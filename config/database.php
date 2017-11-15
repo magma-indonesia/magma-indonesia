@@ -54,6 +54,19 @@ return [
             'engine' => null,
         ],
 
+        'magma' => [
+            'driver' => 'mysql',
+            'host' => env('MAGMA_HOST', 'forge'),
+            'port' => env('MAGMA_PORT', 'forge'),
+            'database' => env('MAGMA_DATABASE', 'forge'),
+            'username' => env('MAGMA_USERNAME', 'forge'),
+            'password' => env('MAGMA_PASSWORD', 'forge'),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => false
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', '127.0.0.1'),
