@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>{{ config('app.name') }}</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
@@ -69,27 +69,32 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                        <a>Halo, {{ auth()->user()->name }}</a>
+                        <a href="{{ route('home') }}">Home</a>
+                        <a href="{{ route('logout') }}">Logout</a>
                     @else
                         <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
+                        {{--  <a href="{{ route('register') }}">Register</a>  --}}
                     @endauth
                 </div>
             @endif
 
             <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
+                <div id="time" class="title m-b-md">Loading . . .</div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <a href="https://laravel.com/docs">Login</a>
+                    <a href="https://laracasts.com">Chamber</a>
                 </div>
             </div>
         </div>
+        <script type="text/javascript">
+        function showTime() {
+            var utc = new Date();
+            document.getElementById('time').innerHTML = utc.toLocaleString('id-ID', { hour12: false })+'WIB';
+        }
+
+        setInterval(showTime, 1000);
+        </script>
     </body>
 </html>
