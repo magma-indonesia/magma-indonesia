@@ -1,0 +1,9 @@
+hr {
+	border-top: 2px solid #007fff;
+}
+
+.btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open .dropdown-toggle.btn-success {
+	background-color: #0066CC;
+	border-color: #0066CC;
+	color: #FFFFFF;
+}
