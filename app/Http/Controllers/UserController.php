@@ -34,24 +34,24 @@ class UserController extends Controller
 
         try {
 
-            if (! $token = JWTAuth::attempt($credentials)) 
+            if (Auth::attempt([$username => $request->username, 'password' => $request->password, 'status' => 1]))
             {
 
-                if ($this->hasTooManyLoginAttempts($request)) {
-                    $this->fireLockoutEvent($request);
-
-                    return $this->sendLockoutResponse($request);
-                }
-
-                $this->incrementLoginAttempts($request);
-
-                throw ValidationException::withMessages([
-                    $request->username => [trans('auth.failed')],
-                ]);
-
+                $token = JWTAuth::attempt($credentials);
+                
             }
 
-            Auth::attempt([$username => $request->username, 'password' => $request->password]);
+            if ($this->hasTooManyLoginAttempts($request)) {
+                $this->fireLockoutEvent($request);
+
+                return $this->sendLockoutResponse($request);
+            }
+
+            $this->incrementLoginAttempts($request);
+
+            throw ValidationException::withMessages([
+                $request->username => [trans('auth.failed')],
+            ]);
 
         } 
         
@@ -126,7 +126,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.create');
     }
 
     /**
@@ -137,7 +137,25 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|string|max:255',
+            'nip' => 'required|digits:18|unique:users',
+            'phone' => 'nullable|digits_between:10,12|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+            'status' => 'required|boolean'
+        ]);
+
+        $input  = $request->all();
+        $user   = new User();
+
+        if ($user->fill($input)->save())
+        {
+            return redirect()->route('users.index')->with('flash_message',$request->name.' berhasil ditambahkan.');
+        } 
+
+        return redirect()->route('users.index')->with('flash_message','User gagal ditambahkan.');      
+
     }
 
     /**
@@ -149,6 +167,8 @@ class UserController extends Controller
     public function show($id)
     {
         //
+        $user = User::findOrFail($id); 
+        return $user->name;
     }
 
     /**
@@ -160,6 +180,10 @@ class UserController extends Controller
     public function edit($id)
     {
         //
+        $user = User::findOrFail($id); 
+        $roles = Role::get();
+
+        return view('users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -172,6 +196,30 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $user = User::findOrFail($id);
+        
+        $this->validate($request, [
+            'name' => 'required|string|max:255',
+            'nip' => 'required|digits:18|unique:users,nip,'.$user->id,
+            'phone' => 'nullable|digits_between:11,12',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
+            'status' => 'required|boolean'
+        ]);
+
+        $input = $request->all();
+        $name  = $request->name;        
+        $roles = $request['roles'];
+        $user->fill($input)->save();
+
+        if (isset($roles)) {        
+            $user->roles()->sync($roles); 
+        }        
+        else {
+            $user->roles()->detach();
+        }
+        return redirect()->route('users.index')
+            ->with('flash_message',
+            'Data '.$name.' berhasil dirubah.');
     }
 
     /**
@@ -182,6 +230,15 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user   = User::findOrFail($id);
+        $nama   = $user->name;
+        $user->delete();
+
+        $data = [
+            'success' => 1,
+            'message' => $nama.' berhasil dihapus.'
+        ];
+
+        return response()->json($data);
     }
 }
