@@ -4,908 +4,527 @@
     {{ config('app.name') }}
 @endsection
 
-@section('sub-title')
-    MAGMA Chamber
+@section('content-body')   
+        <div class="content animate-panel">
+            <div class="row">
+                <div class="col-lg-12 text-center m-t-md">
+                    <h2>
+                        Selamat Datang di MAGMA Chamber
+                    </h2>
+
+                    <p>
+                        Pusat kontrol data
+                        <strong>MAGMA</strong> meliputi kebencanaan Gunung Api, Gerakan Tanah, Gempa Bumi dan Tsunami.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="hpanel">
+                        <div class="panel-heading">
+                            <div class="panel-tools">
+                                <a class="showhide">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="closebox">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                            Informasi dan Statistik
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-3 text-center">
+                                    <div class="small">
+                                        <i class="fa fa-bolt"></i> Jumlah Data MAGMA
+                                    </div>
+                                    <div>
+                                        <h1 class="font-extra-bold m-t-xl m-b-xs">
+                                            226,802
+                                        </h1>
+                                        <small>Data Gunung Api</small>
+                                    </div>
+                                    <div class="small m-t-xl">
+                                        <i class="fa fa-clock-o"></i> Data dari Mei 2015
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="text-center small">
+                                        <i class="fa fa-laptop"></i> Data User Aktif
+                                    </div>
+                                    <div class="flot-chart" style="height: 160px">
+                                        <div class="flot-chart-content" id="flot-line-chart"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <div class="small">
+                                        <i class="fa fa-clock-o"></i> Active duration
+                                    </div>
+                                    <div>
+                                        <h1 class="font-extra-bold m-t-xl m-b-xs">
+                                            10 Months
+                                        </h1>
+                                        <small>And four weeks</small>
+                                    </div>
+                                    <div class="small m-t-xl">
+                                        <i class="fa fa-clock-o"></i> Last active in 12.10.2015
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            Last update: 21.05.2015
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="hpanel">
+                        <div class="panel-body text-center h-200">
+                            <i class="pe-7s-graph1 fa-4x"></i>
+
+                            <h1 class="m-xs">$1 206,90</h1>
+
+                            <h3 class="font-extra-bold no-margins text-success">
+                                All Income
+                            </h3>
+                            <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit vestibulum.</small>
+                        </div>
+                        <div class="panel-footer">
+                            This is standard panel footer
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="hpanel stats">
+                        <div class="panel-body h-200">
+                            <div class="stats-title pull-left">
+                                <h4>Users Activity</h4>
+                            </div>
+                            <div class="stats-icon pull-right">
+                                <i class="pe-7s-share fa-4x"></i>
+                            </div>
+                            <div class="m-t-xl">
+                                <h3 class="m-b-xs">210</h3>
+                                <span class="font-bold no-margins">
+                                    Social users
+                                </span>
+
+                                <div class="progress m-t-xs full progress-small">
+                                    <div style="width: 55%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="55" role="progressbar" class=" progress-bar progress-bar-success">
+                                        <span class="sr-only">35% Complete (success)</span>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <small class="stats-label">Pages / Visit</small>
+                                        <h4>7.80</h4>
+                                    </div>
+
+                                    <div class="col-xs-6">
+                                        <small class="stats-label">% New Visits</small>
+                                        <h4>76.43%</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            This is standard panel footer
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="hpanel stats">
+                        <div class="panel-body h-200">
+                            <div class="stats-title pull-left">
+                                <h4>Page Views</h4>
+                            </div>
+                            <div class="stats-icon pull-right">
+                                <i class="pe-7s-monitor fa-4x"></i>
+                            </div>
+                            <div class="m-t-xl">
+                                <h1 class="text-success">860k+</h1>
+                                <span class="font-bold no-margins">
+                                    Social users
+                                </span>
+                                <br/>
+                                <small>
+                                    Lorem Ipsum is simply dummy text of the printing and
+                                    <strong>typesetting industry
+                                    </strong>. Lorem Ipsum has been.
+                                </small>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            This is standard panel footer
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="hpanel stats">
+                        <div class="panel-body h-200">
+                            <div class="stats-title pull-left">
+                                <h4>Today income</h4>
+                            </div>
+                            <div class="stats-icon pull-right">
+                                <i class="pe-7s-cash fa-4x"></i>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="flot-chart">
+                                <div class="flot-chart-content" id="flot-income-chart"></div>
+                            </div>
+                            <div class="m-t-xs">
+
+                                <div class="row">
+                                    <div class="col-xs-5">
+                                        <small class="stat-label">Today</small>
+                                        <h4>$230,00 </h4>
+                                    </div>
+                                    <div class="col-xs-7">
+                                        <small class="stat-label">Last week</small>
+                                        <h4>$7 980,60
+                                            <i class="fa fa-level-up text-success"></i>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            This is standard panel footer
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="hpanel stats">
+                        <div class="panel-heading">
+                            <div class="panel-tools">
+                                <a class="showhide">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="closebox">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                            Last active
+                        </div>
+                        <div class="panel-body list">
+                            <div class="stats-title pull-left">
+                                <h4>Activity</h4>
+                            </div>
+                            <div class="stats-icon pull-right">
+                                <i class="pe-7s-science fa-4x"></i>
+                            </div>
+                            <div class="m-t-xl">
+                                <span class="font-bold no-margins">
+                                    Social users
+                                </span>
+                                <br/>
+                                <small>
+                                    Lorem Ipsum is simply dummy text of the printing simply all dummy text. Lorem Ipsum is simply dummy text of the printing
+                                    and typesetting industry. Lorem Ipsum has been.
+                                </small>
+                            </div>
+                            <div class="row m-t-md">
+                                <div class="col-lg-6">
+                                    <h3 class="no-margins font-extra-bold text-success">300,102</h3>
+
+                                    <div class="font-bold">98%
+                                        <i class="fa fa-level-up text-success"></i>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <h3 class="no-margins font-extra-bold text-success">280,200</h3>
+
+                                    <div class="font-bold">98%
+                                        <i class="fa fa-level-up text-success"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row m-t-md">
+                                <div class="col-lg-6">
+                                    <h3 class="no-margins font-extra-bold ">120,108</h3>
+
+                                    <div class="font-bold">38%
+                                        <i class="fa fa-level-down"></i>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <h3 class="no-margins font-extra-bold ">450,600</h3>
+
+                                    <div class="font-bold">28%
+                                        <i class="fa fa-level-down"></i>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            This is standard panel footer
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hpanel">
+                        <div class="panel-heading">
+                            <div class="panel-tools">
+                                <a class="showhide">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="closebox">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                            Recently active projects
+                        </div>
+                        <div class="panel-body list">
+                            <div class="table-responsive project-list">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+
+                                            <th colspan="2">Project</th>
+                                            <th>Completed</th>
+                                            <th>Task</th>
+                                            <th>Date</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="i-checks" checked>
+                                            </td>
+                                            <td>Contract with Zender Company
+                                                <br/>
+                                                <small>
+                                                    <i class="fa fa-clock-o"></i> Created 14.08.2015</small>
+                                            </td>
+                                            <td>
+                                                <span class="pie">1/5</span>
+                                            </td>
+                                            <td>
+                                                <strong>20%</strong>
+                                            </td>
+                                            <td>Jul 14, 2013</td>
+                                            <td>
+                                                <a href="">
+                                                    <i class="fa fa-check text-success"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="i-checks">
+                                            </td>
+                                            <td>There are many variations of passages
+                                                <br/>
+                                                <small>
+                                                    <i class="fa fa-clock-o"></i> Created 21.07.2015</small>
+                                            </td>
+                                            <td>
+                                                <span class="pie">1/4</span>
+                                            </td>
+                                            <td>
+                                                <strong>40%</strong>
+                                            </td>
+                                            <td>Jul 16, 2013</td>
+                                            <td>
+                                                <a href="">
+                                                    <i class="fa fa-check text-navy"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="i-checks" checked>
+                                            </td>
+                                            <td>Contrary to popular belief
+                                                <br/>
+                                                <small>
+                                                    <i class="fa fa-clock-o"></i> Created 12.06.2015</small>
+                                            </td>
+                                            <td>
+                                                <span class="pie">0.52/1.561</span>
+                                            </td>
+                                            <td>
+                                                <strong>75%</strong>
+                                            </td>
+                                            <td>Jul 18, 2013</td>
+                                            <td>
+                                                <a href="">
+                                                    <i class="fa fa-check text-navy"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="i-checks">
+                                            </td>
+                                            <td>Gamma project
+                                                <br/>
+                                                <small>
+                                                    <i class="fa fa-clock-o"></i> Created 06.03.2015</small>
+                                            </td>
+                                            <td>
+                                                <span class="pie">226/360</span>
+                                            </td>
+                                            <td>
+                                                <strong>16%</strong>
+                                            </td>
+                                            <td>Jul 22, 2013</td>
+                                            <td>
+                                                <a href="">
+                                                    <i class="fa fa-check text-navy"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="hpanel">
+                        <div class="panel-heading">
+                            <div class="panel-tools">
+                                <a class="showhide">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="closebox">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                            Activity
+                        </div>
+                        <div class="panel-body list">
+
+                            <div class="pull-right">
+                                <a href="#" class="btn btn-xs btn-default">Today</a>
+                                <a href="#" class="btn btn-xs btn-default">Month</a>
+                            </div>
+                            <div class="panel-title">Last Activity</div>
+                            <small class="fo">This is simple example</small>
+                            <div class="list-item-container">
+                                <div class="list-item">
+                                    <h3 class="no-margins font-extra-bold text-success">2,773</h3>
+                                    <small>Tota Messages Sent</small>
+                                    <div class="pull-right font-bold">98%
+                                        <i class="fa fa-level-up text-success"></i>
+                                    </div>
+                                </div>
+                                <div class="list-item">
+                                    <h3 class="no-margins font-extra-bold text-color3">4,422</h3>
+                                    <small>Last activity</small>
+                                    <div class="pull-right font-bold">13%
+                                        <i class="fa fa-level-down text-color3"></i>
+                                    </div>
+                                </div>
+                                <div class="list-item">
+                                    <h3 class="no-margins font-extra-bold text-color3">9,180</h3>
+                                    <small>Monthly income</small>
+                                    <div class="pull-right font-bold">22%
+                                        <i class="fa fa-bolt text-color3"></i>
+                                    </div>
+                                </div>
+                                <div class="list-item">
+                                    <h3 class="no-margins font-extra-bold text-success">1,450</h3>
+                                    <small>Tota Messages Sent</small>
+                                    <div class="pull-right font-bold">44%
+                                        <i class="fa fa-level-up text-success"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 @endsection
 
-@section('breadcrumb')
-<ul class="breadcrumb">
-    <li class="breadcrumb-item">
-        <a href="{{ route('chamber') }}">Home</a>
-    </li>
-</ul>
+@section('add-vendor-script')
+
+    <script src="{{ asset('vendor/iCheck/icheck.min.js') }}"></script>
+    <script src="{{ asset('vendor/jquery-flot/jquery.flot.js') }}"></script>
+    <script src="{{ asset('vendor/jquery-flot/jquery.flot.resize.js') }}"></script>
+    <script src="{{ asset('vendor/jquery-flot/jquery.flot.pie.js') }}"></script>
+    <script src="{{ asset('vendor/flot.curvedlines/curvedLines.js') }}"></script>
+    <script src="{{ asset('vendor/jquery.flot.spline/index.js') }}"></script>
+    <script src="{{ asset('vendor/peity/jquery.peity.min.js') }}"></script>
+    
 @endsection
 
-@section('content')
-<div class="row">
-    <div class="col-sm-12">
-        <div class="element-wrapper">
-            <h6 class="element-header">
-                Import MAGMA v1
-            </h6>
-            <div class="element-box">
-                <div class="element-info">
-                    <div class="row align-items-center">
-                        <div class="col-sm-8">
-                            <div class="element-info-with-icon">
-                                <div class="element-info-icon">
-                                    <div class="os-icon os-icon-wallet-loaded"></div>
-                                </div>
-                                <div class="element-info-text">
-                                    <h5 class="element-inner-header">
-                                        Import User
-                                    </h5>
-                                    <div class="element-inner-desc">
-                                        Normalisasi database Users dari MAGMA v1 ke v2 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 col-xl-4">
-                        <div class="row">
-                            <div class="col-sm-6 b-r b-b">
-                                <div class="el-tablo centered padded">
-                                    <div class="value">
-                                        
-                                    </div>
-                                    <div class="label">
-                                        Products Sold
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 b-b">
-                                <div class="el-tablo centered padded">
-                                    <div class="value">
-                                        47.5K
-                                    </div>
-                                    <div class="label">
-                                        Followers
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6 b-r">
-                                <div class="el-tablo centered padded">
-                                    <div class="value">
-                                        $95
-                                    </div>
-                                    <div class="label">
-                                        Daily Earnings
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="el-tablo centered padded">
-                                    <div class="value">
-                                        12
-                                    </div>
-                                    <div class="label">
-                                        Products
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xl-4">
-                        <div class="padded b-l b-r">
-                            <div class="element-info-with-icon smaller">
-                                <div class="element-info-icon">
-                                    <div class="os-icon os-icon-bar-chart-stats-up"></div>
-                                </div>
-                                <div class="element-info-text">
-                                    <h5 class="element-inner-header">
-                                        Monthly Revenue
-                                    </h5>
-                                    <div class="element-inner-desc">
-                                        Calculated every month
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="os-progress-bar blue">
-                                <div class="bar-labels">
-                                    <div class="bar-label-left">
-                                        <span>Accessories</span>
-                                        <span class="positive">+10</span>
-                                    </div>
-                                    <div class="bar-label-right">
-                                        <span class="info">72/100</span>
-                                    </div>
-                                </div>
-                                <div class="bar-level-1" style="width: 100%">
-                                    <div class="bar-level-2" style="width: 60%">
-                                        <div class="bar-level-3" style="width: 20%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="os-progress-bar blue">
-                                <div class="bar-labels">
-                                    <div class="bar-label-left">
-                                        <span>Shoe Sales</span>
-                                        <span class="negative">-5</span>
-                                    </div>
-                                    <div class="bar-label-right">
-                                        <span class="info">62/100</span>
-                                    </div>
-                                </div>
-                                <div class="bar-level-1" style="width: 100%">
-                                    <div class="bar-level-2" style="width: 40%">
-                                        <div class="bar-level-3" style="width: 10%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="os-progress-bar blue">
-                                <div class="bar-labels">
-                                    <div class="bar-label-left">
-                                        <span>New Customers</span>
-                                        <span class="positive">+12</span>
-                                    </div>
-                                    <div class="bar-label-right">
-                                        <span class="info">78/100</span>
-                                    </div>
-                                </div>
-                                <div class="bar-level-1" style="width: 100%">
-                                    <div class="bar-level-2" style="width: 80%">
-                                        <div class="bar-level-3" style="width: 50%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="hidden-lg-down col-xl-4">
-                        <div class="padded">
-                            <div class="el-tablo bigger">
-                                <div class="value">
-                                    245
-                                </div>
-                                <div class="trending trending-up">
-                                    <span>12%</span>
-                                    <i class="os-icon os-icon-arrow-up2"></i>
-                                </div>
-                                <div class="label">
-                                    Products Sold
-                                </div>
-                            </div>
-                            <div class="el-chart-w">
-                                <canvas height="100" id="liteLineChart" width="300"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-12">
-        <div class="element-wrapper">
-            <h6 class="element-header">
-                Chamber
-            </h6>
-            <div class="element-box">
-                <div class="element-info">
-                    <div class="row align-items-center">
-                        <div class="col-sm-8">
-                            <div class="element-info-with-icon">
-                                <div class="element-info-icon">
-                                    <div class="os-icon os-icon-wallet-loaded"></div>
-                                </div>
-                                <div class="element-info-text">
-                                    <h5 class="element-inner-header">
-                                        Sales Statistics
-                                    </h5>
-                                    <div class="element-inner-desc">
-                                        Discharge best employed your phase each the of shine. Be met even.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="element-search">
-                                <input placeholder="Type to search for products..." type="text">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 col-xl-4">
-                        <div class="row">
-                            <div class="col-sm-6 b-r b-b">
-                                <div class="el-tablo centered padded">
-                                    <div class="value">
-                                        3814
-                                    </div>
-                                    <div class="label">
-                                        Products Sold
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 b-b">
-                                <div class="el-tablo centered padded">
-                                    <div class="value">
-                                        47.5K
-                                    </div>
-                                    <div class="label">
-                                        Followers
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6 b-r">
-                                <div class="el-tablo centered padded">
-                                    <div class="value">
-                                        $95
-                                    </div>
-                                    <div class="label">
-                                        Daily Earnings
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="el-tablo centered padded">
-                                    <div class="value">
-                                        12
-                                    </div>
-                                    <div class="label">
-                                        Products
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xl-4">
-                        <div class="padded b-l b-r">
-                            <div class="element-info-with-icon smaller">
-                                <div class="element-info-icon">
-                                    <div class="os-icon os-icon-bar-chart-stats-up"></div>
-                                </div>
-                                <div class="element-info-text">
-                                    <h5 class="element-inner-header">
-                                        Monthly Revenue
-                                    </h5>
-                                    <div class="element-inner-desc">
-                                        Calculated every month
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="os-progress-bar blue">
-                                <div class="bar-labels">
-                                    <div class="bar-label-left">
-                                        <span>Accessories</span>
-                                        <span class="positive">+10</span>
-                                    </div>
-                                    <div class="bar-label-right">
-                                        <span class="info">72/100</span>
-                                    </div>
-                                </div>
-                                <div class="bar-level-1" style="width: 100%">
-                                    <div class="bar-level-2" style="width: 60%">
-                                        <div class="bar-level-3" style="width: 20%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="os-progress-bar blue">
-                                <div class="bar-labels">
-                                    <div class="bar-label-left">
-                                        <span>Shoe Sales</span>
-                                        <span class="negative">-5</span>
-                                    </div>
-                                    <div class="bar-label-right">
-                                        <span class="info">62/100</span>
-                                    </div>
-                                </div>
-                                <div class="bar-level-1" style="width: 100%">
-                                    <div class="bar-level-2" style="width: 40%">
-                                        <div class="bar-level-3" style="width: 10%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="os-progress-bar blue">
-                                <div class="bar-labels">
-                                    <div class="bar-label-left">
-                                        <span>New Customers</span>
-                                        <span class="positive">+12</span>
-                                    </div>
-                                    <div class="bar-label-right">
-                                        <span class="info">78/100</span>
-                                    </div>
-                                </div>
-                                <div class="bar-level-1" style="width: 100%">
-                                    <div class="bar-level-2" style="width: 80%">
-                                        <div class="bar-level-3" style="width: 50%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="hidden-lg-down col-xl-4">
-                        <div class="padded">
-                            <div class="el-tablo bigger">
-                                <div class="value">
-                                    245
-                                </div>
-                                <div class="trending trending-up">
-                                    <span>12%</span>
-                                    <i class="os-icon os-icon-arrow-up2"></i>
-                                </div>
-                                <div class="label">
-                                    Products Sold
-                                </div>
-                            </div>
-                            <div class="el-chart-w">
-                                <canvas height="100" id="liteLineChart" width="300"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-4 col-xl-2">
-        <div class="element-wrapper">
-            <h6 class="element-header">
-                Top Selling Today
-            </h6>
-            <div class="element-box">
-                <div class="el-chart-w">
-                    <canvas height="120" id="donutChart" width="120"></canvas>
-                    <div class="inside-donut-chart-label">
-                        <strong>142</strong>
-                        <span>Total Orders</span>
-                    </div>
-                </div>
-                <div class="el-legend">
-                    <div class="legend-value-w">
-                        <div class="legend-pin" style="background-color: #6896f9;"></div>
-                        <div class="legend-value">
-                            Processed
-                        </div>
-                    </div>
-                    <div class="legend-value-w">
-                        <div class="legend-pin" style="background-color: #85c751;"></div>
-                        <div class="legend-value">
-                            Cancelled
-                        </div>
-                    </div>
-                    <div class="legend-value-w">
-                        <div class="legend-pin" style="background-color: #d97b70;"></div>
-                        <div class="legend-value">
-                            Pending
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-8 col-xl-7">
-        <div class="element-wrapper">
-            <h6 class="element-header">
-                New Orders
-            </h6>
-            <div class="element-box">
-                <div class="table-responsive">
-                    <table class="table table-lightborder">
-                        <thead>
-                            <tr>
-                                <th>
-                                    Customer Name
-                                </th>
-                                <th>
-                                    Products Ordered
-                                </th>
-                                <th class="text-center">
-                                    Status
-                                </th>
-                                <th class="text-right">
-                                    Order Total
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="nowrap">
-                                    John Mayers
-                                </td>
-                                <td>
-                                    <div class="cell-image-list">
-                                        <div class="cell-img" style="background-image: url(img/portfolio9.jpg)"></div>
-                                        <div class="cell-img" style="background-image: url(img/portfolio2.jpg)"></div>
-                                        <div class="cell-img" style="background-image: url(img/portfolio12.jpg)"></div>
-                                        <div class="cell-img-more">
-                                            + 5 more
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <div class="status-pill green" data-title="Complete" data-toggle="tooltip"></div>
-                                </td>
-                                <td class="text-right">
-                                    $354
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="nowrap">
-                                    Kelly Brans
-                                </td>
-                                <td>
-                                    <div class="cell-image-list">
-                                        <div class="cell-img" style="background-image: url(img/portfolio14.jpg)"></div>
-                                        <div class="cell-img" style="background-image: url(img/portfolio8.jpg)"></div>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <div class="status-pill red" data-title="Cancelled" data-toggle="tooltip"></div>
-                                </td>
-                                <td class="text-right">
-                                    $94
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="nowrap">
-                                    Tim Howard
-                                </td>
-                                <td>
-                                    <div class="cell-image-list">
-                                        <div class="cell-img" style="background-image: url(img/portfolio16.jpg)"></div>
-                                        <div class="cell-img" style="background-image: url(img/portfolio14.jpg)"></div>
-                                        <div class="cell-img" style="background-image: url(img/portfolio5.jpg)"></div>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <div class="status-pill green" data-title="Complete" data-toggle="tooltip"></div>
-                                </td>
-                                <td class="text-right">
-                                    $156
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="nowrap">
-                                    Joe Trulli
-                                </td>
-                                <td>
-                                    <div class="cell-image-list">
-                                        <div class="cell-img" style="background-image: url(img/portfolio1.jpg)"></div>
-                                        <div class="cell-img" style="background-image: url(img/portfolio5.jpg)"></div>
-                                        <div class="cell-img" style="background-image: url(img/portfolio6.jpg)"></div>
-                                        <div class="cell-img-more">
-                                            + 2 more
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <div class="status-pill yellow" data-title="Pending" data-toggle="tooltip"></div>
-                                </td>
-                                <td class="text-right">
-                                    $1,120
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="nowrap">
-                                    Jerry Lingard
-                                </td>
-                                <td>
-                                    <div class="cell-image-list">
-                                        <div class="cell-img" style="background-image: url(img/portfolio9.jpg)"></div>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <div class="status-pill green" data-title="Complete" data-toggle="tooltip"></div>
-                                </td>
-                                <td class="text-right">
-                                    $856
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 col-lg-5 col-xl-3">
-        <div class="element-wrapper">
-            <h6 class="element-header">
-                Support Agents
-            </h6>
-            <div class="element-box-tp">
-                <div class="profile-tile">
-                    <div class="profile-tile-box">
-                        <div class="pt-avatar-w">
-                            <img alt="" src="img/avatar1.jpg">
-                        </div>
-                        <div class="pt-user-name">
-                            Mark Parson
-                        </div>
-                    </div>
-                    <div class="profile-tile-meta">
-                        <ul>
-                            <li>
-                                Last Login:
-                                <strong>Online Now</strong>
-                            </li>
-                            <li>
-                                Tickets:
-                                <strong>12</strong>
-                            </li>
-                            <li>
-                                Response Time:
-                                <strong>2 hours</strong>
-                            </li>
-                        </ul>
-                        <div class="pt-btn">
-                            <a class="btn btn-success btn-sm" href="#">Send Message</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="profile-tile">
-                    <div class="profile-tile-box">
-                        <div class="pt-avatar-w">
-                            <img alt="" src="img/avatar1.jpg">
-                        </div>
-                        <div class="pt-user-name">
-                            Mark Parson
-                        </div>
-                    </div>
-                    <div class="profile-tile-meta">
-                        <ul>
-                            <li>
-                                Last Login:
-                                <strong>Online Now</strong>
-                            </li>
-                            <li>
-                                Tickets:
-                                <strong>12</strong>
-                            </li>
-                            <li>
-                                Response Time:
-                                <strong>2 hours</strong>
-                            </li>
-                        </ul>
-                        <div class="pt-btn">
-                            <a class="btn btn-secondary btn-sm" href="#">Send Message</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="profile-tile hidden-md">
-                    <div class="profile-tile-box">
-                        <div class="pt-avatar-w">
-                            <img alt="" src="img/avatar1.jpg">
-                        </div>
-                        <div class="pt-user-name">
-                            Mark Parson
-                        </div>
-                    </div>
-                    <div class="profile-tile-meta">
-                        <ul>
-                            <li>
-                                Last Login:
-                                <strong>Online Now</strong>
-                            </li>
-                            <li>
-                                Tickets:
-                                <strong>12</strong>
-                            </li>
-                            <li>
-                                Response Time:
-                                <strong>2 hours</strong>
-                            </li>
-                        </ul>
-                        <div class="pt-btn">
-                            <a class="btn btn-success btn-sm" href="#">Send Message</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 col-lg-7 col-xl-12">
-        <div class="element-wrapper">
-            <h6 class="element-header">
-                Unique Visitors Graph
-            </h6>
-            <div class="element-box">
-                <div class="os-tabs-w">
-                    <div class="os-tabs-controls">
-                        <ul class="nav nav-tabs smaller">
-                            <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#tab_overview">Overview</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tab_sales">Sales</a>
-                            </li>
-                        </ul>
-                        <ul class="nav nav-pills smaller hidden-xl-down">
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#">Today</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#">7 Days</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#">14 Days</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#">Last Month</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="tab_overview">
-                            <div class="el-tablo">
-                                <div class="label">
-                                    Unique Visitors
-                                </div>
-                                <div class="value">
-                                    12,537
-                                </div>
-                            </div>
-                            <div class="el-chart-w">
-                                <canvas height="150px" id="lineChart" width="600px"></canvas>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="tab_sales"></div>
-                        <div class="tab-pane" id="tab_conversion"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-12">
-        <div class="element-wrapper">
-            <h6 class="element-header">
-                Recent Orders
-            </h6>
-            <div class="element-box-tp">
-                <div class="controls-above-table">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <a class="btn btn-sm btn-secondary" href="#">Download CSV</a>
-                            <a class="btn btn-sm btn-secondary" href="#">Archive</a>
-                            <a class="btn btn-sm btn-danger" href="#">Delete</a>
-                        </div>
-                        <div class="col-sm-6">
-                            <form class="form-inline justify-content-sm-end">
-                                <input class="form-control form-control-sm rounded bright" placeholder="Search" type="text">
-                                <select class="form-control form-control-sm rounded bright">
-                                    <option selected="selected" value="">
-                                        Select Status
-                                    </option>
-                                    <option value="Pending">
-                                        Pending
-                                    </option>
-                                    <option value="Active">
-                                        Active
-                                    </option>
-                                    <option value="Cancelled">
-                                        Cancelled
-                                    </option>
-                                </select>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-bordered table-lg table-v2 table-striped">
-                        <thead>
-                            <tr>
-                                <th class="text-center">
-                                    <input class="form-control" type="checkbox">
-                                </th>
-                                <th>
-                                    Customer Name
-                                </th>
-                                <th>
-                                    Country
-                                </th>
-                                <th>
-                                    Order Total
-                                </th>
-                                <th>
-                                    Referral
-                                </th>
-                                <th>
-                                    Status
-                                </th>
-                                <th>
-                                    Actions
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="text-center">
-                                    <input class="form-control" type="checkbox">
-                                </td>
-                                <td>
-                                    John Mayers
-                                </td>
-                                <td>
-                                    <img alt="" src="img/flags-icons/us.png" width="25px">
-                                </td>
-                                <td class="text-right">
-                                    $245
-                                </td>
-                                <td>
-                                    Organic
-                                </td>
-                                <td class="text-center">
-                                    <div class="status-pill green" data-title="Complete" data-toggle="tooltip"></div>
-                                </td>
-                                <td class="row-actions">
-                                    <a href="#">
-                                        <i class="os-icon os-icon-pencil-2"></i>
-                                    </a>
-                                    <a href="#">
-                                        <i class="os-icon os-icon-link-3"></i>
-                                    </a>
-                                    <a class="danger" href="#">
-                                        <i class="os-icon os-icon-database-remove"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">
-                                    <input class="form-control" type="checkbox">
-                                </td>
-                                <td>
-                                    Mike Astone
-                                </td>
-                                <td>
-                                    <img alt="" src="img/flags-icons/fr.png" width="25px">
-                                </td>
-                                <td class="text-right">
-                                    $154
-                                </td>
-                                <td>
-                                    Organic
-                                </td>
-                                <td class="text-center">
-                                    <div class="status-pill red" data-title="Cancelled" data-toggle="tooltip"></div>
-                                </td>
-                                <td class="row-actions">
-                                    <a href="#">
-                                        <i class="os-icon os-icon-pencil-2"></i>
-                                    </a>
-                                    <a href="#">
-                                        <i class="os-icon os-icon-link-3"></i>
-                                    </a>
-                                    <a class="danger" href="#">
-                                        <i class="os-icon os-icon-database-remove"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">
-                                    <input class="form-control" type="checkbox">
-                                </td>
-                                <td>
-                                    Kira Knight
-                                </td>
-                                <td>
-                                    <img alt="" src="img/flags-icons/us.png" width="25px">
-                                </td>
-                                <td class="text-right">
-                                    $23
-                                </td>
-                                <td>
-                                    Adwords
-                                </td>
-                                <td class="text-center">
-                                    <div class="status-pill green" data-title="Complete" data-toggle="tooltip"></div>
-                                </td>
-                                <td class="row-actions">
-                                    <a href="#">
-                                        <i class="os-icon os-icon-pencil-2"></i>
-                                    </a>
-                                    <a href="#">
-                                        <i class="os-icon os-icon-link-3"></i>
-                                    </a>
-                                    <a class="danger" href="#">
-                                        <i class="os-icon os-icon-database-remove"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">
-                                    <input class="form-control" type="checkbox">
-                                </td>
-                                <td>
-                                    Jessica Bloom
-                                </td>
-                                <td>
-                                    <img alt="" src="img/flags-icons/ca.png" width="25px">
-                                </td>
-                                <td class="text-right">
-                                    $112
-                                </td>
-                                <td>
-                                    Organic
-                                </td>
-                                <td class="text-center">
-                                    <div class="status-pill green" data-title="Complete" data-toggle="tooltip"></div>
-                                </td>
-                                <td class="row-actions">
-                                    <a href="#">
-                                        <i class="os-icon os-icon-pencil-2"></i>
-                                    </a>
-                                    <a href="#">
-                                        <i class="os-icon os-icon-link-3"></i>
-                                    </a>
-                                    <a class="danger" href="#">
-                                        <i class="os-icon os-icon-database-remove"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">
-                                    <input class="form-control" type="checkbox">
-                                </td>
-                                <td>
-                                    Gary Lineker
-                                </td>
-                                <td>
-                                    <img alt="" src="img/flags-icons/ca.png" width="25px">
-                                </td>
-                                <td class="text-right">
-                                    $64
-                                </td>
-                                <td>
-                                    Organic
-                                </td>
-                                <td class="text-center">
-                                    <div class="status-pill yellow" data-title="Pending" data-toggle="tooltip"></div>
-                                </td>
-                                <td class="row-actions">
-                                    <a href="#">
-                                        <i class="os-icon os-icon-pencil-2"></i>
-                                    </a>
-                                    <a href="#">
-                                        <i class="os-icon os-icon-link-3"></i>
-                                    </a>
-                                    <a class="danger" href="#">
-                                        <i class="os-icon os-icon-database-remove"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="controls-below-table">
-                    <div class="table-records-info">
-                        Showing records 1 - 5
-                    </div>
-                    <div class="table-records-pages">
-                        <ul>
-                            <li>
-                                <a href="#">Previous</a>
-                            </li>
-                            <li>
-                                <a class="current" href="#">1</a>
-                            </li>
-                            <li>
-                                <a href="#">2</a>
-                            </li>
-                            <li>
-                                <a href="#">3</a>
-                            </li>
-                            <li>
-                                <a href="#">4</a>
-                            </li>
-                            <li>
-                                <a href="#">Next</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+@section('add-script')
+    <script src="{{ asset('scripts/charts.js') }}"></script>
+    <script>
+
+        $(function () {
+
+            /**
+             * Flot charts data and options
+             */
+            var data1 = [[0, 55], [1, 48], [2, 40], [3, 36], [4, 40], [5, 60], [6, 50], [7, 51]];
+            var data2 = [[0, 56], [1, 49], [2, 41], [3, 38], [4, 46], [5, 67], [6, 57], [7, 59]];
+
+            var chartUsersOptions = {
+                series: {
+                    splines: {
+                        show: true,
+                        tension: 0.4,
+                        lineWidth: 1,
+                        fill: 0.4
+                    },
+                },
+                grid: {
+                    tickColor: "#f0f0f0",
+                    borderWidth: 1,
+                    borderColor: 'f0f0f0',
+                    color: '#6a6c6f'
+                },
+                colors: ["#007fff", "#efefef"],
+            };
+
+            $.plot($("#flot-line-chart"), [data1, data2], chartUsersOptions);
+
+            /**
+             * Flot charts 2 data and options
+             */
+            var chartIncomeData = [
+                {
+                    label: "line",
+                    data: [[1, 10], [2, 26], [3, 16], [4, 36], [5, 32], [6, 51]]
+                }
+            ];
+
+            var chartIncomeOptions = {
+                series: {
+                    lines: {
+                        show: true,
+                        lineWidth: 0,
+                        fill: true,
+                        fillColor: "#64cc34"
+
+                    }
+                },
+                colors: ["#62cb31"],
+                grid: {
+                    show: false
+                },
+                legend: {
+                    show: false
+                }
+            };
+
+            $.plot($("#flot-income-chart"), chartIncomeData, chartIncomeOptions);
+
+
+
+        });
+
+    </script>
 @endsection
