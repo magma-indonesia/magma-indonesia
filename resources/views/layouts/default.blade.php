@@ -3,26 +3,26 @@
 
 @include('includes.head')
 
-<body>
-    <div class="all-wrapper menu-top">
-        <div class="layout-w">
-            @include('includes.mobile')
-            @include('includes.desktop')
-            <!-- Content -->
-            <div class="content-w">
-                @yield('breadcrumb')
+<body class="fixed-navbar fixed-sidebar">
 
-                <div class="content-i">
-                    <div class="content-box">
-                        @yield('content')
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="display-type"></div>
+    <!-- Simple splash screen-->
+    @include('includes.loader')
+
+    <!-- Header -->
+    @include('includes.header')
+
+    {{--  Navigasi  --}}
+    @include('includes.navigation')
+
+    {{--  Content wrapper  --}}
+    <div id="wrapper">
+    @yield('content-header')
+    @yield('content-body')
+    @include('includes.footer')
     </div>
-    
-    @include('includes.js')
+
+<!-- Vendor scripts -->
+@include('includes.script')
 
 </body>
 
