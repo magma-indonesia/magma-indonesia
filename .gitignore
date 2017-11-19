@@ -1,6 +1,9 @@
 /node_modules
 /public/hot
+/public/fonts
+/public/vendor
 /public/storage
+/public/images
 /public/bower_components
 /public/img
 /storage/*.key
