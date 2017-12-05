@@ -55,6 +55,8 @@
                     <form role="form" id="form" method="POST" action="{{ route('users.update',$user->id) }}">
                         {{ method_field('PUT') }}
                         {{ csrf_field() }}
+                        <input name="_type" value="base" type="hidden">
+
                         <div class="form-group">
                             <label>Nama</label> 
                             <input name="name" type="text" placeholder="Masukkan Nama" class="form-control" value="{{ $user->name }}" required>
@@ -97,12 +99,18 @@
                             <label>Roles</label>
                             @foreach($roles as $role)
                                 <div class="checkbox">
-                                    <label><input name="roles[]" value="{{$role->id}}" type="checkbox" class="i-checks" checked> {{$role->name}} </label>                       
+                                    <label><input name="roles[]" value="{{$role->id}}" type="checkbox" class="i-checks" {{ $user->hasRole($role->name) ? 'checked':''}}> {{$role->name}} </label>                       
                                 </div>
                             @endforeach
                             @if( $errors->has('roles'))
                             <label id="roles-error" class="error" for="roles">{{ ucfirst($errors->first('roles')) }}</label>
                             @endif
+                        </div>
+                        <div class="form-group">
+                            <label>Pilih Semua</label> 
+                            <div class="checkbox">
+                                <label><input type="checkbox" class="i-checks all"> Check All</label>    
+                            </div>
                         </div>
                         @endif
                         <div class="hr-line-dashed"></div>

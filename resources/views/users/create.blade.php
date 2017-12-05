@@ -46,8 +46,9 @@
                         Masukkan semua data-data yang dibutuhkan untuk menambahkan pengguna ke dalam MAGMA.
                     </p>
 
-                    <form role="form" id="form" method="POST" action="{{ route('users.store') }}">
+                    <form role="form" id="form" method="POST" action="{{ route('users.store') }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
+                        <input name="_type" value="base" type="hidden">
                         <div class="form-group">
                             <label>Nama</label> 
                             <input name="name" type="text" placeholder="Masukkan Nama" class="form-control" value="{{ old('name') }}" required>
@@ -84,10 +85,19 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label>Konrimasi Password</label> 
+                            <label>Konfirmasi Password</label> 
                             <input name="password_confirmation" type="password" placeholder="Konfirmasi Password" class="form-control" required>
                             @if( $errors->has('password_confirmation'))
                             <label id="password_confirmation-error" class="error" for="password_confirmation">{{ ucfirst($errors->first('password_confirmation')) }}</label>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label>Upload Photo</label> 
+                            <label class="form-control btn btn-primary btn-file">
+                                <span class="label-file">Browse </span> <input class="file" name="file" type="file" style="display: none;">
+                            </label>
+                            @if( $errors->has('file'))
+                            <label id="file-error" class="error" for="file">{{ ucfirst($errors->first('file')) }}</label>
                             @endif
                         </div>
                         <div class="form-group">
@@ -119,7 +129,14 @@
 
 @section('add-script')
 <script>
-	$(function(){
+	$(document).ready(function(){
+
+        $('input.file').on('change', function() {
+            var input = $(this),
+                label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+            $('.label-file').html(label);
+            console.log(label);
+        });
 
         $("#form").validate({
             rules: {
@@ -127,7 +144,7 @@
                     required: true,
                     minlength: 4
                 },
-                nip: {
+                {{--  nip: {
                     required: true,
                     digits: true,
                     minlength: 18,
@@ -150,14 +167,14 @@
                 password_confirmation: {
                     required: true,
                     equalTo: '#password'
-                }
+                }  --}}
             },
             messages: {
                 name: {
                     required: 'Harap Masukkan Nama Anda',
                     minlength: 'Minimal 4 karakter'
                 },
-                nip: {
+                {{--  nip: {
                     required: 'Harap Masukkan NIP Anda',
                     digits: 'NIP hanya menerima dalam bentuk karakter angka saja',
                     minlength: 'Panjang karakter NIP adalah 18 karakter',
@@ -180,7 +197,7 @@
                 password_confirmation: {
                     required: 'Konfirmasi Password tidak boleh kosong',
                     equalTo: 'Password tidak sama'
-                }
+                }  --}}
             },
             submitHandler: function(form) {
                 form.submit();
