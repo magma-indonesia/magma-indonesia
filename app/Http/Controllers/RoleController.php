@@ -50,7 +50,7 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-                'name'=>'required|unique:roles|max:50',
+                'name'=>'required|max:50|unique:roles',
                 'permissions' =>'required',
             ]
         );
@@ -83,7 +83,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        //
+        return $id;
     }
 
     /**
@@ -95,6 +95,10 @@ class RoleController extends Controller
     public function edit($id)
     {
         //
+        $role = Role::findOrFail($id); 
+        $permissions = Permission::get();
+
+        return view('roles.edit', compact('role', 'permissions'));
     }
 
     /**
@@ -107,6 +111,31 @@ class RoleController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $role = Role::findOrFail($id);
+        
+        $this->validate($request, [
+            'name'=>'required|max:50|unique:roles,name,'.$role->id,
+            'permissions' =>'required',
+        ]);
+
+        $input = $request->except(['permissions']);     
+        $permissions = $request['permissions'];
+        $role->fill($input)->save();
+
+        $permissions_all = Permission::all();
+
+        foreach ($permissions_all as $p) {
+            $role->revokePermissionTo($p);
+        }
+
+        foreach ($permissions as $permission) {
+            $p = Permission::where('id', '=', $permission)->firstOrFail();
+            $role->givePermissionTo($p);
+        }
+
+        return redirect()->route('roles.index')
+        ->with('flash_message',
+         'Role '. $role->name.' berhasil dirubah!');
     }
 
     /**
@@ -117,6 +146,15 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $role   = Role::findOrFail($id);
+        $name   = $role->name;
+        $role->delete();
+
+        $data = [
+            'success' => 1,
+            'message' => $name.' berhasil dihapus.'
+        ];
+
+        return response()->json($data);
     }
 }
