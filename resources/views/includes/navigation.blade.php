@@ -90,6 +90,21 @@
                         @yield('nav-edit-roles')
                     </ul>
                 </li>
+                <li class="{{ active('press.*') }}">
+                    <a href="#">
+                        <span class="nav-label">Press Release</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li class="{{ active('press.index') }}">
+                            <a href="{{ route('press.index') }}">List Press</a>
+                        </li>
+                        <li class="{{ active('press.create') }}">
+                            <a href="{{ route('press.create') }}">Buat Press Release</a>
+                        </li>
+                        @yield('nav-edit-press')
+                    </ul>
+                </li>
             </ul>
         </div>
     </aside>
