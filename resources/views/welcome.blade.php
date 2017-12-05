@@ -80,18 +80,19 @@
             @endif
 
             <div class="content">
+                <div class="title m-b-md">MAGMA v2</div>            
                 <div id="time" class="title m-b-md">Loading . . .</div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Login</a>
-                    <a href="https://laracasts.com">Chamber</a>
+                    <a href="{{ route('login') }}">Login</a>
+                    <a href="{{ route('chamber') }}">Chamber</a>
                 </div>
             </div>
         </div>
         <script type="text/javascript">
         function showTime() {
             var utc = new Date();
-            document.getElementById('time').innerHTML = utc.toLocaleString('id-ID', { hour12: false })+'WIB';
+            document.getElementById('time').innerHTML = utc.toLocaleString('id-ID', { hour12: false })+' WITA';
         }
 
         setInterval(showTime, 1000);
