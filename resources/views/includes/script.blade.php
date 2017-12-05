@@ -4,6 +4,8 @@
     <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('vendor/metisMenu/dist/metisMenu.min.js') }}"></script>
     <script src="{{ asset('vendor/sparkline/index.js') }}"></script>
+    <script src="{{ asset('vendor/iCheck/icheck.min.js') }}"></script>
+
     
     @yield('add-vendor-script')
     <!-- App scripts -->
