@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use Validator;
 
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -12,6 +13,15 @@ use Session;
 
 class PermissionController extends Controller
 {
+
+    public function getRoles()
+    {
+        $role = Role::findOrFail(3);
+        $permissions = Permission::all();
+        $permission = $role->permissions()->get();
+
+        return $permission;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -21,6 +31,7 @@ class PermissionController extends Controller
     {
         //
         $permissions = Permission::all();
+
         return view('permissions.index', compact('permissions'));
     }
 
@@ -44,29 +55,37 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
+        
         $this->validate($request, [
-            'name'=>'required|max:40',
+            'name.*' => 'required|min:3|max:40|unique:permissions,name',
         ]);
 
-        $name   = $request['name'];
+        $names  = $request['name'];
         $roles  = $request['roles'];
 
-        $permission = new Permission();
-        $permission->name = $name;
-        $permission->save();
+        foreach ($names as $key => $name) {
+            $permission = new Permission();
+            $permission->name = $name;
+            $permission->save();
 
-        if (!empty($request['roles'])) { 
-            foreach ($roles as $role) {
-                $r = Role::where('id', '=', $role)->firstOrFail(); //Match input role to db record
+            if (!empty($request['roles'])) { 
+                foreach ($roles as $role) {
+                    $r = Role::where('id', '=', $role)->firstOrFail(); //Match input role to db record
 
-                $permission = Permission::where('name', '=', $name)->first(); //Match input //permission to db record
-                $r->givePermissionTo($permission);
+                    $permission = Permission::where('name', '=', $name)->first(); //Match input //permission to db record
+                    $r->givePermissionTo($permission);
+                }
             }
         }
 
+        $data = [
+            'success' => 1,
+            'message' => $name.' berhasil ditambahkan.'
+        ];
+
         return redirect()->route('permissions.index')
             ->with('flash_message',
-             'Permission '. $permission->name.' telah ditambhkan!');
+             'Permission '. implode($request->name,', ').' telah ditambahkan!');
     }
 
     /**
@@ -77,7 +96,7 @@ class PermissionController extends Controller
      */
     public function show($id)
     {
-        //
+        return $id;
     }
 
     /**
@@ -100,7 +119,23 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $permission = Permission::findOrFail($id);
+
+        $this->validate($request, [
+            'name'=>'required|min:3|max:40|unique:permissions,name,'.$permission->id,
+        ]);
+
+        $name   = $request['name'];
+        
+        $input = $request->all();
+        $permission->fill($input)->save();
+
+        $data = [
+            'success' => 1,
+            'message' => 'Permission '.$request->name.' berhasil dirubah.'
+        ];
+
+        return response()->json($data);
     }
 
     /**
@@ -111,6 +146,15 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $permission   = Permission::findOrFail($id);
+        $name   = $permission->name;
+        $permission->delete();
+
+        $data = [
+            'success' => 1,
+            'message' => $name.' berhasil dihapus.'
+        ];
+
+        return response()->json($data);
     }
 }
