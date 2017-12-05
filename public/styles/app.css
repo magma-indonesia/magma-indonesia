@@ -1,9 +1,19 @@
 hr {
-	border-top: 2px solid #007fff;
+	border-top: 2px solid #eee;
+}
+
+.ladda-button[data-style="expand-right"][data-loading] {
+	color: white !important;
 }
 
 .btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open .dropdown-toggle.btn-success {
 	background-color: #0066CC;
 	border-color: #0066CC;
 	color: #FFFFFF;
+}
+
+.btn-success:active:hover, .btn-success.active:hover, .open > .dropdown-toggle.btn-success:hover, .btn-success:active:focus, .btn-success.active:focus, .open > .dropdown-toggle.btn-success:focus, .btn-success:active.focus, .btn-success.active.focus, .open > .dropdown-toggle.btn-success.focus {
+	color: #fff;
+	background-color: #007fff;
+	border-color: #007fff;
 }
