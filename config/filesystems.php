@@ -48,6 +48,13 @@ return [
             'root' => storage_path('app'),
         ],
 
+        'press' => [
+            'driver' => 'local',
+            'root' => storage_path('app/press'),
+            'url' => env('APP_URL').'/press',
+            'visibility' => 'public',
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
