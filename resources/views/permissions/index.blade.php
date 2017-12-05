@@ -1,12 +1,13 @@
 @extends('layouts.default')
 
 @section('title')
-    MAGMA | List User Permissions
+    List User Permissions
 @endsection
 
 @section('add-vendor-css')
     <link rel="stylesheet" href="{{ asset('vendor/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('vendor/sweetalert/lib/sweet-alert.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/ladda/dist/ladda-themeless.min.css') }}" />
 @endsection
 
 @section('content-header')
@@ -66,19 +67,46 @@
                                 <tbody>
                                     @foreach($permissions as $permission)
                                     <tr>
-                                        <td>{{ $permission->name }}</td>
+                                        <td class="permission">{{ $permission->name }}</td>
                                         <td>
-                                            <a href="{{ route('permissions.edit',['id'=>$permission->id]) }}" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">Edit</a>
-                                            <form style="display:inline" method="POST" action="{{ route('permissions.destroy',['id'=>$permission->id]) }}" accept-charset="UTF-8">
+                                            <button type="button" value="{{ $permission->id }}" class="btn btn-sm btn-success btn-outline edit" data-toggle="modal" data-target="#edit">Edit</button>
+                                            <form style="display:inline" id="form-delete" method="POST" action="{{ route('permissions.destroy',['id'=>$permission->id]) }}" accept-charset="UTF-8">
                                                 {{ method_field('DELETE') }}
                                                 {{ csrf_field() }}
-                                                <button value="Delete" class="btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
+                                                <button class="btn btn-sm btn-danger btn-outline" type="submit">Delete</button>
                                             </form>
                                         </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+
+                            <div class="modal fade hmodal-success" id="edit" tabindex="-1" role="dialog"  aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form role="form" id="form-edit" method="POST" action="{{ url()->current() }}/">
+                                            <div class="color-line"></div>
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Rubah Permission</h4>
+                                                <small class="font-bold">Rubah nama Permission sesuai dengan fungsi yang Roles</small>
+                                            </div>
+                                            <div class="modal-body">
+                                                    {{ method_field('PUT') }}
+                                                    {{ csrf_field() }}
+                                                    <div class="form-group">
+                                                        <label>Nama Permission</label> 
+                                                        <input id="modal-permission" name="name" type="text" placeholder="Masukkan Nama Permission" class="form-control" value="" required>
+                                                    </div>
+                                                    <div class="hr-line-dashed"></div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" style="display:none" class="btn btn-default close-modal" data-dismiss="modal">Close</button>
+                                                <button type="submit" id="form-submit" value="{{ $permission->id }}" class="btn btn-primary ladda-button" data-style="expand-right" data-size="l"><span class="ladda-label">Submit</span></a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
@@ -99,8 +127,10 @@
     <script src="{{ asset('vendor/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('vendor/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
     <script src="{{ asset('vendor/datatables.net-buttons-bs/js/buttons.bootstrap.min.js') }}"></script>
-    <script src="{{ asset('vendor/iCheck/icheck.min.js') }}"></script>
     <script src="{{ asset('vendor/sweetalert/lib/sweet-alert.min.js') }}"></script>
+    <script src="{{ asset('vendor/ladda/dist/spin.min.js') }}"></script>
+    <script src="{{ asset('vendor/ladda/dist/ladda.min.js') }}"></script>
+    <script src="{{ asset('vendor/ladda/dist/ladda.jquery.min.js') }}"></script>
 
 @endsection
 
@@ -109,25 +139,68 @@
 
         $(document).ready(function () {
 
+            var $id,$row;
+
+            $('.edit').click(function(e){
+                $('.close-modal').toggle();
+
+                var $tableuser = $('#table-permissions').DataTable(),
+                    $permission = $tableuser.row($(this).parents('tr')).data()[0];
+                
+                $row = $tableuser.row($(this).parents('tr'));
+
+                $id = $(this).val();
+
+                var $modal = $('#modal-permission').val($permission);
+
+            });
+
+            $('#form-submit').on('click',function (e) {
+
+                e.preventDefault();
+                $('.close-modal').toggle();
+
+                var l = Ladda.create(this);
+                var $button = $(this);
+                l.start();
+
+                var $url = $('form#form-edit').attr('action')+$id,
+                    $data = $('form#form-edit').serialize();
+
+                $.ajax({
+                    url: $url,
+                    data: $data,
+                    type: 'POST',
+                    success: function(res){
+                        if (res.success){
+                            var $temp = $row.data();
+                            $temp[0] = $('#modal-permission').val();
+                            $row.data($temp).invalidate();
+                            setTimeout(function(){
+                                l.stop();
+                                $('.modal').modal('hide');
+                            },1500);
+
+                        }
+                    }
+                });
+
+            });
+
             // Initialize table
             $('#table-permissions').dataTable({
                 dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 buttons: [
                     { extend: 'copy', className: 'btn-sm' },
-                    { extend: 'csv', title: 'Daftar Permissions', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5 ]} },
-                    { extend: 'pdf', title: 'Daftar Permissions', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5 ]} },
+                    { extend: 'csv', title: 'Daftar Permissions', className: 'btn-sm', exportOptions: { columns: [ 0]} },
+                    { extend: 'pdf', title: 'Daftar Permissions', className: 'btn-sm', exportOptions: { columns: [ 0]} },
                     { extend: 'print', className: 'btn-sm' }
                 ]
 
             });
 
-            $('form').on('submit',function (e) {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                    }
-                });
+            $('form#form-delete').on('submit',function (e) {
 
                 var $url = $(this).attr('action'),
                     $data = $(this).serialize();
@@ -143,7 +216,7 @@
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Yes, hapus!",
+                    confirmButtonText: "Hapus Gan!!",
                     cancelButtonText: "Gak jadi deh!",
                     closeOnConfirm: false,
                     closeOnCancel: true },
