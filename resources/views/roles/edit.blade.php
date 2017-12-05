@@ -1,8 +1,14 @@
 @extends('layouts.default') 
 
 @section('title') 
-    MAGMA | Create User 
-@endsection 
+    MAGMA | Edit Role
+@endsection
+
+@section('nav-edit-roles')
+                        <li class="{{ active('roles.*') }}">
+                            <a href="{{ route('roles.edit',$role->id) }}">Edit Role</a>
+                        </li>
+@endsection
 
 @section('content-header')
 <div class="small-header">
@@ -17,14 +23,14 @@
 						<span>Roles</span>
 					</li>
 					<li class="active">
-						<span>Create </span>
+						<span>Edit </span>
 					</li>
 				</ol>
 			</div>
 			<h2 class="font-light m-b-xs">
-				Create Roles
+				Edit Role
 			</h2>
-			<small>Menu ini untuk digunakan untuk menambahkan pengguna MAGMA Indonesia</small>
+			<small>Menu ini untuk digunakan untuk merubah informasi Roles pengguna MAGMA Indonesia</small>
 		</div>
 	</div>
 </div>
@@ -39,16 +45,17 @@
                     <div class="panel-tools">
                         <a class="showhide"><i class="fa fa-chevron-up"></i></a>
                     </div>
-                    Masukkan daftar role pengguna.
+                    Edit nama Role pengguna.
                 </div>
                 <div class="panel-body">
-                    <form role="form" id="form" method="POST" action="{{ route('roles.store') }}">
+                    <form role="form" id="form" method="POST" action="{{ route('roles.update',$role->id) }}">
+                        {{ method_field('PUT') }}
                         {{ csrf_field() }}
                         <div class="form-group">
                             <label>Nama Role</label> 
-                            <input name="name" type="text" placeholder="Masukkan Nama Role" class="form-control" value="{{ old('name') }}" required>
+                            <input name="name" type="text" placeholder="Masukkan Nama Role" class="form-control" value="{{ $role->name }}" required>
                             @if( $errors->has('name'))
-                            <label class="error" for="name">{{ ucfirst($errors->first('name')) }}</label>
+                            <label id="name-error" class="error" for="name">{{ ucfirst($errors->first('name')) }}</label>
                             @endif
                         </div>
                         
@@ -57,23 +64,26 @@
                             <label>Permissions</label>
                             @foreach($permissions as $permission)
                             <div class="checkbox">
-                                <label><input name="permissions[]" value="{{$permission->id}}" type="checkbox" class="i-checks"> {{$permission->name}} </label>    
+                                <label><input name="permissions[]" value="{{$permission->id}}" type="checkbox" class="i-checks" {{ $role->hasPermissionTo($permission->name) ? 'checked' : '' }}> {{$permission->name}} </label>    
                             </div>
                             @endforeach
                             @if( $errors->has('permissions'))
                             <label id="permissions-error" class="error" for="permissions">{{ ucfirst($errors->first('permissions')) }}</label>
                             @endif
                         </div>
-                        @endif
                         <div class="form-group">
                             <label>Pilih Semua</label> 
                             <div class="checkbox">
-                                <label><input name="check-all" type="checkbox" class="i-checks all"> Check All</label>    
+                                <label><input type="checkbox" class="i-checks all"> Check All</label>    
                             </div>
                         </div>
+                        @endif
                         <div class="hr-line-dashed"></div>
-                        <button class="btn btn-sm btn-primary m-t-n-xs pull-right" type="submit"><strong>Submit</strong></button>
+                        <div>
+                            <button class="btn btn-sm btn-primary m-t-n-xs" type="submit"><strong>Submit</strong></button>
+                        </div>
                     </form>
+
                 </div>
             </div>
         </div>
