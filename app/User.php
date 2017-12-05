@@ -42,4 +42,22 @@ class User extends Authenticatable
     {   
         $this->attributes['password'] = bcrypt($password);
     }
+
+    /*     
+     *   Masing-masing user hanya memiliki 1 Foto
+     */
+
+    public function photo()
+    {
+        return $this->hasOne('App\UserPhoto');
+    }
+
+    /*     
+     *   Masing-masing user bisa memiliki lebih
+     *   dari 1 Press Release
+     */
+    public function press()
+    {
+        return $this->hasMany('App\Press');
+    }
 }
