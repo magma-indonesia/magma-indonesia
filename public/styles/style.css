@@ -404,7 +404,7 @@ body.modal-open {
 }
 .full .progress-bar-success {
   background-color: #007fff;
-  border-right: 4px solid #58b62c;
+  border-right: 4px solid #007fff;
 }
 .full .progress-bar-info {
   background-color: #3498db;
