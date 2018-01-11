@@ -383,7 +383,7 @@ body.modal-open {
 .progress-bar {
   background-color: #f1f3f6;
   text-align: right;
-  padding-right: 10px;
+  /* padding-right: 10px; */
   color: #6a6c6f;
 }
 .progress-small,
@@ -404,7 +404,7 @@ body.modal-open {
 }
 .full .progress-bar-success {
   background-color: #007fff;
-  border-right: 4px solid #007fff;
+  border-right: 0px solid #007fff;
 }
 .full .progress-bar-info {
   background-color: #3498db;
