@@ -43,7 +43,7 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($password);
     }
 
-    /*     
+    /**     
      *   Masing-masing user hanya memiliki 1 Foto
      */
 
@@ -52,12 +52,21 @@ class User extends Authenticatable
         return $this->hasOne('App\UserPhoto');
     }
 
-    /*     
+    /**     
      *   Masing-masing user bisa memiliki lebih
      *   dari 1 Press Release
      */
     public function press()
     {
         return $this->hasMany('App\Press');
+    }
+
+    /**     
+     *   Masing-masing user bisa memiliki lebih
+     *   dari 1 Vars
+     */
+    public function var()
+    {
+        return $this->hasMany('App\MagmaVar','nip','nip_pelapor');
     }
 }
