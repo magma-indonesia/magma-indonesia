@@ -76,7 +76,7 @@
                                         <td>{{ $user->roles()->pluck('name')->implode(', ') }}</td>                                        
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->phone }}</td>
-                                        <td>{{$user->status ? 'Aktif':'Tidak Aktif' }}</span>
+                                        <td>{{ $user->status ? 'Aktif':'Tidak Aktif' }}</span>
                                         </td>
                                         <td>
                                             <a href="{{ route('users.edit',['id'=>$user->id]) }}" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">Edit</a>

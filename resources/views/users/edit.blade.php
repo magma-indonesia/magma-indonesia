@@ -5,9 +5,9 @@
 @endsection
 
 @section('nav-edit-user')
-                        <li class="{{ active('users.*') }}">
-                            <a href="{{ route('users.edit',$user->id) }}">Edit User</a>
-                        </li>
+<li class="{{ active('users.*') }}">
+    <a href="{{ route('users.edit',$user->id) }}">Edit User</a>
+</li>
 @endsection
 
 @section('content-header')
