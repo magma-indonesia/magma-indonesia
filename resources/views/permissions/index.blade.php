@@ -100,8 +100,9 @@
                                                     <div class="hr-line-dashed"></div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" style="display:none" class="btn btn-default close-modal" data-dismiss="modal">Close</button>
-                                                <button type="submit" id="form-submit" value="{{ $permission->id }}" class="btn btn-primary ladda-button" data-style="expand-right" data-size="l"><span class="ladda-label">Submit</span></a>
+                                                <button type="button" class="btn btn-default close-modal" data-dismiss="modal">Close</button>
+                                                <button type="submit" id="form-submit" value="{{ $permission->id }}" class="btn btn-primary ladda-button" data-style="expand-right"><span class="ladda-label">Submit</span><span class="ladda-spinner">
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
@@ -142,7 +143,6 @@
             var $id,$row;
 
             $('.edit').click(function(e){
-                $('.close-modal').toggle();
 
                 var $tableuser = $('#table-permissions').DataTable(),
                     $permission = $tableuser.row($(this).parents('tr')).data()[0];
@@ -161,7 +161,6 @@
                 $('.close-modal').toggle();
 
                 var l = Ladda.create(this);
-                var $button = $(this);
                 l.start();
 
                 var $url = $('form#form-edit').attr('action')+$id,
@@ -178,9 +177,9 @@
                             $row.data($temp).invalidate();
                             setTimeout(function(){
                                 l.stop();
+                                $('.close-modal').toggle();
                                 $('.modal').modal('hide');
                             },1500);
-
                         }
                     }
                 });
@@ -193,8 +192,8 @@
                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 buttons: [
                     { extend: 'copy', className: 'btn-sm' },
-                    { extend: 'csv', title: 'Daftar Permissions', className: 'btn-sm', exportOptions: { columns: [ 0]} },
-                    { extend: 'pdf', title: 'Daftar Permissions', className: 'btn-sm', exportOptions: { columns: [ 0]} },
+                    { extend: 'csv', title: 'Daftar Permissions', className: 'btn-sm', exportOptions: { columns: [0]} },
+                    { extend: 'pdf', title: 'Daftar Permissions', className: 'btn-sm', exportOptions: { columns: [0]} },
                     { extend: 'print', className: 'btn-sm' }
                 ]
 

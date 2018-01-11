@@ -87,13 +87,15 @@
                             <label id="roles-error" class="error" for="roles">{{ ucfirst($errors->first('roles')) }}</label>
                             @endif
                         </div>
-                        @endif
                         <div class="form-group">
                             <label>Pilih Semua</label> 
                             <div class="checkbox">
                                 <label><input type="checkbox" class="i-checks all"> Check All</label>    
                             </div>
                         </div>
+
+                        @endif
+
                         <div class="hr-line-dashed"></div>
                         <button class="btn btn-sm btn-primary m-t-n-xs pull-right" type="submit"><strong>Submit</strong></button>
                     </form>
