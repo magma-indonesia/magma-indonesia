@@ -41,9 +41,25 @@
             <ul class="nav" id="side-menu">
                 <li class="{{ active('chamber') }}">
                     <a href="{{ route('chamber') }}">
-                        <span class="nav-label">Super Admin</span>
+                        <span class="nav-label">Magma Chamber</span>
+                    </a>
+                </li>
+                <li class="{{ active('import') }}">
+                    <a href="{{ route('import') }}">
+                        <span class="nav-label">Import</span>
                         <span class="label label-success pull-right">v.1</span>
                     </a>
+                </li>
+                <li class="{{ active('activities.*') }}">
+                    <a href="#">
+                        <span class="nav-label">Aktivitas</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li class="{{ active('activities.index') }}">
+                            <a href="{{ route('activities.index') }}">Gunung Api</a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="{{ active('users.*') }}">
                     <a href="#">
@@ -104,6 +120,12 @@
                         </li>
                         @yield('nav-edit-press')
                     </ul>
+                </li>
+                <li class="{{ active('chambers.vona') }}">
+                    <a href="{{ route('vona.index') }}">
+                        <span class="nav-label">VONA</span>
+                        <span class="pull-right"><i class="pe-7s-plane"></i></span>
+                    </a>
                 </li>
             </ul>
         </div>
