@@ -80,17 +80,17 @@
             <div class="col-lg-3">
                 <div class="hpanel stats">
                     <div class="panel-heading">
-                        Data Utama VAR
+                        Data Var
                     </div>
                     <div class="panel-body h-200">
                         <div class="stats-title pull-left">
-                            <h4>Data VAR</h4>
+                            <h4>Data Utama VAR</h4>
                         </div>
                         <div class="stats-icon pull-right">
                             <i class="pe-7s-share fa-4x"></i>
                         </div>
                         <div class="m-t-xl">
-                            <h3 class="m-b-xs jumlah-vars">{{ $vars }}</h3>
+                            <h3 class="m-b-xs jumlah-vars">{{ number_format($vars,0,',','.') }}</h3>
                             <span class="font-bold no-margins">
                                 Jumlah data VAR
                             </span>
@@ -104,7 +104,7 @@
                             <div class="row">
                                 <div class="col-xs-6">
                                     <small class="stats-label">Jumlah VAR Magma v1</small>
-                                    <h4>{{ $varsv1 }}</h4>
+                                    <h4>{{ number_format($varsv1,0,',','.') }}</h4>
                                 </div>
 
                                 <div class="col-xs-6">
@@ -156,7 +156,7 @@
                         data-import="dailies" action="{{ route('import.dailies') }}">
                             {{ csrf_field() }}
                             <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
-                                <span class="ladda-label">Import Var Daily</span>
+                                <span class="ladda-label">Import Data Harian</span>
                                 <span class="ladda-spinner"></span>
                             </button>
                         </form>
@@ -168,14 +168,14 @@
             <div class="col-lg-3">
                 <div class="hpanel stats">
                     <div class="panel-heading">
-                        Data Visual
+                        Data Var
                     </div>
                     <div class="panel-body list">
                         <div class="stats-title pull-left">
-                            <h4>Data VAR</h4>
+                            <h4>Data Visual</h4>
                         </div>
                         <div class="stats-icon pull-right">
-                            <i class="pe-7s-science fa-4x"></i>
+                            <i class=" pe-7s-camera fa-4x"></i>
                         </div>
                         <div class="m-t-xl">
                             <span class="font-bold no-margins">
@@ -188,7 +188,7 @@
                         </div>
                         <div class="row m-t-md">
                             <div class="col-lg-6">
-                                <h3 class="no-margins font-extra-bold text-success jumlah-visuals">{{ $visuals }}</h3>
+                                <h3 class="no-margins font-extra-bold text-success jumlah-visuals">{{ number_format($visuals,0,',','.') }}</h3>
                                 <div class="font-bold"><i class="fa fa-level-up text-success"></i> Jumlah data terkini</div>
                             </div>
                         </div>
@@ -198,13 +198,53 @@
                         data-import="visuals" action="{{ route('import.visuals') }}">
                             {{ csrf_field() }}
                             <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
-                                <span class="ladda-label">Import Var Visual</span>
+                                <span class="ladda-label">Import Data Visual</span>
                                 <span class="ladda-spinner"></span>
                             </button>
                         </form>
                     </div>
                 </div>
             </div>
+            <div class="col-lg-3">
+                <div class="hpanel stats">
+                    <div class="panel-heading">
+                        Data Var
+                    </div>
+                    <div class="panel-body list">
+                        <div class="stats-title pull-left">
+                            <h4>Data Klimatologi</h4>
+                        </div>
+                        <div class="stats-icon pull-right">
+                            <i class="pe-7s-cloud fa-4x"></i>
+                        </div>
+                        <div class="m-t-xl">
+                            <span class="font-bold no-margins">
+                                Import Data Klimatologi
+                            </span>
+                            <br/>
+                            <small>
+                                Panel ini digunakan untuk import data pengamatan klimatologi dari MAGMA-VAR, sekaligus normalisasi data ke versi yang lebih baru.
+                            </small>
+                        </div>
+                        <div class="row m-t-md">
+                            <div class="col-lg-6">
+                                <h3 class="no-margins font-extra-bold text-success jumlah-klimatologis">{{ number_format($klimatologis,0,',','.') }}</h3>
+                                <div class="font-bold"><i class="fa fa-level-up text-success"></i> Jumlah data terkini</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer text-center">
+                        <form role="form" id="form-import" method="POST"
+                        data-import="klimatologis" action="{{ route('import.klimatologi') }}">
+                            {{ csrf_field() }}
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
+                                <span class="ladda-label">Import Data Klimatologi</span>
+                                <span class="ladda-spinner"></span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>            
         </div>
     </div>
 @endsection
@@ -221,6 +261,11 @@
     <script>
 
         $(document).ready(function () {
+
+            function commafy(num) {
+                var $num = num.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1.');
+                return $num;
+            }
 
             $('button#form-submit').on('click',function(e) {
                 e.preventDefault();
@@ -240,18 +285,27 @@
                     data: $data,
                     type: 'POST',
                     success: function(data){
-                        if (data.success){
+                        if (data.success==1){
                             console.log(data);
                             setTimeout(function(){
                                 l.stop();
+                                $jumlah = data.count;
                                 $button.attr('disabled', 'disabled');
                                 $label.html(data.message);
-                                $('.jumlah-'+$import).html(data.count);
+                                $('.jumlah-'+$import).html(commafy($jumlah));
                                 if ($import=='vars') {
-                                    $('.persentase-'+$import).html(Math.round(data.count/{{ $varsv1 }}*100)+'%');
+                                    $persentase = $jumlah/{{ $varsv1 }}*100;
+                                    $('.persentase-'+$import).html($persentase.toFixed(2)+'%');
                                 }
-                            },1500)
+                            },1000)
+                        } else {
+                            l.stop();
+                            $button.removeAttr('disabled');
                         }
+                    },
+                    error: function(xhr,code,error){
+                        l.stop();
+                        $label.html('Error. Coba lagi?');
                     }
                 });
                 

@@ -73,7 +73,7 @@
                         <a href="{{ route('home') }}">Home</a>
                         <a href="{{ route('logout') }}">Logout</a>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
+                        {{--  <a href="{{ route('login') }}">Login</a>  --}}
                         {{--  <a href="{{ route('register') }}">Register</a>  --}}
                     @endauth
                 </div>
@@ -90,9 +90,10 @@
             </div>
         </div>
         <script type="text/javascript">
+            
         function showTime() {
             var utc = new Date();
-            document.getElementById('time').innerHTML = utc.toLocaleString('id-ID', { hour12: false })+' WITA';
+            document.getElementById('time').innerHTML = utc.toLocaleString('id-ID', { hour12: false })+' WIB';
         }
 
         setInterval(showTime, 1000);

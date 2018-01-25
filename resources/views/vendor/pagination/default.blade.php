@@ -1,5 +1,5 @@
 @if ($paginator->hasPages())
-    <ul class="pagination pull-right">
+    <ul class="pagination pull-left">
         {{-- Previous Page Link --}}
         @if ($paginator->onFirstPage())
             <li class="disabled"><span>&laquo;</span></li>

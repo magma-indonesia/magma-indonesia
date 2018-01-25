@@ -34,68 +34,67 @@
 @endsection
 
 @section('content-body')
-        <div class="content animate-panel">
-            <div class="row">
-                <div class="col-lg-12">
+    <div class="content animate-panel">
+        <div class="row">
+            <div class="col-lg-12">
 
-                    <div class="hpanel">
-                        <div class="panel-heading">
-                            <div class="panel-tools">
-                                <a class="showhide">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
-                                <a class="closebox">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </div>
-                            Tabel Users
+                <div class="hpanel">
+                    <div class="panel-heading">
+                        <div class="panel-tools">
+                            <a class="showhide">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="closebox">
+                                <i class="fa fa-times"></i>
+                            </a>
                         </div>
-                        @if(Session::has('flash_message'))
-                        <div class="alert alert-success">
-                            <i class="fa fa-bolt"></i> {!! session('flash_message') !!}
-                        </div>
-                        @endif
-                        <div class="panel-body">
-                            <table id="table-users" class="table table-striped table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Nama</th>
-                                        <th>NIP</th>
-                                        <th>Roles</th>
-                                        <th>Email</th>
-                                        <th>Phone</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($users as $user)
-                                    <tr>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $user->nip }}</td>
-                                        <td>{{ $user->roles()->pluck('name')->implode(', ') }}</td>                                        
-                                        <td>{{ $user->email }}</td>
-                                        <td>{{ $user->phone }}</td>
-                                        <td>{{ $user->status ? 'Aktif':'Tidak Aktif' }}</span>
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('users.edit',['id'=>$user->id]) }}" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">Edit</a>
-                                            <form style="display:inline" method="POST" action="{{ route('users.destroy',['id'=>$user->id]) }}" accept-charset="UTF-8">
-                                                {{ method_field('DELETE') }}
-                                                {{ csrf_field() }}
-                                                <button value="Delete" class="btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-
-                        </div>
+                        Tabel Users
+                    </div>
+                    @if(Session::has('flash_message'))
+                    <div class="alert alert-success">
+                        <i class="fa fa-bolt"></i> {!! session('flash_message') !!}
+                    </div>
+                    @endif
+                    <div class="panel-body">
+                        <table id="table-users" class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Nama</th>
+                                    <th>NIP</th>
+                                    <th>Roles</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($users as $user)
+                                <tr>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{!! strlen($user->nip)<18 ? $user->nip.'<b>KTP</b>' : $user->nip !!}</td>
+                                    <td>{{ $user->roles()->pluck('name')->implode(', ') }}</td>                                        
+                                    <td>{{ $user->email }}</td>
+                                    <td>{{ $user->phone }}</td>
+                                    <td>{{ $user->status ? 'Aktif':'Tidak Aktif' }}</span>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('users.edit',['id'=>$user->id]) }}" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">Edit</a>
+                                        <form style="display:inline" method="POST" action="{{ route('users.destroy',['id'=>$user->id]) }}" accept-charset="UTF-8">
+                                            {{ method_field('DELETE') }}
+                                            {{ csrf_field() }}
+                                            <button value="Delete" class="btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 @endsection
 
 @section('add-vendor-script')

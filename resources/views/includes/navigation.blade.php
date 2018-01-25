@@ -11,7 +11,7 @@
 
                     <div class="dropdown">
                         <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-                            <small class="text-muted">Founder of App
+                            <small class="text-muted">App
                                 <b class="caret"></b>
                             </small>
                         </a>
@@ -50,6 +50,17 @@
                         <span class="label label-success pull-right">v.1</span>
                     </a>
                 </li>
+                <li class="{{ active('volcanoes.*') }}">
+                    <a href="#">
+                        <span class="nav-label">Data Dasar</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li class="{{ active('volcanoes') }}">
+                            <a href="{{ route('volcanoes.index') }}">Gunung Api</a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="{{ active('activities.*') }}">
                     <a href="#">
                         <span class="nav-label">Aktivitas</span>
@@ -67,7 +78,7 @@
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level">
-                        <li class="{{ active('users.index') }}">
+                        <li class="{{ active('users') }}">
                             <a href="{{ route('users.index') }}">List Users</a>
                         </li>
                         <li class="{{ active('users.create') }}">
@@ -82,7 +93,7 @@
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level">
-                        <li class="{{ active('permissions.index') }}">
+                        <li class="{{ active('permissions') }}">
                             <a href="{{ route('permissions.index') }}">Permissions</a>
                         </li>
                         <li class="{{ active('permissions.create') }}">
@@ -97,7 +108,7 @@
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level">
-                        <li class="{{ active('roles.index') }}">
+                        <li class="{{ active('roles') }}">
                             <a href="{{ route('roles.index') }}">Roles User</a>
                         </li>
                         <li class="{{ active('roles.create') }}">

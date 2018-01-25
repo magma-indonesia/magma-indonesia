@@ -12,12 +12,12 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'name'      => 'Martanto',
-            'nip'       => '198803152015031005',
-            'email'     => 'martanto@live.com',
-            'phone'     => '085236600055',
-            'status'    => 1,
-            'password'  => bcrypt('anto')
+            'name'      => env('ADMIN_NAME','Admin'),
+            'nip'       => env('ADMIN_NIP','000000000000000000'),
+            'email'     => env('ADMIN_EMAIL','magma@esdm.go.id'),
+            'phone'     => env('ADMIN_PHONE','0227272606'),
+            'status'    => env('ADMIN_STATUS',1),
+            'password'  => bcrypt(env('ADMIN_PASSWORD','admin')),
         ]);
     }
 }

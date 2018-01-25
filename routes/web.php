@@ -14,9 +14,7 @@ Route::group(['middleware' => ['guest']], function () {
 });
 
 Route::get('/logout', 'UserController@logout')->name('logout');
-Route::get('/tes', function(){
-    return view('tes');
-});;
+Route::get('/tes', 'TesController@index');
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +36,7 @@ Route::group(['middleware' => ['auth']], function () {
         ]]);
         Route::resource('press', 'PressController');
         Route::resource('activities', 'ActivityController');
+        Route::resource('volcanoes','VolcanoController');
         
         Route::resource('vona', 'VonaController');    
 
@@ -48,7 +47,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('vars','ImportController@vars')->name('import.vars');
             Route::post('dailies','ImportController@dailies')->name('import.dailies');
             Route::post('visuals','ImportController@visuals')->name('import.visuals');
-            
+            Route::get('klimatologi','ImportController@klimatologis')->name('import.klimatologi');          
+        
         });
     });
     

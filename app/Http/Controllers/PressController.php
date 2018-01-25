@@ -138,7 +138,6 @@ class PressController extends Controller
              'Press Release : '. $request->title.' berhasil dirubah!');
         }
 
-
     }
 
     /**

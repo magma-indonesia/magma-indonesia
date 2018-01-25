@@ -27,6 +27,9 @@ class MagmaVar extends Model
     /**     
      *   Masing-masing Var hanya dimiliki
      *   oleh 1 User
+     * 
+     *   @return App\User 
+     * 
      */
     public function user()
     {
@@ -36,6 +39,9 @@ class MagmaVar extends Model
     /**     
      *   Masing-masing Var hanya dimiliki
      *   oleh 1 Gunungapi
+     * 
+     *   @return App\Gadd
+     * 
      */
     public function gunungapi()
     {
@@ -48,7 +54,7 @@ class MagmaVar extends Model
      */
     public function visual()
     {
-        return $this->hasOne('App\VarVisual','noticenumber','noticenumber_id');
+        return $this->hasOne('App\VarVisual','noticenumber_id','noticenumber');
     }
 
     /**     
@@ -57,6 +63,6 @@ class MagmaVar extends Model
      */
     public function varDaily()
     {
-        return $this->hasOne('App\VarDaily','noticenumber','noticenumber_id');
+        return $this->hasOne('App\VarDaily','noticenumber_id','noticenumber');
     }
 }

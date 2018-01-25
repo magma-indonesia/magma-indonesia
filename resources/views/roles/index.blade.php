@@ -117,8 +117,8 @@
                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 buttons: [
                     { extend: 'copy', className: 'btn-sm' },
-                    { extend: 'csv', title: 'Daftar Roles', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5 ]} },
-                    { extend: 'pdf', title: 'Daftar Roles', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5 ]} },
+                    { extend: 'csv', title: 'Daftar Roles', className: 'btn-sm', exportOptions: { columns: [ 0, 1 ]} },
+                    { extend: 'pdf', title: 'Daftar Roles', className: 'btn-sm', exportOptions: { columns: [ 0, 1 ]} },
                     { extend: 'print', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5 ]} }
                 ]
 

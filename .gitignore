@@ -15,3 +15,6 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 .env
+*.rar
+public/js/popup_chat_trigger_demo.js
+resources/views/tes/index.blade.php
