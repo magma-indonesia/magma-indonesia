@@ -25,7 +25,8 @@ class VolcanoController extends Controller
      */
     public function create()
     {
-        //
+        $gadds = Gadd::all();
+        
     }
 
     /**
@@ -58,7 +59,11 @@ class VolcanoController extends Controller
      */
     public function edit($id)
     {
-        //
+        // return md5('198707032009121002');
+
+        $gadd = Gadd::findOrFail($id);
+
+        return view('volcanoes.edit', compact('gadd'));
     }
 
     /**
