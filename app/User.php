@@ -29,6 +29,7 @@ class User extends Authenticatable
     ];
 
     protected $dates = ['deleted_at'];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -38,6 +39,13 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * Mengembalikan semua fungsi attribute Password
+     * Dalam format bcrypt. Sehingga tidak perlu memberikan method/fungsi tambahan
+     * untuk enkripsi password
+     *
+     * @var string
+     */
     public function setPasswordAttribute($password)
     {   
         $this->attributes['password'] = bcrypt($password);
