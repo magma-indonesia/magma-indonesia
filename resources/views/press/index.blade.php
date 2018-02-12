@@ -37,7 +37,7 @@
 @section('content-body')
 	<div class="content animate-panel">
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-10">
 				@if ($presses->isEmpty())
 				<div class="alert alert-info">
 					<h4>
@@ -80,8 +80,8 @@
 										<br/>
 										<small>{{ \Carbon\Carbon::parse($press->created_at)->format('d M Y H:i:s') }}</small>
 									</span>
-									<div style="line-height: 1.8;">
-									{!! str_limit(strip_tags($press->body),300) !!}
+									<div class="col-xs-8" style="line-height: 1.8;">
+									{!! \Illuminate\Support\Str::words($press->body,50,'...') !!}
 									</div>
 									
 								</div>
