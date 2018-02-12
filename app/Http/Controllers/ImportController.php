@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use App\Traits\MagmaHelper;
 use App\Traits\JenisGempa;
 use App\User;
@@ -26,7 +25,7 @@ class ImportController extends Controller
     public function __construct(Request $request)
     {
 
-       ini_set('max_execution_time', 3000);
+       ini_set('max_execution_time', 6000);
 
     }
 
@@ -148,7 +147,6 @@ class ImportController extends Controller
 
             strlen($item->email)>5 ? $email = $item->email : $email = NULL;
             strlen($item->phone)>9 ? $phone = str_replace('+62','0',$item->phone) : $phone = NULL;
-            $password = Hash::make($item->password);
             
             User::firstOrCreate(
                     [ 'nip' => $item->nip ],
@@ -156,7 +154,7 @@ class ImportController extends Controller
                         'name'  => $item->name,
                         'email' => $email,
                         'phone' => $phone,
-                        'password' => $password,
+                        'password' => $item->password,
                         'status' => 1
                     ]
                 );
