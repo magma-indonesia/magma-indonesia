@@ -21,4 +21,3 @@ resources/views/tes/index.blade.php
 app/Http/Controllers/TesController.php
 app/Http/Controllers/TesController.php
 app/Http/Controllers/TesController.php
-app/Http/Controllers/TesController.php
