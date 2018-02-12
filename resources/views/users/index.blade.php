@@ -133,19 +133,13 @@
             });
 
             $('form').on('submit',function (e) {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                    }
-                });
+                e.preventDefault();                
 
                 var $url = $(this).attr('action'),
                     $data = $(this).serialize();
 
                 var $tableuser = $('#table-users').DataTable();
                 var $row = $tableuser.row($(this).parents('tr'));
-
-                e.preventDefault();
 
                 swal({
                     title: "Anda yakin?",

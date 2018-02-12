@@ -144,7 +144,7 @@
                     required: true,
                     minlength: 4
                 },
-                {{--  nip: {
+                nip: {
                     required: true,
                     digits: true,
                     minlength: 18,
@@ -162,19 +162,19 @@
                 },
                 password: {
                     required: true,
-                    minlength: 6
+                    minlength: 4
                 },
                 password_confirmation: {
                     required: true,
                     equalTo: '#password'
-                }  --}}
+                }
             },
             messages: {
                 name: {
                     required: 'Harap Masukkan Nama Anda',
                     minlength: 'Minimal 4 karakter'
                 },
-                {{--  nip: {
+                nip: {
                     required: 'Harap Masukkan NIP Anda',
                     digits: 'NIP hanya menerima dalam bentuk karakter angka saja',
                     minlength: 'Panjang karakter NIP adalah 18 karakter',
@@ -185,8 +185,8 @@
                     email: 'Format email Anda belum benar'
                 },
                 phone: {
-                    required: 'Harap Masukkan email valid Anda',
-                    digits: 'Format nomor telpon belum benar',
+                    required: 'Format masih belum benar',
+                    digits: 'Format nomor telpon belum benar, contoh : 085236600055',
                     minlength: 'Panjang karakter minimal No HP adalah 10 karakter',
                     maxlength: 'Panjang karakter maksimal No HP adalah 12 karakter'
                 },
@@ -197,7 +197,7 @@
                 password_confirmation: {
                     required: 'Konfirmasi Password tidak boleh kosong',
                     equalTo: 'Password tidak sama'
-                }  --}}
+                }
             },
             submitHandler: function(form) {
                 form.submit();

@@ -304,6 +304,7 @@
                         }
                     },
                     error: function(xhr,code,error){
+                        console.log(xhr.status);
                         l.stop();
                         $label.html('Error. Coba lagi?');
                     }

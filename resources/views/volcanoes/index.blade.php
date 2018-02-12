@@ -40,61 +40,65 @@
                 {{ $gadds->links() }}                
             </div>            
         </div>
-        <div class="row">
-            @foreach($gadds as $gadd)
-            <div class="col-lg-3">
-                <div class="hpanel plan-box hgreen active">
-                    <div class="panel-heading hbuilt text-center">
-                        <h4 class="font-bold">{{ $gadd->name }}</h4>
-                    </div>
-                    <div class="panel-body">
-                        <p class="text-muted">
-                            Diisi sejarah Gunung Api nya (Belum diupdate)
-                        </p>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <td>
-                                        <h5>Data Dasar</h5>
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><b>Tipe Gunung Api</b></td>
-                                    <td>{{ $gadd->volc_type }}</td>
-                                </tr>
-                                <tr>
-                                    <td><b>Ketinggian Puncak</b></td>
-                                    <td>{{ $gadd->elevation.' mdpl' }}</td>
-                                </tr>
-                                <tr>
-                                    <td><b>Posisi Geografis</b></td>
-                                    <td>{!! $gadd->longitude.'&deg;BT, '.$gadd->latitude.'&deg;LU' !!}</td>
-                                </tr>
-                                <tr>
-                                    <td><b>Kota/Kabupaten</b></td>
-                                    <td>{!! $gadd->district !!}</td>
-                                </tr>
-                                <tr>
-                                    <td><b>Provinsi</b></td>
-                                    <td>{!! $gadd->province !!}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <p class="text-muted">
-                            Diisi keterangan lainnya
-                        </p>
+        @foreach($gadds as $i => $gadd)
+            @if($i%4 == 0)
+            <div class="row">        
+            @endif
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <div class="hpanel plan-box hgreen active">
+                        <div class="panel-heading hbuilt text-center">
+                            <h4 class="font-bold">{{ $gadd->name }}</h4>
+                        </div>
+                        <div class="panel-body">
+                            <p class="text-muted">
+                                Diisi sejarah Gunung Api nya (Belum diupdate)
+                            </p>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <td>
+                                            <h5>Data Dasar</h5>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><b>Tipe Gunung Api</b></td>
+                                        <td>{{ $gadd->volc_type }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Ketinggian Puncak</b></td>
+                                        <td>{{ $gadd->elevation.' mdpl' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Posisi Geografis</b></td>
+                                        <td>{!! $gadd->longitude.'&deg;BT, '.$gadd->latitude.'&deg;LU' !!}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Kota/Kabupaten</b></td>
+                                        <td>{!! $gadd->district !!}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Provinsi</b></td>
+                                        <td>{!! $gadd->province !!}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p class="text-muted">
+                                Diisi keterangan lainnya
+                            </p>
 
-                        <h3 class="font-bold">
-                            $20/month
-                        </h3>
-                        <a href="{{ route('volcanoes.edit',['id'=>$gadd->id]) }}" class="btn btn-success btn-sm m-t-xs">Edit</a>
+                            <h3 class="font-bold">
+                                $20/month
+                            </h3>
+                            <a href="{{ route('volcanoes.edit',['id'=>$gadd->id]) }}" class="btn btn-success btn-sm m-t-xs">Edit</a>
+                        </div>
                     </div>
                 </div>
+            @if($i%4 == 3 || $i==(count($gadds)-1))
             </div>
-            @endforeach
-        </div>
+            @endif
+        @endforeach
         <div class="row">
             <div class="col-sm-12">
                 {{ $gadds->links() }}                

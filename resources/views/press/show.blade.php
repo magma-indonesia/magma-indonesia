@@ -13,7 +13,7 @@
                     <h4>{{ $press->title }}</h4>
                     <div class="text-muted small">
                         Dibuat oleh: <span class="font-bold">{{ $press->user->name }}</span>
-                        {{ $press->created_at }}
+                        {{ $press->created_at->formatLocalized('%A, %d %B %Y, %H:%M').' WIB' }}
                     </div>
                 </div>
                 <div class="panel-body">

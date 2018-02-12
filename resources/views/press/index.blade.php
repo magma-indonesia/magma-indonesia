@@ -75,12 +75,12 @@
 									</small></h4>
 
 								</div>
-								<div class="panel-body p-sm">
+								<div class="panel-body p-m">
 									<span class="vertical-date pull-right"> {{ \Carbon\Carbon::parse($press->created_at)->format('l') }}
 										<br/>
 										<small>{{ \Carbon\Carbon::parse($press->created_at)->format('d M Y H:i:s') }}</small>
 									</span>
-									<div>
+									<div style="line-height: 1.8;">
 									{!! str_limit(strip_tags($press->body),300) !!}
 									</div>
 									
