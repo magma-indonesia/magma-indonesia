@@ -47,7 +47,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('vars','ImportController@vars')->name('import.vars');
             Route::post('dailies','ImportController@dailies')->name('import.dailies');
             Route::post('visuals','ImportController@visuals')->name('import.visuals');
-            Route::get('klimatologi','ImportController@klimatologis')->name('import.klimatologi');          
+            Route::post('klimatologi','ImportController@klimatologis')->name('import.klimatologi');          
         
         });
     });
