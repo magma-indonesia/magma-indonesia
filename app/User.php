@@ -13,6 +13,16 @@ class User extends Authenticatable
     use HasRoles,SoftDeletes,Notifiable;
 
     /**
+     * Route notifications for the Slack channel.
+     *
+     * @return string
+     */
+    public function routeNotificationForSlack()
+    {
+        return env('SLACK_WEBHOOK_LOGIN');
+    }
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

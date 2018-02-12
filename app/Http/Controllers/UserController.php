@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use App\Notifications\UserLogin;
 
 //Importing laravel-permission models
 use Spatie\Permission\Models\Role;
@@ -38,9 +39,9 @@ class UserController extends Controller
 
             if (Auth::attempt([$username => $request->username, 'password' => $request->password, 'status' => 1]))
             {
-
+                $user = Auth::user();
+                $user->notify(new UserLogin($user));
                 $token = JWTAuth::attempt($credentials);
-                
             }
 
             if ($this->hasTooManyLoginAttempts($request)) {
