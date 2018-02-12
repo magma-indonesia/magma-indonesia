@@ -140,28 +140,28 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $path = $request->file('file')->store('photo','press');
-        return $path;
+        // $path = $request->file('file')->store('photo','press');
+        // return $path;
         
-        return $file->getSize();
-        // $this->validate($request, [
-        //     'name' => 'required|string|max:255',
-        //     'nip' => 'required|digits:18|unique:users',
-        //     'phone' => 'nullable|digits_between:10,12|unique:users',
-        //     'email' => 'required|string|email|max:255|unique:users',
-        //     'password' => 'required|string|min:6|confirmed',
-        //     'status' => 'required|boolean'
-        // ]);
+        // return $file->getSize();
+        $this->validate($request, [
+            'name' => 'required|string|max:255',
+            'nip' => 'required|digits:18|unique:users',
+            'phone' => 'nullable|digits_between:10,12|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+            'status' => 'required|boolean'
+        ]);
 
-        // $input  = $request->all();
-        // $user   = new User();
+        $input  = $request->all();
+        $user   = new User();
 
-        // if ($user->fill($input)->save())
-        // {
-        //     return redirect()->route('users.index')->with('flash_message',$request->name.' berhasil ditambahkan.');
-        // } 
+        if ($user->fill($input)->save())
+        {
+            return redirect()->route('users.index')->with('flash_message',$request->name.' berhasil ditambahkan.');
+        } 
 
-        // return redirect()->route('users.index')->with('flash_message','User gagal ditambahkan.');      
+        return redirect()->route('users.index')->with('flash_message','User gagal ditambahkan.');      
 
     }
 
