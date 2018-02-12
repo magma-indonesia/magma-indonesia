@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\User;
 use App\Events\PressViewed;
+use App\Notifications\PressRelease;
 
 class PressController extends Controller
 {
@@ -67,6 +68,7 @@ class PressController extends Controller
         $press->user_id = $request->user_id;
 
         if ($press->save()){
+            $press->notify(new PressRelease(1,$press));
             return redirect()->route('press.index')
             ->with('flash_message',
              'Press Release : '. $request->title.' telah ditambahkan!');
@@ -133,6 +135,7 @@ class PressController extends Controller
         $press->fill($input)->save();
 
         if ($press->save()){
+            $press->notify(new PressRelease(3,$press));
             return redirect()->route('press.index')
             ->with('flash_message',
              'Press Release : '. $request->title.' berhasil dirubah!');
@@ -150,7 +153,9 @@ class PressController extends Controller
     {
         $press  = Press::findOrFail($press->id);
         $name   = $press->title;
-        $press->delete();
+        if ($press->delete()){
+            $press->notify(new PressRelease(0,$press));            
+        };
 
         $data = [
             'success' => 1,

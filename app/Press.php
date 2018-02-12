@@ -2,12 +2,24 @@
 
 namespace App;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Press extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes,Notifiable;
+
+    /**
+     * Route notifications for the Slack channel.
+     *
+     * @return string
+     */
+    public function routeNotificationForSlack()
+    {
+        return env('SLACK_WEBHOOK_PRESS');
+    }
+
     /**
      * The attributes that are mass assignable.
      *
