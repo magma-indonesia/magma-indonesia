@@ -40,9 +40,9 @@
                 {{ $gadds->links() }}                
             </div>            
         </div>
-        @foreach($gadds as $i => $gadd)
-            @if($i%4 == 0)
-            <div class="row">        
+        @foreach($gadds as $gadd)
+            @if($loop->first or $loop->iteration % 4 == 0)
+                <div class="row">
             @endif
                 <div class="col-xs-12 col-md-6 col-lg-3">
                     <div class="hpanel plan-box hgreen active">
@@ -95,8 +95,8 @@
                         </div>
                     </div>
                 </div>
-            @if($i%4 == 3 || $i==(count($gadds)-1))
-            </div>
+            @if($loop->last == true or $loop->iteration % 4 ==0 )
+                </div>
             @endif
         @endforeach
         <div class="row">
