@@ -33,7 +33,7 @@ class PressController extends Controller
      */
     public function create()
     {
-        $users = User::all();
+        $users = User::orderBy('name')->get();
         return view('press.create',compact('users'));   
     }
 
