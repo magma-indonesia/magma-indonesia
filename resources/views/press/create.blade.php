@@ -73,7 +73,8 @@
                             <label>Isi Press Release</label>
                             @if( $errors->has('body'))
                             <label class="error" for="body">{{ ucfirst($errors->first('body')) }}</label>
-                            @endif<textarea name="body" class="summernote">{{ old('body') }}</textarea>
+                            @endif
+                            <textarea name="body" class="summernote">{{ old('body') }}</textarea>
                         </div>
                     </div>
                     <div class="panel-footer">
