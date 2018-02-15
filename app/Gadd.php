@@ -46,4 +46,13 @@ class Gadd extends Model
     {
         return $this->hasOne('App\MagmaVar','code_id','code')->orderBy('var_data_date','desc');
     }
+
+    /**     
+     *   Masing-masing Gunungapi hanya memiliki 
+     *   1 sejarah gunungapi
+     */
+    public function history()
+    {
+        return $this->hasOne('App\History','code_id','code');
+    }
 }
