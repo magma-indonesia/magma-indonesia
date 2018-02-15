@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Gadd;
+use App\History;
 
 class VolcanoController extends Controller
 {
@@ -38,6 +39,9 @@ class VolcanoController extends Controller
     public function store(Request $request)
     {
         //
+        $gadd = new Gadd();
+        $gadd->history->body = $request->body;
+        $gadd->save();
     }
 
     /**
@@ -75,7 +79,16 @@ class VolcanoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $gadd = Gadd::findOrFail($id);
+
+        $success = $gadd->history()->updateOrCreate([
+                        'code_id' => $gadd->code],[
+                        'body' => $request->body
+                    ]);
+
+        if ($success){
+            return 'oke';
+        }
     }
 
     /**
