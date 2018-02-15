@@ -41,17 +41,19 @@
             </div>            
         </div>
         @foreach($gadds as $gadd)
-            @if($loop->first or $loop->iteration % 4 == 0)
+            @if($loop->first or $loop->iteration % 2 == 0)
                 <div class="row">
             @endif
-                <div class="col-xs-12 col-md-6 col-lg-3">
+                <div class="col-xs-12 col-md-6 col-lg-6">
                     <div class="hpanel plan-box hgreen active">
                         <div class="panel-heading hbuilt text-center">
                             <h4 class="font-bold">{{ $gadd->name }}</h4>
                         </div>
                         <div class="panel-body">
                             <p class="text-muted">
-                                Diisi sejarah Gunung Api nya (Belum diupdate)
+                                @if(!empty($gadd->history))
+                                    {!! $gadd->history->body !!}
+                                @endif
                             </p>
                             <table class="table">
                                 <thead>
@@ -95,7 +97,7 @@
                         </div>
                     </div>
                 </div>
-            @if($loop->last == true or $loop->iteration % 4 ==0 )
+            @if($loop->last == true or $loop->iteration % 2 ==0 )
                 </div>
             @endif
         @endforeach
