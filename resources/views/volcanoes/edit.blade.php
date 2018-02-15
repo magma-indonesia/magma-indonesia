@@ -4,6 +4,11 @@
 MAGMA | Edit - {{ $gadd->name }}
 @endsection
 
+@section('add-vendor-css')
+    <link rel="stylesheet" href="{{ asset('vendor/summernote/dist/summernote.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/summernote/dist/summernote-bs3.css') }}" />
+@endsection
+
 @section('nav-edit-volcano')
 <li class="{{ active('volcanoes.*') }}">
     <a href="{{ route('volcanoes.edit',$gadd->id) }}">Edit {{ $gadd->name }}</a>
@@ -65,6 +70,13 @@ MAGMA | Edit - {{ $gadd->name }}
                             @endif
                         </div>
                         <div class="form-group">
+                            <label>Sejarah Gunung Api</label> 
+                            <textarea name="body" class="summernote">{{ $gadd->history->body }}</textarea>
+                            @if( $errors->has('name'))
+                            <label id="name-error" class="error" for="name">{{ ucfirst($errors->first('name')) }}</label>
+                            @endif
+                        </div>
+                        <div class="form-group">
                             <label>Tipe Gunung Api</label>
                             <select class="form-control" name="tipe">
                                 <option value="A" {{ $gadd->volc_type == 'A' ? 'selected' : ''}}>A</option>
@@ -103,17 +115,17 @@ MAGMA | Edit - {{ $gadd->name }}
                             @endif
                         </div>
                         <div class="form-group">
-                            <label>Kota/Kabupaten</label> 
-                            <input name="kota" type="text" placeholder="Masukkan Nama Kota/Kabupaten Gunung Api" class="form-control" value="{{ $gadd->district }}" required>
-                            @if( $errors->has('kota'))
-                            <label id="kota-error" class="error" for="kota">{{ ucfirst($errors->first('kota')) }}</label>
-                            @endif
-                        </div>
-                        <div class="form-group">
                             <label>Provinsi</label>
                             <input name="provinsi" type="text" placeholder="Masukkan Nama Provinsi Gunung Api" class="form-control" value="{{ $gadd->province }}" required>
                             @if( $errors->has('provinsi'))
                             <label id="provinsi-error" class="error" for="provinsi">{{ ucfirst($errors->first('provinsi')) }}</label>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label>Kota/Kabupaten</label> 
+                            <input name="kota" type="text" placeholder="Masukkan Nama Kota/Kabupaten Gunung Api" class="form-control" value="{{ $gadd->district }}" required>
+                            @if( $errors->has('kota'))
+                            <label id="kota-error" class="error" for="kota">{{ ucfirst($errors->first('kota')) }}</label>
                             @endif
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -130,5 +142,33 @@ MAGMA | Edit - {{ $gadd->name }}
 </div>
 @endsection
 
+@section('add-vendor-script')
+<script src="{{ asset('vendor/summernote/dist/summernote.min.js') }}"></script>
+@endsection
+
 @section('add-script')
+<script>
+
+    $(document).ready(function () {
+
+        // Initialize summernote plugin
+        $('.summernote').summernote({
+            height: '300px',
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'clear']],
+                ['fontname', ['fontname']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']],
+                ['table', ['table']],
+                ['insert', ['hr']],
+                ['view', ['fullscreen', 'codeview']],
+                ['help', ['help']]
+            ]
+        });
+
+    });
+
+</script>
 @endsection
