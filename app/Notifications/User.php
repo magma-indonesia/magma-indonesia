@@ -7,19 +7,19 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\SlackMessage;
 
-class UserLogin extends Notification
+class User extends Notification
 {
     use Queueable;
 
-    protected $user;
-
+    protected $type,$user;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($type,$user)
     {
+        $this->type = $type;
         $this->user = $user;
     }
 
@@ -42,8 +42,19 @@ class UserLogin extends Notification
      */
     public function toSlack($notifiable)
     {
+        switch ($this->type) {
+            case 'create':
+                $note = 'ditambahkan';
+                break;
+            case 'update':
+                $note = 'dirubah';
+                break;
+            default:
+                $note = 'dihapus';
+                break;
+        }
         return (new SlackMessage)
                     ->from('Super Admin',':ghost:')
-                    ->content('*'.$this->user->name.'* login via Web');
+                    ->content('User *'.$this->user->name.'* berhasil *'.$note.'* - oleh _'.auth()->user()->name.'_');
     }
 }
