@@ -5,9 +5,9 @@
 @endsection
 
 @section('nav-edit-roles')
-                        <li class="{{ active('roles.*') }}">
-                            <a href="{{ route('roles.edit',$role->id) }}">Edit Role</a>
-                        </li>
+<li class="{{ active('roles.*') }}">
+    <a href="{{ route('roles.edit',$role->id) }}">Edit Role</a>
+</li>
 @endsection
 
 @section('content-header')
