@@ -71,7 +71,7 @@ MAGMA | Edit - {{ $gadd->name }}
                         </div>
                         <div class="form-group">
                             <label>Sejarah Gunung Api</label> 
-                            <textarea name="body" class="summernote">{{ $gadd->history->body }}</textarea>
+                            <textarea name="body" class="summernote">{{ !empty($gadd->history->body) ? $gadd->history->body : '' }}</textarea>
                             @if( $errors->has('name'))
                             <label id="name-error" class="error" for="name">{{ ucfirst($errors->first('name')) }}</label>
                             @endif
