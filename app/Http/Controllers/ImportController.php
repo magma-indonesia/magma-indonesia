@@ -17,15 +17,24 @@ use App\VarKlimatologi;
 use App\VarPj;
 use App\VarVerifikator;
 
+use App\Import;
+use App\Notifications\ImportNotification;
+
 class ImportController extends Controller
 {
 
     use MagmaHelper,JenisGempa;
 
+    protected function sendNotif($type)
+    {
+        $import = new Import();
+        $import->notify(new ImportNotification($type));
+    }
+
     public function __construct(Request $request)
     {
-
-       ini_set('max_execution_time', 6000);
+        set_error_handler(null);
+        ini_set('max_execution_time', 6000);
 
     }
 
@@ -124,6 +133,8 @@ class ImportController extends Controller
                 'message' => 'Data Dasar Gunung Api berhasil diperbarui',
                 'count' => Gadd::count()
             ];
+
+            $this->sendNotif('Data Dasar Gunung Api');
     
             return response()->json($data);
         }
@@ -174,6 +185,8 @@ class ImportController extends Controller
                 'count' => User::count()
             ];
     
+            $this->sendNotif('Users');
+            
             return response()->json($data);
         }
 
@@ -330,6 +343,8 @@ class ImportController extends Controller
             'count' => VarDaily::count()
         ];
 
+        $this->sendNotif('Laporan Harian');
+
         return response()->json($data);
     }
 
@@ -454,6 +469,8 @@ class ImportController extends Controller
             'count' => VarVisual::count()
         ];
 
+        $this->sendNotif('Visual');
+
         return response()->json($data);                            
 
     }
@@ -550,6 +567,8 @@ class ImportController extends Controller
             'message' => 'Data Klimatologi berhasil diperbarui',
             'count' => VarKlimatologi::count()
         ];
+
+        $this->sendNotif('Data Klimatologi');
 
         return response()->json($data);      
     }
