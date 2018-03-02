@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 use Auth;
 use JWTAuth;
 use App\User;
+use App\UserPhoto;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use App\Notifications\UserLogin;
+use App\Notifications\User As UserNotification;
 
 //Importing laravel-permission models
 use Spatie\Permission\Models\Role;
@@ -22,6 +24,41 @@ use Session;
 class UserController extends Controller
 {
     use AuthenticatesUsers;
+
+    /**
+     * Uploading photo profile user
+     *
+     * @return boolean
+     */
+    protected function uploadPhoto($nip,$photo,$filetype)
+    {
+
+        list($type, $photo) = explode(';', $photo);
+        list(, $photo)      = explode(',', $photo);
+        $photo = base64_decode($photo);
+        $photoName = uniqid().$filetype;
+        $uploadPhoto = Storage::disk('user')->put($photoName, $photo);
+
+        if ($uploadPhoto)
+        {
+            $getUserId = User::where('nip',$nip)->first();
+            $success = $getUserId->photo()->updateOrCreate([
+                'user_id' => $getUserId->id],[
+                'filename' => $photoName
+            ]);
+        } else {
+            return redirect()->back()->with('flash_message','Gagal upload photo User.');    
+        }
+
+        if ($success)
+        {
+            return true;
+        }
+        
+        return redirect()->back()->with('flash_message','Gagal upload photo User.');    
+    
+    }
+
     /** 
      * Login Controller User
      * @param  \Illuminate\Http\Request  $request
@@ -141,29 +178,33 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request;
         // $path = $request->file('file')->store('photo','press');
         // return $path;
         
         // return $file->getSize();
         $this->validate($request, [
             'name' => 'required|string|max:255',
-            'nip' => 'required|digits:18|unique:users',
-            'phone' => 'nullable|digits_between:10,12|unique:users',
-            'email' => 'required|string|email|max:255|unique:users',
+            'nip' => 'required|digits:18|unique:users,nip,NULL,id,deleted_at,NULL',
+            'phone' => 'nullable|digits_between:10,12|unique:users,phone,NULL,id,deleted_at,NULL',
+            'email' => 'required|string|email|max:255|unique:users,email,NULL,id,deleted_at,NULL',
             'password' => 'required|string|min:6|confirmed',
             'status' => 'required|boolean'
         ]);
 
-        $input  = $request->all();
-        $user   = new User();
+        $input  = $request->except(['imagebase64','file']);
+     
+        $user = new User();
+        $userSaved = $user->fill($input)->save();
+        $request->has('file') ? $uploadPhoto = $this->uploadPhoto($request->nip,$request->imagebase64,$request->filetype) : $uploadPhoto = true;
 
-        if ($user->fill($input)->save())
+        if ($userSaved AND $uploadPhoto)
         {
+            $user->notify(new UserNotification('create',$user));
             return redirect()->route('users.index')->with('flash_message',$request->name.' berhasil ditambahkan.');
         } 
 
-        return redirect()->route('users.index')->with('flash_message','User gagal ditambahkan.');      
-
+        return redirect()->route('users.index')->with('flash_message','User gagal ditambahkan.');    
     }
 
     /**
@@ -225,6 +266,9 @@ class UserController extends Controller
         else {
             $user->roles()->detach();
         }
+
+        $user->notify(new UserNotification('update',$user));        
+
         return redirect()->route('users.index')
             ->with('flash_message',
             'Data '.$name.' berhasil dirubah.');
@@ -240,7 +284,9 @@ class UserController extends Controller
     {
         $user   = User::findOrFail($id);
         $nama   = $user->name;
-        $user->delete();
+        if ($user->delete()){
+            $user->notify(new UserNotification('delete',$user));            
+        }
 
         $data = [
             'success' => 1,
