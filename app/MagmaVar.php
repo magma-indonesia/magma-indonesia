@@ -28,7 +28,7 @@ class MagmaVar extends Model
      *   Masing-masing Var hanya dimiliki
      *   oleh 1 User
      * 
-     *   @return App\User 
+     *   @return \App\User 
      * 
      */
     public function user()
@@ -40,7 +40,7 @@ class MagmaVar extends Model
      *   Masing-masing Var hanya dimiliki
      *   oleh 1 Gunungapi
      * 
-     *   @return App\Gadd
+     *   @return \App\Gadd
      * 
      */
     public function gunungapi()
@@ -51,6 +51,7 @@ class MagmaVar extends Model
     /**     
      *   Masing-masing Var hanya memiliki
      *   1 data visual
+     *   @return \App\VarVisual
      */
     public function visual()
     {
