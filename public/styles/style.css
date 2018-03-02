@@ -3685,3 +3685,13 @@ ul.h-list li:hover a {
     margin-left: 10px;
   }
 }
+
+.upload-message {
+  text-align: center;
+  padding: 50px;
+  font-size: 22px;
+  color: #aaa;
+  width: 260px;
+  margin: 50px auto;
+  border: 1px solid #aaa;
+}
