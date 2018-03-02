@@ -302,6 +302,8 @@ class ImportController extends Controller
             'count' => MagmaVar::count()
         ];
 
+        $this->sendNotif('Data MAGMA-VAR v1');
+
         return response()->json($data);
     }
 
