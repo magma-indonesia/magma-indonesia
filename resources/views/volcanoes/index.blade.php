@@ -84,6 +84,16 @@
                                         <td><b>Provinsi</b></td>
                                         <td>{!! $gadd->province !!}</td>
                                     </tr>
+                                    <tr>
+                                        <td><b>Pos</b></td>
+                                        <td>
+                                            <ul class="list-unstyled">
+                                                @foreach($gadd->pos as $pos)
+                                                <li>{{ $pos->observatory }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                             <p class="text-muted">
