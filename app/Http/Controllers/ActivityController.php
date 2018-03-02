@@ -19,7 +19,7 @@ class ActivityController extends Controller
     public function index()
     {     
 
-        $vars = MagmaVar::orderBy('var_data_date','desc')->simplePaginate(30);
+        $vars = MagmaVar::orderBy('var_data_date','desc')->orderBy('created_at','desc')->simplePaginate(30);
         $gadds = Gadd::orderBy('name')->whereNotIn('code',['TEO','SBG'])->get();
 
         Carbon::setLocale('id'); 
@@ -56,7 +56,11 @@ class ActivityController extends Controller
      */
     public function show($id)
     {
-        //
+        // return $id;
+        $var = MagmaVar::where('noticenumber',$id)->with(['user','visual'])->first();   
+
+        return $var;
+
     }
 
     /**
