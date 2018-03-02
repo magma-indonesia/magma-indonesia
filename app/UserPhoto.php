@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserPhoto extends Model
 {
+    protected $table    = 'users_photo';
     /**
      * The attributes that are mass assignable.
      *
