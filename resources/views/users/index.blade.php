@@ -80,7 +80,7 @@
                                     </td>
                                     <td>
                                         <a href="{{ route('users.edit',['id'=>$user->id]) }}" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">Edit</a>
-                                        <form style="display:inline" method="POST" action="{{ route('users.destroy',['id'=>$user->id]) }}" accept-charset="UTF-8">
+                                        <form id="deleteForm" style="display:inline" method="POST" action="{{ route('users.destroy',['id'=>$user->id]) }}" accept-charset="UTF-8">
                                             {{ method_field('DELETE') }}
                                             {{ csrf_field() }}
                                             <button value="Delete" class="btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
@@ -132,7 +132,7 @@
 
             });
 
-            $('form').on('submit',function (e) {
+            $('body').on('submit','#deleteForm',function (e) {
                 e.preventDefault();                
 
                 var $url = $(this).attr('action'),
