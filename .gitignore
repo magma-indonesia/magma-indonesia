@@ -6,6 +6,7 @@
 /public/images
 /public/bower_components
 /public/img
+/public/upload
 /storage/*.key
 /vendor
 /.idea
