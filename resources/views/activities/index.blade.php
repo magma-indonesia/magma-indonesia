@@ -50,9 +50,7 @@
                                             <span class="pie">{{ $gadd->latestVar->var_data_date->formatLocalized('%A, %d %B %Y').', '.$gadd->latestVar->periode }}</span>
                                         </td>  
                                         <td>
-                                            <a href="">
-                                                <a href="#" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">View</a>
-                                            </a>
+                                            <a href="{{ route('activities.show',$gadd->latestVar->noticenumber ) }}" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">View</a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -181,7 +179,7 @@
                                         <td>{{ $var->user->name }}</td>
                                         <td>
                                             <a href="">
-                                                <a href="#" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">View</a>
+                                                <a href="{{ route('activities.show',$var->noticenumber ) }}" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">View</a>
                                             </a>
                                         </td>
                                     </tr>
