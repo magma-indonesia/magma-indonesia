@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Gadd extends Model
 {
     protected $table    = 'ga_dd';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -28,6 +29,22 @@ class Gadd extends Model
         'longitude',
         'smithsonian_id'
     ];
+
+    protected $hidden = [
+        'id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
+    /**     
+     *   Masing-masing Gunungapi bisa memiliki lebih
+     *   dari 1 Pos Pengamatan Gunung Api
+     */
+    public function pos()
+    {
+        return $this->hasMany('App\PosPga','code_id','code');
+    }
 
     /**     
      *   Masing-masing Gunungapi bisa memiliki lebih

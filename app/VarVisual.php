@@ -22,6 +22,11 @@ class VarVisual extends Model
         'visual_kawah'
     ];
 
+    protected $hidden  = [
+        'id',
+        'noticenumber_id',
+    ];
+
     protected $guarded  = [
         'id'
     ];
