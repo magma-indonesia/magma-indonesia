@@ -2,140 +2,180 @@
 
 @section('title') 
     MAGMA | Create User 
-@endsection 
+@endsection
+
+@section('add-vendor-css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.1/croppie.min.css" />
+@endsection
 
 @section('content-header')
-<div class="small-header">
-	<div class="hpanel">
-		<div class="panel-body">
-			<div id="hbreadcrumb" class="pull-right">
-				<ol class="hbreadcrumb breadcrumb">
-					<li>
-						<a href="{{ route('chamber') }}">Chamber</a>
-					</li>
-					<li>
-						<span>Users</span>
-					</li>
-					<li class="active">
-						<span>Create </span>
-					</li>
-				</ol>
-			</div>
-			<h2 class="font-light m-b-xs">
-				Create Users
-			</h2>
-			<small>Menu ini untuk digunakan untuk menambahkan pengguna MAGMA Indonesia</small>
-		</div>
-	</div>
-</div>
+    <div class="small-header">
+        <div class="hpanel">
+            <div class="panel-body">
+                <div id="hbreadcrumb" class="pull-right">
+                    <ol class="hbreadcrumb breadcrumb">
+                        <li>
+                            <a href="{{ route('chamber') }}">Chamber</a>
+                        </li>
+                        <li>
+                            <span>Users</span>
+                        </li>
+                        <li class="active">
+                            <span>Create </span>
+                        </li>
+                    </ol>
+                </div>
+                <h2 class="font-light m-b-xs">
+                    Create Users
+                </h2>
+                <small>Menu ini untuk digunakan untuk menambahkan pengguna MAGMA Indonesia</small>
+            </div>
+        </div>
+    </div>
 @endsection 
 
 @section('content-body')
-<div class="content animate-panel">
-    <div class="row">
-        <div class="col-lg-offset-3 col-lg-6">
-            <div class="hpanel">
-                <div class="panel-heading">
-                    <div class="panel-tools">
-                        <a class="showhide"><i class="fa fa-chevron-up"></i></a>
+    <div class="content animate-panel">
+        <div class="row">
+            <div class="col-lg-offset-3 col-lg-6">
+                <div class="hpanel">
+                    <div class="panel-heading">
+                        <div class="panel-tools">
+                            <a class="showhide"><i class="fa fa-chevron-up"></i></a>
+                        </div>
+                        Input Data Dasar Pengguna
                     </div>
-                    Input Data Dasar Pengguna
-                </div>
-                <div class="panel-body">
-                    <p>
-                        Masukkan semua data-data yang dibutuhkan untuk menambahkan pengguna ke dalam MAGMA.
-                    </p>
+                    <div class="panel-body">
+                        <p>
+                            Masukkan semua data-data yang dibutuhkan untuk menambahkan pengguna ke dalam MAGMA.
+                        </p>
 
-                    <form role="form" id="form" method="POST" action="{{ route('users.store') }}" enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        <input name="_type" value="base" type="hidden">
-                        <div class="form-group">
-                            <label>Nama</label> 
-                            <input name="name" type="text" placeholder="Masukkan Nama" class="form-control" value="{{ old('name') }}" required>
-                            @if( $errors->has('name'))
-                            <label id="name-error" class="error" for="name">{{ ucfirst($errors->first('name')) }}</label>
-                            @endif
-                        </div>
-                        <div class="form-group">
-                            <label>NIP</label> 
-                            <input name="nip" type="text" placeholder="Masukkan NIP" class="form-control" value="{{ old('nip') }}"required>
-                            @if( $errors->has('nip'))
-                            <label id="nip-error" class="error" for="nip">{{ ucfirst($errors->first('nip')) }}</label>
-                            @endif
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label> 
-                            <input name="email" type="email" placeholder="Masukkan email" class="form-control" value="{{ old('email') }}" required>
-                            @if( $errors->has('email'))
-                            <label id="email-error" class="error" for="email">{{ ucfirst($errors->first('email')) }}</label>
-                            @endif
-                        </div>
-                        <div class="form-group">
-                            <label>Phone</label> 
-                            <input name="phone" type="text" placeholder="Masukkan No Handphone" class="form-control" value="{{ old('phone') }}" required>
-                            @if( $errors->has('phone'))
-                            <label id="phone-error" class="error" for="phone">{{ ucfirst($errors->first('phone')) }}</label>
-                            @endif
-                        </div>
-                        <div class="form-group">
-                            <label>Password</label> 
-                            <input id="password" name="password" type="password" placeholder="Masukkan Password" class="form-control" required>
-                            @if( $errors->has('password'))
-                            <label id="password-error" class="error" for="password">{{ ucfirst($errors->first('password')) }}</label>
-                            @endif
-                        </div>
-                        <div class="form-group">
-                            <label>Konfirmasi Password</label> 
-                            <input name="password_confirmation" type="password" placeholder="Konfirmasi Password" class="form-control" required>
-                            @if( $errors->has('password_confirmation'))
-                            <label id="password_confirmation-error" class="error" for="password_confirmation">{{ ucfirst($errors->first('password_confirmation')) }}</label>
-                            @endif
-                        </div>
-                        <div class="form-group">
-                            <label>Upload Photo</label> 
-                            <label class="form-control btn btn-primary btn-file">
-                                <span class="label-file">Browse </span> <input class="file" name="file" type="file" style="display: none;">
-                            </label>
-                            @if( $errors->has('file'))
-                            <label id="file-error" class="error" for="file">{{ ucfirst($errors->first('file')) }}</label>
-                            @endif
-                        </div>
-                        <div class="form-group">
-                            <label>Status User</label>
-                            <div>
-                                <label class="checkbox-inline"> 
-                                <input name="status" class="i-checks" type="radio" value="1" id="status" checked> Aktif </label> 
-                                <label class="checkbox-inline">
-                                <input name="status" class="i-checks" type="radio" value="0" id="status"> Tidak Aktif </label> 
+                        <form role="form" id="form" method="POST" action="{{ route('users.store') }}" enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                            <input name="_type" value="base" type="hidden">
+                            <div class="form-group">
+                                <label>Nama</label> 
+                                <input name="name" type="text" placeholder="Masukkan Nama" class="form-control" value="{{ old('name') }}" required>
+                                @if( $errors->has('name'))
+                                <label id="name-error" class="error" for="name">{{ ucfirst($errors->first('name')) }}</label>
+                                @endif
                             </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div>
-                            <button class="btn btn-sm btn-primary m-t-n-xs" type="submit"><strong>Submit</strong></button>
-                        </div>
-                    </form>
+                            <div class="form-group">
+                                <label>NIP</label> 
+                                <input name="nip" type="text" placeholder="Masukkan NIP" class="form-control" value="{{ old('nip') }}"required>
+                                @if( $errors->has('nip'))
+                                <label id="nip-error" class="error" for="nip">{{ ucfirst($errors->first('nip')) }}</label>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label> 
+                                <input name="email" type="email" placeholder="Masukkan email" class="form-control" value="{{ old('email') }}" required>
+                                @if( $errors->has('email'))
+                                <label id="email-error" class="error" for="email">{{ ucfirst($errors->first('email')) }}</label>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label>Phone</label> 
+                                <input name="phone" type="text" placeholder="Masukkan No Handphone" class="form-control" value="{{ old('phone') }}" required>
+                                @if( $errors->has('phone'))
+                                <label id="phone-error" class="error" for="phone">{{ ucfirst($errors->first('phone')) }}</label>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label> 
+                                <input id="password" name="password" type="password" placeholder="Masukkan Password" class="form-control" required>
+                                @if( $errors->has('password'))
+                                <label id="password-error" class="error" for="password">{{ ucfirst($errors->first('password')) }}</label>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label>Konfirmasi Password</label> 
+                                <input name="password_confirmation" type="password" placeholder="Konfirmasi Password" class="form-control" required>
+                                @if( $errors->has('password_confirmation'))
+                                <label id="password_confirmation-error" class="error" for="password_confirmation">{{ ucfirst($errors->first('password_confirmation')) }}</label>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label>Upload Photo</label>
+                                <div class="upload-message">Upload Foto Profil Anda</div>
+                                <div class="upload-photo" style="display:none"></div>
+                                <label class="form-control btn btn-primary btn-file">
+                                    <span class="label-file">Browse </span> 
+                                    <input class="file" name="file" type="file" style="display: none;">
+                                    <input type="hidden" id="imagebase64" name="imagebase64">
+                                    <input type="hidden" id="filetype" name="filetype">                                  
+                                </label>
+                                @if( $errors->has('file'))
+                                <label id="file-error" class="error" for="file">{{ ucfirst($errors->first('file')) }}</label>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label>Status User</label>
+                                <div>
+                                    <label class="checkbox-inline"> 
+                                    <input name="status" class="i-checks" type="radio" value="1" id="status" checked> Aktif </label> 
+                                    <label class="checkbox-inline">
+                                    <input name="status" class="i-checks" type="radio" value="0" id="status"> Tidak Aktif </label> 
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div>
+                                <button class="btn btn-sm btn-primary m-t-n-xs" type="submit"><strong>Submit</strong></button>
+                            </div>
+                        </form>
 
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection 
 
 @section('add-vendor-script')
 <script src="{{ asset('vendor/iCheck/icheck.min.js') }}"></script>
 <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.1/croppie.min.js"></script>
 @endsection 
 
 @section('add-script')
 <script>
 	$(document).ready(function(){
 
+        $uploadCrop = $('.upload-photo').croppie({
+            enableExif: true,
+            viewport: {
+                width: 300,
+                height: 300
+            },
+            boundary: {
+                width:310,
+                height:310
+            }
+        });
+
         $('input.file').on('change', function() {
+             $('.upload-message').hide();
+             $('.upload-photo').show();
+        
             var input = $(this),
-                label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                label = input.val().replace(/\\/g, '/').replace(/.*\//, ''),
+                filetype = '.'+label.split('.').pop();
+                reader = new FileReader();
+
             $('.label-file').html(label);
-            console.log(label);
+            console.log('Nama file : '+label+', tipe : '+filetype);
+            $('#filetype').val(filetype);
+
+            reader.onload = function (e) {
+                $uploadCrop.croppie('bind', {
+                    url: e.target.result
+                }).then(function(){
+                    console.log('Binding Berhasil');
+                });
+            }
+
+            reader.readAsDataURL(this.files[0]);
+            
         });
 
         $("#form").validate({
@@ -200,7 +240,13 @@
                 }
             },
             submitHandler: function(form) {
-                form.submit();
+                $uploadCrop.croppie('result', {
+                    type: 'canvas',
+                    size: 'viewport'
+                }).then(function (resp){
+                    $('#imagebase64').val(resp);
+                    form.submit();
+                });
             }
         });
 
