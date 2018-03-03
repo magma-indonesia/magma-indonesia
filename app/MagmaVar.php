@@ -60,6 +60,16 @@ class MagmaVar extends Model
 
     /**     
      *   Masing-masing Var hanya memiliki
+     *   1 data klimatologi
+     *   @return \App\VarKlimatologi
+     */
+    public function klimatologi()
+    {
+        return $this->hasOne('App\VarKlimatologi','noticenumber_id','noticenumber');
+    }
+
+    /**     
+     *   Masing-masing Var hanya memiliki
      *   1 data Var harian
      */
     public function varDaily()
