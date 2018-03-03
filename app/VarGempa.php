@@ -4,9 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class GempaGunungApi extends Model
+class VarGempa extends Model
 {
-
     protected function jumlah()
     {
         $sum = 0;

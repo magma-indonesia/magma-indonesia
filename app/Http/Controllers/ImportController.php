@@ -16,7 +16,7 @@ use App\VarAsap;
 use App\VarKlimatologi;
 use App\VarPj;
 use App\VarVerifikator;
-use App\GempaGunungApi;
+use App\VarGempa;
 
 use App\Import;
 use App\Notifications\ImportNotification;
@@ -967,8 +967,8 @@ class ImportController extends Controller
         $vardailies = VarDaily::count();
         $visuals = VarVisual::count();
         $klimatologis = VarKlimatologi::count();
-        $gempagunungapi = GempaGunungApi::JumlahGempaGunungApi();
+        $gempa = VarGempa::JumlahGempaGunungApi();
         
-        return view('import.index',compact('users','gadds','varsv1','vars','vardailies','visuals','klimatologis','gempagunungapi'));
+        return view('import.index',compact('users','gadds','varsv1','vars','vardailies','visuals','klimatologis','gempa'));
     }
 }

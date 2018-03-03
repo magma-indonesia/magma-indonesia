@@ -76,4 +76,13 @@ class MagmaVar extends Model
     {
         return $this->hasOne('App\VarDaily','noticenumber_id','noticenumber');
     }
+
+    /**     
+     *   Masing-masing Var hanya memiliki
+     *   1 data Var harian
+     */
+    public function tej()
+    {
+        return $this->hasOne('App\EqTej','noticenumber_id','noticenumber');
+    }
 }

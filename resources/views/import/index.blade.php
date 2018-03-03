@@ -268,7 +268,7 @@
                         </div>
                         <div class="row m-t-md">
                             <div class="col-lg-6">
-                                <h3 class="no-margins font-extra-bold text-success jumlah-gempa">{{ number_format($gempagunungapi,0,',','.') }}</h3>
+                                <h3 class="no-margins font-extra-bold text-success jumlah-gempa">{{ number_format($gempa,0,',','.') }}</h3>
                                 <div class="font-bold"><i class="fa fa-level-up text-success"></i> Jumlah gempa seluruh gunung api Indonesia yang tersimpan</div>
                             </div>
                         </div>
