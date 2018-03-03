@@ -244,6 +244,46 @@
                         </form>
                     </div>
                 </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="hpanel stats">
+                    <div class="panel-heading">
+                        Data Gempa Gunung Api
+                    </div>
+                    <div class="panel-body list">
+                        <div class="stats-title pull-left">
+                            <h4>Data Gempa Gunung Api</h4>
+                        </div>
+                        <div class="stats-icon pull-right">
+                            <i class="pe-7s-download fa-4x"></i>
+                        </div>
+                        <div class="m-t-xl">
+                            <span class="font-bold no-margins">
+                                Import Data Gempa Gunung Api
+                            </span>
+                            <br/>
+                            <small>
+                                Panel ini digunakan untuk import data Gempa Gunung Api dari MAGMA-VAR, sekaligus normalisasi data ke versi yang lebih baru.
+                            </small>
+                        </div>
+                        <div class="row m-t-md">
+                            <div class="col-lg-6">
+                                <h3 class="no-margins font-extra-bold text-success jumlah-gempa">{{ number_format($gempagunungapi,0,',','.') }}</h3>
+                                <div class="font-bold"><i class="fa fa-level-up text-success"></i> Jumlah gempa seluruh gunung api Indonesia yang tersimpan</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer text-center">
+                        <form role="form" id="form-import" method="POST"
+                        data-import="gempa" action="{{ route('import.gempa') }}">
+                            {{ csrf_field() }}
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
+                                <span class="ladda-label">Import Data Gempa Gunung Api</span>
+                                <span class="ladda-spinner"></span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>            
         </div>
     </div>
