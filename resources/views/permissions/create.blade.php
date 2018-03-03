@@ -52,7 +52,7 @@
                             <div class="input-group">
                                 <input name="name[]" type="text" placeholder="Min 3 Karakter, Maksimal 10 Karakter" class="form-control" value="" required>
                                 <span class="input-group-btn"> 
-                                    <button type="button" class="btn btn-primary add-permission"> + </button>
+                                    <button type="button" class="btn btn-primary add-permission" style="width:40px;"> + </button>
                                 </span>
                             </div>
                         </div>
@@ -63,9 +63,9 @@
                                 <input name="name[]" type="text" placeholder="Min 3 Karakter, Maksimal 10 Karakter" class="form-control" value="{{ old('name.'.$i) }}" required>
                                 <span class="input-group-btn">
                                 @if($i>0)                  
-                                    <button type="button" class="btn btn-danger remove-permission"> - </button>
+                                    <button type="button" class="btn btn-danger remove-permission" style="width:40px;"> - </button>
                                 @else
-                                    <button type="button" class="btn btn-primary add-permission"> + </button>                                    
+                                    <button type="button" class="btn btn-primary add-permission" style="width:40px;"> + </button>                         
                                 @endif
                             </div>
                             @if($errors->has('name.*'.$i))
@@ -141,7 +141,7 @@
 
             var $ele = $(this).closest('.form-group').clone(true),
                 $removePlus  = $ele.find('.input-group-btn').remove(),
-                $remove = '<span class="input-group-btn"><button type="button" class="btn btn-danger remove-permission"> - </button></span>',
+                $remove = '<span class="input-group-btn"><button type="button" class="btn btn-danger remove-permission" style="width:40px;"> - </button></span>',
                 $addRemove = $ele.find('input').after($remove);
             
             $(this).closest('.form-group').after($ele);
