@@ -22,6 +22,7 @@ class EqGug extends Model
     /* Data untuk gempa yang memiliki jarak LUNCUR */
     protected $fillable = [
         
+        'var_gempa_id',
         'noticenumber_id',
         'jumlah',
         'amin',
@@ -40,7 +41,11 @@ class EqGug extends Model
     protected $hidden   = [
         
         'id',
+        'var_gempa_id',
         'noticenumber_id',
+        'created_at',
+        'updated_at',
+        'deleted_at'
         
     ];
         

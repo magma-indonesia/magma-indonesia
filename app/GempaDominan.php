@@ -45,6 +45,7 @@ class GempaDominan extends Model
 
     protected $fillable = [
         
+        'var_gempa_id',
         'noticenumber_id',
         'jumlah',
         'amin',

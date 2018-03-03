@@ -325,8 +325,8 @@
                     data: $data,
                     type: 'POST',
                     success: function(data){
+                        console.log(data);
                         if (data.success==1){
-                            console.log(data);
                             setTimeout(function(){
                                 l.stop();
                                 $jumlah = data.count;
