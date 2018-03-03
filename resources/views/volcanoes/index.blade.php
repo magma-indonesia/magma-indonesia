@@ -41,18 +41,21 @@
             </div>            
         </div>
         @foreach($gadds as $gadd)
-            @if($loop->first or $loop->iteration % 2 == 0)
+            @if($loop->first or $loop->iteration % 3 == 0)
                 <div class="row">
             @endif
-                <div class="col-xs-12 col-md-6 col-lg-6">
+                <div class="col-xs-12 col-md-4 col-lg-4">
                     <div class="hpanel plan-box hgreen active">
                         <div class="panel-heading hbuilt text-center">
                             <h4 class="font-bold">{{ $gadd->name }}</h4>
                         </div>
                         <div class="panel-body">
+                            <h5>Pendahuluan</h5>
                             <p class="text-muted">
                                 @if(!empty($gadd->history))
                                     {!! $gadd->history->body !!}
+                                @else
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam a nunc varius, bibendum tortor a, iaculis mauris. Phasellus venenatis magna vel purus efficitur malesuada. Integer in metus id neque vehicula dictum vel nec augue. Mauris a magna eget enim feugiat ullamcorper non sed purus. Aliquam erat volutpat.
                                 @endif
                             </p>
                             <table class="table">
@@ -96,18 +99,16 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <h5>Keterangan Lainnya</h5>                            
                             <p class="text-muted">
                                 Diisi keterangan lainnya
                             </p>
 
-                            <h3 class="font-bold">
-                                $20/month
-                            </h3>
                             <a href="{{ route('volcanoes.edit',['id'=>$gadd->id]) }}" class="btn btn-success btn-sm m-t-xs">Edit</a>
                         </div>
                     </div>
                 </div>
-            @if($loop->last == true or $loop->iteration % 2 ==0 )
+            @if($loop->last == true or $loop->iteration % 3 ==0 )
                 </div>
             @endif
         @endforeach
