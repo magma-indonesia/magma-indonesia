@@ -12,6 +12,8 @@ class User extends Authenticatable
 {
     use HasRoles,SoftDeletes,Notifiable;
 
+    protected $dates = ['deleted_at'];    
+
     /**
      * Route notifications for the Slack channel.
      *
@@ -37,8 +39,6 @@ class User extends Authenticatable
         'api_token',
         'remember_token'
     ];
-
-    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that should be hidden for arrays.

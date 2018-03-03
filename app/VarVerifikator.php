@@ -10,4 +10,13 @@ class VarVerifikator extends Model
         'noticenumber_id',
         'nip_id'
     ];
+
+    protected $guarded  = [
+        'id'
+    ];
+
+    protected $hidden  = [
+        'id',
+        'deleted_at',
+    ];
 }

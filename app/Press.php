@@ -10,6 +10,8 @@ class Press extends Model
 {
     use SoftDeletes,Notifiable;
 
+    protected $dates = ['deleted_at'];
+
     /**
      * Route notifications for the Slack channel.
      *

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PosPga extends Model
 {
+    
     protected $fillable = [
 
         'code_id',

@@ -26,6 +26,12 @@ class VarAsap extends Model
         'tekasap'
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
     protected $guarded  = [
         'id'
     ];
@@ -36,6 +42,6 @@ class VarAsap extends Model
      */
     public function visual()
     {
-        return $this->belongsTo('App\VarVisual','var_visual_id','id');
+        return $this->belongsTo('App\VarVisual');
     }
 }
