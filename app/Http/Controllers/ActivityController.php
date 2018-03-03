@@ -57,7 +57,7 @@ class ActivityController extends Controller
     public function show($id)
     {
         // return $id;
-        $var = MagmaVar::where('noticenumber',$id)->with(['user','visual'])->first();   
+        $var = MagmaVar::where('noticenumber',$id)->with(['user','visual','klimatologi'])->first();   
 
         return $var;
 

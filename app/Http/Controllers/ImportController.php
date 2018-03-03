@@ -16,6 +16,7 @@ use App\VarAsap;
 use App\VarKlimatologi;
 use App\VarPj;
 use App\VarVerifikator;
+use App\GempaGunungApi;
 
 use App\Import;
 use App\Notifications\ImportNotification;
@@ -25,17 +26,22 @@ class ImportController extends Controller
 
     use MagmaHelper,JenisGempa;
 
-    protected function sendNotif($type)
-    {
-        $import = new Import();
-        $import->notify(new ImportNotification($type));
-    }
-
     public function __construct(Request $request)
     {
         set_error_handler(null);
         ini_set('max_execution_time', 6000);
 
+    }
+
+    /**     
+     *   Untuk mengirim notifikasi ke Slack
+     *   
+     * 
+     */  
+    protected function sendNotif($type)
+    {
+        $import = new Import();
+        $import->notify(new ImportNotification($type));
     }
 
     /**     
@@ -575,6 +581,382 @@ class ImportController extends Controller
         return response()->json($data);      
     }
 
+    public function gempa()
+    {
+
+        $jenis      = $this->jenisgempa();
+
+        foreach ($jenis as $key => $x) 
+        {
+
+           $nama    = $x->nama;
+           $jenis   = $x->jenis;
+           $kode    = $x->kode;
+           $select  = $x->select;
+
+           if ($jenis=='sp')
+           {
+
+                $gempa      = new \App\GempaSP;
+                $table      = 'e_'.$kode;
+                $gempa->setTable($table);
+
+                $vars       = DB::connection('magma')
+                            ->table('magma_var')
+                            ->select($select)
+                            ->where('var_'.$kode,'>',0)
+                            ->orderBy('no', 'asc')
+                            ->chunk(200,function($varx) use ($kode,$gempa)
+                            {
+
+                                foreach ($varx as $var) 
+                                {
+                                
+                                    $no             = $var->no;
+                                    $gacode         = $var->ga_code;
+                                    $source         = $var->var_source;
+
+                                    $obscode        = $this->obscode($gacode,$source);
+                                    $noticenumber   = $obscode.$var->var_noticenumber;
+
+                                    $jumlah     = $var->{'var_'.$kode};
+                                    $amin       = $var->{'var_'.$kode.'_amin'};
+                                    $amax       = $var->{'var_'.$kode.'_amax'};
+                                    $spmin      = $var->{'var_'.$kode.'_spmin'};
+                                    $spmax      = $var->{'var_'.$kode.'_spmax'};
+                                    $dmin       = $var->{'var_'.$kode.'_dmin'};
+                                    $dmax       = $var->{'var_'.$kode.'_dmax'};
+
+                                    $update     = $gempa->updateOrCreate(
+
+                                        [   'noticenumber_id'   => $noticenumber],
+                                        [
+
+                                            'jumlah'            => $jumlah,
+                                            'amin'              => $amin,
+                                            'amax'              => $amax,
+                                            'spmin'             => $spmin,
+                                            'spmax'             => $spmax,
+                                            'dmin'              => $dmin,
+                                            'dmax'              => $dmax
+
+                                        ]       
+
+                                    );
+                                }
+
+                            });
+
+                $this->sendNotif('Gempa '.$nama);
+
+           }
+
+           if ($jenis=='normal')
+           {
+
+            $gempa      = new \App\GempaNormal;
+            $table      = 'e_'.$kode;
+            $gempa->setTable($table);
+
+            $vars       = DB::connection('magma')
+                        ->table('magma_var')
+                        ->select($select)
+                        ->where('var_'.$kode,'>',0)
+                        ->orderBy('no', 'asc')
+                        ->chunk(200,function($varx) use ($kode,$gempa)
+                        {
+
+                            foreach ($varx as $var) 
+                            {
+                            
+                                $no             = $var->no;
+                                $gacode         = $var->ga_code;
+                                $source         = $var->var_source;
+
+                                $obscode        = $this->obscode($gacode,$source);
+                                $noticenumber   = $obscode.$var->var_noticenumber;
+
+                                $jumlah     = $var->{'var_'.$kode};
+                                $amin       = $var->{'var_'.$kode.'_amin'};
+                                $amax       = $var->{'var_'.$kode.'_amax'};
+                                $dmin       = $var->{'var_'.$kode.'_dmin'};
+                                $dmax       = $var->{'var_'.$kode.'_dmax'};
+
+                                $update     = $gempa->updateOrCreate(
+
+                                    [   'noticenumber_id'   => $noticenumber],
+                                    [
+
+                                        'jumlah'            => $jumlah,
+                                        'amin'              => $amin,
+                                        'amax'              => $amax,
+                                        'dmin'              => $dmin,
+                                        'dmax'              => $dmax
+
+                                    ]       
+
+                                );
+
+                            }
+
+                        });
+
+            $this->sendNotif('Gempa '.$nama);
+
+           }
+
+           if ($jenis=='dominan')
+           {
+
+                $gempa      = new \App\GempaDominan;
+                $table      = 'e_'.$kode;
+                $gempa->setTable($table);
+             
+                $vars       = DB::connection('magma')
+                            ->table('magma_var')
+                            ->select($select)
+                            ->where('var_'.$kode,'>',0)
+                            ->orderBy('no', 'asc')
+                            ->chunk(200,function($varx) use ($kode,$gempa)
+                            {
+    
+                                foreach ($varx as $var) 
+                                {
+                                
+                                    $no             = $var->no;
+                                    $gacode         = $var->ga_code;
+                                    $source         = $var->var_source;
+    
+                                    $obscode        = $this->obscode($gacode,$source);
+                                    $noticenumber   = $obscode.$var->var_noticenumber;
+      
+                                    $jumlah     = $var->{'var_'.$kode};
+                                    $amin       = $var->{'var_'.$kode.'_amin'};
+                                    $amax       = $var->{'var_'.$kode.'_amax'};
+                                    $adom       = $var->{'var_'.$kode.'_adom'};
+    
+                                    $update     = $gempa->updateOrCreate(
+    
+                                        [   'noticenumber_id'   => $noticenumber],
+                                        [
+    
+                                            'jumlah'            => $jumlah,
+                                            'amin'              => $amin,
+                                            'amax'              => $amax,
+                                            'adom'              => $adom
+    
+                                        ]       
+    
+                                    );
+    
+                                }
+    
+                            });
+                
+            $this->sendNotif('Gempa '.$nama);            
+                
+
+           }
+
+           if ($jenis=='luncuran')
+           {
+
+            $gempa      = new \App\GempaLuncuran;
+            $table      = 'e_'.$kode;
+            $gempa->setTable($table);
+          
+            $vars       = DB::connection('magma')
+                        ->table('magma_var')
+                        ->select($select)
+                        ->where('var_'.$kode,'>',0)
+                        ->orderBy('no', 'asc')
+                        ->chunk(200,function($varx) use ($kode,$gempa)
+                        {
+
+                            foreach ($varx as $var) 
+                            {
+                            
+                                $no             = $var->no;
+                                $gacode         = $var->ga_code;
+                                $source         = $var->var_source;
+
+                                $obscode        = $this->obscode($gacode,$source);
+                                $noticenumber   = $obscode.$var->var_noticenumber;
+
+                                $jumlah     = $var->{'var_'.$kode};
+                                $amin       = $var->{'var_'.$kode.'_amin'};
+                                $amax       = $var->{'var_'.$kode.'_amax'};
+                                $dmin       = $var->{'var_'.$kode.'_dmin'};
+                                $dmax       = $var->{'var_'.$kode.'_dmax'};
+                                $rmin       = $var->{'var_'.$kode.'_rmin'};
+                                $rmax       = $var->{'var_'.$kode.'_rmax'};
+                                $arah       = $var->{'var_'.$kode.'_alun'};
+                                $arah       = $this->arah($arah);
+
+                                if (empty($arah))
+                                {
+
+                                    $arah       = null;
+
+                                }
+
+                                $update     = $gempa->updateOrCreate(
+
+                                    [   'noticenumber_id'   => $noticenumber],
+                                    [
+
+                                        'jumlah'            => $jumlah,
+                                        'amin'              => $amin,
+                                        'amax'              => $amax,
+                                        'dmin'              => $dmin,
+                                        'dmax'              => $dmax,
+                                        'rmin'              => $rmin,
+                                        'rmax'              => $rmax,
+                                        'arah'              => $arah
+
+                                    ]       
+
+                                );
+
+                            }
+
+                        });
+
+            $this->sendNotif('Gempa '.$nama);
+
+           }
+
+           if ($jenis=='erupsi')
+           {
+
+            $gempa      = new \App\GempaErupsi;
+            $table      = 'e_'.$kode;
+            $gempa->setTable($table);
+         
+            $vars       = DB::connection('magma')
+                        ->table('magma_var')
+                        ->select($select)
+                        ->where('var_'.$kode,'>',0)
+                        ->orderBy('no', 'asc')
+                        ->chunk(200,function($varx) use ($kode,$gempa)
+                        {
+
+                            foreach ($varx as $var) 
+                            {
+                            
+                                $no             = $var->no;
+                                $gacode         = $var->ga_code;
+                                $source         = $var->var_source;
+
+                                $obscode        = $this->obscode($gacode,$source);
+                                $noticenumber   = $obscode.$var->var_noticenumber;
+
+                                $jumlah     = $var->{'var_'.$kode};
+                                $amin       = $var->{'var_'.$kode.'_amin'};
+                                $amax       = $var->{'var_'.$kode.'_amax'};
+                                $dmin       = $var->{'var_'.$kode.'_dmin'};
+                                $dmax       = $var->{'var_'.$kode.'_dmax'};
+                                $tmin       = $var->{'var_'.$kode.'_tmin'};
+                                $tmax       = $var->{'var_'.$kode.'_tmax'};
+
+                                $update     = $gempa->updateOrCreate(
+
+                                    [   'noticenumber_id'   => $noticenumber],
+                                    [
+
+                                        'jumlah'            => $jumlah,
+                                        'amin'              => $amin,
+                                        'amax'              => $amax,
+                                        'dmin'              => $dmin,
+                                        'dmax'              => $dmax,
+                                        'tmin'              => $tmin,
+                                        'tmax'              => $tmax
+
+                                    ]       
+
+                                );
+                            }
+
+                        });
+
+            $this->sendNotif('Gempa '.$nama);
+
+           }
+
+           if ($jenis=='terasa')
+           {
+
+            $gempa      = new \App\GempaTerasa;
+            $table      = 'e_'.$kode;
+            $gempa->setTable($table);
+
+            $vars       = DB::connection('magma')
+                        ->table('magma_var')
+                        ->select($select)
+                        ->where('var_'.$kode,'>',0)
+                        ->orderBy('no', 'asc')
+                        ->chunk(200,function($varx) use ($kode,$gempa)
+                        {
+
+                            foreach ($varx as $var) 
+                            {
+                            
+                                $no             = $var->no;
+                                $gacode         = $var->ga_code;
+                                $source         = $var->var_source;
+
+                                $obscode        = $this->obscode($gacode,$source);
+                                $noticenumber   = $obscode.$var->var_noticenumber;
+
+                                $jumlah     = $var->{'var_'.$kode};
+                                $amin       = $var->{'var_'.$kode.'_amin'};
+                                $amax       = $var->{'var_'.$kode.'_amax'};
+                                $spmin      = $var->{'var_'.$kode.'_spmin'};
+                                $spmax      = $var->{'var_'.$kode.'_spmax'};
+                                $dmin       = $var->{'var_'.$kode.'_dmin'};
+                                $dmax       = $var->{'var_'.$kode.'_dmax'};
+                                $skala      = $var->{'var_'.$kode.'_skalamin'}.','.$var->{'var_'.$kode.'_skalamax'};
+                                $skala      = $this->skala($skala);
+
+                                $update     = $gempa->firstOrCreate(
+
+                                    [   'noticenumber_id'   => $noticenumber],
+                                    [
+
+                                        'jumlah'            => $jumlah,
+                                        'amin'              => $amin,
+                                        'amax'              => $amax,
+                                        'spmin'             => $spmin,
+                                        'spmax'             => $spmax,
+                                        'dmin'              => $dmin,
+                                        'dmax'              => $dmax,
+                                        'skala'             => $skala
+
+                                    ]       
+
+                                );
+
+                             }
+
+                        });
+
+            $this->sendNotif('Gempa '.$nama);
+
+           }
+        
+        }
+
+        $this->sendNotif('Data Gempa');
+        
+        // return response()->json($data);
+
+        // $tej    = new Gempa('tej');
+        // $tej->setJumlah(2);
+        // $tej->setAmin(10);
+        // return response()->json($$data);
+
+    }
+
     public function index()
     {
 
@@ -585,7 +967,8 @@ class ImportController extends Controller
         $vardailies = VarDaily::count();
         $visuals = VarVisual::count();
         $klimatologis = VarKlimatologi::count();
+        $gempagunungapi = GempaGunungApi::JumlahGempaGunungApi();
         
-        return view('import.index',compact('users','gadds','varsv1','vars','vardailies','visuals','klimatologis'));
+        return view('import.index',compact('users','gadds','varsv1','vars','vardailies','visuals','klimatologis','gempagunungapi'));
     }
 }
