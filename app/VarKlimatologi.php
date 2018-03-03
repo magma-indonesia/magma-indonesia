@@ -37,10 +37,9 @@ class VarKlimatologi extends Model
 
     ];
 
-    protected $hidden   = [
-
-        'id'
-
+    protected $hidden  = [
+        'id',
+        'noticenumber_id',
     ];
 
     protected $guarded  = [
