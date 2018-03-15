@@ -50,22 +50,20 @@
                             <h4 class="font-bold">{{ $gadd->name }}</h4>
                         </div>
                         <div class="panel-body">
-                            <h5>Pendahuluan</h5>
-                            <p class="text-muted">
-                                @if(!empty($gadd->history))
-                                    {!! $gadd->history->body !!}
-                                @else
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam a nunc varius, bibendum tortor a, iaculis mauris. Phasellus venenatis magna vel purus efficitur malesuada. Integer in metus id neque vehicula dictum vel nec augue. Mauris a magna eget enim feugiat ullamcorper non sed purus. Aliquam erat volutpat.
-                                @endif
-                            </p>
+                            <dl>
+                                <dt>Pendahuluan</dt>
+                                <dd>                                
+                                    @if(!empty($gadd->history))
+                                        {!! $gadd->history->body !!}
+                                    @else
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam a nunc varius, bibendum tortor a, iaculis mauris. Phasellus venenatis magna vel purus efficitur malesuada. Integer in metus id neque vehicula dictum vel nec augue. Mauris a magna eget enim feugiat ullamcorper non sed purus. Aliquam erat volutpat.
+                                    @endif
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>Data Dasar</dt>
+                            </dl>
                             <table class="table">
-                                <thead>
-                                    <tr>
-                                        <td>
-                                            <h5>Data Dasar</h5>
-                                        </td>
-                                    </tr>
-                                </thead>
                                 <tbody>
                                     <tr>
                                         <td><b>Tipe Gunung Api</b></td>
@@ -99,10 +97,12 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <h5>Keterangan Lainnya</h5>                            
-                            <p class="text-muted">
-                                Diisi keterangan lainnya
-                            </p>
+                            <dl>
+                                <dt>Keterangan Lainnya</dt>
+                                <dd>                                
+                                    Diisi keterangan lainnya
+                                </dd>
+                            </dl>
 
                             <a href="{{ route('volcanoes.edit',['id'=>$gadd->id]) }}" class="btn btn-success btn-sm m-t-xs">Edit</a>
                         </div>
