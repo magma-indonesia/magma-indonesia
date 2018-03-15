@@ -101,7 +101,6 @@
     <script src="{{ asset('vendor/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('vendor/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
     <script src="{{ asset('vendor/datatables.net-buttons-bs/js/buttons.bootstrap.min.js') }}"></script>
-    <script src="{{ asset('vendor/iCheck/icheck.min.js') }}"></script>
     <script src="{{ asset('vendor/sweetalert/lib/sweet-alert.min.js') }}"></script>
 
 @endsection

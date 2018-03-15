@@ -52,7 +52,7 @@
                         @role('Super Admin|Admin MGA')
                         <div class="form-group">
                             <label>Pembuat Laporan</label>
-                            <select class="form-control" name="user_id">
+                            <select id="user_id" class="form-control" name="user_id">
                                 @foreach($users as $user)
                                 <option value="{{ $user->id}}" {{ $user->id == auth()->user()->id ? 'selected' : ''}}>{{ $user->name }}</option>      
                                 @endforeach
@@ -90,6 +90,7 @@
 @section('add-vendor-script')
 <script src="{{ asset('vendor/summernote/dist/summernote.min.js') }}"></script>
 <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
+
 @endsection
 
 @section('add-script')

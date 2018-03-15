@@ -51,7 +51,7 @@
                         </p>
 
                         <form role="form" id="form" method="POST" action="{{ route('users.store') }}" enctype="multipart/form-data">
-                            {{ csrf_field() }}
+                            @csrf
                             <input name="_type" value="base" type="hidden">
                             <div class="form-group">
                                 <label>Nama</label> 
@@ -132,7 +132,6 @@
 @endsection 
 
 @section('add-vendor-script')
-<script src="{{ asset('vendor/iCheck/icheck.min.js') }}"></script>
 <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.1/croppie.min.js"></script>
 @endsection 

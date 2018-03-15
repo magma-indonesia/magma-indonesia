@@ -62,14 +62,17 @@
                     @yield('nav-edit-volcano')
                 </ul>
             </li>
-            <li class="{{ active('activities.*') }}">
+            <li class="{{ active(['activities.*','gunungapi.*']) }}">
                 <a href="#">
                     <span class="nav-label">Aktivitas</span>
                     <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
                     <li class="{{ active('activities.index') }}">
-                        <a href="{{ route('activities.index') }}">Gunung Api</a>
+                        <a href="{{ route('activities.index') }}">Semua Kebencanaan</a>
+                    </li>
+                    <li class="{{ active('gunungapi.index') }}">
+                        <a href="{{ route('gunungapi.index') }}">Gunung Api</a>
                     </li>
                 </ul>
             </li>

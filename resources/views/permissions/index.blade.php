@@ -35,87 +35,87 @@
 @endsection
 
 @section('content-body')
-        <div class="content animate-panel">
-            <div class="row">
-                <div class="col-lg-12">
+    <div class="content animate-panel">
+        <div class="row">
+            <div class="col-lg-12">
 
-                    <div class="hpanel">
-                        <div class="panel-heading">
-                            <div class="panel-tools">
-                                <a class="showhide">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
-                                <a class="closebox">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </div>
-                            Tabel Permissions
+                <div class="hpanel">
+                    <div class="panel-heading">
+                        <div class="panel-tools">
+                            <a class="showhide">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="closebox">
+                                <i class="fa fa-times"></i>
+                            </a>
                         </div>
-                        @if(Session::has('flash_message'))
-                        <div class="alert alert-success">
-                            <i class="fa fa-bolt"></i> {!! session('flash_message') !!}
-                        </div>
-                        @endif
-                        <div class="panel-body">
-                            <table id="table-permissions" class="table table-striped table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Permission</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($permissions as $permission)
-                                    <tr>
-                                        <td class="permission">{{ $permission->name }}</td>
-                                        <td>
-                                            <button type="button" value="{{ $permission->id }}" class="btn btn-sm btn-success btn-outline edit" data-toggle="modal" data-target="#edit">Edit</button>
-                                            <form style="display:inline" id="form-delete" method="POST" action="{{ route('permissions.destroy',['id'=>$permission->id]) }}" accept-charset="UTF-8">
-                                                {{ method_field('DELETE') }}
-                                                {{ csrf_field() }}
-                                                <button class="btn btn-sm btn-danger btn-outline" type="submit">Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-
-                            @if(!$permissions->isEmpty())
-                            <div class="modal fade hmodal-success" id="edit" tabindex="-1" role="dialog"  aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <form role="form" id="form-edit" method="POST" action="{{ url()->current() }}/">
-                                            <div class="color-line"></div>
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">Rubah Permission</h4>
-                                                <small class="font-bold">Rubah nama Permission sesuai dengan fungsi yang Roles</small>
-                                            </div>
-                                            <div class="modal-body">
-                                                    {{ method_field('PUT') }}
-                                                    {{ csrf_field() }}
-                                                    <div class="form-group">
-                                                        <label>Nama Permission</label> 
-                                                        <input id="modal-permission" name="name" type="text" placeholder="Masukkan Nama Permission" class="form-control" value="" required>
-                                                    </div>
-                                                    <div class="hr-line-dashed"></div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default close-modal" data-dismiss="modal">Close</button>
-                                                <button type="submit" id="form-submit" value="{{ $permission->id }}" class="btn btn-primary ladda-button" data-style="expand-right"><span class="ladda-label">Submit</span><span class="ladda-spinner">
-                                                </button>
-                                            </div>
+                        Tabel Permissions
+                    </div>
+                    @if(Session::has('flash_message'))
+                    <div class="alert alert-success">
+                        <i class="fa fa-bolt"></i> {!! session('flash_message') !!}
+                    </div>
+                    @endif
+                    <div class="panel-body">
+                        <table id="table-permissions" class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Permission</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($permissions as $permission)
+                                <tr>
+                                    <td class="permission">{{ $permission->name }}</td>
+                                    <td>
+                                        <button type="button" value="{{ $permission->id }}" class="btn btn-sm btn-success btn-outline edit" data-toggle="modal" data-target="#edit">Edit</button>
+                                        <form style="display:inline" id="form-delete" method="POST" action="{{ route('permissions.destroy',['id'=>$permission->id]) }}" accept-charset="UTF-8">
+                                            {{ method_field('DELETE') }}
+                                            {{ csrf_field() }}
+                                            <button class="btn btn-sm btn-danger btn-outline" type="submit">Delete</button>
                                         </form>
-                                    </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                        @if(!$permissions->isEmpty())
+                        <div class="modal fade hmodal-success" id="edit" tabindex="-1" role="dialog"  aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form role="form" id="form-edit" method="POST" action="{{ url()->current() }}/">
+                                        <div class="color-line"></div>
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Rubah Permission</h4>
+                                            <small class="font-bold">Rubah nama Permission sesuai dengan fungsi yang Roles</small>
+                                        </div>
+                                        <div class="modal-body">
+                                                {{ method_field('PUT') }}
+                                                {{ csrf_field() }}
+                                                <div class="form-group">
+                                                    <label>Nama Permission</label> 
+                                                    <input id="modal-permission" name="name" type="text" placeholder="Masukkan Nama Permission" class="form-control" value="" required>
+                                                </div>
+                                                <div class="hr-line-dashed"></div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default close-modal" data-dismiss="modal">Close</button>
+                                            <button type="submit" id="form-submit" value="{{ $permission->id }}" class="btn btn-primary ladda-button" data-style="expand-right"><span class="ladda-label">Submit</span><span class="ladda-spinner">
+                                            </button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-                            @endif
-
                         </div>
+                        @endif
+
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 @endsection
 
 @section('add-vendor-script')
