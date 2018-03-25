@@ -15,7 +15,7 @@ class CreateVarVisualsTable extends Migration
     {
         Schema::create('var_visuals', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('noticenumber_id',16)->index();
+            $table->string('noticenumber_id',16)->unique()->index();
             $table->foreign('noticenumber_id')->references('noticenumber')->on('magma_vars')->onDelete('cascade');
             $table->char('visibility',60)->nullable();
             $table->char('visual_asap',15)->nullable();

@@ -15,7 +15,7 @@ class CreateMagmaVarsTable extends Migration
     {
         Schema::create('magma_vars', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('noticenumber',16)->unique();
+            $table->string('noticenumber',16)->unique()->index();
             $table->dateTime('var_issued');
             $table->char('code_id',3)->index();
             $table->foreign('code_id')->references('code')->on('ga_dd');

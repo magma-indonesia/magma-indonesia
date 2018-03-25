@@ -15,7 +15,7 @@ class CreateVarGempasTable extends Migration
     {
         Schema::create('var_gempas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('noticenumber_id',16)->index();
+            $table->string('noticenumber_id',16)->unique()->index();
             $table->foreign('noticenumber_id')->references('noticenumber')->on('magma_vars')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
