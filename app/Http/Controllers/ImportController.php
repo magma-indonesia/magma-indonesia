@@ -152,7 +152,7 @@ class ImportController extends Controller
             strlen($item->email)>5 ? $email = $item->email : $email = NULL;
             strlen($item->phone)>9 ? $phone = str_replace('+62','0',$item->phone) : $phone = NULL;
             
-            User::firstOrCreate(
+            User::updateOrCreate(
                     [ 'nip' => $item->nip ],
                     [                 
                         'name'  => $item->name,
