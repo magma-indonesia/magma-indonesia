@@ -37,7 +37,19 @@ class UserController extends Controller
         list(, $photo)      = explode(',', $photo);
         $photo = base64_decode($photo);
         $photoName = uniqid().$filetype;
+        
         $uploadPhoto = Storage::disk('user')->put($photoName, $photo);
+
+        if (Storage::disk('user')->exists(optional(auth()->user()->photo)->filename))
+        {
+            Storage::disk('user')->delete(auth()->user()->photo->filename);
+            Storage::disk('user-thumb')->delete(auth()->user()->photo->filename);
+        }
+
+        $url = Storage::disk('user')->get($photoName);
+
+        $thumbnail = Image::make($url);
+        $thumbnail->resize(76, 76)->save(storage_path('app/users/photo/thumb/'.$photoName));
 
         if ($uploadPhoto)
         {
@@ -78,7 +90,9 @@ class UserController extends Controller
             {
                 $user = Auth::user();
                 $user->notify(new UserLogin($user));
-                $token = JWTAuth::attempt($credentials);
+                $token = Auth::guard('api')->attempt($credentials);
+
+                return redirect()->route('chamber')->header('Authorization','Bearer '.$token);
             }
 
             if ($this->hasTooManyLoginAttempts($request)) {
@@ -100,15 +114,6 @@ class UserController extends Controller
             return response()->json(['success' => false,'error' => 'could_not_create_token'], 500);
             
         }
-
-        $res    = [
-            
-            'success' => true,
-            'token' => $token
-
-        ];
-
-        return redirect()->route('chamber')->header('Authorization','Bearer '.$token);
 
     }
 
@@ -255,10 +260,11 @@ class UserController extends Controller
             'status' => 'required|boolean'
         ]);
 
-        $input = $request->all();
+        $input = $request->except(['imagebase64','file']);
         $name  = $request->name;        
         $roles = $request['roles'];
         $user->fill($input)->save();
+        $request->has('file') ? $uploadPhoto = $this->uploadPhoto($request->nip,$request->imagebase64,$request->filetype) : $uploadPhoto = true;
 
         if (isset($roles)) {        
             $user->roles()->sync($roles); 

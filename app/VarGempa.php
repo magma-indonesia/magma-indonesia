@@ -34,7 +34,7 @@ class VarGempa extends Model
 
     ];
 
-    protected function jumlah()
+    public static function jumlah()
     {
         $sum = 0;
         $sum += \App\EqApg::sum('jumlah');
@@ -67,7 +67,7 @@ class VarGempa extends Model
      */
     public function JumlahGempaGunungApi()
     {
-        return static::jumlah();
+        return $this->jumlah();
     }
 
     /**     
@@ -259,12 +259,6 @@ class VarGempa extends Model
         return $this->hasOne('App\EqMtr');
     }
 
-    public function setWith($data)
-    {
-
-        return $this->with = $data;
-
-    }
     /**     
      *   Masing-masing Var hanya memiliki
      *   1 data Gempa Tektonik Lokal

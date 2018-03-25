@@ -9,6 +9,12 @@ class MagmaVar extends Model
 {
     use SoftDeletes;
 
+    public $timestamps = false;
+
+    protected $casts = [
+        'var_data_date' => 'date:Y-m-d',
+    ];
+
     protected $dates = ['deleted_at','var_data_date'];
 
     protected $fillable = [
@@ -19,9 +25,9 @@ class MagmaVar extends Model
         'periode',
         'var_perwkt',
         'obscode_id',
+        'statuses_desc_id',
         'nip_pelapor',
-        'nip_pj',
-        'nip_verifikator',
+        'created_at'
     ];
 
     /**     
@@ -34,6 +40,18 @@ class MagmaVar extends Model
     public function user()
     {
         return $this->belongsTo('App\User','nip_pelapor','nip');
+    }
+
+    /**     
+     *   Masing-masing Var hanya memiliki
+     *   1 status gunung api
+     * 
+     *   @return \App\StatusIndex
+     * 
+     */
+    public function status()
+    {
+        return $this->belongsTo('App\StatusIndex','statuses_desc_id','id');
     }
 
     /**     

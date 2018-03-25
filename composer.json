@@ -12,7 +12,7 @@
         "laravel/framework": "5.6.*",
         "laravel/tinker": "~1.0",
         "spatie/laravel-permission": "^2.7",
-        "tymon/jwt-auth": "0.5.*",
+        "tymon/jwt-auth": "dev-develop",
         "watson/active": "^2.0"
     },
     "require-dev": {

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Resources\UserResource;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +13,9 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/user', function (Request $request) {
+    return new UserResource(App\User::find(1));
 });
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return new UserResource(User::find(1));
+// });

@@ -179,7 +179,7 @@ return [
 
         Spatie\Permission\PermissionServiceProvider::class,
         Watson\Active\ActiveServiceProvider::class,
-        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class    
 
     ],

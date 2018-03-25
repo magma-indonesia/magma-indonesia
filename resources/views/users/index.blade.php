@@ -10,27 +10,27 @@
 @endsection
 
 @section('content-header')
-        <div class="small-header">
-            <div class="hpanel">
-                <div class="panel-body">
-                    <div id="hbreadcrumb" class="pull-right">
-                        <ol class="hbreadcrumb breadcrumb">
-                            <li><a href="{{ route('chamber') }}">Chamber</a></li>
-                            <li>
-                                <span>Users</span>
-                            </li>
-                            <li class="active">
-                                <span>List </span>
-                            </li>
-                        </ol>
-                    </div>
-                    <h2 class="font-light m-b-xs">
-                        List Users
-                    </h2>
-                    <small>Daftar pengguna MAGMA Indonesia -  Pusat Vulkanologi dan Mitigasi Bencana Geologi</small>
+    <div class="small-header">
+        <div class="hpanel">
+            <div class="panel-body">
+                <div id="hbreadcrumb" class="pull-right">
+                    <ol class="hbreadcrumb breadcrumb">
+                        <li><a href="{{ route('chamber') }}">Chamber</a></li>
+                        <li>
+                            <span>Users</span>
+                        </li>
+                        <li class="active">
+                            <span>List </span>
+                        </li>
+                    </ol>
                 </div>
+                <h2 class="font-light m-b-xs">
+                    List Users
+                </h2>
+                <small>Daftar pengguna MAGMA Indonesia -  Pusat Vulkanologi dan Mitigasi Bencana Geologi</small>
             </div>
         </div>
+    </div>
 @endsection
 
 @section('content-body')

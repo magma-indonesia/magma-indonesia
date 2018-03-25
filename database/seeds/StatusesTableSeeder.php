@@ -11,11 +11,13 @@ class StatusesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('statuses')->insert([
-            ['level' => 1, 'status' => 'Level I (Normal)'],
-            ['level' => 2, 'status' => 'Level II (Waspada)'],
-            ['level' => 3, 'status' => 'Level III (Siaga)'],
-            ['level' => 4, 'status' => 'Level IV (Awas)']
+        DB::table('statuses_desc')->insert([                                
+            
+            ['status' => 'Level I (Normal)'],
+            ['status' => 'Level II (Waspada)'],
+            ['status' => 'Level III (Siaga)'],
+            ['status' => 'Level IV (Awas)']
+            
         ]);
     }
 }

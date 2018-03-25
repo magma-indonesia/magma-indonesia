@@ -1,7 +1,7 @@
 @extends('layouts.default') 
 
 @section('title') 
-MAGMA | Edit - {{ $gadd->name }}
+Gunungapi | Edit - {{ $gadd->name }}
 @endsection
 
 @section('add-vendor-css')
@@ -10,8 +10,8 @@ MAGMA | Edit - {{ $gadd->name }}
 @endsection
 
 @section('nav-edit-volcano')
-<li class="{{ active('volcanoes.*') }}">
-    <a href="{{ route('volcanoes.edit',$gadd->id) }}">Edit {{ $gadd->name }}</a>
+<li class="{{ active('gunungapi.*') }}">
+    <a href="{{ route('datadasar.edit',$gadd->id) }}">Edit {{ $gadd->name }}</a>
 </li>
 @endsection
 
@@ -57,7 +57,7 @@ MAGMA | Edit - {{ $gadd->name }}
                         Perubahan data dilakukan jika memang ada data yang tidak valid atau data memang perlu untuk diperbarui.
                     </p>
 
-                    <form role="form" id="form" method="POST" action="{{ route('volcanoes.update',$gadd->id) }}">
+                    <form role="form" id="form" method="POST" action="{{ route('datadasar.update',$gadd->id) }}">
                         {{ method_field('PUT') }}
                         {{ csrf_field() }}
                         <input name="_type" value="base" type="hidden">

@@ -18,8 +18,9 @@ class CreateVarPjsTable extends Migration
             $table->string('noticenumber_id',16)->index();
             $table->foreign('noticenumber_id')->references('noticenumber')->on('magma_vars')->onDelete('cascade');
             $table->string('nip_id',18)->nullable();
-            $table->foreign('nip_id')->references('nip')->on('users');
+            $table->foreign('nip_id')->references('nip')->on('users')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

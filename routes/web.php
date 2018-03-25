@@ -7,7 +7,7 @@
 | UserController, including View, Login, Register, Update, Delete
 |
 */
-Route::group(['middleware' => ['guest']], function () {
+Route::group(['middleware' => ['web','guest']], function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/login', 'UserController@showLoginForm')->name('login');
     Route::post('/login', 'UserController@login');
@@ -15,7 +15,8 @@ Route::group(['middleware' => ['guest']], function () {
 
 Route::get('/logout', 'UserController@logout')->name('logout');
 Route::get('/tes', 'TesController@index');
-Route::get('/tes/image', 'TesController@imageCrop');
+Route::get('/tes/image/', 'TesController@imageCrop');
+Route::get('/tes/image/{id?}', 'TesController@getFile')->name('tesimage');
 Route::post('/tes/image', 'TesController@imageCropPost');
 
 
@@ -26,22 +27,16 @@ Route::post('/tes/image', 'TesController@imageCropPost');
 | UserConstroller, including View, Login, Register, Update, Delete
 |
 */
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['web','auth']], function () {
 
-    Route::group(['prefix' => 'chambers'], function (){
+    Route::group(['prefix' => 'images'], function () {
+        Route::group(['prefix' => 'user'], function () {
+            Route::get('photo/{id?}','UserPhotoController@photo')->name('user.photo');
+        });
+    });
+
+    Route::group(['prefix' => 'chambers'], function () {
         Route::get('/', 'ChamberController@index')->name('chamber');
-        Route::resource('users', 'UserController');
-        Route::resource('permissions', 'PermissionController', ['except' => [
-            'show','edit'
-        ]]);
-        Route::resource('roles', 'RoleController', ['except' => [
-            'show'
-        ]]);
-        Route::resource('press', 'PressController');
-        Route::resource('activities', 'ActivityController');
-        Route::resource('volcanoes','VolcanoController');
-        
-        Route::resource('vona', 'VonaController');    
 
         Route::group(['prefix' => 'import'], function () {
             Route::get('/', 'ImportController@index')->name('import');
@@ -53,11 +48,33 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('klimatologi','ImportController@klimatologis')->name('import.klimatologi');
             Route::post('gempa','ImportController@gempa')->name('import.gempa');                  
         });
+
+        Route::resource('users', 'UserController');
+
+        Route::group(['prefix' => 'gunungapi'], function () {
+            Route::resource('datadasar','DataDasar');
+            Route::resource('laporanga','ActivityGaController');
+            Route::get('laporan/search','ActivityGaController@search')->name('laporan.gunungapi.search');
+            
+        });
+
+        Route::resource('permissions', 'PermissionController', ['except' => [
+            'show','edit'
+        ]]);
+        Route::resource('roles', 'RoleController', ['except' => [
+            'show'
+        ]]);
+        Route::resource('press', 'PressController');
+
+        Route::group(['prefix' => 'activities'], function(){
+            Route::get('/', 'ActivityController@index')->name('activities.index');
+        });
+        
+        Route::resource('vona', 'VonaController');    
+
     });
     
     Route::group(['prefix' => 'img'], function (){
         Route::get('/user/{id}', 'ImageController@user');
     });
 });
-
-

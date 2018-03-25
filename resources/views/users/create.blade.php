@@ -101,7 +101,7 @@
                                 <div class="upload-photo" style="display:none"></div>
                                 <label class="form-control btn btn-primary btn-file">
                                     <span class="label-file">Browse </span> 
-                                    <input class="file" name="file" type="file" style="display: none;">
+                                    <input accept="image/*" class="file" name="file" type="file" style="display: none;">
                                     <input type="hidden" id="imagebase64" name="imagebase64">
                                     <input type="hidden" id="filetype" name="filetype">                                  
                                 </label>
@@ -134,6 +134,7 @@
 @section('add-vendor-script')
 <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.1/croppie.min.js"></script>
+<script src="{{ asset('vendor/exif-js/exif.js') }}"></script>
 @endsection 
 
 @section('add-script')
@@ -167,7 +168,8 @@
 
             reader.onload = function (e) {
                 $uploadCrop.croppie('bind', {
-                    url: e.target.result
+                    url: e.target.result,
+                    orientation: 1
                 }).then(function(){
                     console.log('Binding Berhasil');
                 });

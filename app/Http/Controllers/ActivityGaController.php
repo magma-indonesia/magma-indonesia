@@ -8,24 +8,22 @@ use Carbon\Carbon;
 use App\Gadd;
 use App\MagmaVar;
 use App\VarDaily;
+use App\Http\Resources\VarResource;
 
-class ActivityController extends Controller
+class ActivityGaController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {     
-
-        $vars = MagmaVar::orderBy('var_data_date','desc')->orderBy('created_at','desc')->simplePaginate(30)->setPageName('ga_page');;
+    {
+        $vars = MagmaVar::orderBy('var_data_date','desc')->orderBy('created_at','desc')->simplePaginate(15);
         $gadds = Gadd::orderBy('name')->whereNotIn('code',['TEO','SBG'])->get();
 
         Carbon::setLocale('id'); 
-        return view('activities.index',compact('vars','gadds'));
-        
+        return view('gunungapi.laporan.index',compact('vars','gadds'));
     }
 
     /**
@@ -34,21 +32,16 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id, Request $request)
+    public function show($id)
     {
-        // return $request;
-        $var = MagmaVar::where('noticenumber',$id)->with([
+        $var = MagmaVar::where('noticenumber',$id)->first();
 
-            'user:name,nip',
-            'visual',
-            'visual.asap',
-            'klimatologi',
-            'gempa'
+        Carbon::setLocale('id');             
+        $var = new VarResource($var);
             
-            ])->first();
-
-        return $var;
-
+        // return $var;
+        
+        return view('gunungapi.laporan.show', compact('var'));
     }
 
     /**
@@ -57,7 +50,7 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function search($jenis, SearchGunungApi $request)
+    public function search(Request $request)
     {
         $tipe = $request->jenis;
         $code = strtoupper($request->gunungapi);
@@ -65,19 +58,25 @@ class ActivityController extends Controller
         $start = $request->input('start',null);
         $end = $request->input('end',null);
 
-        // switch ($tipe) {
-        //     case '0':
-        //         # code...
-        //         break;
+        switch ($tipe) {
+            case '0':
+                $end = Carbon::createFromFormat('Y-m-d',$start)->addDays(14)->format('Y-m-d');
+                break;
+            case '1':
+                $start = $bulan;
+                $end = Carbon::createFromFormat('Y-m-d',$bulan)->endOfMonth()->format('Y-m-d');
+                break;
             
-        //     default:
-        //         # code...
-        //         break;
-        // }
+            default:
+                $end = $end;
+                break;
+        }
+
+        // return $end;
 
         $vars = MagmaVar::where('code_id', 'like', $code)
                     ->whereBetween('var_data_date', [$start, $end])
-                    ->orderBy('var_data_date','desc')
+                    ->orderBy('var_data_date','asc')
                     ->orderBy('created_at','desc')
                     ->paginate(15);
 
@@ -89,14 +88,10 @@ class ActivityController extends Controller
         //     'end' => $end,
         // ]);
 
+
         Carbon::setLocale('id');
 
-        if ($jenis == 'ga')
-        {
-            return view('activities.gunungapi.search',compact('vars','gadds'));
-            
-        }
+        return view('gunungapi.laporan.search',compact('vars','gadds'));
 
     }
-
 }

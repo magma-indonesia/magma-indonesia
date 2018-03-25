@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Gadd;
 use App\User;
 use App\VarVisual;
 use App\VarAsap;
@@ -21,6 +22,17 @@ class TesController extends Controller
 
     public function index()
     {
+        return intval('6 jam');
+        //has many
+        $gadd = Gadd::where('code','AGU')->first();
+        $status = $gadd->status->first()->deskriptif;
+        return $status;
+
+        //get filename
+        $user = User::FindOrFail(auth()->user()->id);
+        $photo = $user->photo->filename;
+        return $photo;
+        
         //SUM collection
         $sum = \App\EqTej::sum('jumlah');
         return $sum;
@@ -33,6 +45,13 @@ class TesController extends Controller
         return $asap = VarAsap::find(2)->visual;
         
 
+    }
+
+    public function getFile($id)
+    {
+        $file = Storage::disk('user')->get('gZY9ubeGtTUBwx7DvvOXxifncBC6W8NlBYmSihDV.png');
+        return response($file, 200)->header('Content-Type', 'image/png');
+        
     }
 
     public function imageCrop()

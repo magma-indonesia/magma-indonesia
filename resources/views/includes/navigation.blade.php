@@ -2,8 +2,8 @@
     <div id="navigation">
         {{--  Mini Profile  --}}
         <div class="profile-picture">
-            <a href="index.html">
-                <img src="{{ asset('images/profile.jpg') }}" class="img-circle m-b" alt="logo">
+            <a href="{{ route('users.edit',['id' => auth()->user()->id]) }}">
+            <img class="img-circle m-b" src="{{ route('user.photo') }}" style="max-width: 76px;">
             </a>
 
             <div class="stats-label text-color">
@@ -21,11 +21,10 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="login.html">Logout</a>
+                            <a href="{{ route('logout') }}">Logout</a>
                         </li>
                     </ul>
                 </div>
-
 
                 <div id="sparkline1" class="small-chart m-t-sm"></div>
                 <div>
@@ -43,38 +42,13 @@
                 <a href="{{ route('chamber') }}">
                     <span class="nav-label">Magma Chamber</span>
                 </a>
-            </li>
+            </li>            
+
             <li class="{{ active('import') }}">
                 <a href="{{ route('import') }}">
                     <span class="nav-label">Import</span>
                     <span class="label label-success pull-right">v.1</span>
                 </a>
-            </li>
-            <li class="{{ active('volcanoes.*') }}">
-                <a href="#">
-                    <span class="nav-label">Data Dasar</span>
-                    <span class="fa arrow"></span>
-                </a>
-                <ul class="nav nav-second-level">
-                    <li class="{{ active('volcanoes') }}">
-                        <a href="{{ route('volcanoes.index') }}">Gunung Api</a>
-                    </li>
-                    @yield('nav-edit-volcano')
-                </ul>
-            </li>
-            <li class="{{ active(['activities.*','gunungapi.*']) }}">
-                <a href="#">
-                    <span class="nav-label">Aktivitas</span>
-                    <span class="fa arrow"></span>
-                </a>
-                <ul class="nav nav-second-level">
-                    <li class="{{ active('activities.index') }}">
-                        <a href="{{ route('activities.index') }}">Semua Kebencanaan</a>
-                    </li>
-                    <li class="{{ active('gunungapi.index') }}">
-                        <a href="{{ route('gunungapi.index') }}">Gunung Api</a>
-                    </li>
-                </ul>
             </li>
             <li class="{{ active('users.*') }}">
                 <a href="#">
@@ -89,6 +63,34 @@
                         <a href="{{ route('users.create') }}">Tambah Users</a>
                     </li>
                     @yield('nav-edit-user')
+                </ul>
+            </li>
+            <li class="{{ active(['activities.*','gunungapi.*']) }}">
+                <a href="#">
+                    <span class="nav-label">Aktivitas</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li class="{{ active('activities.index') }}">
+                        <a href="{{ route('activities.index') }}">Semua Kebencanaan</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="{{ active(['datadasar.*','laporanga.*','laporan.gunungapi.search']) }}">
+                <a href="#">
+                    <span class="nav-label">Gunung Api</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li class="{{ active('datadasar') }}">
+                        <a href="{{ route('datadasar.index') }}">Data Dasar</a>
+                    </li>
+                    @yield('nav-edit-volcano')
+                    <li class="{{ active('laporanga') }}">
+                        <a href="{{ route('laporanga.index') }}">Daftar Laporan</a>
+                    </li>
+                    @yield('nav-search-laporanga')                    
+                    @yield('nav-edit-datadasar')
                 </ul>
             </li>
             <li class="{{ active('permissions.*') }}">

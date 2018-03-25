@@ -40,14 +40,13 @@
 			<div class="col-md-10">
 				@if ($presses->isEmpty())
 				<div class="alert alert-info">
-					<h4>
-						<i class="fa fa-bolt"></i> Tidak ada data Press Release.
-						<a href="{{ route('press.create') }}">
-							<strong>Buat Press Release?</strong>
-						</a>
-					</h4>
+					<i class="fa fa-bolt"></i> Tidak ada data Press Release.
+					<a href="{{ route('press.create') }}">
+						<strong>Buat Press Release?</strong>
+					</a>
 				</div>
-				@endif @if(Session::has('flash_message'))
+				@endif 
+				@if(Session::has('flash_message'))
 				<div class="alert alert-success">
 					<i class="fa fa-bolt"></i> {!! session('flash_message') !!}
 				</div>

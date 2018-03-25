@@ -5,9 +5,100 @@ namespace App\Traits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\PosPga;
+use App\TempTable;
+use App\Import;
+
+use App\Notifications\ImportNotification;
 
 trait MagmaHelper
 {
+    /**     
+     *   Untuk mengirim notifikasi ke Slack
+     *   @param string $type jenis notifikasi
+     * 
+     */  
+    private function sendNotif($type)
+    {
+        $import = new Import();
+        $import->notify(new ImportNotification($type));
+
+        return;
+    }
+
+    /**     
+     *   Import data status gunung api
+     *   @param string $status gunung api
+     * 
+     */  
+    private function getStatus($status)
+    {
+        switch ($status){
+            case 'Level I (Normal)':
+                return 1;
+                break;
+            case 'Level II (Waspada)':
+                return 2;
+                break;
+            case 'Level III (Siaga)':
+                return 3;
+                break;
+            default:
+                return 4;
+        }
+    }
+
+    /**     
+     *   Start no dari magma_var v1
+     *   
+     * 
+     */  
+    private function endNo()
+    {
+        $end        = DB::connection('magma')
+                    ->table('magma_var')
+                    ->select('no')
+                    ->orderBy('no','desc')
+                    ->first();
+
+        $end        = $end->no;
+        
+        return $end;
+
+    }
+
+    /**     
+     *   Start no dari magma_var v1
+     *   
+     * 
+     */  
+    private function startNo($kode)
+    {
+        $start      = TempTable::select('no')->where('jenis',$kode)->orderBy('id')->first();
+                
+        if (empty($start))
+        {
+            return $start = 1;
+        } 
+
+        return $start  = $start->no;
+
+    }
+
+    /**     
+     *   Save for TempTable
+     *   untuk import data
+     *   @param string $kode gunung api, $no kolom no magma v1
+     */  
+    private function temptable($kode,$no)
+    {
+        $temp = TempTable::updateOrCreate(
+                    [   'jenis' => $kode ],
+                    [   'no' => $no      ]
+                );
+        
+        return;
+    }
+
     /**     
      *   Fungsi Update Pos Pengamatan Gunungapi Merapi
      *   karena memiliki lebih dari 1 Pos

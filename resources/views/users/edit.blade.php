@@ -1,7 +1,11 @@
 @extends('layouts.default') 
 
 @section('title') 
-    MAGMA | Edit User 
+    MAGMA | Edit {{ auth()->user()->name }} 
+@endsection
+
+@section('add-vendor-css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.1/croppie.min.css" />
 @endsection
 
 @section('nav-edit-user')
@@ -91,6 +95,20 @@
                                 @endif
                             </div>
                             <div class="form-group">
+                                <label>Upload Photo</label>
+                                <div class="upload-message">Upload Foto Profil Anda</div>
+                                <div class="upload-photo" style="display:none"></div>
+                                <label class="form-control btn btn-primary btn-file">
+                                    <span class="label-file">Browse </span> 
+                                    <input accept="image/*" class="file" name="file" type="file" style="display: none;">
+                                    <input type="hidden" id="imagebase64" name="imagebase64">
+                                    <input type="hidden" id="filetype" name="filetype">                                  
+                                </label>
+                                @if( $errors->has('file'))
+                                <label id="file-error" class="error" for="file">{{ ucfirst($errors->first('file')) }}</label>
+                                @endif
+                            </div>
+                            <div class="form-group">
                                 <label>Status User</label>
                                 <div>
                                     <label class="checkbox-inline"> 
@@ -132,12 +150,52 @@
 @endsection
 
 @section('add-vendor-script')
-    <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.1/croppie.min.js"></script>
+<script src="{{ asset('vendor/exif-js/exif.js') }}"></script>
 @endsection 
 
 @section('add-script')
 <script>
 	$(function(){
+
+        $uploadCrop = $('.upload-photo').croppie({
+            enableExif: true,
+            viewport: {
+                width: 300,
+                height: 300
+            },
+            boundary: {
+                width:310,
+                height:310
+            }
+        });
+
+        $('input.file').on('change', function() {
+             $('.upload-message').hide();
+             $('.upload-photo').show();
+        
+            var input = $(this),
+                label = input.val().replace(/\\/g, '/').replace(/.*\//, ''),
+                filetype = '.'+label.split('.').pop();
+                reader = new FileReader();
+
+            $('.label-file').html(label);
+            console.log('Nama file : '+label+', tipe : '+filetype);
+            $('#filetype').val(filetype);
+
+            reader.onload = function (e) {
+                $uploadCrop.croppie('bind', {
+                    url: e.target.result,
+                    orientation: 1
+                }).then(function(){
+                    console.log('Binding Berhasil');
+                });
+            }
+
+            reader.readAsDataURL(this.files[0]);
+            
+        });
 
         $("#form").validate({
             rules: {
@@ -178,14 +236,20 @@
                     email: 'Format email Anda belum benar'
                 },
                 phone: {
-                    required: 'Harap Masukkan email valid Anda',
+                    required: 'Nomor HP Anda belum benar',
                     digits: 'Format nomor telpon belum benar',
                     minlength: 'Panjang karakter minimal No HP adalah 10 karakter',
                     maxlength: 'Panjang karakter maksimal No HP adalah 12 karakter'
                 }
             },
             submitHandler: function(form) {
-                form.submit();
+                $uploadCrop.croppie('result', {
+                    type: 'canvas',
+                    size: 'viewport'
+                }).then(function (resp){
+                    $('#imagebase64').val(resp);
+                    form.submit();
+                });
             }
         });
 

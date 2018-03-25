@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Gadd;
 use App\History;
 
-class VolcanoController extends Controller
+class DataDasar extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class VolcanoController extends Controller
     public function index()
     {
         $gadds = Gadd::orderBy('name')->paginate(12);
-        return view('volcanoes.index',compact('gadds'));
+        return view('gunungapi.datadasar.index',compact('gadds'));
     }
 
     /**
@@ -67,7 +67,7 @@ class VolcanoController extends Controller
 
         $gadd = Gadd::findOrFail($id);
 
-        return view('volcanoes.edit', compact('gadd'));
+        return view('gunungapi.datadasar.edit', compact('gadd'));
     }
 
     /**

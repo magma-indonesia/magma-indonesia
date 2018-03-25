@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    Data Dasar - Gunung Api
+    Gunung Api | Data Dasar
 @endsection
 
 @section('add-vendor-css')
@@ -104,7 +104,7 @@
                                 </dd>
                             </dl>
 
-                            <a href="{{ route('volcanoes.edit',['id'=>$gadd->id]) }}" class="btn btn-success btn-sm m-t-xs">Edit</a>
+                            <a href="{{ route('datadasar.edit',['id'=>$gadd->id]) }}" class="btn btn-success btn-sm m-t-xs">Edit</a>
                         </div>
                     </div>
                 </div>

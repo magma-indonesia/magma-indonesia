@@ -17,3 +17,45 @@ hr {
 	background-color: #007fff;
 	border-color: #007fff;
 }
+
+#side-menu {
+    background:#f1f3f6;
+}
+
+.label-awas {
+    background-color: #F44336;
+}
+
+.label-siaga {
+    background-color: #FF9800;
+}
+
+.label-waspada {
+    background-color: #FFC107;
+}
+
+.label-normal {
+    background-color: #4CAF50;
+}
+
+.press-release {
+	font-family: "Times New Roman", Georgia, Serif;
+	font-size: 20px;
+	line-height: 32px;
+}
+
+.project-list table tr td[class="1"] {
+	border-left: 10px solid #4CAF50;
+}
+
+.project-list table tr td[class="2"] {
+	border-left: 10px solid #FFC107;
+}
+
+.project-list table tr td[class="3"] {
+	border-left: 10px solid #FF9800;
+}
+
+.project-list table tr td[class="4"] {
+	border-left: 10px solid #F44336;
+}

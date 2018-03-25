@@ -39,6 +39,15 @@ class Gadd extends Model
 
     /**     
      *   Masing-masing Gunungapi bisa memiliki lebih
+     *   dari 1 Status. Catatan peningkatan atau penurunan level Gunung Api
+     */
+    public function status()
+    {
+        return $this->hasMany('App\Status','code_id','code');
+    }
+
+    /**     
+     *   Masing-masing Gunungapi bisa memiliki lebih
      *   dari 1 Pos Pengamatan Gunung Api
      */
     public function pos()

@@ -1500,7 +1500,7 @@ html {
   overflow-x: hidden!important;
 }
 body {
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; 
   background-color: #fff;
   font-size: 13px;
   color: #6a6c6f;
@@ -1565,12 +1565,12 @@ body {
 }
 .color-line {
   background: #f7f9fa;
-  height: 6px;
-  background-image: -webkit-linear-gradient(left, #1A237E, #283593 25%, #303F9F 25%, #3949AB 35%, #3F51B5 35%, #3F51B5 45%, #5C6BC0 45%, #5C6BC0 55%, #7986CB 55%, #7986CB 65%, #9FA8DA 65%, #9FA8DA 75%, #C5CAE9 85%, #C5CAE9 85%, #E8EAF6 85%, #E8EAF6 100%);
-  background-image: -moz-linear-gradient(left, #1A237E, #283593 25%, #303F9F 25%, #3949AB 35%, #3F51B5 35%, #3F51B5 45%, #5C6BC0 45%, #5C6BC0 55%, #7986CB 55%, #7986CB 65%, #9FA8DA 65%, #9FA8DA 75%, #C5CAE9 85%, #C5CAE9 85%, #E8EAF6 85%, #E8EAF6 100%);
-  background-image: -ms-linear-gradient(left, #34495e, #34495e 25%, #9b59b6 25%, #9b59b6 35%, #3498db 35%, #3498db 45%, #007fff 45%, #007fff 55%, #ffb606 55%, #ffb606 65%, #e67e22 65%, #e67e22 75%, #e74c3c 85%, #e74c3c 85%, #c0392b 85%, #c0392b 100%);
-  background-image: linear-gradient(to right, #1A237E, #283593 25%, #303F9F 25%, #3949AB 35%, #3F51B5 35%, #3F51B5 45%, #5C6BC0 45%, #5C6BC0 55%, #7986CB 55%, #7986CB 65%, #9FA8DA 65%, #9FA8DA 75%, #C5CAE9 85%, #C5CAE9 85%, #E8EAF6 85%, #E8EAF6 100%);
-  background-size: 100% 6px;
+  height: 10px;
+  background-image: -webkit-linear-gradient(left, #34495e, #34495e 25%, #9b59b6 25%, #9b59b6 35%, #3498db 35%, #3498db 45%, #62cb31 45%, #62cb31 55%, #ffb606 55%, #ffb606 65%, #e67e22 65%, #e67e22 75%, #e74c3c 85%, #e74c3c 85%, #c0392b 85%, #c0392b 100%);
+  background-image: -moz-linear-gradient(left, #34495e, #34495e 25%, #9b59b6 25%, #9b59b6 35%, #3498db 35%, #3498db 45%, #62cb31 45%, #62cb31 55%, #ffb606 55%, #ffb606 65%, #e67e22 65%, #e67e22 75%, #e74c3c 85%, #e74c3c 85%, #c0392b 85%, #c0392b 100%);
+  background-image: -ms-linear-gradient(left, #34495e, #34495e 25%, #9b59b6 25%, #9b59b6 35%, #3498db 35%, #3498db 45%, #62cb31 45%, #62cb31 55%, #ffb606 55%, #ffb606 65%, #e67e22 65%, #e67e22 75%, #e74c3c 85%, #e74c3c 85%, #c0392b 85%, #c0392b 100%);
+  background-image: linear-gradient(to right, #34495e, #34495e 25%, #9b59b6 25%, #9b59b6 35%, #3498db 35%, #3498db 45%, #62cb31 45%, #62cb31 55%, #ffb606 55%, #ffb606 65%, #e67e22 65%, #e67e22 75%, #e74c3c 85%, #e74c3c 85%, #c0392b 85%, #c0392b 100%);
+  background-size: 100% 10px;
   background-position: 50% 100%;
   background-repeat: no-repeat;
 }

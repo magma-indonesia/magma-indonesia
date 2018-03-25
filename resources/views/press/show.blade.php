@@ -16,7 +16,7 @@
                         {{ $press->created_at->formatLocalized('%A, %d %B %Y, %H:%M').' WIB' }}
                     </div>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body press-release">
                     {!! $press->body !!}
                 </div>
                 <div class="panel-footer">

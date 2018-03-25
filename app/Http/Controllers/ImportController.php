@@ -17,9 +17,7 @@ use App\VarKlimatologi;
 use App\VarPj;
 use App\VarVerifikator;
 use App\VarGempa;
-
-use App\Import;
-use App\Notifications\ImportNotification;
+use App\Status;
 
 class ImportController extends Controller
 {
@@ -28,20 +26,9 @@ class ImportController extends Controller
 
     public function __construct(Request $request)
     {
-        set_error_handler(null);
-        ini_set('max_execution_time', 9000);
 
-    }
+        ini_set('max_execution_time', 1200);
 
-    /**     
-     *   Untuk mengirim notifikasi ke Slack
-     *   
-     * 
-     */  
-    protected function sendNotif($type)
-    {
-        $import = new Import();
-        $import->notify(new ImportNotification($type));
     }
 
     /**     
@@ -200,14 +187,15 @@ class ImportController extends Controller
 
     public function vars()
     {
+
         $vars           = DB::connection('magma')
                         ->table('magma_var')
-                        ->orderBy('no')
                         ->select(
 
                             'no',
                             'ga_code',
                             'var_noticenumber',
+                            'cu_status',
                             'var_issued',
                             'var_data_date',
                             'periode',
@@ -219,11 +207,14 @@ class ImportController extends Controller
                             'var_log'
 
                         )
-                        ->chunk(100, function($var)
+                        ->whereBetween('no',[$this->startNo('vars'),$this->endNo()])
+                        ->orderBy('no')
+                        ->chunk(1000, function($var)
                         {
 
                             foreach ($var as $varx) 
                             {
+                                $no             = $varx->no;
 
                                 $gacode                     = $varx->ga_code;
                                 $var_issued                 = str_replace('/','-',$varx->var_issued);
@@ -263,8 +254,9 @@ class ImportController extends Controller
                                                                     'code_id'               => $varx->ga_code,
                                                                     'var_data_date'         => $varx->var_data_date,
                                                                     'periode'               => $varx->periode,
-                                                                    'var_perwkt'            => $varx->var_perwkt,
+                                                                    'var_perwkt'            => intval($varx->var_perwkt),
                                                                     'obscode_id'            => $obscode,
+                                                                    'statuses_desc_id'      => $this->getStatus($varx->cu_status),
                                                                     'nip_pelapor'           => $var_nip_pelapor,
                                                                     'created_at'            => $varx->var_log
                                                                 ]
@@ -297,6 +289,8 @@ class ImportController extends Controller
                                             ]
                                         );
                                     }
+
+                                    $this->temptable('vars',$no);
                                 }
                             }
 
@@ -380,8 +374,9 @@ class ImportController extends Controller
                             'var_viskawah'
 
                         )
+                        ->whereBetween('no',[$this->startNo('visuals'),$this->endNo()])
                         ->orderBy('no','asc')
-                        ->chunk(100,function($varx)
+                        ->chunk(1000,function($varx)
                         {
                             foreach ($varx as $vars) 
                             {
@@ -450,6 +445,10 @@ class ImportController extends Controller
                                                         ]   
 
                                                     );
+                                if ($update) 
+                                {
+                                    $this->temptable('visuals',$no);
+                                }
 
                                 if ($visual_asap=='Teramati'){
                                     
@@ -505,8 +504,9 @@ class ImportController extends Controller
                             'var_arangin'
 
                         )
+                        ->whereBetween('no',[$this->startNo('klima'),$this->endNo()])
                         ->orderBy('no','asc')
-                        ->chunk(100,function($varx){
+                        ->chunk(1000,function($varx){
 
                             foreach ($varx as $var) {
 
@@ -566,6 +566,11 @@ class ImportController extends Controller
 
                                                     );
 
+                                if ($update)
+                                {
+                                    $this->temptable('klima',$no);
+                                }
+
                             };
 
                         });
@@ -604,9 +609,10 @@ class ImportController extends Controller
                 $vars       = DB::connection('magma')
                             ->table('magma_var')
                             ->select($select)
+                            ->whereBetween('no',[$this->startNo($kode),$this->endNo()])
                             ->where('var_'.$kode,'>',0)
                             ->orderBy('no', 'asc')
-                            ->chunk(200,function($varx) use ($kode,$gempa)
+                            ->chunk(1000,function($varx) use ($kode,$gempa)
                             {
 
                                 foreach ($varx as $var) 
@@ -646,14 +652,17 @@ class ImportController extends Controller
                                         ]       
 
                                     );
-
                                     
+                                    if ($update)
+                                    {
+                                        $this->temptable($kode,$no);
+                                    }
 
                                 }
 
                             });
 
-                $this->sendNotif(($key+1).'. Gempa '.$nama);
+                //$this->sendNotif(($key+1).'. Gempa '.$nama);
 
            }
 
@@ -666,10 +675,10 @@ class ImportController extends Controller
 
                 $vars       = DB::connection('magma')
                             ->table('magma_var')
-                            ->select($select)
+                            ->select($select)->whereBetween('no',[$this->startNo($kode),$this->endNo()])
                             ->where('var_'.$kode,'>',0)
                             ->orderBy('no', 'asc')
-                            ->chunk(200,function($varx) use ($kode,$gempa)
+                            ->chunk(1000,function($varx) use ($kode,$gempa)
                             {
 
                                 foreach ($varx as $var) 
@@ -705,12 +714,16 @@ class ImportController extends Controller
                                         ]       
 
                                     );
+                                    if ($update)
+                                    {
+                                        $this->temptable($kode,$no);
+                                    }
 
                                 }
 
                             });
 
-                $this->sendNotif(($key+1).'. Gempa '.$nama);
+                //$this->sendNotif(($key+1).'. Gempa '.$nama);
 
            }
 
@@ -720,13 +733,13 @@ class ImportController extends Controller
                 $gempa      = new \App\GempaDominan;
                 $table      = 'e_'.$kode;
                 $gempa->setTable($table);
-             
+
                 $vars       = DB::connection('magma')
                             ->table('magma_var')
-                            ->select($select)
+                            ->select($select)->whereBetween('no',[$this->startNo($kode),$this->endNo()])
                             ->where('var_'.$kode,'>',0)
                             ->orderBy('no', 'asc')
-                            ->chunk(200,function($varx) use ($kode,$gempa)
+                            ->chunk(1000,function($varx) use ($kode,$gempa)
                             {
     
                                 foreach ($varx as $var) 
@@ -760,12 +773,17 @@ class ImportController extends Controller
                                         ]       
     
                                     );
+
+                                    if ($update)
+                                    {
+                                        $this->temptable($kode,$no);
+                                    }
     
                                 }
     
                             });
                 
-                $this->sendNotif(($key+1).'. Gempa '.$nama);  
+                //$this->sendNotif(($key+1).'. Gempa '.$nama);  
                 
            }
 
@@ -775,13 +793,13 @@ class ImportController extends Controller
                 $gempa      = new \App\GempaLuncuran;
                 $table      = 'e_'.$kode;
                 $gempa->setTable($table);
-            
+
                 $vars       = DB::connection('magma')
                             ->table('magma_var')
-                            ->select($select)
+                            ->select($select)->whereBetween('no',[$this->startNo($kode),$this->endNo()])
                             ->where('var_'.$kode,'>',0)
                             ->orderBy('no', 'asc')
-                            ->chunk(200,function($varx) use ($kode,$gempa)
+                            ->chunk(1000,function($varx) use ($kode,$gempa)
                             {
 
                                 foreach ($varx as $var) 
@@ -832,11 +850,16 @@ class ImportController extends Controller
 
                                     );
 
+                                    if ($update)
+                                    {
+                                        $this->temptable($kode,$no);
+                                    }
+
                                 }
 
                             });
 
-                $this->sendNotif(($key+1).'. Gempa '.$nama);
+                //$this->sendNotif(($key+1).'. Gempa '.$nama);
 
            }
 
@@ -850,9 +873,10 @@ class ImportController extends Controller
                 $vars       = DB::connection('magma')
                             ->table('magma_var')
                             ->select($select)
+                            ->whereBetween('no',[$this->startNo($kode),$this->endNo()])
                             ->where('var_'.$kode,'>',0)
                             ->orderBy('no', 'asc')
-                            ->chunk(200,function($varx) use ($kode,$gempa)
+                            ->chunk(1000,function($varx) use ($kode,$gempa)
                             {
 
                                 foreach ($varx as $var) 
@@ -892,11 +916,16 @@ class ImportController extends Controller
                                         ]       
 
                                     );
+
+                                    if ($update)
+                                    {
+                                        $this->temptable($kode,$no);
+                                    }
                                 }
 
                             });
 
-                $this->sendNotif(($key+1).'. Gempa '.$nama);
+                //$this->sendNotif(($key+1).'. Gempa '.$nama);
 
            }
 
@@ -909,10 +938,10 @@ class ImportController extends Controller
 
                 $vars       = DB::connection('magma')
                             ->table('magma_var')
-                            ->select($select)
+                            ->select($select)->whereBetween('no',[$this->startNo($kode),$this->endNo()])
                             ->where('var_'.$kode,'>',0)
                             ->orderBy('no', 'asc')
-                            ->chunk(200,function($varx) use ($kode,$gempa)
+                            ->chunk(1000,function($varx) use ($kode,$gempa)
                             {
 
                                 foreach ($varx as $var) 
@@ -956,11 +985,16 @@ class ImportController extends Controller
 
                                     );
 
+                                    if ($update)
+                                    {
+                                        $this->temptable($kode,$no);
+                                    }
+
                                 }
 
                             });
 
-                $this->sendNotif(($key+1).'. Gempa '.$nama);
+                //$this->sendNotif(($key+1).'. Gempa '.$nama);
 
            }
         
@@ -971,12 +1005,54 @@ class ImportController extends Controller
         $data = [
             'success' => 1,
             'message' => 'Data Kegempaan berhasil diperbarui',
-            'count' => VarGempa::JumlahGempaGunungApi()
+            'count' => VarGempa::jumlah()
         ];
 
         return response()->json($data);
  
     }
+
+    public function status()
+    {
+        $gadds  = Gadd::select('code')->get();
+
+        $statuses = ['Level I (Normal)','Level II (Waspada)','Level III (Siaga)','Level IV (Awas)'];
+
+        foreach ($gadds as $gadd)
+        {
+            $kode = 'status-'.$gadd->code;
+
+            $vars = DB::connection('magma')
+                    ->table('magma_var')
+                    ->select('no','ga_code','cu_status')
+                    ->where('ga_code',$gadd->code)
+                    ->whereBetween('no',[$this->startNo($kode),$this->endNo()])
+                    ->chunk(1000, function($var){
+
+                        foreach ($var as $key => $varx)
+                        {
+                
+                            $no = $varx->no;
+
+                            if ($key == 0)
+                            {
+                                $status = $varx->cu_status;
+
+                            }
+
+                            if ($update)
+                            {
+                                $this->temptable($kode,$no);
+                            }
+
+
+                        }
+
+                    });
+
+        }
+    }
+
 
     public function index()
     {
@@ -988,7 +1064,8 @@ class ImportController extends Controller
         $vardailies = VarDaily::count();
         $visuals = VarVisual::count();
         $klimatologis = VarKlimatologi::count();
-        $gempa = VarGempa::JumlahGempaGunungApi();
+        $gempa = new VarGempa();
+        $gempa = $gempa->jumlah();
         
         return view('import.index',compact('users','gadds','varsv1','vars','vardailies','visuals','klimatologis','gempa'));
     }

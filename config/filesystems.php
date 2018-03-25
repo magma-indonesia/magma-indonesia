@@ -57,8 +57,12 @@ return [
 
         'user' => [
             'driver' => 'local',
-            'root' => storage_path('app/user/profile'),
-            'visibility' => 'private',
+            'root' => storage_path('app/users/photo'),
+        ],
+
+        'user-thumb' => [
+            'driver' => 'local',
+            'root' => storage_path('app/users/photo/thumb'),
         ],
 
         'public' => [
