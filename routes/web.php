@@ -31,7 +31,7 @@ Route::group(['middleware' => ['web','auth']], function () {
 
     Route::group(['prefix' => 'images'], function () {
         Route::group(['prefix' => 'user'], function () {
-            Route::get('photo/{id?}','UserPhotoController@photo')->name('user.photo');
+            Route::get('photo/{id?}/{high?}','UserPhotoController@photo')->name('user.photo');
         });
     });
 
