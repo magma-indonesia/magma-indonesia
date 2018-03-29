@@ -12,6 +12,8 @@ use App\VarDaily;
 use App\Http\Resources\VarResource;
 use App\Http\Resources\VarCollection;
 use App\Http\Resources\GunungApiCollection;
+use App\Http\Resources\LatestVarCollection;
+
 
 class VarController extends Controller 
 {
@@ -31,5 +33,21 @@ class VarController extends Controller
         // return $var;
         
         return view('gunungapi.laporan.show', compact('var'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function latest()
+    {
+        $gadds = Gadd::orderBy('name')
+                    ->whereNotIn('code',['TEO','SBG'])
+                    ->get();
+            
+        return $vars = new LatestVarCollection($gadds);
+        
     }
 }

@@ -20,6 +20,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::group(['prefix' => 'v1'], function () {
 
         Route::get('user/{nip}','Api\UserController@show');
+        Route::get('var/latest','Api\VarController@latest');
         Route::get('var/{id}','Api\VarController@show');
     });
 });
