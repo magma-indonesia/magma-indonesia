@@ -9,6 +9,8 @@ use App\Gadd;
 use App\MagmaVar;
 use App\VarDaily;
 use App\Http\Resources\VarResource;
+use App\Http\Resources\VarCollection;
+use App\Http\Resources\GunungApiCollection;
 
 class ActivityGaController extends Controller
 {
@@ -19,9 +21,17 @@ class ActivityGaController extends Controller
      */
     public function index()
     {
-        $vars = MagmaVar::orderBy('var_data_date','desc')->orderBy('created_at','desc')->simplePaginate(15);
-        $gadds = Gadd::orderBy('name')->whereNotIn('code',['TEO','SBG'])->get();
+        $vars = MagmaVar::orderBy('var_data_date','desc')
+                    ->orderBy('created_at','desc')
+                    ->simplePaginate(15);
 
+        $gadds = Gadd::orderBy('name')
+                    ->whereNotIn('code',['TEO','SBG'])
+                    ->get();
+
+        // return $vars = new GunungApiCollection($gadds);
+
+        // return view('tes',compact('vars'));
         Carbon::setLocale('id'); 
         return view('gunungapi.laporan.index',compact('vars','gadds'));
     }

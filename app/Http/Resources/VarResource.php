@@ -22,17 +22,7 @@ class VarResource extends JsonResource
     {
         return [
             'meta' => [
-                'id'            => $this->id,
-                'gunungapi'     => new GunungApiResource($this->gunungapi),
-                'noticenumber'  => $this->noticenumber,
-                'issued'        => $this->var_issued,
-                'issued_day'    => $this->convertToDay($this->var_issued, ' %H:%I:%S'),
-                'data_date'     => $this->var_data_date->toDateString(),
-                'data_date_day' => $this->convertToDay($this->var_data_date),
-                'created'       => $this->created_at,
-                'created_day'   => $this->convertToDay($this->created_at, ' %H:%I:%S'),
-                'periode'       => intval($this->var_perwkt),
-                'pelapor'       => new UserResource($this->user),
+                'key' => 'value'
             ],
         ];
     }
@@ -47,11 +37,22 @@ class VarResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
-            
+
+            'id'            => $this->id,
+            'gunungapi'     => new GunungApiResource($this->gunungapi),
+            'noticenumber'  => $this->noticenumber,
+            'issued'        => $this->var_issued,
+            'issued_day'    => $this->convertToDay($this->var_issued, ' %H:%I:%S'),
+            'data_date'     => $this->var_data_date->toDateString(),
+            'data_date_day' => $this->convertToDay($this->var_data_date),
+            'created'       => $this->created_at,
+            'created_day'   => $this->convertToDay($this->created_at, ' %H:%I:%S'),
+            'periode'       => intval($this->var_perwkt),
+            'pelapor'       => new UserResource($this->user),
             'status'        => $this->statuses_desc_id,
-            'gempa'         => new GempaResource($this->gempa),
             'visual'        => new VisualResource($this->visual),
             'klimatologi'   => new KlimatologiResource($this->klimatologi),
+            'gempa'         => new GempaResource($this->gempa),
             
         ];
     }

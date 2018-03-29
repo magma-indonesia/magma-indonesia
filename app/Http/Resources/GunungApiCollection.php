@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class VarCollection extends ResourceCollection
+class GunungApiCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -14,6 +14,6 @@ class VarCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return VarResource::collection($this->collection);
+        return GunungApiResource::collection($this->collection);
     }
 }
