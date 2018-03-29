@@ -15,7 +15,7 @@ class UserLogin extends Notification
 
     protected function content()
     {
-        $this->type == 'api' ? $content = '*API - '.$this->user->name.'* berhasil login' : '*'.$this->user->name.'* login via Web';
+        $this->type == 'api' ? $content = '*API - '.$this->user->name.'* berhasil login' : $content = '*'.$this->user->name.'* login via Web';
 
         return $content;
     }
