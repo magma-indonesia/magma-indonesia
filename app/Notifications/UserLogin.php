@@ -11,16 +11,24 @@ class UserLogin extends Notification
 {
     use Queueable;
 
-    protected $user;
+    protected $type,$user;
+
+    protected function content()
+    {
+        $this->type == 'api' ? $content = '*API - '.$this->user->name.'* berhasil login' : '*'.$this->user->name.'* login via Web';
+
+        return $content;
+    }
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($type = 'web', $user)
     {
         $this->user = $user;
+        $this->type = $type;
     }
 
     /**
@@ -44,6 +52,6 @@ class UserLogin extends Notification
     {
         return (new SlackMessage)
                     ->from('Super Admin',':ghost:')
-                    ->content('*'.$this->user->name.'* login via Web');
+                    ->content('*'.$this->content().'* login via Web');
     }
 }
