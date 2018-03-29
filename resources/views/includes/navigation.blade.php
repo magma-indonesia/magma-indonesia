@@ -3,7 +3,7 @@
         {{--  Mini Profile  --}}
         <div class="profile-picture">
             <a href="{{ route('users.edit',['id' => auth()->user()->id]) }}">
-            <img class="img-circle m-b" src="{{ route('user.photo') }}" style="max-width: 76px;">
+            <img class="img-circle m-b" src="{{ route('user.photo',['id' => auth()->user()->id]) }}" style="max-width: 76px;">
             </a>
 
             <div class="stats-label text-color">
