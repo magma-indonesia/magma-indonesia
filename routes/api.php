@@ -16,9 +16,10 @@ use App\Http\Resources\UserResource;
 Route::get('login','Api\UserController@index');
 Route::post('login', 'Api\UserController@login');
 
-Route::group(['prefix' => 'v1'], function () {
-    Route::get('/user', function (Request $request) {
-        return new UserResource(App\User::find(1));
+Route::group(['middleware' => ['auth:api']], function () {
+    Route::group(['prefix' => 'v1'], function () {
+
+        Route::get('user/{nip}','Api\UserController@show');
     });
 });
 // Route::middleware('auth:api')->get('/user', function (Request $request) {

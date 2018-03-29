@@ -48,6 +48,52 @@ trait MagmaHelper
     }
 
     /**     
+     *   Bidang dari masing-masing user
+     *   
+     * 
+     */  
+    protected function bidangConvert($bidang)
+    {
+        if (empty($bidang) || strlen($bidang)<3 )
+        {
+            return 5;
+        }
+
+        if (str_contains($bidang,'kanologi'))
+        {
+            return 1;
+        }
+
+        if (str_contains($bidang,'unung'))
+        {
+            return 2;
+        }
+
+        if (str_contains($bidang,'anah'))
+        {
+            return 3;
+        }
+
+        if (str_contains($bidang,'empa'))
+        {
+            return 4;
+        }
+
+        if (str_contains($bidang,'alai'))
+        {
+            return 5;
+        }
+
+        if (str_contains($bidang,'saha'))
+        {
+            return 6;
+        }
+        
+        return 5;
+
+    }
+
+    /**     
      *   Start no dari magma_var v1
      *   
      * 

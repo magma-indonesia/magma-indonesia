@@ -67,13 +67,16 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'id',
         'password', 
         'remember_token',
         'status',
         'created_at',
         'updated_at',
         'deleted_at',
+    ];
+
+    protected $guarded  = [
+        'id'
     ];
 
     /**
@@ -86,6 +89,15 @@ class User extends Authenticatable implements JWTSubject
     public function setPasswordAttribute($password)
     {   
         $this->attributes['password'] = bcrypt($password);
+    }
+
+    /**     
+     *   Masing-masing user hanya memiliki 1 Bidang
+     */
+
+    public function bidang()
+    {
+        return $this->hasOne('App\UserBidang','user_id','id');
     }
 
     /**     

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Traits\MagmaHelper;
 use App\Traits\JenisGempa;
 use App\User;
+use App\UserBidang;
 use App\Gadd;
 use App\PosPga;
 use App\MagmaVar;
@@ -181,6 +182,31 @@ class ImportController extends Controller
             $this->sendNotif('Users');
             
             return response()->json($data);
+        }
+
+    }
+
+    public function bidang()
+    {
+        $users  = DB::connection('magma')
+                ->table('vg_peg')
+                ->select(
+                    'vg_nip AS nip',
+                    'vg_bid AS bidang'
+                    )
+                ->orderBy('id')
+                ->get();
+
+        foreach ($users as $user) {
+
+            $bidang = $this->bidangConvert($user->bidang);
+            $user = User::where('nip',$user->nip)->firstOrFail();
+            // return $user;
+
+            $update             = UserBidang::firstOrCreate(
+                                        ['user_id' => $user->id], ['user_bidang_desc_id'  => $bidang]   
+                                    );
+
         }
 
     }

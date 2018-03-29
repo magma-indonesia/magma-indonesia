@@ -42,6 +42,7 @@ Route::group(['middleware' => ['web','auth']], function () {
             Route::get('/', 'ImportController@index')->name('import');
             Route::post('gadds','ImportController@gadds')->name('import.gadds');            
             Route::post('users','ImportController@users')->name('import.users');
+            Route::get('bidang','ImportController@bidang')->name('import.bidang');
             Route::post('vars','ImportController@vars')->name('import.vars');
             Route::post('dailies','ImportController@dailies')->name('import.dailies');
             Route::post('visuals','ImportController@visuals')->name('import.visuals');

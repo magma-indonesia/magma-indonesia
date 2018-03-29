@@ -19,10 +19,11 @@ class UserController extends Controller
     // {
     //     $this->middleware('guest')->except('logout');
     // }
-    
+
     public function index()
     {
-        return 'v1';
+        $user = JWTAuth::parseToken()->authenticate();
+        return $user;
     }
 
     /** 
@@ -95,6 +96,18 @@ class UserController extends Controller
 
         return $this->loginAttempt($request);
 
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($nip)
+    {   
+        $user = User::where('nip',$nip)->first();
+        return new UserResource($user);
     }
 
 }
