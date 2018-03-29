@@ -89,7 +89,7 @@ class UserController extends Controller
             if (Auth::attempt([$username => $request->username, 'password' => $request->password, 'status' => 1]))
             {
                 $user = Auth::user();
-                $user->notify(new UserLogin($user));
+                $user->notify(new UserLogin('web',$user));
                 $token = Auth::guard('api')->attempt($credentials);
 
                 return redirect()->route('chamber')->header('Authorization','Bearer '.$token);
@@ -264,7 +264,8 @@ class UserController extends Controller
         $name  = $request->name;        
         $roles = $request['roles'];
         $user->fill($input)->save();
-        $request->has('file') ? $uploadPhoto = $this->uploadPhoto($request->nip,$request->imagebase64,$request->filetype) : $uploadPhoto = true;
+            
+        $request->file ? $uploadPhoto = $this->uploadPhoto($request->nip,$request->imagebase64,$request->filetype) : $uploadPhoto = true;
 
         if (isset($roles)) {        
             $user->roles()->sync($roles); 
