@@ -22,6 +22,10 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('user/{nip}','Api\UserController@show');
         Route::get('var/latest','Api\VarController@latest');
         Route::get('var/{id}','Api\VarController@show');
+
+        Route::resource('roq','Api\OldRoqController', ['except' => [
+            'create','edit','store','destroy'
+        ]]);
     });
 });
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
