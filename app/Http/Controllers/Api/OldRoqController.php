@@ -68,6 +68,8 @@ class OldRoqController extends Controller
 
         $nip_pelapor = $request->nip_pelapor;
         $nama_pelapor = User::where('nip',$request->nip_pelapor)->first()->name;
+
+        $sumber = 'Badan Meteorologi, Klimatologi dan Geofisika (BMKG);Deutsche GeoForschungsZentrum (GFZ)';
         
         if (in_array($nip_pelapor,$verikator))
         {
@@ -97,7 +99,7 @@ class OldRoqController extends Controller
         }
         
         $roq->fill([
-            'roq_tanggapan' => $request->tanggapan,
+            'roq_tanggapan' => empty($request->tanggapan) ? 'TIDAK' : $request->tanggapan,
             'roq_title' => $request->title,
             'roq_tsu' => empty($request->tsunami) ? 'TIDAK' : $request->tsunami,
             'roq_intro' => $request->intro,
@@ -105,7 +107,7 @@ class OldRoqController extends Controller
             'roq_mekanisme' => $request->mekanisme,
             'roq_efek' => $request->efek,
             'roq_rekom' => $request->rekomendasi,
-            'roq_source' => $request->sumber
+            'roq_source' => $sumber
         ]);
 
         $data = [
