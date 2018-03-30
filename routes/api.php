@@ -15,6 +15,7 @@ use App\Http\Resources\UserResource;
 */
 Route::get('login','Api\UserController@index');
 Route::post('login', 'Api\UserController@login');
+Route::get('logout', 'Api\UserController@logout');
 
 Route::group(['middleware' => ['auth:api']], function () {
     Route::group(['prefix' => 'v1'], function () {

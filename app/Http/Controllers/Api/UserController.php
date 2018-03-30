@@ -110,4 +110,14 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
+    public function logout(Request $request)
+    {
+        $user = JWTAuth::setToken($request->token)->invalidate();
+        
+        return response()->json([
+            'data' => [ 'success' => true, 'message' => 'Berhasil menghapus token'],
+        ]);
+    }
+    
+
 }
