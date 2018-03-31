@@ -16,6 +16,11 @@ use App\Http\Resources\UserResource;
 Route::post('login', 'Api\UserController@login');
 Route::get('logout', 'Api\UserController@logout');
 
+Route::group(['prefix' => 'tesuser'], function() {
+    Route::get('mgt','TesUserMgtController@index');
+    Route::get('mgb','TesUserMgbController@index');
+});
+
 Route::group(['middleware' => ['auth:api']], function () {
     Route::group(['prefix' => 'v1'], function () {
         Route::get('user','Api\UserController@index');
