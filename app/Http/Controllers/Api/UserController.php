@@ -9,6 +9,7 @@ use Auth;
 use JWTAuth;
 use App\User;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\UserCollection;
 use App\Notifications\UserLogin;
 use App\Notifications\User As UserNotification;
 
@@ -20,10 +21,15 @@ class UserController extends Controller
     //     $this->middleware('guest')->except('logout');
     // }
 
-    public function index()
+    public function index(Request $request)
     {
-        $user = JWTAuth::parseToken()->authenticate();
-        return $user;
+    
+        $request->has('bidang') ? $bidang = $request->bidang : $bidang = '%';
+        $users = User::whereHas('bidang.deskriptif', function($query) use($bidang){
+            $query->where('code','like',$bidang);
+        })->paginate(30);  
+        return new UserCollection($users);
+        
     }
 
     /** 

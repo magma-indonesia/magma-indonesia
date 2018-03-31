@@ -13,13 +13,12 @@ use App\Http\Resources\UserResource;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('login','Api\UserController@index');
 Route::post('login', 'Api\UserController@login');
 Route::get('logout', 'Api\UserController@logout');
 
 Route::group(['middleware' => ['auth:api']], function () {
     Route::group(['prefix' => 'v1'], function () {
-
+        Route::get('user','Api\UserController@index');
         Route::get('user/{nip}','Api\UserController@show');
         Route::get('var/latest','Api\VarController@latest');
         Route::get('var/{id}','Api\VarController@show');
