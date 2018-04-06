@@ -52,6 +52,6 @@ class UserLogin extends Notification
     {
         return (new SlackMessage)
                     ->from('Super Admin',':ghost:')
-                    ->content('*'.$this->content().'* login via Web');
+                    ->content($this->content());
     }
 }
