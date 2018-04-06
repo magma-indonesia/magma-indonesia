@@ -73,7 +73,7 @@ class ActivityGaController extends Controller
                 $end = Carbon::createFromFormat('Y-m-d',$start)->addDays(14)->format('Y-m-d');
                 break;
             case '1':
-                $start = $bulan;
+                $start = Carbon::createFromFormat('Y-m-d',$bulan)->startOfMonth()->format('Y-m-d');
                 $end = Carbon::createFromFormat('Y-m-d',$bulan)->endOfMonth()->format('Y-m-d');
                 break;
             
@@ -88,7 +88,7 @@ class ActivityGaController extends Controller
                     ->whereBetween('var_data_date', [$start, $end])
                     ->orderBy('var_data_date','asc')
                     ->orderBy('created_at','desc')
-                    ->paginate(15);
+                    ->paginate(31);
 
         // $vars->appends([
         //     'gunungapi' => $code,
