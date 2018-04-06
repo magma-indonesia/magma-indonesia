@@ -75,7 +75,7 @@
                                                 <i class="fa fa-clock-o"></i> Tanggal : {{ $var->var_data_date->formatLocalized('%d %B %Y') }}</small>
                                         </td>
                                         <td>
-                                            <span class="pie">{{ $var->var_perwkt.', '.$var->periode }}</span>
+                                            <span class="pie">{{ $var->var_perwkt.' Jam, '.$var->periode }}</span>
                                         </td>
                                         {{--  <td>
                                             <strong>{{ $var->var_data_date->diffForHumans() }}</strong>
