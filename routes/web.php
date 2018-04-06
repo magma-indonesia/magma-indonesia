@@ -47,7 +47,8 @@ Route::group(['middleware' => ['web','auth']], function () {
             Route::post('dailies','ImportController@dailies')->name('import.dailies');
             Route::post('visuals','ImportController@visuals')->name('import.visuals');
             Route::post('klimatologi','ImportController@klimatologis')->name('import.klimatologi');
-            Route::post('gempa','ImportController@gempa')->name('import.gempa');                  
+            Route::post('gempa','ImportController@gempa')->name('import.gempa');
+            Route::get('vona','ImportController@vona')->name('import.vona');                     
         });
 
         Route::resource('users', 'UserController');
