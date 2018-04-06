@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use App\Traits\MagmaHelper;
 use App\Traits\JenisGempa;
 use App\User;
@@ -1038,6 +1039,7 @@ class ImportController extends Controller
  
     }
 
+    //belum beres
     public function status()
     {
         $gadds  = Gadd::select('code')->get();
@@ -1077,6 +1079,29 @@ class ImportController extends Controller
                     });
 
         }
+    }
+
+    public function vona()
+    {
+        // return 'vona';
+
+        $vonas = DB::connection('magma')->table('ga_vona')->select('issued','type')->limit(10)->get();
+
+        $vonas = $vonas->map(function ($vona,$key){
+            
+            $issued = str_replace('Z','',$vona->issued);
+            $issued = Carbon::createFromFormat('Ymd/Hi', $issued)->toDateTimeString();
+
+            $vona->type == 'REAL' ? $type = 1 : $type = 0;
+
+            return [
+                'issued' => $issued,
+                'type'  => $type
+            ];
+        });
+
+        // 20160216/2345Z
+        return $vonas;
     }
 
 
