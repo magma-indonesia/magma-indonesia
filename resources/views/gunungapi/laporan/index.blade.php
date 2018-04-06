@@ -111,20 +111,6 @@
                                 <label class="error" for="end">{{ ucfirst($errors->first('end')) }}</label>
                                 @endif
                             </div>
-                            <div class="form-group">
-                                <label class="control-label">Tags:</label>
-                                <div class="input-group">
-                                    <select class="select2" multiple="multiple" >
-                                        <option selected value="Branding">Branding</option>
-                                        <option selected value="Website">Website</option>
-                                        <option selected value="Design">Design</option>
-                                        <option selected value="Ilustration">Ilustration</option>
-                                        <option selected value="New">New</option>
-                                        <option value="Important">Important</option>
-                                        <option value="External">External</option>
-                                    </select>
-                                </div>
-                            </div>
 
                             <button class="btn btn-success btn-block" type="submit">Apply</button>
 
