@@ -76,7 +76,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="{{ active(['datadasar.*','laporanga.*','laporan.gunungapi.search']) }}">
+            <li class="{{ active(['datadasar.*','laporanga.*','laporan.gunungapi.search','pos.*']) }}">
                 <a href="#">
                     <span class="nav-label">Gunung Api</span>
                     <span class="fa arrow"></span>
@@ -88,6 +88,9 @@
                     @yield('nav-edit-volcano')
                     <li class="{{ active('laporanga') }}">
                         <a href="{{ route('laporanga.index') }}">Daftar Laporan</a>
+                    </li>
+                    <li class="{{ active('pos') }}">
+                        <a href="{{ route('pos.index') }}">Pos Pengamatan Gunung Api</a>
                     </li>
                     @yield('nav-search-laporanga')                    
                     @yield('nav-edit-datadasar')

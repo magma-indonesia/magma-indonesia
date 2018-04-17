@@ -42,7 +42,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($gadds as $gadd)
-                                    <tr>
+                                    <tr title="{{ $gadd->latestVar->status->status }}">
                                         <td class="{{ $gadd->latestVar->statuses_desc_id }}">{{ $gadd->name }}</td>
                                         <td>
                                             <span class="pie">{{ $gadd->latestVar->var_data_date->formatLocalized('%A, %d %B %Y').', '.$gadd->latestVar->periode }}</span>
@@ -140,8 +140,8 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($vars as $var)
-                                    <tr>
-                                    <td class="{{ $var->status->id }}">Laporan Gunungapi {{ $var->gunungapi->name }}
+                                    <tr title="{{ $var->status->status }}">
+                                        <td class="{{ $var->status->id }}">Laporan Gunungapi {{ $var->gunungapi->name }}
                                             <br/>
                                             <small>
                                                 <i class="fa fa-clock-o"></i> Tanggal : {{ $var->var_data_date->formatLocalized('%d %B %Y') }}</small>

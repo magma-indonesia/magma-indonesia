@@ -37,15 +37,11 @@
     <div class="content animate-panel">
         <div class="row">
             <div class="col-lg-12">
-
                 <div class="hpanel">
                     <div class="panel-heading">
                         <div class="panel-tools">
                             <a class="showhide">
                                 <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="closebox">
-                                <i class="fa fa-times"></i>
                             </a>
                         </div>
                         Tabel Users
@@ -55,7 +51,7 @@
                         <i class="fa fa-bolt"></i> {!! session('flash_message') !!}
                     </div>
                     @endif
-                    <div class="panel-body">
+                    <div class="panel-body table-responsive">
                         <table id="table-users" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -79,10 +75,10 @@
                                     <td>{{ $user->status ? 'Aktif':'Tidak Aktif' }}</span>
                                     </td>
                                     <td>
-                                        <a href="{{ route('users.edit',['id'=>$user->id]) }}" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">Edit</a>
                                         <form id="deleteForm" style="display:inline" method="POST" action="{{ route('users.destroy',['id'=>$user->id]) }}" accept-charset="UTF-8">
-                                            {{ method_field('DELETE') }}
-                                            {{ csrf_field() }}
+                                            @method('DELETE')
+                                            @csrf
+                                            <a href="{{ route('users.edit',['id'=>$user->id]) }}" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">Edit</a>                                            
                                             <button value="Delete" class="btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
                                         </form>
                                     </td>

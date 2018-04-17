@@ -40,7 +40,7 @@
                                 <tbody>
                                     @foreach ($gadds as $gadd)
                                     <tr>
-                                        <td>{{ $gadd->name }}</td>
+                                        <td class="{{ $gadd->latestVar->statuses_desc_id }}">{{ $gadd->name }}</td>
                                         <td>
                                             <span class="pie">{{ $gadd->latestVar->var_data_date->formatLocalized('%A, %d %B %Y').', '.$gadd->latestVar->periode }}</span>
                                         </td>  
@@ -72,25 +72,25 @@
                                     <tr>
                                         <th>Laporan</th>
                                         <th>Jenis Laporan</th>
-                                        {{--  <th>Tanggal</th>  --}}
+                                         <th>Tanggal</th> 
                                         <th>Pembuat Laporan</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($vars as $var)
-                                    <tr>
-                                        <td>Laporan Gunungapi {{ $var->gunungapi->name }}
+                                    <tr title="{{ $var->status->status }}">
+                                        <td class="{{ $var->status->id }}">Laporan Gunungapi {{ $var->gunungapi->name }}
                                             <br/>
                                             <small>
                                                 <i class="fa fa-clock-o"></i> Tanggal : {{ $var->var_data_date->formatLocalized('%d %B %Y') }}</small>
                                         </td>
                                         <td>
-                                            <span class="pie">{{ $var->var_perwkt.', '.$var->periode }}</span>
+                                            <span class="pie">{{ $var->var_perwkt.' Jam, '.$var->periode }}</span>
                                         </td>
-                                        {{--  <td>
+                                         <td>
                                             <strong>{{ $var->var_data_date->diffForHumans() }}</strong>
-                                        </td>  --}}
+                                        </td> 
                                         <td>{{ $var->user->name }}</td>
                                         <td>
                                             <a href="">
