@@ -16,6 +16,7 @@ class PosPga extends Model
         'elevation',
         'latitude',
         'longitude',
+        'keterangan',
         'created_at',
         'updated_at'
 
