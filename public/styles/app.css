@@ -44,18 +44,18 @@ hr {
 	line-height: 32px;
 }
 
-.project-list table tr td[class="1"] {
+table tr td[class*="1"] {
 	border-left: 10px solid #4CAF50;
 }
 
-.project-list table tr td[class="2"] {
+table tr td[class*="2"] {
 	border-left: 10px solid #FFC107;
 }
 
-.project-list table tr td[class="3"] {
+table tr td[class*="3"] {
 	border-left: 10px solid #FF9800;
 }
 
-.project-list table tr td[class="4"] {
+table tr td[class*="4"] {
 	border-left: 10px solid #F44336;
 }
