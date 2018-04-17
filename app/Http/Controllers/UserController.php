@@ -183,11 +183,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request;
-        // $path = $request->file('file')->store('photo','press');
-        // return $path;
-        
-        // return $file->getSize();
+
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'nip' => 'required|digits:18|unique:users,nip,NULL,id,deleted_at,NULL',
