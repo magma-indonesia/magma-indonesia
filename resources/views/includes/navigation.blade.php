@@ -92,6 +92,7 @@
                     <li class="{{ active('pos') }}">
                         <a href="{{ route('pos.index') }}">Pos Pengamatan Gunung Api</a>
                     </li>
+                    @yield('nav-edit-pos')
                     @yield('nav-search-laporanga')                    
                     @yield('nav-edit-datadasar')
                 </ul>
