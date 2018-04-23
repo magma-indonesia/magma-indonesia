@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\v1;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OldRoq extends Model
+class GempaRoq extends Model
 {
     public $timestamps = false;
 
@@ -33,5 +33,4 @@ class OldRoq extends Model
         'roq_logtime'
 
     ];
-
 }

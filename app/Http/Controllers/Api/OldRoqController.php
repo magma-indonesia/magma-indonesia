@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\OldRoq;
+use App\v1\GempaRoq as OldRoq;
 use App\User;
 
 use Validator;
