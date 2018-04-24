@@ -180,7 +180,8 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Watson\Active\ActiveServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class    
+        Intervention\Image\ImageServiceProvider::class,
+        Laravolt\Indonesia\ServiceProvider::class
 
     ],
 
@@ -234,6 +235,7 @@ return [
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Indonesia' => Laravolt\Indonesia\Facade::class
 
     ],
 
