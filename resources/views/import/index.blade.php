@@ -53,6 +53,33 @@
             <div class="col-lg-3">
                 <div class="hpanel">
                     <div class="panel-heading">
+                        Data Bidang Users
+                    </div>
+                    <div class="panel-body text-center h-200">
+                        <i class="pe-7s-shuffle fa-4x"></i>
+                        <br>
+                        <h1 class="m-xs jumlah-bidang">{{ $bidang }}</h1>
+
+                        <h3 class="font-extra-bold no-margins text-success">
+                            Bidang User
+                        </h3>
+                        <small>Jumlah yang terdata</small>
+                    </div>
+                    <div class="panel-footer text-center">
+                        <form role="form" id="form-import" method="POST"
+                        data-import="bidang" action="{{ route('import.bidang') }}">
+                            {{ csrf_field() }}
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
+                                <span class="ladda-label">Import Data Bidang</span>
+                                <span class="ladda-spinner"></span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="hpanel">
+                    <div class="panel-heading">
                         Data Dasar Gunung Api
                     </div>
                     <div class="panel-body text-center h-200">
@@ -126,43 +153,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
-                <div class="hpanel stats">
-                        <div class="panel-heading">
-                            Data VAR Harian
-                        </div>
-                    <div class="panel-body h-200">
-                        <div class="stats-title pull-left">
-                            <h4>Var Daily</h4>
-                        </div>
-                        <div class="stats-icon pull-right">
-                            <i class="pe-7s-monitor fa-4x"></i>
-                        </div>
-                        <div class="m-t-xl">
-                            <h1 class="text-success jumlah-dailies">{{ $vardailies }}</h1>
-                            <span class="font-bold no-margins">
-                                Volcanic Activiy Report
-                            </span>
-                            <br/>
-                            <small>
-                                Panel ini memberikan informasi tentang
-                                <strong>update VAR terkini dari MAGMA v1
-                                </strong>. Digunakan untuk melakukan updating manual.
-                            </small>
-                        </div>
-                    </div>
-                    <div class="panel-footer text-center">
-                        <form role="form" id="form-import" method="POST"
-                        data-import="dailies" action="{{ route('import.dailies') }}">
-                            {{ csrf_field() }}
-                            <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
-                                <span class="ladda-label">Import Data Harian</span>
-                                <span class="ladda-spinner"></span>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="row">
             <div class="col-lg-3">
@@ -223,7 +213,7 @@
                             </span>
                             <br/>
                             <small>
-                                Panel ini digunakan untuk import data pengamatan klimatologi dari MAGMA-VAR, sekaligus normalisasi data ke versi yang lebih baru.
+                                Import data pengamatan klimatologi dari MAGMA-VAR, sekaligus normalisasi data ke versi yang lebih baru.
                             </small>
                         </div>
                         <div class="row m-t-md">
@@ -252,7 +242,7 @@
                     </div>
                     <div class="panel-body list">
                         <div class="stats-title pull-left">
-                            <h4>Data Gempa Gunung Api</h4>
+                            <h4>Jumlah Data Gempa</h4>
                         </div>
                         <div class="stats-icon pull-right">
                             <i class="pe-7s-download fa-4x"></i>
@@ -269,7 +259,7 @@
                         <div class="row m-t-md">
                             <div class="col-lg-6">
                                 <h3 class="no-margins font-extra-bold text-success jumlah-gempa">{{ number_format($gempa,0,',','.') }}</h3>
-                                <div class="font-bold"><i class="fa fa-level-up text-success"></i> Jumlah gempa seluruh gunung api Indonesia yang tersimpan</div>
+                                <div class="font-bold"><i class="fa fa-level-up text-success"></i> Jumlah seluruh gempa</div>
                             </div>
                         </div>
                     </div>
@@ -284,7 +274,86 @@
                         </form>
                     </div>
                 </div>
-            </div>            
+            </div>
+            <div class="col-lg-3">
+                <div class="hpanel stats">
+                        <div class="panel-heading">
+                            Data VAR Harian
+                        </div>
+                    <div class="panel-body h-200">
+                        <div class="stats-title pull-left">
+                            <h4>Var Daily</h4>
+                        </div>
+                        <div class="stats-icon pull-right">
+                            <i class="pe-7s-monitor fa-4x"></i>
+                        </div>
+                        <div class="m-t-xl">
+                            <h1 class="text-success jumlah-dailies">{{ $vardailies }}</h1>
+                            <span class="font-bold no-margins">
+                                Volcanic Activiy Report
+                            </span>
+                            <br/>
+                            <small>
+                                Panel ini memberikan informasi tentang
+                                <strong>update VAR terkini dari MAGMA v1
+                                </strong>. Digunakan untuk melakukan updating manual.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="panel-footer text-center">
+                        <form role="form" id="form-import" method="POST"
+                        data-import="dailies" action="{{ route('import.dailies') }}">
+                            {{ csrf_field() }}
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
+                                <span class="ladda-label">Import Data Harian</span>
+                                <span class="ladda-spinner"></span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>        
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="hpanel stats">
+                    <div class="panel-heading">
+                        Data CRS
+                    </div>
+                    <div class="panel-body list">
+                        <div class="stats-title pull-left">
+                            <h4>Data CRS</h4>
+                        </div>
+                        <div class="stats-icon pull-right">
+                            <i class="pe-7s-note fa-4x"></i>
+                        </div>
+                        <div class="m-t-xl">
+                            <span class="font-bold no-margins">
+                                Import Data CRS
+                            </span>
+                            <br/>
+                            <small>
+                                Panel ini digunakan untuk meng-import data CRS v1
+                            </small>
+                        </div>
+                        <div class="row m-t-md">
+                            <div class="col-lg-6">
+                                <h3 class="no-margins font-extra-bold text-success jumlah-crs">{{ number_format($crs,0,',','.') }}</h3>
+                                <div class="font-bold"><i class="fa fa-level-up text-success"></i> Jumlah data CRS</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer text-center">
+                        <form role="form" id="form-import" method="POST"
+                        data-import="crs" action="{{ route('import.crs') }}">
+                            {{ csrf_field() }}
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
+                                <span class="ladda-label">Import Data CRS</span>
+                                <span class="ladda-spinner"></span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
