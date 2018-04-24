@@ -40,9 +40,10 @@ Route::group(['middleware' => ['web','auth']], function () {
 
         Route::group(['prefix' => 'import'], function () {
             Route::get('/', 'ImportController@index')->name('import');
+            Route::post('crs','ImportController@crs')->name('import.crs');
             Route::post('gadds','ImportController@gadds')->name('import.gadds');            
             Route::post('users','ImportController@users')->name('import.users');
-            Route::get('bidang','ImportController@bidang')->name('import.bidang');
+            Route::post('bidang','ImportController@bidang')->name('import.bidang');
             Route::post('vars','ImportController@vars')->name('import.vars');
             Route::post('dailies','ImportController@dailies')->name('import.dailies');
             Route::post('visuals','ImportController@visuals')->name('import.visuals');
@@ -55,6 +56,7 @@ Route::group(['middleware' => ['web','auth']], function () {
 
         Route::group(['prefix' => 'gunungapi'], function () {
             Route::resource('datadasar','DataDasar');
+            Route::resource('pos','PosPgaController');      
             Route::resource('laporanga','ActivityGaController');
             Route::get('laporan/search','ActivityGaController@search')->name('laporan.gunungapi.search');
             
