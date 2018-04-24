@@ -119,11 +119,22 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**     
+     *   Gunung Api
      *   Masing-masing user bisa memiliki lebih
      *   dari 1 Vars
      */
     public function var()
     {
         return $this->hasMany('App\MagmaVar','nip','nip_pelapor');
+    }
+
+    /**     
+     *   Gerakan Tanah
+     *   Masing-masing user bisa memiliki lebih
+     *   dari 1 Crs
+     */
+    public function crs()
+    {
+        return $this->hasMany('App\SigertanCrsValidasi','nip','nip_id');
     }
 }
