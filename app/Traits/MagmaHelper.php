@@ -98,15 +98,29 @@ trait MagmaHelper
      *   
      * 
      */  
-    private function endNo()
+    private function endNo($type)
     {
-        $end        = DB::connection('magma')
-                    ->table('magma_var')
-                    ->select('no')
-                    ->orderBy('no','desc')
-                    ->first();
+        if($type == 'var')
+        {
+            $end        = DB::connection('magma')
+                        ->table('magma_var')
+                        ->select('no')
+                        ->orderBy('no','desc')
+                        ->first();
 
-        $end        = $end->no;
+            $end        = $end->no;
+        }
+
+        if($type == 'crs')
+        {
+            $end        = DB::connection('magma')
+                        ->table('magma_crs')
+                        ->select('idx AS no')
+                        ->orderBy('no','desc')
+                        ->first();
+
+            $end        = $end->no;
+        }
         
         return $end;
 
