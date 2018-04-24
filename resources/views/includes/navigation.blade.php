@@ -57,7 +57,7 @@
                 </a>
                 <ul class="nav nav-second-level">
                     <li class="{{ active('users') }}">
-                        <a href="{{ route('users.index') }}">List Users</a>
+                        <a href="{{ route('users.index') }}">Daftar Users</a>
                     </li>
                     <li class="{{ active('users.create') }}">
                         <a href="{{ route('users.create') }}">Tambah Users</a>

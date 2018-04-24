@@ -56,59 +56,6 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="hpanel">
-                    <div class="panel-heading">
-                        Semua Laporan Gunung Api
-                    </div>
-                    <div class="panel-body list">
-                        <div class="text-center">
-                        {{ $vars->links() }}
-                        </div>
-                        <div class="table-responsive project-list">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Laporan</th>
-                                        <th>Jenis Laporan</th>
-                                         <th>Tanggal</th> 
-                                        <th>Pembuat Laporan</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($vars as $var)
-                                    <tr title="{{ $var->status->status }}">
-                                        <td class="{{ $var->status->id }}">Laporan Gunungapi {{ $var->gunungapi->name }}
-                                            <br/>
-                                            <small>
-                                                <i class="fa fa-clock-o"></i> Tanggal : {{ $var->var_data_date->formatLocalized('%d %B %Y') }}</small>
-                                        </td>
-                                        <td>
-                                            <span class="pie">{{ $var->var_perwkt.' Jam, '.$var->periode }}</span>
-                                        </td>
-                                         <td>
-                                            <strong>{{ $var->var_data_date->diffForHumans() }}</strong>
-                                        </td> 
-                                        <td>{{ $var->user->name }}</td>
-                                        <td>
-                                            <a href="">
-                                                <a href="{{ route('laporanga.show',$var->noticenumber ) }}" target="_blank" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">View</a>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="text-center">
-                        {{ $vars->links() }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 @endsection
 
