@@ -20,6 +20,12 @@ use App\VarPj;
 use App\VarVerifikator;
 use App\VarGempa;
 use App\Status;
+use App\SigertanCrs;
+use App\SigertanCrsDevices;
+use App\SigertanCrsValidasi;
+
+use App\v1\GertanCrs as OldGertan;
+use Indonesia;
 
 class ImportController extends Controller
 {
@@ -210,6 +216,16 @@ class ImportController extends Controller
 
         }
 
+        $data = [
+            'success' => 1,
+            'message' => 'Data Bidang berhasil diperbarui',
+            'count' => UserBidang::count()
+        ];
+
+        $this->sendNotif('Data Bidang');
+
+        return response()->json($data);
+
     }
 
     public function vars()
@@ -234,7 +250,7 @@ class ImportController extends Controller
                             'var_log'
 
                         )
-                        ->whereBetween('no',[$this->startNo('vars'),$this->endNo()])
+                        ->whereBetween('no',[$this->startNo('vars'),$this->endNo('var')])
                         ->orderBy('no')
                         ->chunk(1000, function($var)
                         {
@@ -401,7 +417,7 @@ class ImportController extends Controller
                             'var_viskawah'
 
                         )
-                        ->whereBetween('no',[$this->startNo('visuals'),$this->endNo()])
+                        ->whereBetween('no',[$this->startNo('visuals'),$this->endNo('var')])
                         ->orderBy('no','asc')
                         ->chunk(1000,function($varx)
                         {
@@ -531,7 +547,7 @@ class ImportController extends Controller
                             'var_arangin'
 
                         )
-                        ->whereBetween('no',[$this->startNo('klima'),$this->endNo()])
+                        ->whereBetween('no',[$this->startNo('klima'),$this->endNo('var')])
                         ->orderBy('no','asc')
                         ->chunk(1000,function($varx){
 
@@ -636,7 +652,7 @@ class ImportController extends Controller
                 $vars       = DB::connection('magma')
                             ->table('magma_var')
                             ->select($select)
-                            ->whereBetween('no',[$this->startNo($kode),$this->endNo()])
+                            ->whereBetween('no',[$this->startNo($kode),$this->endNo('var')])
                             ->where('var_'.$kode,'>',0)
                             ->orderBy('no', 'asc')
                             ->chunk(1000,function($varx) use ($kode,$gempa)
@@ -702,7 +718,7 @@ class ImportController extends Controller
 
                 $vars       = DB::connection('magma')
                             ->table('magma_var')
-                            ->select($select)->whereBetween('no',[$this->startNo($kode),$this->endNo()])
+                            ->select($select)->whereBetween('no',[$this->startNo($kode),$this->endNo('var')])
                             ->where('var_'.$kode,'>',0)
                             ->orderBy('no', 'asc')
                             ->chunk(1000,function($varx) use ($kode,$gempa)
@@ -763,7 +779,7 @@ class ImportController extends Controller
 
                 $vars       = DB::connection('magma')
                             ->table('magma_var')
-                            ->select($select)->whereBetween('no',[$this->startNo($kode),$this->endNo()])
+                            ->select($select)->whereBetween('no',[$this->startNo($kode),$this->endNo('var')])
                             ->where('var_'.$kode,'>',0)
                             ->orderBy('no', 'asc')
                             ->chunk(1000,function($varx) use ($kode,$gempa)
@@ -823,7 +839,7 @@ class ImportController extends Controller
 
                 $vars       = DB::connection('magma')
                             ->table('magma_var')
-                            ->select($select)->whereBetween('no',[$this->startNo($kode),$this->endNo()])
+                            ->select($select)->whereBetween('no',[$this->startNo($kode),$this->endNo('var')])
                             ->where('var_'.$kode,'>',0)
                             ->orderBy('no', 'asc')
                             ->chunk(1000,function($varx) use ($kode,$gempa)
@@ -900,7 +916,7 @@ class ImportController extends Controller
                 $vars       = DB::connection('magma')
                             ->table('magma_var')
                             ->select($select)
-                            ->whereBetween('no',[$this->startNo($kode),$this->endNo()])
+                            ->whereBetween('no',[$this->startNo($kode),$this->endNo('var')])
                             ->where('var_'.$kode,'>',0)
                             ->orderBy('no', 'asc')
                             ->chunk(1000,function($varx) use ($kode,$gempa)
@@ -965,7 +981,7 @@ class ImportController extends Controller
 
                 $vars       = DB::connection('magma')
                             ->table('magma_var')
-                            ->select($select)->whereBetween('no',[$this->startNo($kode),$this->endNo()])
+                            ->select($select)->whereBetween('no',[$this->startNo($kode),$this->endNo('var')])
                             ->where('var_'.$kode,'>',0)
                             ->orderBy('no', 'asc')
                             ->chunk(1000,function($varx) use ($kode,$gempa)
@@ -1054,7 +1070,7 @@ class ImportController extends Controller
                     ->table('magma_var')
                     ->select('no','ga_code','cu_status')
                     ->where('ga_code',$gadd->code)
-                    ->whereBetween('no',[$this->startNo($kode),$this->endNo()])
+                    ->whereBetween('no',[$this->startNo($kode),$this->endNo('var')])
                     ->chunk(1000, function($var){
 
                         foreach ($var as $key => $varx)
@@ -1104,11 +1120,116 @@ class ImportController extends Controller
         return $vonas;
     }
 
+    /**
+     * Import data Gerakan Tanah dari v1
+     * table magma_crs, magma_sigertan, magma_qls_rec
+     * qls_fst, qls_ver, qls_atm, qls_trb
+     *
+     * @return \Illuminate\Http\Request
+     */
+
+    public function crs()
+    {
+
+        $items = OldGertan::whereBetween('idx',[$this->startNo('crs'),$this->endNo('crs')])->get();
+
+        foreach($items as $item)
+        {
+            $no             = $item->idx;
+            $name           = $item->crs_usr;
+            $phone          = strlen($item->crs_pho) >14 ? substr($item->crs_pho, 0, 14) : $item->crs_pho;
+            $crs_id         = $item->crs_ids;
+            $waktu_kejadian = $item->crs_dtm;
+            $zona           = $item->crs_zon;
+            $type           = $item->crs_typ == 'GUNUNGAPI' ? 'GUNUNG API': $item->crs_typ;
+            $type           = $item->crs_typ == 'GEMPABUMI' ? 'GEMPA BUMI': $item->crs_typ;            
+            $province_id    = Indonesia::search($item->crs_prv)->allProvinces()->first()->id;
+            $city_id        = Indonesia::search($item->crs_cty)->allCities()->first()->id;
+            $district_id    = Indonesia::search($item->crs_rgn)->allDistricts()->first()->id;
+            $village_id     = Indonesia::search($item->crs_vil)->allVillages()->first()->id;
+            $bwd            = $item->crs_bwd;
+            $latitude       = $item->crs_lat > 1000000 ? $item->crs_lat/1000 : $item->crs_lat;
+            $longitude      = $item->crs_lon > 50000 ? $item->crs_lon/100 : $item->crs_lon;
+            $brd            = $item->crs_brd == 'TIDAK' ? 0 : 1;
+            $sumber         = $item->crs_fsr;
+            $tsc            = $item->crs_tsc;
+            $ksc            = $item->crs_ksc;
+            $status         = $item->crs_sta;
+            $lat_user       = $item->lat_usr == null ? 0 : $item->lat_usr;
+            $lon_user       = $item->long_usr == null ? 0 : $item->long_usr;
+            
+            $crs    = SigertanCrs::firstOrCreate(
+                        [
+                            'crs_id' => $crs_id
+                        ],
+                        [
+                            'name' => $name,
+                            'phone' => $phone,
+                            'waktu_kejadian' => $waktu_kejadian,
+                            'zona' => $zona,
+                            'province_id' => $province_id,
+                            'city_id' => $city_id,
+                            'district_id' => $district_id,
+                            'village_id' => $village_id,
+                            'bwd' => $bwd,
+                            'latitude' => $latitude,
+                            'longitude' => $longitude,
+                            'brd' => $brd,
+                            'sumber' => $sumber,
+                            'tsc' => $tsc,
+                            'ksc' => $ksc,
+                            'status' => $status,
+                            'latitude_user' => $lat_user,
+                            'longitde_user' => $lon_user
+                        ]
+                    );
+
+            $aplikasi   = $item->crs_soa;
+            $device     = $item->crs_dvc;
+
+            $device = SigertanCrsDevices::firstOrCreate(
+                            ['crs_id' => $crs->id],
+                            [
+                                'aplikasi' => $aplikasi,
+                                'devices' => $device,
+                            ]
+                        );
+
+            if (!empty($item->crs_vor))
+            {
+                $valid = $item->crs_val == 'VALID' ? 1 : 0;
+                $nip_id = $item->crs_vor;
+
+                $validasi = SigertanCrsValidasi::firstOrCreate(
+                    ['crs_id' => $crs->id],
+                    [
+                        'valid' => $valid,
+                        'nip_id' => $nip_id
+                    ]
+                );
+            }
+
+            $this->temptable('crs',$no);
+           
+        }       
+
+        $this->sendNotif('Data CRS');
+
+        $data = [
+            'success' => 1,
+            'message' => 'Data CRS berhasil diperbarui',
+            'count' => SigertanCrs::count()
+        ];
+
+        return response()->json($data);
+
+    }
 
     public function index()
     {
 
         $users = User::count();
+        $bidang = UserBidang::count();
         $gadds = Gadd::count();
         $varsv1 = DB::connection('magma')->table('magma_var')->count();
         $vars = MagmaVar::count();
@@ -1117,7 +1238,8 @@ class ImportController extends Controller
         $klimatologis = VarKlimatologi::count();
         $gempa = new VarGempa();
         $gempa = $gempa->jumlah();
+        $crs = SigertanCrs::count();
         
-        return view('import.index',compact('users','gadds','varsv1','vars','vardailies','visuals','klimatologis','gempa'));
+        return view('import.index',compact('users','bidang','gadds','varsv1','vars','vardailies','visuals','klimatologis','gempa','crs'));
     }
 }
