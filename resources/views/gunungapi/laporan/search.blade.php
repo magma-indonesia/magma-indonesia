@@ -223,12 +223,6 @@
                 return Date.parse(startDate) <= Date.parse(endDate);
             }, '* Tanggal akhir harus setelah tanggal awal');
 
-            // Initialize table
-            $('.table-daily').dataTable({
-                dom: "<'row'<'col-sm-4'l><'col-sm-2 text-center'B><'col-sm-6'f>>tp",
-                "lengthMenu": [[5, 25, 50, -1], [5, 25, 50, "All"]]
-            });
-
             $('#bulan').datepicker({
                 startDate: '2015-05-01',
                 endDate: '{{ now()->format('Y-m-d') }}',
@@ -256,7 +250,6 @@
                         isValid = Date.parse(startDate) <= Date.parse(endDate);
                     console.log(isValid);
                 });
-                
             });
 
             $('#jenis').on('change',function(e){
