@@ -181,7 +181,8 @@ return [
         Watson\Active\ActiveServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        Laravolt\Indonesia\ServiceProvider::class
+        Laravolt\Indonesia\ServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
 
@@ -235,7 +236,8 @@ return [
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        'Indonesia' => Laravolt\Indonesia\Facade::class
+        'Indonesia' => Laravolt\Indonesia\Facade::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 
