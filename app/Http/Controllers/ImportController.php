@@ -1142,7 +1142,7 @@ class ImportController extends Controller
             $waktu_kejadian = $item->crs_dtm;
             $zona           = $item->crs_zon;
             $type           = $item->crs_typ == 'GUNUNGAPI' ? 'GUNUNG API': $item->crs_typ;
-            $type           = $item->crs_typ == 'GEMPABUMI' ? 'GEMPA BUMI': $item->crs_typ;            
+            $type           = $type == 'GEMPABUMI' ? 'GEMPA BUMI': $type;       
             $province_id    = Indonesia::search($item->crs_prv)->allProvinces()->first()->id;
             $city_id        = Indonesia::search($item->crs_cty)->allCities()->first()->id;
             $district_id    = Indonesia::search($item->crs_rgn)->allDistricts()->first()->id;
@@ -1167,6 +1167,7 @@ class ImportController extends Controller
                             'phone' => $phone,
                             'waktu_kejadian' => $waktu_kejadian,
                             'zona' => $zona,
+                            'type' => $type,
                             'province_id' => $province_id,
                             'city_id' => $city_id,
                             'district_id' => $district_id,
