@@ -43,11 +43,15 @@
                     <span class="nav-label">Magma Chamber</span>
                 </a>
             </li>            
-
             <li class="{{ active('import') }}">
                 <a href="{{ route('import') }}">
                     <span class="nav-label">Import</span>
                     <span class="label label-success pull-right">v.1</span>
+                </a>
+            </li>
+            <li class="{{ active('crs.*') }}">
+                <a href="{{ route('crs.index') }}">
+                    <span class="nav-label">CRS</span>
                 </a>
             </li>
             <li class="{{ active('users.*') }}">
@@ -89,6 +93,9 @@
                     <li class="{{ active('laporanga') }}">
                         <a href="{{ route('laporanga.index') }}">Daftar Laporan</a>
                     </li>
+                    <li class="{{ active('search') }}">
+                            <a href="{{ route('laporan.gunungapi.search') }}">Cari Laporan</a>
+                        </li>
                     <li class="{{ active('pos') }}">
                         <a href="{{ route('pos.index') }}">Pos Pengamatan Gunung Api</a>
                     </li>
