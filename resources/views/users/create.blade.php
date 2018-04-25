@@ -93,7 +93,7 @@
                                 @endif
                             </div>
                             <div class="form-group">
-                                <label>Upload Photo</label>
+                                <label>Upload Photo (opsional)</label>
                                 <div class="upload-message">Upload Foto Profil Anda</div>
                                 <div class="upload-photo" style="display:none"></div>
                                 <label class="form-control btn btn-primary btn-file">
