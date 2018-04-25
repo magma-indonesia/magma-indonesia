@@ -59,3 +59,15 @@ table tr td[class*="3"] {
 table tr td[class*="4"] {
 	border-left: 10px solid #F44336;
 }
+
+.text-baru {
+	color: #F44336;
+}
+
+.text-draft {
+	color: #FF9800;
+}
+
+.text-terbit {
+	color: #4CAF50;
+}
