@@ -18,6 +18,11 @@ class SigertanCrsValidasi extends Model
         'id'
     ];
 
+    public function getValidAttribute($value)
+    {
+        return $value == 1 ? 'Valid' : 'Invalid';
+    }
+
     /**     
      *   Masing-masing crs hanya dimiliki
      *   oleh 1 data crs

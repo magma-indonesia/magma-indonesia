@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Indonesia;
 
 class SigertanCrs extends Model
 {
@@ -40,6 +41,23 @@ class SigertanCrs extends Model
         'id'
     ];
 
+    protected $appends = ['provinsi','kota'];
+
+    public function getTypeAttribute($value)
+    {
+        return title_case($value);
+    }
+
+    public function getProvinsiAttribute()
+    {
+        return Indonesia::findProvince($this->province_id)->name;
+    }
+
+    public function getKotaAttribute()
+    {
+        return Indonesia::findCity($this->city_id)->name;
+    }
+
    /**     
      *   Masing-masing crs hanya memiliki 
      *   1 device yang digunakan untuk membuat laporan
@@ -66,4 +84,5 @@ class SigertanCrs extends Model
     {
         return $this->hasOne('App\SigertanCrsValidasi','crs_id','id');
     }
+
 }
