@@ -40,9 +40,6 @@
             <div class="col-lg-offset-3 col-lg-6">
                 <div class="hpanel">
                     <div class="panel-heading">
-                        <div class="panel-tools">
-                            <a class="showhide"><i class="fa fa-chevron-up"></i></a>
-                        </div>
                         Input Data Dasar Pengguna
                     </div>
                     <div class="panel-body">
