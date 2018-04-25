@@ -39,11 +39,6 @@
             <div class="col-lg-12">
                 <div class="hpanel">
                     <div class="panel-heading">
-                        <div class="panel-tools">
-                            <a class="showhide">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                        </div>
                         Tabel Users
                     </div>
                     @if(Session::has('flash_message'))
