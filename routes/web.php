@@ -19,7 +19,6 @@ Route::get('/tes/image/', 'TesController@imageCrop');
 Route::get('/tes/image/{id?}', 'TesController@getFile')->name('tesimage');
 Route::post('/tes/image', 'TesController@imageCropPost');
 
-
 /*
 |--------------------------------------------------------------------------
 | Chamber Routes
@@ -51,6 +50,12 @@ Route::group(['middleware' => ['web','auth']], function () {
             Route::post('gempa','ImportController@gempa')->name('import.gempa');
             Route::get('vona','ImportController@vona')->name('import.vona');                     
         });
+
+        Route::get('export/{jenis}/{tipe?}','ExportController@crs')->name('export');
+
+        Route::resource('crs','CrsController');
+        Route::post('crs/lokasi','CrsController@getCities')->name('crs.getcities');
+        
 
         Route::resource('users', 'UserController');
 
