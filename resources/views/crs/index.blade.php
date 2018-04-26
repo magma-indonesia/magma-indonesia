@@ -211,7 +211,7 @@
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div>
-                                <button class="btn btn-sm btn-primary m-t-n-xs" type="submit"><strong>Fiter Laporan</strong></button>
+                                <button class="btn btn-sm btn-primary m-t-n-xs"><strong>Fiter Laporan</strong></button>
                             </div>
                         </form>
                     </div>
@@ -228,7 +228,7 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="pagination">
-                                    <a href="{{ route('export',Request::all()) }}" type="submit" class="btn btn-success btn-outline m-b-t">Save to Excel</a>
+                                    <a href="{{ route('export',Request::all()) }}" type="button" class="btn btn-success btn-outline m-b-t">Save to Excel</a>
                                 </div>
                             </div>
                             <div class="col-md-6 text-center">
