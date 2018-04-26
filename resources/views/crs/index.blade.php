@@ -228,7 +228,7 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="pagination">
-                                    <a href="{{ route('export',Request::all()) }}" type="submit" class="btn btn-success btn-outline">Save to Excel</a>
+                                    <a href="{{ route('export',Request::all()) }}" type="submit" class="btn btn-success btn-outline m-b-t">Save to Excel</a>
                                 </div>
                             </div>
                             <div class="col-md-6 text-center">
@@ -247,6 +247,9 @@
                                         <th>Validator</th>
                                         <th>Waktu Kejadian</th>
                                         <th>Lokasi</th>
+                                        <th>Latitude</th>
+                                        <th>Longitude</th>
+                                        <th>Sumber</th>
                                         <th>Keterangan</th>
                                     </tr>
                                 </thead>
@@ -261,7 +264,10 @@
                                         <td>{{ optional($item->validator)->user ? $item->validator->user->name : '-'}}</td>  
                                         <td>{{ $item->waktu_kejadian }}</td>
                                         <td>{{ Indonesia::findProvince($item->province_id)->name .', '. Indonesia::findCity($item->city_id)->name .', '. Indonesia::findDistrict($item->district_id)->name }}</td>
-                                        <td>{{ $item->tsc .' - '. $item->ksc }}</td>                                      
+                                        <td>{{ $item->latitude }}</td>
+                                        <td>{{ $item->longitude }}</td>
+                                        <td>{{ $item->sumber }}</td>
+                                        <td>{{ $item->tsc .', '. $item->ksc }}</td>                                      
                                     </tr>
                                     @endforeach
                                 </tbody>
