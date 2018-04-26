@@ -9,12 +9,6 @@
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap-datepicker-master/dist/css/bootstrap-datepicker3.min.css') }}" />
 @endsection
 
-@section('nav-search-laporanga')
-    <li class="{{ active('laporan.gunungapi.search.*') }}">
-        <a href="{{ route('laporan.gunungapi.search') }}">Cari Laporan</a>
-    </li>
-@endsection
-
 @section('content-header')
     <div class="small-header">
         <div class="hpanel">
@@ -179,7 +173,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
