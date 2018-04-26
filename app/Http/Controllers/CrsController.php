@@ -35,7 +35,7 @@ class CrsController extends Controller
         }
 
         switch($request->status){
-            case '*':
+            case 'all':
                 $status = ['BARU','DRAFT','TERBIT'];
                 break;
             default:
@@ -63,8 +63,8 @@ class CrsController extends Controller
                 break;
         }
 
-        $provinsi = $request->provinsi == '*' ? '%' : $request->provinsi;
-        $kota = $request->kota == '*' ? '%' : $request->kota;     
+        $provinsi = $request->provinsi == 'all' ? '%' : $request->provinsi;
+        $kota = $request->kota == 'all' ? '%' : $request->kota;
 
         $crs = SigertanCrs::orderBy('waktu_kejadian','desc')
                 ->whereIn('status',$status)
@@ -72,8 +72,24 @@ class CrsController extends Controller
                 ->whereBetween('waktu_kejadian',[$request->start,$request->end])
                 ->where('province_id','like',$provinsi)
                 ->where('city_id','like',$kota);
+                
+        $valid = $request->valid;
 
-        return $crs;
+        switch ($valid) {
+            case 'not':
+                return $crs->doesntHave('validator');
+                break;
+            case 'all':
+                return $crs;
+                break;
+            default:
+                $valid == 'valid' ? $valid = 1 : $valid;
+                $valid == 'invalid' ? $valid = 0 : $valid;
+                return $crs->whereHas('validator', function($query) use ($valid){
+                            $query->where('valid','like',$valid);
+                        });
+                break;
+        }
 
     }
 
@@ -108,8 +124,23 @@ class CrsController extends Controller
                     ->orderBy('total','desc')
                     ->take(8)
                     ->get();
+
+        $request->flash();
         
-        return view('crs.index',compact('crs','provinsi','jumlahBaru','jumlahDraft','jumlahTerbit','total','jumlahMga','jumlahMgt','jumlahMgb','jumlahEtc','topProv'));
+        return view('crs.index',compact(
+                    'crs',
+                    'provinsi',
+                    'jumlahBaru',
+                    'jumlahDraft',
+                    'jumlahTerbit',
+                    'total',
+                    'jumlahMga',
+                    'jumlahMgt',
+                    'jumlahMgb',
+                    'jumlahEtc',
+                    'topProv'
+                    )
+                );
     }
 
     /**
@@ -119,7 +150,7 @@ class CrsController extends Controller
      */
     public function create()
     {
-        //
+        return 'create';
     }
 
     /**
@@ -130,7 +161,7 @@ class CrsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return 'store';
     }
 
     /**
@@ -141,7 +172,7 @@ class CrsController extends Controller
      */
     public function show($id)
     {
-        //
+        return 'show';
     }
 
     /**
@@ -152,7 +183,7 @@ class CrsController extends Controller
      */
     public function edit($id)
     {
-        //
+        return 'edit';
     }
 
     /**
@@ -164,7 +195,7 @@ class CrsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return 'update';
     }
 
     /**

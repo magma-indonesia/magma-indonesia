@@ -141,7 +141,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-9">
                 <div class="hpanel">
                     <div class="panel-heading">
                         Filter Laporan
@@ -153,7 +153,7 @@
                                     <div class="form-group">
                                         <label for="status">Status</label>
                                         <select id="status" class="form-control m-b" name="status"> 
-                                            <option value="*" {{ empty(old('status')) ? 'selected' : ''}}>Semua Status</option>
+                                            <option value="all" {{ empty(old('status')) ? 'selected' : ''}}>Semua Status</option>
                                             <option value="BARU" {{ old('status') == 'BARU' ? 'selected' : ''}}>Baru</option>
                                             <option value="DRAFT" {{ old('status') == 'DRAFT' ? 'selected' : ''}}>Draft</option>
                                             <option value="TERBIT" {{ old('status') == 'TERBIT' ? 'selected' : ''}}>Terbit</option>
@@ -162,7 +162,7 @@
                                     <div class="form-group">
                                         <label for="tipe">Tipe Bencana</label>
                                         <select id="tipe" class="form-control m-b" name="tipe">
-                                            <option value="*" {{ empty(old('tipe')) ? 'selected' : ''}}>Semua Bencana</option>
+                                            <option value="all" {{ empty(old('tipe')) ? 'selected' : ''}}>Semua Bencana</option>
                                             <option value="1" {{ old('tipe') == 1 ? 'selected' : ''}}>Gerakan Tanah</option>
                                             <option value="2" {{ old('tipe') == 2 ? 'selected' : ''}}>Gempa Bumi</option>
                                             <option value="3" {{ old('tipe') == 3 ? 'selected' : ''}}>Tsunami</option>
@@ -171,19 +171,20 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label>Waktu Kejadian</label>
-                                        <div class="input-group input-daterange">
-                                            <input id="start" type="text" class="form-control" value="{{ now()->subDays(90)->format('Y-m-d') }}" name="start">
-                                            <div class="input-group-addon"> - </div>
-                                            <input id="end" type="text" class="form-control" value="{{ now()->format('Y-m-d') }}" name="end">
-                                        </div>
+                                        <label for="valid">Validasi</label>
+                                        <select id="valid" class="form-control m-b" name="valid"> 
+                                            <option value="all" {{ empty(old('valid')) ? 'selected' : ''}}>Semua Validasi</option>
+                                            <option value="not" {{ old('valid') == 'not' ? 'selected' : ''}}>Belum Divalidasi</option>
+                                            <option value="valid" {{ old('valid') == 'valid' ? 'selected' : ''}}>Valid</option>
+                                            <option value="invalid" {{ old('valid') == 'invalid' ? 'selected' : ''}}>Invalid</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="provinsi">Provinsi</label>
                                         <select id="provinsi" class="form-control m-b" name="provinsi">
-                                            <option value="*" selected="">Semua Provinsi</option>
+                                            <option value="all" selected="">Semua Provinsi</option>
                                             @foreach($provinsi as $item)                   
                                             <option value="{{ $item->id }}" {{ old('provinsi') == $item->name ? 'selected' : ''}}>{{ $item->name }}</option>      
                                             @endforeach
@@ -192,16 +193,25 @@
                                     <div class="form-group">
                                         <label for="kota">Kota/Kabupaten</label>
                                         <select id="kota" class="form-control m-b" name="kota">
-                                            <option value="*" selected="">Semua Kota</option>
+                                            <option value="all" selected="">Semua Kota</option>
                                             @foreach($provinsi[0]->cities as $item)                   
                                             <option value="{{ $item->id }}" {{ old('kota') == $item->name ? 'selected' : ''}}>{{ $item->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
+                                    <div class="form-group">
+                                        <label>Waktu Kejadian</label>
+                                        <div class="input-group input-daterange">
+                                            <input id="start" type="text" class="form-control" value="{{ empty(old('start')) ? now()->subDays(90)->format('Y-m-d') : old('start')}}" name="start">
+                                            <div class="input-group-addon"> - </div>
+                                            <input id="end" type="text" class="form-control" value="{{ empty(old('end')) ? now()->format('Y-m-d') : old('end')}}" name="end">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="hr-line-dashed"></div>
                             <div>
-                                <button class="btn btn-sm btn-primary m-t-n-xs" type="submit"><strong>Submit</strong></button>
+                                <button class="btn btn-sm btn-primary m-t-n-xs" type="submit"><strong>Fiter Laporan</strong></button>
                             </div>
                         </form>
                     </div>
@@ -218,7 +228,7 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="pagination">
-                                    <a href="{{ route('export',['jenis' => 'crs'])}}" type="button" class="btn btn-success btn-outline">Save to Excel</a>
+                                    <a href="{{ route('export',Request::all()) }}" type="submit" class="btn btn-success btn-outline">Save to Excel</a>
                                 </div>
                             </div>
                             <div class="col-md-6 text-center">
@@ -233,10 +243,11 @@
                                         <th>Nama Pelapor</th>
                                         <th>No. HP</th>
                                         <th>Tipe Bencana</th>
+                                        <th>Validasi</th>
+                                        <th>Validator</th>
                                         <th>Waktu Kejadian</th>
                                         <th>Lokasi</th>
                                         <th>Keterangan</th>
-                                        
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -246,9 +257,11 @@
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->phone }}</td>
                                         <td>{{ title_case($item->type) }}</td>
+                                        <td><span class="label {{ optional($item->validator)->valid ? $item->validator->valid == 'Valid' ? 'label-success' : 'label-warning': 'label-danger'}}">{{ optional($item->validator)->valid ? $item->validator->valid : 'Belum divalidasi'}}</span></td>
+                                        <td>{{ optional($item->validator)->user ? $item->validator->user->name : '-'}}</td>  
                                         <td>{{ $item->waktu_kejadian }}</td>
                                         <td>{{ Indonesia::findProvince($item->province_id)->name .', '. Indonesia::findCity($item->city_id)->name .', '. Indonesia::findDistrict($item->district_id)->name }}</td>
-                                        <td>{{ $item->tsc .' - '. $item->ksc }}</td>
+                                        <td>{{ $item->tsc .' - '. $item->ksc }}</td>                                      
                                     </tr>
                                     @endforeach
                                 </tbody>
