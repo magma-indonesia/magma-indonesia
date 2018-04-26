@@ -45,7 +45,6 @@
             <div class="col-md-12">
                 <div class="hpanel">
                     <div class="row">
-
                         <div class="col-md-12 col-lg-3">
                             <div class="hpanel">                     
                                 <div class="panel-heading">
@@ -57,10 +56,20 @@
                                     </div>
                                     <form role="form" id="form" method="GET" action="{{ route('laporan.gunungapi.search') }}">
                                         <div class="form-group">
+                                            <label class="control-label">Nama Pelapor</label>
+                                            <select id="nip" class="form-control m-b" name="nip">
+                                                <option value="all" {{ !empty($input) ? $input['nip'] == 'all' ? 'selected' : '' : '' }}>- Pilih Semua-</option>
+                                                @foreach($users as $user)
+                                                <option value="{{ $user->nip }}" {{ !empty($input) ? $input['nip'] == $user->nip  ? 'selected' : '' : '' }}>{{ $user->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="control-label">Gunung Api</label>
-                                            <select id="gunungapi" class="form-control m-b" name="gunungapi">                                    
+                                            <select id="gunungapi" class="form-control m-b" name="gunungapi">
+                                                <option value="all" {{ !empty($input) ? $input['gunungapi'] == 'all' ? 'selected' : '' :'' }}>- Pilih Semua-</option>
                                                 @foreach ($gadds as $gadd)
-                                                <option value="{{ $gadd->code }}" {{ old('gunungapi') == $gadd->code || empty(old('gunungapi')) && $loop->first ? 'selected' : ''}}>{{ $gadd->name }}</option>      
+                                                <option value="{{ $gadd->code }}" {{ !empty($input) ? $input['gunungapi'] == $gadd->code ? 'selected' : '' : '' }}>{{ $gadd->name }}</option>      
                                                 @endforeach
                                             </select>
                                             @if( $errors->has('gunungapi'))
@@ -69,9 +78,10 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">Tipe Laporan</label>
-                                            <select id="tipe" class="form-control m-b" name="tipe">                                    
-                                                <option value="24" {{ old('tipe') == 24 || empty(old('tipe')) ? 'selected' : ''}}>24 Jam</option>
-                                                <option value="6" {{ old('tipe') == 6 ? 'selected' : ''}}>6 Jam</option>                                             
+                                            <select id="tipe" class="form-control m-b" name="tipe">
+                                                <option value="all" {{ !empty($input) ? $input['tipe'] == 'all' ? 'selected' : '' : '' }}>- Pilih Semua-</option>                                                                                 
+                                                <option value="24" {{ !empty($input) ? $input['tipe'] == 24 ? 'selected' : '' : '' }}>24 Jam</option>
+                                                <option value="6" {{ !empty($input) ? $input['tipe'] == 6 ? 'selected' : '' : '' }}>6 Jam</option>                                             
                                             </select>
                                             @if( $errors->has('tipe'))
                                             <label class="error" for="tipe">{{ ucfirst($errors->first('tipe')) }}</label>
@@ -80,10 +90,9 @@
                                         <div class="form-group">
                                             <label class="control-label">Range Laporan</label>
                                             <select id="jenis" class="form-control m-b" name="jenis">                                    
-                                                <option value="0" {{ old('jenis') == 0 || empty(old('jenis')) ? 'selected' : ''}}>2 Mingguan</option>
-                                                <option value="1" {{ old('jenis') == 1 ? 'selected' : ''}}>Bulanan</option>    
-                                                <option value="2" {{ old('jenis') == 2 ? 'selected' : ''}}>6 Bulanan</option>
-                                                <option value="3" {{ old('jenis') == 3 ? 'selected' : ''}}>Custom</option>                                            
+                                                <option value="0" {{ !empty($input) ? $input['jenis'] == 0 ? 'selected' : '' : '' }}>2 Mingguan</option>
+                                                <option value="1" {{ !empty($input) ? $input['jenis'] == 1 ? 'selected' : '' : '' }}>Bulanan</option>    
+                                                <option value="3" {{ !empty($input) ? $input['jenis'] == 3 ? 'selected' : '' : '' }}>Custom</option>   
                                             </select>
                                             @if( $errors->has('jenis'))
                                             <label class="error" for="jenis">{{ ucfirst($errors->first('jenis')) }}</label>
@@ -91,14 +100,14 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">Bulan Awal</label>
-                                            <input id="bulan" type="text" class="form-control" value="{{ now()->format('Y-m-d') }}" name="bulan" disabled>
+                                            <input id="bulan" type="text" class="form-control" value="{{ now()->startOfMonth()->format('Y-m-d') }}" name="bulan" {{ !empty($input) ? $input['jenis'] == 1 ? '' : 'disabled' : '' }}>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label">Range Tanggal</label>
+                                            <label class="control-label">Range Tanggal (awal)</label>
                                             <div class="input-group input-daterange">
-                                                <input id="start" type="text" class="form-control" value="{{ now()->subDays(14)->format('Y-m-d') }}" name="start" disabled>
+                                                <input id="start" type="text" class="form-control" value="{{ now()->subDays(14)->format('Y-m-d') }}" name="start" {{ !empty($input) ? $input['jenis'] == 1 ? 'disabled' : '' : '' }}>
                                                 <div class="input-group-addon"> - </div>
-                                                <input id="end" type="text" class="form-control" value="{{ now()->format('Y-m-d') }}" name="end" disabled>
+                                                <input id="end" type="text" class="form-control" value="{{ now()->format('Y-m-d') }}" name="end" {{ !empty($input) ? $input['jenis'] == 1 ? 'disabled' : '' : '' }}>
                                             </div>
                                             @if( $errors->has('start'))
                                             <label class="error" for="start">{{ ucfirst($errors->first('start')) }}</label>
@@ -107,7 +116,6 @@
                                             <label class="error" for="end">{{ ucfirst($errors->first('end')) }}</label>
                                             @endif
                                         </div>
-
                                         <button class="btn btn-success btn-block" type="submit">Apply</button>
                                     </form>
                                 </div>
@@ -138,7 +146,6 @@
                                                 <tr>
                                                     <th>Laporan</th>
                                                     <th>Jenis Laporan</th>
-                                                    {{--  <th>Tanggal</th>  --}}
                                                     <th>Pembuat Laporan</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -154,9 +161,6 @@
                                                     <td>
                                                         <span class="pie">{{ $var->var_perwkt.' Jam, '.$var->periode }}</span>
                                                     </td>
-                                                    {{--  <td>
-                                                        <strong>{{ $var->var_data_date->diffForHumans() }}</strong>
-                                                    </td>  --}}
                                                     <td>{{ $var->user->name }}</td>
                                                     <td>
                                                         <a href="">
@@ -197,12 +201,12 @@
 
         $(document).ready(function () {
             var endDateForm = $('#end').closest('.form-group'),
-                bulanForm = $('#bulan').closest('.form-group'),
-                hideEndDateForm = endDateForm.show();
-            
-            bulanForm.hide();
-            $('#start').prop('disabled',false);
-            $('#end, .input-group-addon').hide();
+                bulanForm = $('#bulan').closest('.form-group');
+
+            $('#nip').on('change', function(e){
+                var $nip = $('#nip').val();
+                console.log($nip);
+            });
 
             $.fn.datepicker.dates['id'] = {
                 days: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
@@ -252,38 +256,19 @@
                 });
             });
 
-            $('#jenis').on('change',function(e){
+            $('#jenis').on('change load',function(e){
                 var jenisVal = $(this).val();
                 switch(jenisVal) {
-                    case '0':
-                        console.log(jenisVal);
-                        endDateForm.show();
-                        bulanForm.hide();                 
-                        $('#start').prop('disabled',false);
-                        $('#bulan, #end').prop('disabled',true);                        
-                        $('#end, .input-group-addon').hide();
-                        break;
                     case '1':
                         console.log(jenisVal);
-                        endDateForm.hide();
-                        bulanForm.show(); 
                         $('#start, #end').prop('disabled',true);
                         $('#bulan').prop('disabled',false); 
                         break;
-                    case '2':
-                        console.log(jenisVal);
-                        endDateForm.hide();
-                        bulanForm.show(); 
-                        $('#start, #end').prop('disabled',true);
-                        $('#bulan').prop('disabled',false);
-                        break;
                     default:
-                        console.log(jenisVal);
-                        bulanForm.hide();    
+                        console.log(jenisVal);        
                         $('#start, #end').prop('disabled',false);
-                        $('#bulan').prop('disabled',true);  
-                        $('#end, .input-group-addon').show();
-                        endDateForm.show();
+                        $('#bulan').prop('disabled',true);                      
+                        break;
                 } 
             });
 

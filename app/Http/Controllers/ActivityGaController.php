@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Gadd;
 use App\MagmaVar;
 use App\VarDaily;
+use App\User;
 use App\Http\Resources\VarResource;
 use App\Http\Resources\VarCollection;
 
@@ -56,50 +57,84 @@ class ActivityGaController extends Controller
      */
     public function search(Request $request)
     {
-        $tipe = $request->jenis;
-        $periode = $request->tipe;
-        $code = strtoupper($request->gunungapi);
-        $bulan = $request->input('bulan',null);        
-        $start = $request->input('start',null);
-        $end = $request->input('end',null);
-
-        switch ($tipe) {
-            case '0':
-                $end = Carbon::createFromFormat('Y-m-d',$start)->addDays(14)->format('Y-m-d');
-                break;
-            case '1':
-                $start = Carbon::createFromFormat('Y-m-d',$bulan)->startOfMonth()->format('Y-m-d');
-                $end = Carbon::createFromFormat('Y-m-d',$bulan)->endOfMonth()->format('Y-m-d');
-                break;
-            
-            default:
-                $end = $end;
-                break;
-        }
-
-        $vars = MagmaVar::where('code_id', 'like', $code)
-                    ->whereBetween('var_data_date', [$start, $end])
-                    ->where('var_perwkt',$periode)
-                    ->orderBy('var_data_date','asc')
-                    ->orderBy('created_at','desc');
-        
-        $count = $vars->count();
-
-        $vars = $vars->paginate(31);
-
         $gadds = Gadd::orderBy('name')
                     ->whereNotIn('code',['TEO','SBG'])
                     ->get();
 
-        Carbon::setLocale('id');
-        if ($vars->count() == 0)
-        {
-            return view('gunungapi.laporan.search',compact('vars','gadds'))->with('flash_message',
-            'Kriteria pencarian tidak ditemukan/belum ada');
-        }      
+        $users = User::whereHas('bidang', function($query){
+                    $query->where('user_bidang_desc_id','like',2);
+                })->orderBy('name')->get();
 
-        return view('gunungapi.laporan.search',compact('vars','gadds'))->with('flash_result',
-        $count.' laporan berhasil ditemukan');
+        $input = $request->all();
+        // return $input;
+
+        if (count($request->all()) >0 )
+        {
+
+            switch ($request->nip) {
+                case 'all':
+                    $nip = '%';
+                    break;
+                default:
+                    $nip = $request->input('nip','%');
+                    break;
+            }
+
+            switch ($request->gunungapi) {
+                case 'all':
+                    $code = '%';
+                    break;
+                default:
+                    $code = strtoupper($request->gunungapi);
+                    break;
+            }
+    
+            switch ($request->tipe) {
+                case 'all':
+                    $periode = '%';
+                    break;
+                default:
+                    $periode = $request->tipe;
+                    break;
+            }
+    
+            $bulan = $request->input('bulan',null);        
+            $start = $request->input('start',null);
+            $end = $request->input('end',null);
+    
+            switch ($request->jenis) {
+                case '0':
+                    $end = Carbon::createFromFormat('Y-m-d',$start)->addDays(14)->format('Y-m-d');
+                    break;
+                case '1':
+                    $start = Carbon::createFromFormat('Y-m-d',$bulan)->startOfMonth()->format('Y-m-d');
+                    $end = Carbon::createFromFormat('Y-m-d',$bulan)->endOfMonth()->format('Y-m-d');
+                    break;
+                
+                default:
+                    $end = $end;
+                    break;
+            }
+    
+            $vars = MagmaVar::where('code_id', 'like', $code)
+                        ->whereBetween('var_data_date', [$start, $end])
+                        ->where('var_perwkt','like',$periode)
+                        ->where('nip_pelapor','like',$nip)
+                        ->orderBy('var_data_date','asc')
+                        ->orderBy('created_at','desc');
+            
+            $count = $vars->count();
+    
+            $vars = $vars->paginate(31);
+    
+            Carbon::setLocale('id');
+
+            return view('gunungapi.laporan.search',compact('input','vars','gadds','users'))->with('flash_result',
+            $count.' laporan berhasil ditemukan');
+        }
+
+        return view('gunungapi.laporan.search',compact('input','gadds','users'))->with('flash_message',
+        'Kriteria pencarian tidak ditemukan/belum ada');
 
     }
 }
