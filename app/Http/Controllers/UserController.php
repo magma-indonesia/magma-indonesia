@@ -148,8 +148,6 @@ class UserController extends Controller
 
         return redirect()->route('home');
 
-        // return response()->json(['success' => true, 'message' => 'Logout Berhasil'])->withCookie($cookie);
-
     }
 
     /**
