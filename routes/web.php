@@ -51,7 +51,7 @@ Route::group(['middleware' => ['web','auth']], function () {
             Route::get('vona','ImportController@vona')->name('import.vona');                     
         });
 
-        Route::get('export/crs','ExportController@crs')->name('export');
+        Route::get('export/{type}','ExportController@index')->name('export');
 
         Route::resource('crs','CrsController');
         Route::post('crs/lokasi','CrsController@getCities')->name('crs.getcities');
