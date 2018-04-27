@@ -226,13 +226,13 @@
                     </div>
                     <div class="panel-body list">
                         <div class="row">
-                            <div class="col-md-3">
-                                <div class="pagination">
-                                    <a href="{{ route('export',Request::all()) }}" type="button" class="btn btn-success btn-outline m-b-t">Save to Excel</a>
-                                </div>
-                            </div>
-                            <div class="col-md-6 text-center">
+                            <div class="col-md-6">
                                 {{ $crs->appends(Request::except('crs_page'))->links() }}
+                            </div>
+                            <div class="col-md-6">
+                                <div class="pagination pull-right">
+                                    <a href="{{ route('export',['type' => 'crs',Request::getQueryString()]) }}" type="button" class="btn btn-success btn-sm m-b-t">Save to Excel</a>
+                                </div>
                             </div>
                         </div>
                         <div class="table-responsive project-list">
@@ -273,9 +273,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="text-center">
                         {{ $crs->appends(Request::except('crs_page'))->links() }}
-                        </div>
                     </div>
                 </div>
             </div>

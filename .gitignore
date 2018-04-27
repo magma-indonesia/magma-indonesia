@@ -20,3 +20,4 @@ yarn-error.log
 public/js/popup_chat_trigger_demo.js
 resources/views/tes/index.blade.php
 app/Http/Controllers/TesController.php
+.vscode/launch.json

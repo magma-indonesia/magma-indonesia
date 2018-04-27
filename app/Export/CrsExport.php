@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use App\SigertanCrs;
 use App\IndonesiaProvince as Provinsi;
 use DB;
-use Indonesia;
 
 class CrsExport implements FromView
 {
@@ -67,7 +66,7 @@ class CrsExport implements FromView
         $provinsi = $request->provinsi == 'all' ? '%' : $request->provinsi;
         $kota = $request->kota == 'all' ? '%' : $request->kota;
 
-        $crs = SigertanCrs::orderBy('waktu_kejadian','desc')
+        $crs = SigertanCrs::orderBy('waktu_kejadian','asc')
                 ->whereIn('status',$status)
                 ->whereIn('type',$tipe)
                 ->whereBetween('waktu_kejadian',[$request->start,$request->end])
