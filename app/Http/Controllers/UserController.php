@@ -89,7 +89,14 @@ class UserController extends Controller
             if (Auth::attempt([$username => $request->username, 'password' => $request->password, 'status' => 1]))
             {
                 $user = Auth::user();
-                $user->notify(new UserLogin('web',$user));
+
+                try {
+                    $user->notify(new UserLogin('web',$user));
+                }
+                catch (Exception $e){
+                    
+                }
+                
                 $token = Auth::guard('api')->attempt($credentials);
 
                 return redirect()->route('chamber')->header('Authorization','Bearer '.$token);
