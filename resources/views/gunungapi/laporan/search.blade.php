@@ -34,145 +34,143 @@
 @endsection
 
 @section('content-body')
-    <div class="content animate-panel">
+    <div class="content animate-panel">        
         <div class="row">
-            <div class="col-md-12">
-                <div class="hpanel">
-                    <div class="row">
-                        <div class="col-md-12 col-lg-3">
-                            <div class="hpanel">                     
-                                <div class="panel-heading">
-                                    Filter Laporan
-                                </div>
-                                <div class="panel-body">
-                                    <div class="m-b-md">
-                                        Masukkan parameter pencarian
-                                    </div>
-                                    <form role="form" id="form" method="GET" action="{{ route('laporan.gunungapi.search') }}">
-                                        <div class="form-group">
-                                            <label class="control-label">Nama Pelapor</label>
-                                            <select id="nip" class="form-control m-b" name="nip">
-                                                <option value="all" {{ old('nip') == 'all' || empty(old('nip')) ? 'selected' : '' }}>- Pilih Semua-</option>
-                                                @foreach($users as $user)
-                                                <option value="{{ $user->nip }}" {{ old('nip') == $user->nip ? 'selected' : '' }}>{{ $user->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Gunung Api</label>
-                                            <select id="gunungapi" class="form-control m-b" name="gunungapi">
-                                                <option value="all" {{ old('gunungapi') == 'all' || empty(old('gunungapi')) ? 'selected' : '' }}>- Pilih Semua-</option>
-                                                @foreach ($gadds as $gadd)
-                                                <option value="{{ $gadd->code }}" {{ old('gunungapi') == $gadd->code ? 'selected' : '' }}>{{ $gadd->name }}</option>      
-                                                @endforeach
-                                            </select>
-                                            @if( $errors->has('gunungapi'))
-                                            <label class="error" for="gunungapi">{{ ucfirst($errors->first('gunungapi')) }}</label>
-                                            @endif
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Tipe Laporan</label>
-                                            <select id="tipe" class="form-control m-b" name="tipe">
-                                                <option value="all" {{ old('tipe') == 'all' || empty(old('tipe')) ? 'selected' : '' }}>- Pilih Semua-</option>                                                                                 
-                                                <option value="24" {{ old('tipe') == 24 ? 'selected' : '' }}>24 Jam</option>
-                                                <option value="6" {{ old('tipe') == 6 ? 'selected' : '' }}>6 Jam</option>                                            
-                                            </select>
-                                            @if( $errors->has('tipe'))
-                                            <label class="error" for="tipe">{{ ucfirst($errors->first('tipe')) }}</label>
-                                            @endif
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Range Laporan</label>
-                                            <select id="jenis" class="form-control m-b" name="jenis">                                    
-                                                <option value="0" {{ old('jenis') == 0 || empty(old('tipe')) ? 'selected' : '' }}>2 Mingguan</option>
-                                                <option value="1" {{ old('jenis') == 1 ? 'selected' : '' }}>Bulanan</option>
-                                                <option value="3" {{ old('jenis') == 3 ? 'selected' : '' }}>Custom</option>
-                                            </select>
-                                            @if( $errors->has('jenis'))
-                                            <label class="error" for="jenis">{{ ucfirst($errors->first('jenis')) }}</label>
-                                            @endif
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Bulan Awal</label>
-                                            <input id="bulan" type="text" class="form-control" value="{{ empty(old('bulan')) ? now()->startOfMonth()->format('Y-m-d') : old('bulan')}}" name="bulan" {{ old('jenis') == 1 ? '' : 'disabled' }}>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Range Tanggal (awal)</label>
-                                            <div class="input-group input-daterange">
-                                                <input id="start" type="text" class="form-control" value="{{ empty(old('start')) ? now()->subDays(14)->format('Y-m-d') : old('start')}}" name="start" {{ old('jenis') == 1 ? 'disabled' : '' }}>
-                                                <div class="input-group-addon"> - </div>
-                                                <input id="end" type="text" class="form-control" value="{{ empty(old('end')) ? now()->format('Y-m-d') : old('end')}}" name="end" {{ old('jenis') == 3 ? '' : 'disabled' }}>
-                                            </div>
-                                            @if( $errors->has('start'))
-                                            <label class="error" for="start">{{ ucfirst($errors->first('start')) }}</label>
-                                            @endif
-                                            @if( $errors->has('end'))
-                                            <label class="error" for="end">{{ ucfirst($errors->first('end')) }}</label>
-                                            @endif
-                                        </div>
-                                        <button class="btn btn-success btn-block" type="submit">Apply</button>
-                                    </form>
-                                </div>
+            <div class="col-md-12 col-lg-3">
+                <div class="hpanel">                     
+                    <div class="panel-heading">
+                        Filter Laporan
+                    </div>
+                    <div class="panel-body">
+                        <div class="m-b-md">
+                            Masukkan parameter pencarian
+                        </div>
+                        <form role="form" id="form" method="GET" action="{{ route('laporan.gunungapi.search') }}">
+                            <div class="form-group">
+                                <label class="control-label">Nama Pelapor</label>
+                                <select id="nip" class="form-control m-b" name="nip">
+                                    <option value="all" {{ old('nip') == 'all' || empty(old('nip')) ? 'selected' : '' }}>- Pilih Semua-</option>
+                                    @foreach($users as $user)
+                                    <option value="{{ $user->nip }}" {{ old('nip') == $user->nip ? 'selected' : '' }}>{{ $user->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                        </div>     
-    
-                        <div class="col-md-12 col-lg-9">
-                            <div id="all-vars" class="hpanel">
-                                <div class="panel-heading">
-                                    Hasil Pencarian
+                            <div class="form-group">
+                                <label class="control-label">Gunung Api</label>
+                                <select id="gunungapi" class="form-control m-b" name="gunungapi">
+                                    <option value="all" {{ old('gunungapi') == 'all' || empty(old('gunungapi')) ? 'selected' : '' }}>- Pilih Semua-</option>
+                                    @foreach ($gadds as $gadd)
+                                    <option value="{{ $gadd->code }}" {{ old('gunungapi') == $gadd->code ? 'selected' : '' }}>{{ $gadd->name }}</option>      
+                                    @endforeach
+                                </select>
+                                @if( $errors->has('gunungapi'))
+                                <label class="error" for="gunungapi">{{ ucfirst($errors->first('gunungapi')) }}</label>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Tipe Laporan</label>
+                                <select id="tipe" class="form-control m-b" name="tipe">
+                                    <option value="all" {{ old('tipe') == 'all' || empty(old('tipe')) ? 'selected' : '' }}>- Pilih Semua-</option>                                                                                 
+                                    <option value="24" {{ old('tipe') == 24 ? 'selected' : '' }}>24 Jam</option>
+                                    <option value="6" {{ old('tipe') == 6 ? 'selected' : '' }}>6 Jam</option>                                            
+                                </select>
+                                @if( $errors->has('tipe'))
+                                <label class="error" for="tipe">{{ ucfirst($errors->first('tipe')) }}</label>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Range Laporan</label>
+                                <select id="jenis" class="form-control m-b" name="jenis">                                    
+                                    <option value="0" {{ old('jenis') == 0 || empty(old('tipe')) ? 'selected' : '' }}>2 Mingguan</option>
+                                    <option value="1" {{ old('jenis') == 1 ? 'selected' : '' }}>Bulanan</option>
+                                    <option value="3" {{ old('jenis') == 3 ? 'selected' : '' }}>Custom</option>
+                                </select>
+                                @if( $errors->has('jenis'))
+                                <label class="error" for="jenis">{{ ucfirst($errors->first('jenis')) }}</label>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Bulan Awal</label>
+                                <input id="bulan" type="text" class="form-control" value="{{ empty(old('bulan')) ? now()->startOfMonth()->format('Y-m-d') : old('bulan')}}" name="bulan" {{ old('jenis') == 1 ? '' : 'disabled' }}>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Range Tanggal (awal)</label>
+                                <div class="input-group input-daterange">
+                                    <input id="start" type="text" class="form-control" value="{{ empty(old('start')) ? now()->subDays(14)->format('Y-m-d') : old('start')}}" name="start" {{ old('jenis') == 1 ? 'disabled' : '' }}>
+                                    <div class="input-group-addon"> - </div>
+                                    <input id="end" type="text" class="form-control" value="{{ empty(old('end')) ? now()->format('Y-m-d') : old('end')}}" name="end" {{ old('jenis') == 3 ? '' : 'disabled' }}>
                                 </div>
-                                <div class="panel-body list">
-                                    @if(!empty($flash_message))
-                                    <div class="alert alert-danger">
-                                        <i class="fa fa-bolt"></i> {{ $flash_message }}
-                                    </div>
-                                    @endif
-                                    @if(!empty($flash_result))
-                                    <div class="alert alert-success">
-                                        <i class="fa fa-bolt"></i> {{ $flash_result }}
-                                    </div>                                    
-                                    <div class="text-center">
-                                    {{ $vars->appends(Request::except('page'))->links() }}
-                                    </div>
-                                    <div class="table-responsive project-list">
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Laporan</th>
-                                                    <th>Jenis Laporan</th>
-                                                    <th>Pembuat Laporan</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($vars as $var)
-                                                <tr>
-                                                    <td>Laporan Gunungapi {{ $var->gunungapi->name }}
-                                                        <br/>
-                                                        <small>
-                                                            <i class="fa fa-clock-o"></i> Tanggal : {{ $var->var_data_date->formatLocalized('%d %B %Y') }}</small>
-                                                    </td>
-                                                    <td>
-                                                        <span class="pie">{{ $var->var_perwkt.' Jam, '.$var->periode }}</span>
-                                                    </td>
-                                                    <td>{{ $var->user->name }}</td>
-                                                    <td>
-                                                        <a href="">
-                                                            <a href="{{ route('laporanga.show',$var->noticenumber ) }}" target="_blank" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">View</a>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="text-center">
-                                    {{ $vars->appends(Request::except('page'))->links() }}
-                                    </div>
-                                    @endif
+                                @if( $errors->has('start'))
+                                <label class="error" for="start">{{ ucfirst($errors->first('start')) }}</label>
+                                @endif
+                                @if( $errors->has('end'))
+                                <label class="error" for="end">{{ ucfirst($errors->first('end')) }}</label>
+                                @endif
+                            </div>
+                            <button class="btn btn-success btn-block" type="submit">Apply</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-9">
+                <div class="hpanel">
+                    <div class="panel-heading">
+                        Hasil Pencarian
+                    </div>
+                    <div class="panel-body list">
+                        @if(!empty($flash_message))
+                        <div class="alert alert-danger">
+                            <i class="fa fa-bolt"></i> {{ $flash_message }}
+                        </div>
+                        @endif
+                        @if(!empty($flash_result))
+                        <div class="alert alert-success">
+                            <i class="fa fa-bolt"></i> {{ $flash_result }}
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{ $vars->appends(Request::except('page'))->links() }}
+                            </div>
+                            <div class="col-md-6">
+                                <div class="pagination pull-right">
+                                    <a href="{{ route('export',['type' => 'var',Request::getQueryString()]) }}" type="button" class="btn btn-sm btn-success m-b-t">Save to Excel</a>
                                 </div>
                             </div>
                         </div>
+                        <div class="table-responsive project-list">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Laporan</th>
+                                        <th>Jenis Laporan</th>
+                                        <th>Pembuat Laporan</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($vars as $var)
+                                    <tr>
+                                        <td>Laporan Gunungapi {{ $var->gunungapi->name }}
+                                            <br/>
+                                            <small>
+                                                <i class="fa fa-clock-o"></i> Tanggal : {{ $var->var_data_date->formatLocalized('%d %B %Y') }}</small>
+                                        </td>
+                                        <td>
+                                            <span class="pie">{{ $var->var_perwkt.' Jam, '.$var->periode }}</span>
+                                        </td>
+                                        <td>{{ $var->user->name }}</td>
+                                        <td>
+                                            <a href="">
+                                                <a href="{{ route('laporanga.show',$var->noticenumber ) }}" target="_blank" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">View</a>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            {{ $vars->appends(Request::except('page'))->links() }}
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -193,8 +191,6 @@
     <script>
 
         $(document).ready(function () {
-            var endDateForm = $('#end').closest('.form-group'),
-                bulanForm = $('#bulan').closest('.form-group');
 
             $('#nip').on('change', function(e){
                 var $nip = $('#nip').val();
