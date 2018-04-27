@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use JWTAuth;
+use Exception;
 use App\User;
 use App\UserPhoto;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -94,7 +95,7 @@ class UserController extends Controller
                     $user->notify(new UserLogin('web',$user));
                 }
                 catch (Exception $e){
-                    
+
                 }
                 
                 $token = Auth::guard('api')->attempt($credentials);
