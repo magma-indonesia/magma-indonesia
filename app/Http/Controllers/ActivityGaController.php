@@ -65,8 +65,7 @@ class ActivityGaController extends Controller
                     $query->where('user_bidang_desc_id','like',2);
                 })->orderBy('name')->get();
 
-        $input = $request->all();
-        // return $input;
+        $request->flash();
 
         if (count($request->all()) >0 )
         {
@@ -104,7 +103,7 @@ class ActivityGaController extends Controller
     
             switch ($request->jenis) {
                 case '0':
-                    $end = Carbon::createFromFormat('Y-m-d',$start)->addDays(14)->format('Y-m-d');
+                    $end = Carbon::createFromFormat('Y-m-d',$start)->addDays(13)->format('Y-m-d');
                     break;
                 case '1':
                     $start = Carbon::createFromFormat('Y-m-d',$bulan)->startOfMonth()->format('Y-m-d');

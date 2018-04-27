@@ -52,18 +52,18 @@
                                         <div class="form-group">
                                             <label class="control-label">Nama Pelapor</label>
                                             <select id="nip" class="form-control m-b" name="nip">
-                                                <option value="all" {{ !empty($input) ? $input['nip'] == 'all' ? 'selected' : '' : '' }}>- Pilih Semua-</option>
+                                                <option value="all" {{ old('nip') == 'all' || empty(old('nip')) ? 'selected' : '' }}>- Pilih Semua-</option>
                                                 @foreach($users as $user)
-                                                <option value="{{ $user->nip }}" {{ !empty($input) ? $input['nip'] == $user->nip  ? 'selected' : '' : '' }}>{{ $user->name }}</option>
+                                                <option value="{{ $user->nip }}" {{ old('nip') == $user->nip ? 'selected' : '' }}>{{ $user->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">Gunung Api</label>
                                             <select id="gunungapi" class="form-control m-b" name="gunungapi">
-                                                <option value="all" {{ !empty($input) ? $input['gunungapi'] == 'all' ? 'selected' : '' :'' }}>- Pilih Semua-</option>
+                                                <option value="all" {{ old('gunungapi') == 'all' || empty(old('gunungapi')) ? 'selected' : '' }}>- Pilih Semua-</option>
                                                 @foreach ($gadds as $gadd)
-                                                <option value="{{ $gadd->code }}" {{ !empty($input) ? $input['gunungapi'] == $gadd->code ? 'selected' : '' : '' }}>{{ $gadd->name }}</option>      
+                                                <option value="{{ $gadd->code }}" {{ old('gunungapi') == $gadd->code ? 'selected' : '' }}>{{ $gadd->name }}</option>      
                                                 @endforeach
                                             </select>
                                             @if( $errors->has('gunungapi'))
@@ -73,9 +73,9 @@
                                         <div class="form-group">
                                             <label class="control-label">Tipe Laporan</label>
                                             <select id="tipe" class="form-control m-b" name="tipe">
-                                                <option value="all" {{ !empty($input) ? $input['tipe'] == 'all' ? 'selected' : '' : '' }}>- Pilih Semua-</option>                                                                                 
-                                                <option value="24" {{ !empty($input) ? $input['tipe'] == 24 ? 'selected' : '' : '' }}>24 Jam</option>
-                                                <option value="6" {{ !empty($input) ? $input['tipe'] == 6 ? 'selected' : '' : '' }}>6 Jam</option>                                             
+                                                <option value="all" {{ old('tipe') == 'all' || empty(old('tipe')) ? 'selected' : '' }}>- Pilih Semua-</option>                                                                                 
+                                                <option value="24" {{ old('tipe') == 24 ? 'selected' : '' }}>24 Jam</option>
+                                                <option value="6" {{ old('tipe') == 6 ? 'selected' : '' }}>6 Jam</option>                                            
                                             </select>
                                             @if( $errors->has('tipe'))
                                             <label class="error" for="tipe">{{ ucfirst($errors->first('tipe')) }}</label>
@@ -84,9 +84,9 @@
                                         <div class="form-group">
                                             <label class="control-label">Range Laporan</label>
                                             <select id="jenis" class="form-control m-b" name="jenis">                                    
-                                                <option value="0" {{ !empty($input) ? $input['jenis'] == 0 ? 'selected' : '' : '' }}>2 Mingguan</option>
-                                                <option value="1" {{ !empty($input) ? $input['jenis'] == 1 ? 'selected' : '' : '' }}>Bulanan</option>    
-                                                <option value="3" {{ !empty($input) ? $input['jenis'] == 3 ? 'selected' : '' : '' }}>Custom</option>   
+                                                <option value="0" {{ old('jenis') == 0 || empty(old('tipe')) ? 'selected' : '' }}>2 Mingguan</option>
+                                                <option value="1" {{ old('jenis') == 1 ? 'selected' : '' }}>Bulanan</option>
+                                                <option value="3" {{ old('jenis') == 3 ? 'selected' : '' }}>Custom</option>
                                             </select>
                                             @if( $errors->has('jenis'))
                                             <label class="error" for="jenis">{{ ucfirst($errors->first('jenis')) }}</label>
@@ -94,14 +94,14 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">Bulan Awal</label>
-                                            <input id="bulan" type="text" class="form-control" value="{{ now()->startOfMonth()->format('Y-m-d') }}" name="bulan" {{ !empty($input) ? $input['jenis'] == 1 ? '' : 'disabled' : '' }}>
+                                            <input id="bulan" type="text" class="form-control" value="{{ empty(old('bulan')) ? now()->startOfMonth()->format('Y-m-d') : old('bulan')}}" name="bulan" {{ old('jenis') == 1 ? '' : 'disabled' }}>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">Range Tanggal (awal)</label>
                                             <div class="input-group input-daterange">
-                                                <input id="start" type="text" class="form-control" value="{{ now()->subDays(14)->format('Y-m-d') }}" name="start" {{ !empty($input) ? $input['jenis'] == 1 ? 'disabled' : '' : '' }}>
+                                                <input id="start" type="text" class="form-control" value="{{ empty(old('start')) ? now()->subDays(14)->format('Y-m-d') : old('start')}}" name="start" {{ old('jenis') == 1 ? 'disabled' : '' }}>
                                                 <div class="input-group-addon"> - </div>
-                                                <input id="end" type="text" class="form-control" value="{{ now()->format('Y-m-d') }}" name="end" {{ !empty($input) ? $input['jenis'] == 1 ? 'disabled' : '' : '' }}>
+                                                <input id="end" type="text" class="form-control" value="{{ empty(old('end')) ? now()->format('Y-m-d') : old('end')}}" name="end" {{ old('jenis') == 3 ? '' : 'disabled' }}>
                                             </div>
                                             @if( $errors->has('start'))
                                             <label class="error" for="start">{{ ucfirst($errors->first('start')) }}</label>
@@ -252,15 +252,20 @@
             $('#jenis').on('change load',function(e){
                 var jenisVal = $(this).val();
                 switch(jenisVal) {
+                    case '0':
+                        console.log(jenisVal);
+                        $('#bulan, #end').prop('disabled',true);
+                        $('#start').prop('disabled',false);
+                        break;
                     case '1':
                         console.log(jenisVal);
-                        $('#start, #end').prop('disabled',true);
                         $('#bulan').prop('disabled',false); 
+                        $('#start, #end').prop('disabled',true);
                         break;
                     default:
-                        console.log(jenisVal);        
+                        console.log(jenisVal);
                         $('#start, #end').prop('disabled',false);
-                        $('#bulan').prop('disabled',true);                      
+                        $('#bulan').prop('disabled',true);                     
                         break;
                 } 
             });
