@@ -25,6 +25,7 @@ use App\SigertanCrsDevices;
 use App\SigertanCrsValidasi;
 
 use App\v1\GertanCrs as OldGertan;
+use App\v1\MagmaSigertan as OldSigertan;
 use Indonesia;
 
 class ImportController extends Controller
@@ -1224,6 +1225,13 @@ class ImportController extends Controller
 
         return response()->json($data);
 
+    }
+
+    public function sigertan()
+    {
+        $qlses = OldSigertan::paginate(5);
+
+        return $qlses;
     }
 
     public function index()
