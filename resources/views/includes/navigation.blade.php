@@ -67,6 +67,9 @@
                         <a href="{{ route('users.create') }}">Tambah Users</a>
                     </li>
                     @yield('nav-edit-user')
+                    <li class="{{ active('users.administrasi') }}">
+                        <a href="{{ route('users.administrasi.index') }}">Administrasi</a>
+                    </li>
                 </ul>
             </li>
             <li class="{{ active(['activities.*','gunungapi.*']) }}">
