@@ -40,6 +40,7 @@ Route::group(['middleware' => ['web','auth']], function () {
         Route::group(['prefix' => 'import'], function () {
             Route::get('/', 'ImportController@index')->name('import');
             Route::post('crs','ImportController@crs')->name('import.crs');
+            Route::get('qls','ImportController@sigertan')->name('import.qls');
             Route::post('gadds','ImportController@gadds')->name('import.gadds');            
             Route::post('users','ImportController@users')->name('import.users');
             Route::post('bidang','ImportController@bidang')->name('import.bidang');
@@ -56,6 +57,9 @@ Route::group(['middleware' => ['web','auth']], function () {
         Route::resource('crs','CrsController');
         Route::post('crs/lokasi','CrsController@getCities')->name('crs.getcities');
         
+        Route::name('users.administrasi.')->group(function() {
+            Route::get('users/administrasi','UserAdministratifController@index')->name('index');
+        });
 
         Route::resource('users', 'UserController');
 
@@ -64,7 +68,6 @@ Route::group(['middleware' => ['web','auth']], function () {
             Route::resource('pos','PosPgaController');      
             Route::resource('laporanga','ActivityGaController');
             Route::get('laporan/search','ActivityGaController@search')->name('laporan.gunungapi.search');
-            
         });
 
         Route::resource('permissions', 'PermissionController', ['except' => [

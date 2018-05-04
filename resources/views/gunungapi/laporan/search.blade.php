@@ -168,8 +168,8 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            {{ $vars->appends(Request::except('page'))->links() }}
                         </div>
+                        {{ $vars->appends(Request::except('page'))->links() }}                        
                         @endif
                     </div>
                 </div>
