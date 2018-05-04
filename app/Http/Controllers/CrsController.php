@@ -39,7 +39,7 @@ class CrsController extends Controller
                 $status = ['BARU','DRAFT','TERBIT'];
                 break;
             default:
-                $status = explode(';',$request->status);
+                $status = explode(';',$request->input('status','BARU;DRAFT;TERBIT'));
         }
 
         switch ($request->tipe) {
@@ -63,8 +63,8 @@ class CrsController extends Controller
                 break;
         }
 
-        $provinsi = $request->provinsi == 'all' ? '%' : $request->provinsi;
-        $kota = $request->kota == 'all' ? '%' : $request->kota;
+        $provinsi = $request->provinsi == 'all' ? '%' : $request->input('provinsi','%');
+        $kota = $request->kota == 'all' ? '%' : $request->input('kota','%');
 
         $crs = SigertanCrs::orderBy('waktu_kejadian','desc')
                 ->whereIn('status',$status)
@@ -73,7 +73,7 @@ class CrsController extends Controller
                 ->where('province_id','like',$provinsi)
                 ->where('city_id','like',$kota);
                 
-        $valid = $request->valid;
+        $valid = $request->input('valid','all');
 
         switch ($valid) {
             case 'not':

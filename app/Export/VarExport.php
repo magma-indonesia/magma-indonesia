@@ -43,7 +43,7 @@ class VarExport implements FromView
                     $code = '%';
                     break;
                 default:
-                    $code = strtoupper($request->gunungapi);
+                    $code = strtoupper($request->input('gunungapi','%'));
                     break;
             }
     
@@ -52,13 +52,13 @@ class VarExport implements FromView
                     $periode = '%';
                     break;
                 default:
-                    $periode = $request->tipe;
+                    $periode = $request->input('tipe','%');
                     break;
             }
     
-            $bulan = $request->input('bulan',null);        
-            $start = $request->input('start',null);
-            $end = $request->input('end',null);
+            $bulan = $request->input('bulan', Carbon::parse('first day of this year')->format('Y-m-d'));        
+            $start = $request->input('start', Carbon::parse('first day of this year')->format('Y-m-d'));
+            $end = $request->input('end', Carbon::now()->format('Y-m-d'));
     
             switch ($request->jenis) {
                 case '0':
@@ -68,7 +68,6 @@ class VarExport implements FromView
                     $start = Carbon::createFromFormat('Y-m-d',$bulan)->startOfMonth()->format('Y-m-d');
                     $end = Carbon::createFromFormat('Y-m-d',$bulan)->endOfMonth()->format('Y-m-d');
                     break;
-                
                 default:
                     $end = $end;
                     break;
