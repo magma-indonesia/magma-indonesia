@@ -7,7 +7,12 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class GempaResource extends JsonResource
 {
 
-    protected $codes = ['lts','apl','gug','apg','hbs','tre','tor','lof','hyb','vtb','vta','vlp','tel','trs','tej','dev','gtb','hrm','dpt','mtr'];
+    protected $codes = [
+        'lts','apl','gug','apg','hbs',
+        'tre','tor','lof','hyb','vtb',
+        'vta','vlp','tel','trs','tej',
+        'dev','gtb','hrm','dpt','mtr'
+    ];
     
     /**
      * Transform the resource into an array.
