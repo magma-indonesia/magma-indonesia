@@ -36,14 +36,11 @@
         <div class="col-lg-offset-3 col-lg-6">
             <div class="hpanel">
                 <div class="panel-heading">
-                    <div class="panel-tools">
-                        <a class="showhide"><i class="fa fa-chevron-up"></i></a>
-                    </div>
                     Masukkan daftar Permission pengguna.
                 </div>
                 <div class="panel-body">
                     <form role="form" id="form" method="POST" action="{{ route('permissions.store') }}">
-                        {{ csrf_field() }}
+                        @csrf
                         <div class="form-group">
                             <label>Nama Permission</label>
                         </div>
@@ -65,8 +62,9 @@
                                 @if($i>0)                  
                                     <button type="button" class="btn btn-danger remove-permission" style="width:40px;"> - </button>
                                 @else
-                                    <button type="button" class="btn btn-primary add-permission" style="width:40px;"> + </button>                         
+                                    <button type="button" class="btn btn-primary add-permission" style="width:40px;"> + </button>                        
                                 @endif
+                                </span>
                             </div>
                             @if($errors->has('name.*'.$i))
                             <label id="name-error" class="error" for="name[]">{{ ucfirst($errors->first('name.'.$i)) }}</label>
@@ -97,7 +95,7 @@
                         @endif
 
                         <div class="hr-line-dashed"></div>
-                        <button class="btn btn-sm btn-primary m-t-n-xs pull-right" type="submit"><strong>Submit</strong></button>
+                        <button class="btn btn-sm btn-primary m-t-n-xs" type="submit"><strong>Submit</strong></button>
                     </form>
 
                 </div>
@@ -110,7 +108,6 @@
 @section('add-vendor-script')
 <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
 <script src="{{ asset('vendor/iCheck/icheck.min.js') }}"></script>
-
 @endsection 
 
 @section('add-script')
@@ -149,12 +146,11 @@
 
         });
 
-
         $('form').on('click','.remove-permission',function(){
             $(this).closest('.form-group').remove();
         });
 
-        {{--  $("#form").validate({
+        $("#form").validate({
             errorPlacement: function(error, element) {
                 console.log(element);
                 if (element.attr('name') == 'name[]' ){
@@ -165,19 +161,19 @@
             rules: {
                 'name[]': {
                     required: true,
-                    minlength: 4
+                    minlength: 3
                 }
             },
             messages: {
                 'name[]': {
-                    required: 'Harap Masukkan Nama Anda',
+                    required: 'Nama Permission tidak boleh kosong',
                     minlength: 'Minimal 4 karakter'
                 }
             },
             submitHandler: function(form) {
                 form.submit();
             }
-        });  --}}
+        });
 
     });
 
