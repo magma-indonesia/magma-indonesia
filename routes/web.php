@@ -37,6 +37,10 @@ Route::group(['middleware' => ['web','auth']], function () {
     Route::group(['prefix' => 'chambers'], function () {
         Route::get('/', 'ChamberController@index')->name('chamber');
 
+        Route::name('administratif.')->group(function () {
+            Route::resource('jabatan','JabatanController');
+        });
+
         Route::group(['prefix' => 'import'], function () {
             Route::get('/', 'ImportController@index')->name('import');
             Route::post('crs','ImportController@crs')->name('import.crs');
