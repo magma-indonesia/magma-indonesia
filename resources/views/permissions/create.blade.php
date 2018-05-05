@@ -107,7 +107,6 @@
 
 @section('add-vendor-script')
 <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
-<script src="{{ asset('vendor/iCheck/icheck.min.js') }}"></script>
 @endsection 
 
 @section('add-script')
