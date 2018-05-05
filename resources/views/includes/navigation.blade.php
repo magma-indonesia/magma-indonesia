@@ -54,17 +54,29 @@
                     <span class="nav-label">CRS</span>
                 </a>
             </li>
+            <li class="{{ active('administratif.*') }}">
+                <a href="#">
+                    <span class="nav-label">Administrasi</span>
+                    <span class="fa arrow"></span>                    
+                </a>
+                <ul class="nav nav-second-level">
+                    <li class="{{ active('administratif.jabatan.index') }}">
+                        <a href="{{ route('administratif.jabatan.index') }}">Daftar Jabatan</a>
+                    </li>
+                    @yield('nav-add-jabatan')
+                </ul>
+            </li>
             <li class="{{ active('users.*') }}">
                 <a href="#">
                     <span class="nav-label">Users</span>
                     <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
-                    <li class="{{ active('users') }}">
+                    <li class="{{ active('users.index') }}">
                         <a href="{{ route('users.index') }}">Daftar Users</a>
                     </li>
                     <li class="{{ active('users.create') }}">
-                        <a href="{{ route('users.create') }}">Tambah Users</a>
+                        <a href="{{ route('users.create') }}">Tambah User</a>
                     </li>
                     @yield('nav-edit-user')
                     <li class="{{ active('users.administrasi') }}">
@@ -89,17 +101,17 @@
                     <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
-                    <li class="{{ active('datadasar') }}">
+                    <li class="{{ active('datadasar.index') }}">
                         <a href="{{ route('datadasar.index') }}">Data Dasar</a>
                     </li>
                     @yield('nav-edit-volcano')
-                    <li class="{{ active('laporanga') }}">
+                    <li class="{{ active('laporanga.index') }}">
                         <a href="{{ route('laporanga.index') }}">Daftar Laporan</a>
                     </li>
                     <li class="{{ active('search') }}">
                             <a href="{{ route('laporan.gunungapi.search') }}">Cari Laporan</a>
                         </li>
-                    <li class="{{ active('pos') }}">
+                    <li class="{{ active('pos.index') }}">
                         <a href="{{ route('pos.index') }}">Pos Pengamatan Gunung Api</a>
                     </li>
                     @yield('nav-edit-pos')                 
@@ -112,7 +124,7 @@
                     <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
-                    <li class="{{ active('permissions') }}">
+                    <li class="{{ active('permissions.index') }}">
                         <a href="{{ route('permissions.index') }}">Permissions</a>
                     </li>
                     <li class="{{ active('permissions.create') }}">
@@ -127,7 +139,7 @@
                     <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
-                    <li class="{{ active('roles') }}">
+                    <li class="{{ active('roles.index') }}">
                         <a href="{{ route('roles.index') }}">Roles User</a>
                     </li>
                     <li class="{{ active('roles.create') }}">
