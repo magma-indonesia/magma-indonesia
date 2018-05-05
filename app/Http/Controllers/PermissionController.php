@@ -78,11 +78,6 @@ class PermissionController extends Controller
             }
         }
 
-        $data = [
-            'success' => 1,
-            'message' => $name.' berhasil ditambahkan.'
-        ];
-
         return redirect()->route('permissions.index')
             ->with('flash_message',
              'Permission '. implode($request->name,', ').' telah ditambahkan!');
