@@ -122,7 +122,7 @@
                                 <label>Roles</label>
                                 @foreach($roles as $role)
                                     <div class="checkbox">
-                                        <label><input name="roles[]" value="{{$role->id}}" type="checkbox" class="i-checks" {{ $user->hasRole($role->name) ? 'checked':''}}> {{$role->name}} </label>                       
+                                        <label><input name="roles[]" value="{{$role->id}}" type="checkbox" class="i-checks roles" {{ $user->hasRole($role->name) ? 'checked':''}}> {{$role->name}} </label>                       
                                     </div>
                                 @endforeach
                                 @if( $errors->has('roles'))
@@ -158,6 +158,26 @@
 @section('add-script')
 <script>
 	$(function(){
+
+        var $checkAll = $('input.all'),
+            $checkboxes = $('input.roles');
+
+        $checkAll.on('ifChecked ifUnchecked', function(event) {        
+            if (event.type == 'ifChecked') {
+                $checkboxes.iCheck('check');
+            } else {
+                $checkboxes.iCheck('uncheck');
+            }
+        });
+
+        $checkboxes.on('ifChanged', function(event){
+            if($checkboxes.filter(':checked').length == $checkboxes.length) {
+                $checkAll.prop('checked', 'checked');
+            } else {
+                $checkAll.removeProp('checked');
+            }
+            $checkAll.iCheck('update');
+        });
 
         $uploadCrop = $('.upload-photo').croppie({
             enableExif: true,
@@ -196,6 +216,8 @@
             reader.readAsDataURL(this.files[0]);
             
         });
+
+        
 
         $("#form").validate({
             rules: {
