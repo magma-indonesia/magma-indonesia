@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Ramsey\Uuid\Uuid;
 use Carbon\Carbon;
 use App\Traits\MagmaHelper;
 use App\Traits\JenisGempa;
@@ -26,6 +27,8 @@ use App\SigertanCrsValidasi;
 
 use App\v1\GertanCrs as OldGertan;
 use App\v1\MagmaSigertan as OldSigertan;
+use App\v1\Vona as OldVona;
+
 use Indonesia;
 
 class ImportController extends Controller
@@ -52,7 +55,7 @@ class ImportController extends Controller
                 ->orderBy('no')
                 ->get();
         
-        $gadds  = $gadds->map(function ($item) {
+        $gadds  = $gadds->each(function ($item, $key) {
 
             Gadd::firstOrCreate(
                 [   'code'              => $item->ga_code],
@@ -72,17 +75,10 @@ class ImportController extends Controller
                 ]
             );
 
-            return [
-
-                'code'              => $item->ga_code,
-                'name'              => $item->ga_nama_gapi,
-
-            ];
-
         });
 
         $gadds = Gadd::select('code','name')->get();
-        $gadds = $gadds->map(function ($item) {
+        $gadds = $gadds->each(function ($item, $key) {
 
             $gacode         = $item->code;
             $name           = $item->name;
@@ -119,13 +115,6 @@ class ImportController extends Controller
 
             }
 
-            return [
-
-                'code'              => $item->code,
-                'name'              => $item->name,
-
-            ];
-
         });
 
         if ($gadds){
@@ -156,7 +145,7 @@ class ImportController extends Controller
                 ->orderBy('id')
                 ->get();
 
-        $users = $users->map(function ($item) {
+        $users = $users->each(function ($item, $key) {
 
             strlen($item->email)>5 ? $email = $item->email : $email = NULL;
             strlen($item->phone)>9 ? $phone = str_replace('+62','0',$item->phone) : $phone = NULL;
@@ -171,12 +160,6 @@ class ImportController extends Controller
                         'status' => 1
                     ]
                 );
-
-            return [
-
-                'name'  => $item->name,
-
-            ];
         });
 
         if ($users){
@@ -1100,25 +1083,16 @@ class ImportController extends Controller
 
     public function vona()
     {
-        // return 'vona';
 
-        $vonas = DB::connection('magma')->table('ga_vona')->select('issued','type')->limit(10)->get();
+        $olds = OldVona::paginate(5);
 
-        $vonas = $vonas->map(function ($vona,$key){
+        $olds->each(function ($item, $key) {
             
-            $issued = str_replace('Z','',$vona->issued);
-            $issued = Carbon::createFromFormat('Ymd/Hi', $issued)->toDateTimeString();
-
-            $vona->type == 'REAL' ? $type = 1 : $type = 0;
-
-            return [
-                'issued' => $issued,
-                'type'  => $type
-            ];
         });
 
+
         // 20160216/2345Z
-        return $vonas;
+        // return $vonas;
     }
 
     /**
