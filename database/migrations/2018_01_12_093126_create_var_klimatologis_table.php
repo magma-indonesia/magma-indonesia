@@ -15,7 +15,7 @@ class CreateVarKlimatologisTable extends Migration
     {
         Schema::create('var_klimatologis', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('noticenumber_id',16)->unique()->index();
+            $table->char('noticenumber_id',16)->unique()->index();
             $table->foreign('noticenumber_id')->references('noticenumber')->on('magma_vars')->onDelete('cascade');
             $table->char('cuaca',50)->nullable();
             $table->char('kecangin',32)->nullable();

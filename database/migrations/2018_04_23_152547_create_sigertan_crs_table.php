@@ -38,8 +38,8 @@ class CreateSigertanCrsTable extends Migration
             $table->date('tsc')->default(Carbon::now())->comment('Tanggal sumber berita (default: hari ini)');
             $table->string('ksc')->comment('Keterangan berita/fenomena yang dilihat');
             $table->enum('status',['BARU','DRAFT','TERBIT']);
-            $table->float('latitude_user')->default(0);
-            $table->float('longitude_user')->default(0);
+            $table->float('latitude_user',10,6)->default(0);
+            $table->float('longitude_user',10,6)->default(0);
             $table->timestamps();
         });
     }

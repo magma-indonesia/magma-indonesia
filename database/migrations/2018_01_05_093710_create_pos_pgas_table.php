@@ -21,8 +21,8 @@ class CreatePosPgasTable extends Migration
             $table->string('observatory');
             $table->string('address')->nullable();
             $table->float('elevation')->nullable();
-            $table->float('latitude')->nullable();
-            $table->float('longitude')->nullable();
+            $table->float('latitude',10,6)->nullable();
+            $table->float('longitude',10,6)->nullable();
             $table->text('keterangan')->nullable();            
             $table->timestamps();
         });

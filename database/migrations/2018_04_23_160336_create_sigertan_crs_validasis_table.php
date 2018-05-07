@@ -18,7 +18,7 @@ class CreateSigertanCrsValidasisTable extends Migration
             $table->integer('crs_id')->unsigned()->index()->nullable();
             $table->foreign('crs_id')->references('id')->on('sigertan_crs')->onDelete('cascade');
             $table->boolean('valid')->default(0);
-            $table->string('nip_id',18);
+            $table->char('nip_id',18);
             $table->foreign('nip_id')->references('nip')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

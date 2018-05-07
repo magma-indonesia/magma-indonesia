@@ -17,7 +17,7 @@ class CreateVarDailiesTable extends Migration
             $table->increments('id');
             $table->char('code_id',3)->unique();
             $table->foreign('code_id')->references('code')->on('ga_dd');
-            $table->string('noticenumber_id',16)->unique()->index();
+            $table->char('noticenumber_id',16)->unique()->index();
             $table->foreign('noticenumber_id')->references('noticenumber')->on('magma_vars')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

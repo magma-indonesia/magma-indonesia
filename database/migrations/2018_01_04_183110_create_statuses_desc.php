@@ -15,7 +15,7 @@ class CreateStatusesDesc extends Migration
     {
         Schema::create('statuses_desc', function (Blueprint $table) {
             $table->increments('id');        
-            $table->string('status');
+            $table->char('status',20);
             $table->timestamps();
         });
     }
