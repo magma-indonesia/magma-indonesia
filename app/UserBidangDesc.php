@@ -12,7 +12,7 @@ class UserBidangDesc extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id',
-        'user_bidang_desc_id'
+        'code',
+        'nama'
     ];
 }
