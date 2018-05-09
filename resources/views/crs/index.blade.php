@@ -17,7 +17,7 @@
             <div class="panel-body">
                 <div id="hbreadcrumb" class="pull-right">
                     <ol class="hbreadcrumb breadcrumb">
-                        <li><a href="{{ route('chamber') }}">Chamber</a></li>
+                        <li><a href="{{ route('chambers.index') }}">Chamber</a></li>
                         <li class="active">
                             <span>CRS </span>
                         </li>
@@ -47,17 +47,17 @@
                             <div class="list-item">
                                 <h3 class="no-margins font-extra-bold text-baru">{{ $jumlahBaru }}</h3>
                                 <small> Baru </small>
-                                <div class="pull-right font-bold">{{ round($jumlahBaru/$total*100, 2) }}% <i class="fa fa-level-up text-success"></i></div>
+                                <div class="pull-right font-bold">{{ $jumlahBaru>0 ? round($jumlahBaru/$total*100, 2 ) : 0 }}% <i class="fa fa-level-up text-success"></i></div>
                             </div>
                             <div class="list-item">
                                 <h3 class="no-margins font-extra-bold text-draft">{{ $jumlahDraft }}</h3>
                                 <small> Draft</small>
-                                <div class="pull-right font-bold">{{ round($jumlahDraft/$total*100, 2) }}% <i class="fa fa-level-down text-color3"></i></div>
+                                <div class="pull-right font-bold">{{ $jumlahBaru>0 ? round($jumlahDraft/$total*100, 2) : 0}}% <i class="fa fa-level-down text-color3"></i></div>
                             </div>
                             <div class="list-item">
                                 <h3 class="no-margins font-extra-bold text-terbit">{{ $jumlahTerbit }}</h3>
                                 <small> Terbit</small>
-                                <div class="pull-right font-bold">{{ round($jumlahTerbit/$total*100, 2) }}% <i class="fa fa-bolt text-color3"></i></div>
+                                <div class="pull-right font-bold">{{ $jumlahBaru>0 ? round($jumlahTerbit/$total*100, 2) : 0 }}% <i class="fa fa-bolt text-color3"></i></div>
                             </div>
                             <div class="list-item">
                                 <h3 class="no-margins font-extra-bold text-success">{{ $total }}</h3>
@@ -80,28 +80,28 @@
                             <div class="list-item">
                                 <h3 class="no-margins font-extra-bold text-success">
                                     {{ $jumlahMga }}
-                                    <span class="pull-right font-bold">{{ round($jumlahMga/$total*100, 2) }}% <i class="fa fa-bar-chart-o"></i></span>
+                                    <span class="pull-right font-bold">{{ $jumlahMga ? round($jumlahMga/$total*100, 2) : 0 }}% <i class="fa fa-bar-chart-o"></i></span>
                                 </h3>
                                 <h5>Gunung Api</h5>
                             </div>
                             <div class="list-item">
                                 <h3 class="no-margins font-extra-bold text-success">
                                     {{ $jumlahMgt }}
-                                    <span class="pull-right font-bold">{{ round($jumlahMgt/$total*100, 2) }}% <i class="fa fa-bar-chart-o"></i></span>
+                                    <span class="pull-right font-bold">{{ $jumlahMga ? round($jumlahMgt/$total*100, 2) : 0 }}% <i class="fa fa-bar-chart-o"></i></span>
                                 </h3>
                                 <h5>Gerakan Tanah</h5>
                             </div>
                             <div class="list-item">
                                 <h3 class="no-margins font-extra-bold text-success">
                                     {{ $jumlahMgb }}
-                                    <span class="pull-right font-bold">{{ round($jumlahMgb/$total*100, 2) }}% <i class="fa fa-bar-chart-o"></i></span>
+                                    <span class="pull-right font-bold">{{ $jumlahMgb ? round($jumlahMgb/$total*100, 2) : 0 }}% <i class="fa fa-bar-chart-o"></i></span>
                                 </h3>
                                 <h5>Gempa Bumi dan Tsunami</h5>
                             </div>
                             <div class="list-item">
                                 <h3 class="no-margins font-extra-bold text-success">
                                     {{ $jumlahEtc }}
-                                    <span class="pull-right font-bold">{{ round($jumlahEtc/$total*100, 2) }}% <i class="fa fa-bar-chart-o"></i></span>
+                                    <span class="pull-right font-bold">{{ $jumlahMgb ? round($jumlahEtc/$total*100, 2) : 0 }}% <i class="fa fa-bar-chart-o"></i></span>
                                 </h3>
                                 <h5>Semburan Lumpur, Gas dan Air</h5>
                             </div>
@@ -231,7 +231,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="pagination pull-right">
-                                    <a href="{{ route('export',['type' => 'crs',Request::getQueryString()]) }}" type="button" class="btn btn-success btn-sm m-b-t">Save to Excel</a>
+                                    <a href="{{ route('chambers.export',['type' => 'crs',Request::getQueryString()]) }}" type="button" class="btn btn-success btn-sm m-b-t">Save to Excel</a>
                                 </div>
                             </div>
                         </div>
@@ -339,7 +339,7 @@
                 console.log($id);
                 
                 $.ajax({
-                    url: '{{ route('crs.getcities' )}}',
+                    url: '{{ route('chambers.crs.getcities' )}}',
                     data: {id:$id},
                     type: 'POST',
                     success: function(data){
