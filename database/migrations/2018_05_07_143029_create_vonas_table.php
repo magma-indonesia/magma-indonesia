@@ -14,7 +14,9 @@ class CreateVonasTable extends Migration
     public function up()
     {
         Schema::create('vonas', function (Blueprint $table) {
-            $table->uuid('uuid')->primary();
+            $table->increments('id');
+            $table->uuid('uuid');
+            $table->char('noticenumber',11)->index();
             $table->dateTime('issued');
             $table->enum('type',['REAL','EXERCISE']);
             $table->char('code_id',3)->index();
@@ -25,7 +27,7 @@ class CreateVonasTable extends Migration
             $table->text('vas')->comment('Volcanic Activity Summary');
             $table->float('vch_summit')->comment('Volcano Cloud Height Above Summit');
             $table->float('vch_asl')->comment('Volcano Cloud Height Above Sea Level');
-            $table->float('vch_other')->comment('Volcano Cloud Height Other Information')->nullable();
+            $table->string('vch_other')->comment('Volcano Cloud Height Other Information')->nullable();
             $table->string('remarks')->nullable();
             $table->boolean('sent')->default(0);
             $table->char('nip_pelapor',18)->index();
