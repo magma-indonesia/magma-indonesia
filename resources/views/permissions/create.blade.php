@@ -39,7 +39,7 @@
                     Masukkan daftar Permission pengguna.
                 </div>
                 <div class="panel-body">
-                    <form role="form" id="form" method="POST" action="{{ route('permissions.store') }}">
+                    <form role="form" id="form" method="POST" action="{{ route('chambers.permissions.store') }}">
                         @csrf
                         <div class="form-group">
                             <label>Nama Permission</label>
