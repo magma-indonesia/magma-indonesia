@@ -9,7 +9,7 @@
 */
 Route::group(['middleware' => ['web','guest']], function () {
     Route::get('/', 'HomeController@index')->name('home');
-    Route::get('/login', 'UserController@showLoginForm')->name('login');
+    Route::get('/login', 'UserController@showLoginForm')->name('login')->middleware('revalidate');
     Route::post('/login', 'UserController@login');
 });
 
@@ -34,61 +34,61 @@ Route::group(['middleware' => ['web','auth']], function () {
         });
     });
 
-    Route::group(['prefix' => 'chambers'], function () {
-        Route::get('/', 'ChamberController@index')->name('chamber');
+    // Route::group(['prefix' => 'chambers'], function () {
+    //     Route::get('/', 'ChamberController@index')->name('chamber');
 
-        Route::name('administratif.')->group(function () {
-            Route::resource('jabatan','JabatanController');
-        });
+    //     Route::name('administratif.')->group(function () {
+    //         Route::resource('jabatan','JabatanController');
+    //     });
 
-        Route::group(['prefix' => 'import'], function () {
-            Route::get('/', 'ImportController@index')->name('import');
-            Route::post('crs','ImportController@crs')->name('import.crs');
-            Route::get('qls','ImportController@sigertan')->name('import.qls');
-            Route::post('gadds','ImportController@gadds')->name('import.gadds');            
-            Route::post('users','ImportController@users')->name('import.users');
-            Route::post('bidang','ImportController@bidang')->name('import.bidang');
-            Route::post('vars','ImportController@vars')->name('import.vars');
-            Route::post('dailies','ImportController@dailies')->name('import.dailies');
-            Route::post('visuals','ImportController@visuals')->name('import.visuals');
-            Route::post('klimatologi','ImportController@klimatologis')->name('import.klimatologi');
-            Route::post('gempa','ImportController@gempa')->name('import.gempa');
-            Route::get('vona','ImportController@vona')->name('import.vona');                     
-        });
+    //     Route::group(['prefix' => 'import'], function () {
+    //         Route::get('/', 'ImportController@index')->name('import');
+    //         Route::post('crs','ImportController@crs')->name('import.crs');
+    //         Route::get('qls','ImportController@sigertan')->name('import.qls');
+    //         Route::post('gadds','ImportController@gadds')->name('import.gadds');            
+    //         Route::post('users','ImportController@users')->name('import.users');
+    //         Route::post('bidang','ImportController@bidang')->name('import.bidang');
+    //         Route::post('vars','ImportController@vars')->name('import.vars');
+    //         Route::post('dailies','ImportController@dailies')->name('import.dailies');
+    //         Route::post('visuals','ImportController@visuals')->name('import.visuals');
+    //         Route::post('klimatologi','ImportController@klimatologis')->name('import.klimatologi');
+    //         Route::post('gempa','ImportController@gempa')->name('import.gempa');
+    //         Route::get('vona','ImportController@vona')->name('import.vona');                     
+    //     });
 
-        Route::get('export/{type}','ExportController@index')->name('export');
+    //     Route::get('export/{type}','ExportController@index')->name('export');
 
-        Route::resource('crs','CrsController');
-        Route::post('crs/lokasi','CrsController@getCities')->name('crs.getcities');
+    //     Route::resource('crs','CrsController');
+    //     Route::post('crs/lokasi','CrsController@getCities')->name('crs.getcities');
         
-        Route::name('users.administrasi.')->group(function() {
-            Route::get('users/administrasi','UserAdministratifController@index')->name('index');
-        });
+    //     Route::name('users.administrasi.')->group(function() {
+    //         Route::get('users/administrasi','UserAdministratifController@index')->name('index');
+    //     });
 
-        Route::resource('users', 'UserController');
+    //     Route::resource('users', 'UserController');
 
-        Route::group(['prefix' => 'gunungapi'], function () {
-            Route::resource('datadasar','DataDasar');
-            Route::resource('pos','PosPgaController');      
-            Route::resource('laporanga','ActivityGaController');
-            Route::get('laporan/search','ActivityGaController@search')->name('laporan.gunungapi.search');
-        });
+    //     Route::group(['prefix' => 'gunungapi'], function () {
+    //         Route::resource('datadasar','DataDasar');
+    //         Route::resource('pos','PosPgaController');      
+    //         Route::resource('laporanga','ActivityGaController');
+    //         Route::get('laporan/search','ActivityGaController@search')->name('laporan.gunungapi.search');
+    //     });
 
-        Route::resource('permissions', 'PermissionController', ['except' => [
-            'show','edit'
-        ]]);
-        Route::resource('roles', 'RoleController', ['except' => [
-            'show'
-        ]]);
-        Route::resource('press', 'PressController');
+    //     Route::resource('permissions', 'PermissionController', ['except' => [
+    //         'show','edit'
+    //     ]]);
+    //     Route::resource('roles', 'RoleController', ['except' => [
+    //         'show'
+    //     ]]);
+    //     Route::resource('press', 'PressController');
 
-        Route::group(['prefix' => 'activities'], function(){
-            Route::get('/', 'ActivityController@index')->name('activities.index');
-        });
+    //     Route::group(['prefix' => 'activities'], function(){
+    //         Route::get('/', 'ActivityController@index')->name('activities.index');
+    //     });
         
-        Route::resource('vona', 'VonaController');    
+    //     Route::resource('vona', 'VonaController');    
 
-    });
+    // });
     
     Route::group(['prefix' => 'img'], function (){
         Route::get('/user/{id}', 'ImageController@user');
