@@ -40,7 +40,7 @@
     <div class="row">
         <div class="col-lg-12">
             <form role="form" id="form" method="POST" action="{{ route('press.store') }}">
-                {{ csrf_field() }}
+                @csrf
                 <div class="hpanel">
                     <div class="panel-heading">
                         <div class="panel-tools">

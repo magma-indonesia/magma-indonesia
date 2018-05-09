@@ -11,7 +11,7 @@
 			<div id="hbreadcrumb" class="pull-right">
 				<ol class="hbreadcrumb breadcrumb">
 					<li>
-						<a href="{{ route('chamber') }}">Chamber</a>
+						<a href="{{ route('chambers.index') }}">Chamber</a>
 					</li>
 					<li>
 						<span>Roles</span>
@@ -42,8 +42,8 @@
                     Masukkan daftar role pengguna.
                 </div>
                 <div class="panel-body">
-                    <form role="form" id="form" method="POST" action="{{ route('roles.store') }}">
-                        {{ csrf_field() }}
+                    <form role="form" id="form" method="POST" action="{{ route('chambers.roles.store') }}">
+                        @csrf
                         <div class="form-group">
                             <label>Nama Role</label> 
                             <input name="name" type="text" placeholder="Masukkan Nama Role" class="form-control" value="{{ old('name') }}" required>

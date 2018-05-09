@@ -10,27 +10,27 @@
 @endsection
 
 @section('content-header')
-        <div class="small-header">
-            <div class="hpanel">
-                <div class="panel-body">
-                    <div id="hbreadcrumb" class="pull-right">
-                        <ol class="hbreadcrumb breadcrumb">
-                            <li><a href="{{ route('chamber') }}">Chamber</a></li>
-                            <li>
-                                <span>Roles</span>
-                            </li>
-                            <li class="active">
-                                <span>List </span>
-                            </li>
-                        </ol>
-                    </div>
-                    <h2 class="font-light m-b-xs">
-                        List Roles User
-                    </h2>
-                    <small>Daftar Roles pengguna MAGMA Indonesia -  Pusat Vulkanologi dan Mitigasi Bencana Geologi</small>
+    <div class="small-header">
+        <div class="hpanel">
+            <div class="panel-body">
+                <div id="hbreadcrumb" class="pull-right">
+                    <ol class="hbreadcrumb breadcrumb">
+                        <li><a href="{{ route('chambers.index') }}">Chamber</a></li>
+                        <li>
+                            <span>Roles</span>
+                        </li>
+                        <li class="active">
+                            <span>List </span>
+                        </li>
+                    </ol>
                 </div>
+                <h2 class="font-light m-b-xs">
+                    List Roles User
+                </h2>
+                <small>Daftar Roles pengguna MAGMA Indonesia -  Pusat Vulkanologi dan Mitigasi Bencana Geologi</small>
             </div>
         </div>
+    </div>
 @endsection
 
 @section('content-body')
@@ -70,8 +70,8 @@
                                         <td>{{ $role->name }}</td>
                                         <td>{{ $role->permissions()->pluck('name')->implode(', ') }}</td>
                                         <td>
-                                            <a href="{{ route('roles.edit',['id'=>$role->id]) }}" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">Edit</a>
-                                            <form style="display:inline" method="POST" action="{{ route('roles.destroy',['id'=>$role->id]) }}" accept-charset="UTF-8">
+                                            <a href="{{ route('chambers.roles.edit',['id'=>$role->id]) }}" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">Edit</a>
+                                            <form style="display:inline" method="POST" action="{{ route('chambers.roles.destroy',['id'=>$role->id]) }}" accept-charset="UTF-8">
                                                 {{ method_field('DELETE') }}
                                                 {{ csrf_field() }}
                                                 <button value="Delete" class="btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>

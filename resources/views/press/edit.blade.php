@@ -5,9 +5,9 @@
 @endsection
 
 @section('nav-edit-press')
-                        <li class="{{ active('press.*') }}">
-                            <a href="{{ route('press.edit',$press->id) }}">Edit Press Release</a>
-                        </li>
+<li class="{{ active('chambers.press.*') }}">
+    <a href="{{ route('chambers.press.edit',$press->id) }}">Edit Press Release</a>
+</li>
 @endsection
 
 @section('add-vendor-css')
@@ -22,7 +22,7 @@
 			<div id="hbreadcrumb" class="pull-right">
 				<ol class="hbreadcrumb breadcrumb">
 					<li>
-						<a href="{{ route('chamber') }}">Chamber</a>
+						<a href="{{ route('chambers.index') }}">Chamber</a>
 					</li>
 					<li>
 						<span>Press Release</span>
@@ -45,9 +45,9 @@
 <div class="content animate-panel">
     <div class="row">
         <div class="col-lg-12">
-            <form role="form" id="form" method="POST" action="{{ route('press.update',$press->id) }}">
-                {{ method_field('PUT') }}
-                {{ csrf_field() }}
+            <form role="form" id="form" method="POST" action="{{ route('chambers.press.update',$press->id) }}">
+                @method('PUT')
+                @csrf
                 <div class="hpanel">
                     <div class="panel-heading">
                         <div class="panel-tools">

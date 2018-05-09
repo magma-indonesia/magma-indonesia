@@ -15,7 +15,7 @@
 				<div id="hbreadcrumb" class="pull-right">
 					<ol class="hbreadcrumb breadcrumb">
 						<li>
-							<a href="{{ route('chamber') }}">Chamber</a>
+							<a href="{{ route('chambers.index') }}">Chamber</a>
 						</li>
 						<li>
 							<span>Press Release</span>
@@ -41,7 +41,7 @@
 				@if ($presses->isEmpty())
 				<div class="alert alert-info">
 					<i class="fa fa-bolt"></i> Tidak ada data Press Release.
-					<a href="{{ route('press.create') }}">
+					<a href="{{ route('chambers.press.create') }}">
 						<strong>Buat Press Release?</strong>
 					</a>
 				</div>
@@ -62,12 +62,13 @@
 							<div class="vertical-timeline-content">
 								<div class="panel-heading hbuilt">
 									<div class="pull-right">
-										<form style="display:inline" id="form-delete" method="POST" action="{{ route('press.destroy',['id'=>$press->id]) }}" accept-charset="UTF-8">
-											{{ method_field('DELETE') }} {{ csrf_field() }}
+										<form style="display:inline" id="form-delete" method="POST" action="{{ route('chambers.press.destroy',['id'=>$press->id]) }}" accept-charset="UTF-8">
+											@method('DELETE')
+											@csrf
 											<button class="btn btn-danger btn-xs" type="submit">Delete</button>
 										</form>
-										<a role="button" href="{{ route('press.edit',['id' => $press->id] )}}" class="btn btn-default btn-xs"> Edit</a>
-											<a role="button" href="{{ route('press.show',['id' => $press->id] )}}" class="btn btn-default btn-xs"> View</a>
+										<a role="button" href="{{ route('chambers.press.edit',['id' => $press->id] )}}" class="btn btn-default btn-xs"> Edit</a>
+											<a role="button" href="{{ route('chambers.press.show',['id' => $press->id] )}}" class="btn btn-default btn-xs"> View</a>
 									</div>
 									<h4>{{ $press->title }}, 								<small>
 										<i>{{ $press->updated_at ? 'updated at '.$press->updated_at : '' }} </i>

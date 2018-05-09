@@ -16,7 +16,7 @@
                 <div class="panel-body">
                     <div id="hbreadcrumb" class="pull-right">
                         <ol class="hbreadcrumb breadcrumb">
-                            <li><a href="{{ route('chamber') }}">Chamber</a></li>
+                            <li><a href="{{ route('chambers.index') }}">Chamber</a></li>
                             <li>
                                 <span>Permissions</span>
                             </li>
@@ -70,7 +70,7 @@
                                     <td class="permission">{{ $permission->name }}</td>
                                     <td>
                                         <button type="button" value="{{ $permission->id }}" class="btn btn-sm btn-success btn-outline edit" data-toggle="modal" data-target="#edit">Edit</button>
-                                        <form style="display:inline" id="form-delete" method="POST" action="{{ route('permissions.destroy',['id'=>$permission->id]) }}" accept-charset="UTF-8">
+                                        <form style="display:inline" id="form-delete" method="POST" action="{{ route('chambers.permissions.destroy',['id'=>$permission->id]) }}" accept-charset="UTF-8">
                                             {{ method_field('DELETE') }}
                                             {{ csrf_field() }}
                                             <button class="btn btn-sm btn-danger btn-outline" type="submit">Delete</button>
@@ -92,8 +92,8 @@
                                             <small class="font-bold">Rubah nama Permission sesuai dengan fungsi yang Roles</small>
                                         </div>
                                         <div class="modal-body">
-                                                {{ method_field('PUT') }}
-                                                {{ csrf_field() }}
+                                                @method('PUT')
+                                                @csrf
                                                 <div class="form-group">
                                                     <label>Nama Permission</label> 
                                                     <input id="modal-permission" name="name" type="text" placeholder="Masukkan Nama Permission" class="form-control" value="" required>

@@ -11,7 +11,7 @@
 			<div id="hbreadcrumb" class="pull-right">
 				<ol class="hbreadcrumb breadcrumb">
 					<li>
-						<a href="{{ route('chamber') }}">Chamber</a>
+						<a href="{{ route('chambers.index') }}">Chamber</a>
 					</li>
 					<li>
 						<span>Permissions</span>

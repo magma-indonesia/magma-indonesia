@@ -5,8 +5,8 @@
 @endsection
 
 @section('nav-edit-roles')
-<li class="{{ active('roles.*') }}">
-    <a href="{{ route('roles.edit',$role->id) }}">Edit Role</a>
+<li class="{{ active('chambers.roles.*') }}">
+    <a href="{{ route('chambers.roles.edit',$role->id) }}">Edit Role</a>
 </li>
 @endsection
 
@@ -17,7 +17,7 @@
 			<div id="hbreadcrumb" class="pull-right">
 				<ol class="hbreadcrumb breadcrumb">
 					<li>
-						<a href="{{ route('chamber') }}">Chamber</a>
+						<a href="{{ route('chambers.index') }}">Chamber</a>
 					</li>
 					<li>
 						<span>Roles</span>
@@ -48,9 +48,9 @@
                     Edit nama Role pengguna.
                 </div>
                 <div class="panel-body">
-                    <form role="form" id="form" method="POST" action="{{ route('roles.update',$role->id) }}">
-                        {{ method_field('PUT') }}
-                        {{ csrf_field() }}
+                    <form role="form" id="form" method="POST" action="{{ route('chambers.roles.update',$role->id) }}">
+                        @method('PUT')
+                        @csrf
                         <div class="form-group">
                             <label>Nama Role</label> 
                             <input name="name" type="text" placeholder="Masukkan Nama Role" class="form-control" value="{{ $role->name }}" required>
