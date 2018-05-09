@@ -14,7 +14,7 @@ class VonaController extends Controller
      */
     public function index()
     {
-        //
+        return Vona::paginate(5);
     }
 
     /**
@@ -46,7 +46,7 @@ class VonaController extends Controller
      */
     public function show(Vona $vona)
     {
-        //
+        return Vona::findOrFail('75e66488-56db-49c4-ab0c-a4f16a7fc500');
     }
 
     /**
