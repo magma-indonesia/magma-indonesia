@@ -6,7 +6,7 @@
 
 @section('nav-edit-pos')
     <li class="{{ active('pos.*') }}">
-        <a href="{{ route('pos.edit',$pga->id) }}">Edit Pos</a>
+        <a href="{{ route('chambers.pos.edit',$pga->id) }}">Edit Pos</a>
     </li>
 @endsection
 
@@ -16,7 +16,7 @@
 		<div class="panel-body">
 			<div id="hbreadcrumb" class="pull-right">
 				<ol class="hbreadcrumb breadcrumb">
-                    <li><a href="{{ route('chamber') }}">Chamber</a></li>
+                    <li><a href="{{ route('chambers.index') }}">Chamber</a></li>
                     <li>
                         <span>Data Dasar</span>
                     </li>
@@ -49,7 +49,7 @@
                         Edit Pos Pengamatan Gunung Api {{ $pga->gunungapi->name }}
                     </div>
                     <div class="panel-body">
-                        <form role="form" id="form" method="POST" action="{{ route('pos.update',$pga->id) }}" class="form-horizontal" enctype="multipart/form-data">
+                        <form role="form" id="form" method="POST" action="{{ route('chambers.pos.update',$pga->id) }}" class="form-horizontal" enctype="multipart/form-data">
                             @method('PUT')
                             @csrf
                             <input type="hidden" name="code" value="{{ $pga->code_id }}">
@@ -124,7 +124,7 @@
                             <div class="hr-line-dashed"></div>                           
                             <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-2">
-                                    <button class="btn btn-default" onclick="window.location='{{ route('pos.index') }}'">Cancel</button>
+                                    <button class="btn btn-default" onclick="window.location='{{ route('chambers.pos.index') }}'">Cancel</button>
                                     <button class="btn btn-primary" type="submit">Save changes</button>
                                 </div>
                             </div>
