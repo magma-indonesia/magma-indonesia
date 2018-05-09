@@ -86,9 +86,7 @@ class DataDasar extends Controller
                         'body' => $request->body
                     ]);
 
-        if ($success){
-            return 'oke';
-        }
+        return redirect()->route('chambers.datadasar.index');
     }
 
     /**
