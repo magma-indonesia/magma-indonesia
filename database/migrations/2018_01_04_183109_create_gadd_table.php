@@ -25,10 +25,10 @@ class CreateGaddTable extends Migration
             $table->char('nearest_city',100)->nullable();
             $table->char('division',5);
             $table->char('volc_type',2);
-            $table->integer('elevation');
-            $table->float('latitude');
-            $table->float('longitude');
-            $table->char('smithsonian_id', 11)->nullable();
+            $table->float('elevation');
+            $table->float('latitude',10,6);
+            $table->float('longitude',10,6);
+            $table->char('smithsonian_id', 6)->nullable();
             $table->timestamps();
         });
     }
