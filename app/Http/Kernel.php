@@ -61,5 +61,6 @@ class Kernel extends HttpKernel
         'jwt.refresh' => Tymon\JWTAuth\Middleware\RefreshToken::class,
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
+        'revalidate' => \App\Http\Middleware\RevalidateBackHistory::class,
     ];
 }
