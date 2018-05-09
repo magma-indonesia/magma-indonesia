@@ -8,6 +8,8 @@ use JWTAuth;
 use Exception;
 use App\User;
 use App\UserPhoto;
+use App\UserBidang;
+use App\UserBidangDesc as Bidang;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Storage;
@@ -31,7 +33,7 @@ class UserController extends Controller
      *
      * @return boolean
      */
-    protected function uploadPhoto($nip,$photo,$filetype)
+    protected function uploadPhoto($user,$photo,$filetype)
     {
 
         list($type, $photo) = explode(';', $photo);
@@ -41,10 +43,10 @@ class UserController extends Controller
         
         $uploadPhoto = Storage::disk('user')->put($photoName, $photo);
 
-        if (Storage::disk('user')->exists(optional(auth()->user()->photo)->filename))
+        if (Storage::disk('user')->exists(optional($user->photo)->filename))
         {
-            Storage::disk('user')->delete(auth()->user()->photo->filename);
-            Storage::disk('user-thumb')->delete(auth()->user()->photo->filename);
+            Storage::disk('user')->delete($user->photo->filename);
+            Storage::disk('user-thumb')->delete($user->photo->filename);
         }
 
         $url = Storage::disk('user')->get($photoName);
@@ -54,11 +56,13 @@ class UserController extends Controller
 
         if ($uploadPhoto)
         {
-            $getUserId = User::where('nip',$nip)->first();
-            $success = $getUserId->photo()->updateOrCreate([
-                'user_id' => $getUserId->id],[
-                'filename' => $photoName
-            ]);
+            $success = $user->photo()->updateOrCreate(
+                [
+                    'user_id' => $user->id
+                ],
+                [
+                    'filename' => $photoName
+                ]);
         } else {
             return redirect()->back()->with('flash_message','Gagal upload photo User.');    
         }
@@ -100,7 +104,7 @@ class UserController extends Controller
                 
                 $token = Auth::guard('api')->attempt($credentials);
 
-                return redirect()->route('chamber')->header('Authorization','Bearer '.$token);
+                return redirect()->route('chambers.index')->header('Authorization','Bearer '.$token);
             }
 
             if ($this->hasTooManyLoginAttempts($request)) {
@@ -144,8 +148,7 @@ class UserController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::logout();
-        $cookie = \Cookie::forget('token');
+        $logout = Auth::logout();
 
         if(Auth::check())
         {
@@ -178,7 +181,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        $bidangs = Bidang::whereIn('code',['mga','mgb','mgt','bpt','btu'])->get();
+        return view('users.create',compact('bidangs'));
     }
 
     /**
@@ -193,25 +197,31 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'nip' => 'required|digits:18|unique:users,nip,NULL,id,deleted_at,NULL',
+            'bidang' => 'required|in:2,3,4,5,6',
             'phone' => 'nullable|digits_between:10,12|unique:users,phone,NULL,id,deleted_at,NULL',
             'email' => 'required|string|email|max:255|unique:users,email,NULL,id,deleted_at,NULL',
             'password' => 'required|string|min:6|confirmed',
             'status' => 'required|boolean'
         ]);
 
-        $input  = $request->except(['imagebase64','file']);
+        $input  = $request->except(['bidang','imagebase64','file']);
      
-        $user = new User();
-        $userSaved = $user->fill($input)->save();
-        $request->has('file') ? $uploadPhoto = $this->uploadPhoto($request->nip,$request->imagebase64,$request->filetype) : $uploadPhoto = true;
+        $user = User::create($input);
 
-        if ($userSaved AND $uploadPhoto)
+        $bidang = UserBidang::create([
+            'user_id' => $user->id,
+            'user_bidang_desc_id' => $request->bidang
+        ]);
+        
+        $request->has('file') ? $uploadPhoto = $this->uploadPhoto($user,$request->imagebase64,$request->filetype) : $uploadPhoto = true;
+
+        if ($user AND $uploadPhoto)
         {
             $user->notify(new UserNotification('create',$user));
-            return redirect()->route('users.index')->with('flash_message',$request->name.' berhasil ditambahkan.');
+            return redirect()->route('chambers.users.index')->with('flash_message',$request->name.' berhasil ditambahkan.');
         } 
 
-        return redirect()->route('users.index')->with('flash_message','User gagal ditambahkan.');    
+        return redirect()->route('chambers.users.index')->with('flash_message','User gagal ditambahkan.');    
     }
 
     /**
@@ -238,8 +248,9 @@ class UserController extends Controller
         //
         $user = User::findOrFail($id); 
         $roles = Role::get();
+        $bidangs = Bidang::whereIn('code',['mga','mgb','mgt','bpt','btu'])->get();
 
-        return view('users.edit', compact('user', 'roles'));
+        return view('users.edit', compact('user', 'roles', 'bidangs'));
     }
 
     /**
@@ -257,6 +268,7 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'nip' => 'required|digits:18|unique:users,nip,'.$user->id,
+            'bidang' => 'required|in:2,3,4,5,6',
             'phone' => 'nullable|digits_between:11,12',
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
             'status' => 'required|boolean'
@@ -267,7 +279,7 @@ class UserController extends Controller
         $roles = $request['roles'];
         $user->fill($input)->save();
             
-        $request->file ? $uploadPhoto = $this->uploadPhoto($request->nip,$request->imagebase64,$request->filetype) : $uploadPhoto = true;
+        $request->file ? $uploadPhoto = $this->uploadPhoto($user,$request->imagebase64,$request->filetype) : $uploadPhoto = true;
 
         if (isset($roles)) {        
             $user->roles()->sync($roles); 
@@ -278,7 +290,7 @@ class UserController extends Controller
 
         $user->notify(new UserNotification('update',$user));        
 
-        return redirect()->route('users.index')
+        return redirect()->route('chambers.users.index')
             ->with('flash_message',
             'Data '.$name.' berhasil dirubah.');
     }
