@@ -70,7 +70,7 @@ class RoleController extends Controller
             $role->givePermissionTo($p);
         }
 
-        return redirect()->route('roles.index')
+        return redirect()->route('chambers.roles.index')
             ->with('flash_message',
              'Role '. $role->name.' telah berhasil ditambahkan !');
     }
@@ -133,7 +133,7 @@ class RoleController extends Controller
             $role->givePermissionTo($p);
         }
 
-        return redirect()->route('roles.index')
+        return redirect()->route('chambers.roles.index')
         ->with('flash_message',
          'Role '. $role->name.' berhasil dirubah!');
     }

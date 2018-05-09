@@ -78,7 +78,7 @@ class PermissionController extends Controller
             }
         }
 
-        return redirect()->route('permissions.index')
+        return redirect()->route('chambers.permissions.index')
             ->with('flash_message',
              'Permission '. implode($request->name,', ').' telah ditambahkan!');
     }

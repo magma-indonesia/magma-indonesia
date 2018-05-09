@@ -58,9 +58,15 @@
                     <div class="panel-heading">
                         Daftar Jabatan yang terdaftar
                     </div>
-                    <div class="panel-body m-b">
-                        <a href="{{ route('chambers.administratif.jabatan.create') }}" class="btn btn-outline btn-success" type="button">Buat Jabatan Baru</a>
-                        <a href="{{ route('chambers.users.administrasi.index') }}" class="btn btn-outline btn-warning" type="button">Tambahkan Jabatan ke User</a>                    
+                    <div class="panel-body float-e-margins m-b">
+                        <div class="row text-center">
+                            <div class="col-md-4 col-lg-2 col-sm-6 col-xs-12">
+                                <a href="{{ route('chambers.administratif.jabatan.create') }}" class="btn btn-outline btn-block btn-success" type="button">Buat Jabatan Baru</a>
+                            </div>
+                            <div class="col-md-4 col-lg-2 col-sm-6 col-xs-12">
+                                <a href="{{ route('chambers.users.administrasi.index') }}" class="btn btn-block btn-outline btn-warning" type="button">Tambahkan Jabatan ke User</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="panel-body table-responsive">
                         <table id="table-jabatan" class="table table-striped table-hover">
@@ -155,7 +161,7 @@
                 targets: [0]
             }],
             order: [[ 1, 'asc' ]],
-            dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+            dom: "<'row'<'col-md-4 m-b'l><'col-md-4 m-b text-center'B><'col-md-4 col-xs-12'f>>tp",
                 "lengthMenu": [[10, 20, 30, -1], [10, 20, 30, "All"]],
                 buttons: [
                     { extend: 'copy', className: 'btn-sm'},
