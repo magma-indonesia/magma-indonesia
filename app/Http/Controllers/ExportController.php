@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 use App\Export\VarExport;
+use App\Export\CrsExport;
 
 class ExportController extends Controller
 {
