@@ -24,6 +24,7 @@ use App\Status;
 use App\SigertanCrs;
 use App\SigertanCrsDevices;
 use App\SigertanCrsValidasi;
+use App\Vona;
 
 use App\v1\GertanCrs as OldGertan;
 use App\v1\MagmaSigertan as OldSigertan;
@@ -1084,15 +1085,50 @@ class ImportController extends Controller
     public function vona()
     {
 
-        $olds = OldVona::paginate(5);
+        $olds = OldVona::take(5)->get();
 
         $olds->each(function ($item, $key) {
-            
+
+            $noticenumber = $item->notice_number;
+            $issued = $item->issued;
+            $type = $item->type;
+            $code_id = $item->ga_code;
+            $cu_code = $item->cu_avcode;
+            $location = $item->volcano_location;
+            $elevation = $item->summit_elevation;
+            $vas = $item->volcanic_act_summ;
+            $vch_summit = $item->vc_height - $item->summit_elevation;
+            $vch_asl = $item->vc_height;
+            $vch_other = $item->other_vc_info;
+            $remarks = $item->remarks;
+            $sent = $item->sent;
+            $pelapor = empty($item->nip) ? '198803152015031005' : $item->nip;
+
+            Vona::firstOrCreate(
+                [
+                    'noticenumber' => $noticenumber,
+                ],
+                [
+
+                    'issued' => $issued,
+                    'type' => $type,
+                    'code_id' => $code_id,
+                    'cu_code' => $cu_code,
+                    'location' => $location,
+                    'elevation' => $elevation,
+                    'vas' => $vas,
+                    'vch_summit' => $vch_summit,
+                    'vch_asl' => $vch_asl,
+                    'vch_other' => $vch_other,
+                    'remarks' => $remarks,
+                    'sent' => $sent,
+                    'nip_pelapor' => $pelapor
+                ]
+            );
         });
 
+        return Vona::all();
 
-        // 20160216/2345Z
-        // return $vonas;
     }
 
     /**
