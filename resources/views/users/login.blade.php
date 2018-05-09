@@ -5,8 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="csrf-token" content="{{ csrf_token() }}">
-
+	<meta key-magma="{{ str_random(40) }}">
 	<!-- Page title -->
 	<title>Login</title>
 
@@ -37,7 +36,7 @@
 				<div class="hpanel">
 					<div class="panel-body">
 						<form method="POST" action="{{ route('login') }}" id="loginForm">
-                            {{ csrf_field() }}
+                            @csrf
 							<div class="form-group">
 								<label class="control-label" for="username">NIP/Email</label>
 								<input type="text" placeholder="Masukkan NIP atau email Anda" title="NIP/Email" name="username" id="username" class="form-control"
@@ -62,7 +61,7 @@
 							@endif
 
 							<button type="submit" class="btn btn-success btn-block">Login</button>
-							<a class="btn btn-default btn-block" href="{{ route('users.create') }}">Register</a>
+							<a class="btn btn-default btn-block" href="{{ route('chambers.users.create') }}">Register</a>
 						</form>
 					</div>
 				</div>

@@ -40,8 +40,8 @@
                     </div>
                     <div class="panel-footer text-center">
                         <form role="form" id="form-import" method="POST"
-                        data-import="users" action="{{ route('import.users') }}">
-                            {{ csrf_field() }}
+                        data-import="users" action="{{ route('chambers.import.users') }}">
+                            @csrf
                             <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
                                 <span class="ladda-label">Import Data Users</span>
                                 <span class="ladda-spinner"></span>
@@ -67,8 +67,8 @@
                     </div>
                     <div class="panel-footer text-center">
                         <form role="form" id="form-import" method="POST"
-                        data-import="bidang" action="{{ route('import.bidang') }}">
-                            {{ csrf_field() }}
+                        data-import="bidang" action="{{ route('chambers.import.bidang') }}">
+                            @csrf
                             <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
                                 <span class="ladda-label">Import Data Bidang</span>
                                 <span class="ladda-spinner"></span>
@@ -94,8 +94,8 @@
                     </div>
                     <div class="panel-footer text-center">
                         <form role="form" id="form-import" method="POST"
-                        data-import="gadds" action="{{ route('import.gadds') }}">
-                            {{ csrf_field() }}
+                        data-import="gadds" action="{{ route('chambers.import.gadds') }}">
+                            @csrf
                             <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
                                 <span class="ladda-label">Import Data Dasar</span>
                                 <span class="ladda-spinner"></span>
@@ -143,8 +143,8 @@
                     </div>
                     <div class="panel-footer text-center">
                         <form role="form" id="form-import" method="POST"
-                        data-import="vars" action="{{ route('import.vars') }}">
-                            {{ csrf_field() }}
+                        data-import="vars" action="{{ route('chambers.import.vars') }}">
+                            @csrf
                             <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
                                 <span class="ladda-label">Import Vars</span>
                                 <span class="ladda-spinner"></span>
@@ -185,8 +185,8 @@
                     </div>
                     <div class="panel-footer text-center">
                         <form role="form" id="form-import" method="POST"
-                        data-import="visuals" action="{{ route('import.visuals') }}">
-                            {{ csrf_field() }}
+                        data-import="visuals" action="{{ route('chambers.import.visuals') }}">
+                            @csrf
                             <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
                                 <span class="ladda-label">Import Data Visual</span>
                                 <span class="ladda-spinner"></span>
@@ -225,8 +225,8 @@
                     </div>
                     <div class="panel-footer text-center">
                         <form role="form" id="form-import" method="POST"
-                        data-import="klimatologis" action="{{ route('import.klimatologi') }}">
-                            {{ csrf_field() }}
+                        data-import="klimatologis" action="{{ route('chambers.import.klimatologi') }}">
+                            @csrf
                             <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
                                 <span class="ladda-label">Import Data Klimatologi</span>
                                 <span class="ladda-spinner"></span>
@@ -265,8 +265,8 @@
                     </div>
                     <div class="panel-footer text-center">
                         <form role="form" id="form-import" method="POST"
-                        data-import="gempa" action="{{ route('import.gempa') }}">
-                            {{ csrf_field() }}
+                        data-import="gempa" action="{{ route('chambers.import.gempa') }}">
+                            @csrf
                             <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
                                 <span class="ladda-label">Import Data Gempa Gunung Api</span>
                                 <span class="ladda-spinner"></span>
@@ -302,8 +302,8 @@
                     </div>
                     <div class="panel-footer text-center">
                         <form role="form" id="form-import" method="POST"
-                        data-import="dailies" action="{{ route('import.dailies') }}">
-                            {{ csrf_field() }}
+                        data-import="dailies" action="{{ route('chambers.import.dailies') }}">
+                            @csrf
                             <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
                                 <span class="ladda-label">Import Data Harian</span>
                                 <span class="ladda-spinner"></span>
@@ -344,8 +344,8 @@
                     </div>
                     <div class="panel-footer text-center">
                         <form role="form" id="form-import" method="POST"
-                        data-import="crs" action="{{ route('import.crs') }}">
-                            {{ csrf_field() }}
+                        data-import="crs" action="{{ route('chambers.import.crs') }}">
+                            @csrf
                             <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
                                 <span class="ladda-label">Import Data CRS</span>
                                 <span class="ladda-spinner"></span>
@@ -412,8 +412,14 @@
                             $button.removeAttr('disabled');
                         }
                     },
-                    error: function(xhr,code,error){
-                        console.log(xhr.status);
+                    error: function(data){
+                        var $errors ={
+                            'status': data.status,
+                            'exception': data.responseJSON.exception,
+                            'file': data.responseJSON.file,
+                            'line': data.responseJSON.line
+                        };
+                        console.log($errors);
                         l.stop();
                         $label.html('Error. Coba lagi?');
                     }

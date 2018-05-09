@@ -15,7 +15,7 @@
             <div class="panel-body">
                 <div id="hbreadcrumb" class="pull-right">
                     <ol class="hbreadcrumb breadcrumb">
-                        <li><a href="{{ route('chamber') }}">Chamber</a></li>
+                        <li><a href="{{ route('chambers.index') }}">Chamber</a></li>
                         <li>
                             <span>Data Dasar</span>
                         </li>
@@ -104,7 +104,7 @@
                                 </dd>
                             </dl>
 
-                            <a href="{{ route('datadasar.edit',['id'=>$gadd->id]) }}" class="btn btn-success btn-sm m-t-xs">Edit</a>
+                            <a href="{{ route('chambers.datadasar.edit',['id'=>$gadd->id]) }}" class="btn btn-success btn-sm m-t-xs">Edit</a>
                         </div>
                     </div>
                 </div>

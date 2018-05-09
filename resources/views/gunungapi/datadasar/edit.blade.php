@@ -10,8 +10,8 @@ Gunungapi | Edit - {{ $gadd->name }}
 @endsection
 
 @section('nav-edit-volcano')
-<li class="{{ active('gunungapi.*') }}">
-    <a href="{{ route('datadasar.edit',$gadd->id) }}">Edit {{ $gadd->name }}</a>
+<li class="{{ active('chambers.gunungapi.*') }}">
+    <a href="{{ route('chambers.datadasar.edit',$gadd->id) }}">Edit {{ $gadd->name }}</a>
 </li>
 @endsection
 
@@ -22,7 +22,7 @@ Gunungapi | Edit - {{ $gadd->name }}
 			<div id="hbreadcrumb" class="pull-right">
 				<ol class="hbreadcrumb breadcrumb">
 					<li>
-						<a href="{{ route('chamber') }}">Chamber</a>
+						<a href="{{ route('chambers.index') }}">Chamber</a>
 					</li>
 					<li>
 						<span>Gunung Api</span>
@@ -57,9 +57,9 @@ Gunungapi | Edit - {{ $gadd->name }}
                         Perubahan data dilakukan jika memang ada data yang tidak valid atau data memang perlu untuk diperbarui.
                     </p>
 
-                    <form role="form" id="form" method="POST" action="{{ route('datadasar.update',$gadd->id) }}">
-                        {{ method_field('PUT') }}
-                        {{ csrf_field() }}
+                    <form role="form" id="form" method="POST" action="{{ route('chambers.datadasar.update',$gadd->id) }}">
+                        @method('PUT')
+                        @csrf
                         <input name="_type" value="base" type="hidden">
 
                         <div class="form-group">

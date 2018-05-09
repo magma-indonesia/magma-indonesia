@@ -63,7 +63,7 @@ class JabatanController extends Controller
             $jabatan->save();
         }
 
-        return redirect()->route('administratif.jabatan.index')
+        return redirect()->route('chambers.administratif.jabatan.index')
             ->with('flash_message',
              'Jabatan <b>'. implode($request->name,', ').'</b> berhasil ditambahkan!');
     }

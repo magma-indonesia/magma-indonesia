@@ -9,8 +9,8 @@
 @endsection
 
 @section('nav-edit-user')
-    <li class="{{ active('users.*') }}">
-        <a href="{{ route('users.edit',$user->id) }}">Edit User</a>
+    <li class="{{ active('chambers.users.*') }}">
+        <a href="{{ route('chambers.users.edit',$user->id) }}">Edit User</a>
     </li>
 @endsection
 
@@ -21,7 +21,7 @@
 			<div id="hbreadcrumb" class="pull-right">
 				<ol class="hbreadcrumb breadcrumb">
 					<li>
-						<a href="{{ route('chamber') }}">Chamber</a>
+						<a href="{{ route('chambers.index') }}">Chamber</a>
 					</li>
 					<li>
 						<span>Users</span>
@@ -61,9 +61,9 @@
                             Masukkan semua data-data yang dibutuhkan untuk merubah pengguna ke dalam MAGMA.
                         </p>
 
-                        <form role="form" id="form" method="POST" action="{{ route('users.update',$user->id) }}">
-                            {{ method_field('PUT') }}
-                            {{ csrf_field() }}
+                        <form role="form" id="form" method="POST" action="{{ route('chambers.users.update',$user->id) }}">
+                            @method('PUT')
+                            @csrf
                             <input name="_type" value="base" type="hidden">
 
                             <div class="form-group">
@@ -78,6 +78,21 @@
                                 <input name="nip" type="text" placeholder="Masukkan NIP" class="form-control" value="{{ $user->nip }}"required>
                                 @if( $errors->has('nip'))
                                 <label id="nip-error" class="error" for="nip">{{ ucfirst($errors->first('nip')) }}</label>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label>Bidang</label> 
+                                <select id="bidang" class="form-control" name="bidang">
+                                    @foreach($bidangs as $bidang)
+                                    @if(optional($user->bidang)->user_bidang_desc_id)
+                                    <option value="{{ $bidang->id }}" {{ $user->bidang->user_bidang_desc_id == $bidang->id ? 'selected' : '' }}>{{ $bidang->nama }}</option>
+                                    @else
+                                    <option value="{{ $bidang->id }}" {{ (empty(old('bidang')) AND $loop->first) || old('bidang') == $bidang->id ? 'selected' : '' }}>{{ $bidang->nama }}</option>
+                                    @endif
+                                    @endforeach
+                                </select>
+                                @if( $errors->has('bidang'))
+                                <label id="nip-bidang" class="error" for="bidang">{{ ucfirst($errors->first('bidang')) }}</label>
                                 @endif
                             </div>
                             <div class="form-group">

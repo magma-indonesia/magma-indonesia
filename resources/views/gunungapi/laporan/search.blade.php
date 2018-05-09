@@ -15,7 +15,7 @@
             <div class="panel-body">
                 <div id="hbreadcrumb" class="pull-right">
                     <ol class="hbreadcrumb breadcrumb">
-                        <li><a href="{{ route('chamber') }}">Chamber</a></li>
+                        <li><a href="{{ route('chambers.index') }}">Chamber</a></li>
                         <li>
                             <span>Gunung Api</span>
                         </li>
@@ -45,7 +45,7 @@
                         <div class="m-b-md">
                             Masukkan parameter pencarian
                         </div>
-                        <form role="form" id="form" method="GET" action="{{ route('laporan.gunungapi.search') }}">
+                        <form role="form" id="form" method="GET" action="{{ route('chambers.laporanga.search') }}">
                             <div class="form-group">
                                 <label class="control-label">Nama Pelapor</label>
                                 <select id="nip" class="form-control m-b" name="nip">
@@ -133,7 +133,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="pagination pull-right">
-                                    <a href="{{ route('export',['type' => 'var',Request::getQueryString()]) }}" type="button" class="btn btn-sm btn-success m-b-t">Save to Excel</a>
+                                    <a href="{{ route('chambers.export',['type' => 'var',Request::getQueryString()]) }}" type="button" class="btn btn-sm btn-success m-b-t">Save to Excel</a>
                                 </div>
                             </div>
                         </div>
@@ -161,7 +161,7 @@
                                         <td>{{ $var->user->name }}</td>
                                         <td>
                                             <a href="">
-                                                <a href="{{ route('laporanga.show',$var->noticenumber ) }}" target="_blank" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">View</a>
+                                                <a href="{{ route('chambers.laporanga.show',$var->noticenumber ) }}" target="_blank" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">View</a>
                                             </a>
                                         </td>
                                     </tr>

@@ -2,7 +2,7 @@
     <div id="navigation">
         {{--  Mini Profile  --}}
         <div class="profile-picture">
-            <a href="{{ route('users.edit',['id' => auth()->user()->id]) }}">
+            <a href="{{ route('chambers.users.edit',['id' => auth()->user()->id]) }}">
             <img class="img-circle m-b" src="{{ route('user.photo',['id' => auth()->user()->id]) }}" style="max-width: 76px;">
             </a>
 
@@ -38,133 +38,133 @@
 
         {{--  Sidebar  --}}
         <ul class="nav" id="side-menu">
-            <li class="{{ active('chamber') }}">
-                <a href="{{ route('chamber') }}">
+            <li class="{{ active('chambers') }}">
+                <a href="{{ route('chambers.index') }}">
                     <span class="nav-label">Magma Chamber</span>
                 </a>
             </li>            
-            <li class="{{ active('import') }}">
-                <a href="{{ route('import') }}">
+            <li class="{{ active('chambers.import.*') }}">
+                <a href="{{ route('chambers.import.index') }}">
                     <span class="nav-label">Import</span>
                     <span class="label label-success pull-right">v.1</span>
                 </a>
             </li>
-            <li class="{{ active('crs.*') }}">
-                <a href="{{ route('crs.index') }}">
+            <li class="{{ active('chambers.crs.*') }}">
+                <a href="{{ route('chambers.crs.index') }}">
                     <span class="nav-label">CRS</span>
                 </a>
             </li>
-            <li class="{{ active('administratif.*') }}">
+            <li class="{{ active('chambers.administratif.*') }}">
                 <a href="#">
                     <span class="nav-label">Administrasi</span>
                     <span class="fa arrow"></span>                    
                 </a>
                 <ul class="nav nav-second-level">
-                    <li class="{{ active('administratif.jabatan.index') }}">
-                        <a href="{{ route('administratif.jabatan.index') }}">Daftar Jabatan</a>
+                    <li class="{{ active('chambers.administratif.jabatan.index') }}">
+                        <a href="{{ route('chambers.administratif.jabatan.index') }}">Daftar Jabatan</a>
                     </li>
                     @yield('nav-add-jabatan')
                 </ul>
             </li>
-            <li class="{{ active('users.*') }}">
+            <li class="{{ active('chambers.users.*') }}">
                 <a href="#">
                     <span class="nav-label">Users</span>
                     <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
-                    <li class="{{ active('users.index') }}">
-                        <a href="{{ route('users.index') }}">Daftar Users</a>
+                    <li class="{{ active('chambers.users.index') }}">
+                        <a href="{{ route('chambers.users.index') }}">Daftar Users</a>
                     </li>
-                    <li class="{{ active('users.create') }}">
-                        <a href="{{ route('users.create') }}">Tambah User</a>
+                    <li class="{{ active('chambers.users.create') }}">
+                        <a href="{{ route('chambers.users.create') }}">Tambah User</a>
                     </li>
                     @yield('nav-edit-user')
-                    <li class="{{ active('users.administrasi') }}">
-                        <a href="{{ route('users.administrasi.index') }}">Administrasi</a>
+                    <li class="{{ active('chambers.users.administrasi') }}">
+                        <a href="{{ route('chambers.users.administrasi.index') }}">Administrasi</a>
                     </li>
                 </ul>
             </li>
-            <li class="{{ active(['activities.*','gunungapi.*']) }}">
+            <li class="{{ active(['chambers.activities.*','chambers.gunungapi.*']) }}">
                 <a href="#">
                     <span class="nav-label">Aktivitas</span>
                     <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
-                    <li class="{{ active('activities.index') }}">
-                        <a href="{{ route('activities.index') }}">Semua Kebencanaan</a>
+                    <li class="{{ active('chambers.activities.index') }}">
+                        <a href="{{ route('chambers.activities.index') }}">Semua Kebencanaan</a>
                     </li>
                 </ul>
             </li>
-            <li class="{{ active(['datadasar.*','laporanga.*','laporan.gunungapi.search','pos.*']) }}">
+            <li class="{{ active(['chambers.datadasar.*','chambers.laporanga.*','chambers.laporanga.search','chambers.pos.*']) }}">
                 <a href="#">
                     <span class="nav-label">Gunung Api</span>
                     <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
-                    <li class="{{ active('datadasar.index') }}">
-                        <a href="{{ route('datadasar.index') }}">Data Dasar</a>
+                    <li class="{{ active('chambers.datadasar.index') }}">
+                        <a href="{{ route('chambers.datadasar.index') }}">Data Dasar</a>
                     </li>
                     @yield('nav-edit-volcano')
-                    <li class="{{ active('laporanga.index') }}">
-                        <a href="{{ route('laporanga.index') }}">Daftar Laporan</a>
+                    <li class="{{ active('chambers.laporanga.index') }}">
+                        <a href="{{ route('chambers.laporanga.index') }}">Daftar Laporan</a>
                     </li>
-                    <li class="{{ active('search') }}">
-                            <a href="{{ route('laporan.gunungapi.search') }}">Cari Laporan</a>
+                    <li class="{{ active('chambers.laporanga.search') }}">
+                            <a href="{{ route('chambers.laporanga.search') }}">Cari Laporan</a>
                         </li>
-                    <li class="{{ active('pos.index') }}">
-                        <a href="{{ route('pos.index') }}">Pos Pengamatan Gunung Api</a>
+                    <li class="{{ active('chambers.pos.index') }}">
+                        <a href="{{ route('chambers.pos.index') }}">Pos Pengamatan Gunung Api</a>
                     </li>
                     @yield('nav-edit-pos')                 
                     @yield('nav-edit-datadasar')
                 </ul>
             </li>
-            <li class="{{ active('permissions.*') }}">
+            <li class="{{ active('chambers.permissions.*') }}">
                 <a href="#">
                     <span class="nav-label">Permissions</span>
                     <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
-                    <li class="{{ active('permissions.index') }}">
-                        <a href="{{ route('permissions.index') }}">Permissions</a>
+                    <li class="{{ active('chambers.permissions.index') }}">
+                        <a href="{{ route('chambers.permissions.index') }}">Permissions</a>
                     </li>
-                    <li class="{{ active('permissions.create') }}">
-                        <a href="{{ route('permissions.create') }}">Tambah Permission</a>
+                    <li class="{{ active('chambers.permissions.create') }}">
+                        <a href="{{ route('chambers.permissions.create') }}">Tambah Permission</a>
                     </li>
                     @yield('nav-edit-permissions')
                 </ul>
             </li>
-            <li class="{{ active('roles.*') }}">
+            <li class="{{ active('chambers.roles.*') }}">
                 <a href="#">
                     <span class="nav-label">Roles</span>
                     <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
-                    <li class="{{ active('roles.index') }}">
-                        <a href="{{ route('roles.index') }}">Roles User</a>
+                    <li class="{{ active('chambers.roles.index') }}">
+                        <a href="{{ route('chambers.roles.index') }}">Roles User</a>
                     </li>
-                    <li class="{{ active('roles.create') }}">
-                        <a href="{{ route('roles.create') }}">Tambah Role</a>
+                    <li class="{{ active('chambers.roles.create') }}">
+                        <a href="{{ route('chambers.roles.create') }}">Tambah Role</a>
                     </li>
                     @yield('nav-edit-roles')
                 </ul>
             </li>
-            <li class="{{ active('press.*') }}">
+            <li class="{{ active('chambers.press.*') }}">
                 <a href="#">
                     <span class="nav-label">Press Release</span>
                     <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
-                    <li class="{{ active('press.index') }}">
-                        <a href="{{ route('press.index') }}">List Press</a>
+                    <li class="{{ active('chambers.press.index') }}">
+                        <a href="{{ route('chambers.press.index') }}">List Press</a>
                     </li>
-                    <li class="{{ active('press.create') }}">
-                        <a href="{{ route('press.create') }}">Buat Press Release</a>
+                    <li class="{{ active('chambers.press.create') }}">
+                        <a href="{{ route('chambers.press.create') }}">Buat Press Release</a>
                     </li>
                     @yield('nav-edit-press')
                 </ul>
             </li>
-            <li class="{{ active('chambers.vona') }}">
-                <a href="{{ route('vona.index') }}">
+            <li class="{{ active('chambers.vona.*') }}">
+                <a href="{{ route('chambers.vona.index') }}">
                     <span class="nav-label">VONA</span>
                     <span class="pull-right"><i class="pe-7s-plane"></i></span>
                 </a>

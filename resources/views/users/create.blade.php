@@ -15,7 +15,7 @@
                 <div id="hbreadcrumb" class="pull-right">
                     <ol class="hbreadcrumb breadcrumb">
                         <li>
-                            <a href="{{ route('chamber') }}">Chamber</a>
+                            <a href="{{ route('chambers.index') }}">Chamber</a>
                         </li>
                         <li>
                             <span>Users</span>
@@ -47,7 +47,7 @@
                             Masukkan semua data-data yang dibutuhkan untuk menambahkan pengguna ke dalam MAGMA.
                         </p>
 
-                        <form role="form" id="form" method="POST" action="{{ route('users.store') }}" enctype="multipart/form-data">
+                        <form role="form" id="form" method="POST" action="{{ route('chambers.users.store') }}" enctype="multipart/form-data">
                             @csrf
                             <input name="_type" value="base" type="hidden">
                             <div class="form-group">
@@ -62,6 +62,17 @@
                                 <input name="nip" type="text" placeholder="Masukkan NIP" class="form-control" value="{{ old('nip') }}"required>
                                 @if( $errors->has('nip'))
                                 <label id="nip-error" class="error" for="nip">{{ ucfirst($errors->first('nip')) }}</label>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label>Bidang</label> 
+                                <select id="bidang" class="form-control" name="bidang">
+                                    @foreach($bidangs as $bidang)
+                                    <option value="{{ $bidang->id }}" {{ (empty(old('bidang')) AND $loop->first) || old('bidang') == $bidang->id ? 'selected' : '' }}>{{ $bidang->nama }}</option>
+                                    @endforeach
+                                </select>
+                                @if( $errors->has('bidang'))
+                                <label id="nip-bidang" class="error" for="bidang">{{ ucfirst($errors->first('bidang')) }}</label>
                                 @endif
                             </div>
                             <div class="form-group">
@@ -188,6 +199,9 @@
                     minlength: 18,
                     maxlength: 18
                 },
+                bidang: {
+                    required: true,
+                },
                 email: {
                     required: true,
                     email: true
@@ -217,6 +231,9 @@
                     digits: 'NIP hanya menerima dalam bentuk karakter angka saja',
                     minlength: 'Panjang karakter NIP adalah 18 karakter',
                     maxlength: 'Panjang karakter NIP adalah 18 karakter'
+                },
+                bidang: {
+                    required: 'Harap pilih bidang User',
                 },
                 email: {
                     required: 'Harap Masukkan email valid Anda',

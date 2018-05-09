@@ -18,13 +18,13 @@
                 <div id="hbreadcrumb" class="pull-right">
                     <ol class="hbreadcrumb breadcrumb">
                         <li>
-                            <a href="{{ route('chamber') }}">Chamber</a>
+                            <a href="{{ route('chambers.index') }}">Chamber</a>
                         </li>
                         <li>
                             <span>Administratif </span>
                         </li>
                         <li class="active">
-                            <a href="{{ route('administratif.jabatan.index') }}">Daftar Jabatan</a>
+                            <a href="{{ route('chambers.administratif.jabatan.index') }}">Daftar Jabatan</a>
                         </li>
                     </ol>
                 </div>
@@ -44,7 +44,7 @@
                 @if($jabatans->isEmpty())
                 <div class="alert alert-info">
                     <i class="fa fa-bolt"></i> Tidak ada data Jabatan.
-                    <a href="{{ route('administratif.jabatan.create') }}">
+                    <a href="{{ route('chambers.administratif.jabatan.create') }}">
                         <strong>Buat Jabatan baru?</strong>
                     </a>
                 </div>
@@ -59,8 +59,8 @@
                         Daftar Jabatan yang terdaftar
                     </div>
                     <div class="panel-body m-b">
-                        <a href="{{ route('administratif.jabatan.create') }}" class="btn btn-outline btn-success" type="button">Buat Jabatan Baru</a>
-                        <a href="{{ route('users.administrasi.index') }}" class="btn btn-outline btn-warning" type="button">Tambahkan Jabatan ke User</a>                    
+                        <a href="{{ route('chambers.administratif.jabatan.create') }}" class="btn btn-outline btn-success" type="button">Buat Jabatan Baru</a>
+                        <a href="{{ route('chambers.users.administrasi.index') }}" class="btn btn-outline btn-warning" type="button">Tambahkan Jabatan ke User</a>                    
                     </div>
                     <div class="panel-body table-responsive">
                         <table id="table-jabatan" class="table table-striped table-hover">
@@ -77,7 +77,7 @@
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $jabatan->nama }}</td>
                                     <td>
-                                        <form id="deleteForm" style="display:inline" method="POST" action="{{ route('administratif.jabatan.destroy',['id'=>$jabatan->id]) }}" accept-charset="UTF-8">
+                                        <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.administratif.jabatan.destroy',['id'=>$jabatan->id]) }}" accept-charset="UTF-8">
                                             @method('DELETE')
                                             @csrf
                                             <button type="button" value="{{ $jabatan->id }}" class="btn btn-sm btn-success btn-outline edit" data-toggle="modal" data-target="#edit">Edit</button>

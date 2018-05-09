@@ -9,8 +9,8 @@
 @endsection
 
 @section('nav-add-jabatan')
-    <li class="{{ active('administratif.jabatan.create') }}">
-        <a href="{{ route('administratif.jabatan.create') }}">Tambah Jabatan</a>
+    <li class="{{ active('chambers.administratif.jabatan.create') }}">
+        <a href="{{ route('chambers.administratif.jabatan.create') }}">Tambah Jabatan</a>
     </li>
 @endsection
 
@@ -21,13 +21,13 @@
                 <div id="hbreadcrumb" class="pull-right">
                     <ol class="hbreadcrumb breadcrumb">
                         <li>
-                            <a href="{{ route('chamber') }}">Chamber</a>
+                            <a href="{{ route('chambers.index') }}">Chamber</a>
                         </li>
                         <li>
                             <span>Administratif </span>
                         </li>
                         <li class="active">
-                            <a href="{{ route('administratif.jabatan.index') }}">Jabatan</a>
+                            <a href="{{ route('chambers.administratif.jabatan.index') }}">Jabatan</a>
                         </li>
                     </ol>
                 </div>
@@ -49,7 +49,7 @@
                         Tambah Jabatan Baru
                     </div>
                     <div class="panel-body">
-                        <form role="form" id="form" method="post" action="{{ route('administratif.jabatan.store')}}">
+                        <form role="form" id="form" method="post" action="{{ route('chambers.administratif.jabatan.store')}}">
                             @csrf
                             <label>Nama Jabatan</label>
                             @if (count($errors)==0)

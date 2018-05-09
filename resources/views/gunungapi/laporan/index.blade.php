@@ -45,7 +45,7 @@
                                             <span class="pie">{{ $gadd->latestVar->var_data_date->formatLocalized('%A, %d %B %Y').', '.$gadd->latestVar->periode }}</span>
                                         </td>  
                                         <td>
-                                            <a href="{{ route('laporanga.show',$gadd->latestVar->noticenumber ) }}" target="_blank" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">View</a>
+                                            <a href="{{ route('chambers.laporanga.show',$gadd->latestVar->noticenumber ) }}" target="_blank" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">View</a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -94,7 +94,7 @@
                                         <td>{{ $var->user->name }}</td>
                                         <td>
                                             <a href="">
-                                                <a href="{{ route('laporanga.show',$var->noticenumber ) }}" target="_blank" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">View</a>
+                                                <a href="{{ route('chambers.laporanga.show',$var->noticenumber ) }}" target="_blank" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">View</a>
                                             </a>
                                         </td>
                                     </tr>

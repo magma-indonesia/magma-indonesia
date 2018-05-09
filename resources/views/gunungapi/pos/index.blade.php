@@ -15,7 +15,7 @@
             <div class="panel-body">
                 <div id="hbreadcrumb" class="pull-right">
                     <ol class="hbreadcrumb breadcrumb">
-                        <li><a href="{{ route('chamber') }}">Chamber</a></li>
+                        <li><a href="{{ route('chambers.index') }}">Chamber</a></li>
                         <li>
                             <span>Data Dasar</span>
                         </li>
@@ -76,11 +76,11 @@
                                     <td>{{ $pga->longitude }}</td>
                                     <td><a class="btn btn-sm btn-success btn-outline" href="http://maps.google.com/maps?q={{ $pga->latitude }},{{ $pga->longitude }}" target="_blank">Link</a></td>                                    
                                     <td>
-                                        <form id="deleteForm" style="display:inline" method="POST" action="{{ route('pos.destroy',['id'=>$pga->id]) }}" accept-charset="UTF-8">
+                                        <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.pos.destroy',['id'=>$pga->id]) }}" accept-charset="UTF-8">
                                             @method('DELETE')
                                             @csrf
-                                            <a href="{{ route('pos.edit',$pga) }}" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;" target="_blank" title="Edit Pos Pengamatan"><i class=" pe-7s-note"></i></a>
-                                            <a href="{{ route('pos.create',['id'=>$pga->code_id]) }}" class="btn btn-sm btn-warning2 btn-outline" style="margin-right: 3px;" target="_blank">Tambah Pos</a>
+                                            <a href="{{ route('chambers.pos.edit',$pga) }}" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;" target="_blank" title="Edit Pos Pengamatan"><i class=" pe-7s-note"></i></a>
+                                            <a href="{{ route('chambers.pos.create',['id'=>$pga->code_id]) }}" class="btn btn-sm btn-warning2 btn-outline" style="margin-right: 3px;" target="_blank">Tambah Pos</a>
                                             <button value="Delete" class="btn btn-sm btn-danger delete" type="submit" title="Delete Pos Pengamatan"><i class="pe-7s-trash"></i></button>
                                         </form>
                                     </td>                          

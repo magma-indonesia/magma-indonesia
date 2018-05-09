@@ -15,7 +15,7 @@
             <div class="panel-body">
                 <div id="hbreadcrumb" class="pull-right">
                     <ol class="hbreadcrumb breadcrumb">
-                        <li><a href="{{ route('chamber') }}">Chamber</a></li>
+                        <li><a href="{{ route('chambers.index') }}">Chamber</a></li>
                         <li>
                             <span>Users</span>
                         </li>
@@ -52,6 +52,7 @@
                                 <tr>
                                     <th>Nama</th>
                                     <th>NIP</th>
+                                    <th>Bidang</th>
                                     <th>Roles</th>
                                     <th>Email</th>
                                     <th>Phone</th>
@@ -64,16 +65,17 @@
                                 <tr>
                                     <td>{{ $user->name }}</td>
                                     <td>{!! strlen($user->nip)<18 ? $user->nip.'<b>KTP</b>' : $user->nip !!}</td>
+                                    <td>{{ optional(optional($user->bidang)->deskriptif)->nama }}</td>
                                     <td>{{ $user->roles()->pluck('name')->implode(', ') }}</td>                                        
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->phone }}</td>
                                     <td>{{ $user->status ? 'Aktif':'Tidak Aktif' }}</span>
                                     </td>
                                     <td>
-                                        <form id="deleteForm" style="display:inline" method="POST" action="{{ route('users.destroy',['id'=>$user->id]) }}" accept-charset="UTF-8">
+                                        <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.users.destroy',['id'=>$user->id]) }}" accept-charset="UTF-8">
                                             @method('DELETE')
                                             @csrf
-                                            <a href="{{ route('users.edit',['id'=>$user->id]) }}" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">Edit</a>                                            
+                                            <a href="{{ route('chambers.users.edit',['id'=>$user->id]) }}" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">Edit</a>                                            
                                             <button value="Delete" class="btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
                                         </form>
                                     </td>
@@ -115,9 +117,9 @@
                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 buttons: [
                     { extend: 'copy', className: 'btn-sm'},
-                    { extend: 'csv', title: 'Daftar Users', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5 ]} },
-                    { extend: 'pdf', title: 'Daftar Users', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5 ]} },
-                    { extend: 'print', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5 ]} }
+                    { extend: 'csv', title: 'Daftar Users', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6 ]} },
+                    { extend: 'pdf', title: 'Daftar Users', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6 ]} },
+                    { extend: 'print', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6 ]} }
                 ]
 
             });
