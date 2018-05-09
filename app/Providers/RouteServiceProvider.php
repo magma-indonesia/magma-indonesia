@@ -38,6 +38,8 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapApiRoutes();
 
         $this->mapWebRoutes();
+        $this->mapChamberRoutes();
+        $this->mapImportRoutes();
 
         //
     }
@@ -69,5 +71,23 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
+    }
+
+    protected function mapChamberRoutes()
+    {
+        Route::prefix('chambers')
+             ->name('chambers.')
+             ->middleware(['web','auth'])
+             ->namespace($this->namespace)
+             ->group(base_path('routes/chambers.php'));
+    }
+
+    protected function mapImportRoutes()
+    {
+        Route::prefix('chambers/import')
+             ->name('chambers.import.')
+             ->middleware(['web','auth'])
+             ->namespace($this->namespace)
+             ->group(base_path('routes/import.php'));
     }
 }
