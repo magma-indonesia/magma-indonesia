@@ -16,7 +16,7 @@
 			<div id="hbreadcrumb" class="pull-right">
 				<ol class="hbreadcrumb breadcrumb">
 					<li>
-						<a href="{{ route('chamber') }}">Chamber</a>
+						<a href="{{ route('chambers.index') }}">Chamber</a>
 					</li>
 					<li>
 						<span>Press Release</span>
@@ -39,7 +39,7 @@
 <div class="content animate-panel">
     <div class="row">
         <div class="col-lg-12">
-            <form role="form" id="form" method="POST" action="{{ route('press.store') }}">
+            <form role="form" id="form" method="POST" action="{{ route('chambers.press.store') }}">
                 @csrf
                 <div class="hpanel">
                     <div class="panel-heading">

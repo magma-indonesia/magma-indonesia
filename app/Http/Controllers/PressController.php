@@ -69,7 +69,7 @@ class PressController extends Controller
 
         if ($press->save()){
             $press->notify(new PressRelease(1,$press));
-            return redirect()->route('press.index')
+            return redirect()->route('chambers.press.index')
             ->with('flash_message',
              'Press Release : '. $request->title.' telah ditambahkan!');
         }
@@ -136,7 +136,7 @@ class PressController extends Controller
 
         if ($press->save()){
             $press->notify(new PressRelease(3,$press));
-            return redirect()->route('press.index')
+            return redirect()->route('chambers.press.index')
             ->with('flash_message',
              'Press Release : '. $request->title.' berhasil dirubah!');
         }
