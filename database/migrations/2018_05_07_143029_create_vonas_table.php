@@ -28,7 +28,7 @@ class CreateVonasTable extends Migration
             $table->float('vch_summit')->comment('Volcano Cloud Height Above Summit');
             $table->float('vch_asl')->comment('Volcano Cloud Height Above Sea Level');
             $table->string('vch_other')->comment('Volcano Cloud Height Other Information')->nullable();
-            $table->string('remarks')->nullable();
+            $table->text('remarks')->nullable();
             $table->boolean('sent')->default(0);
             $table->char('nip_pelapor',18)->index();
             $table->foreign('nip_pelapor')->references('nip')->on('users');
