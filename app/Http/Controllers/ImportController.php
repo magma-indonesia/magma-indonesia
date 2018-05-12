@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Uuid;
 use Carbon\Carbon;
+use Validate;
 use App\Traits\MagmaHelper;
 use App\Traits\JenisGempa;
 use App\User;
@@ -26,9 +27,10 @@ use App\SigertanCrsDevices;
 use App\SigertanCrsValidasi;
 use App\Vona;
 
-use App\v1\GertanCrs as OldGertan;
+use App\v1\GertanCrs as OldCrs;
 use App\v1\MagmaSigertan as OldSigertan;
 use App\v1\Vona as OldVona;
+use App\v1\MagmaVar as OldVar;
 
 use Indonesia;
 
@@ -1085,9 +1087,13 @@ class ImportController extends Controller
     public function vona()
     {
 
-        $olds = OldVona::take(5)->get();
+        $olds = OldVona::all();
 
         $olds->each(function ($item, $key) {
+
+            // $item->validate([
+            //     'noticenumber' => 'bail|required|unique:vonas,noticenumber',
+            // ]);
 
             $noticenumber = $item->notice_number;
             $issued = $item->issued;
@@ -1100,16 +1106,17 @@ class ImportController extends Controller
             $vch_summit = $item->vc_height - $item->summit_elevation;
             $vch_asl = $item->vc_height;
             $vch_other = $item->other_vc_info;
-            $remarks = $item->remarks;
+            $remarks = strlen($item->remarks)<6 ? null : $item->remarks;
             $sent = $item->sent;
+
             $pelapor = empty($item->nip) ? '198803152015031005' : $item->nip;
+            $pelapor = $pelapor == '196807071992051001' || $pelapor == '196807071992031001' ? '196807071992031018' : $pelapor;
 
             Vona::firstOrCreate(
                 [
                     'noticenumber' => $noticenumber,
                 ],
                 [
-
                     'issued' => $issued,
                     'type' => $type,
                     'code_id' => $code_id,
@@ -1127,7 +1134,7 @@ class ImportController extends Controller
             );
         });
 
-        return Vona::all();
+        return Vona::paginate(5);
 
     }
 
@@ -1142,7 +1149,7 @@ class ImportController extends Controller
     public function crs()
     {
 
-        $items = OldGertan::whereBetween('idx',[$this->startNo('crs'),$this->endNo('crs')])->get();
+        $items = OldCrs::whereBetween('idx',[$this->startNo('crs'),$this->endNo('crs')])->get();
 
         foreach($items as $item)
         {
