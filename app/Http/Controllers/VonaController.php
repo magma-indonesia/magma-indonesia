@@ -14,7 +14,9 @@ class VonaController extends Controller
      */
     public function index()
     {
-        return Vona::paginate(5);
+        $vonas = Vona::orderBy('issued','desc')->paginate(10);
+
+        return view('vona.index',compact('vonas'));
     }
 
     /**
@@ -46,7 +48,7 @@ class VonaController extends Controller
      */
     public function show(Vona $vona)
     {
-        return Vona::findOrFail('75e66488-56db-49c4-ab0c-a4f16a7fc500');
+        return Vona::findOrFail($vona->uuid);
     }
 
     /**
