@@ -35,15 +35,10 @@
 
 @section('content-body')
     <div class="content animate-panel">
-        <div class="row">
-            <div class="col-sm-12">
-                {{ $gadds->links() }}                
-            </div>            
-        </div>
-        @foreach($gadds as $gadd)
-            @if($loop->first or $loop->iteration % 3 == 0)
-                <div class="row">
-            @endif
+        {{ $gadds->links() }}                
+        @foreach($gadds->chunk(3) as $chunk)
+            <div class="row">
+                @foreach($chunk as $gadd)
                 <div class="col-xs-12 col-md-4 col-lg-4">
                     <div class="hpanel plan-box hgreen active">
                         <div class="panel-heading hbuilt text-center">
@@ -108,14 +103,9 @@
                         </div>
                     </div>
                 </div>
-            @if($loop->last == true or $loop->iteration % 3 ==0 )
-                </div>
-            @endif
+                @endforeach
+            </div>
         @endforeach
-        <div class="row">
-            <div class="col-sm-12">
-                {{ $gadds->links() }}                
-            </div>            
-        </div>
+        {{ $gadds->links() }}                
     </div>
 @endsection
