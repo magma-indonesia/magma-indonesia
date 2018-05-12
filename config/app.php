@@ -238,6 +238,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Indonesia' => Laravolt\Indonesia\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Client' => App\Helpers\Client::class,
 
     ],
 
