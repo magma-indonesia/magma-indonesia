@@ -29,9 +29,9 @@
                 <div id="sparkline1" class="small-chart m-t-sm"></div>
                 <div>
                     <h4 class="font-extra-bold m-b-xs">
-                        $260 104,200
+                        {{Request::ip()}}
                     </h4>
-                    <small class="text-muted">Your income from the last year in sales product X.</small>
+                    <small class="text-muted">IP address yang sedang digunakan oleh Anda.</small>
                 </div>
             </div>
         </div>
