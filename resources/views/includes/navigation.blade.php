@@ -164,10 +164,18 @@
                 </ul>
             </li>
             <li class="{{ active('chambers.vona.*') }}">
-                <a href="{{ route('chambers.vona.index') }}">
+                <a href="#">
                     <span class="nav-label">VONA</span>
-                    <span class="pull-right"><i class="pe-7s-plane"></i></span>
+                    <span class="fa arrow"></span>
                 </a>
+                <ul class="nav nav-second-level">
+                    <li class="{{ active('chambers.vona.index') }}">
+                        <a href="{{ route('chambers.vona.index') }}">Daftar VONA</a>
+                    </li>
+                    <li class="{{ active('chambers.vona.create') }}">
+                        <a href="{{ route('chambers.vona.create') }}">Buat VONA</a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>
