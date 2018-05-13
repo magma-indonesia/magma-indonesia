@@ -27,7 +27,6 @@ class Vona extends Model
         'code_id',
         'cu_code',
         'location',
-        'elevation',
         'vas',
         'vch_summit',        
         'vch_asl',
