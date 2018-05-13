@@ -16,14 +16,13 @@ class CreateVonasTable extends Migration
         Schema::create('vonas', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('uuid');
-            $table->char('noticenumber',11)->index();
+            $table->char('noticenumber',11)->nullable();
             $table->dateTime('issued');
             $table->enum('type',['REAL','EXERCISE']);
             $table->char('code_id',3)->index();
             $table->foreign('code_id')->references('code')->on('ga_dd');
             $table->enum('cu_code',['GREEN','YELLOW','ORANGE','RED']);
             $table->string('location');
-            $table->float('elevation');
             $table->text('vas')->comment('Volcanic Activity Summary');
             $table->float('vch_summit')->comment('Volcano Cloud Height Above Summit');
             $table->float('vch_asl')->comment('Volcano Cloud Height Above Sea Level');
