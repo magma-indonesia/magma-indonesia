@@ -4,10 +4,6 @@
     VONA | Volcano Observatory Notice for Aviation
 @endsection
 
-@section('add-vendor-css')
-    <link rel="stylesheet" href="{{ asset('vendor/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" />
-@endsection
-
 @section('content-header')
     <div class="small-header">
         <div class="hpanel">
@@ -54,7 +50,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Volcano</th>
-                                        <th>Issued</th>
+                                        <th>Issued (UTC)</th>
                                         <th>Current Aviation Colour Code</th>
                                         <th>Volcano Cloud Height (ASL)</th>
                                         <th>Sender</th>
@@ -65,7 +61,7 @@
                                     <tr>
                                         <td>{{ $vonas->firstItem()+$key }}</td>
                                         <td>{{ $vona->gunungapi->name }}</td>
-                                        <td>{!! $vona->issued.'<b> UTC</b>' !!}</td>
+                                        <td>{{ $vona->issued }}</td>
                                         <td>{{ title_case($vona->cu_code) }}</td>
                                         <td>{{ $vona->vch_asl.' meter' }}</td>
                                         <td>{{ $vona->user->name }}</td>
