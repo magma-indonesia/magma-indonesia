@@ -51,5 +51,14 @@ Route::resource('roles', 'RoleController', ['except' => [
 ]]);
 Route::resource('press', 'PressController');
 
-Route::resource('vona', 'VonaController');  
-
+// Route::name('vona.')->group(function(){
+//     Route::get('vona','VonaController@index')->name('index');
+//     Route::post('vona','VonaController@store')->name('store');
+//     Route::get('vona/create','VonaController@create')->name('create');
+//     Route::delete('vona/{vona}','VonaController@destroy')->name('destroy');
+//     Route::match(['put','patch'],'vona/{vona}','VonaController@update')->name('update');
+//     Route::get('vona/{vona}','VonaController@show')->name('show');
+//     Route::get('vona/{vona}/edit','VonaController@show')->name('edit');
+// });
+Route::get('vona/draft','VonaController@draft')->name('vona.draft');
+Route::resource('vona', 'VonaController');

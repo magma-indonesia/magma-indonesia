@@ -40,6 +40,7 @@ class VonaController extends Controller
         }
         return 'E '.$deg.' deg '.$min.' min '.$sec.' sec'; 
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -47,9 +48,21 @@ class VonaController extends Controller
      */
     public function index(Request $request)
     {        
-        $vonas = Vona::orderBy('issued','desc')->paginate(30);
+        $vonas = Vona::orderBy('issued','desc')->where('sent',1)->paginate(30);
 
         return view('vona.index',compact('vonas'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function draft(Request $request)
+    {        
+        $vonas = Vona::orderBy('issued','desc')->where('sent',0)->paginate(30);
+
+        return view('vona.draft',compact('vonas'));
     }
 
     /**
@@ -167,7 +180,21 @@ class VonaController extends Controller
      */
     public function destroy(Vona $vona)
     {
-        //
+        $vona = Vona::findOrFail($vona->uuid);
+        $issued = 'VONA Gunung Api '.$vona->gunungapi->name.', Issued '.$vona->issued.'UTC';
+
+        if ($vona->delete())
+        {
+            $data = [
+                'success' => 1,
+                'message' => $issued.' berhasil dihapus.'
+            ];
+
+            return response()->json($data);
+        }
+
+        return $vona;
+
     }
 
 }
