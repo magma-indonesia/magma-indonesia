@@ -11,5 +11,5 @@ Route::post('dailies','ImportController@dailies')->name('dailies');
 Route::post('visuals','ImportController@visuals')->name('visuals');
 Route::post('klimatologi','ImportController@klimatologis')->name('klimatologi');
 Route::post('gempa','ImportController@gempa')->name('gempa');
-Route::get('vona','ImportController@vona')->name('vona');
+Route::post('vona','ImportController@vona')->name('vona');
 Route::get('status','ImportController@status')->name('status');

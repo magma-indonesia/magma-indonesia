@@ -1101,7 +1101,6 @@ class ImportController extends Controller
             $code_id = $item->ga_code;
             $cu_code = $item->cu_avcode;
             $location = $item->volcano_location;
-            $elevation = $item->summit_elevation;
             $vas = $item->volcanic_act_summ;
             $vch_summit = $item->vc_height - $item->summit_elevation;
             $vch_asl = $item->vc_height;
@@ -1122,7 +1121,6 @@ class ImportController extends Controller
                     'code_id' => $code_id,
                     'cu_code' => $cu_code,
                     'location' => $location,
-                    'elevation' => $elevation,
                     'vas' => $vas,
                     'vch_summit' => $vch_summit,
                     'vch_asl' => $vch_asl,
@@ -1134,7 +1132,15 @@ class ImportController extends Controller
             );
         });
 
-        return Vona::paginate(5);
+        $this->sendNotif('Data VONA');
+
+        $data = [
+            'success' => 1,
+            'message' => 'Data VONA berhasil diperbarui',
+            'count' => Vona::count()
+        ];
+
+        return response()->json($data);
 
     }
 
@@ -1265,7 +1271,8 @@ class ImportController extends Controller
         $gempa = new VarGempa();
         $gempa = $gempa->jumlah();
         $crs = SigertanCrs::count();
+        $vona = Vona::count();
         
-        return view('import.index',compact('users','bidang','gadds','varsv1','vars','vardailies','visuals','klimatologis','gempa','crs'));
+        return view('import.index',compact('users','bidang','gadds','varsv1','vars','vardailies','visuals','klimatologis','gempa','crs','vona'));
     }
 }
