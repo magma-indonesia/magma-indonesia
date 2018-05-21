@@ -1087,7 +1087,7 @@ class ImportController extends Controller
     public function vona()
     {
 
-        $olds = OldVona::all();
+        $olds = OldVona::whereBetween('no',[$this->startNo('vona'),$this->endNo('vona')])->get();
 
         $olds->each(function ($item, $key) {
 
@@ -1095,11 +1095,13 @@ class ImportController extends Controller
             //     'noticenumber' => 'bail|required|unique:vonas,noticenumber',
             // ]);
 
+            $no = $item->no;
             $noticenumber = $item->notice_number;
             $issued = $item->issued;
             $type = $item->type;
             $code_id = $item->ga_code;
             $cu_code = $item->cu_avcode;
+            $prev_code = $item->pre_avcode;
             $location = $item->volcano_location;
             $vas = $item->volcanic_act_summ;
             $vch_summit = $item->vc_height - $item->summit_elevation;
@@ -1120,6 +1122,7 @@ class ImportController extends Controller
                     'type' => $type,
                     'code_id' => $code_id,
                     'cu_code' => $cu_code,
+                    'prev_code' => $prev_code,                    
                     'location' => $location,
                     'vas' => $vas,
                     'vch_summit' => $vch_summit,
@@ -1130,6 +1133,8 @@ class ImportController extends Controller
                     'nip_pelapor' => $pelapor
                 ]
             );
+
+            $this->temptable('vona',$no);
         });
 
         $this->sendNotif('Data VONA');
