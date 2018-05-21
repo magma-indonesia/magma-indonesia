@@ -56,6 +56,7 @@
                                         <th>Volcano</th>
                                         <th>Issued (UTC)</th>
                                         <th>Current Aviation Colour Code</th>
+                                        <th>Previous Aviation Colour Code</th>
                                         <th>Volcano Cloud Height (ASL)</th>
                                         <th>Sender</th>
                                         @role('Super Admin')
@@ -67,21 +68,23 @@
                                     @foreach($vonas as $key => $vona)
                                     <tr>
                                         <td>{{ $vonas->firstItem()+$key }}</td>
-                                        <td>{{ $vona->gunungapi->name }}</td>
+                                        <td><a href="{{ route('chambers.vona.show',['uuid' => $vona->uuid])}}" target="_blank">{{ $vona->gunungapi->name }}</a></td>
                                         <td>{{ $vona->issued }}</td>
                                         <td>{{ title_case($vona->cu_code) }}</td>
-                                        <td>{{ $vona->vch_asl.' meter' }}</td>
+                                        <td>{{ strtolower($vona->cu_code) }}</td>
+                                        <td>{{ $vona->vch_asl > 0 ? $vona->vch_asl.' meter' : 'Tidak teramati' }}</td>
                                         <td>{{ $vona->user->name }}</td>
-                                        @role('Super Admin')
                                         <td>
+                                            <a href="{{ route('chambers.vona.edit',['uuid'=>$vona->uuid]) }}" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">Edit</a>                                                                                        
+                                            @role('Super Admin')
                                             <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.vona.destroy',['uuid'=>$vona->uuid]) }}" accept-charset="UTF-8">
                                                 @method('DELETE')
                                                 @csrf
-                                                <a href="{{ route('chambers.vona.edit',['uuid'=>$vona->uuid]) }}" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">Edit</a>                                            
                                                 <button value="Delete" class="btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
                                             </form>
+                                            @endrole
                                         </td>
-                                        @endrole                                        
+                                                                                
                                     </tr>
                                     @endforeach
                                 </tbody>
