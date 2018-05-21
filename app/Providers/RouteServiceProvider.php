@@ -77,7 +77,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::prefix('chambers')
              ->name('chambers.')
-             ->middleware(['web','auth'])
+             ->middleware(['web','auth','revalidate'])
              ->namespace($this->namespace)
              ->group(base_path('routes/chambers.php'));
     }
@@ -86,7 +86,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::prefix('chambers/import')
              ->name('chambers.import.')
-             ->middleware(['web','auth'])
+             ->middleware(['web','auth','revalidate'])
              ->namespace($this->namespace)
              ->group(base_path('routes/import.php'));
     }
