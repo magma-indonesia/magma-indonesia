@@ -26,6 +26,7 @@ class Vona extends Model
         'type', 
         'code_id',
         'cu_code',
+        'prev_code',
         'location',
         'vas',
         'vch_summit',        
@@ -41,11 +42,26 @@ class Vona extends Model
 
     protected $hidden = ['id'];
 
-    // protected $appends = ['source','contacts'];
+    protected $appends = ['source','contacts'];
 
     const SOURCE = "Indonesian Center for Volcanology and Geological Hazard Mitigation (CVGHM)";
 
-    const CONTACTS = "Center for Volcanology and Geological Hazard Mitigation (CVGHM)\r\nTel: +62-22-727-2606\r\nFacsimile: +62-22-720-2761\r\nEmail : vsi@vsi.esdm.go.id";
+    const CONTACTS = "Center for Volcanology and Geological Hazard Mitigation (CVGHM), Tel: +62-22-727-2606, Facsimile: +62-22-720-2761, Email : vsi@vsi.esdm.go.id";
+
+    public function getPrevCodeAttribute($value)
+    {
+        return strtolower($value);
+    }
+
+    public function getSourceAttribute($value)
+    {
+        return self::SOURCE;
+    }
+
+    public function getContactsAttribute($value)
+    {
+        return self::CONTACTS;
+    }
 
     public function gunungapi ()
     {
