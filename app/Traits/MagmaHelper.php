@@ -121,6 +121,17 @@ trait MagmaHelper
 
             $end        = $end->no;
         }
+
+        if($type == 'vona')
+        {
+            $end        = DB::connection('magma')
+                        ->table('ga_vona')
+                        ->select('no')
+                        ->orderBy('no','desc')
+                        ->first();
+
+            $end        = $end->no;
+        }
         
         return $end;
 
