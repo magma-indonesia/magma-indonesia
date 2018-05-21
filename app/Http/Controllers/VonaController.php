@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class VonaController extends Controller
 {
+    /**
+     * Convert longitude and latitude to decimal text
+     *
+     * @return lat,lon string
+     */
     protected function location($type,$decimal)
     {
         $vars = explode(".",$decimal);
@@ -48,7 +53,7 @@ class VonaController extends Controller
      */
     public function index(Request $request)
     {        
-        $vonas = Vona::orderBy('issued','desc')->where('sent',1)->paginate(30);
+        $vonas = Vona::orderBy('issued','desc')->where('sent',1)->paginate(30,['*'],'vona_page');
 
         return view('vona.index',compact('vonas'));
     }
@@ -60,8 +65,7 @@ class VonaController extends Controller
      */
     public function draft(Request $request)
     {        
-        $vonas = Vona::orderBy('issued','desc')->where('sent',0)->paginate(30);
-
+        $vonas = Vona::orderBy('issued','desc')->where('sent',0)->paginate(30,['*'],'vona_page');
         return view('vona.draft',compact('vonas'));
     }
 
@@ -157,7 +161,7 @@ class VonaController extends Controller
      */
     public function edit(Vona $vona)
     {
-        //
+        return Vona::findOrFail($vona->uuid);
     }
 
     /**
@@ -193,7 +197,12 @@ class VonaController extends Controller
             return response()->json($data);
         }
 
-        return $vona;
+        $data = [
+            'success' => 0,
+            'message' => $issued.' gagal dihapus.'
+        ];
+
+        return response()->json($data);
 
     }
 
