@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Vona;
+use App\VonaSubscriber as Subscription;
 use App\Gadd;
 use App\User;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class VonaController extends Controller
 {
@@ -56,6 +58,19 @@ class VonaController extends Controller
         $vonas = Vona::orderBy('issued','desc')->where('sent',1)->paginate(30,['*'],'vona_page');
 
         return view('vona.index',compact('vonas'));
+    }
+
+    /**
+     * Display a search result of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {        
+        $q = $request->q;
+        // $vonas = Vona::orderBy('issued','desc')->where('sent',1)->paginate(30,['*'],'vona_page');
+
+        return view('vona.search',compact('q'));
     }
 
     /**
@@ -150,7 +165,9 @@ class VonaController extends Controller
      */
     public function show(Vona $vona)
     {
-        return Vona::findOrFail($vona->uuid);
+        $vona = Vona::findOrFail($vona->uuid);
+        $vona->addPageViewThatExpiresAt(Carbon::now()->addHours(1));
+        return view('vona.show',compact('vona'));
     }
 
     /**
@@ -205,5 +222,43 @@ class VonaController extends Controller
         return response()->json($data);
 
     }
+
+    /**
+     * Send VONA to subscribers.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Vona  $vona
+     * @return \Illuminate\Http\Response
+     */
+    public function send(Request $request, Vona $vona)
+    {
+        //
+    }
+
+    /**
+     * VONA's email subscribers list.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Vona  $vona
+     * @return \Illuminate\Http\Response
+     */
+    public function subscribe(Request $request)
+    {
+        $subs = Subscription::paginate(30,['*'],'sub_page');
+
+        return view('vona.subscribe',compact('subs'));
+    }
+
+    /**
+     * VONA's email subscribers list.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Vona  $vona
+     * @return \Illuminate\Http\Response
+     */
+     public function subscribeCreate(Request $request, Vona $vona)
+     {
+        return 'subscribeCreate';
+     }
 
 }
