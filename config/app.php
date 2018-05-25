@@ -183,7 +183,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Laravolt\Indonesia\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-
+        CyrildeWit\PageViewCounter\PageViewCounterServiceProvider::class,
     ],
 
     /*
