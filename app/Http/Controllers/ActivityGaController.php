@@ -34,6 +34,16 @@ class ActivityGaController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function letusan()
+    {
+        return 'Letusan';
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
