@@ -14,7 +14,7 @@
             <td>{{ $var->gunungapi->name }}</td>
             <td>{{ $var->user->name }}</td>
             <td>{{ $var->user->nip }}</td>
-            <td>{{ $var->var_data_date }}</td>
+            <td>{{ $var->var_data_date->format('Y-m-d') }}</td>
             <td>{{ $var->var_perwkt.' Jam, '.$var->periode }}</td>
         </tr>
         @endforeach
