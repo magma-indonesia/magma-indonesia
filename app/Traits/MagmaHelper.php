@@ -132,6 +132,28 @@ trait MagmaHelper
 
             $end        = $end->no;
         }
+
+        if($type == 'subs')
+        {
+            $end        = DB::connection('magma')
+                        ->table('magma_subscribe')
+                        ->select('no')
+                        ->orderBy('no','desc')
+                        ->first();
+
+            $end        = $end->no;
+        }
+
+        if($type == 'ven')
+        {
+            $end        = DB::connection('magma')
+                        ->table('magma_erupt')
+                        ->select('erupt_id')
+                        ->orderBy('erupt_id','desc')
+                        ->first();
+
+            $end        = $end->erupt_id;
+        }
         
         return $end;
 
