@@ -26,11 +26,15 @@ use App\SigertanCrs;
 use App\SigertanCrsDevices;
 use App\SigertanCrsValidasi;
 use App\Vona;
+use App\VonaSubscriber;
+use App\MagmaVen;
 
 use App\v1\GertanCrs as OldCrs;
 use App\v1\MagmaSigertan as OldSigertan;
 use App\v1\Vona as OldVona;
 use App\v1\MagmaVar as OldVar;
+use App\v1\VonaSubscriber as OldSub;
+use App\v1\MagmaVen as OldVen;
 
 use Indonesia;
 
@@ -1089,12 +1093,8 @@ class ImportController extends Controller
 
         $olds = OldVona::whereBetween('no',[$this->startNo('vona'),$this->endNo('vona')])->get();
 
-        $olds->each(function ($item, $key) {
-
-            // $item->validate([
-            //     'noticenumber' => 'bail|required|unique:vonas,noticenumber',
-            // ]);
-
+        $olds->each(function ($item, $key) 
+        {
             $no = $item->no;
             $noticenumber = $item->notice_number;
             $issued = $item->issued;
@@ -1109,11 +1109,10 @@ class ImportController extends Controller
             $vch_other = $item->other_vc_info;
             $remarks = strlen($item->remarks)<6 ? null : $item->remarks;
             $sent = $item->sent;
-
             $pelapor = empty($item->nip) ? '198803152015031005' : $item->nip;
             $pelapor = $pelapor == '196807071992051001' || $pelapor == '196807071992031001' ? '196807071992031018' : $pelapor;
 
-            Vona::firstOrCreate(
+            $create = Vona::firstOrCreate(
                 [
                     'noticenumber' => $noticenumber,
                 ],
@@ -1134,7 +1133,10 @@ class ImportController extends Controller
                 ]
             );
 
-            $this->temptable('vona',$no);
+            if ($create)
+            {
+                $this->temptable('vona',$no);
+            }
         });
 
         $this->sendNotif('Data VONA');
@@ -1146,7 +1148,119 @@ class ImportController extends Controller
         ];
 
         return response()->json($data);
+    }
 
+    public function subscribers()
+    {
+        $subs = OldSub::whereBetween('no',[$this->startNo('subs'),$this->endNo('subs')])->get();
+
+        $subs->each(function ($item, $Key)
+        {
+            $no = $item->no;
+            $name = $item->nama;
+            $email = $item->email;
+            $status = $item->subscribe;
+
+            $create = VonaSubscriber::firstOrCreate(
+                        [
+                            'email' => $email
+                        ],
+                        [
+                            'name' => $name,
+                            'status' => $status
+                        ]
+                    );
+
+            if ($create)
+            {
+                $this->temptable('subs',$no);
+            }
+            
+        });
+
+        $this->sendNotif('VONA Subscribers');
+
+        $data = [
+            'success' => 1,
+            'message' => 'VONA Subscribers berhasil diperbarui',
+            'count' => VonaSubscriber::count()
+        ];
+
+        return response()->json($data);
+    }
+
+    public function ven()
+    {
+        $vens = OldVen::whereBetween('erupt_id',[$this->startNo('ven'),$this->endNo('ven')])->get();
+
+        $vens->each(function ($item, $Key){
+            $no = $item->erupt_id;
+            $code = $item->ga_code;
+            $date = $item->erupt_tgl;
+            $time = $item->erupt_jam;
+            $visiblity = $item->erupt_vis;
+            $height = $item->erupt_tka;
+            $wasap = explode(', ',$item->erupt_wrn);
+            $arahasap = $item->erupt_arh;
+            $amp = $item->erupt_amp;
+            $durasi = $item->erupt_drs;
+            $photo = $item->erupt_pht;
+            $photo == '-' ? $photo = null : $photo;
+            $status = $item->erupt_sta;
+            switch ($status) {
+                case 'Level I (Normal)':
+                    $status = 1;
+                    break;
+                case 'Level II (Waspada)':
+                   $status = 2;
+                    break;
+                case 'Level III (Siaga)':
+                    $status = 3;
+                    break;
+                default:
+                    $status = 4;
+                    break;
+            }
+            $rekomendasi = $item->erupt_rek;
+            $lainnya = $item->erupt_ket;
+            $nip_pelapor = $item->erupt_usr;
+
+            $create = MagmaVen::firstOrCreate(
+                    [
+                        'code_id' => $code,
+                        'date' => $date,
+                        'time' => $time
+                    ],
+                    [
+                        'height' => $height,
+                        'wasap' => $wasap,
+                        'visibility' => $visiblity,
+                        'arah_asap' => $arahasap,
+                        'amplitudo' => $amp,
+                        'durasi' => $durasi,        
+                        'photo' => $photo,
+                        'status' => $status,
+                        'rekomendasi' => $rekomendasi,
+                        'lainnya' => $lainnya,
+                        'nip_pelapor' => $nip_pelapor
+                    ]
+                );
+
+            if ($create)
+            {
+                $this->temptable('ven',$no);
+            }
+        });
+
+        $this->sendNotif('Data Informasi Letusan');
+
+        $data = [
+            'success' => 1,
+            'message' => 'Data Informasi Letusan berhasil diperbarui',
+            'count' => MagmaVen::count()
+        ];
+
+        return response()->json($data);
     }
 
     /**
@@ -1277,7 +1391,9 @@ class ImportController extends Controller
         $gempa = $gempa->jumlah();
         $crs = SigertanCrs::count();
         $vona = Vona::count();
+        $subs = VonaSubscriber::count();
+        $vens = MagmaVen::count();
         
-        return view('import.index',compact('users','bidang','gadds','varsv1','vars','vardailies','visuals','klimatologis','gempa','crs','vona'));
+        return view('import.index',compact('users','bidang','gadds','varsv1','vars','vardailies','visuals','klimatologis','gempa','crs','vona','subs','vens'));
     }
 }
