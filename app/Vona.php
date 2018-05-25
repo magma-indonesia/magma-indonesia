@@ -4,23 +4,27 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Uuid;
+use Carbon\Carbon;
+use CyrildeWit\PageViewCounter\Traits\HasPageViewCounter;
 
 class Vona extends Model
 {
-    use Uuid;
+    use Uuid,HasPageViewCounter;
 
     public $incrementing = false;
 
     protected $primaryKey = 'uuid';
 
     protected $keyType = 'string';
+
+    protected $appends = ['issued_utc','source','contacts','page_views'];
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-
         'noticenumber',
         'issued',
         'type', 
@@ -42,11 +46,14 @@ class Vona extends Model
 
     protected $hidden = ['id'];
 
-    protected $appends = ['source','contacts'];
-
     const SOURCE = "Indonesian Center for Volcanology and Geological Hazard Mitigation (CVGHM)";
 
-    const CONTACTS = "Center for Volcanology and Geological Hazard Mitigation (CVGHM), Tel: +62-22-727-2606, Facsimile: +62-22-720-2761, Email : vsi@vsi.esdm.go.id";
+    const CONTACTS = "Center for Volcanology and Geological Hazard Mitigation (CVGHM), Tel: +62-22-727-2606, Facsimile: +62-22-720-2761, email : vsi@vsi.esdm.go.id";
+
+    public function getIssuedUtcAttribute()
+    {
+        return Carbon::createFromFormat('Y-m-d H:i:s' ,$this->attributes['issued'])->format('Ymd/Hi').'Z';
+    }
 
     public function getPrevCodeAttribute($value)
     {
@@ -63,12 +70,22 @@ class Vona extends Model
         return self::CONTACTS;
     }
 
-    public function gunungapi ()
+    /**
+     * Get the total page views of the article.
+     *
+     * @return int
+     */
+    public function getPageViewsAttribute()
+    {
+        return $this->getPageViews();
+    }
+
+    public function gunungapi()
     {
         return $this->belongsTo('App\Gadd','code_id','code');
     }
 
-    public function user ()
+    public function user()
     {
         return $this->belongsTo('App\User','nip_pelapor','nip');
     }

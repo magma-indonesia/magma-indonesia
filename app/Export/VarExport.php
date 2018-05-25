@@ -87,15 +87,17 @@ class VarExport implements FromView
         return array();
     }
 
+    /**
+     * View result in blade
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function view(): View
     {      
         $vars = $this->applyFilter($this->request);
   
         $vars = $vars->get();
         
-        return view('export.var',compact(
-                    'vars'
-                    )
-                );
+        return view('export.var',compact('vars'));
     }
 }
