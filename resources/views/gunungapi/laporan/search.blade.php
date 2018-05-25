@@ -45,7 +45,7 @@
                         <div class="m-b-md">
                             Masukkan parameter pencarian
                         </div>
-                        <form role="form" id="form" method="GET" action="{{ route('chambers.laporanga.search') }}">
+                        <form role="form" id="form" method="GET" action="{{ route('chambers.laporan.search') }}">
                             <div class="form-group">
                                 <label class="control-label">Nama Pelapor</label>
                                 <select id="nip" class="form-control m-b" name="nip">
@@ -161,7 +161,7 @@
                                         <td>{{ $var->user->name }}</td>
                                         <td>
                                             <a href="">
-                                                <a href="{{ route('chambers.laporanga.show',$var->noticenumber ) }}" target="_blank" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">View</a>
+                                                <a href="{{ route('chambers.laporan.show',$var->noticenumber ) }}" target="_blank" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">View</a>
                                             </a>
                                         </td>
                                     </tr>

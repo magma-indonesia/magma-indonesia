@@ -95,7 +95,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="{{ active(['chambers.datadasar.*','chambers.laporanga.*','chambers.laporanga.search','chambers.pos.*']) }}">
+            <li class="{{ active(['chambers.datadasar.*','chambers.laporan.*','chambers.laporan.search','chambers.pos.*']) }}">
                 <a href="#">
                     <span class="nav-label">Gunung Api</span>
                     <span class="fa arrow"></span>
@@ -105,11 +105,14 @@
                         <a href="{{ route('chambers.datadasar.index') }}">Data Dasar</a>
                     </li>
                     @yield('nav-edit-volcano')
-                    <li class="{{ active('chambers.laporanga.index') }}">
-                        <a href="{{ route('chambers.laporanga.index') }}">Daftar Laporan</a>
+                    <li class="{{ active('chambers.laporan.index') }}">
+                        <a href="{{ route('chambers.laporan.index') }}">Daftar Laporan</a>
                     </li>
-                    <li class="{{ active('chambers.laporanga.search') }}">
-                            <a href="{{ route('chambers.laporanga.search') }}">Cari Laporan</a>
+                    <li class="{{ active('chambers.laporan.letusan') }}">
+                        <a href="{{ route('chambers.laporan.letusan') }}">Laporan Letusan</a>
+                    </li>
+                    <li class="{{ active('chambers.laporan.search') }}">
+                            <a href="{{ route('chambers.laporan.search') }}">Cari Laporan</a>
                         </li>
                     <li class="{{ active('chambers.pos.index') }}">
                         <a href="{{ route('chambers.pos.index') }}">Pos Pengamatan Gunung Api</a>
@@ -179,6 +182,11 @@
                         <a href="{{ route('chambers.vona.create') }}">Buat VONA</a>
                     </li>
                     @yield('nav-show-vona')
+                    @role('Super Admin')
+                    <li class="{{ active('chambers.vona.subscribe') }}">
+                        <a href="{{ route('chambers.vona.subscribe') }}">Subscription</a>
+                    </li>
+                    @endrole
                 </ul>
             </li>
         </ul>

@@ -38,9 +38,10 @@ Route::group(['prefix' => 'activities'], function(){
 
 Route::group(['prefix' => 'gunungapi'], function () {
     Route::resource('datadasar','DataDasar');
-    Route::resource('pos','PosPgaController');      
-    Route::resource('laporanga','ActivityGaController');
-    Route::get('laporan/search','ActivityGaController@search')->name('laporanga.search');
+    Route::resource('pos','PosPgaController');
+    Route::get('laporan/search','ActivityGaController@search')->name('laporan.search');
+    Route::get('laporan/laetusan','ActivityGaController@letusan')->name('laporan.letusan');      
+    Route::resource('laporan','ActivityGaController');
 });
 
 Route::resource('permissions', 'PermissionController', ['except' => [
@@ -61,4 +62,8 @@ Route::resource('press', 'PressController');
 //     Route::get('vona/{vona}/edit','VonaController@show')->name('edit');
 // });
 Route::get('vona/draft','VonaController@draft')->name('vona.draft');
+Route::get('vona/search','VonaController@search')->name('vona.search');
+Route::post('vona/send','VonaController@send')->name('vona.send');
+Route::get('vona/subscribers','VonaController@subscribe')->name('vona.subscribe');
+Route::post('vona/subscribers','VonaController@subscribeCreate')->name('vona.subscribe.create');
 Route::resource('vona', 'VonaController');
