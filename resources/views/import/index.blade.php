@@ -317,37 +317,37 @@
             <div class="col-lg-3">
                 <div class="hpanel stats">
                     <div class="panel-heading">
-                        Data CRS
+                        Data Informasi Letusan (VEN)
                     </div>
                     <div class="panel-body list">
                         <div class="stats-title pull-left">
-                            <h4>Data CRS</h4>
+                            <h4>Informasi Letusan</h4>
                         </div>
                         <div class="stats-icon pull-right">
-                            <i class="pe-7s-note fa-4x"></i>
+                            <i class="pe-7s-graph3 fa-4x"></i>
                         </div>
                         <div class="m-t-xl">
                             <span class="font-bold no-margins">
-                                Import Data CRS
+                                Import Data Informasi Letusan
                             </span>
                             <br/>
                             <small>
-                                Panel ini digunakan untuk meng-import data CRS v1
+                                Panel ini digunakan untuk meng-import data Informasi Letusan
                             </small>
                         </div>
                         <div class="row m-t-md">
                             <div class="col-lg-6">
-                                <h3 class="no-margins font-extra-bold text-success jumlah-crs">{{ number_format($crs,0,',','.') }}</h3>
-                                <div class="font-bold"><i class="fa fa-level-up text-success"></i> Jumlah data CRS</div>
+                                <h3 class="no-margins font-extra-bold text-success jumlah-vens">{{ number_format($vens,0,',','.') }}</h3>
+                                <div class="font-bold"><i class="fa fa-level-up text-success"></i> Jumlah data Informasi Letusan</div>
                             </div>
                         </div>
                     </div>
                     <div class="panel-footer text-center">
                         <form role="form" id="form-import" method="POST"
-                        data-import="crs" action="{{ route('chambers.import.crs') }}">
+                        data-import="vens" action="{{ route('chambers.import.vens') }}">
                             @csrf
                             <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
-                                <span class="ladda-label">Import Data CRS</span>
+                                <span class="ladda-label">Import Data Informasi Letusan</span>
                                 <span class="ladda-spinner"></span>
                             </button>
                         </form>
@@ -388,6 +388,86 @@
                             @csrf
                             <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
                                 <span class="ladda-label">Import Data VONA</span>
+                                <span class="ladda-spinner"></span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="hpanel stats">
+                    <div class="panel-heading">
+                        Data VONA Subscribers
+                    </div>
+                    <div class="panel-body list">
+                        <div class="stats-title pull-left">
+                            <h4>VONA Subscribers</h4>
+                        </div>
+                        <div class="stats-icon pull-right">
+                            <i class=" pe-7s-mail fa-4x"></i>
+                        </div>
+                        <div class="m-t-xl">
+                            <span class="font-bold no-margins">
+                                Import Data VONA Subscribers
+                            </span>
+                            <br/>
+                            <small>
+                                Panel ini digunakan untuk meng-import data VONA Subscribers
+                            </small>
+                        </div>
+                        <div class="row m-t-md">
+                            <div class="col-lg-6">
+                                <h3 class="no-margins font-extra-bold text-success jumlah-subscribers">{{ number_format($subs,0,',','.') }}</h3>
+                                <div class="font-bold"><i class="fa fa-level-up text-success"></i> Jumlah data Subscribers</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer text-center">
+                        <form role="form" id="form-import" method="POST"
+                        data-import="subscribers" action="{{ route('chambers.import.subscribers') }}">
+                            @csrf
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
+                                <span class="ladda-label">Import Data Subscribers</span>
+                                <span class="ladda-spinner"></span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="hpanel stats">
+                    <div class="panel-heading">
+                        Data CRS
+                    </div>
+                    <div class="panel-body list">
+                        <div class="stats-title pull-left">
+                            <h4>Data CRS</h4>
+                        </div>
+                        <div class="stats-icon pull-right">
+                            <i class="pe-7s-note fa-4x"></i>
+                        </div>
+                        <div class="m-t-xl">
+                            <span class="font-bold no-margins">
+                                Import Data CRS
+                            </span>
+                            <br/>
+                            <small>
+                                Panel ini digunakan untuk meng-import data CRS v1
+                            </small>
+                        </div>
+                        <div class="row m-t-md">
+                            <div class="col-lg-6">
+                                <h3 class="no-margins font-extra-bold text-success jumlah-crs">{{ number_format($crs,0,',','.') }}</h3>
+                                <div class="font-bold"><i class="fa fa-level-up text-success"></i> Jumlah data CRS</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer text-center">
+                        <form role="form" id="form-import" method="POST"
+                        data-import="crs" action="{{ route('chambers.import.crs') }}">
+                            @csrf
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
+                                <span class="ladda-label">Import Data CRS</span>
                                 <span class="ladda-spinner"></span>
                             </button>
                         </form>
