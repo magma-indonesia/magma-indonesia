@@ -39,13 +39,27 @@
                     <div class="panel-heading">
                         VONA
                     </div>
-                    <div class="panel-body float-e-margins m-b">
+                    <div class="panel-body">
                         <div class="row text-center">
                             <div class="col-md-4 col-lg-2 col-sm-6 col-xs-12">
                                 <a href="{{ route('chambers.vona.create') }}" class="btn btn-outline btn-block btn-success" type="button">Buat VONA Baru</a>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="hpanel">
+                    <div class="panel-body">
+                        <form role="form" id="form" method="GET" action="{{ route('chambers.vona.search') }}">
+                            <div class="input-group">
+                                <input name="q" class="form-control" type="text" placeholder="Cari VONA ...">
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="hpanel">
                     <div class="panel-body">
                         {{ $vonas->links() }}
                         <div class="table-responsive">
@@ -83,8 +97,7 @@
                                                 <button value="Delete" class="btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
                                             </form>
                                             @endrole
-                                        </td>
-                                                                                
+                                        </td>                      
                                     </tr>
                                     @endforeach
                                 </tbody>
