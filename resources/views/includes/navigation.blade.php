@@ -108,8 +108,8 @@
                     <li class="{{ active('chambers.laporan.index') }}">
                         <a href="{{ route('chambers.laporan.index') }}">Daftar Laporan</a>
                     </li>
-                    <li class="{{ active('chambers.laporan.letusan') }}">
-                        <a href="{{ route('chambers.laporan.letusan') }}">Laporan Letusan</a>
+                    <li class="{{ active('chambers.letusan.index') }}">
+                        <a href="{{ route('chambers.letusan.index') }}">Laporan Letusan</a>
                     </li>
                     <li class="{{ active('chambers.laporan.search') }}">
                             <a href="{{ route('chambers.laporan.search') }}">Cari Laporan</a>
