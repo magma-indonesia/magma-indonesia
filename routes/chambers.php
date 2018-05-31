@@ -39,10 +39,11 @@ Route::group(['prefix' => 'activities'], function(){
 Route::group(['prefix' => 'gunungapi'], function () {
     Route::resource('datadasar','DataDasar');
     Route::resource('pos','PosPgaController');
+    Route::resource('letusan','MagmaVenController');
     Route::get('laporan/search','ActivityGaController@search')->name('laporan.search');
-    Route::get('laporan/laetusan','ActivityGaController@letusan')->name('laporan.letusan');      
     Route::resource('laporan','ActivityGaController');
 });
+
 
 Route::resource('permissions', 'PermissionController', ['except' => [
     'show','edit'
