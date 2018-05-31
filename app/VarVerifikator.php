@@ -24,4 +24,16 @@ class VarVerifikator extends Model
         'id',
         'deleted_at',
     ];
+
+    /**     
+     *   Masing-masing Var hanya dimiliki
+     *   oleh 1 User
+     * 
+     *   @return \App\User 
+     * 
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User','nip_id','nip');
+    }
 }
