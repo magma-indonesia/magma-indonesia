@@ -9,7 +9,7 @@ class EqTrs extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'e_lts';
+    protected $table = 'e_trs';
 
     protected $dates = ['deleted_at'];
 
