@@ -23,8 +23,6 @@ class EqLts extends Model
         'amax',
         'dmin',
         'dmax',
-        'tmin',
-        'tmax',
         'created_at',
         'updated_at',
         'deleted_at'
