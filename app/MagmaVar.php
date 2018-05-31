@@ -43,6 +43,40 @@ class MagmaVar extends Model
     }
 
     /**     
+     *   Masing-masing Var bisa memiliki
+     *   lebih dari 1 Verifikator PJ
+     * 
+     *   @return \App\VarVerifikator
+     */
+    public function pj()
+    {
+        return $this->hasOne('App\VarPj','noticenumber_id','noticenumber');
+    }
+
+    /**     
+     *   Masing-masing Var bisa memiliki
+     *   lebih dari 1 Verifikator
+     * 
+     *   @return \App\VarVerifikator
+     */
+    public function verifikator()
+    {
+        return $this->hasOne('App\VarVerifikator','noticenumber_id','noticenumber');
+    }
+
+    /**     
+     *   Masing-masing Var hanya memiliki
+     *   oleh 1 Pos
+     * 
+     *   @return \App\PosPga 
+     * 
+     */
+    public function pos()
+    {
+        return $this->belongsTo('App\PosPga','obscode_id','obscode');
+    }
+
+    /**     
      *   Masing-masing Var hanya memiliki
      *   1 status gunung api
      * 
