@@ -24,8 +24,6 @@ class CreateGempaerupsi extends Migration
         $table->float('amax',8,2)->default(0.0);
         $table->float('dmin',8,2)->default(0.0);
         $table->float('dmax',8,2)->default(0.0);
-        $table->float('tmin',8,2)->default(0.0);
-        $table->float('tmax',8,2)->default(0.0);
         $table->timestamps();
         $table->softDeletes();
     }
