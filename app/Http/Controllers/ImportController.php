@@ -28,6 +28,7 @@ use App\SigertanCrsValidasi;
 use App\Vona;
 use App\VonaSubscriber;
 use App\MagmaVen;
+use App\VarLetusan;
 
 use App\v1\GertanCrs as OldCrs;
 use App\v1\MagmaSigertan as OldSigertan;
@@ -243,7 +244,7 @@ class ImportController extends Controller
                         )
                         ->whereBetween('no',[$this->startNo('vars'),$this->endNo('var')])
                         ->orderBy('no')
-                        ->chunk(1000, function($var)
+                        ->chunk(2000, function($var)
                         {
 
                             foreach ($var as $varx) 
@@ -410,7 +411,7 @@ class ImportController extends Controller
                         )
                         ->whereBetween('no',[$this->startNo('visuals'),$this->endNo('var')])
                         ->orderBy('no','asc')
-                        ->chunk(1000,function($varx)
+                        ->chunk(2000,function($varx)
                         {
                             foreach ($varx as $vars) 
                             {
@@ -930,6 +931,8 @@ class ImportController extends Controller
                                     $dmax       = $var->{'var_'.$kode.'_dmax'};
                                     $tmin       = $var->{'var_'.$kode.'_tmin'};
                                     $tmax       = $var->{'var_'.$kode.'_tmax'};
+                                    $wasap      = $var->{'var_'.$kode.'_wasap'};
+                                    $wasap      = $this->wasap($wasap);
 
                                     $addGempa   = VarGempa::firstOrCreate(['noticenumber_id' => $noticenumber]);    
 
@@ -944,14 +947,21 @@ class ImportController extends Controller
                                             'amax'              => $amax,
                                             'dmin'              => $dmin,
                                             'dmax'              => $dmax,
-                                            'tmin'              => $tmin,
-                                            'tmax'              => $tmax
 
                                         ]       
 
                                     );
 
-                                    if ($update)
+                                    $visual_id  = VarVisual::select('id')->where('noticenumber_id',$noticenumber)->first()->id;
+                                    $addLetusan = VarLetusan::firstOrCreate(
+                                                        [   'var_visual_id'     => $visual_id],
+                                                        [   'tmin'         => $tmin,
+                                                            'tmax'         => $tmax,
+                                                            'wasap'        => $wasap,
+                                                        ]
+                                                    );
+
+                                    if ($update AND $addLetusan)
                                     {
                                         $this->temptable($kode,$no);
                                     }
