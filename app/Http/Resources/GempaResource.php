@@ -8,10 +8,26 @@ class GempaResource extends JsonResource
 {
 
     protected $codes = [
-        'lts','apl','gug','apg','hbs',
-        'tre','tor','lof','hyb','vtb',
-        'vta','vlp','tel','trs','tej',
-        'dev','gtb','hrm','dpt','mtr'
+        'lts' => 'Letusan/Erupsi',
+        'apl' => 'Awan Panas Letusan',
+        'gug' => 'Guguran',
+        'apg' => 'Awan Panas Guguran',
+        'hbs' => 'Hembusan',
+        'tre' => 'Tremor Non-Harmonik',
+        'tor' => 'Tornillo',
+        'lof' => 'Low Frequency',
+        'hyb' => 'Hybrid/Fase Banyak',
+        'vtb' => 'Vulkanik Dangkal',
+        'vta' => 'Vulkanik Dalam',
+        'vlp' => 'Very Long Period',
+        'tel' => 'Tektonik Lokal',
+        'trs' => 'Terasa',
+        'tej' => 'Tektonik Jauh',
+        'dev' => 'Double Event',
+        'gtb' => 'Getaran Banjir',
+        'hrm' => 'Harmonik',
+        'dpt' => 'Deep Tremor',
+        'mtr' => 'Tremor Menerus'
     ];
     
     /**
@@ -22,11 +38,19 @@ class GempaResource extends JsonResource
      */
     public function toArray($request)
     {
-
-        foreach ($this->codes as $code) {
-            $temp[$code] = $this->when($this->$code, $this->$code);
+        $data = array();
+        foreach ($this->codes as $code=>$name) {
+            $collection = collect($this->$code);
+            if ($collection->isNotEmpty())
+            {
+                $temp = [
+                    'code' => $code,
+                    'name' => $name,
+                    'data' => $collection
+                ];
+                array_push($data,$temp);
+            }
         }
-
-        return $temp;
+        return $data;
     }
 }
