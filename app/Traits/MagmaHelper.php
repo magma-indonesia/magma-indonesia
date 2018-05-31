@@ -452,14 +452,14 @@ trait MagmaHelper
     private function intasap($intasap)
     {
 
-        $s_intasap      = ['-','Tipis','Sedang','Tebal'];
+        $s_intasap      = ['Tipis','Sedang','Tebal'];
 
         $intasap        = str_replace(', ',',',$intasap);
 
         if (empty($intasap))
         {
 
-            $intasap        = ['-'];
+            $intasap        = ['Tipis'];
             return $intasap;
 
         }
@@ -485,7 +485,7 @@ trait MagmaHelper
         $tekasap       = str_replace(', ',',',$tekasap);
 
 
-        if (empty($tekasap))
+        if (empty($tekasap) || $tekasap == '-')
         {
 
             $tekasap    = ['Lemah'];
@@ -524,6 +524,11 @@ trait MagmaHelper
 
                 }
 
+            }
+
+            if (empty($data))
+            {
+                $data = 'Nihil';
             }
 
             return $data;
