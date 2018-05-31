@@ -12,8 +12,13 @@ use App\User;
 use App\Http\Resources\VarResource;
 use App\Http\Resources\VarCollection;
 
+use App\Traits\VisualAsap;
+use App\Traits\DeskripsiVar;
+
 class ActivityGaController extends Controller
 {
+    use VisualAsap,DeskripsiVar;
+
     /**
      * Display a listing of the resource.
      *
@@ -22,25 +27,15 @@ class ActivityGaController extends Controller
     public function index()
     {
         $vars = MagmaVar::orderBy('var_data_date','desc')
-                    ->orderBy('created_at','desc')
-                    ->simplePaginate(15);
+                ->orderBy('created_at','desc')
+                ->simplePaginate(15);
 
         $gadds = Gadd::orderBy('name')
-                    ->whereNotIn('code',['TEO','SBG'])
-                    ->get();
+                ->whereNotIn('code',['TEO','SBG'])
+                ->get();
 
         Carbon::setLocale('id'); 
         return view('gunungapi.laporan.index',compact('vars','gadds'));
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function letusan()
-    {
-        return 'Letusan';
     }
 
     /**
@@ -51,12 +46,25 @@ class ActivityGaController extends Controller
      */
     public function show($id)
     {
-        $var = MagmaVar::where('noticenumber',$id)->first();
+        Carbon::setLocale('id');
 
-        Carbon::setLocale('id');             
+        $var = MagmaVar::where('noticenumber',$id)->firstOrFail();
+
+        $gempa = $this->deskripsi($var->gempa)->getGempa();
+
+        $visual = $this->cuaca($var->klimatologi->cuaca)
+                ->angin($var->klimatologi->kecangin,$var->klimatologi->arahangin)
+                ->suhu($var->klimatologi->suhumin,$var->klimatologi->suhumax)
+                ->kelembaban($var->klimatologi->lembabmin,$var->klimatologi->lembabmax)
+                ->tekanan($var->klimatologi->tekmin,$var->klimatologi->tekmax)
+                ->visibility($var->visual->visibility)
+                ->asap($var->visual->visual_asap, $var->visual->asap ?? '')
+                ->letusan($var->visual->letusan ?? '')
+                ->getVisual();
+
         $var = new VarResource($var);
         
-        return view('gunungapi.laporan.show', compact('var'));
+        return view('gunungapi.laporan.show', compact('var','visual','gempa'));
     }
 
     /**
