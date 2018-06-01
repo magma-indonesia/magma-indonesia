@@ -19,10 +19,13 @@ trait MagmaHelper
      */  
     private function sendNotif($type)
     {
-        $import = new Import();
-        $import->notify(new ImportNotification($type));
+        try {
+            $import = new Import();
+            $import->notify(new ImportNotification($type));
+        }
+        catch (Exception $e){
 
-        return;
+        }
     }
 
     /**     
