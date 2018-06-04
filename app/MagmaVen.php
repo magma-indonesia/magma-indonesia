@@ -22,6 +22,8 @@ class MagmaVen extends Model
         'arah_asap'     => 'array',
     ];
 
+    protected $with = ['user:nip,name'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -45,7 +47,7 @@ class MagmaVen extends Model
 
     protected $guarded = ['id','uuid'];
 
-    protected $hidden = ['id'];
+    protected $hidden = ['id','nip_pelapor'];
 
     /**
      * Scope a status query
