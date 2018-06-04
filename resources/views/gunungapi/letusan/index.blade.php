@@ -8,10 +8,6 @@
     <link rel="stylesheet" href="{{ asset('vendor/sweetalert/lib/sweet-alert.css') }}" />
 @endsection
 
-@section('add-vendor-css')
-    <link rel="stylesheet" href="{{ asset('vendor/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" />
-@endsection
-
 @section('content-header')
     <div class="small-header">
         <div class="hpanel">
