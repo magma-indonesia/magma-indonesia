@@ -125,9 +125,6 @@
                 var $url = $(this).attr('action'),
                     $data = $(this).serialize();
 
-                // var $tableuser = $('#table-users').DataTable();
-                // var $row = $tableuser.row($(this).parents('tr'));
-
                 swal({
                     title: "Anda yakin?",
                     text: "Data yang telah dihapus tidak bisa dikembalikan",
