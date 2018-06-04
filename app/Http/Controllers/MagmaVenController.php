@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\MagmaVen;
+use Carbon\Carbon;
 
 class MagmaVenController extends Controller
 {
@@ -13,7 +15,8 @@ class MagmaVenController extends Controller
      */
     public function index()
     {
-        return view('gunungapi.letusan.index');
+        $vens = MagmaVen::orderBy('date','desc')->orderBy('time','desc')->paginate(30,['*'],'ven_page');
+        return view('gunungapi.letusan.index',compact('vens'));
     }
 
     /**
@@ -45,7 +48,9 @@ class MagmaVenController extends Controller
      */
     public function show($id)
     {
-        //
+        $ven = MagmaVen::findOrFail($id);
+        $ven->addPageViewThatExpiresAt(Carbon::now()->addHours(1));
+        return view('gunungapi.letusan.show',compact('ven'));
     }
 
     /**
