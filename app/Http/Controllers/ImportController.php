@@ -1211,7 +1211,7 @@ class ImportController extends Controller
             $visiblity = $item->erupt_vis;
             $height = $item->erupt_tka;
             $wasap = explode(', ',$item->erupt_wrn);
-            $arahasap = $item->erupt_arh;
+            $arahasap = explode(', ',$item->erupt_arh);
             $amp = $item->erupt_amp;
             $durasi = $item->erupt_drs;
             $photo = $item->erupt_pht;
