@@ -54,8 +54,11 @@ class VonaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {        
-        $vonas = Vona::orderBy('issued','desc')->where('sent',1)->paginate(30,['*'],'vona_page');
+    {  
+        $vonas = Vona::select('uuid','issued','cu_code','prev_code','vch_asl','code_id','nip_pelapor')
+                ->orderBy('issued','desc')
+                ->where('sent',1)
+                ->paginate(30,['*'],'vona_page');
 
         return view('vona.index',compact('vonas'));
     }
