@@ -19,6 +19,7 @@ class MagmaVen extends Model
     
     protected $casts = [
         'wasap'         => 'array',
+        'intensitas'    => 'array',
         'arah_asap'     => 'array',
     ];
 
@@ -35,6 +36,7 @@ class MagmaVen extends Model
         'time',
         'height',
         'wasap',
+        'intensitas',
         'arah_asap',
         'amplitudo',
         'durasi',        
