@@ -1220,20 +1220,21 @@ class ImportController extends Controller
             $status = $item->erupt_sta;
             switch ($status) {
                 case 'Level I (Normal)':
-                    $status = 1;
+                    $status = '1';
                     break;
                 case 'Level II (Waspada)':
-                   $status = 2;
+                   $status = '2';
                     break;
                 case 'Level III (Siaga)':
-                    $status = 3;
+                    $status = '3';
                     break;
                 default:
-                    $status = 4;
+                    $status = '4';
                     break;
             }
             $rekomendasi = $item->erupt_rek;
             $lainnya = $item->erupt_ket;
+            $lainnya == '-' ? $lainnya = null : $lainnya;
             $nip_pelapor = $item->erupt_usr;
 
             $create = MagmaVen::firstOrCreate(
