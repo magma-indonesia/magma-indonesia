@@ -1211,6 +1211,7 @@ class ImportController extends Controller
             $visiblity = $item->erupt_vis;
             $height = $item->erupt_tka;
             $wasap = explode(', ',$item->erupt_wrn);
+            $intensitas = explode(', ',$item->erupt_int);
             $arahasap = explode(', ',$item->erupt_arh);
             $amp = $item->erupt_amp;
             $durasi = $item->erupt_drs;
@@ -1244,6 +1245,7 @@ class ImportController extends Controller
                     [
                         'height' => $height,
                         'wasap' => $wasap,
+                        'intensitas' => $intensitas,
                         'visibility' => $visiblity,
                         'arah_asap' => $arahasap,
                         'amplitudo' => $amp,
