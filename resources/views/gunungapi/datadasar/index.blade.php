@@ -106,6 +106,8 @@
                 @endforeach
             </div>
         @endforeach
-        {{ $gadds->links() }}                
+        <div class="m-b">
+            {{ $gadds->links() }}             
+        </div>
     </div>
 @endsection
