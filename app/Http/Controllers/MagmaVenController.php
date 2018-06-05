@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\LaporanLetusan;
 use App\MagmaVen;
+use App\Gadd;
 use Carbon\Carbon;
 
 class MagmaVenController extends Controller
@@ -26,7 +28,8 @@ class MagmaVenController extends Controller
      */
     public function create()
     {
-        //
+        $gadds = Gadd::select('code','name')->orderBy('name')->get();
+        return view('gunungapi.letusan.create',compact('gadds'));
     }
 
     /**
@@ -35,9 +38,9 @@ class MagmaVenController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(LaporanLetusan $request)
     {
-        //
+        return $request;
     }
 
     /**
