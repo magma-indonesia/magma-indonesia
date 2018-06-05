@@ -71,3 +71,7 @@ table tr td[class*="4"] {
 .text-terbit {
 	color: #4CAF50;
 }
+
+.hr-line-dashed {
+    border-top: 5px dotted #f1f3f6;
+}
