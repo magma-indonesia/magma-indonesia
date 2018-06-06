@@ -28,7 +28,7 @@ class CreateMagmaVensTable extends Migration
             $table->float('amplitudo',8,2)->default(0);
             $table->float('durasi',8,2)->default(0);
             $table->string('photo')->nullable();
-            $table->tinyInteger('status');
+            $table->enum('status',['1','2','3','4']);
             $table->text('rekomendasi')->nullable();
             $table->text('lainnya')->nullable();
             $table->char('nip_pelapor',18);
