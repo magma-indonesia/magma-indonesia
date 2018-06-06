@@ -14,6 +14,21 @@ class VonaResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'uuid' => $this->uuid,
+            'noticenumber' => $this->noticenumber,
+            'issued' => $this->issued,
+            'code_id' => $this->code_id,
+            'cu_code' => $this->cu_code,
+            'prev_code' => $this->prev_code,
+            'location' => $this->location,
+            'vas' => $this->vas,
+            'vch_summit' => $this->vch_summit,
+            'vch_asl' => $this->vch_asl,
+            'vch_other' => $this->vch_other,
+            'remarks' => $this->remarks,
+            'issued_utc' => $this->issued_utc,
+            'gunungapi' => new GunungApiResource($this->gunungapi),
+        ];
     }
 }
