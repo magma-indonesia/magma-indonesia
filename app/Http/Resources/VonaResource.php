@@ -19,6 +19,8 @@ class VonaResource extends JsonResource
             'noticenumber' => $this->noticenumber,
             'issued' => $this->issued,
             'code_id' => $this->code_id,
+            'smithsonian_id' => $this->gunungapi->smithsonian_id,
+            'volcano' => $this->gunungapi->name,
             'cu_code' => $this->cu_code,
             'prev_code' => $this->prev_code,
             'location' => $this->location,
@@ -28,7 +30,6 @@ class VonaResource extends JsonResource
             'vch_other' => $this->vch_other,
             'remarks' => $this->remarks,
             'issued_utc' => $this->issued_utc,
-            'gunungapi' => new GunungApiResource($this->gunungapi),
         ];
     }
 }
