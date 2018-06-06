@@ -43,8 +43,8 @@
                     <div class="panel-heading">
                         Form Informasi Letusan
                     </div>
-                    <div class="panel-body">
-                        <form class="form-horizontal" method="POST" action="{{ route('chambers.letusan.store') }}" enctype="multipart/form-data">
+                    <div class="panel-body">     
+                        <form id="form" class="form-horizontal" method="POST" action="{{ route('chambers.letusan.store') }}" enctype="multipart/form-data">
                             @csrf
                             {{-- Nama Gunung Api --}}
                             <div class="form-group">
@@ -75,7 +75,7 @@
                                 </div>
                             </div>
 
-                        <div class="teramati" style="display: {{ old('visibility') == '0' ? 'none' :'block'}};">
+                            <div class="teramati" style="display: {{ old('visibility') == '0' ? 'none' :'block'}};">
                                 {{-- Waktu Letusan --}}
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Waktu Letusan</label>
@@ -92,7 +92,7 @@
                                     <label class="col-sm-2 control-label">Tinggi Letusan</label>
                                     <div class="col-sm-6">
                                         <div class="input-group">
-                                            <input name="height" class="form-control" type="text" value="{{ empty(old('height')) ? '' : old('height') }}">
+                                            <input placeholder="Antara 100 - 20000 meter" name="height" class="form-control" type="text" value="{{ empty(old('height')) ? '' : old('height') }}">
                                             <span class="input-group-addon h-bg-red">meter, dari atas puncak</span>
                                         </div>
                                         @if( $errors->has('height'))
@@ -108,23 +108,29 @@
                                         <div class="row">
                                             <div class="col-sm-3">
                                                 <div class="checkbox">
-                                                    <label><input name="wasap[]" value="Putih" type="checkbox" class="i-checks wasap" {{ is_array(old('wasap')) AND in_array('Putih',old('wasap')) ? 'checked' : ''}}> Putih </label>
+                                                    <label><input name="wasap[]" value="Putih" type="checkbox" class="i-checks wasap" {{ (is_array(old('wasap')) AND in_array('Putih',old('wasap'))) ? 'checked' : ''}}> Putih </label>
                                                 </div>
                                                 <div class="checkbox">
-                                                    <label><input name="wasap[]" value="Kelabu" type="checkbox" class="i-checks wasap" {{ is_array(old('wasap')) AND in_array('Kelabu',old('wasap')) ? 'checked' : ''}}> Kelabu </label>
+                                                    <label><input name="wasap[]" value="Kelabu" type="checkbox" class="i-checks wasap" {{ (is_array(old('wasap')) AND in_array('Kelabu',old('wasap'))) ? 'checked' : ''}}> Kelabu </label>
                                                 </div>
                                             </div>
                                             <div class="col-sm-3">
                                                 <div class="checkbox">
-                                                    <label><input name="wasap[]" value="Coklat" type="checkbox" class="i-checks wasap" {{ is_array(old('wasap')) AND in_array('Coklat',old('wasap')) ? 'checked' : ''}}> Coklat </label>
+                                                    <label><input name="wasap[]" value="Coklat" type="checkbox" class="i-checks wasap" {{ (is_array(old('wasap')) AND in_array('Coklat',old('wasap'))) ? 'checked' : ''}}> Coklat </label>
                                                 </div>
                                                 <div class="checkbox">
-                                                    <label><input name="wasap[]" value="Hitam" type="checkbox" class="i-checks wasap" {{ is_array(old('wasap')) AND in_array('Hitam',old('wasap')) ? 'checked' : ''}}> Hitam </label>
+                                                    <label><input name="wasap[]" value="Hitam" type="checkbox" class="i-checks wasap" {{ (is_array(old('wasap')) AND in_array('Hitam',old('wasap'))) ? 'checked' : ''}}> Hitam </label>
                                                 </div>
                                             </div>
                                         </div>
-                                        @if( $errors->has('wasap'))
-                                        <label class="error" for="wasap">{{ ucfirst($errors->first('wasap')) }}</label>
+                                        @if($errors->has('wasap'))
+                                            <label class="error" for="wasap">{{  ucfirst($errors->first('wasap')) }}</label>
+                                        @endif
+                                        @if($errors->has('wasap.*'))
+                                        @foreach($errors->get('wasap.*') as $error)
+                                            <label class="error" for="wasap">{{  $error[0] }}</label>
+                                            @break
+                                        @endforeach
                                         @endif
                                     </div>
                                 </div>
@@ -133,11 +139,17 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Intensitas</label>
                                     <div class="col-sm-6">
-                                        <label class="checkbox-inline"><input name="intensitas[]" value="Tipis" type="checkbox" class="i-checks intensitas" {{ is_array(old('intensitas')) AND in_array('Tipis',old('intensitas')) ? 'checked' : ''}}> Tipis </label>
-                                        <label class="checkbox-inline"><input name="intensitas[]" value="Sedang" type="checkbox" class="i-checks intensitas" {{ is_array(old('intensitas')) AND in_array('Sedang',old('intensitas')) ? 'checked' : ''}}> Sedang </label>
-                                        <label class="checkbox-inline"><input name="intensitas[]" value="Tebal" type="checkbox" class="i-checks intensitas" {{ is_array(old('intensitas')) AND in_array('Tebal',old('intensitas')) ? 'checked' : ''}}> Tebal </label>
+                                        <label class="checkbox-inline"><input name="intensitas[]" value="Tipis" type="checkbox" class="i-checks intensitas" {{ (is_array(old('intensitas')) AND in_array('Tipis',old('intensitas'))) ? 'checked' : ''}}> Tipis </label>
+                                        <label class="checkbox-inline"><input name="intensitas[]" value="Sedang" type="checkbox" class="i-checks intensitas" {{ (is_array(old('intensitas')) AND in_array('Sedang',old('intensitas'))) ? 'checked' : ''}}> Sedang </label>
+                                        <label class="checkbox-inline"><input name="intensitas[]" value="Tebal" type="checkbox" class="i-checks intensitas" {{ (is_array(old('intensitas')) AND in_array('Tebal',old('intensitas'))) ? 'checked' : ''}}> Tebal </label>
                                         @if( $errors->has('intensitas'))
                                         <label class="error" for="intensitas">{{ ucfirst($errors->first('intensitas')) }}</label>
+                                        @endif
+                                        @if($errors->has('intensitas.*'))
+                                        @foreach($errors->get('intensitas.*') as $error)
+                                            <label class="error" for="intensitas">{{  $error[0] }}</label>
+                                            @break
+                                        @endforeach
                                         @endif
                                     </div>
                                 </div>
@@ -149,35 +161,41 @@
                                         <div class="row">
                                             <div class="col-sm-3">
                                                 <div class="checkbox">
-                                                    <label><input name="arah[]" value="Utara" type="checkbox" class="i-checks arah" {{ is_array(old('arah')) AND in_array('Utara',old('arah')) ? 'checked' : ''}}> Utara </label>
+                                                    <label><input name="arah[]" value="Utara" type="checkbox" class="i-checks arah" {{ (is_array(old('arah')) AND in_array('Utara',old('arah'))) ? 'checked' : ''}}> Utara </label>
                                                 </div>
                                                 <div class="checkbox">
-                                                    <label><input name="arah[]" value="Timur Laut" type="checkbox" class="i-checks arah" {{ is_array(old('arah')) AND in_array('Timur Laut',old('arah')) ? 'checked' : ''}}> Timur Laut </label>
+                                                    <label><input name="arah[]" value="Timur Laut" type="checkbox" class="i-checks arah" {{ (is_array(old('arah')) AND in_array('Timur Laut',old('arah'))) ? 'checked' : ''}}> Timur Laut </label>
                                                 </div>
                                                 <div class="checkbox">
-                                                    <label><input name="arah[]" value="Timur" type="checkbox" class="i-checks arah" {{ is_array(old('arah')) AND in_array('Timur',old('arah')) ? 'checked' : ''}}> Timur </label>
+                                                    <label><input name="arah[]" value="Timur" type="checkbox" class="i-checks arah" {{ (is_array(old('arah')) AND in_array('Timur',old('arah'))) ? 'checked' : ''}}> Timur </label>
                                                 </div>
                                                 <div class="checkbox">
-                                                    <label><input name="arah[]" value="Tenggara" type="checkbox" class="i-checks arah" {{ is_array(old('arah')) AND in_array('Tenggara',old('arah')) ? 'checked' : ''}}> Tenggara </label>
+                                                    <label><input name="arah[]" value="Tenggara" type="checkbox" class="i-checks arah" {{ (is_array(old('arah')) AND in_array('Tenggara',old('arah'))) ? 'checked' : ''}}> Tenggara </label>
                                                 </div>
                                             </div>
                                             <div class="col-sm-3">
                                                 <div class="checkbox">
-                                                    <label><input name="arah[]" value="Selatan" type="checkbox" class="i-checks arah" {{ is_array(old('arah')) AND in_array('Selatan',old('arah')) ? 'checked' : ''}}> Selatan </label>
+                                                    <label><input name="arah[]" value="Selatan" type="checkbox" class="i-checks arah" {{ (is_array(old('arah')) AND in_array('Selatan',old('arah'))) ? 'checked' : ''}}> Selatan </label>
                                                 </div>
                                                 <div class="checkbox">
-                                                    <label><input name="arah[]" value="Barat Daya" type="checkbox" class="i-checks arah" {{ is_array(old('arah')) AND in_array('Barat Daya',old('arah')) ? 'checked' : ''}}> Barat Daya </label>
+                                                    <label><input name="arah[]" value="Barat Daya" type="checkbox" class="i-checks arah" {{ (is_array(old('arah')) AND in_array('Barat Daya',old('arah'))) ? 'checked' : ''}}> Barat Daya </label>
                                                 </div>
                                                 <div class="checkbox">
-                                                    <label><input name="arah[]" value="Barat" type="checkbox" class="i-checks arah" {{ is_array(old('arah')) AND in_array('Barat',old('arah')) ? 'checked' : ''}}> Barat </label>
+                                                    <label><input name="arah[]" value="Barat" type="checkbox" class="i-checks arah" {{ (is_array(old('arah')) AND in_array('Barat',old('arah'))) ? 'checked' : ''}}> Barat </label>
                                                 </div>
                                                 <div class="checkbox">
-                                                    <label><input name="arah[]" value="Barat Laut" type="checkbox" class="i-checks arah" {{ is_array(old('arah')) AND in_array('Barat Laut',old('arah')) ? 'checked' : ''}}> Barat Laut </label>
+                                                    <label><input name="arah[]" value="Barat Laut" type="checkbox" class="i-checks arah" {{ (is_array(old('arah')) AND in_array('Barat Laut',old('arah'))) ? 'checked' : ''}}> Barat Laut </label>
                                                 </div>
                                             </div>
                                         </div>
                                         @if( $errors->has('arah'))
                                         <label class="error" for="arah">{{ ucfirst($errors->first('arah')) }}</label>
+                                        @endif
+                                        @if($errors->has('arah.*'))
+                                        @foreach($errors->get('arah.*') as $error)
+                                            <label class="error" for="arah">{{  $error[0] }}</label>
+                                            @break
+                                        @endforeach
                                         @endif
                                     </div>
                                 </div>
@@ -208,37 +226,36 @@
                                         @endif
                                     </div>
                                 </div>
-                                
-                                {{-- Status --}}
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Status Gunung Api</label>
-                                    <div class="col-sm-6">
-                                        <select id="status" class="form-control" name="status">
-                                            <option value="1" {{ old('status') == '1' ? 'selected' : ''}}>Level I (Normal)</option>
-                                            <option value="2" {{ old('status') == '2' ? 'selected' : ''}}>Level II (Waspada)</option>
-                                            <option value="3" {{ old('status') == '3' ? 'selected' : ''}}>Level III (Siaga)</option>
-                                            <option value="4" {{ old('status') == '4' ? 'selected' : ''}}>Level IV (Awas)</option>
-                                        </select>
-                                        @if( $errors->has('status'))
-                                        <label class="error" for="status">{{ ucfirst($errors->first('status')) }}</label>
-                                        @endif
-                                    </div>
+                            </div>
+                            {{-- Status --}}
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Status Gunung Api</label>
+                                <div class="col-sm-6">
+                                    <select id="status" class="form-control" name="status">
+                                        <option value="1" {{ old('status') == '1' ? 'selected' : ''}}>Level I (Normal)</option>
+                                        <option value="2" {{ old('status') == '2' ? 'selected' : ''}}>Level II (Waspada)</option>
+                                        <option value="3" {{ old('status') == '3' ? 'selected' : ''}}>Level III (Siaga)</option>
+                                        <option value="4" {{ old('status') == '4' ? 'selected' : ''}}>Level IV (Awas)</option>
+                                    </select>
+                                    @if( $errors->has('status'))
+                                    <label class="error" for="status">{{ ucfirst($errors->first('status')) }}</label>
+                                    @endif
                                 </div>
-                                
-                                {{-- Rekomendasi --}}
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Rekomendasi</label>
-                                    <div class="col-sm-6">
-                                        <textarea name="rekomendasi"class="form-control" rows="5">{{ old('rekomendasi')}}</textarea>
-                                    </div>
+                            </div>
+                            
+                            {{-- Rekomendasi --}}
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Rekomendasi</label>
+                                <div class="col-sm-6">
+                                    <textarea placeholder="Kosongi jika tidak ada" name="rekomendasi"class="form-control" rows="5">{{ old('rekomendasi')}}</textarea>
                                 </div>
-                                
-                                {{-- Keterangan Lainnya --}}
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Keterangan Lainnya (opsional)</label>
-                                    <div class="col-sm-6">
-                                        <textarea name="lainnya"class="form-control" rows="3">{{ old('lainnya')}}</textarea>
-                                    </div>
+                            </div>
+                            
+                            {{-- Keterangan Lainnya --}}
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Keterangan Lainnya (opsional)</label>
+                                <div class="col-sm-6">
+                                    <textarea placeholder="Kosongi jika tidak ada" name="lainnya"class="form-control" rows="3">{{ old('lainnya')}}</textarea>
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
@@ -281,7 +298,6 @@
                 } else {
                     $('.teramati').show();
                 }
-                
             });
         });
     </script>
