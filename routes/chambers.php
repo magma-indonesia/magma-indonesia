@@ -44,24 +44,16 @@ Route::group(['prefix' => 'gunungapi'], function () {
     Route::resource('laporan','ActivityGaController');
 });
 
-
 Route::resource('permissions', 'PermissionController', ['except' => [
     'show','edit'
 ]]);
+
 Route::resource('roles', 'RoleController', ['except' => [
     'show'
 ]]);
+
 Route::resource('press', 'PressController');
 
-// Route::name('vona.')->group(function(){
-//     Route::get('vona','VonaController@index')->name('index');
-//     Route::post('vona','VonaController@store')->name('store');
-//     Route::get('vona/create','VonaController@create')->name('create');
-//     Route::delete('vona/{vona}','VonaController@destroy')->name('destroy');
-//     Route::match(['put','patch'],'vona/{vona}','VonaController@update')->name('update');
-//     Route::get('vona/{vona}','VonaController@show')->name('show');
-//     Route::get('vona/{vona}/edit','VonaController@show')->name('edit');
-// });
 Route::get('vona/draft','VonaController@draft')->name('vona.draft');
 Route::get('vona/search','VonaController@search')->name('vona.search');
 Route::post('vona/send','VonaController@send')->name('vona.send');
