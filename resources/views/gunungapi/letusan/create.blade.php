@@ -228,34 +228,34 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="hr-line-dashed"></div>
-                                {{-- Rekaman Seismik --}}
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Rekaman Seismik</label>
-                                    <div class="col-sm-6">
-                                        <div class="input-group">
-                                            <span class="input-group-addon" style="min-width: 100px;">Amplitudo</span>
-                                            <input name="amplitudo" class="form-control" type="text" value="{{ empty(old('amplitudo')) ? '' : old('amplitudo') }}">
-                                            <span class="input-group-addon" style="min-width: 75px;">mm</span>
-                                        </div>
-                                        @if( $errors->has('amplitudo'))
-                                        <label class="error" for="amplitudo">{{ ucfirst($errors->first('amplitudo')) }}</label>
-                                        @endif
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            {{-- Rekaman Seismik --}}
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Rekaman Seismik</label>
+                                <div class="col-sm-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" style="min-width: 100px;">Amplitudo</span>
+                                        <input name="amplitudo" class="form-control" type="text" value="{{ empty(old('amplitudo')) ? '' : old('amplitudo') }}">
+                                        <span class="input-group-addon" style="min-width: 75px;">mm</span>
                                     </div>
+                                    @if( $errors->has('amplitudo'))
+                                    <label class="error" for="amplitudo">{{ ucfirst($errors->first('amplitudo')) }}</label>
+                                    @endif
                                 </div>
-                                <div class="form-group">
-                                    <div class="col-sm-6 col-sm-offset-2">
-                                        <div class="input-group">
-                                            <span class="input-group-addon" style="min-width: 100px;">Durasi</span>
-                                            <input name="durasi" class="form-control" type="text" value="{{ empty(old('durasi')) ? '' : old('durasi') }}">
-                                            <span class="input-group-addon" style="min-width: 75px;">detik</span>
-                                        </div>
-                                        @if( $errors->has('durasi'))
-                                        <label class="error" for="durasi">{{ ucfirst($errors->first('durasi')) }}</label>
-                                        @endif
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-6 col-sm-offset-2">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" style="min-width: 100px;">Durasi</span>
+                                        <input name="durasi" class="form-control" type="text" value="{{ empty(old('durasi')) ? '' : old('durasi') }}">
+                                        <span class="input-group-addon" style="min-width: 75px;">detik</span>
                                     </div>
+                                    @if( $errors->has('durasi'))
+                                    <label class="error" for="durasi">{{ ucfirst($errors->first('durasi')) }}</label>
+                                    @endif
                                 </div>
-                            </div>                            
+                            </div>                      
                             {{-- Rekomendasi --}}
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Rekomendasi</label>
