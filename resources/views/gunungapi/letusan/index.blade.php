@@ -80,8 +80,8 @@
                                         <td>{{ $ven->date.' '.$ven->time.' '.$ven->gunungapi->zonearea }}</td>
                                         <td>{{ $ven->visibility ? 'Teramati':'Tidak Teramati' }}</td>
                                         <td>{{ $ven->height }}</td>
-                                        <td>{{ implode(', ',$ven->wasap) }}</td>
-                                        <td>{{ implode(', ',$ven->arah_asap) }}</td>
+                                        <td>{{ $ven->wasap ?  implode(', ',$ven->wasap) : '-' }}</td>
+                                        <td>{{ $ven->arah_asap ? implode(', ',$ven->arah_asap) : '-' }}</td>
                                         <td>{{ $ven->durasi > 0 ?  $ven->durasi : 'Tidak Teramati' }}</td>
                                         <td>{{ $ven->user->name }}</td>
                                         <td>
