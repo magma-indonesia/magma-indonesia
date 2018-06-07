@@ -46,7 +46,7 @@
             }
 
             .title {
-                font-size: 84px;
+                font-size: 42px;
             }
 
             .links > a {
@@ -85,7 +85,6 @@
 
                 <div class="links">
                     <a href="{{ route('login') }}">Login</a>
-                    {{-- <a href="{{ route('chamber') }}">Chamber</a> --}}
                 </div>
             </div>
         </div>
