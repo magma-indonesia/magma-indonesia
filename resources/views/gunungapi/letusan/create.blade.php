@@ -18,7 +18,7 @@
                             <a href="{{ route('chambers.index') }}">Chambers</a>
                         </li>
                         <li>
-                            <a href="{{ route('chambers.gunungapi.index') }}">Gunung Api</a>
+                            <a href="{{ route('chambers.datadasar.index') }}">Gunung Api</a>
                         </li>
                         <li>
                             <a href="{{ route('chambers.letusan.index') }}">Letusan</a>
@@ -62,6 +62,22 @@
                                     @endif
                                 </div>
                             </div>
+
+                            {{-- Status --}}
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Status Gunung Api</label>
+                                <div class="col-sm-6">
+                                    <select id="status" class="form-control" name="status">
+                                        <option value="1" {{ old('status') == '1' ? 'selected' : ''}}>Level I (Normal)</option>
+                                        <option value="2" {{ old('status') == '2' ? 'selected' : ''}}>Level II (Waspada)</option>
+                                        <option value="3" {{ old('status') == '3' ? 'selected' : ''}}>Level III (Siaga)</option>
+                                        <option value="4" {{ old('status') == '4' ? 'selected' : ''}}>Level IV (Awas)</option>
+                                    </select>
+                                    @if( $errors->has('status'))
+                                    <label class="error" for="status">{{ ucfirst($errors->first('status')) }}</label>
+                                    @endif
+                                </div>
+                            </div>
                             
                             {{-- Visual Kolom Abu --}}
                             <div class="form-group">
@@ -77,18 +93,31 @@
                                 </div>
                             </div>
 
-                            <div class="teramati" style="display: {{ old('visibility') == '0' ? 'none' :'block'}};">
-                                {{-- Waktu Letusan --}}
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Waktu Letusan</label>
-                                    <div class="col-sm-6">
-                                        <input name="date" id="datepicker" class="form-control" type="text" value="{{ empty(old('date')) ? now()->format('Y-m-d H:i') : old('date') }}">
-                                        @if( $errors->has('date'))
-                                        <label class="error" for="date">{{ ucfirst($errors->first('date')) }}</label>
-                                        @endif
-                                    </div>
+                            {{-- Draft VONA --}}
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Buat Draft VONA</label>
+                                <div class="col-sm-6">
+                                    <label class="checkbox-inline"><input name="draft" value="1" type="radio" class="i-checks draft" {{ old('draft') == '1' ? 'checked' : ''}}> Ya </label>
+                                    <label class="checkbox-inline"><input name="draft" value="0" type="radio" class="i-checks draft" {{ (old('draft') == '0' OR empty(old('draft'))) ? 'checked' : ''}}> Tidak </label>
+                                    <span class="help-block m-b-none">Pilih Opsi ini jika ingin memasukkan laporan letusan ke dalam <label><a class="text-success" href="{{ route('chambers.vona.draft')}}" target="_blank">Draft VONA</a></label></span>
+                                    @if( $errors->has('draft'))
+                                    <label class="error" for="draft">{{ ucfirst($errors->first('draft')) }}</label>
+                                    @endif
                                 </div>
-                                
+                            </div>
+
+                            {{-- Waktu Letusan --}}
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Waktu Letusan</label>
+                                <div class="col-sm-6">
+                                    <input name="date" id="datepicker" class="form-control" type="text" value="{{ empty(old('date')) ? now()->format('Y-m-d H:i') : old('date') }}">
+                                    @if( $errors->has('date'))
+                                    <label class="error" for="date">{{ ucfirst($errors->first('date')) }}</label>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="teramati" style="display: {{ old('visibility') == '0' ? 'none' :'block'}};">
                                 {{-- Tinggi Letusan --}}
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Tinggi Letusan</label>
@@ -136,7 +165,6 @@
                                         @endif
                                     </div>
                                 </div>
-                                
                                 {{-- Intensitas --}}
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Intensitas</label>
@@ -155,7 +183,6 @@
                                         @endif
                                     </div>
                                 </div>
-                                
                                 {{-- Arah Abu --}}
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Abu Mengarah ke</label>
@@ -228,23 +255,7 @@
                                         @endif
                                     </div>
                                 </div>
-                            </div>
-                            {{-- Status --}}
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Status Gunung Api</label>
-                                <div class="col-sm-6">
-                                    <select id="status" class="form-control" name="status">
-                                        <option value="1" {{ old('status') == '1' ? 'selected' : ''}}>Level I (Normal)</option>
-                                        <option value="2" {{ old('status') == '2' ? 'selected' : ''}}>Level II (Waspada)</option>
-                                        <option value="3" {{ old('status') == '3' ? 'selected' : ''}}>Level III (Siaga)</option>
-                                        <option value="4" {{ old('status') == '4' ? 'selected' : ''}}>Level IV (Awas)</option>
-                                    </select>
-                                    @if( $errors->has('status'))
-                                    <label class="error" for="status">{{ ucfirst($errors->first('status')) }}</label>
-                                    @endif
-                                </div>
-                            </div>
-                            
+                            </div>                            
                             {{-- Rekomendasi --}}
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Rekomendasi</label>
