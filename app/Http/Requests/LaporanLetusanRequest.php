@@ -68,6 +68,7 @@ class LaporanLetusanRequest extends FormRequest
     protected $tidakTeramati = [
         'code' => 'required|size:3',
         'visibility' => 'required|boolean',
+        'date' => 'required|date_format:Y-m-d H:i|before:tomorrow',
         'draft' => 'required|boolean',
         'status' => 'required|in:1,2,3,4',
         'rekomendasi' => 'nullable',
