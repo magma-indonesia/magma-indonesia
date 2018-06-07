@@ -14,7 +14,7 @@
                             <a href="{{ route('chambers.index') }}">Chambers</a>
                         </li>
                         <li>
-                            <a href="{{ route('chambers.gunungapi.index') }}">Gunung Api</a>
+                            <a href="{{ route('chambers.datadasar.index') }}">Gunung Api</a>
                         </li>
                         <li>
                             <span>Laporan Letusan</span>
@@ -44,7 +44,7 @@
                             </div>
                         <h3><b>Informasi Erupsi G. {{ $ven->gunungapi->name }}</b></h3>
                         <blockquote class="pull-left">
-                            <p>Telah terjadi erupsi G. {{ $ven->gunungapi->name }}, {{ $ven->gunungapi->province }} pada {{ $ven->date }}, pukul {{ $ven->time.$ven->gunungapi->zonearea}} dengan tinggi kolom abu teramati &plusmn; {{ $ven->height }} m di atas puncak (&plusmn; {{ $ven->height+$ven->gunungapi->elevation }} m di atas permukaan laut). Kolom abu teramati berwarna {{ count($ven->wasap) > 1 ? strtolower($ven->wasap[0]).' hingga '.strtolower(last($ven->wasap)) : strtolower($ven->wasap[0]) }} dengan intensitas {{ count($ven->intensitas) > 1 ? strtolower($ven->intensitas[0]).' hingga '.strtolower(last($ven->intensitas)) : strtolower($ven->intensitas[0]) }} ke arah {{ count($ven->arah_asap) > 1 ? strtolower($ven->arah_asap[0]).' dan '.strtolower(last($ven->arah_asap)) : strtolower($ven->arah_asap[0]) }}. {{ $ven->amplitudo > 0 ? 'Erupsi ini terekam di seismograf dengan amplitudo maksimum '.$ven->amplitudo.' mm dan durasi '.$ven->durasi.' detik.' : ''}}</p>
+                            <p>Telah terjadi erupsi G. {{ $ven->gunungapi->name }}, {{ $ven->gunungapi->province }} pada tanggal {{ $ven->date }}, pukul {{ $ven->time.' '.$ven->gunungapi->zonearea}} dengan tinggi kolom abu teramati &plusmn; {{ $ven->height }} m di atas puncak (&plusmn; {{ $ven->height+$ven->gunungapi->elevation }} m di atas permukaan laut). Kolom abu teramati berwarna {{ count($ven->wasap) > 1 ? strtolower($ven->wasap[0]).' hingga '.strtolower(last($ven->wasap)) : strtolower($ven->wasap[0]) }} dengan intensitas {{ count($ven->intensitas) > 1 ? strtolower($ven->intensitas[0]).' hingga '.strtolower(last($ven->intensitas)) : strtolower($ven->intensitas[0]) }} ke arah {{ count($ven->arah_asap) > 1 ? strtolower($ven->arah_asap[0]).' dan '.strtolower(last($ven->arah_asap)) : strtolower($ven->arah_asap[0]) }}. {{ $ven->amplitudo > 0 ? 'Erupsi ini terekam di seismograf dengan amplitudo maksimum '.$ven->amplitudo.' mm dan durasi '.$ven->durasi.' detik.' : ''}}</p>
                         </blockquote>
                         <h3><b>Rekomendasi</b></h3>
                         <blockquote class="pull-left">
