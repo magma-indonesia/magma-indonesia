@@ -71,6 +71,8 @@ class LaporanLetusanRequest extends FormRequest
         'date' => 'required|date_format:Y-m-d H:i|before:tomorrow',
         'draft' => 'required|boolean',
         'status' => 'required|in:1,2,3,4',
+        'amplitudo' => 'required|numeric|between:0,120',
+        'durasi' => 'required|numeric|between:0,600',
         'rekomendasi' => 'nullable',
         'lainnya' => 'nullable',
     ];
