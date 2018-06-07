@@ -22,9 +22,9 @@ class CreateMagmaVensTable extends Migration
             $table->time('time');
             $table->boolean('visibility')->default(1);
             $table->integer('height')->default(0);
-            $table->char('wasap',100);
-            $table->char('intensitas',100);            
-            $table->char('arah_asap',100);
+            $table->char('wasap',100)->nullable();
+            $table->char('intensitas',100)->nullable();            
+            $table->char('arah_asap',100)->nullable();
             $table->float('amplitudo',8,2)->default(0);
             $table->float('durasi',8,2)->default(0);
             $table->string('photo')->nullable();
