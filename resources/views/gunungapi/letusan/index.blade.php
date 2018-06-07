@@ -14,9 +14,11 @@
             <div class="panel-body">
                 <div id="hbreadcrumb" class="pull-right">
                     <ol class="hbreadcrumb breadcrumb">
-                        <li><a href="{{ route('chambers.index') }}">Chambers</a></li>
                         <li>
-                            <span>Gunung Api </span>
+                            <a href="{{ route('chambers.index') }}">Chambers</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('chambers.gunungapi.index') }}">Gunung Api</a>
                         </li>
                         <li class="active">
                             <span>Laporan Letusan</span>
