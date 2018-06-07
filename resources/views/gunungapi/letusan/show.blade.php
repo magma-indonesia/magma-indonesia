@@ -37,19 +37,47 @@
     <div class="content animate-panel content-boxed">
         <div class="row">
             <div class="col-lg-12">
+                <div class="hpanel">
+                    <div class="panel-heading">
+                        Volcano Eruption Notice
+                    </div>
+                    <div class="panel-body float-e-margins">
+                        <div class="col-md-6 col-lg-4 col-sm-12 col-xs-12">
+                            <a href="{{ route('chambers.letusan.index') }}" class="btn btn-outline btn-block btn-success" type="button">Daftar Informasi Letusan</a>
+                        </div>
+                        <div class="col-md-6 col-lg-4 col-sm-12 col-xs-12">
+                            <a href="{{ route('chambers.letusan.create') }}" class="btn btn-outline btn-block btn-success" type="button">Buat Informasi Letusan</a>
+                        </div>
+                        <div class="col-md-6 col-lg-4 col-sm-12 col-xs-12">
+                            <a href="{{ route('chambers.letusan.edit',['uuid'=>$ven->uuid]) }}" class="btn btn-outline btn-block btn-success" type="button">Edit Letusan</a>
+                        </div>
+                    </div>
+                </div>
                 <div class="hpanel blog-article-box">
                     <div class="panel-body">
                             <div class="profile-picture" style="text-align: left;">
                                 <img alt="logo" class="p-m" src="{{ url('/').'/img/volcano.svg' }}" style="width: 180px;">
                             </div>
-                        <h3><b>Informasi Erupsi G. {{ $ven->gunungapi->name }}</b></h3>
-                        <blockquote class="pull-left">
-                            <p>Telah terjadi erupsi G. {{ $ven->gunungapi->name }}, {{ $ven->gunungapi->province }} pada tanggal {{ $ven->date }}, pukul {{ $ven->time.' '.$ven->gunungapi->zonearea}} dengan tinggi kolom abu teramati &plusmn; {{ $ven->height }} m di atas puncak (&plusmn; {{ $ven->height+$ven->gunungapi->elevation }} m di atas permukaan laut). Kolom abu teramati berwarna {{ count($ven->wasap) > 1 ? strtolower($ven->wasap[0]).' hingga '.strtolower(last($ven->wasap)) : strtolower($ven->wasap[0]) }} dengan intensitas {{ count($ven->intensitas) > 1 ? strtolower($ven->intensitas[0]).' hingga '.strtolower(last($ven->intensitas)) : strtolower($ven->intensitas[0]) }} ke arah {{ count($ven->arah_asap) > 1 ? strtolower($ven->arah_asap[0]).' dan '.strtolower(last($ven->arah_asap)) : strtolower($ven->arah_asap[0]) }}. {{ $ven->amplitudo > 0 ? 'Erupsi ini terekam di seismograf dengan amplitudo maksimum '.$ven->amplitudo.' mm dan durasi '.$ven->durasi.' detik.' : ''}}</p>
+                        <h3>
+                            <b>Informasi Erupsi G. {{ $ven->gunungapi->name }}</b>
+                        </h3>
+                        <blockquote>
+                            <p>{!!$visual !!}</p>
                         </blockquote>
+
+                        @if(!empty($ven->rekomendasi))
                         <h3><b>Rekomendasi</b></h3>
-                        <blockquote class="pull-left">
+                        <blockquote>
                             <p>{!! nl2br($ven->rekomendasi) !!}</p>
                         </blockquote>
+                        @endif
+                        @if(!empty($ven->lainnya))
+                        <h3><b>Keterangan Lainnya</b></h3>
+                        <blockquote>
+                            <p>{!! nl2br($ven->lainnya) !!}</p>
+                        </blockquote>
+                        @endif
+                        <p><small><b>Sumber:</b> Kementerian Energi dan Sumber Daya Mineral, Badan Geologi, Pusat Vulkanologi dan Mitigasi Bencana Geologi</small></p>
                     </div>
                     <div class="panel-footer">
                         <span class="pull-right">
