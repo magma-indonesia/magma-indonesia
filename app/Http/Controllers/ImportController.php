@@ -1210,9 +1210,9 @@ class ImportController extends Controller
             $time = $item->erupt_jam;
             $visiblity = $item->erupt_vis;
             $height = $item->erupt_tka;
-            $wasap = explode(', ',$item->erupt_wrn);
-            $intensitas = explode(', ',$item->erupt_int);
-            $arahasap = explode(', ',$item->erupt_arh);
+            $wasap = $item->erupt_wrn == '-' ? null : explode(', ',$item->erupt_wrn);
+            $intensitas = $item->erupt_int == '-' ? null : explode(', ',$item->erupt_int);
+            $arahasap = $item->erupt_arh == '-' ? null : explode(', ',$item->erupt_arh);
             $amp = $item->erupt_amp;
             $durasi = $item->erupt_drs;
             $photo = $item->erupt_pht;
