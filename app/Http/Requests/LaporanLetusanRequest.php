@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LaporanLetusan extends FormRequest
+class LaporanLetusanRequest extends FormRequest
 {
     /**
      * Get the error messages for the defined validation rules.
@@ -44,8 +44,9 @@ class LaporanLetusan extends FormRequest
     protected $teramati = [
         'code' => 'required|size:3',
         'visibility' => 'required|boolean',
+        'draft' => 'required|boolean',
         'date' => 'required|date_format:Y-m-d H:i|before:tomorrow',
-        'height' => 'required|between:100,20000',
+        'height' => 'required|numeric|between:100,20000',
         'wasap' => 'required|array',
         'wasap.*' => 'in:Putih,Kelabu,Coklat,Hitam',
         'intensitas' => 'required|array',
@@ -67,6 +68,7 @@ class LaporanLetusan extends FormRequest
     protected $tidakTeramati = [
         'code' => 'required|size:3',
         'visibility' => 'required|boolean',
+        'draft' => 'required|boolean',
         'status' => 'required|in:1,2,3,4',
         'rekomendasi' => 'nullable',
         'lainnya' => 'nullable',
