@@ -36,12 +36,9 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapApiRoutes();
-
         $this->mapWebRoutes();
         $this->mapChamberRoutes();
         $this->mapImportRoutes();
-
-        //
     }
 
     /**
@@ -73,6 +70,11 @@ class RouteServiceProvider extends ServiceProvider
              ->group(base_path('routes/api.php'));
     }
 
+    /**
+     * Define the "chambers" routes for MAGMA dashboard.
+     * 
+     * @return void
+     */
     protected function mapChamberRoutes()
     {
         Route::prefix('chambers')
@@ -82,6 +84,11 @@ class RouteServiceProvider extends ServiceProvider
              ->group(base_path('routes/chambers.php'));
     }
 
+    /**
+     * Define the "import" routes for MAGMA dashboard.
+     *
+     * @return void
+     */
     protected function mapImportRoutes()
     {
         Route::prefix('chambers/import')
