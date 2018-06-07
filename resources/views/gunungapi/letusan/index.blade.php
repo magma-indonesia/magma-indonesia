@@ -18,10 +18,10 @@
                             <a href="{{ route('chambers.index') }}">Chambers</a>
                         </li>
                         <li>
-                            <a href="{{ route('chambers.gunungapi.index') }}">Gunung Api</a>
+                            <a href="{{ route('chambers.datadasar.index') }}">Gunung Api</a>
                         </li>
                         <li class="active">
-                            <span>Laporan Letusan</span>
+                            <a href="{{ route('chambers.letusan.index') }}">Letusan</a>
                         </li>
                     </ol>
                 </div>
@@ -49,6 +49,11 @@
                     </div>
                 </div>
                 <div class="hpanel">
+                    @if(Session::has('flash_message'))
+                    <div class="alert alert-success">
+                        <i class="fa fa-bolt"></i> {!! session('flash_message') !!}
+                    </div>
+                    @endif
                     <div class="panel-body">
                         {{ $vens->links() }}
                         <div class="table-responsive">
@@ -135,7 +140,9 @@
                                 console.log(data);
                                 if (data.success){
                                     swal("Berhasil!", data.message, "success");
-                                    location.reload();
+                                    setTimeout(function(){
+                                        location.reload();
+                                    },2000);
                                 }
                             },
                             error: function(data){
