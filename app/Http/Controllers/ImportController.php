@@ -1171,21 +1171,22 @@ class ImportController extends Controller
             $email = $item->email;
             $status = $item->subscribe;
 
-            $create = VonaSubscriber::firstOrCreate(
-                        [
-                            'email' => $email
-                        ],
-                        [
-                            'name' => $name,
-                            'status' => $status
-                        ]
-                    );
+            if (!empty($name) OR !empty($email)) {
+                $create = VonaSubscriber::firstOrCreate(
+                    [
+                        'email' => $email
+                    ],
+                    [
+                        'name' => $name,
+                        'status' => $status
+                    ]
+                );
 
-            if ($create)
-            {
-                $this->temptable('subs',$no);
+                if ($create)
+                {
+                    $this->temptable('subs',$no);
+                }
             }
-            
         });
 
         $this->sendNotif('VONA Subscribers');
