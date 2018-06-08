@@ -42,22 +42,24 @@
                         Volcano Eruption Notice
                     </div>
                     <div class="panel-body float-e-margins">
-                        <div class="col-md-6 col-lg-4 col-sm-12 col-xs-12">
-                            <a href="{{ route('chambers.letusan.index') }}" class="btn btn-outline btn-block btn-success" type="button">Daftar Informasi Letusan</a>
-                        </div>
-                        <div class="col-md-6 col-lg-4 col-sm-12 col-xs-12">
-                            <a href="{{ route('chambers.letusan.create') }}" class="btn btn-outline btn-block btn-success" type="button">Buat Informasi Letusan</a>
-                        </div>
-                        <div class="col-md-6 col-lg-4 col-sm-12 col-xs-12">
-                            <a href="{{ route('chambers.letusan.edit',['uuid'=>$ven->uuid]) }}" class="btn btn-outline btn-block btn-success" type="button">Edit Letusan</a>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-4 col-sm-12 col-xs-12">
+                                <a href="{{ route('chambers.letusan.index') }}" class="btn btn-outline btn-block btn-success" type="button">Daftar Informasi Letusan</a>
+                            </div>
+                            <div class="col-md-6 col-lg-4 col-sm-12 col-xs-12">
+                                <a href="{{ route('chambers.letusan.create') }}" class="btn btn-outline btn-block btn-success" type="button">Buat Informasi Letusan</a>
+                            </div>
+                            <div class="col-md-6 col-lg-4 col-sm-12 col-xs-12">
+                                <a href="{{ route('chambers.letusan.edit',['uuid'=>$ven->uuid]) }}" class="btn btn-outline btn-block btn-success" type="button">Edit Letusan</a>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="hpanel blog-article-box">
                     <div class="panel-body">
-                            <div class="profile-picture" style="text-align: left;">
-                                <img alt="logo" class="p-m" src="{{ url('/').'/img/volcano.svg' }}" style="width: 180px;">
-                            </div>
+                        <div class="profile-picture" style="text-align: left;">
+                            <img alt="logo" class="p-m" src="{{ url('/').'/img/volcano.svg' }}" style="width: 180px;">
+                        </div>
                         <h3>
                             <b>Informasi Erupsi G. {{ $ven->gunungapi->name }}</b>
                         </h3>
@@ -78,6 +80,9 @@
                         </blockquote>
                         @endif
                         <p><small><b>Sumber:</b> Kementerian Energi dan Sumber Daya Mineral, Badan Geologi, Pusat Vulkanologi dan Mitigasi Bencana Geologi</small></p>
+                        @if (Session::has('vona'))
+                        <a href={{ route('chambers.vona.show',['uuid'=> session('vona')]) }} type="button" class="btn btn-outline btn-success">Draft VONA</a>
+                        @endif
                     </div>
                     <div class="panel-footer">
                         <span class="pull-right">

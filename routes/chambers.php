@@ -57,6 +57,5 @@ Route::resource('press', 'PressController');
 Route::get('vona/draft','VonaController@draft')->name('vona.draft');
 Route::get('vona/search','VonaController@search')->name('vona.search');
 Route::post('vona/send','VonaController@send')->name('vona.send');
-Route::get('vona/subscribers','VonaController@subscribe')->name('vona.subscribe');
-Route::post('vona/subscribers','VonaController@subscribeCreate')->name('vona.subscribe.create');
+Route::resource('vona/subscribers','VonaSubscriberController');
 Route::resource('vona', 'VonaController');

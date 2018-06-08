@@ -21,7 +21,7 @@
                             <a href="{{ route('chambers.vona.index') }}">VONA</a>
                         </li>
                         <li>
-                            <a href="{{ route('chambers.vona.subscribe') }}">Subscription</a>
+                            <a href="{{ route('chambers.subscribers.index') }}">Subscription</a>
                         </li>
                     </ol>
                 </div>
@@ -45,7 +45,7 @@
                     <div class="panel-body">
                         <div class="row text-center">
                             <div class="col-md-4 col-lg-2 col-sm-6 col-xs-12">
-                                <a href="#" class="btn btn-outline btn-block btn-success" type="button">Tambah Subscription</a>
+                            <a href="{{ route('chambers.subscribers.create')}}" class="btn btn-outline btn-block btn-success" type="button">Tambah Subscriber</a>
                             </div>
                         </div>
                     </div>

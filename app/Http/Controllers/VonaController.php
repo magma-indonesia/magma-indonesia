@@ -83,7 +83,10 @@ class VonaController extends Controller
      */
     public function draft(Request $request)
     {        
-        $vonas = Vona::orderBy('issued','desc')->where('sent',0)->paginate(30,['*'],'vona_page');
+        $vonas = Vona::orderBy('issued','desc')
+                ->where('sent',0)
+                ->paginate(30,['*'],'vona_page');
+
         return view('vona.draft',compact('vonas'));
     }
 
@@ -237,31 +240,4 @@ class VonaController extends Controller
     {
         //
     }
-
-    /**
-     * VONA's email subscribers list.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Vona  $vona
-     * @return \Illuminate\Http\Response
-     */
-    public function subscribe(Request $request)
-    {
-        $subs = Subscription::paginate(30,['*'],'sub_page');
-
-        return view('vona.subscribe',compact('subs'));
-    }
-
-    /**
-     * VONA's email subscribers list.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Vona  $vona
-     * @return \Illuminate\Http\Response
-     */
-     public function subscribeCreate(Request $request, Vona $vona)
-     {
-        return 'subscribeCreate';
-     }
-
 }

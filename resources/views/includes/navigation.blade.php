@@ -183,8 +183,8 @@
                     </li>
                     @yield('nav-show-vona')
                     @role('Super Admin')
-                    <li class="{{ active('chambers.vona.subscribe') }}">
-                        <a href="{{ route('chambers.vona.subscribe') }}">Subscription</a>
+                    <li class="{{ active('chambers.subscribers.index') }}">
+                        <a href="{{ route('chambers.subscribers.index') }}">Subscription</a>
                     </li>
                     @endrole
                 </ul>
