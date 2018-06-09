@@ -57,7 +57,7 @@
                     </div>
                     @endif
                     <div class="panel-body">
-                        <table id="table-permissions" class="table table-striped table-bordered table-hover">
+                        <table id="table-permissions" class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>Permission</th>

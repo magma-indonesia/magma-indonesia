@@ -56,7 +56,7 @@
                         </div>
                         @endif
                         <div class="panel-body">
-                            <table id="table-roles" class="table table-striped table-bordered table-hover">
+                            <table id="table-roles" class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th>Role</th>
