@@ -29,6 +29,7 @@ use App\Vona;
 use App\VonaSubscriber;
 use App\MagmaVen;
 use App\VarLetusan;
+use App\MagmaRoq;
 
 use App\v1\GertanCrs as OldCrs;
 use App\v1\MagmaSigertan as OldSigertan;
@@ -36,6 +37,7 @@ use App\v1\Vona as OldVona;
 use App\v1\MagmaVar as OldVar;
 use App\v1\VonaSubscriber as OldSub;
 use App\v1\MagmaVen as OldVen;
+use App\v1\MagmaVRoq as OldRoq;
 
 use Indonesia;
 
@@ -1390,6 +1392,17 @@ class ImportController extends Controller
         return $qlses;
     }
 
+    /**
+     * Import data Gempa Bumi dari v1
+     * table magma_roq
+     *
+     * @return \Illuminate\Http\Request
+     */
+    public function roq()
+    {
+        $vens = OldRoq::whereBetween('no',[$this->startNo('roq'),$this->endNo('roq')])->get();
+    }
+
     public function index()
     {
 
@@ -1407,6 +1420,7 @@ class ImportController extends Controller
         $vona = Vona::count();
         $subs = VonaSubscriber::count();
         $vens = MagmaVen::count();
+        $roq =  MagmaRoq::count();
         
         return view('import.index',compact('users','bidang','gadds','varsv1','vars','vardailies','visuals','klimatologis','gempa','crs','vona','subs','vens'));
     }
