@@ -157,6 +157,17 @@ trait MagmaHelper
 
             $end        = $end->erupt_id;
         }
+
+        if($type == 'roq')
+        {
+            $end        = DB::connection('magma')
+                        ->table('magma_roq')
+                        ->select('no')
+                        ->orderBy('no','desc')
+                        ->first();
+
+            $end        = $end->no;
+        }
         
         return $end;
 

@@ -475,6 +475,48 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="hpanel stats">
+                    <div class="panel-heading">
+                        Magma ROQ
+                    </div>
+                    <div class="panel-body list">
+                        <div class="stats-title pull-left">
+                            <h4>Data ROQ</h4>
+                        </div>
+                        <div class="stats-icon pull-right">
+                            <i class="pe-7s-note fa-4x"></i>
+                        </div>
+                        <div class="m-t-xl">
+                            <span class="font-bold no-margins">
+                                Import Data ROQ
+                            </span>
+                            <br/>
+                            <small>
+                                Panel ini digunakan untuk meng-import data ROQ v1
+                            </small>
+                        </div>
+                        <div class="row m-t-md">
+                            <div class="col-lg-6">
+                                <h3 class="no-margins font-extra-bold text-success jumlah-roq">{{ number_format($roq,0,',','.') }}</h3>
+                                <div class="font-bold"><i class="fa fa-level-up text-success"></i> Jumlah data ROQ</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer text-center">
+                        <form role="form" id="form-import" method="POST"
+                        data-import="roq" action="{{ route('chambers.import.roq') }}">
+                            @csrf
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
+                                <span class="ladda-label">Import Data CRS</span>
+                                <span class="ladda-spinner"></span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
