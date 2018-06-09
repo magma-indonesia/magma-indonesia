@@ -63,9 +63,10 @@
                     @endif
                     <div class="panel-body table-responsive">
                         {{-- {{ $users->links() }} --}}
-                        <table id="table-administrasi"class="table table-striped table-bordered table-hover">
+                        <table id="table-administrasi"class="table table-striped">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Nama</th>
                                     <th>NIP</th>
                                     <th>Bidang</th>
@@ -76,8 +77,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($users as $user)
+                                @foreach($users as $key => $user)
                                 <tr>
+                                    <td>{{ $key+1 }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->nip }}</td>
                                     <td>{{ $user->bidang->deskriptif->nama }}</td>
