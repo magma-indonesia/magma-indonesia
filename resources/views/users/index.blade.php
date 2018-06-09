@@ -47,7 +47,7 @@
                     </div>
                     @endif
                     <div class="panel-body table-responsive">
-                        <table id="table-users" class="table table-striped table-bordered table-hover">
+                        <table id="table-users" class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>Nama</th>
