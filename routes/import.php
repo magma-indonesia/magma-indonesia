@@ -14,4 +14,5 @@ Route::post('gempa','ImportController@gempa')->name('gempa');
 Route::post('vens','ImportController@ven')->name('vens');
 Route::post('vona','ImportController@vona')->name('vona');
 Route::post('subscribers','ImportController@subscribers')->name('subscribers');
+Route::post('roq','ImportController@roq')->name('roq');
 Route::get('status','ImportController@status')->name('status');
