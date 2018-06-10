@@ -70,6 +70,7 @@
                                     <th>Nama</th>
                                     <th>NIP</th>
                                     <th>Bidang</th>
+                                    <th>Penempatan</th>
                                     <th>Jabatan</th>
                                     <th>Fungsional</th>
                                     <th>Golongan</th>
@@ -83,6 +84,7 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->nip }}</td>
                                     <td>{{ $user->bidang->deskriptif->nama }}</td>
+                                    <td>null</td>
                                     <td>null</td>
                                     <td>null</td>
                                     <td>null</td>
