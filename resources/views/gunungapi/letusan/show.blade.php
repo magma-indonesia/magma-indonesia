@@ -58,7 +58,7 @@
                 <div class="hpanel blog-article-box">
                     <div class="panel-body">
                         <div class="profile-picture" style="text-align: left;">
-                            <img alt="logo" class="p-m" src="{{ url('/').'/img/volcano.svg' }}" style="width: 180px;">
+                            <img alt="logo" class="p-m" src="{{ url('/').'/images/volcano.svg' }}" style="width: 180px;">
                         </div>
                         <h3>
                             <b>Informasi Erupsi G. {{ $ven->gunungapi->name }}</b>
