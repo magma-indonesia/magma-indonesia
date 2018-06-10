@@ -44,6 +44,14 @@ Route::group(['prefix' => 'gunungapi'], function () {
     Route::resource('laporan','ActivityGaController');
 });
 
+Route::name('gempabumi.')->group(function () {
+    Route::group(['prefix' => 'gempabumi'], function () {
+        Route::resource('tanggapan','RoqTanggapanController');
+        Route::get('/','MagmaRoqController@index')->name('index');
+        Route::delete('/{id}','MagmaRoqController@destroy')->name('destroy');
+    });
+});
+
 Route::resource('permissions', 'PermissionController', ['except' => [
     'show','edit'
 ]]);
