@@ -49,10 +49,35 @@
                     <span class="label label-success pull-right">v.1</span>
                 </a>
             </li>
-            <li class="{{ active('chambers.crs.*') }}">
-                <a href="{{ route('chambers.crs.index') }}">
-                    <span class="nav-label">CRS</span>
+            <li class="{{ active('chambers.roles.*') }}">
+                <a href="#">
+                    <span class="nav-label">Roles</span>
+                    <span class="fa arrow"></span>
                 </a>
+                <ul class="nav nav-second-level">
+                    <li class="{{ active('chambers.roles.index') }}">
+                        <a href="{{ route('chambers.roles.index') }}">Roles User</a>
+                    </li>
+                    <li class="{{ active('chambers.roles.create') }}">
+                        <a href="{{ route('chambers.roles.create') }}">Tambah Role</a>
+                    </li>
+                    @yield('nav-edit-roles')
+                </ul>
+            </li>
+            <li class="{{ active('chambers.permissions.*') }}">
+                <a href="#">
+                    <span class="nav-label">Permissions</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li class="{{ active('chambers.permissions.index') }}">
+                        <a href="{{ route('chambers.permissions.index') }}">Permissions</a>
+                    </li>
+                    <li class="{{ active('chambers.permissions.create') }}">
+                        <a href="{{ route('chambers.permissions.create') }}">Tambah Permission</a>
+                    </li>
+                    @yield('nav-edit-permissions')
+                </ul>
             </li>
             <li class="{{ active('chambers.administratif.*') }}">
                 <a href="#">
@@ -65,6 +90,11 @@
                     </li>
                     @yield('nav-add-jabatan')
                 </ul>
+            </li>
+            <li class="{{ active('chambers.crs.*') }}">
+                <a href="{{ route('chambers.crs.index') }}">
+                    <span class="nav-label">CRS</span>
+                </a>
             </li>
             <li class="{{ active('chambers.users.*') }}">
                 <a href="#">
@@ -121,34 +151,18 @@
                     @yield('nav-edit-datadasar')
                 </ul>
             </li>
-            <li class="{{ active('chambers.permissions.*') }}">
+            <li class="{{ active('chambers.gempabumi.*') }}">
                 <a href="#">
-                    <span class="nav-label">Permissions</span>
+                    <span class="nav-label">Gempa Bumi</span>
                     <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
-                    <li class="{{ active('chambers.permissions.index') }}">
-                        <a href="{{ route('chambers.permissions.index') }}">Permissions</a>
+                    <li class="{{ active('chambers.gempabumi.index') }}">
+                        <a href="{{ route('chambers.gempabumi.index') }}">Daftar Kejadian</a>
                     </li>
-                    <li class="{{ active('chambers.permissions.create') }}">
-                        <a href="{{ route('chambers.permissions.create') }}">Tambah Permission</a>
+                    <li class="{{ active('chambers.gempabumi.tanggapan.index') }}">
+                        <a href="{{ route('chambers.gempabumi.tanggapan.index') }}">Daftar Tanggapan</a>
                     </li>
-                    @yield('nav-edit-permissions')
-                </ul>
-            </li>
-            <li class="{{ active('chambers.roles.*') }}">
-                <a href="#">
-                    <span class="nav-label">Roles</span>
-                    <span class="fa arrow"></span>
-                </a>
-                <ul class="nav nav-second-level">
-                    <li class="{{ active('chambers.roles.index') }}">
-                        <a href="{{ route('chambers.roles.index') }}">Roles User</a>
-                    </li>
-                    <li class="{{ active('chambers.roles.create') }}">
-                        <a href="{{ route('chambers.roles.create') }}">Tambah Role</a>
-                    </li>
-                    @yield('nav-edit-roles')
                 </ul>
             </li>
             <li class="{{ active('chambers.press.*') }}">
