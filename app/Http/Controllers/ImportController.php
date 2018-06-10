@@ -30,6 +30,7 @@ use App\VonaSubscriber;
 use App\MagmaVen;
 use App\VarLetusan;
 use App\MagmaRoq;
+use App\RoqTanggapan;
 
 use App\v1\GertanCrs as OldCrs;
 use App\v1\MagmaSigertan as OldSigertan;
@@ -37,7 +38,7 @@ use App\v1\Vona as OldVona;
 use App\v1\MagmaVar as OldVar;
 use App\v1\VonaSubscriber as OldSub;
 use App\v1\MagmaVen as OldVen;
-use App\v1\MagmaVRoq as OldRoq;
+use App\v1\MagmaRoq as OldRoq;
 
 use Indonesia;
 
@@ -1400,7 +1401,84 @@ class ImportController extends Controller
      */
     public function roq()
     {
-        $vens = OldRoq::whereBetween('no',[$this->startNo('roq'),$this->endNo('roq')])->get();
+        $olds = OldRoq::whereBetween('no',[$this->startNo('roq'),$this->endNo('roq')])->get();
+
+        $olds->each(function ($item,$key) {
+            $no = $item->no;
+            $utc = $item->datetime_utc;
+            $noticenumber = $item->id_lap;
+            $magnitude = $item->magnitude;
+            $type = 'SR';
+            $depth = $item->depth;
+            $lat = $item->lat_lima;
+            $lon = $item->lon_lima;
+            $area = $item->area;
+            $koter = $item->koter;
+            $mmi = $item->mmi == '-belum ada keterangan-' ? null : $item->mmi;
+            $nearest = $item->nearest_volcano;
+            
+            if (empty($item->roq_nip_pelapor)  AND !empty($item->roq_nip_pemeriksa))
+            {
+                $nip_pelapor = $item->roq_nip_pemeriksa;
+            } else {
+                $nip_pelapor = $item->roq_nip_pelapor;
+            }
+
+            $maplink = str_replace('https://magma.vsi.esdm.go.id/img/roqfm/','',$item->roq_maplink);
+
+            $create = MagmaRoq::firstOrCreate(
+                [ 'noticenumber' => $noticenumber ],
+                [
+                    'utc' => $utc,
+                    'magnitude' => $magnitude,
+                    'type' => $type,
+                    'depth' => $depth,
+                    'latitude' => $lat,
+                    'longitude' => $lon,
+                    'area' => $area,
+                    'kota_terdekat' => $koter,
+                    'mmi' => $mmi,
+                    'nearest_volcano' => $nearest
+                ]
+            );
+
+            if ($item->roq_tanggapan == 'YA')
+            {
+                $response = RoqTanggapan::firstOrCreate(
+                    [
+                        'noticenumber_id' => $noticenumber
+                    ],
+                    [
+                        'judul' => $item->roq_title,
+                        'tsunami' => $item->roq_tsu == 'YA'? 1 : 0 ,
+                        'pendahuluan' => $item->roq_intro,
+                        'kondisi_wilayah' => $item->roq_konwil,
+                        'mekanisme' => $item->roq_mekanisme,
+                        'dampak' => $item->roq_efek,
+                        'rekomendasi' => $item->roq_rekom,
+                        'sumber' => explode(';',$item->roq_source),
+                        'maplink' => $maplink,
+                        'nip_pelapor' => $nip_pelapor,
+                        'nip_pemeriksa' => $item->roq_nip_pemeriksa,
+                    ]
+                );
+            }
+
+           if ($create)
+            {
+                $this->temptable('roq',$no);
+            }
+        });
+
+        $this->sendNotif('Data Gempa Bumi');
+
+        $data = [
+            'success' => 1,
+            'message' => 'Data Gempa Bumi berhasil diperbarui',
+            'count' => MagmaRoq::count()
+        ];
+
+        return response()->json($data);
     }
 
     public function index()
@@ -1422,6 +1500,22 @@ class ImportController extends Controller
         $vens = MagmaVen::count();
         $roq =  MagmaRoq::count();
         
-        return view('import.index',compact('users','bidang','gadds','varsv1','vars','vardailies','visuals','klimatologis','gempa','crs','vona','subs','vens'));
+        return view('import.index',compact(
+            'users',
+            'bidang',
+            'gadds',
+            'varsv1',
+            'vars',
+            'vardailies',
+            'visuals',
+            'klimatologis',
+            'gempa',
+            'crs',
+            'vona',
+            'subs',
+            'vens',
+            'roq'
+            )
+        );
     }
 }
