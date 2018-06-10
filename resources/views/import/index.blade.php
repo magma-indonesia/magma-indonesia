@@ -509,7 +509,7 @@
                         data-import="roq" action="{{ route('chambers.import.roq') }}">
                             @csrf
                             <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
-                                <span class="ladda-label">Import Data CRS</span>
+                                <span class="ladda-label">Import Data ROQ</span>
                                 <span class="ladda-spinner"></span>
                             </button>
                         </form>
