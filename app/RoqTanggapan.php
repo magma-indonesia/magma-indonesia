@@ -35,6 +35,11 @@ class RoqTanggapan extends Model
 
     protected $hidden = ['id','nip_pelapor','nip_pemeriksa'];
 
+    public function roq()
+    {
+        return $this->belongsTo('App\MagmaRoq','noticenumber_id','noticenumber');
+    }
+
     public function pelapor()
     {
         return $this->belongsTo('App\User','nip_pelapor','nip');

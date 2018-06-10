@@ -14,10 +14,10 @@ class RoqTanggapanController extends Controller
      */
     public function index()
     {
-        return $roqs = RoqTanggapan::orderBy('id','desc')
+        $responses = RoqTanggapan::orderBy('id','desc')
             ->paginate(30,['*'],'resp_page');
 
-        return view('gempabumi.tanggapan.index',compact('roqs'));
+        return view('gempabumi.tanggapan.index',compact('responses'));
     }
 
     /**
