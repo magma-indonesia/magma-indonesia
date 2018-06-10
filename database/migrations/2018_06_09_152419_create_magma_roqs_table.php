@@ -15,6 +15,17 @@ class CreateMagmaRoqsTable extends Migration
     {
         Schema::create('magma_roqs', function (Blueprint $table) {
             $table->increments('id');
+            $table->char('noticenumber',17)->unique()->index();
+            $table->dateTime('utc');
+            $table->float('magnitude');
+            $table->char('type',3);
+            $table->float('depth');
+            $table->float('latitude',10,6)->nullable();
+            $table->float('longitude',10,6)->nullable();
+            $table->char('area',50);
+            $table->char('kota_terdekat',100)->nullable();
+            $table->string('mmi')->nullable();
+            $table->char('nearest_volcano',100);            
             $table->timestamps();
         });
     }
