@@ -20,8 +20,6 @@ class ActivityController extends Controller
     public function index()
     {     
         $gadds = Gadd::orderBy('name')->whereNotIn('code',['TEO','SBG'])->get();
-
-        Carbon::setLocale('id'); 
         return view('activities.index',compact('gadds'));
     }
 

@@ -3,9 +3,17 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Carbon\Carbon;
 
 class AppServiceProvider extends ServiceProvider
 {
+
+    protected function setLocalToIndonesia()
+    {
+        setlocale(LC_TIME, 'id_ID.utf8');
+        Carbon::setLocale(config('app.locale'));
+    }
+
     /**
      * Bootstrap any application services.
      *
@@ -13,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->setLocalToIndonesia();
     }
 
     /**

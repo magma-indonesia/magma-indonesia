@@ -34,7 +34,6 @@ class ActivityGaController extends Controller
                 ->whereNotIn('code',['TEO','SBG'])
                 ->get();
 
-        Carbon::setLocale('id'); 
         return view('gunungapi.laporan.index',compact('vars','gadds'));
     }
 
@@ -51,10 +50,6 @@ class ActivityGaController extends Controller
         // locale -a
         // sudo locale-gen id_ID.UTF-8
         // sudo dpkg-reconfigure locales
-        
-        setlocale(LC_TIME, 'id_ID.utf8');
-
-        Carbon::setLocale('id');
 
         $var = MagmaVar::where('noticenumber',$id)->firstOrFail();
 
@@ -151,8 +146,6 @@ class ActivityGaController extends Controller
             $count = $vars->count();
     
             $vars = $vars->paginate(31);
-    
-            Carbon::setLocale('id');
 
             return view('gunungapi.laporan.search',compact('input','vars','gadds','users'))->with('flash_result',
             $count.' laporan berhasil ditemukan');
