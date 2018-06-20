@@ -37,6 +37,7 @@ class MagmaVen extends Model
         'height',
         'wasap',
         'intensitas',
+        'visibility',
         'arah_asap',
         'amplitudo',
         'durasi',        
