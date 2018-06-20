@@ -140,18 +140,18 @@
                                         <div class="row">
                                             <div class="col-sm-3">
                                                 <div class="checkbox">
-                                                    <label><input name="wasap[]" value="Putih" type="checkbox" class="i-checks wasap" {{ ((in_array('Putih',$ven->wasap)) OR (is_array(old('wasap')) AND in_array('Putih',old('wasap')))) ? 'checked' : ''}}> Putih </label>
+                                                    <label><input name="wasap[]" value="Putih" type="checkbox" class="i-checks wasap" {{ ((!empty($ven->wasap) AND in_array('Putih',$ven->wasap)) OR (is_array(old('wasap')) AND in_array('Putih',old('wasap')))) ? 'checked' : ''}}> Putih </label>
                                                 </div>
                                                 <div class="checkbox">
-                                                    <label><input name="wasap[]" value="Kelabu" type="checkbox" class="i-checks wasap" {{ ((in_array('Kelabu',$ven->wasap)) OR (is_array(old('wasap')) AND in_array('Kelabu',old('wasap')))) ? 'checked' : ''}}> Kelabu </label>
+                                                    <label><input name="wasap[]" value="Kelabu" type="checkbox" class="i-checks wasap" {{ ((!empty($ven->wasap) AND  in_array('Kelabu',$ven->wasap)) OR (is_array(old('wasap')) AND in_array('Kelabu',old('wasap')))) ? 'checked' : ''}}> Kelabu </label>
                                                 </div>
                                             </div>
                                             <div class="col-sm-3">
                                                 <div class="checkbox">
-                                                    <label><input name="wasap[]" value="Coklat" type="checkbox" class="i-checks wasap" {{ ((in_array('Coklat',$ven->wasap)) OR (is_array(old('wasap')) AND in_array('Coklat',old('wasap')))) ? 'checked' : ''}}> Coklat </label>
+                                                    <label><input name="wasap[]" value="Coklat" type="checkbox" class="i-checks wasap" {{ ((!empty($ven->wasap) AND in_array('Coklat',$ven->wasap)) OR (is_array(old('wasap')) AND in_array('Coklat',old('wasap')))) ? 'checked' : ''}}> Coklat </label>
                                                 </div>
                                                 <div class="checkbox">
-                                                    <label><input name="wasap[]" value="Hitam" type="checkbox" class="i-checks wasap" {{ ((in_array('Hitam',$ven->wasap)) OR (is_array(old('wasap')) AND in_array('Hitam',old('wasap')))) ? 'checked' : ''}}> Hitam </label>
+                                                    <label><input name="wasap[]" value="Hitam" type="checkbox" class="i-checks wasap" {{ ((!empty($ven->wasap) AND in_array('Hitam',$ven->wasap)) OR (is_array(old('wasap')) AND in_array('Hitam',old('wasap')))) ? 'checked' : ''}}> Hitam </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -170,9 +170,9 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Intensitas</label>
                                     <div class="col-sm-6">
-                                        <label class="checkbox-inline"><input name="intensitas[]" value="Tipis" type="checkbox" class="i-checks intensitas" {{ ((in_array('Tipis',$ven->intensitas)) OR (is_array(old('intensitas')) AND in_array('Tipis',old('intensitas')))) ? 'checked' : ''}}> Tipis </label>
-                                        <label class="checkbox-inline"><input name="intensitas[]" value="Sedang" type="checkbox" class="i-checks intensitas" {{ ((in_array('Sedang',$ven->intensitas)) OR (is_array(old('intensitas')) AND in_array('Sedang',old('intensitas')))) ? 'checked' : ''}}> Sedang </label>
-                                        <label class="checkbox-inline"><input name="intensitas[]" value="Tebal" type="checkbox" class="i-checks intensitas" {{ ((in_array('Tebal',$ven->intensitas)) OR (is_array(old('intensitas')) AND in_array('Tebal',old('intensitas')))) ? 'checked' : ''}}> Tebal </label>
+                                        <label class="checkbox-inline"><input name="intensitas[]" value="Tipis" type="checkbox" class="i-checks intensitas" {{ ((!empty($ven->intensitas) AND in_array('Tipis',$ven->intensitas)) OR (is_array(old('intensitas')) AND in_array('Tipis',old('intensitas')))) ? 'checked' : ''}}> Tipis </label>
+                                        <label class="checkbox-inline"><input name="intensitas[]" value="Sedang" type="checkbox" class="i-checks intensitas" {{ ((!empty($ven->intensitas) AND in_array('Sedang',$ven->intensitas)) OR (is_array(old('intensitas')) AND in_array('Sedang',old('intensitas')))) ? 'checked' : ''}}> Sedang </label>
+                                        <label class="checkbox-inline"><input name="intensitas[]" value="Tebal" type="checkbox" class="i-checks intensitas" {{ ((!empty($ven->intensitas) AND in_array('Tebal',$ven->intensitas)) OR (is_array(old('intensitas')) AND in_array('Tebal',old('intensitas')))) ? 'checked' : ''}}> Tebal </label>
                                         @if( $errors->has('intensitas'))
                                         <label class="error" for="intensitas">{{ ucfirst($errors->first('intensitas')) }}</label>
                                         @endif
@@ -191,30 +191,30 @@
                                         <div class="row">
                                             <div class="col-sm-3">
                                                 <div class="checkbox">
-                                                    <label><input name="arah[]" value="Utara" type="checkbox" class="i-checks arah" {{ ((in_array('Utara',$ven->arah_asap)) OR (is_array(old('arah')) AND in_array('Utara',old('arah')))) ? 'checked' : ''}}> Utara </label>
+                                                    <label><input name="arah[]" value="Utara" type="checkbox" class="i-checks arah" {{ ((!empty($ven->arah_asap) AND in_array('Utara',$ven->arah_asap)) OR (is_array(old('arah')) AND in_array('Utara',old('arah')))) ? 'checked' : ''}}> Utara </label>
                                                 </div>
                                                 <div class="checkbox">
-                                                    <label><input name="arah[]" value="Timur Laut" type="checkbox" class="i-checks arah" {{ ((in_array('Timur Laut',$ven->arah_asap)) OR (is_array(old('arah')) AND in_array('Timur Laut',old('arah')))) ? 'checked' : ''}}> Timur Laut </label>
+                                                    <label><input name="arah[]" value="Timur Laut" type="checkbox" class="i-checks arah" {{ ((!empty($ven->arah_asap) AND in_array('Timur Laut',$ven->arah_asap)) OR (is_array(old('arah')) AND in_array('Timur Laut',old('arah')))) ? 'checked' : ''}}> Timur Laut </label>
                                                 </div>
                                                 <div class="checkbox">
-                                                    <label><input name="arah[]" value="Timur" type="checkbox" class="i-checks arah" {{ ((in_array('Timur',$ven->arah_asap)) OR (is_array(old('arah')) AND in_array('Timur',old('arah')))) ? 'checked' : ''}}> Timur </label>
+                                                    <label><input name="arah[]" value="Timur" type="checkbox" class="i-checks arah" {{ ((!empty($ven->arah_asap) AND in_array('Timur',$ven->arah_asap)) OR (is_array(old('arah')) AND in_array('Timur',old('arah')))) ? 'checked' : ''}}> Timur </label>
                                                 </div>
                                                 <div class="checkbox">
-                                                    <label><input name="arah[]" value="Tenggara" type="checkbox" class="i-checks arah" {{ ((in_array('Tenggara',$ven->arah_asap)) OR (is_array(old('arah')) AND in_array('Tenggara',old('arah')))) ? 'checked' : ''}}> Tenggara </label>
+                                                    <label><input name="arah[]" value="Tenggara" type="checkbox" class="i-checks arah" {{ ((!empty($ven->arah_asap) AND in_array('Tenggara',$ven->arah_asap)) OR (is_array(old('arah')) AND in_array('Tenggara',old('arah')))) ? 'checked' : ''}}> Tenggara </label>
                                                 </div>
                                             </div>
                                             <div class="col-sm-3">
                                                 <div class="checkbox">
-                                                    <label><input name="arah[]" value="Selatan" type="checkbox" class="i-checks arah" {{ ((in_array('Selatan',$ven->arah_asap)) OR (is_array(old('arah')) AND in_array('Selatan',old('arah')))) ? 'checked' : ''}}> Selatan </label>
+                                                    <label><input name="arah[]" value="Selatan" type="checkbox" class="i-checks arah" {{ ((!empty($ven->arah_asap) AND in_array('Selatan',$ven->arah_asap)) OR (is_array(old('arah')) AND in_array('Selatan',old('arah')))) ? 'checked' : ''}}> Selatan </label>
                                                 </div>
                                                 <div class="checkbox">
-                                                    <label><input name="arah[]" value="Barat Daya" type="checkbox" class="i-checks arah" {{ ((in_array('Barat Daya',$ven->arah_asap)) OR (is_array(old('arah')) AND in_array('Barat Daya',old('arah')))) ? 'checked' : ''}}> Barat Daya </label>
+                                                    <label><input name="arah[]" value="Barat Daya" type="checkbox" class="i-checks arah" {{ ((!empty($ven->arah_asap) AND in_array('Barat Daya',$ven->arah_asap)) OR (is_array(old('arah')) AND in_array('Barat Daya',old('arah')))) ? 'checked' : ''}}> Barat Daya </label>
                                                 </div>
                                                 <div class="checkbox">
-                                                    <label><input name="arah[]" value="Barat" type="checkbox" class="i-checks arah" {{ ((in_array('Barat',$ven->arah_asap)) OR (is_array(old('arah')) AND in_array('Barat',old('arah')))) ? 'checked' : ''}}> Barat </label>
+                                                    <label><input name="arah[]" value="Barat" type="checkbox" class="i-checks arah" {{ ((!empty($ven->arah_asap) AND in_array('Barat',$ven->arah_asap)) OR (is_array(old('arah')) AND in_array('Barat',old('arah')))) ? 'checked' : ''}}> Barat </label>
                                                 </div>
                                                 <div class="checkbox">
-                                                    <label><input name="arah[]" value="Barat Laut" type="checkbox" class="i-checks arah" {{ ((in_array('Barat Laut',$ven->arah_asap)) OR (is_array(old('arah')) AND in_array('Barat Laut',old('arah')))) ? 'checked' : ''}}> Barat Laut </label>
+                                                    <label><input name="arah[]" value="Barat Laut" type="checkbox" class="i-checks arah" {{ ((!empty($ven->arah_asap) AND in_array('Barat Laut',$ven->arah_asap)) OR (is_array(old('arah')) AND in_array('Barat Laut',old('arah')))) ? 'checked' : ''}}> Barat Laut </label>
                                                 </div>
                                             </div>
                                         </div>

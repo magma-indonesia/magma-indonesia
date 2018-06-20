@@ -67,19 +67,27 @@ trait VisualLetusan
     {
         $asl = $ven->height+$ven->gunungapi->elevation;
 
-        $wasap = count($ven->wasap) > 1 
+        $wasap = !empty($ven->wasap) 
             ? str_replace_last(', ',' hingga ', strtolower(implode(', ',$ven->wasap))) 
             : strtolower($ven->wasap[0]);
 
-        $intensitas = count($ven->intensitas) > 1 
+        $intensitas = !empty($ven->intensitas) 
             ? strtolower($ven->intensitas[0]).' hingga '.strtolower(last($ven->intensitas)) 
             : strtolower($ven->intensitas[0]);
 
-        $arah = count($ven->arah_asap) > 1 
+        $arah = !empty($ven->arah_asap)
             ? str_replace_last(', ',' dan ', strtolower(implode(', ',$ven->arah_asap))) 
             : strtolower($ven->arah_asap[0]);
+
+        $kolomAbu = $ven->height > 0
+            ? 'teramati &plusmn; '.$ven->height.' m di atas puncak (&plusmn; '.$asl.' m di atas permukaan laut). Kolom abu teramati berwarna '. $wasap .' dengan intensitas '. $intensitas .' ke arah '.$arah
+            : 'tidak teramati karena tertutup kabut';
+
+        $seismograf = $ven->amplitudo > 0
+            ? 'Erupsi ini terekam di seismograf dengan amplitudo maksimum '.$ven->amplitudo.' mm dan durasi '.$ven->durasi.' detik.'
+            : '';
         
-        $data = 'Telah terjadi erupsi G. '. $ven->gunungapi->name .', '. $ven->gunungapi->province .' pada tanggal '. $ven->date .', pukul '. $ven->time.' '.$ven->gunungapi->zonearea.' dengan tinggi kolom abu teramati &plusmn; '. $ven->height .' m di atas puncak (&plusmn; '. $asl .' m di atas permukaan laut). Kolom abu teramati berwarna '. $wasap .' dengan intensitas '. $intensitas .' ke arah '. $arah .'. Erupsi ini terekam di seismograf dengan amplitudo maksimum '.$ven->amplitudo.' mm dan durasi '.$ven->durasi.' detik.';
+        $data = 'Telah terjadi erupsi G. '. $ven->gunungapi->name .', '. $ven->gunungapi->province .' pada tanggal '. $ven->date .', pukul '. $ven->time.' '.$ven->gunungapi->zonearea.' dengan tinggi kolom abu '. $kolomAbu .'. '.$seismograf;
 
         return $data;
     }
