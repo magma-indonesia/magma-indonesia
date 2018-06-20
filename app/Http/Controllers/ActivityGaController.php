@@ -46,6 +46,14 @@ class ActivityGaController extends Controller
      */
     public function show($id)
     {
+        // Set Local Time
+        //
+        // locale -a
+        // sudo locale-gen id_ID.UTF-8
+        // sudo dpkg-reconfigure locales
+        
+        setlocale(LC_TIME, 'id_ID.utf8');
+
         Carbon::setLocale('id');
 
         $var = MagmaVar::where('noticenumber',$id)->firstOrFail();

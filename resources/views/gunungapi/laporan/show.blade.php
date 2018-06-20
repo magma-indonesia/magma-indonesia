@@ -114,8 +114,8 @@
                                     <a href="#">{{ $var->pos->observatory }}</a>
                                 </div>
                                 <div>
-                                    <span class="font-extra-bold">Tanggal: </span>
-                                    {{ $var->var_data_date->format('Y-m-d')}}
+                                    <span class="font-extra-bold">Hari/Tanggal: </span>
+                                    {{ $var->var_data_date->formatLocalized('%A, %d %B %Y')}}
                                 </div>
                                 <div>
                                     <span class="font-extra-bold">Periode: </span>
