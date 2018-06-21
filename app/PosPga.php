@@ -8,7 +8,6 @@ class PosPga extends Model
 {
     
     protected $fillable = [
-
         'code_id',
         'obscode',
         'observatory',
@@ -17,9 +16,6 @@ class PosPga extends Model
         'latitude',
         'longitude',
         'keterangan',
-        'created_at',
-        'updated_at'
-
     ];
 
     /**     
