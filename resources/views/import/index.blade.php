@@ -78,6 +78,33 @@
                 </div>
             </div>
             <div class="col-lg-3">
+                    <div class="hpanel">
+                        <div class="panel-heading">
+                            Data Absensi Pegawai
+                        </div>
+                        <div class="panel-body text-center h-200">
+                            <i class="pe-7s-look fa-4x"></i>
+                            <br>
+                            <h1 class="m-xs jumlah-absensi">{{ $absensi }}</h1>
+    
+                            <h3 class="font-extra-bold no-margins text-success">
+                                Absensi Pegawai
+                            </h3>
+                            <small>Jumlah Absen</small>
+                        </div>
+                        <div class="panel-footer text-center">
+                            <form role="form" id="form-import" method="POST"
+                            data-import="absensi" action="{{ route('chambers.import.absensi') }}">
+                                @csrf
+                                <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
+                                    <span class="ladda-label">Import Data Absensi</span>
+                                    <span class="ladda-spinner"></span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <div class="col-lg-3">
                 <div class="hpanel">
                     <div class="panel-heading">
                         Data Dasar Gunung Api
@@ -104,6 +131,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-lg-3">
                 <div class="hpanel stats">
                     <div class="panel-heading">
@@ -153,12 +182,10 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col-lg-3">
                 <div class="hpanel stats">
                     <div class="panel-heading">
-                        Data Var
+                        Data Var Visual
                     </div>
                     <div class="panel-body list">
                         <div class="stats-title pull-left">
@@ -274,7 +301,9 @@
                         </form>
                     </div>
                 </div>
-            </div>
+            </div>     
+        </div>
+        <div class="row">
             <div class="col-lg-3">
                 <div class="hpanel stats">
                         <div class="panel-heading">
@@ -311,9 +340,7 @@
                         </form>
                     </div>
                 </div>
-            </div>        
-        </div>
-        <div class="row">
+            </div>   
             <div class="col-lg-3">
                 <div class="hpanel stats">
                     <div class="panel-heading">
@@ -434,6 +461,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-lg-3">
                 <div class="hpanel stats">
                     <div class="panel-heading">
@@ -474,8 +503,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col-lg-3">
                 <div class="hpanel stats">
                     <div class="panel-heading">

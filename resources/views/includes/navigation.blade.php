@@ -96,12 +96,15 @@
                     <span class="nav-label">CRS</span>
                 </a>
             </li>
-            <li class="{{ active('chambers.users.*') }}">
+            <li class="{{ active(['chambers.users.*','chambers.absensi.*']) }}">
                 <a href="#">
                     <span class="nav-label">Users</span>
                     <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
+                    <li class="{{ active('chambers.absensi.index') }}">
+                        <a href="{{ route('chambers.absensi.index') }}">Absensi Pegawai</a>
+                    </li>
                     <li class="{{ active('chambers.users.index') }}">
                         <a href="{{ route('chambers.users.index') }}">Daftar Users</a>
                     </li>

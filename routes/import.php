@@ -3,7 +3,8 @@
 Route::get('/','ImportController@index')->name('index');
 Route::post('crs','ImportController@crs')->name('crs');
 Route::get('qls','ImportController@sigertan')->name('qls');
-Route::post('gadds','ImportController@gadds')->name('gadds');            
+Route::post('gadds','ImportController@gadds')->name('gadds');   
+Route::post('absensi','ImportController@absensi')->name('absensi');   
 Route::post('users','ImportController@users')->name('users');
 Route::post('bidang','ImportController@bidang')->name('bidang');
 Route::post('vars','ImportController@vars')->name('vars');

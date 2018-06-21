@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\PosPga;
 use App\TempTable;
 use App\Import;
+use App\Kantor;
 
 use App\Notifications\ImportNotification;
 
@@ -168,6 +169,17 @@ trait MagmaHelper
 
             $end        = $end->no;
         }
+
+        if($type == 'abs')
+        {
+            $end        = DB::connection('magma')
+                        ->table('pga_abs')
+                        ->select('id_abs')
+                        ->orderBy('id_abs','desc')
+                        ->first();
+
+            $end        = $end->id_abs;
+        }
         
         return $end;
 
@@ -311,33 +323,46 @@ trait MagmaHelper
      *   @param string $ga_code, $code, $name
      * 
      */
-    private function updatePos($ga_code,$code,$name)
+    private function updatePos($ga_code,$code,$name,$tzone)
     {
 
-        $pos            = DB::connection('magma')->table('ga_dd')
-                        ->select(
+        $pos = DB::connection('magma')->table('ga_dd')
+            ->select(
+                'ga_adr_pos',
+                'ga_elev_pos',
+                'ga_lat_pos',
+                'ga_lon_pos'
+            )
+            ->where('ga_code','=',$ga_code)
+            ->first();
 
-                            'ga_adr_pos',
-                            'ga_elev_pos',
-                            'ga_lat_pos',
-                            'ga_lon_pos'
+        $updatePos = PosPga::firstOrCreate(
+                [   
+                    'obscode'  => $code
+                ],
+                [   
+                    'code_id'     => $ga_code,
+                    'observatory' => $name,
+                    'address'     => $pos->ga_adr_pos,
+                    'elevation'   => $pos->ga_elev_pos,
+                    'latitude'    => $pos->ga_lat_pos,
+                    'longitude'   => $pos->ga_lon_pos
+                ]
+            );
 
-                        )
-                        ->where('ga_code','=',$ga_code)
-                        ->first();
-
-        $update         = PosPga::firstOrCreate(
-
-                            [   'obscode'  => $code],
-                            [   'code_id'     => $ga_code,
-                                'observatory' => $name,
-                                'address'     => $pos->ga_adr_pos,
-                                'elevation'   => $pos->ga_elev_pos,
-                                'latitude'    => $pos->ga_lat_pos,
-                                'longitude'   => $pos->ga_lon_pos
-                            ]
-
-                        );
+        $updateKantor = Kantor::firstOrCreate(
+                [
+                    'code' => $code
+                ],
+                [
+                    'nama' => $name,
+                    'tzone' => $tzone,
+                    'address' => $pos->ga_adr_pos,
+                    'elevation' => $pos->ga_elev_pos,
+                    'latitude' => $pos->ga_lat_pos,
+                    'longitude' => $pos->ga_lon_pos
+                ]
+            );
 
     }
 

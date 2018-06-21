@@ -31,6 +31,8 @@ use App\MagmaVen;
 use App\VarLetusan;
 use App\MagmaRoq;
 use App\RoqTanggapan;
+use App\Absensi;
+use App\Kantor;
 
 use App\v1\GertanCrs as OldCrs;
 use App\v1\MagmaSigertan as OldSigertan;
@@ -39,6 +41,7 @@ use App\v1\MagmaVar as OldVar;
 use App\v1\VonaSubscriber as OldSub;
 use App\v1\MagmaVen as OldVen;
 use App\v1\MagmaRoq as OldRoq;
+use App\v1\Absensi as OldAbsensi;
 
 use Indonesia;
 
@@ -54,6 +57,76 @@ class ImportController extends Controller
 
     }
 
+    /**
+     * Import data Absensi MAGMA v1
+     *
+     * @return void
+     */
+    public function absensi()
+    {
+        $absensis = OldAbsensi::whereBetween('id_abs',[$this->startNo('abs'),$this->endNo('abs')])->get();
+        
+        $absensis->each(function ($item,$key) {
+
+            $no = $item->id_abs;
+            $nip = $item->vg_nip;
+            $kantor = $item->obscode;
+            $code = $item->ga_code;
+            $checkin = $item->checkin_time == '00:00:00' ?  null : $item->date_abs.' '.$item->checkin_time;
+            $checkin_image = empty($item->checkin_image) ?  null : $item->checkin_image;
+            $checkin_latitude = $item->checkin_lat;
+            $checkin_longitude = $item->checkin_lon;
+            $checkout = $item->checkout_time == '00:00:00' ? null : $item->date_abs.' '.$item->checkout_time;
+            $checkout_image = empty($item->checkout_image) ? null  : $item->checkout_image;
+            $checkout_latitude = $item->checkout_lat;
+            $checkout_longitude = $item->checkout_lon;
+            $distance = $item->checkin_dist;
+            $duration = $item->length_work;
+            $nip_ver = empty($item->nip_ver) ?  null : $item->nip_ver;
+            $keterangan = $item->ket_abs;
+
+            if ($item->date_abs != '0000-00-00') 
+            {
+                $create = Absensi::firstOrCreate(
+                    [
+                        'nip_id' => $nip,
+                        'checkin' => $checkin
+                    ],
+                    [
+                        'kantor_id' => $kantor,
+                        'checkin_image' => $checkin_image,
+                        'checkin_latitude' => $checkin_latitude,
+                        'checkin_longitude' => $checkin_longitude,
+                        'checkout' => $checkout,
+                        'checkout_image' => $checkout_image,
+                        'checkout_latitude' => $checkout_latitude,
+                        'checkout_longitude' => $checkout_longitude,
+                        'distance' => $distance,
+                        'duration' => $duration,
+                        'nip_verifikator' => $nip_ver,
+                        'keterangan' => $keterangan
+                    ]
+                );
+    
+                if ($create)
+                {
+                    $this->temptable('abs',$no);
+                }
+            }
+
+        }); 
+
+        $data = [
+            'success' => 1,
+            'message' => 'Data Absensi berhasil diperbarui',
+            'count' => Absensi::count()
+        ];
+
+        $this->sendNotif('Absensi Pegawai');
+
+        return response()->json($data);
+    }
+
     /**     
      *   Untuk Import Data dasar Gunung Api
      *   dari Magma v1 ke Magma v2
@@ -66,7 +139,7 @@ class ImportController extends Controller
                 ->orderBy('no')
                 ->get();
         
-        $gadds  = $gadds->each(function ($item, $key) {
+        $gadds->each(function ($item, $key) {
 
             Gadd::firstOrCreate(
                 [   'code'              => $item->ga_code],
@@ -88,58 +161,74 @@ class ImportController extends Controller
 
         });
 
-        $gadds = Gadd::select('code','name')->get();
-        $gadds = $gadds->each(function ($item, $key) {
+        $gadds = Gadd::select('code','name','zonearea')->get();
+        $gadds->each(function ($item, $key) {
 
-            $gacode         = $item->code;
-            $name           = $item->name;
+            $gacode = $item->code;
+            $name = $item->name;
+            $tzone = $item->zonearea;
 
             if ($gacode!='MER')
             {
-
-                $obscode    = $gacode.'1';
+                $obscode = $gacode.'1';
                 $var_source = 'Pos Pengamatan Gunungapi '.$name;
-
-                $update     = $this->updatePos($gacode,$obscode,$var_source);
-
+                $update = $this->updatePos($gacode,$obscode,$var_source,$tzone);
             } else {
-
-                $obs       = [
-
-                                '1' => 'Pos Pengamatan Gunung Merapi - Jarakah',
-                                '2' => 'Pos Pengamatan Gunung Merapi - Babadan',
-                                '3' => 'Pos Pengamatan Gunung Merapi - Kaliurang',
-                                '4' => 'Pos Pengamatan Gunung Merapi - Ngepos',
-                                '5' => 'Pos Pengamatan Gunung Merapi - Selo'
-
-                            ];
-
+                $obs = [
+                    '1' => 'Pos Pengamatan Gunung Merapi - Jarakah',
+                    '2' => 'Pos Pengamatan Gunung Merapi - Babadan',
+                    '3' => 'Pos Pengamatan Gunung Merapi - Kaliurang',
+                    '4' => 'Pos Pengamatan Gunung Merapi - Ngepos',
+                    '5' => 'Pos Pengamatan Gunung Merapi - Selo'
+                ];
                 foreach ($obs as $key => $value)
                 {
-
-                    $obscode    = $gacode.$key;
+                    $obscode = $gacode.$key;
                     $var_source = $value;
-
-                    $update     = $this->updatePos($gacode,$obscode,$var_source);
-
+                    $update = $this->updatePos($gacode,$obscode,$var_source,$tzone);
                 }
 
             }
 
         });
 
-        if ($gadds){
+        $updatePvg = Kantor::firstOrCreate(
+            [
+                'code' => 'PVG'
+            ],
+            [
+                'nama' => 'Pusat Vulkanologi dan Mitigasi Bencana Geologi',
+                'tzone' => 'WIB',
+                'address' => 'Jl. Diponegoro No. 57 Bandung',
+                'elevation' => 735,
+                'latitude' => -6.899733,
+                'longitude' => 107.620427
+            ]
+        );
 
-            $data = [
-                'success' => 1,
-                'message' => 'Data Dasar Gunung Api berhasil diperbarui',
-                'count' => Gadd::count()
-            ];
+        $updatePvg = Kantor::firstOrCreate(
+            [
+                'code' => 'BTK'
+            ],
+            [
+                'nama' => 'Balai Penyelidikan dan Pengembangan Teknologi Kebencanaan Geologi',
+                'tzone' => 'WIB',
+                'address' => 'Jl. Cendana No. 15 Yogyakarta',
+                'elevation' => 110,
+                'latitude' => -7.797772,
+                'longitude' => 110.384899
+            ]
+        );
 
-            $this->sendNotif('Data Dasar Gunung Api');
-    
-            return response()->json($data);
-        }
+        $data = [
+            'success' => 1,
+            'message' => 'Data Dasar Gunung Api berhasil diperbarui',
+            'count' => Gadd::count()
+        ];
+
+        $this->sendNotif('Data Dasar Gunung Api');
+
+        return response()->json($data);
     }
 
     public function users()
@@ -1117,7 +1206,7 @@ class ImportController extends Controller
             $prev_code = $item->pre_avcode;
             $location = $item->volcano_location;
             $vas = $item->volcanic_act_summ;
-            $vch_summit = $item->vc_height - $item->summit_elevation;
+            $vch_summit = $item->vc_height > 0 ? $item->vc_height - $item->summit_elevation : 0;
             $vch_asl = $item->vc_height;
             $vch_other = $item->other_vc_info;
             $remarks = strlen($item->remarks)<6 ? null : $item->remarks;
@@ -1481,6 +1570,11 @@ class ImportController extends Controller
         return response()->json($data);
     }
 
+    /**
+     * Index import
+     *
+     * @return void
+     */
     public function index()
     {
 
@@ -1499,6 +1593,7 @@ class ImportController extends Controller
         $subs = VonaSubscriber::count();
         $vens = MagmaVen::count();
         $roq =  MagmaRoq::count();
+        $absensi = Absensi::count();
         
         return view('import.index',compact(
             'users',
@@ -1514,7 +1609,8 @@ class ImportController extends Controller
             'vona',
             'subs',
             'vens',
-            'roq'
+            'roq',
+            'absensi'
             )
         );
     }

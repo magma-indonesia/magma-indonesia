@@ -27,9 +27,12 @@ Route::name('administratif.')->group(function () {
     Route::resource('jabatan','JabatanController');
 });
 
+Route::resource('absensi','AbsensiController');
+
 Route::name('users.administrasi.')->group(function() {
     Route::get('users/administrasi','UserAdministratifController@index')->name('index');
 });
+
 Route::resource('users', 'UserController');
 
 Route::group(['prefix' => 'activities'], function(){
