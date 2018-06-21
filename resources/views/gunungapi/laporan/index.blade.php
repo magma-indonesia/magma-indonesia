@@ -39,7 +39,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($gadds as $gadd)
-                                    <tr title="{{ $gadd->latestVar->status->status }}">
+                                    <tr class="click-here" data-href="{{ route('chambers.laporan.show',$gadd->latestVar->noticenumber ) }}" title="{{ $gadd->latestVar->status->status }}">
                                         <td class="{{ $gadd->latestVar->statuses_desc_id }}">{{ $gadd->name }}</td>
                                         <td>
                                             <span class="pie">{{ $gadd->latestVar->var_data_date->formatLocalized('%A, %d %B %Y').', '.$gadd->latestVar->periode }}</span>
@@ -79,7 +79,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($vars as $var)
-                                    <tr title="{{ $var->status->status }}">
+                                    <tr class="click-here" data-href="{{ route('chambers.laporan.show',$var->noticenumber ) }}" title="{{ $var->status->status }}" target="_blank" style="cursor: pointer;">
                                         <td class="{{ $var->status->id }}">Laporan Gunungapi {{ $var->gunungapi->name }}
                                             <br/>
                                             <small>
@@ -94,7 +94,7 @@
                                         <td>{{ $var->user->name }}</td>
                                         <td>
                                             <a href="">
-                                                <a href="{{ route('chambers.laporan.show',$var->noticenumber ) }}" target="_blank" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">View</a>
+                                                <a href="{{ route('chambers.laporan.show',$var->noticenumber ) }}" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">View</a>
                                             </a>
                                         </td>
                                     </tr>
@@ -122,6 +122,10 @@
     <script>
 
         $(document).ready(function () {
+
+            $('.click-here').click(function() {
+                window.open($(this).data('href'),'_blank');
+            });
 
             // Initialize table
             $('.table-daily').dataTable({
