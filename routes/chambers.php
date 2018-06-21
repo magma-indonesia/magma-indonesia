@@ -44,6 +44,7 @@ Route::group(['prefix' => 'gunungapi'], function () {
     Route::resource('pos','PosPgaController');
     Route::resource('letusan','MagmaVenController');
     Route::get('laporan/search','ActivityGaController@search')->name('laporan.search');
+    Route::post('laporan/verifikasiv1','ActivityGaController@verifikasiv1')->name('laporan.verifikasiv1');
     Route::resource('laporan','ActivityGaController');
 });
 

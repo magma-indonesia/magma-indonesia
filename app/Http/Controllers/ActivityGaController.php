@@ -7,6 +7,7 @@ use App\Http\Requests\SearchGunungApi;
 use Carbon\Carbon;
 use App\Gadd;
 use App\MagmaVar;
+use App\v1\MagmaVar as OldVar;
 use App\VarDaily;
 use App\User;
 use App\Http\Resources\VarResource;
@@ -154,5 +155,33 @@ class ActivityGaController extends Controller
         return view('gunungapi.laporan.search',compact('input','gadds','users'))->with('flash_message',
         'Kriteria pencarian tidak ditemukan/belum ada');
 
+    }
+
+    public function verifikasiv1(Request $request)
+    {
+
+        $oldVar = OldVar::where('ga_code','like',$request->ga_code)
+            ->where('var_noticenumber','like',$request->noticenumber)
+            ->first();
+
+        $oldVar->var_nip_pemeriksa_pj = auth()->user()->nip;
+        $oldVar->var_nama_pemeriksa_pj = auth()->user()->name;
+        
+        if ($oldVar->save())
+        {
+            $data = [
+                'success' => 1,
+                'message' => 'Berhasil Diverifikasi'
+            ];
+    
+            return response()->json($data);
+        }
+        
+        $data = [
+            'success' => 0,
+            'message' => 'Gagal Verifikasi'
+        ];
+
+        return response()->json($data);
     }
 }

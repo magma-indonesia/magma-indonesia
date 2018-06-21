@@ -5,6 +5,7 @@
 @endsection
 
 @section('add-vendor-css')
+    <link rel="stylesheet" href="{{ asset('vendor/sweetalert/lib/sweet-alert.css') }}" />
     <link rel="stylesheet" href="{{ asset('vendor/json-viewer/jquery.json-viewer.css') }}" />
 @endsection
 
@@ -143,9 +144,20 @@
                         </div>
                         <div class="col-lg-6">
                             <h4>Kegempaan </h4>
-                            <p>{{ $gempa }}</p>
+                            <p>{{ empty($gempa) ? 'Kegempaan nihil.' : $gempa }}</p>
                         </div>
                     </div>
+                </div>
+
+                <div class="border-bottom border-left border-right bg-white p-m">
+                    <form id="verifikasi" method="POST" action="{{ route('chambers.laporan.verifikasiv1') }}" accept-charset="UTF-8">
+                        @csrf
+                        <input name="ga_code" value="{{ $var->code_id }}" type="hidden">
+                        <input name="noticenumber" value="{{ substr_replace($var->noticenumber,'',0,4) }}" type="hidden">
+                        <div class="btn-group">
+                            <button type="submit" id="form-submit" class="btn btn-block btn-danger"><i class="fa fa-arrow-right"></i> Verifikasi Magma v1</button>
+                        </div>
+                    </form>
                 </div>
 
                 <div class="border-bottom border-left border-right bg-white p-m">
@@ -187,17 +199,12 @@
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
 
                 <div class="panel-footer text-right">
                     <div class="btn-group">
-                        <button class="btn btn-default"><i class="fa fa-reply"></i> Reply</button>
-                        <button class="btn btn-default"><i class="fa fa-arrow-right"></i> Forward</button>
-                        <button class="btn btn-default"><i class="fa fa-print"></i> Print</button>
-                        <button class="btn btn-default"><i class="fa fa-trash-o"></i> Remove</button>
+                        <button class="btn btn-outline btn-block btn-success"><i class="fa fa-arrow-right"></i> Verifikasi Magma v1</button>
                     </div>
                 </div>
             </div>
@@ -209,6 +216,8 @@
 @section('add-vendor-script')
     <!-- Json Viewer -->
     <script src="{{ asset('vendor/json-viewer/jquery.json-viewer.js') }}"></script>
+    <script src="{{ asset('vendor/sweetalert/lib/sweet-alert.min.js') }}"></script>
+
 @endsection
 
 @section('add-script')
@@ -216,6 +225,55 @@
 
         $(document).ready(function () {
             $('#json-renderer').jsonViewer(@json($var), {collapsed: true});
+
+            $('body').on('submit','#verifikasi',function (e) {
+                e.preventDefault();                
+
+                var $url = $(this).attr('action'),
+                    $data = $(this).serialize();
+                
+                    swal({
+                    title: "Verifikasi Data?",
+                    text: "Pastikan datanya sudah benar semua",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, lanjut!",
+                    cancelButtonText: "Gak jadi deh!",
+                    closeOnConfirm: false,
+                    closeOnCancel: true },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: $url,
+                            data: $data,
+                            type: 'POST',
+                            success: function(data){
+                                console.log(data);
+                                if (data.success){
+                                    swal("Berhasil!", data.message, "success");
+                                    setTimeout(function(){
+                                        location.reload();
+                                    },2000);
+                                }
+                            },
+                            error: function(data){
+                                var $errors = {
+                                    'status': data.status,
+                                    'exception': data.responseJSON.exception,
+                                    'file': data.responseJSON.file,
+                                    'line': data.responseJSON.line
+                                };
+                                console.log($errors);
+                                console.log($errors);
+                                swal("Gagal!", data.responseJSON.exception, "error");
+                            }
+                        });
+                    }
+                });
+
+                return false;
+            });
         });
     
     </script>
