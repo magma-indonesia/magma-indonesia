@@ -39,10 +39,13 @@
                     <div class="panel-heading">
                         VONA
                     </div>
-                    <div class="panel-body">
-                        <div class="row text-center">
-                            <div class="col-md-4 col-lg-2 col-sm-6 col-xs-12">
+                    <div class="panel-body float-e-margins">
+                        <div class="row">
+                            <div class="col-md-4 col-lg-2 col-sm-12 col-xs-12">
                                 <a href="{{ route('chambers.vona.create') }}" class="btn btn-outline btn-block btn-success" type="button">Buat VONA Baru</a>
+                            </div>
+                            <div class="col-md-4 col-lg-2 col-sm-12 col-xs-12">
+                                <a href="{{ route('chambers.vona.draft') }}" class="btn btn-outline btn-block btn-success" type="button">Draft VONA</a>
                             </div>
                         </div>
                     </div>
@@ -145,8 +148,9 @@
                                 console.log(data);
                                 if (data.success){
                                     swal("Berhasil!", data.message, "success");
-                                    location.reload();
-                                    // $row.remove().draw();
+                                    setTimeout(function(){
+                                        location.reload();
+                                    },2000);
                                 }
                             },
                             error: function(data){
@@ -157,8 +161,7 @@
                                     'line': data.responseJSON.line
                                 };
                                 console.log($errors);
-                                l.stop();
-                                $label.html('Error. Coba lagi?');
+                                swal("Gagal!", data.responseJSON.exception, "error");
                             }
                         });
                     }

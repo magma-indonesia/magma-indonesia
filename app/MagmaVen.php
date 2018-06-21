@@ -21,6 +21,7 @@ class MagmaVen extends Model
         'wasap'         => 'array',
         'intensitas'    => 'array',
         'arah_asap'     => 'array',
+        'date'          => 'datetime:Y-m-d',
     ];
 
     protected $with = ['user:nip,name'];
@@ -32,6 +33,7 @@ class MagmaVen extends Model
      */
     protected $fillable = [
         'code_id',
+        'vona_uuid',
         'date', 
         'time',
         'height',
@@ -96,5 +98,10 @@ class MagmaVen extends Model
     public function user()
     {
         return $this->belongsTo('App\User','nip_pelapor','nip');
+    }
+
+    public function vona()
+    {
+        return $this->hasOne('App\Vona','ven_uuid','uuid');
     }
 }

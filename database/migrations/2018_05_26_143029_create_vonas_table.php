@@ -17,6 +17,8 @@ class CreateVonasTable extends Migration
             $table->increments('id');
             $table->uuid('uuid')->unique();
             $table->char('noticenumber',11)->nullable();
+            $table->uuid('ven_uuid')->nullable();
+            $table->foreign('ven_uuid')->references('uuid')->on('magma_vens')->onDelete('cascade');
             $table->dateTime('issued');
             $table->enum('type',['REAL','EXERCISE']);
             $table->char('code_id',3)->index();
@@ -25,7 +27,7 @@ class CreateVonasTable extends Migration
             $table->enum('prev_code',['unassigned','GREEN','YELLOW','ORANGE','RED']);
             $table->string('location');
             $table->text('vas')->comment('Volcanic Activity Summary');
-            $table->float('vch_summit')->comment('Volcano Cloud Height Above Summit');
+            $table->float('vch_summit')->default(0)->comment('Volcano Cloud Height Above Summit');
             $table->float('vch_asl')->comment('Volcano Cloud Height Above Sea Level');
             $table->string('vch_other')->comment('Volcano Cloud Height Other Information')->nullable();
             $table->text('remarks')->nullable();

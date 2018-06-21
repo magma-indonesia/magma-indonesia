@@ -132,8 +132,9 @@
                                 console.log(data);
                                 if (data.success){
                                     swal("Berhasil!", data.message, "success");
-                                    location.reload();
-                                    // $row.remove().draw();
+                                    setTimeout(function(){
+                                        location.reload();
+                                    },2000);
                                 }
                             },
                             error: function(data){
@@ -144,8 +145,7 @@
                                     'line': data.responseJSON.line
                                 };
                                 console.log($errors);
-                                l.stop();
-                                $label.html('Error. Coba lagi?');
+                                swal("Gagal!", data.responseJSON.exception, "error");
                             }
                         });
                     }

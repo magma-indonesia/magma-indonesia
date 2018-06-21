@@ -79,9 +79,8 @@
                             <p>{!! nl2br($ven->lainnya) !!}</p>
                         </blockquote>
                         @endif
-                        <p><small><b>Sumber:</b> Kementerian Energi dan Sumber Daya Mineral, Badan Geologi, Pusat Vulkanologi dan Mitigasi Bencana Geologi</small></p>
-                        @if (Session::has('vona'))
-                        <a href={{ route('chambers.vona.show',['uuid'=> session('vona')]) }} type="button" class="btn btn-outline btn-success">Draft VONA</a>
+                        @if(!empty($ven->vona->uuid))
+                        <a href={{ route('chambers.vona.show',['uuid'=> $ven->vona->uuid]) }} type="button" class="btn btn-outline btn-success">Draft VONA</a>
                         @endif
                     </div>
                     <div class="panel-footer">
@@ -90,6 +89,16 @@
                         </span>
                         <i class="fa fa-eye"> </i> {{ $ven->page_views }}
                     </div>
+                    <div class="panel-footer">
+                            <img style="max-width: 60px;float: left;display: inline-block;" src="http://chamber.localhost/images/logo/esdm.gif">
+                            <div style="padding-left: 15px;display: inline-block;">
+                                <h7>Kementerian Energi dan Sumber Daya Mineral</h7>
+                                <h6 class="font-bold">Badan Geologi</h6>
+                                <h5 class="font-extra-bold">Pusat Vulkanologi dan Mitigasi Bencana Geologi</h5>
+                            </div>
+
+                    </div>
+
                 </div>
             </div>
         </div>

@@ -78,7 +78,7 @@ class MagmaVenController extends Controller
         return 'E '.$deg.' deg '.$min.' min '.$sec.' sec'; 
     }
 
-    protected function translateDirection(array $arah)
+    protected function translateDirection($arah)
     {
         $translate = collect($arah)->map(function ($direction) {
             switch ($direction) {
@@ -115,33 +115,37 @@ class MagmaVenController extends Controller
 
     protected function draftVona($ven,$vona)
     {
-        $issued = Carbon::createFromFormat('Y-m-d H:i',$ven->date.' '.$ven->time,'Asia/Jakarta')
+        $issued = Carbon::createFromFormat('Y-m-d H:i',$ven->date->format('Y-m-d').' '.$ven->time,'Asia/Jakarta')
             ->setTimezone('UTC')
             ->toDateTimeString();
 
         $location = $this->location('lat',$ven->gunungapi->latitude).$this->location('lon',$ven->gunungapi->longitude);
 
         $issued_utc = Carbon::createFromFormat('Y-m-d H:i:s',$issued)->format('Hi');
-        $issued_lt = Carbon::createFromFormat('Y-m-d H:i',$ven->date.' '.$ven->time,'Asia/Jakarta')->format('Hi');
+        $issued_lt = Carbon::createFromFormat('Y-m-d H:i',$ven->date->format('Y-m-d').' '.$ven->time,'Asia/Jakarta')->format('Hi');
 
         if ($ven->visibility == '1') {
             $vas = 'Eruption with volcanic ash cloud at '.$issued_utc.'Z ('.$issued_lt.' LT).';
             $other = 'Ash coud moving to '.$this->translateDirection($ven->arah_asap);
+            $height = $ven->height;
         } else {
             $vas = 'Ash cloud is not visibile.';
+            $other = null;
+            $height = 0;
         }
 
         $vch_asl = $ven->height+$ven->gunungapi->elevation;
 
+        $vona->ven_uuid = $ven->uuid;
         $vona->issued = $issued;
         $vona->type = 'REAL';
         $vona->code_id = $ven->code_id;
         $vona->cu_code = $vch_asl > 6000 ? 'RED' : 'YELLOW';
         $vona->location = $location;
         $vona->vas = $vas;
-        $vona->vch_summit = $ven->height;
+        $vona->vch_summit = $height;
         $vona->vch_asl = $vch_asl;
-        $vona->vch_other = $this->translateDirection($ven->arah_asap);
+        $vona->vch_other = $other;
         $vona->nip_pelapor = auth()->user()->nip;
         
         if ($vona->save()) {
@@ -160,6 +164,7 @@ class MagmaVenController extends Controller
      */
     public function store(LaporanLetusanRequest $request)
     {
+        // return $request;
         $ven = new MagmaVen;
         $vona = new Vona;
 
@@ -172,8 +177,7 @@ class MagmaVenController extends Controller
         $uuid = $saveVona != false ? $vona->uuid : '' ;
 
         if ($saveVen){
-            return redirect()->route('chambers.letusan.show',['uuid'=> $ven->uuid])
-                ->with('vona',$uuid);
+            return redirect()->route('chambers.letusan.show',['uuid'=> $ven->uuid]);
         }
 
         return redirect()->route('chambers.letusan.index')
