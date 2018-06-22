@@ -15,7 +15,7 @@ class CreateVarPjsTable extends Migration
     {
         Schema::create('var_pjs', function (Blueprint $table) {
             $table->increments('id');
-            $table->char('noticenumber_id',16)->unique()->index();
+            $table->char('noticenumber_id',16)->index();
             $table->foreign('noticenumber_id')->references('noticenumber')->on('magma_vars')->onDelete('cascade');
             $table->char('nip_id',18)->nullable();
             $table->foreign('nip_id')->references('nip')->on('users')->onDelete('cascade');

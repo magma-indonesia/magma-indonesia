@@ -50,7 +50,7 @@ class MagmaVar extends Model
      */
     public function pj()
     {
-        return $this->hasOne('App\VarPj','noticenumber_id','noticenumber');
+        return $this->hasMany('App\VarPj','noticenumber_id','noticenumber');
     }
 
     /**     

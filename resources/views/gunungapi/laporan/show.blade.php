@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    Laporan | {{ $var->gunungapi->name.' | '.$var->noticenumber }}
+    {{ $var->gunungapi->name.' | '.$var->noticenumber }}
 @endsection
 
 @section('add-vendor-css')
@@ -124,11 +124,15 @@
                                 </div>
                                 <div>
                                     <span class="font-extra-bold">Validasi Penanggung Jawab: </span>
-                                    {{ $var->pj->nip_id ?? 'Belum divalidasi' }}
+                                    @if($var->pj->isEmpty())
+                                        Belum Divalidasi
+                                    @else
+                                        {{ $var->pj->implode('user.name',', ') }}
+                                    @endif
                                 </div>
                                 <div>
                                     <span class="font-extra-bold">Verifikator: </span>
-                                    {{ $var->verifikator->nip_id ?? 'Belum diverifikasi' }}
+                                    {{ optional($var->verifikator)->user->name ?? 'Belum diverifikasi' }}
                                 </div>
                             </div>
                         </div>
@@ -147,16 +151,24 @@
                             <p>{{ empty($gempa) ? 'Kegempaan nihil.' : $gempa }}</p>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <form class="m-t" id="validasi" method="POST" action="{{ route('chambers.laporan.validasi') }}" accept-charset="UTF-8">
+                                @csrf
+                                <input name="noticenumber" value="{{ $var->noticenumber }}" type="hidden">
+                                <button type="submit" id="form-submit" class="btn btn-outline btn-success"><i class="fa fa-check"></i> Validasi</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="border-bottom border-left border-right bg-white p-m">
-                    <form id="verifikasi" method="POST" action="{{ route('chambers.laporan.verifikasiv1') }}" accept-charset="UTF-8">
+                    <h4 class="font-bold">Validasi untuk MAGMA v1 </h4>
+                    <form id="validasiv1" method="POST" action="{{ route('chambers.laporan.verifikasiv1') }}" accept-charset="UTF-8">
                         @csrf
                         <input name="ga_code" value="{{ $var->code_id }}" type="hidden">
-                        <input name="noticenumber" value="{{ substr_replace($var->noticenumber,'',0,4) }}" type="hidden">
-                        <div class="btn-group">
-                            <button type="submit" id="form-submit" class="btn btn-block btn-danger"><i class="fa fa-arrow-right"></i> Verifikasi Magma v1</button>
-                        </div>
+                        <input name="noticenumber" value="{{ substr($var->noticenumber,4) }}" type="hidden">
+                        <button type="submit" id="form-submit" class="btn btn-outline btn-danger"><i class="fa fa-check"></i> Validasi Magma v1</button>
                     </form>
                 </div>
 
@@ -226,7 +238,56 @@
         $(document).ready(function () {
             $('#json-renderer').jsonViewer(@json($var), {collapsed: true});
 
-            $('body').on('submit','#verifikasi',function (e) {
+            $('body').on('submit','#validasi',function (e) {
+                e.preventDefault();                
+
+                var $url = $(this).attr('action'),
+                    $data = $(this).serialize();
+                
+                    swal({
+                    title: "Verifikasi Data?",
+                    text: "Pastikan datanya sudah benar semua",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, lanjut!",
+                    cancelButtonText: "Gak jadi deh!",
+                    closeOnConfirm: false,
+                    closeOnCancel: true },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: $url,
+                            data: $data,
+                            type: 'POST',
+                            success: function(data){
+                                console.log(data);
+                                if (data.success){
+                                    swal("Berhasil!", data.message, "success");
+                                    setTimeout(function(){
+                                        location.reload();
+                                    },2000);
+                                }
+                            },
+                            error: function(data){
+                                var $errors = {
+                                    'status': data.status,
+                                    'exception': data.responseJSON.exception,
+                                    'file': data.responseJSON.file,
+                                    'line': data.responseJSON.line
+                                };
+                                console.log($errors);
+                                console.log($errors);
+                                swal("Gagal!", data.responseJSON.exception, "error");
+                            }
+                        });
+                    }
+                });
+
+                return false;
+            });
+
+            $('body').on('submit','#validasiv1',function (e) {
                 e.preventDefault();                
 
                 var $url = $(this).attr('action'),

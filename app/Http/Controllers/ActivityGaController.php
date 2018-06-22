@@ -10,6 +10,7 @@ use App\MagmaVar;
 use App\v1\MagmaVar as OldVar;
 use App\VarDaily;
 use App\User;
+use App\VarPj;
 use App\Http\Resources\VarResource;
 use App\Http\Resources\VarCollection;
 
@@ -52,7 +53,9 @@ class ActivityGaController extends Controller
         // sudo locale-gen id_ID.UTF-8
         // sudo dpkg-reconfigure locales
 
-        $var = MagmaVar::where('noticenumber',$id)->firstOrFail();
+        $var = MagmaVar::with('pj')
+            ->where('noticenumber',$id)
+            ->firstOrFail();
 
         $gempa = $this->deskripsi($var->gempa)->getGempa();
 
@@ -68,7 +71,7 @@ class ActivityGaController extends Controller
 
         $var = new VarResource($var);
         
-        return view('gunungapi.laporan.show', compact('var','visual','gempa'));
+        return view('gunungapi.laporan.show', compact('var','visual','gempa','pj'));
     }
 
     /**
@@ -155,6 +158,36 @@ class ActivityGaController extends Controller
         return view('gunungapi.laporan.search',compact('input','gadds','users'))->with('flash_message',
         'Kriteria pencarian tidak ditemukan/belum ada');
 
+    }
+
+    public function validasi(Request $request)
+    {
+        $varPj = VarPj::updateOrCreate(
+            [
+                'noticenumber_id' => $request->noticenumber,
+                'nip_id' => auth()->user()->nip
+            ],
+            [
+                
+            ]
+        );
+        
+        if($varPj)
+        {
+            $data = [
+                'success' => 1,
+                'message' => 'Berhasil Divalidasi'
+            ];
+    
+            return response()->json($data);
+        }
+
+        $data = [
+            'success' => 0,
+            'message' => 'Gagal Verifikasi'
+        ];
+
+        return response()->json($data);
     }
 
     public function verifikasiv1(Request $request)
