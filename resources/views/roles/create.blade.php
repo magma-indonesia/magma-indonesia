@@ -1,7 +1,7 @@
 @extends('layouts.default') 
 
 @section('title') 
-    MAGMA | Create User 
+    MAGMA | Create Role
 @endsection 
 
 @section('content-header')
