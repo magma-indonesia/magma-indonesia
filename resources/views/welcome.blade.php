@@ -88,7 +88,7 @@
                 </div>
             </div>
         </div>
-        <script type="text/javascript">
+        <script>
             
         function showTime() {
             var utc = new Date();
