@@ -510,7 +510,7 @@
                     </div>
                     <div class="panel-body list">
                         <div class="stats-title pull-left">
-                            <h4>Data ROQ</h4>
+                            <h4>Gempa Bumi - Data ROQ</h4>
                         </div>
                         <div class="stats-icon pull-right">
                             <i class="pe-7s-note fa-4x"></i>
