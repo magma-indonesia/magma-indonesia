@@ -80,30 +80,30 @@
                             <div class="list-item">
                                 <h3 class="no-margins font-extra-bold text-success">
                                     {{ $jumlahMga }}
-                                    <span class="pull-right font-bold">{{ $jumlahMga ? round($jumlahMga/$total*100, 2) : 0 }}% <i class="fa fa-bar-chart-o"></i></span>
+                                    <span class="pull-right">{{ $jumlahMga ? round($jumlahMga/$total*100, 2) : 0 }}%  </span>
                                 </h3>
-                                <h5>Gunung Api</h5>
+                                <h6>Gunung Api</h6>
                             </div>
                             <div class="list-item">
                                 <h3 class="no-margins font-extra-bold text-success">
                                     {{ $jumlahMgt }}
-                                    <span class="pull-right font-bold">{{ $jumlahMga ? round($jumlahMgt/$total*100, 2) : 0 }}% <i class="fa fa-bar-chart-o"></i></span>
+                                    <span class="pull-right">{{ $jumlahMga ? round($jumlahMgt/$total*100, 2) : 0 }}%  </span>
                                 </h3>
-                                <h5>Gerakan Tanah</h5>
+                                <h6>Gerakan Tanah</h6>
                             </div>
                             <div class="list-item">
                                 <h3 class="no-margins font-extra-bold text-success">
                                     {{ $jumlahMgb }}
-                                    <span class="pull-right font-bold">{{ $jumlahMgb ? round($jumlahMgb/$total*100, 2) : 0 }}% <i class="fa fa-bar-chart-o"></i></span>
+                                    <span class="pull-right">{{ $jumlahMgb ? round($jumlahMgb/$total*100, 2) : 0 }}%  </span>
                                 </h3>
-                                <h5>Gempa Bumi dan Tsunami</h5>
+                                <h6>Gempa Bumi dan Tsunami</h6>
                             </div>
                             <div class="list-item">
                                 <h3 class="no-margins font-extra-bold text-success">
                                     {{ $jumlahEtc }}
-                                    <span class="pull-right font-bold">{{ $jumlahMgb ? round($jumlahEtc/$total*100, 2) : 0 }}% <i class="fa fa-bar-chart-o"></i></span>
+                                    <span class="pull-right">{{ $jumlahMgb ? round($jumlahEtc/$total*100, 2) : 0 }}%  </span>
                                 </h3>
-                                <h5>Semburan Lumpur, Gas dan Air</h5>
+                                <h6>Semburan Lumpur, Gas dan Air</h6>
                             </div>
                         </div>
 

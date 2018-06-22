@@ -130,7 +130,7 @@
             // Initialize table
             $('.table-daily').dataTable({
                 dom: "<'row'<'col-sm-4'l><'col-sm-2 text-center'B><'col-sm-6'f>>tp",
-                "lengthMenu": [[5, 25, 50, -1], [5, 25, 50, "All"]]
+                "lengthMenu": [[8, 24, 50, -1], [8, 24, 50, "All"]]
             });   
 
         });
