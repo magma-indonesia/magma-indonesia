@@ -39,7 +39,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($gadds as $gadd)
-                                    <tr class="click-here" data-href="{{ route('chambers.laporan.show',$gadd->latestVar->noticenumber ) }}" title="{{ $gadd->latestVar->status->status }}">
+                                    <tr title="{{ $gadd->latestVar->status->status }}">
                                         <td class="{{ $gadd->latestVar->statuses_desc_id }}">{{ $gadd->name }}</td>
                                         <td>
                                             <span class="pie">{{ $gadd->latestVar->var_data_date->formatLocalized('%A, %d %B %Y').', '.$gadd->latestVar->periode }}</span>
