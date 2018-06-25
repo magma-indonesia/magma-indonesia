@@ -49,6 +49,12 @@ Route::group(['prefix' => 'gunungapi'], function () {
     Route::resource('laporan','ActivityGaController');
 });
 
+Route::name('gerakantanah.')->group(function() {
+    Route::group(['prefix' => 'gerakantanah'], function () {
+        Route::resource('laporan','ActivityMgtController');
+    });
+});
+
 Route::name('gempabumi.')->group(function () {
     Route::group(['prefix' => 'gempabumi'], function () {
         Route::resource('tanggapan','RoqTanggapanController');
