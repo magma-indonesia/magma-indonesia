@@ -90,7 +90,7 @@
                         <i class="fa fa-eye"> </i> {{ $ven->page_views }}
                     </div>
                     <div class="panel-footer">
-                        <img style="max-width: 60px;float: left;display: inline-block;" src="http://chamber.localhost/images/logo/esdm.gif">
+                    <img style="max-width: 60px;float: left;display: inline-block;" src="{{ url('/') }}/images/logo/esdm.gif">
                         <div style="padding-left: 15px;display: inline-block;">
                             <h7>Kementerian Energi dan Sumber Daya Mineral</h7>
                             <h6 class="font-bold">Badan Geologi</h6>
