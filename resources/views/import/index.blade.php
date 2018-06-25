@@ -506,14 +506,14 @@
             <div class="col-lg-3">
                 <div class="hpanel stats">
                     <div class="panel-heading">
-                        Magma ROQ
+                        Gempa Bumi - Magma ROQ
                     </div>
                     <div class="panel-body list">
                         <div class="stats-title pull-left">
-                            <h4>Gempa Bumi - Data ROQ</h4>
+                            <h4>Data ROQ</h4>
                         </div>
                         <div class="stats-icon pull-right">
-                            <i class="pe-7s-note fa-4x"></i>
+                            <i class="pe-7s-more fa-4x"></i>
                         </div>
                         <div class="m-t-xl">
                             <span class="font-bold no-margins">
@@ -537,6 +537,46 @@
                             @csrf
                             <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
                                 <span class="ladda-label">Import Data ROQ</span>
+                                <span class="ladda-spinner"></span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="hpanel stats">
+                    <div class="panel-heading">
+                        Gerakan Tanah - Magma Sigertan (QLS)
+                    </div>
+                    <div class="panel-body list">
+                        <div class="stats-title pull-left">
+                            <h4>Data Gerakan Tanah</h4>
+                        </div>
+                        <div class="stats-icon pull-right">
+                            <i class="pe-7s-world fa-4x"></i>
+                        </div>
+                        <div class="m-t-xl">
+                            <span class="font-bold no-margins">
+                                Import Data MAGMA Sigertan (QLS)
+                            </span>
+                            <br/>
+                            <small>
+                                Panel ini digunakan untuk meng-import data MAGMA-SIGERTAN v1
+                            </small>
+                        </div>
+                        <div class="row m-t-md">
+                            <div class="col-lg-6">
+                                <h3 class="no-margins font-extra-bold text-success jumlah-sigertan">{{ number_format($sigertan,0,',','.') }}</h3>
+                                <div class="font-bold"><i class="fa fa-level-up text-success"></i> Jumlah data Sigertan</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer text-center">
+                        <form role="form" id="form-import" method="POST"
+                        data-import="sigertan" action="{{ route('chambers.import.sigertan') }}">
+                            @csrf
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
+                                <span class="ladda-label">Import Sigertan</span>
                                 <span class="ladda-spinner"></span>
                             </button>
                         </form>
