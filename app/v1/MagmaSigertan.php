@@ -14,13 +14,143 @@ class MagmaSigertan extends Model
 
     protected $table = 'magma_sigertan';
 
-    public function getQlsTglAttribute($value)
+    /**
+     * Satuan Bentang Alam
+     *
+     * @param string $value
+     * @return void
+     */
+    public function getQlsSbaAttribute(string $value)
     {
-        return explode('#',$value);
+        return empty($value) ? null : explode('#',$value);
     }
 
-    public function getQlsZkgAttribute($value)
+    /**
+     * Kemiringan lereng kualitatif (pilihan: 
+     * "Datar (flat) : 0 - 2 derajat", 
+     * "Agak miring (gently slope) : 2 - 4 derajat",
+     * "Miring (sloping) : 4 - 8 derajat",
+     * "Agak curam (moderately steep) : 8 - 16 derajat", 
+     * "Curam (steep) : 16 - 35 derajat",
+     * "Sangat curam (very steep) : 35 - 55 derajat",
+     * "Hampir tegak (extremely steep) : > 55 derajat"
+     *
+     * @param string $value
+     * @return void
+     */
+    public function getQlsMrlAttribute(string $value)
     {
-        return explode('#',$value);
+        return empty($value) ? null : explode('#',$value);
+    }
+
+    /**
+     * Jenis Batuan
+     *
+     * @param string $value
+     * @return void
+     */
+    public function getQlsJbtAttribute(string $value)
+    {
+        return empty($value) ? null : $value;
+    }
+
+    /**
+     * Formasi Batuan
+     *
+     * @param string $value
+     * @return void
+     */
+    public function getQlsFrmAttribute(string $value)
+    {
+        return empty($value) ? null : $value;
+    }
+
+    /**
+     * Struktur Geologi
+     *
+     * @param string $value
+     * @return void
+     */
+    public function getQlsStrAttribute(string $value)
+    {
+        return empty($value) ? null : $value;
+    }
+
+    /**
+     * Jenis tanah pelapukan
+     *
+     * @param string $value
+     * @return void
+     */
+    public function getQlsJtpAttribute(string $value)
+    {
+        return empty($value) ? null : $value;
+    }
+
+    /**
+     * Tipe keairan
+     *
+     * @param string $value
+     * @return void
+     */
+    public function getQlsAirAttribute(string $value)
+    {
+        return empty($value) ? null : explode('#',$value);
+    }
+
+    /**
+     * Tipe gerakan tanah
+     *
+     * @param string $value
+     * @return void
+     */
+    public function getQlsTgtAttribute(string $value)
+    {
+        return empty($value) ? null : $value;
+    }
+
+    /**
+     * Material gerakan tanah
+     *
+     * @param string $value
+     * @return void
+     */
+    public function getQlsMgtAttribute(string $value)
+    {
+        return empty($value) ? null : $value;
+    }
+
+    /**
+     * Tata guna lahan
+     *
+     * @param string $value
+     * @return void
+     */
+    public function getQlsTglAttribute(string $value)
+    {
+        return empty($value) ? null : explode('#',$value);
+    }
+
+    /**
+     * Formasi Prakiraan kerentanan gerakan tanah 
+     * (pilihan: Rendah, Menengah, Tinggi)
+     *
+     * @param string $value
+     * @return void
+     */
+    public function getQlsZkgAttribute(string $value)
+    {
+        return empty($value) ? null : explode('#',$value);
+    }
+
+    /**
+     * Faktor penyebab gerakan tanah
+     *
+     * @param string $value
+     * @return void
+     */
+    public function getQlsCauAttribute(string $value)
+    {
+        return empty($value) ? null : explode('#',$value);
     }
 }
