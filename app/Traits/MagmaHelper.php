@@ -8,11 +8,20 @@ use App\PosPga;
 use App\TempTable;
 use App\Import;
 use App\Kantor;
+use App\MagmaSigertan;
 
 use App\Notifications\ImportNotification;
 
 trait MagmaHelper
 {
+
+    private function sigertanExists($noticenumber)
+    {
+        $exists = MagmaSigertan::where('noticenumber','like',$noticenumber)->exists();
+
+        return $exists;
+    }
+
     /**     
      *   Untuk mengirim notifikasi ke Slack
      *   @param string $type jenis notifikasi
@@ -179,6 +188,83 @@ trait MagmaHelper
                         ->first();
 
             $end        = $end->id_abs;
+        }
+
+        if($type == 'qls')
+        {
+            $end        = DB::connection('magma')
+                        ->table('magma_sigertan')
+                        ->select('qls_idx')
+                        ->orderBy('qls_idx','desc')
+                        ->first();
+
+            $end        = $end->qls_idx;
+        }
+
+        if($type == 'qls_rec')
+        {
+            $end        = DB::connection('magma')
+                        ->table('magma_qls_rec')
+                        ->select('rec_idx')
+                        ->orderBy('rec_idx','desc')
+                        ->first();
+
+            $end        = $end->rec_idx;
+        }
+
+        if($type == 'qls_atm')
+        {
+            $end        = DB::connection('magma')
+                        ->table('magma_qls_atm')
+                        ->select('atm_idx')
+                        ->orderBy('atm_idx','desc')
+                        ->first();
+
+            $end        = $end->atm_idx;
+        }
+
+        if($type == 'qls_ver')
+        {
+            $end        = DB::connection('magma')
+                        ->table('magma_qls_ver')
+                        ->select('ver_idx')
+                        ->orderBy('ver_idx','desc')
+                        ->first();
+
+            $end        = $end->ver_idx;
+        }
+
+        if($type == 'qls_sta')
+        {
+            $end        = DB::connection('magma')
+                        ->table('magma_qls_trb')
+                        ->select('trb_idx')
+                        ->orderBy('trb_idx','desc')
+                        ->first();
+
+            $end        = $end->trb_idx;
+        }
+
+        if($type == 'qls_kej')
+        {
+            $end        = DB::connection('magma')
+                        ->table('magma_qls_fst')
+                        ->select('fst_idx')
+                        ->orderBy('fst_idx','desc')
+                        ->first();
+
+            $end        = $end->fst_idx;
+        }
+
+        if($type == 'qls_sos')
+        {
+            $end        = DB::connection('magma')
+                        ->table('magma_qls_sos')
+                        ->select('sos_idx')
+                        ->orderBy('sos_idx','desc')
+                        ->first();
+
+            $end        = $end->sos_idx;
         }
         
         return $end;

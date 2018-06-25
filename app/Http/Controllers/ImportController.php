@@ -9,33 +9,53 @@ use Carbon\Carbon;
 use Validate;
 use App\Traits\MagmaHelper;
 use App\Traits\JenisGempa;
+
 use App\User;
 use App\UserBidang;
+use App\Absensi;
+use App\Kantor;
+
 use App\Gadd;
 use App\PosPga;
 use App\MagmaVar;
+use App\MagmaVen;
 use App\VarDaily;
 use App\VarVisual;
 use App\VarAsap;
 use App\VarKlimatologi;
+use App\VarLetusan;
 use App\VarPj;
 use App\VarVerifikator;
 use App\VarGempa;
 use App\Status;
+use App\Vona;
+use App\VonaSubscriber;
+
 use App\SigertanCrs;
 use App\SigertanCrsDevices;
 use App\SigertanCrsValidasi;
-use App\Vona;
-use App\VonaSubscriber;
-use App\MagmaVen;
-use App\VarLetusan;
+use App\MagmaSigertan;
+use App\SigertanGeologi;
+use App\SigertanKerusakan;
+use App\SigertanKondisi;
+use App\SigertanRekomendasi;
+use App\SigertanAnggotaTim;
+use App\SigertanVerifikator;
+use App\SigertanStatus;
+use App\SigertanFotoKejadian;
+use App\SigertanFotoSosialisasi;
+
 use App\MagmaRoq;
 use App\RoqTanggapan;
-use App\Absensi;
-use App\Kantor;
 
 use App\v1\GertanCrs as OldCrs;
 use App\v1\MagmaSigertan as OldSigertan;
+use App\v1\SigertanRekomendasi as OldSigertanRekomendasi;
+use App\v1\SigertanAnggotaTim as OldSigertanTim;
+use App\v1\SigertanVerifikator as OldSigertanVerifikator;
+use App\v1\SigertanStatus as OldSigertanStatus;
+use App\v1\SigertanFotoKejadian as OldSigertanKejadian;
+use App\v1\SigertanFotoSosialisasi as OldSigertanSosialisasi;
 use App\v1\Vona as OldVona;
 use App\v1\MagmaVar as OldVar;
 use App\v1\VonaSubscriber as OldSub;
@@ -1477,9 +1497,240 @@ class ImportController extends Controller
 
     public function sigertan()
     {
-        $qlses = OldSigertan::paginate(5);
+        $items = OldSigertan::whereBetween('qls_idx',[$this->startNo('qls'),$this->endNo('qls')])->get();
+        $items->each(function ($item,$key) {
 
-        return $qlses;
+            $no = $item->qls_idx;
+            $noticenumber = $item->qls_ids;
+            $crs = $item->crs_ids;
+            $lokasi = empty($item->qls_lok) ? null : $item->qls_lok;
+            $geologi = empty($item->qls_geo) ? null : $item->qls_geo;
+            $situasi = empty($item->qls_pst) ? null : $item->qls_pst;
+            $disposisi = $item->qls_dis;
+            $nip_ketua = $item->qls_ktm == '196308231993031001' ? '196308231993061001' : $item->qls_ktm;
+            $nip_ketua = $nip_ketua == '197307232006041002' ? '197307232006041001' : $nip_ketua;
+            $nip_ketua = empty($nip_ketua) ? '196508231994031001' :  $nip_ketua;
+
+            $createQls = MagmaSigertan::firstOrCreate(
+                [
+                    'noticenumber' => $item->qls_ids,
+                    'crs_id' => $crs
+                ],
+                [
+                    'peta_lokasi' => $lokasi,
+                    'peta_geologi' => $geologi,
+                    'peta_situasi' => $situasi,
+                    'disposisi' => $disposisi,
+                    'nip_ketua' => $nip_ketua,
+                    'created_at' => $item->qls_tfn == '0000-00-00 00:00:00' ?  '2017-01-01 00:00:00' : $item->qls_tfn,
+                    'updated_at' => $item->qls_led
+                ]
+            );
+
+            $createQls = SigertanGeologi::firstOrCreate(
+                [
+                    'noticenumber_id' => $item->qls_ids,
+                ],
+                [
+                    'bentang_alam' => $item->qls_sba,
+                    'kemiringan_lereng' => $item->qls_mrl,
+                    'kemiringan_lereng_rata' => $item->qls_mra,
+                    'ketinggian' => $item->qls_elv,
+                    'jenis_batuan' => $item->qls_jbt,
+                    'formasi_batuan' => $item->qls_frm,
+                    'struktur_geologi' => $item->qls_str,
+                    'jenis_tanah' => $item->qls_jtp,
+                    'ketebalan_tanah' => $item->qls_ktp,
+                    'tipe_keairan' => $item->qls_air,
+                    'muka_air_tanah' => $item->qls_dep,
+                    'tata_guna_lahan' => $item->qls_tgl
+                ]
+            );
+            
+            $createQls = SigertanKondisi::firstOrCreate(
+                [
+                    'noticenumber_id' => $item->qls_ids,
+                ],
+                [
+                    'prakiraan_kerentanan' => $item->qls_zkg,
+                    'tipe_gerakan' => $item->qls_tgt,
+                    'material' => $item->qls_mgt,
+                    'arah_longsoran' => $item->qls_dir,
+                    'panjang_total' => $item->qls_ptl,
+                    'lebar_massa' => $item->qls_lmb,
+                    'panjang_massa' => $item->qls_pmb,
+                    'ketebalan_massa' => $item->qls_kmb,
+                    'lebar_bidang' => $item->qls_lbl,
+                    'panjang_bidang' => $item->qls_pbl,
+                    'ketebalan_bidang' => $item->qls_kbl,
+                    'faktor_penyebab' => $item->qls_cau
+                ]
+            );
+
+            $createQls = SigertanKerusakan::firstOrCreate(
+                [
+                    'noticenumber_id' => $item->qls_ids,
+                ],
+                [
+                    'meninggal' => $item->qls_kmd,
+                    'luka' => $item->qls_kll,
+                    'rumah_rusak' => $item->qls_rrk,
+                    'rumah_hancur' => $item->qls_rhc,
+                    'rumah_terancam' => $item->qls_rtr,
+                    'bangunan_rusak' => $item->qls_blr,
+                    'bangunan_hancur' => $item->qls_blh,
+                    'bangunan_terancam' => $item->qls_bla,
+                    'lahan_rusak' => $item->qls_llp,
+                    'jalan_rusak' => $item->qls_pjr
+                ]
+            );
+
+            if ($createQls)
+            {
+                $this->temptable('qls',$no);
+            }
+
+        });
+
+        $rekomendasi = OldSigertanRekomendasi::whereBetween('rec_idx',[$this->startNo('qls_rec'),$this->endNo('qls_rec')])->get();
+        $rekomendasi->each(function ($item,$key) {
+            if ($this->sigertanExists($item->qls_ids)) {
+                $no = $item->rec_idx;
+                $createQls = SigertanRekomendasi::firstOrCreate(
+                    [
+                        'noticenumber_id' => $item->qls_ids,
+                    ],
+                    [
+                        'rekomendasi' => $item->qls_rec
+                    ]
+                );
+    
+                if ($createQls)
+                {
+                    $this->temptable('qls_rec',$no);
+                }
+            }
+        });
+
+        $anggota = OldSigertanTim::whereBetween('atm_idx',[$this->startNo('qls_atm'),$this->endNo('qls_atm')])->get();
+        $anggota->each(function($item,$key) {
+            if ($this->sigertanExists($item->qls_ids)) {
+                $no = $item->atm_idx;
+                $createQls = SigertanAnggotaTim::firstOrCreate(
+                    [
+                        'noticenumber_id' => $item->qls_ids,
+                        'nip_id' => $item->qls_atm
+                    ],
+                    [
+                        
+                    ]
+                );
+    
+                if ($createQls)
+                {
+                    $this->temptable('qls_atm',$no);
+                }
+            }
+        });
+
+        $verifikator = OldSigertanVerifikator::whereBetween('ver_idx',[$this->startNo('qls_ver'),$this->endNo('qls_ver')])->get();
+        $verifikator->each(function($item,$key) {
+            if ($this->sigertanExists($item->qls_ids)) {
+                $no = $item->ver_idx;
+                $createQls = SigertanVerifikator::firstOrCreate(
+                    [
+                        'noticenumber_id' => $item->qls_ids,
+                    ],
+                    [
+                        'nip_id' => $item->qls_ver
+                    ]
+                );
+    
+                if ($createQls)
+                {
+                    $this->temptable('qls_ver',$no);
+                }
+            }
+        });
+
+        $status = OldSigertanStatus::whereBetween('trb_idx',[$this->startNo('qls_sta'),$this->endNo('qls_sta')])->get();    
+        $status->each(function($item,$key) {
+            if ($this->sigertanExists($item->qls_ids)) {
+                $no = $item->trb_idx;
+                $createQls = SigertanStatus::firstOrCreate(
+                    [
+                        'noticenumber_id' => $item->qls_ids,
+                    ],
+                    [
+                        'nip_penerbit' => $item->qls_trb,
+                        'status' => $item->trb_act == 'TERBIT' ? 1 : 0,
+                    ]
+                );
+    
+                if ($createQls)
+                {
+                    $this->temptable('qls_sta',$no);
+                }
+            }
+        });
+
+        $kejadian = OldSigertanKejadian::whereBetween('fst_idx',[$this->startNo('qls_kej'),$this->endNo('qls_kej')])->get();  
+        $kejadian->each(function($item,$key) {
+            if ($this->sigertanExists($item->qls_ids)) {
+                $no = $item->fst_idx;
+
+                $createQls = SigertanFotoKejadian::firstOrCreate(
+                    [
+                        'noticenumber_id' => $item->qls_ids,
+                        'filename' => $item->qls_fst
+                    ],
+                    [
+                        
+                    ]
+                );
+    
+                if ($createQls)
+                {
+                    $this->temptable('qls_kej',$no);
+                }
+            }
+        });
+
+        $sosialisasi = OldSigertanSosialisasi::whereBetween('sos_idx',[$this->startNo('qls_sos'),$this->endNo('qls_sos')])->get();
+        $sosialisasi->each(function($item,$key) {
+            if ($this->sigertanExists($item->qls_ids)) {
+                $no = $item->sos_idx;
+
+                $createQls = SigertanFotoSosialisasi::firstOrCreate(
+                    [
+                        'noticenumber_id' => $item->qls_ids,
+                        'filename' => $item->qls_sos,
+                    ],
+                    [
+                        
+                    ]
+                );
+
+                if ($createQls)
+                {
+                    $this->temptable('qls_sos',$no);
+                }
+            }
+        });
+
+        try {
+            $this->sendNotif('Data Sigertan');
+        } catch (Exception $e) {
+
+        }
+        
+        $data = [
+            'success' => 1,
+            'message' => 'Data Sigertan berhasil diperbarui',
+            'count' => MagmaSigertan::count()
+        ];
+
+        return response()->json($data);
     }
 
     /**
@@ -1594,6 +1845,7 @@ class ImportController extends Controller
         $vens = MagmaVen::count();
         $roq =  MagmaRoq::count();
         $absensi = Absensi::count();
+        $sigertan = MagmaSigertan::count();
         
         return view('import.index',compact(
             'users',
@@ -1610,7 +1862,8 @@ class ImportController extends Controller
             'subs',
             'vens',
             'roq',
-            'absensi'
+            'absensi',
+            'sigertan'
             )
         );
     }
