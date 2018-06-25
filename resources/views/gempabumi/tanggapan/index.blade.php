@@ -57,7 +57,7 @@
                                         <th>Info Gempa</th>
                                         <th>Pelapor</th>
                                         <th>Pemeriksa</th>
-                                        <th>Action</th>
+                                        <th style="min-width: 180px;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -68,8 +68,8 @@
                                         <td>{{ $res->pelapor->name }}</td>
                                         <td>{{ $res->pemeriksa->name ?? 'Belum ada' }}</td>
                                         <td>
-                                            <a href="{{ route('chambers.gempabumi.tanggapan.show',['noticenumber_id'=> $res->noticenumber]) }}" class="btn btn-sm btn-info btn-outline" style="margin-right: 3px;">View</a>
-                                            <a href="{{ route('chambers.gempabumi.tanggapan.edit',['noticenumber_id'=> $res->noticenumber]) }}" class="btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a> 
+                                            <a href="{{ route('chambers.gempabumi.tanggapan.show',$res->noticenumber_id) }}" class="btn btn-sm btn-info btn-outline" style="margin-right: 3px;">View</a>
+                                            <a href="{{ route('chambers.gempabumi.tanggapan.edit',$res->noticenumber_id) }}" class="btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a> 
                                             @role('Super Admin')
                                             <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.gempabumi.tanggapan.destroy',['noticenumber_id' => $res->noticenumber]) }}" accept-charset="UTF-8">
                                                 @method('DELETE')

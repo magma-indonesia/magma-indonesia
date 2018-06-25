@@ -62,7 +62,7 @@
                                         <th>Kota Terdekat</th>
                                         <th>Gunung Api Terdekat</th>
                                         <th>Tanggapan</th>
-                                        <th>Tanggapan</th>
+                                        <th style="min-width: 240px;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
