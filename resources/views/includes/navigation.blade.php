@@ -46,7 +46,7 @@
             <li class="{{ active('chambers.import.*') }}">
                 <a href="{{ route('chambers.import.index') }}">
                     <span class="nav-label">Import</span>
-                    <span class="label label-success pull-right">v.1</span>
+                    <span class="label label-magma pull-right">v.1</span>
                 </a>
             </li>
             <li class="{{ active('chambers.roles.*') }}">

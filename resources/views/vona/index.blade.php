@@ -42,10 +42,10 @@
                     <div class="panel-body float-e-margins">
                         <div class="row">
                             <div class="col-md-4 col-lg-2 col-sm-12 col-xs-12">
-                                <a href="{{ route('chambers.vona.create') }}" class="btn btn-outline btn-block btn-success" type="button">Buat VONA Baru</a>
+                                <a href="{{ route('chambers.vona.create') }}" class="btn btn-outline btn-block btn-magma" type="button">Buat VONA Baru</a>
                             </div>
                             <div class="col-md-4 col-lg-2 col-sm-12 col-xs-12">
-                                <a href="{{ route('chambers.vona.draft') }}" class="btn btn-outline btn-block btn-success" type="button">Draft VONA</a>
+                                <a href="{{ route('chambers.vona.draft') }}" class="btn btn-outline btn-block btn-magma" type="button">Draft VONA</a>
                             </div>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
                                         <td>{{ $vona->vch_asl > 0 ? $vona->vch_asl.' meter' : 'Tidak teramati' }}</td>
                                         <td>{{ $vona->user->name }}</td>
                                         <td>
-                                            <a href="{{ route('chambers.vona.edit',['uuid'=>$vona->uuid]) }}" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">Edit</a>                                                                                        
+                                            <a href="{{ route('chambers.vona.edit',['uuid'=>$vona->uuid]) }}" class="btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">Edit</a>                                                                                        
                                             @role('Super Admin')
                                             <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.vona.destroy',['uuid'=>$vona->uuid]) }}" accept-charset="UTF-8">
                                                 @method('DELETE')

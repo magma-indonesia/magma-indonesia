@@ -107,7 +107,7 @@
                                 <label class="error" for="end">{{ ucfirst($errors->first('end')) }}</label>
                                 @endif
                             </div>
-                            <button class="btn btn-success btn-block" type="submit">Apply</button>
+                            <button class="btn btn-magma btn-block" type="submit">Apply</button>
                         </form>
                     </div>
                 </div>
@@ -133,7 +133,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="pagination pull-right">
-                                    <a href="{{ route('chambers.export',['type' => 'var',Request::getQueryString()]) }}" type="button" class="btn btn-sm btn-success m-b-t">Save to Excel</a>
+                                    <a href="{{ route('chambers.export',['type' => 'var',Request::getQueryString()]) }}" type="button" class="btn btn-sm btn-magma m-b-t">Save to Excel</a>
                                 </div>
                             </div>
                         </div>
@@ -161,7 +161,7 @@
                                         <td>{{ $var->user->name }}</td>
                                         <td>
                                             <a href="">
-                                                <a href="{{ route('chambers.laporan.show',$var->noticenumber ) }}" target="_blank" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">View</a>
+                                                <a href="{{ route('chambers.laporan.show',$var->noticenumber ) }}" target="_blank" class="btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">View</a>
                                             </a>
                                         </td>
                                     </tr>

@@ -5,7 +5,7 @@
             <h4>Bridging the Will of Nature to Society</h4>
             <hr>
 			<h2>"Bekerjalah tanpa mengeluh dan bergunalah untuk orang lain"</h2>
-			<div class="spinner">
+			<div class="spinner magma">
 				<div class="rect1"></div>
 				<div class="rect2"></div>
 				<div class="rect3"></div>

@@ -70,7 +70,7 @@
                                         <td>{{ $role->name }}</td>
                                         <td>{{ $role->permissions()->pluck('name')->implode(', ') }}</td>
                                         <td>
-                                            <a href="{{ route('chambers.roles.edit',['id'=>$role->id]) }}" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">Edit</a>
+                                            <a href="{{ route('chambers.roles.edit',['id'=>$role->id]) }}" class="btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">Edit</a>
                                             <form style="display:inline" method="POST" action="{{ route('chambers.roles.destroy',['id'=>$role->id]) }}" accept-charset="UTF-8">
                                                 {{ method_field('DELETE') }}
                                                 {{ csrf_field() }}

@@ -156,7 +156,7 @@
                             <form class="m-t" id="validasi" method="POST" action="{{ route('chambers.laporan.validasi') }}" accept-charset="UTF-8">
                                 @csrf
                                 <input name="noticenumber" value="{{ $var->noticenumber }}" type="hidden">
-                                <button type="submit" id="form-submit" class="btn btn-outline btn-success"><i class="fa fa-check"></i> Validasi</button>
+                                <button type="submit" id="form-submit" class="btn btn-outline btn-magma"><i class="fa fa-check"></i> Validasi</button>
                             </form>
                         </div>
                     </div>
@@ -203,7 +203,7 @@
                             <div class="col-sm-3">
                                 <div class="hpanel">
                                     <div class="panel-body file-body">
-                                        <i class="fa fa-file-excel-o text-success"></i>
+                                        <i class="fa fa-file-excel-o text-magma"></i>
                                     </div>
                                     <div class="panel-footer">
                                         <a href="#">Sheets_2016.doc</a>
@@ -216,7 +216,7 @@
 
                 <div class="panel-footer text-right">
                     <div class="btn-group">
-                        <button class="btn btn-outline btn-block btn-success"><i class="fa fa-arrow-right"></i> Verifikasi Magma v1</button>
+                        <button class="btn btn-outline btn-block btn-magma"><i class="fa fa-arrow-right"></i> Verifikasi Magma v1</button>
                     </div>
                 </div>
             </div>

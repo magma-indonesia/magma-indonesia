@@ -40,7 +40,7 @@
             <div class="row">
                 @foreach($chunk as $gadd)
                 <div class="col-xs-12 col-md-4 col-lg-4">
-                    <div class="hpanel plan-box hgreen active">
+                    <div class="hpanel plan-box hmagma active">
                         <div class="panel-heading hbuilt text-center">
                             <h4 class="font-bold">{{ $gadd->name }}</h4>
                         </div>
@@ -99,7 +99,7 @@
                                 </dd>
                             </dl>
 
-                            <a href="{{ route('chambers.datadasar.edit',['id'=>$gadd->id]) }}" class="btn btn-success btn-sm m-t-xs">Edit</a>
+                            <a href="{{ route('chambers.datadasar.edit',['id'=>$gadd->id]) }}" class="btn btn-magma btn-sm m-t-xs">Edit</a>
                         </div>
                     </div>
                 </div>

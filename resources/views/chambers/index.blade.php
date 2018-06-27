@@ -86,7 +86,7 @@
 
                         <h1 class="m-xs">$1 206,90</h1>
 
-                        <h3 class="font-extra-bold no-margins text-success">
+                        <h3 class="font-extra-bold no-margins text-magma">
                             All Income
                         </h3>
                         <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit vestibulum.</small>
@@ -112,7 +112,7 @@
                             </span>
 
                             <div class="progress m-t-xs full progress-small">
-                                <div style="width: 55%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="55" role="progressbar" class=" progress-bar progress-bar-success">
+                                <div style="width: 55%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="55" role="progressbar" class=" progress-bar progress-bar-magma">
                                     <span class="sr-only">35% Complete (success)</span>
                                 </div>
                             </div>
@@ -145,7 +145,7 @@
                             <i class="pe-7s-monitor fa-4x"></i>
                         </div>
                         <div class="m-t-xl">
-                            <h1 class="text-success">860k+</h1>
+                            <h1 class="text-magma">860k+</h1>
                             <span class="font-bold no-margins">
                                 Social users
                             </span>
@@ -185,7 +185,7 @@
                                 <div class="col-xs-7">
                                     <small class="stat-label">Last week</small>
                                     <h4>$7 980,60
-                                        <i class="fa fa-level-up text-success"></i>
+                                        <i class="fa fa-level-up text-magma"></i>
                                     </h4>
                                 </div>
                             </div>
@@ -230,17 +230,17 @@
                         </div>
                         <div class="row m-t-md">
                             <div class="col-lg-6">
-                                <h3 class="no-margins font-extra-bold text-success">300,102</h3>
+                                <h3 class="no-margins font-extra-bold text-magma">300,102</h3>
 
                                 <div class="font-bold">98%
-                                    <i class="fa fa-level-up text-success"></i>
+                                    <i class="fa fa-level-up text-magma"></i>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <h3 class="no-margins font-extra-bold text-success">280,200</h3>
+                                <h3 class="no-margins font-extra-bold text-magma">280,200</h3>
 
                                 <div class="font-bold">98%
-                                    <i class="fa fa-level-up text-success"></i>
+                                    <i class="fa fa-level-up text-magma"></i>
                                 </div>
                             </div>
                         </div>
@@ -312,7 +312,7 @@
                                         <td>Jul 14, 2013</td>
                                         <td>
                                             <a href="">
-                                                <i class="fa fa-check text-success"></i>
+                                                <i class="fa fa-check text-magma"></i>
                                             </a>
                                         </td>
                                     </tr>
@@ -411,10 +411,10 @@
                         <small class="fo">This is simple example</small>
                         <div class="list-item-container">
                             <div class="list-item">
-                                <h3 class="no-margins font-extra-bold text-success">2,773</h3>
+                                <h3 class="no-margins font-extra-bold text-magma">2,773</h3>
                                 <small>Tota Messages Sent</small>
                                 <div class="pull-right font-bold">98%
-                                    <i class="fa fa-level-up text-success"></i>
+                                    <i class="fa fa-level-up text-magma"></i>
                                 </div>
                             </div>
                             <div class="list-item">
@@ -432,10 +432,10 @@
                                 </div>
                             </div>
                             <div class="list-item">
-                                <h3 class="no-margins font-extra-bold text-success">1,450</h3>
+                                <h3 class="no-margins font-extra-bold text-magma">1,450</h3>
                                 <small>Tota Messages Sent</small>
                                 <div class="pull-right font-bold">44%
-                                    <i class="fa fa-level-up text-success"></i>
+                                    <i class="fa fa-level-up text-magma"></i>
                                 </div>
                             </div>
                         </div>

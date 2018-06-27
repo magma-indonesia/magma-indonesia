@@ -57,7 +57,7 @@
                                     <th>Email</th>
                                     <th>Phone</th>
                                     <th>Status</th>
-                                    <th>Action</th>
+                                    <th style="min-width: 180px;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -75,7 +75,7 @@
                                         <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.users.destroy',['id'=>$user->id]) }}" accept-charset="UTF-8">
                                             @method('DELETE')
                                             @csrf
-                                            <a href="{{ route('chambers.users.edit',['id'=>$user->id]) }}" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">Edit</a>                                            
+                                            <a href="{{ route('chambers.users.edit',['id'=>$user->id]) }}" class="btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">Edit</a>                                            
                                             <button value="Delete" class="btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
                                         </form>
                                     </td>

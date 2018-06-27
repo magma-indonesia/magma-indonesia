@@ -61,7 +61,7 @@
                     <div class="panel-body float-e-margins m-b">
                         <div class="row text-center">
                             <div class="col-md-4 col-lg-2 col-sm-6 col-xs-12">
-                                <a href="{{ route('chambers.administratif.jabatan.create') }}" class="btn btn-outline btn-block btn-success" type="button">Buat Jabatan Baru</a>
+                                <a href="{{ route('chambers.administratif.jabatan.create') }}" class="btn btn-outline btn-block btn-magma" type="button">Buat Jabatan Baru</a>
                             </div>
                             <div class="col-md-4 col-lg-2 col-sm-6 col-xs-12">
                                 <a href="{{ route('chambers.users.administrasi.index') }}" class="btn btn-block btn-outline btn-warning" type="button">Tambahkan Jabatan ke User</a>
@@ -72,9 +72,9 @@
                         <table id="table-jabatan" class="table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th style="width: 25px;">#</th>
                                     <th>Jabatan</th>
-                                    <th>Action</th>
+                                    <th style="min-width: 100px;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -86,7 +86,7 @@
                                         <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.administratif.jabatan.destroy',['id'=>$jabatan->id]) }}" accept-charset="UTF-8">
                                             @method('DELETE')
                                             @csrf
-                                            <button type="button" value="{{ $jabatan->id }}" class="btn btn-sm btn-success btn-outline edit" data-toggle="modal" data-target="#edit">Edit</button>
+                                            <button type="button" value="{{ $jabatan->id }}" class="btn btn-sm btn-magma btn-outline edit" data-toggle="modal" data-target="#edit">Edit</button>
                                             <button value="Delete" class="btn btn-sm btn-danger delete" type="submit" title="Delete {{ $jabatan->nama }}"><i class="fa fa-trash-o"></i> <span class="bold">Delete</span></button>
                                         </form>
                                     </td>

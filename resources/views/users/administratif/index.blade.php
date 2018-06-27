@@ -83,7 +83,7 @@
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->nip }}</td>
-                                    <td>{{ $user->bidang->deskriptif->nama }}</td>
+                                    <td>{{ optional(optional($user->bidang)->deskriptif)->nama }}</td>
                                     <td>null</td>
                                     <td>null</td>
                                     <td>null</td>

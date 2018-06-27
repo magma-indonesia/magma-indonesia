@@ -84,7 +84,7 @@
                                             @if(optional($roq->tanggapan)->nip_pelapor)
                                             <a href="{{ route('chambers.gempabumi.tanggapan.edit',['noticenumber_id'=> $roq->noticenumber]) }}" class="btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>   
                                             @else
-                                            <a href="{{ route('chambers.gempabumi.tanggapan.create') }}" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">Buat</a>   
+                                            <a href="{{ route('chambers.gempabumi.tanggapan.create') }}" class="btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">Buat</a>   
                                             @endif
                                             @role('Super Admin')
                                             <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.gempabumi.destroy',['id' => $roq->id]) }}" accept-charset="UTF-8">

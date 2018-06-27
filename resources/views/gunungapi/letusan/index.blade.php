@@ -44,7 +44,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="col-md-4 col-lg-2 col-sm-6 col-xs-12">
-                            <a href="{{ route('chambers.letusan.create') }}" class="btn btn-outline btn-block btn-success" type="button">Buat Informasi Letusan</a>
+                            <a href="{{ route('chambers.letusan.create') }}" class="btn btn-outline btn-block btn-magma" type="button">Buat Informasi Letusan</a>
                         </div>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
                                         <td>{{ $ven->durasi > 0 ?  $ven->durasi : 'Tidak Teramati' }}</td>
                                         <td>{{ $ven->user->name }}</td>
                                         <td>
-                                            <a href="{{ route('chambers.letusan.edit',['uuid'=>$ven->uuid]) }}" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">Edit</a>   
+                                            <a href="{{ route('chambers.letusan.edit',['uuid'=>$ven->uuid]) }}" class="btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">Edit</a>   
                                             @role('Super Admin')
                                             <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.letusan.destroy',['uuid'=>$ven->uuid]) }}" accept-charset="UTF-8">
                                                 @method('DELETE')

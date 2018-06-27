@@ -69,7 +69,7 @@
                                 <tr>
                                     <td class="permission">{{ $permission->name }}</td>
                                     <td>
-                                        <button type="button" value="{{ $permission->id }}" class="btn btn-sm btn-success btn-outline edit" data-toggle="modal" data-target="#edit">Edit</button>
+                                        <button type="button" value="{{ $permission->id }}" class="btn btn-sm btn-magma btn-outline edit" data-toggle="modal" data-target="#edit">Edit</button>
                                         <form style="display:inline" id="form-delete" method="POST" action="{{ route('chambers.permissions.destroy',['id'=>$permission->id]) }}" accept-charset="UTF-8">
                                             {{ method_field('DELETE') }}
                                             {{ csrf_field() }}

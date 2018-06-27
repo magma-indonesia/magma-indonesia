@@ -33,7 +33,7 @@
                         <br>
                         <h1 class="m-xs jumlah-users">{{ $users }}</h1>
 
-                        <h3 class="font-extra-bold no-margins text-success">
+                        <h3 class="font-extra-bold no-margins text-magma">
                             Jumlah User
                         </h3>
                         <small>Jumlah aktif dan terdaftar</small>
@@ -42,7 +42,7 @@
                         <form role="form" id="form-import" method="POST"
                         data-import="users" action="{{ route('chambers.import.users') }}">
                             @csrf
-                            <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
                                 <span class="ladda-label">Import Data Users</span>
                                 <span class="ladda-spinner"></span>
                             </button>
@@ -60,7 +60,7 @@
                         <br>
                         <h1 class="m-xs jumlah-bidang">{{ $bidang }}</h1>
 
-                        <h3 class="font-extra-bold no-margins text-success">
+                        <h3 class="font-extra-bold no-margins text-magma">
                             Bidang User
                         </h3>
                         <small>Jumlah yang terdata</small>
@@ -69,7 +69,7 @@
                         <form role="form" id="form-import" method="POST"
                         data-import="bidang" action="{{ route('chambers.import.bidang') }}">
                             @csrf
-                            <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
                                 <span class="ladda-label">Import Data Bidang</span>
                                 <span class="ladda-spinner"></span>
                             </button>
@@ -87,7 +87,7 @@
                             <br>
                             <h1 class="m-xs jumlah-absensi">{{ $absensi }}</h1>
     
-                            <h3 class="font-extra-bold no-margins text-success">
+                            <h3 class="font-extra-bold no-margins text-magma">
                                 Absensi Pegawai
                             </h3>
                             <small>Jumlah Absen</small>
@@ -96,7 +96,7 @@
                             <form role="form" id="form-import" method="POST"
                             data-import="absensi" action="{{ route('chambers.import.absensi') }}">
                                 @csrf
-                                <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
+                                <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
                                     <span class="ladda-label">Import Data Absensi</span>
                                     <span class="ladda-spinner"></span>
                                 </button>
@@ -114,7 +114,7 @@
                         <br>
                         <h1 class="m-xs jumlah-gadds">{{ $gadds }}</h1>
 
-                        <h3 class="font-extra-bold no-margins text-success">
+                        <h3 class="font-extra-bold no-margins text-magma">
                             Jumlah Gunung Api
                         </h3>
                         <small>Data dasar Gunung Api yang terdaftar</small>
@@ -123,7 +123,7 @@
                         <form role="form" id="form-import" method="POST"
                         data-import="gadds" action="{{ route('chambers.import.gadds') }}">
                             @csrf
-                            <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
                                 <span class="ladda-label">Import Data Dasar</span>
                                 <span class="ladda-spinner"></span>
                             </button>
@@ -152,7 +152,7 @@
                             </span>
 
                             <div class="progress m-t-xs full progress-small">
-                                <div style="width: {{ $vars/$varsv1*100 }}%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="{{ $vars/$varsv1*100 }}" role="progressbar" class=" progress-bar progress-bar-success">
+                                <div style="width: {{ $vars/$varsv1*100 }}%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="{{ $vars/$varsv1*100 }}" role="progressbar" class=" progress-bar progress-bar-magma">
                                     <span class="sr-only">{{ $vars/$varsv1*100 }}% Complete</span>
                                 </div>
                             </div>
@@ -174,7 +174,7 @@
                         <form role="form" id="form-import" method="POST"
                         data-import="vars" action="{{ route('chambers.import.vars') }}">
                             @csrf
-                            <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
                                 <span class="ladda-label">Import Vars</span>
                                 <span class="ladda-spinner"></span>
                             </button>
@@ -205,8 +205,8 @@
                         </div>
                         <div class="row m-t-md">
                             <div class="col-lg-6">
-                                <h3 class="no-margins font-extra-bold text-success jumlah-visuals">{{ number_format($visuals,0,',','.') }}</h3>
-                                <div class="font-bold"><i class="fa fa-level-up text-success"></i> Jumlah data terkini</div>
+                                <h3 class="no-margins font-extra-bold text-magma jumlah-visuals">{{ number_format($visuals,0,',','.') }}</h3>
+                                <div class="font-bold"><i class="fa fa-level-up text-magma"></i> Jumlah data terkini</div>
                             </div>
                         </div>
                     </div>
@@ -214,7 +214,7 @@
                         <form role="form" id="form-import" method="POST"
                         data-import="visuals" action="{{ route('chambers.import.visuals') }}">
                             @csrf
-                            <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
                                 <span class="ladda-label">Import Data Visual</span>
                                 <span class="ladda-spinner"></span>
                             </button>
@@ -245,8 +245,8 @@
                         </div>
                         <div class="row m-t-md">
                             <div class="col-lg-6">
-                                <h3 class="no-margins font-extra-bold text-success jumlah-klimatologis">{{ number_format($klimatologis,0,',','.') }}</h3>
-                                <div class="font-bold"><i class="fa fa-level-up text-success"></i> Jumlah data terkini</div>
+                                <h3 class="no-margins font-extra-bold text-magma jumlah-klimatologis">{{ number_format($klimatologis,0,',','.') }}</h3>
+                                <div class="font-bold"><i class="fa fa-level-up text-magma"></i> Jumlah data terkini</div>
                             </div>
                         </div>
                     </div>
@@ -254,7 +254,7 @@
                         <form role="form" id="form-import" method="POST"
                         data-import="klimatologis" action="{{ route('chambers.import.klimatologi') }}">
                             @csrf
-                            <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
                                 <span class="ladda-label">Import Data Klimatologi</span>
                                 <span class="ladda-spinner"></span>
                             </button>
@@ -285,8 +285,8 @@
                         </div>
                         <div class="row m-t-md">
                             <div class="col-lg-6">
-                                <h3 class="no-margins font-extra-bold text-success jumlah-gempa">{{ number_format($gempa,0,',','.') }}</h3>
-                                <div class="font-bold"><i class="fa fa-level-up text-success"></i> Jumlah seluruh gempa</div>
+                                <h3 class="no-margins font-extra-bold text-magma jumlah-gempa">{{ number_format($gempa,0,',','.') }}</h3>
+                                <div class="font-bold"><i class="fa fa-level-up text-magma"></i> Jumlah seluruh gempa</div>
                             </div>
                         </div>
                     </div>
@@ -294,7 +294,7 @@
                         <form role="form" id="form-import" method="POST"
                         data-import="gempa" action="{{ route('chambers.import.gempa') }}">
                             @csrf
-                            <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
                                 <span class="ladda-label">Import Data Gempa Gunung Api</span>
                                 <span class="ladda-spinner"></span>
                             </button>
@@ -317,7 +317,7 @@
                             <i class="pe-7s-monitor fa-4x"></i>
                         </div>
                         <div class="m-t-xl">
-                            <h1 class="text-success jumlah-dailies">{{ $vardailies }}</h1>
+                            <h1 class="text-magma jumlah-dailies">{{ $vardailies }}</h1>
                             <span class="font-bold no-margins">
                                 Volcanic Activiy Report
                             </span>
@@ -333,7 +333,7 @@
                         <form role="form" id="form-import" method="POST"
                         data-import="dailies" action="{{ route('chambers.import.dailies') }}">
                             @csrf
-                            <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
                                 <span class="ladda-label">Import Data Harian</span>
                                 <span class="ladda-spinner"></span>
                             </button>
@@ -364,8 +364,8 @@
                         </div>
                         <div class="row m-t-md">
                             <div class="col-lg-6">
-                                <h3 class="no-margins font-extra-bold text-success jumlah-vens">{{ number_format($vens,0,',','.') }}</h3>
-                                <div class="font-bold"><i class="fa fa-level-up text-success"></i> Jumlah data Informasi Letusan</div>
+                                <h3 class="no-margins font-extra-bold text-magma jumlah-vens">{{ number_format($vens,0,',','.') }}</h3>
+                                <div class="font-bold"><i class="fa fa-level-up text-magma"></i> Jumlah data Informasi Letusan</div>
                             </div>
                         </div>
                     </div>
@@ -373,7 +373,7 @@
                         <form role="form" id="form-import" method="POST"
                         data-import="vens" action="{{ route('chambers.import.vens') }}">
                             @csrf
-                            <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
                                 <span class="ladda-label">Import Data Informasi Letusan</span>
                                 <span class="ladda-spinner"></span>
                             </button>
@@ -404,8 +404,8 @@
                         </div>
                         <div class="row m-t-md">
                             <div class="col-lg-6">
-                                <h3 class="no-margins font-extra-bold text-success jumlah-vona">{{ number_format($vona,0,',','.') }}</h3>
-                                <div class="font-bold"><i class="fa fa-level-up text-success"></i> Jumlah data VONA</div>
+                                <h3 class="no-margins font-extra-bold text-magma jumlah-vona">{{ number_format($vona,0,',','.') }}</h3>
+                                <div class="font-bold"><i class="fa fa-level-up text-magma"></i> Jumlah data VONA</div>
                             </div>
                         </div>
                     </div>
@@ -413,7 +413,7 @@
                         <form role="form" id="form-import" method="POST"
                         data-import="vona" action="{{ route('chambers.import.vona') }}">
                             @csrf
-                            <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
                                 <span class="ladda-label">Import Data VONA</span>
                                 <span class="ladda-spinner"></span>
                             </button>
@@ -444,8 +444,8 @@
                         </div>
                         <div class="row m-t-md">
                             <div class="col-lg-6">
-                                <h3 class="no-margins font-extra-bold text-success jumlah-subscribers">{{ number_format($subs,0,',','.') }}</h3>
-                                <div class="font-bold"><i class="fa fa-level-up text-success"></i> Jumlah data Subscribers</div>
+                                <h3 class="no-margins font-extra-bold text-magma jumlah-subscribers">{{ number_format($subs,0,',','.') }}</h3>
+                                <div class="font-bold"><i class="fa fa-level-up text-magma"></i> Jumlah data Subscribers</div>
                             </div>
                         </div>
                     </div>
@@ -453,7 +453,7 @@
                         <form role="form" id="form-import" method="POST"
                         data-import="subscribers" action="{{ route('chambers.import.subscribers') }}">
                             @csrf
-                            <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
                                 <span class="ladda-label">Import Data Subscribers</span>
                                 <span class="ladda-spinner"></span>
                             </button>
@@ -486,8 +486,8 @@
                         </div>
                         <div class="row m-t-md">
                             <div class="col-lg-6">
-                                <h3 class="no-margins font-extra-bold text-success jumlah-crs">{{ number_format($crs,0,',','.') }}</h3>
-                                <div class="font-bold"><i class="fa fa-level-up text-success"></i> Jumlah data CRS</div>
+                                <h3 class="no-margins font-extra-bold text-magma jumlah-crs">{{ number_format($crs,0,',','.') }}</h3>
+                                <div class="font-bold"><i class="fa fa-level-up text-magma"></i> Jumlah data CRS</div>
                             </div>
                         </div>
                     </div>
@@ -495,7 +495,7 @@
                         <form role="form" id="form-import" method="POST"
                         data-import="crs" action="{{ route('chambers.import.crs') }}">
                             @csrf
-                            <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
                                 <span class="ladda-label">Import Data CRS</span>
                                 <span class="ladda-spinner"></span>
                             </button>
@@ -526,8 +526,8 @@
                         </div>
                         <div class="row m-t-md">
                             <div class="col-lg-6">
-                                <h3 class="no-margins font-extra-bold text-success jumlah-roq">{{ number_format($roq,0,',','.') }}</h3>
-                                <div class="font-bold"><i class="fa fa-level-up text-success"></i> Jumlah data ROQ</div>
+                                <h3 class="no-margins font-extra-bold text-magma jumlah-roq">{{ number_format($roq,0,',','.') }}</h3>
+                                <div class="font-bold"><i class="fa fa-level-up text-magma"></i> Jumlah data ROQ</div>
                             </div>
                         </div>
                     </div>
@@ -535,7 +535,7 @@
                         <form role="form" id="form-import" method="POST"
                         data-import="roq" action="{{ route('chambers.import.roq') }}">
                             @csrf
-                            <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
                                 <span class="ladda-label">Import Data ROQ</span>
                                 <span class="ladda-spinner"></span>
                             </button>
@@ -566,8 +566,8 @@
                         </div>
                         <div class="row m-t-md">
                             <div class="col-lg-6">
-                                <h3 class="no-margins font-extra-bold text-success jumlah-sigertan">{{ number_format($sigertan,0,',','.') }}</h3>
-                                <div class="font-bold"><i class="fa fa-level-up text-success"></i> Jumlah data Sigertan</div>
+                                <h3 class="no-margins font-extra-bold text-magma jumlah-sigertan">{{ number_format($sigertan,0,',','.') }}</h3>
+                                <div class="font-bold"><i class="fa fa-level-up text-magma"></i> Jumlah data Sigertan</div>
                             </div>
                         </div>
                     </div>
@@ -575,7 +575,7 @@
                         <form role="form" id="form-import" method="POST"
                         data-import="sigertan" action="{{ route('chambers.import.sigertan') }}">
                             @csrf
-                            <button type="submit" id="form-submit" class="ladda-button btn btn-success btn-sm " data-style="expand-right">
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
                                 <span class="ladda-label">Import Sigertan</span>
                                 <span class="ladda-spinner"></span>
                             </button>

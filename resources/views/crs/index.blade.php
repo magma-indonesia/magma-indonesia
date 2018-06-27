@@ -47,7 +47,7 @@
                             <div class="list-item">
                                 <h3 class="no-margins font-extra-bold text-baru">{{ $jumlahBaru }}</h3>
                                 <small> Baru </small>
-                                <div class="pull-right font-bold">{{ $jumlahBaru>0 ? round($jumlahBaru/$total*100, 2 ) : 0 }}% <i class="fa fa-level-up text-success"></i></div>
+                                <div class="pull-right font-bold">{{ $jumlahBaru>0 ? round($jumlahBaru/$total*100, 2 ) : 0 }}% <i class="fa fa-level-up text-magma"></i></div>
                             </div>
                             <div class="list-item">
                                 <h3 class="no-margins font-extra-bold text-draft">{{ $jumlahDraft }}</h3>
@@ -60,7 +60,7 @@
                                 <div class="pull-right font-bold">{{ $jumlahBaru>0 ? round($jumlahTerbit/$total*100, 2) : 0 }}% <i class="fa fa-bolt text-color3"></i></div>
                             </div>
                             <div class="list-item">
-                                <h3 class="no-margins font-extra-bold text-success">{{ $total }}</h3>
+                                <h3 class="no-margins font-extra-bold text-magma">{{ $total }}</h3>
                                 <small>Total Semuanya</small>
                             </div>
                         </div>
@@ -78,28 +78,28 @@
                         <small class="fo">Dikelompokkan Per Bencana</small>
                         <div class="list-item-container">
                             <div class="list-item">
-                                <h3 class="no-margins font-extra-bold text-success">
+                                <h3 class="no-margins font-extra-bold text-magma">
                                     {{ $jumlahMga }}
                                     <span class="pull-right">{{ $jumlahMga ? round($jumlahMga/$total*100, 2) : 0 }}%  </span>
                                 </h3>
                                 <h6>Gunung Api</h6>
                             </div>
                             <div class="list-item">
-                                <h3 class="no-margins font-extra-bold text-success">
+                                <h3 class="no-margins font-extra-bold text-magma">
                                     {{ $jumlahMgt }}
                                     <span class="pull-right">{{ $jumlahMga ? round($jumlahMgt/$total*100, 2) : 0 }}%  </span>
                                 </h3>
                                 <h6>Gerakan Tanah</h6>
                             </div>
                             <div class="list-item">
-                                <h3 class="no-margins font-extra-bold text-success">
+                                <h3 class="no-margins font-extra-bold text-magma">
                                     {{ $jumlahMgb }}
                                     <span class="pull-right">{{ $jumlahMgb ? round($jumlahMgb/$total*100, 2) : 0 }}%  </span>
                                 </h3>
                                 <h6>Gempa Bumi dan Tsunami</h6>
                             </div>
                             <div class="list-item">
-                                <h3 class="no-margins font-extra-bold text-success">
+                                <h3 class="no-margins font-extra-bold text-magma">
                                     {{ $jumlahEtc }}
                                     <span class="pull-right">{{ $jumlahMgb ? round($jumlahEtc/$total*100, 2) : 0 }}%  </span>
                                 </h3>
@@ -231,7 +231,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="pagination pull-right">
-                                    <a href="{{ route('chambers.export',['type' => 'crs',Request::getQueryString()]) }}" type="button" class="btn btn-success btn-sm m-b-t">Save to Excel</a>
+                                    <a href="{{ route('chambers.export',['type' => 'crs',Request::getQueryString()]) }}" type="button" class="btn btn-magma btn-sm m-b-t">Save to Excel</a>
                                 </div>
                             </div>
                         </div>
@@ -260,7 +260,7 @@
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->phone }}</td>
                                         <td>{{ title_case($item->type) }}</td>
-                                        <td><span class="label {{ optional($item->validator)->valid ? $item->validator->valid == 'Valid' ? 'label-success' : 'label-warning': 'label-danger'}}">{{ optional($item->validator)->valid ? $item->validator->valid : 'Belum divalidasi'}}</span></td>
+                                        <td><span class="label {{ optional($item->validator)->valid ? $item->validator->valid == 'Valid' ? 'label-magma' : 'label-warning': 'label-danger'}}">{{ optional($item->validator)->valid ? $item->validator->valid : 'Belum divalidasi'}}</span></td>
                                         <td>{{ optional($item->validator)->user ? $item->validator->user->name : '-'}}</td>  
                                         <td>{{ $item->waktu_kejadian }}</td>
                                         <td>{{ Indonesia::findProvince($item->province_id)->name .', '. Indonesia::findCity($item->city_id)->name .', '. Indonesia::findDistrict($item->district_id)->name }}</td>

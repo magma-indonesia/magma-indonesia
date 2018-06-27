@@ -153,7 +153,7 @@
                                     <td>{{ $pga->elevation }}</td>
                                     <td>{{ $pga->latitude }}</td>
                                     <td>{{ $pga->longitude }}</td>
-                                    <td><a class="btn btn-sm btn-success btn-outline" href="http://maps.google.com/maps?q={{ $pga->latitude }},{{ $pga->longitude }}" target="_blank">Link</a></td> 
+                                    <td><a class="btn btn-sm btn-magma btn-outline" href="http://maps.google.com/maps?q={{ $pga->latitude }},{{ $pga->longitude }}" target="_blank">Link</a></td> 
                                 </tr>
                                 @endforeach
                             </tbody>

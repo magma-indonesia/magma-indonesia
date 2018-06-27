@@ -44,13 +44,13 @@
                     <div class="panel-body float-e-margins">
                         <div class="row">
                             <div class="col-md-6 col-lg-4 col-sm-12 col-xs-12">
-                                <a href="{{ route('chambers.letusan.index') }}" class="btn btn-outline btn-block btn-success" type="button">Daftar Informasi Letusan</a>
+                                <a href="{{ route('chambers.letusan.index') }}" class="btn btn-outline btn-block btn-magma" type="button">Daftar Informasi Letusan</a>
                             </div>
                             <div class="col-md-6 col-lg-4 col-sm-12 col-xs-12">
-                                <a href="{{ route('chambers.letusan.create') }}" class="btn btn-outline btn-block btn-success" type="button">Buat Informasi Letusan</a>
+                                <a href="{{ route('chambers.letusan.create') }}" class="btn btn-outline btn-block btn-magma" type="button">Buat Informasi Letusan</a>
                             </div>
                             <div class="col-md-6 col-lg-4 col-sm-12 col-xs-12">
-                                <a href="{{ route('chambers.letusan.edit',['uuid'=>$ven->uuid]) }}" class="btn btn-outline btn-block btn-success" type="button">Edit Letusan</a>
+                                <a href="{{ route('chambers.letusan.edit',['uuid'=>$ven->uuid]) }}" class="btn btn-outline btn-block btn-magma" type="button">Edit Letusan</a>
                             </div>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                         </blockquote>
                         @endif
                         @if(!empty($ven->vona->uuid))
-                        <a href={{ route('chambers.vona.show',['uuid'=> $ven->vona->uuid]) }} type="button" class="btn btn-outline btn-success">Draft VONA</a>
+                        <a href={{ route('chambers.vona.show',['uuid'=> $ven->vona->uuid]) }} type="button" class="btn btn-outline btn-magma">Draft VONA</a>
                         @endif
                     </div>
                     <div class="panel-footer">

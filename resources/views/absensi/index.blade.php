@@ -41,14 +41,14 @@
                     @role('Super Admin')
                     <div class="panel-body">
                         <div class="col-md-4 col-lg-2 col-sm-6 col-xs-12">
-                            <a href="{{ route('chambers.absensi.create') }}" class="btn btn-outline btn-block btn-success" type="button">Buat Absensi Pegawai</a>
+                            <a href="{{ route('chambers.absensi.create') }}" class="btn btn-outline btn-block btn-magma" type="button">Buat Absensi Pegawai</a>
                         </div>
                     </div>
                     @endrole
                 </div>
                 <div class="hpanel">
                     @if(Session::has('flash_message'))
-                    <div class="alert alert-success">
+                    <div class="alert alert-magma">
                         <i class="fa fa-bolt"></i> {!! session('flash_message') !!}
                     </div>
                     @endif

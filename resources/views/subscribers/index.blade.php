@@ -45,7 +45,7 @@
                     <div class="panel-body">
                         <div class="row text-center">
                             <div class="col-md-4 col-lg-2 col-sm-6 col-xs-12">
-                            <a href="{{ route('chambers.subscribers.create')}}" class="btn btn-outline btn-block btn-success" type="button">Tambah Subscriber</a>
+                            <a href="{{ route('chambers.subscribers.create')}}" class="btn btn-outline btn-block btn-magma" type="button">Tambah Subscriber</a>
                             </div>
                         </div>
                     </div>
@@ -73,9 +73,9 @@
                                         <td>{{ $sub->name ?? 'Guest' }}</td>
                                         <td>{{ $sub->email }}</td>
                                         @role('Super Admin')
-                                        <td>{!! $sub->status ? '<span class="label label-success">Subscribe</span>' : '<span class="label label-danger">Unsubscribe</span>'!!}</td>
+                                        <td>{!! $sub->status ? '<span class="label label-magma">Subscribe</span>' : '<span class="label label-danger">Unsubscribe</span>'!!}</td>
                                         <td>
-                                            <a href="#" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">Edit</a>
+                                            <a href="#" class="btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">Edit</a>
                                             <form id="deleteForm" style="display:inline" method="POST" action="#" accept-charset="UTF-8">
                                                 @method('DELETE')
                                                 @csrf

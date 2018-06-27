@@ -47,10 +47,10 @@
                     </div>
                     <div class="panel-body float-e-margins">
                         <div class="col-md-6 col-lg-4 col-sm-12 col-xs-12">
-                            <a href="{{ route('chambers.letusan.index') }}" class="btn btn-outline btn-block btn-success" type="button">Daftar Informasi Letusan</a>
+                            <a href="{{ route('chambers.letusan.index') }}" class="btn btn-outline btn-block btn-magma" type="button">Daftar Informasi Letusan</a>
                         </div>
                         <div class="col-md-6 col-lg-4 col-sm-12 col-xs-12">
-                            <a href="{{ route('chambers.letusan.create') }}" class="btn btn-outline btn-block btn-success" type="button">Buat Informasi Letusan</a>
+                            <a href="{{ route('chambers.letusan.create') }}" class="btn btn-outline btn-block btn-magma" type="button">Buat Informasi Letusan</a>
                         </div>
                     </div>
                 </div>

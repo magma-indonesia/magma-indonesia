@@ -5,19 +5,6 @@ hr {
 .ladda-button[data-style="expand-right"][data-loading] {
 	color: white !important;
 }
-
-.btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open .dropdown-toggle.btn-success {
-	background-color: #0066CC;
-	border-color: #0066CC;
-	color: #FFFFFF;
-}
-
-.btn-success:active:hover, .btn-success.active:hover, .open > .dropdown-toggle.btn-success:hover, .btn-success:active:focus, .btn-success.active:focus, .open > .dropdown-toggle.btn-success:focus, .btn-success:active.focus, .btn-success.active.focus, .open > .dropdown-toggle.btn-success.focus {
-	color: #fff;
-	background-color: #007fff;
-	border-color: #007fff;
-}
-
 #side-menu {
     background:#f1f3f6;
 }
@@ -74,4 +61,87 @@ table tr td[class*="4"] {
 
 .hr-line-dashed {
     border-top: 5px dotted #f1f3f6;
+}
+.homer-notify.alert-magma {
+	border-left: 6px solid #007fff;
+  }
+.hmodal-magma .color-line {
+	background: #007fff;
+}
+.hmodal-magma h4.modal-title {
+	color: #007fff;
+}
+.full .progress-bar-magma {
+  background-color: #007fff;
+  border-right: 0px solid #007fff;
+}
+.vertical-date small {
+  color: #007fff;
+}
+
+.hpanel.hmagma .panel-body {
+  border-top: 2px solid #007fff;
+}
+.hpanel.hbgmagma .panel-body {
+	background: #007fff;
+}
+.h-bg-magma {
+  background: #007fff;
+}
+.text-magma {
+  color: #007fff;
+}
+.label-magma {
+  background-color: #007fff;
+}
+.checkbox-magma input[type="checkbox"]:checked + label::before {
+  background-color: #007fff;
+  border-color: #007fff;
+}
+.radio-magma input[type="radio"] + label::after {
+  background-color: #007fff;
+}
+.radio-magma input[type="radio"]:checked + label::before {
+  border-color: #007fff;
+}
+.radio-magma input[type="radio"]:checked + label::after {
+  background-color: #007fff;
+}
+.badge.badge-magma {
+  background-color: #007fff;
+}
+.spinner.magma > div {
+  background-color: #007fff;
+}
+.landing-page.magma .navbar .navbar-brand {
+  background-color: #007fff;
+}
+.landing-page.magma .navbar-default .navbar-toggle:hover,
+.landing-page.magma .navbar-default .navbar-toggle:focus {
+  background: #007fff;
+}
+.landing-page.magma .navbar-default .navbar-nav > .active > a,
+.landing-page.magma .navbar-default .navbar-nav > .active > a:hover,
+.landing-page.magma .navbar-default .navbar-nav > .active > a:focus {
+  color: #007fff;
+}
+.landing-page.magma .social-icon a {
+  background: #007fff;
+}
+.landing-page.magma .pricing-plan .pricing-price span {
+  color: #007fff;
+}
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+  background-color: #007fff;
+  border-color: #007ccc;
+}
+
+.pagination > li > a, .pagination > li > span {
+	color: #333;
 }
