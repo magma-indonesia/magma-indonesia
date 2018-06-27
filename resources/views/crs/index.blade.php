@@ -35,7 +35,7 @@
 @section('content-body')
     <div class="content animate-panel">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="hpanel">
                     <div class="panel-heading">
                         Jumlah CRS
@@ -68,7 +68,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="hpanel">
                     <div class="panel-heading">
                         Jumlah CRS per Bidang
@@ -110,7 +110,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">            
+            <div class="col-md-4">            
                 <div class="hpanel">
                     <div class="panel-heading">
                         Per Provinsi - 8 Tertinggi
@@ -141,7 +141,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="hpanel">
                     <div class="panel-heading">
                         Filter Laporan
