@@ -6,8 +6,10 @@
 <body class="fixed-navbar fixed-sidebar">
 
     <!-- Simple splash screen-->
+    @if(Route::currentRouteName() == 'chambers.index')
     @include('includes.loader')
-
+    @endif
+    
     <!-- Header -->
     @include('includes.header')
 
