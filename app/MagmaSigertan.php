@@ -8,7 +8,15 @@ class MagmaSigertan extends Model
 {
     public $timestamps = false;
 
-    protected $with = ['crs'];
+    protected $dates = [
+        'created_at',
+        'updated_at',
+    ];
+
+    protected $with = [
+        'ketua:nip,name',
+        'anggota.user:nip,name',
+    ];
 
     protected $fillable = [
         'crs_id',
@@ -20,6 +28,10 @@ class MagmaSigertan extends Model
         'nip_ketua',
         'created_at',
         'updated_at'
+    ];
+
+    protected $guarded = [
+        'id'
     ];
 
     public function crs()
@@ -45,6 +57,11 @@ class MagmaSigertan extends Model
     public function rekomendasi()
     {
         return $this->hasOne('App\SigertanRekomendasi','noticenumber_id','noticenumber');
+    }
+
+    public function ketua()
+    {
+        return $this->belongsTo('App\User','nip_ketua','nip');
     }
 
     public function anggota()
