@@ -123,7 +123,7 @@ $(window).bind("load", function () {
     setTimeout( function() { 
         // Remove splash screen after load
         $(".splash").fadeOut("slow");
-    }, 1500);
+    }, 1000);
 });
 
 $(window).bind("resize click", function () {
