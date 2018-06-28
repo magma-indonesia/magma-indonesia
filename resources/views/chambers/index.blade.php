@@ -16,6 +16,7 @@
                     Pusat kontrol data
                     <strong>MAGMA</strong> meliputi kebencanaan Gunung Api, Gerakan Tanah, Gempa Bumi dan Tsunami.
                 </p>
+                @include('includes.alert')
             </div>
         </div>
         <div class="row">
