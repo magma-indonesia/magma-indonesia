@@ -16,9 +16,13 @@ class ActivityMgtController extends Controller
     public function index()
     {
         $sigertans = MagmaSigertan::orderBy('updated_at','desc')
+            ->with('ketua','crs','status','kerusakan','kondisi')
+            ->orderBy('updated_at','desc')
             ->paginate(30,['*'],'qls_page');
 
-        return $sigertans;
+        // return $sigertans;
+
+        return view('gerakantanah.index',compact('sigertans'));
     }
 
     /**
