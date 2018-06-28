@@ -141,12 +141,12 @@
                     <li class="{{ active('chambers.laporan.index') }}">
                         <a href="{{ route('chambers.laporan.index') }}">Daftar Laporan</a>
                     </li>
+                    <li class="{{ active('chambers.laporan.search') }}">
+                        <a href="{{ route('chambers.laporan.search') }}">Cari Laporan</a>
+                    </li>
                     <li class="{{ active('chambers.letusan.index') }}">
                         <a href="{{ route('chambers.letusan.index') }}">Laporan Letusan</a>
                     </li>
-                    <li class="{{ active('chambers.laporan.search') }}">
-                            <a href="{{ route('chambers.laporan.search') }}">Cari Laporan</a>
-                        </li>
                     <li class="{{ active('chambers.pos.index') }}">
                         <a href="{{ route('chambers.pos.index') }}">Pos Pengamatan Gunung Api</a>
                     </li>

@@ -51,12 +51,12 @@
                                     <div class="hr-line-dashed"></div>
                                     <h4>Kejadian</h4>
                                     <p>
-                                        Gerakan tanah terjadi di {{ $qls->crs->kecamatan.', '.$qls->crs->kota.', '.$qls->crs->provinsi }} pada tanggal {{ $qls->crs->waktu_kejadian->formatLocalized('%d %B %Y') }}. Secara geografis, lokasi kejadian gerakan tanah terletak pada posisi <a href="http://maps.google.com/maps?q={{ $qls->crs->latitude }},{{ $qls->crs->longitude }}" type="button" class="btn btn-xs btn-magma" target="_blank">{{ $qls->crs->latitude < 0 ? abs($qls->crs->latitude).' LS' : $qls->crs->latitude.' LU' }}, {{ $qls->crs->longitude }} BT</a>
+                                        Gerakan tanah terjadi di {{ $qls->crs->kecamatan.', '.$qls->crs->kota.', '.$qls->crs->provinsi }} pada tanggal {{ $qls->crs->waktu_kejadian->formatLocalized('%d %B %Y') }}. Secara geografis, lokasi kejadian gerakan tanah terletak pada posisi <a href="http://maps.google.com/maps?q={{ $qls->crs->latitude }},{{ $qls->crs->longitude }}" class="btn btn-xs btn-magma" target="_blank">{{ $qls->crs->latitude < 0 ? abs($qls->crs->latitude).' LS' : $qls->crs->latitude.' LU' }}, {{ $qls->crs->longitude }} BT</a>
                                     </p>
                                 </div>
                                 <div class="border-top bg-light p-m">
                                     <div class="row">
-                                        <div class="col-md-6 col-xs-12 border-right">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 border-right">
                                             <dl>
                                                 <dt>Tipe Gerakan Tanah</dt>
                                                 <dd>{{ $qls->kondisi->tipe_gerakan ?? 'Belum ada data' }}</dd>
@@ -64,21 +64,21 @@
                                                 <dd>{{ $qls->kondisi->prakiraan_kerentanan ? 'Daerah ini memiliki potensi '.str_replace_last(', ',' hingga ', strtolower(implode(', ',$qls->kondisi->prakiraan_kerentanan))).' untuk terjadi gerakan tanah.' : 'Belum ada data'}}</dd>
                                                 @if($qls->kondisi->prakiraan_kerentanan)
                                                 <div class="progress m-t-xs full progress-small">
-                                                    <span style="width: 33%" aria-valuemax="33" aria-valuemin="0" aria-valuenow="33" role="progressbar" class=" progress-bar progress-bar-success">
+                                                    <span title="Rendah" style="width: 33%" aria-valuemax="33" aria-valuemin="0" aria-valuenow="33" role="progressbar" class=" progress-bar progress-bar-success">
                                                     </span>
                                                     @if(last($qls->kondisi->prakiraan_kerentanan) == 'MENENGAH' || last($qls->kondisi->prakiraan_kerentanan) == 'TINGGI')
-                                                    <span style="width: 33%" aria-valuemax="66" aria-valuemin="33" aria-valuenow="66" role="progressbar" class=" progress-bar progress-bar-warning">
+                                                    <span title="Menengah" style="width: 33%" aria-valuemax="66" aria-valuemin="33" aria-valuenow="66" role="progressbar" class=" progress-bar progress-bar-warning">
                                                     </span>
                                                     @endif
                                                     @if(last($qls->kondisi->prakiraan_kerentanan) == 'TINGGI')
-                                                    <span style="width: 34%" aria-valuemax="100" aria-valuemin="66" aria-valuenow="100" role="progressbar" class=" progress-bar progress-bar-danger">
+                                                    <span title="Tinggi" style="width: 34%" aria-valuemax="100" aria-valuemin="66" aria-valuenow="100" role="progressbar" class=" progress-bar progress-bar-danger">
                                                     </span>
                                                     @endif
                                                 </div>
                                                 @endif
                                             </dl>
                                         </div>
-                                        <div class="col-md-6 col-xs-12">
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
                                             <dl>
                                                 <dt>Material</dt>
                                                 <dd>{{ $qls->kondisi->material ?? 'Belum ada data' }}</dd>
@@ -91,9 +91,11 @@
                                 <div class="border-top bg-white p-m">
                                     <h4>Rekomendasi</h4>
                                     @if($qls->rekomendasi)
+                                    <div>
                                     <button class="m-b btn btn-default btn-sm" type="button" data-toggle="collapse" data-target="#collapseRekomendasi{{ $qls->id }}" aria-expanded="false" aria-controls="collapseRekomendasi{{ $qls->id }}">
                                             Lihat Rekomendasi
                                     </button>
+                                    </div>
                                     <div class="collapse" id="collapseRekomendasi{{ $qls->id }}">
                                         <div class="well well-lg">
                                             <p>{!! nl2br($qls->rekomendasi->rekomendasi) !!}</p>
