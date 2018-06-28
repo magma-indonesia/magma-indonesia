@@ -8,7 +8,7 @@ use Indonesia;
 class SigertanCrs extends Model
 {
    
-    protected $dates = ['waktu_kejadian'];
+    protected $dates = ['waktu_kejadian','tsc'];
 
     protected $fillable = [
         'name',
@@ -41,7 +41,7 @@ class SigertanCrs extends Model
         'id'
     ];
 
-    protected $appends = ['provinsi','kota'];
+    protected $appends = ['provinsi','kota','kecamatan'];
 
     public function getTypeAttribute($value)
     {
@@ -56,6 +56,11 @@ class SigertanCrs extends Model
     public function getKotaAttribute()
     {
         return Indonesia::findCity($this->city_id)->name;
+    }
+
+    public function getKecamatanAttribute()
+    {
+        return Indonesia::findDistrict($this->district_id)->name;
     }
 
    /**     
