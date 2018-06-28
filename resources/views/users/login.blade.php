@@ -75,7 +75,6 @@
 		</div>
 	</div>
 
-
 	<!-- Vendor scripts -->
 	<script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
 	<script src="{{ asset('vendor/jquery-ui/jquery-ui.min.js') }}"></script>
