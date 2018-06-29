@@ -1189,8 +1189,14 @@ class ImportController extends Controller
                 );
             });
         });
-        
-        return VarRekomendasi::paginate(5); 
+
+        $data = [
+            'success' => 1,
+            'message' => 'Rekomendasi Gunung api berhasil diperbarui',
+            'count' => VarRekomendasi::count()
+        ];
+
+        return response()->json($data);
     }
 
     //belum beres

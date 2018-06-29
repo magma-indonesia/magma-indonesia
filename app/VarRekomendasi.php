@@ -11,4 +11,16 @@ class VarRekomendasi extends Model
         'status',
         'rekomendasi'
     ];
+
+    /**     
+     *   Masing-masing Var hanya dimiliki
+     *   oleh 1 Gunungapi
+     * 
+     *   @return \App\Gadd
+     * 
+     */
+    public function gunungapi()
+    {
+        return $this->belongsTo('App\Gadd','code_id','code');
+    }
 }
