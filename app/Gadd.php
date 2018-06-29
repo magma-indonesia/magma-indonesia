@@ -81,4 +81,14 @@ class Gadd extends Model
     {
         return $this->hasOne('App\History','code_id','code');
     }
+
+    /**
+     * Masing-masing gunungapi memiliki rekomendasi
+     *
+     * @return void
+     */
+    public function rekomendasi()
+    {
+        return $this->hasMany('App\VarRekomendasi','code_id','code');
+    }
 }

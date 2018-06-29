@@ -27,6 +27,7 @@ use App\VarLetusan;
 use App\VarPj;
 use App\VarVerifikator;
 use App\VarGempa;
+use App\VarRekomendasi;
 use App\Status;
 use App\Vona;
 use App\VonaSubscriber;
@@ -56,6 +57,7 @@ use App\v1\SigertanVerifikator as OldSigertanVerifikator;
 use App\v1\SigertanStatus as OldSigertanStatus;
 use App\v1\SigertanFotoKejadian as OldSigertanKejadian;
 use App\v1\SigertanFotoSosialisasi as OldSigertanSosialisasi;
+use App\v1\Gadd as OldDd;
 use App\v1\Vona as OldVona;
 use App\v1\MagmaVar as OldVar;
 use App\v1\VonaSubscriber as OldSub;
@@ -1166,6 +1168,29 @@ class ImportController extends Controller
 
         return response()->json($data);
  
+    }
+
+    public function rekomendasi()
+    {
+        $gadds = OldDd::select('ga_code')
+            ->with('rekomendasi')
+            ->get();
+        
+        $gadds->each(function ($item,$key) {
+            $item->rekomendasi->each(function ($item,$key) {
+                $create = VarRekomendasi::firstOrCreate(
+                    [
+                        'code_id' => $item->ga_code,
+                        'status' => $item->cu_status
+                    ],
+                    [
+                        'rekomendasi' => $item->var_rekom
+                    ]
+                );
+            });
+        });
+        
+        return VarRekomendasi::paginate(5); 
     }
 
     //belum beres

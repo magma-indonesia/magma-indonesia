@@ -12,6 +12,7 @@ Route::post('dailies','ImportController@dailies')->name('dailies');
 Route::post('visuals','ImportController@visuals')->name('visuals');
 Route::post('klimatologi','ImportController@klimatologis')->name('klimatologi');
 Route::post('gempa','ImportController@gempa')->name('gempa');
+Route::post('rekomendasi','ImportController@rekomendasi')->name('rekomendasi');
 Route::post('vens','ImportController@ven')->name('vens');
 Route::post('vona','ImportController@vona')->name('vona');
 Route::post('subscribers','ImportController@subscribers')->name('subscribers');

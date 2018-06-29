@@ -18,4 +18,18 @@ class MagmaVar extends Model
         'var_nip_pemeriksa_pj',
         'var_nama_pemeriksa_pj'
     ];
+
+    public function getCuStatusAttribute($value)
+    {
+        switch ($value) {
+            case 'Level IV (Awas)':
+                return 4;
+            case 'Level III (Siaga)':
+                return 3;
+            case 'Level II (Waspada)':
+                return 2;
+            default:
+                return 1;
+        }
+    }
 }
