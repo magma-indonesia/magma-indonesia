@@ -25,10 +25,32 @@ class MagmaVar extends Model
         'periode',
         'var_perwkt',
         'obscode_id',
-        'statuses_desc_id',
+        'status',
         'nip_pelapor',
         'created_at'
     ];
+
+    protected $appends = [
+        'status_deskripsi'
+    ];
+
+    public function getStatusDeskripsiAttribute()
+    {
+        switch ($this->attributes['status']) {
+            case 4:
+                return 'Level IV (Awas)';
+                break;
+            case 3:
+                return 'Level III (Siaga)';
+                break;
+            case 2:
+                return 'Level II (Waspada)';
+                break;
+            default:
+                return 'Level I (Normal)';
+                break;
+        }
+    }
 
     /**     
      *   Masing-masing Var hanya dimiliki
@@ -74,18 +96,6 @@ class MagmaVar extends Model
     public function pos()
     {
         return $this->belongsTo('App\PosPga','obscode_id','obscode');
-    }
-
-    /**     
-     *   Masing-masing Var hanya memiliki
-     *   1 status gunung api
-     * 
-     *   @return \App\StatusIndex
-     * 
-     */
-    public function status()
-    {
-        return $this->belongsTo('App\StatusIndex','statuses_desc_id','id');
     }
 
     /**     
