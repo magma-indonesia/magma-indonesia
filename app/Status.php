@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Status extends Model
 {
+    protected $casts = [
+        'start_date' => 'datetime:Y-m-d H:i:s',
+        'end_date' => 'datetime:Y-m-d H:i:s'
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -13,12 +18,27 @@ class Status extends Model
      */
     protected $fillable = [
         'code_id',
-        'level_id'
+        'status',
+        'start_date',
+        'end_date'
     ];
 
-    public function deskriptif()
+    protected $appends = [
+        'status_deskripsi'
+    ];
+
+    public function getStatusDeskripsiAttribute()
     {
-        return $this->belongsTo('App\StatusIndex','statuses_desc_id','id');
+        switch ($this->attributes['status']) {
+            case '4':
+                return 'Level IV (Awas)';
+            case '3':
+                return 'Level III (Siaga)';
+            case '2':
+                return 'Level II (Waspada)';
+            default:
+                return 'Level I (Normal)';
+        }
     }
 
     public function gunungapi()
