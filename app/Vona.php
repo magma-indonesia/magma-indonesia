@@ -17,7 +17,16 @@ class Vona extends Model
 
     protected $keyType = 'string';
 
-    protected $appends = ['issued_utc','source','contacts','page_views'];
+    protected $appends = [
+        'issued_utc',
+        'source',
+        'contacts',
+        'page_views'
+    ];
+
+    protected $casts = [
+        'sent' => 'boolean'
+    ];
 
     /**
      * The attributes that are mass assignable.
