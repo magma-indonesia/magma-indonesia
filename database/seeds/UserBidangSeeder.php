@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class UserBidang extends Seeder
+class UserBidangSeeder extends Seeder
 {
     /**
      * Run the database seeds.
