@@ -30,7 +30,7 @@ class ImportMagmaVar extends Import
 
     public function __invoke()
     {
-        $this->old->chunk(5, function ($items) {
+        $this->old->chunk(5000, function ($items) {
             foreach ($items as $key => $item) {
                 $this->setItem($item)
                     ->createVar()
