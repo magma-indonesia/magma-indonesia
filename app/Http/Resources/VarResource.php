@@ -24,8 +24,9 @@ class VarResource extends JsonResource
         return [
 
             'id'            => $this->id,
-            'gunungapi'     => new GunungApiResource($this->gunungapi),
             'noticenumber'  => $this->noticenumber,
+            'gunungapi'     => new GunungApiResource($this->gunungapi),
+            'status'        => $this->statuses_desc_id,
             'issued'        => $this->var_issued,
             'issued_day'    => $this->convertToDay($this->var_issued, ' %H:%I:%S'),
             'data_date'     => $this->var_data_date->toDateString(),
@@ -34,7 +35,6 @@ class VarResource extends JsonResource
             'created_day'   => $this->convertToDay($this->created_at, ' %H:%I:%S'),
             'periode'       => intval($this->var_perwkt),
             'pelapor'       => new UserResource($this->user),
-            'status'        => $this->statuses_desc_id,
             'visual'        => new VisualResource($this->visual),
             'klimatologi'   => new KlimatologiResource($this->klimatologi),
             'gempa'         => new GempaResource($this->gempa),
