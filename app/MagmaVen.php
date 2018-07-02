@@ -63,21 +63,15 @@ class MagmaVen extends Model
     public function getStatusAttribute($value)
     {
         switch ($value) {
-            case 1:
-                $status = 'Level I (Normal)';
-                break;
-            case 2:
-                $status = 'Level II (Waspada)';
-                break;
+            case 4:
+                return 'Level IV (Awas)';
             case 3:
-                $status = 'Level III (Siaga)';
-                break;
+                return 'Level III (Siaga)';
+            case 2:
+                return 'Level II (Waspada)';
             default:
-                $status = 'Level IV (Awas)';
-                break;
+                return 'Level I (Normal)';
         }
-
-        return $status;
     }
 
     /**
