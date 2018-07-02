@@ -16,9 +16,9 @@
             </div>
         </div>
     </div>
-    <div class="content animate-panel">
+    <div class="content animate-panel content-boxed">
         <div class="row">
-            <div class="col-md-offset-3 col-md-6">
+            <div class="col-md-12">
                 @include('includes.alert')
                 <div class="hpanel">
                     <div class="text-center">
