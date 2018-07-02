@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Gadd extends Model
 {
-    protected $table    = 'ga_dd';
+    protected $table = 'ga_dd';
 
     /**
      * The attributes that are mass assignable.

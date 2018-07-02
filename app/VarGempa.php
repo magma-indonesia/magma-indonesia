@@ -14,25 +14,19 @@ class VarGempa extends Model
     protected $with = ['lts','apl','gug','apg','hbs','tre','tor','lof','hyb','vtb','vta','vlp','tel','trs','tej','dev','gtb','hrm','dpt','mtr'];
 
     protected $fillable = [
-
         'noticenumber_id',
-
     ];
 
     protected $hidden  = [
-
         'id',
         'noticenumber_id',
         'created_at',
         'updated_at',
         'deleted_at'
-
     ];
 
-    protected $guarded  = [
-        
+    protected $guarded  = [  
         'id'
-
     ];
 
     public static function jumlah()
