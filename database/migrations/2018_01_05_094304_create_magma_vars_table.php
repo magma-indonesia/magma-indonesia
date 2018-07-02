@@ -24,10 +24,10 @@ class CreateMagmaVarsTable extends Migration
             $table->smallInteger('var_perwkt');
             $table->char('obscode_id',4)->index();
             $table->foreign('obscode_id')->references('obscode')->on('pos_pgas');
-            $table->integer('statuses_desc_id')->unsigned();
-            $table->foreign('statuses_desc_id')->references('id')->on('statuses_desc');
-            $table->char('nip_pelapor',18);
+            $table->enum('status',['1','2','3','4']);
+            $table->char('nip_pelapor',18)->index();
             $table->foreign('nip_pelapor')->references('nip')->on('users');
+            $table->index(['code_id','var_data_date']);
             $table->timestamps();
             $table->softDeletes();
         });
