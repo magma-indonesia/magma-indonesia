@@ -17,8 +17,9 @@ class CreateStatusesTable extends Migration
             $table->increments('id');
             $table->char('code_id',3);
             $table->foreign('code_id')->references('code')->on('ga_dd');
-            $table->integer('statuses_desc_id')->unsigned();
-            $table->foreign('statuses_desc_id')->references('id')->on('statuses_desc');
+            $table->enum('status',['1','2','3','4']);
+            $table->dateTime('start_date');
+            $table->dateTime('end_date')->nullable();
             $table->timestamps();
         });
     }
