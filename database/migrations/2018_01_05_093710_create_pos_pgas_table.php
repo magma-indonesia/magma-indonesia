@@ -18,11 +18,7 @@ class CreatePosPgasTable extends Migration
             $table->char('code_id',3)->index();
             $table->foreign('code_id')->references('code')->on('ga_dd');
             $table->char('obscode',4)->unique();
-            $table->string('observatory');
-            $table->string('address')->nullable();
-            $table->float('elevation')->nullable();
-            $table->float('latitude',10,6)->nullable();
-            $table->float('longitude',10,6)->nullable();
+            $table->foreign('obscode')->references('code')->on('kantors');
             $table->text('keterangan')->nullable();            
             $table->timestamps();
         });
