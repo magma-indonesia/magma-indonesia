@@ -193,7 +193,6 @@ class MagmaVenController extends Controller
     public function show($id)
     {
         $ven = MagmaVen::findOrFail($id);
-        $ven->addPageViewThatExpiresAt(Carbon::now()->addHours(1));
         $visual = $this->visualLetusan($ven);
         return view('gunungapi.letusan.show',compact('ven','visual'));
     }

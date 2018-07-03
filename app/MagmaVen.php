@@ -5,11 +5,10 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Uuid;
 use Carbon\Carbon;
-use CyrildeWit\PageViewCounter\Traits\HasPageViewCounter;
 
 class MagmaVen extends Model
 {
-    use Uuid,HasPageViewCounter;
+    use Uuid;
     //
     public $incrementing = false;
 
@@ -72,16 +71,6 @@ class MagmaVen extends Model
             default:
                 return 'Level I (Normal)';
         }
-    }
-
-    /**
-     * Get the total page views of the article.
-     *
-     * @return int
-     */
-    public function getPageViewsAttribute()
-    {
-        return $this->getPageViews();
     }
 
     public function gunungapi()

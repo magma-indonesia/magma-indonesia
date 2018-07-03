@@ -27,7 +27,6 @@ class CreateVarKlimatologisTable extends Migration
             $table->float('tekmin',5,2)->default(0.0);
             $table->float('tekmax',5,2)->default(0.0);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

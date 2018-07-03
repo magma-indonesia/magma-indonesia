@@ -28,7 +28,6 @@ class CreateGempaluncuran extends Migration
         $table->float('rmax',8,2)->default(0.0);
         $table->text('arah')->nullable();
         $table->timestamps();
-        $table->softDeletes();
     }
 
     public function up()

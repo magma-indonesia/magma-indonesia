@@ -3,15 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class VarGempa extends Model
-{
-    use SoftDeletes;
+{  
 
-    protected $dates = ['deleted_at'];    
-
-    protected $with = ['lts','apl','gug','apg','hbs','tre','tor','lof','hyb','vtb','vta','vlp','tel','trs','tej','dev','gtb','hrm','dpt','mtr'];
+    protected $with = [
+        'lts','apl','gug','apg',
+        'hbs','tre','tor','lof',
+        'hyb','vtb','vta','vlp',
+        'tel','trs','tej','dev',
+        'gtb','hrm','dpt','mtr'
+    ];
 
     protected $fillable = [
         'noticenumber_id',

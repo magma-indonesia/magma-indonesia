@@ -27,7 +27,6 @@ class CreateGempasp extends Migration
         $table->float('dmin',8,2)->default(0.0);
         $table->float('dmax',8,2)->default(0.0);
         $table->timestamps();
-        $table->softDeletes();
     }
 
     public function up()

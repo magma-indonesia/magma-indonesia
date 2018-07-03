@@ -29,7 +29,6 @@ class CreateMagmaVarsTable extends Migration
             $table->foreign('nip_pelapor')->references('nip')->on('users');
             $table->index(['code_id','var_data_date']);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

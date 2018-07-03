@@ -18,7 +18,6 @@ class CreateVarGempasTable extends Migration
             $table->char('noticenumber_id',16)->unique()->index();
             $table->foreign('noticenumber_id')->references('noticenumber')->on('magma_vars')->onDelete('cascade');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

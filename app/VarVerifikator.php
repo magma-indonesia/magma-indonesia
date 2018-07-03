@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class VarVerifikator extends Model
 {
 
-    protected $dates = ['deleted_at'];
-
     protected $fillable = [
         'noticenumber_id',
         'nip_id'

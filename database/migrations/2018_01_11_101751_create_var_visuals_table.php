@@ -21,7 +21,6 @@ class CreateVarVisualsTable extends Migration
             $table->char('visual_asap',15)->nullable();
             $table->text('visual_kawah')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

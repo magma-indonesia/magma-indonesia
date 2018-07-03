@@ -24,7 +24,6 @@ class CreateGempadominan extends Migration
         $table->float('amax',8,2)->default(0.0);
         $table->float('adom',8,2)->default(0.0);
         $table->timestamps();
-        $table->softDeletes();
     }
 
     public function up()

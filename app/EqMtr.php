@@ -3,19 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EqMtr extends Model
 {
-    use SoftDeletes;
 
     protected $table = 'e_mtr';
 
-    protected $dates = ['deleted_at'];
-
     /* Data untuk gempa DOMINAN */
     protected $fillable = [
-        
         'var_gempa_id',
         'noticenumber_id',
         'jumlah',
@@ -24,25 +19,20 @@ class EqMtr extends Model
         'adom',
         'created_at',
         'updated_at',
-        'deleted_at'
-        
     ];
 
     protected $hidden   = [
-        
         'id',
         'var_gempa_id',
         'noticenumber_id',
         'created_at',
         'updated_at',
-        'deleted_at'
-        
     ];
         
     protected $guarded  = [
-
-        'id'
-
+        'id',
+        'var_gempa_id',
+        'noticenumber_id',
     ];
 
     /**     

@@ -5,11 +5,10 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Uuid;
 use Carbon\Carbon;
-use CyrildeWit\PageViewCounter\Traits\HasPageViewCounter;
 
 class Vona extends Model
 {
-    use Uuid,HasPageViewCounter;
+    use Uuid;
 
     public $incrementing = false;
 
@@ -20,8 +19,7 @@ class Vona extends Model
     protected $appends = [
         'issued_utc',
         'source',
-        'contacts',
-        'page_views'
+        'contacts'
     ];
 
     protected $casts = [
@@ -77,16 +75,6 @@ class Vona extends Model
     public function getContactsAttribute($value)
     {
         return self::CONTACTS;
-    }
-
-    /**
-     * Get the total page views of the article.
-     *
-     * @return int
-     */
-    public function getPageViewsAttribute()
-    {
-        return $this->getPageViews();
     }
 
     public function gunungapi()

@@ -28,7 +28,6 @@ class CreateGempaterasa extends Migration
         $table->float('dmax',8,2)->default(0.0);
         $table->char('skala',40)->nullable();
         $table->timestamps();
-        $table->softDeletes();
     }
 
     public function up()

@@ -7,15 +7,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EqDev extends Model
 {
-    use SoftDeletes;
 
-    protected $table    = 'e_dev';
-
-    protected $dates = ['deleted_at'];
+    protected $table = 'e_dev';
 
     /* Data untuk gempa yang memiliki nilai SP */
     protected $fillable = [
-        
         'var_gempa_id',
         'noticenumber_id',
         'jumlah',
@@ -27,29 +23,24 @@ class EqDev extends Model
         'dmax',
         'created_at',
         'updated_at',
-        'deleted_at'
-        
     ];
 
     protected $hidden   = [
-        
         'id',
         'var_gempa_id',
         'noticenumber_id',
         'created_at',
         'updated_at',
-        'deleted_at'
-        
     ];
         
     protected $guarded  = [
-
-        'id'
-
+        'id',
+        'var_gempa_id',
+        'noticenumber_id',
     ];
 
     /**     
-     *   Masing-masing Visual hanya dimiliki
+     *   Masing-masing gempa hanya dimiliki
      *   oleh 1 data VAR
      */
     public function var()

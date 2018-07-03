@@ -3,11 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MagmaVar extends Model
 {
-    use SoftDeletes;
 
     public $timestamps = false;
 
@@ -37,18 +35,14 @@ class MagmaVar extends Model
     public function getStatusDeskripsiAttribute()
     {
         switch ($this->attributes['status']) {
-            case 4:
-                return 'Level IV (Awas)';
-                break;
-            case 3:
-                return 'Level III (Siaga)';
-                break;
+            case 1:
+                return 'Level I (Normal)';
             case 2:
                 return 'Level II (Waspada)';
-                break;
+            case 3:
+                return 'Level III (Siaga)';
             default:
-                return 'Level I (Normal)';
-                break;
+                return 'Level IV (Awas)';
         }
     }
 

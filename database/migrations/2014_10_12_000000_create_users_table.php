@@ -27,7 +27,6 @@ class CreateUsersTable extends Migration
             $table->unique(['phone','deleted_at']);
             $table->rememberToken();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

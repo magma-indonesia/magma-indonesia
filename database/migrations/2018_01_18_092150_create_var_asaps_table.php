@@ -23,7 +23,6 @@ class CreateVarAsapsTable extends Migration
             $table->char('intasap')->nullable();
             $table->char('tekasap')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

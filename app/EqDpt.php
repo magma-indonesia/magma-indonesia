@@ -7,15 +7,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EqDpt extends Model
 {
-    use SoftDeletes;
 
     protected $table = 'e_dpt';
 
-    protected $dates = ['deleted_at'];
-
     /* Data untuk gempa yang TIDAK memiliki nilai SP */
     protected $fillable = [
-        
         'var_gempa_id',
         'noticenumber_id',
         'jumlah',
@@ -25,25 +21,20 @@ class EqDpt extends Model
         'dmax',
         'created_at',
         'updated_at',
-        'deleted_at'
-        
     ];
 
     protected $hidden   = [
-        
         'id',
         'var_gempa_id',
         'noticenumber_id',
         'created_at',
         'updated_at',
-        'deleted_at'
-        
     ];
         
     protected $guarded  = [
-
-        'id'
-
+        'id',
+        'var_gempa_id',
+        'noticenumber_id',
     ];
 
     /**     

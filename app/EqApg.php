@@ -3,25 +3,18 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EqApg extends Model
 {
-    use SoftDeletes;
 
     protected $table = 'e_apg';
 
-    protected $dates = ['deleted_at'];
-
     protected $casts = [
-        
-        'arah'         => 'array'
-        
+        'arah' => 'array'
     ];
 
     /* Data untuk gempa yang memiliki jarak LUNCUR */
     protected $fillable = [
-        
         'var_gempa_id',
         'noticenumber_id',
         'jumlah',
@@ -34,29 +27,24 @@ class EqApg extends Model
         'arah',
         'created_at',
         'updated_at',
-        'deleted_at'
-        
     ];
 
     protected $hidden   = [
-        
         'id',
         'var_gempa_id',
         'noticenumber_id',
         'created_at',
         'updated_at',
-        'deleted_at'
-        
     ];
         
     protected $guarded  = [
-
-        'id'
-
+        'id',
+        'var_gempa_id',
+        'noticenumber_id',
     ];
 
     /**     
-     *   Masing-masing Visual hanya dimiliki
+     *   Masing-masing gempa hanya dimiliki
      *   oleh 1 data VAR
      */
     public function var()

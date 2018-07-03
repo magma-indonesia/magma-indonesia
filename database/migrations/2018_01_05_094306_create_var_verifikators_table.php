@@ -20,7 +20,6 @@ class CreateVarVerifikatorsTable extends Migration
             $table->char('nip_id',18)->nullable();
             $table->foreign('nip_id')->references('nip')->on('users')->onDelete('cascade');;
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

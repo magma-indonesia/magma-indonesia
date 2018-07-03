@@ -13,16 +13,15 @@ class TesController extends Controller
 {
     public function __construct(Request $request)
     {
-
-        
         // dd(\App\VarVisual::select('id')->where('noticenumber_id','IYA1201604212400')->first()->id);
         // return view('tes.index');
-
     }
 
     public function index()
     {
-        return intval('6 jam');
+        return $var = \App\MagmaVar::with('pj')
+            ->where('noticenumber','AGU1201806290000')
+            ->firstOrFail();
         //has many
         $gadd = Gadd::where('code','AGU')->first();
         $status = $gadd->status->first()->deskriptif;

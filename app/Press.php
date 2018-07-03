@@ -4,11 +4,10 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Press extends Model
 {
-    use SoftDeletes,Notifiable;
+    use Notifiable;
 
     protected $dates = ['deleted_at'];
 
