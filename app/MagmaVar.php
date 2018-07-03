@@ -17,7 +17,6 @@ class MagmaVar extends Model
 
     protected $fillable = [
         'noticenumber',
-        'var_issued',
         'code_id',
         'var_data_date',
         'periode',

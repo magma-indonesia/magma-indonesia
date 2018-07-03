@@ -16,12 +16,11 @@ class CreateMagmaVarsTable extends Migration
         Schema::create('magma_vars', function (Blueprint $table) {
             $table->increments('id');
             $table->char('noticenumber',16)->unique()->index();
-            $table->dateTime('var_issued');
             $table->char('code_id',3)->index();
             $table->foreign('code_id')->references('code')->on('ga_dd');
             $table->date('var_data_date');
             $table->char('periode',11);
-            $table->smallInteger('var_perwkt');
+            $table->enum('var_perwkt',['6','12','24']);
             $table->char('obscode_id',4)->index();
             $table->foreign('obscode_id')->references('obscode')->on('pos_pgas');
             $table->enum('status',['1','2','3','4']);
