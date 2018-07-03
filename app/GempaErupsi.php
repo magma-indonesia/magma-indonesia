@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /*  
  *  
@@ -15,22 +14,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class GempaErupsi extends Model
 {
-    use SoftDeletes;
-
-    protected $dates = ['deleted_at'];
 
     public function getTable()
     {
-
         return $this->table;
-
     }
 
     public function setTable($data)
     {
-
         $this->table = $data;
-
     }
 
     //IMPORTANT
@@ -74,9 +66,7 @@ class GempaErupsi extends Model
 
     public function vars()
     {
-
         return $this->belongsTo('App\MagmaVar','noticenumber_id','noticenumber');
-
     }
 
 }

@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /*  
  *  
@@ -14,28 +13,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 */
 class GempaTerasa extends Model
 {
-    use SoftDeletes;
-
-    protected $dates = ['deleted_at'];
 
     protected $casts = [
-        
-        'skala'         => 'array'
-        
+        'skala' => 'array'
     ];
 
     public function getTable()
     {
-
         return $this->table;
-
     }
 
     public function setTable($data)
     {
-
         $this->table = $data;
-
     }
 
     //IMPORTANT
@@ -49,7 +39,6 @@ class GempaTerasa extends Model
     }
 
     protected $fillable = [
-        
         'var_gempa_id',
         'noticenumber_id',
         'jumlah',
@@ -80,9 +69,7 @@ class GempaTerasa extends Model
 
     public function vars()
     {
-
         return $this->belongsTo('App\MagmaVar','noticenumber_id','noticenumber');
-
     }
 
 }
