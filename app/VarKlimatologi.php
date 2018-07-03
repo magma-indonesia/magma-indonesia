@@ -19,6 +19,7 @@ class VarKlimatologi extends Model
 
         'noticenumber_id',
         'cuaca',
+        'curah_hujan',
         'kecangin',
         'arahangin',
         'suhumin',

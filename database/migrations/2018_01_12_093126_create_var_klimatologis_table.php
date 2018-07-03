@@ -18,6 +18,7 @@ class CreateVarKlimatologisTable extends Migration
             $table->char('noticenumber_id',16)->unique()->index();
             $table->foreign('noticenumber_id')->references('noticenumber')->on('magma_vars')->onDelete('cascade');
             $table->char('cuaca',50)->nullable();
+            $table->float('curah_hujan',5,2)->default(0.0);
             $table->char('kecangin',32)->nullable();
             $table->char('arahangin',100)->nullable();
             $table->float('suhumin',4,2)->default(0.0);
