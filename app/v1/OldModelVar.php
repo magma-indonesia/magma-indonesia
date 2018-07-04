@@ -146,6 +146,34 @@ class OldModelVar extends Model
                 return 1;
         }
     }
+
+    protected function warnaAsap(string $value)
+    {
+        $s_wasap = ['Putih','Kelabu','Cokelat','Hitam'];
+
+        if ($value == '-' || empty($value)) {
+            return null;
+        }
+
+        $wasap = str_replace(', ', ',', $value);
+        $wasap = str_replace('#',',',$wasap);
+
+        $wasap = str_replace('Coklat','Cokelat',$wasap);
+        $wasap = explode(',',$wasap);
+
+        return $this->intersect($s_wasap,$wasap);
+    }
+
+    protected function skala(string $value)
+    {
+        $s_skala = ['I','II','III','IV','V','VI','VII'];
+
+        $data = str_replace(', ',',',$value);
+
+        $skala = explode(',',$data);
+
+        return $this->intersect($s_skala,$skala);
+    }
     //endregion
 
     //region MAGMA-VAR
@@ -490,19 +518,7 @@ class OldModelVar extends Model
      */
     public function getVarWasapAttribute(string $value)
     {
-        $s_wasap = ['Putih','Kelabu','Cokelat','Hitam'];
-
-        if ($value == '-' || empty($value)) {
-            return null;
-        }
-
-        $wasap = str_replace(', ', ',', $value);
-        $wasap = str_replace('#',',',$wasap);
-
-        $wasap = str_replace('Coklat','Cokelat',$wasap);
-        $wasap = explode(',',$wasap);
-
-        return $this->intersect($s_wasap,$wasap);
+        return $this->warnaAsap($value);
     }
 
     /**
@@ -559,6 +575,60 @@ class OldModelVar extends Model
         $tekasap = explode(',',$tekasap);
         return $this->intersect($s_tekasap,$tekasap);
     }
+
+    /**
+     * Merubah arah luncuran dari string menjadi array
+     *
+     * @param string $value
+     * @return void
+     */
+    public function getVarGugAlunAttribute(string $value)
+    {
+        $data = str_replace('#',',',$value);
+        return $this->arah($data)->isEmpty() ? null : $this->arah($data) ;
+    }
+
+    /**
+     * Merubah arah luncuran dari string menjadi array
+     *
+     * @param string $value
+     * @return void
+     */
+    public function getVarApgAlunAttribute(string $value)
+    {
+        $data = str_replace('#',',',$value);
+        return $this->arah($data)->isEmpty() ? null : $this->arah($data) ;
+    }
+
+    /**
+     * Merubah arah luncuran dari string menjadi array
+     *
+     * @param string $value
+     * @return void
+     */
+    public function getVarAplAlunAttribute(string $value)
+    {
+        $data = str_replace('#',',',$value);
+        return $this->arah($data)->isEmpty() ? null : $this->arah($data) ;
+    }
+
+    /**
+     * Merubah warna abu letusan dari string menjadi array
+     *
+     * @param string $value
+     * @return void
+     */
+    public function getVarLtsWasapAttribute(string $value)
+    {
+        return $this->warnaAsap($value);
+    }
+
+    public function getVarTrsSkalaminAttribute($value)
+    {
+        $skala = $value.','.$this->attributes['var_trs_skalamax'];
+        return $this->skala($skala);
+    }
+    
     //endregion
 
 }
