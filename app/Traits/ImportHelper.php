@@ -210,7 +210,7 @@ trait ImportHelper
      *   @param string $ga_code, $code, $name
      * 
      */
-    private function posMerapi($gacode,$source)
+    protected function posMerapi($gacode,$source)
     {
 
         if (strpos($source, 'rakah') !== false)
@@ -269,7 +269,7 @@ trait ImportHelper
         if ($gacode=='MER')
         {
 
-            $obscode        = $this->posMerapi($gacode,$source);
+            $obscode = $this->posMerapi($gacode,$source);
             return $obscode;
 
         }
