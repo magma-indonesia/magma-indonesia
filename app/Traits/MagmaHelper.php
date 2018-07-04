@@ -9,6 +9,8 @@ use App\TempTable;
 use App\Import;
 use App\Kantor;
 use App\MagmaSigertan;
+use App\VarPj;
+use App\VarVerifikator;
 
 use App\Notifications\ImportNotification;
 
@@ -48,13 +50,10 @@ trait MagmaHelper
         switch ($status){
             case 'Level I (Normal)':
                 return 1;
-                break;
             case 'Level II (Waspada)':
                 return 2;
-                break;
             case 'Level III (Siaga)':
                 return 3;
-                break;
             default:
                 return 4;
         }
@@ -301,7 +300,7 @@ trait MagmaHelper
                     [   'no' => $no      ]
                 );
         
-        return;
+        return $temp;
     }
 
     /**     
@@ -713,7 +712,7 @@ trait MagmaHelper
         if ($gacode=='MER')
         {
 
-            $data      = $data;
+            return $data;
 
         }
 
@@ -796,5 +795,47 @@ trait MagmaHelper
 
         return $this->sect($s_skala,$skala);
 
+    }
+
+    /**
+     * import Penanggung jawab
+     *
+     * @param string $noticenumber
+     * @param string $var_nip_pj
+     * @return void
+     */
+    protected function varPj($noticenumber,$var_nip_pj)
+    {
+        $data = VarPj::firstOrCreate(
+            [
+                'noticenumber_id' => $noticenumber
+            ],
+            [
+                'nip_id' => $var_nip_pj,
+            ]
+        );
+
+        return $data;
+    }
+
+    /**
+     * Import Verifikator
+     *
+     * @param string $noticenumber
+     * @param string $var_nip_verifikator
+     * @return void
+     */
+    protected function varVerifikator(string $noticenumber,string $var_nip_verifikator)
+    {
+        $data = VarVerifikator::firstOrCreate(
+            [
+                'noticenumber_id' => $noticenumber
+            ],
+            [
+                'nip_id' => $var_nip_verifikator,
+            ]
+        );
+
+        return $data;
     }
 }
