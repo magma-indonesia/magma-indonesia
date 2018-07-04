@@ -20,9 +20,9 @@ class CreateGempadominan extends Migration
         $table->char('noticenumber_id',16)->unique()->index();
         $table->foreign('noticenumber_id')->references('noticenumber')->on('magma_vars')->onDelete('cascade');
         $table->smallInteger('jumlah')->default(0);
-        $table->float('amin',8,2)->default(0.0);
-        $table->float('amax',8,2)->default(0.0);
-        $table->float('adom',8,2)->default(0.0);
+        $table->float('amin',4,2)->default(0.0);
+        $table->float('amax',4,2)->default(0.0);
+        $table->float('adom',4,2)->default(0.0);
         $table->timestamps();
     }
 

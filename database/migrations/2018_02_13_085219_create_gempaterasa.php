@@ -20,12 +20,12 @@ class CreateGempaterasa extends Migration
         $table->char('noticenumber_id',16)->unique()->index();
         $table->foreign('noticenumber_id')->references('noticenumber')->on('magma_vars')->onDelete('cascade');
         $table->smallInteger('jumlah')->default(0);
-        $table->float('amin',8,2)->default(0.0);
-        $table->float('amax',8,2)->default(0.0);
-        $table->float('spmin',8,2)->default(0.0);
-        $table->float('spmax',8,2)->default(0.0);
-        $table->float('dmin',8,2)->default(0.0);
-        $table->float('dmax',8,2)->default(0.0);
+        $table->float('amin',4,2)->default(0.0);
+        $table->float('amax',4,2)->default(0.0);
+        $table->float('spmin',4,2)->default(0.0);
+        $table->float('spmax',4,2)->default(0.0);
+        $table->float('dmin',5,2)->default(0.0);
+        $table->float('dmax',5,2)->default(0.0);
         $table->char('skala',40)->nullable();
         $table->timestamps();
     }
