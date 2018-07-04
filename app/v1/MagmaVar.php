@@ -2,9 +2,9 @@
 
 namespace App\v1;
 
-use Illuminate\Database\Eloquent\Model;
+use App\v1\OldModelVar;
 
-class MagmaVar extends Model
+class MagmaVar extends OldModelVar
 {
     protected $connection = 'magma';
 
@@ -16,20 +16,15 @@ class MagmaVar extends Model
 
     protected $fillable = [
         'var_nip_pemeriksa_pj',
-        'var_nama_pemeriksa_pj'
+        'var_nama_pemeriksa_pj',
     ];
 
-    public function getCuStatusAttribute($value)
-    {
-        switch ($value) {
-            case 'Level IV (Awas)':
-                return 4;
-            case 'Level III (Siaga)':
-                return 3;
-            case 'Level II (Waspada)':
-                return 2;
-            default:
-                return 1;
-        }
-    }
+    protected $casts = [
+        'var_issued' => 'datetime:Y-m-d H:i:s',
+        'var_log' => 'datetime:Y-m-d H:i:s',
+        'var_data_date' => 'date:Y-m-d'
+    ];
+
+    
+    // protected $dates = ['var_data_date'];
 }

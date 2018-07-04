@@ -30,7 +30,6 @@ class VarKlimatologi extends Model
         'tekmax',
         'created_at',
         'updated_at',
-        'deleted_at'
 
     ];
 

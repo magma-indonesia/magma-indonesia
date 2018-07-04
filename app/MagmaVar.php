@@ -9,11 +9,10 @@ class MagmaVar extends Model
 
     public $timestamps = false;
 
-    protected $casts = [
-        'var_data_date' => 'date:Y-m-d',
+    protected $dates = [
+        'deleted_at',
+        'var_data_date'
     ];
-
-    protected $dates = ['deleted_at','var_data_date'];
 
     protected $fillable = [
         'noticenumber',
@@ -24,7 +23,8 @@ class MagmaVar extends Model
         'obscode_id',
         'status',
         'nip_pelapor',
-        'created_at'
+        'created_at',
+        'updated_at'
     ];
 
     protected $appends = [
