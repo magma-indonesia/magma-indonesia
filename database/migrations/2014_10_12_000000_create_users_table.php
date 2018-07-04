@@ -22,9 +22,6 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->boolean('status')->default(1);
             $table->string('api_token')->nullable();
-            $table->unique(['nip','deleted_at']);
-            $table->unique(['email','deleted_at']);
-            $table->unique(['phone','deleted_at']);
             $table->rememberToken();
             $table->timestamps();
         });
