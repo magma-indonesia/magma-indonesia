@@ -11,7 +11,6 @@ use App\Traits\ImportHelper;
 
 class ImportMagmaVar extends Import
 {
-
     use ImportHelper;
 
     protected $obscode, $noticenumber, $pj, $verifikator;
@@ -54,8 +53,6 @@ class ImportMagmaVar extends Import
     {
         $no = $this->item->no;
         $gacode = $this->item->ga_code;
-        $var_issued = str_replace('/','-',$this->item->var_issued);
-        $var_issued = date('Y-m-d H:i:s', strtotime($var_issued));
         $var_nip_pelapor = $this->item->var_nip_pelapor;
         $this->pj = $this->item->var_nip_pemeriksa_pj;
         $this->verifikator = $this->item->var_nip_pemeriksa;
@@ -77,15 +74,15 @@ class ImportMagmaVar extends Import
                     'noticenumber'          => $this->noticenumber
                 ],
                 [
-                    'var_issued'            => $var_issued,
                     'code_id'               => $this->item->ga_code,
                     'var_data_date'         => $this->item->var_data_date,
                     'periode'               => $this->item->periode,
-                    'var_perwkt'            => intval($this->item->var_perwkt),
+                    'var_perwkt'            => $this->item->var_perwkt,
                     'obscode_id'            => $this->obscode,
                     'status'                => $this->item->cu_status,
                     'nip_pelapor'           => $var_nip_pelapor,
-                    'created_at'            => $this->item->var_log
+                    'created_at'            => $this->item->var_issued,
+                    'updated_at'            => $this->item->var_log
                 ]
             );
      
