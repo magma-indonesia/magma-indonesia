@@ -19,8 +19,8 @@ class CreateMagmaVarsTable extends Migration
             $table->char('code_id',3)->index();
             $table->foreign('code_id')->references('code')->on('ga_dd');
             $table->date('var_data_date');
-            $table->char('periode',11);
-            $table->enum('var_perwkt',['6','12','24']);
+            $table->enum('periode',['00:00-24:00','00:00-06:00','06:00-12:00','12:00-18:00','18:00-24:00','00:00-12:00','12:00-24:00']);
+            $table->enum('var_perwkt',[6,12,24]);
             $table->char('obscode_id',4)->index();
             $table->foreign('obscode_id')->references('obscode')->on('pos_pgas');
             $table->enum('status',['1','2','3','4']);
