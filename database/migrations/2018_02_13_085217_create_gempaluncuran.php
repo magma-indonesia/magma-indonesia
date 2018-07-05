@@ -20,10 +20,10 @@ class CreateGempaluncuran extends Migration
         $table->char('noticenumber_id',16)->unique()->index();
         $table->foreign('noticenumber_id')->references('noticenumber')->on('magma_vars')->onDelete('cascade');
         $table->smallInteger('jumlah')->default(0);
-        $table->float('amin',4,2)->default(0.0);
-        $table->float('amax',4,2)->default(0.0);
-        $table->float('dmin',5,2)->default(0.0);
-        $table->float('dmax',5,2)->default(0.0);
+        $table->float('amin',5,2)->default(0.0);
+        $table->float('amax',5,2)->default(0.0);
+        $table->float('dmin',6,2)->default(0.0);
+        $table->float('dmax',6,2)->default(0.0);
         $table->float('rmin',8,2)->default(0.0);
         $table->float('rmax',8,2)->default(0.0);
         $table->char('arah',100)->nullable();
