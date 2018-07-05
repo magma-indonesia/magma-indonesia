@@ -17,6 +17,8 @@ class Import extends \App\Http\Controllers\Controller
 
     protected $error;
 
+    protected $data = false;
+
     protected function setNew($new)
     {
         $this->new = $new;
@@ -46,8 +48,7 @@ class Import extends \App\Http\Controllers\Controller
             $import = new ImportApp();
             $import->notify(new ImportNotification($data['text']));
 
-            $this->status['success'] = 1;
-            $this->status['notification'] = 1;
+            $this->status['success'] = $data['success'];
             $this->status['message'] = $data['message'];
             $this->status['count'] = $data['count'];
 
@@ -55,12 +56,23 @@ class Import extends \App\Http\Controllers\Controller
         }
         catch (Exception $e) {
 
-            $this->status['success'] = 1;
-            $this->status['notification'] = $e;
+            $this->status['success'] = $data['success'];
             $this->status['message'] = $data['message'];
             $this->status['count'] = 0;
 
             return $this;
         }
+    }
+
+    protected function sendError($e)
+    {
+        $data = [
+            'success' => 0,
+            'message' => $e
+        ];
+        
+        $this->sendNotif($data);
+
+        return response()->json($this->status);
     }
 }
