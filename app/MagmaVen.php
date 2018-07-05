@@ -20,7 +20,10 @@ class MagmaVen extends Model
         'wasap'         => 'array',
         'intensitas'    => 'array',
         'arah_asap'     => 'array',
-        'date'          => 'datetime:Y-m-d',
+    ];
+
+    protected $dates = [
+        'date'
     ];
 
     protected $with = ['user:nip,name'];
@@ -32,13 +35,11 @@ class MagmaVen extends Model
      */
     protected $fillable = [
         'code_id',
-        'vona_uuid',
         'date', 
-        'time',
+        'visibility',
         'height',
         'wasap',
         'intensitas',
-        'visibility',
         'arah_asap',
         'amplitudo',
         'durasi',        
@@ -46,7 +47,8 @@ class MagmaVen extends Model
         'status',
         'rekomendasi',
         'lainnya',
-        'nip_pelapor'
+        'nip_pelapor',
+        'created_at'
     ];
 
     protected $guarded = ['id','uuid'];
