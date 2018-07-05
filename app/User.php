@@ -14,6 +14,10 @@ class User extends Authenticatable implements JWTSubject
 
     protected $dates = ['deleted_at'];    
 
+    protected $casts = [
+        'status' => 'boolean'
+    ];
+
     /**
      * Route notifications for the Slack channel.
      *
