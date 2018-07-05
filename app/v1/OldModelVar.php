@@ -623,12 +623,105 @@ class OldModelVar extends Model
         return $this->warnaAsap($value);
     }
 
+    /**
+     * Skala untuk gempa terasa
+     *
+     * @param [type] $value
+     * @return void
+     */
     public function getVarTrsSkalaminAttribute($value)
     {
         $skala = $value.','.$this->attributes['var_trs_skalamax'];
         return $this->skala($skala);
     }
+
+    /**
+     * Normalize nilai amplitudo
+     *
+     * @param [type] $value
+     * @return void
+     */
+    public function getVarVtaAminAttribute($value)
+    {
+        $value = $value > 999 ? $value/10 : $value;
+        $value = $value > 120 ? 15 : $value;
+
+        return $value;
+    }
+
+    /**
+     * Normalize nilai amplitudo
+     *
+     * @param [type] $value
+     * @return void
+     */
+    public function getVarVtaAmaxAttribute($value)
+    {
+        $value = $value > 999 ? $value/10 : $value;
+        $value = $value > 120 ? 120 : $value;
+
+        return $value;
+    }
+
+    public function getVarVtaSpminAttribute($value)
+    {
+        $value = $value > 50 ? 1.5 : $value;
+
+        return $value;
+    }
+
+    public function getVarVtaSpmaxAttribute($value)
+    {
+        $value = $value > 50 ? 3 : $value;
+
+        return $value;
+    }
+
+    public function getVarTejAminAttribute($value)
+    {
+        $value = $value > 999 ? $value/100 : $value;
+        $value = $value > 99 ? $value/10 : $value;
+
+        return $value;
+    }
+
+    public function getVarTejAmaxAttribute($value)
+    {
+        $value = $value > 999 ? $value/100 : $value;
+        $value = $value > 99 ? $value/10 : $value;
+
+        return $value;
+    }
+
+    public function getVarTelAmaxAttribute($value)
+    {
+        $value = $value > 999 ? $this->attributes['var_tel_amin'] : $value;
+
+        return $value;
+    }
+
+    public function getVarTelSpmaxAttribute($value)
+    {
+        $value = $value > 50 ? 3 : $value;
+
+        return $value;
+    }
+
+    public function getVarTejSpmaxAttribute($value)
+    {
+        $value = $value > 50 ? 3 : $value;
+        $value = $value < $this->attributes['var_tej_spmin'] ? $this->attributes['var_tej_spmin'] : $value;
+
+        return $value;
+    }
     
+    public function getVarVtaDmaxAttribute($value)
+    {
+        $value = $value > 999 ? $value/100 : $value;
+        $value = $value > 99 ? $value/10 : $value;
+
+        return $value;
+    }
     //endregion
 
 }
