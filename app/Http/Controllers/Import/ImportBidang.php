@@ -20,39 +20,27 @@ class ImportBidang extends Import
 
     public function __invoke()
     {
-        try  {        
-            $this->old->each(function ($item, $key) {
-                $this->setItem($item)
-                    ->convertBidang()
-                    ->updateBidang();
-            });
+        $this->old->each(function ($item, $key) {
+            $this->setItem($item)
+                ->convertBidang()
+                ->updateBidang();
+        });
 
-            $this->sendNotif(
-                [
-                    'text' => 'Data Bidang',
-                    'message' => 'Data Bidang berhasil diperbarui',
-                    'count' => UserBidang::count()
-                ] 
-            );
+        $data = $this->data
+                ? [ 'success' => 1, 'text' =>'User Bidang', 'message' => 'User Bidang berhasil diperbarui', 'count' => UserBidang::count() ] 
+                : [ 'success' => 0, 'text' => 'User Bidang', 'message' => 'User Bidang gagal diperbarui', 'count' => 0 ];
 
-            return response()->json($this->status);
-        }
+        $this->sendNotif($data);
 
-        catch (Exception $e) {
-            $data = [
-                'success' => 0,
-                'message' => $e
-            ];
-            
-            return response()->json($data);
-        }
+        return response()->json($this->status);
     }
 
     protected function updateBidang()
     {
         $user = User::where('nip', $this->item->vg_nip)->firstOrFail();
 
-        $update = UserBidang::firstOrCreate(
+        try {
+            $create = UserBidang::firstOrCreate(
                 [
                     'user_id' => $user->id
                 ],
@@ -60,6 +48,16 @@ class ImportBidang extends Import
                     'user_bidang_desc_id' => $this->bidang 
                 ]
             );
+
+            if ($create) {
+                $this->data = true;
+            }
+        }
+
+        catch (Exceptipn $e) {
+            $this->sendError($e);
+        }
+
     }
 
     protected function convertBidang()

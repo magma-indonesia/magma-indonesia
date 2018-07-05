@@ -26,13 +26,11 @@ class ImportAbsensi extends Import
             $this->setItem($item)->createAbsensi();
         });
 
-        $this->sendNotif(
-            [
-                'text' => 'Absensi',
-                'message' => 'Data Absensi berhasil diperbarui',
-                'count' => Absensi::count() 
-            ] 
-        );
+        $data = $this->data
+                ? [ 'success' => 1, 'text' => 'Absensi', 'message' => 'Data Absensi berhasil diperbarui','count' => Absensi::count() ] 
+                : [ 'success' => 0, 'text' => 'Absensi', 'message' => 'Data Absensi gagal diperbarui','count' => 0 ];
+
+        $this->sendNotif($data);
 
         return response()->json($this->status);
     }
@@ -80,18 +78,12 @@ class ImportAbsensi extends Import
                     ]
                 );
     
-                if ($create)
-                {
-                    $this->tempTable('abs',$no);
+                if ($create) {
+                    $this->data = $this->tempTable('abs',$no);
                 }
             }
             catch (Exception $e) {
-                $data = [
-                    'success' => 0,
-                    'message' => $e
-                ];
-                
-                return response()->json($data);
+                $this->sendError($e);
             }
 
         }

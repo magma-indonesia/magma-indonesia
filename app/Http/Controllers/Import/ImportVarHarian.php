@@ -28,17 +28,11 @@ class ImportVarHarian extends Import
             $this->setItem($item)->updateDaily();
         });
 
-        $this->data
-            ? [ 'success' => 1, 'message' => 'Data Harian berhasil diperbarui', 'count' => VarDaily::count() ] 
-            : [ 'success' => 0, 'message' => 'Data Harian gagal diperbarui', 'count' => 0 ];
+        $data = $this->data
+            ? [ 'success' => 1, 'text' => 'Data Harian', 'message' => 'Data Harian berhasil diperbarui', 'count' => VarDaily::count() ] 
+            : [ 'success' => 0, 'text' => 'Data Harian', 'message' => 'Data Harian gagal diperbarui', 'count' => 0 ];
 
-        $this->sendNotif(
-            [
-                'text' => 'Data Harian',
-                'message' => 'Data harian berhasil diperbarui',
-                'count' => VarDaily::count()
-            ] 
-        );
+        $this->sendNotif($data);
 
         return response()->json($this->status);
     }
@@ -52,15 +46,10 @@ class ImportVarHarian extends Import
             );
 
             $this->data = $create ? true : false;
-
         }
+
         catch (Exception $e) {
-            $data = [
-                'success' => 0,
-                'message' => $e
-            ];
-            
-            return response()->json($data);
+            $this->sendError($e);
         }
 
         return $this;

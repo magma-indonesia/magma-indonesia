@@ -36,13 +36,11 @@ class ImportVarVisual extends Import
             }
         });
 
-        $this->sendNotif(
-            [
-                'text' => 'Data Visual',
-                'message' => 'Data Visual berhasil diperbarui',
-                'count' => VarVisual::count()
-            ] 
-        );
+        $data = $this->data
+                ? [ 'success' => 1, 'text' => 'Data Visual', 'message' => 'Data Visual berhasil diperbarui', 'count' => VarVisual::count() ] 
+                : [ 'success' => 0, 'text' => 'Data Visual', 'message' => 'Data Visual gagal diperbarui', 'count' => 0 ];
+
+        $this->sendNotif($data);
 
         return response()->json($this->status);
     }
@@ -67,9 +65,7 @@ class ImportVarVisual extends Import
             );
 
             if ($create) {
-                $this->data = $this->tempTable('visuals',$no)
-                    ? [ 'success' => 1, 'message' => 'Data Visual berhasil diperbarui', 'count' => VarVisual::count() ] 
-                    : [ 'success' => 0, 'message' => 'Data Visual gagal diperbarui', 'count' => 0 ];
+                $this->data = $this->tempTable('visuals',$no);
             }
 
             $this->visualasap = $this->item->var_asap;
@@ -78,12 +74,7 @@ class ImportVarVisual extends Import
         }
 
         catch (Exception $e) {
-            $data = [
-                'success' => 0,
-                'message' => $e
-            ];
-            
-            return response()->json($data);
+            $this->sendError($e);
         }
     }
 
@@ -96,17 +87,17 @@ class ImportVarVisual extends Import
                 ->first()->id;
 
             $create = VarAsap::firstOrCreate(
-                        [
-                            'var_visual_id' => $visual_id
-                        ],
-                        [   
-                            'tasap_min' => $this->item->var_tasap_min,
-                            'tasap_max' => $this->item->var_tasap,
-                            'wasap' => $this->item->var_wasap,
-                            'intasap' => $this->item->var_intasap,
-                            'tekasap' => $this->item->var_tekasap
-                        ]
-                    );
+                    [
+                        'var_visual_id' => $visual_id
+                    ],
+                    [   
+                        'tasap_min' => $this->item->var_tasap_min,
+                        'tasap_max' => $this->item->var_tasap,
+                        'wasap' => $this->item->var_wasap,
+                        'intasap' => $this->item->var_intasap,
+                        'tekasap' => $this->item->var_tekasap
+                    ]
+                );
         }
 
         return $this;

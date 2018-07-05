@@ -38,13 +38,11 @@ class ImportMagmaVar extends Import
             }
         });
 
-        $this->sendNotif(
-            [
-                'text' => 'Data MAGMA-VAR v1',
-                'message' => 'Data berhasil diperbarui',
-                'count' => MagmaVar::count()
-            ] 
-        );
+        $data = $this->data
+                    ? [ 'success' => 1, 'text' => 'Data MAGMA-VAR v1', 'message' => 'Data Vars berhasil diperbarui', 'count' => MagmaVar::count() ] 
+                    : [ 'success' => 0, 'text' => 'Data MAGMA-VAR v1', 'message' => 'Data Vars gagal diperbarui', 'count' => 0 ];
+
+        $this->sendNotif($data);
 
         return response()->json($this->status);
     }
@@ -69,7 +67,7 @@ class ImportMagmaVar extends Import
         $this->noticenumber = $this->obscode.$this->item->var_noticenumber;
 
         try {
-            $magmavar = MagmaVar::firstOrCreate(
+            $create = MagmaVar::firstOrCreate(
                 [
                     'noticenumber'          => $this->noticenumber
                 ],
@@ -86,22 +84,15 @@ class ImportMagmaVar extends Import
                 ]
             );
      
-            if ($magmavar) {
-                $this->data = $this->tempTable('vars',$no)
-                    ? [ 'success' => 1, 'message' => 'Data Vars berhasil diperbarui', 'count' => MagmaVar::count() ] 
-                    : [ 'success' => 0, 'message' => 'Data Vars gagal diperbarui', 'count' => 0 ];
+            if ($create) {
+                $this->data = $this->tempTable('vars',$no);
             }
 
             return $this;
         }
 
         catch (Exception $e) {
-            $data = [
-                'success' => 0,
-                'message' => $e
-            ];
-            
-            return response()->json($data);
+            $this->sendError($e);
         }
 
     }

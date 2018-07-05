@@ -36,13 +36,11 @@ class ImportVarKlimatologi extends Import
             }
         });
 
-        $this->sendNotif(
-            [
-                'text' => 'Data Klimatologi',
-                'message' => 'Data Klimatologi berhasil diperbarui',
-                'count' => VarKlimatologi::count()
-            ] 
-        );
+        $data = $this->data
+                ? [ 'success' => 1, 'text' => 'Data Klimatologi', 'message' => 'Data Klimatologi berhasil diperbarui', 'count' => VarKlimatologi::count() ] 
+                : [ 'success' => 0, 'text' => 'Data Klimatologi', 'message' => 'Data Klimatologi gagal diperbarui', 'count' => 0 ];
+
+        $this->sendNotif($data);
 
         return response()->json($this->status);
     }
@@ -75,9 +73,7 @@ class ImportVarKlimatologi extends Import
             );
 
             if ($create) {
-                $this->data = $this->tempTable('klima',$no)
-                    ? [ 'success' => 1, 'message' => 'Data Klimatologi berhasil diperbarui', 'count' => VarKlimatologi::count() ] 
-                    : [ 'success' => 0, 'message' => 'Data Klimatologi gagal diperbarui', 'count' => 0 ];
+                $this->data = $this->tempTable('klima',$no);
             }
         }
 

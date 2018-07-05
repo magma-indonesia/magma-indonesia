@@ -17,30 +17,17 @@ class ImportUsers extends Import
 
     public function __invoke()
     {
-        try {
-            $this->old->each(function ($item, $key) {
-                $this->setItem($item)->updateUser();
-            });
-    
-            $this->sendNotif(
-                [
-                    'text' => 'User',
-                    'message' => 'Data Users berhasil diperbarui',
-                    'count' => User::count() 
-                ] 
-            );
-    
-            return response()->json($this->status);
-        }
+        $this->old->each(function ($item, $key) {
+            $this->setItem($item)->updateUser();
+        });
 
-        catch (Exception $e) {
-            $data = [
-                'success' => 0,
-                'message' => $e
-            ];
-            
-            return response()->json($data);
-        }
+        $data = $this->data
+                ? [ 'success' => 1, 'text' => 'Data User', 'message' => 'Data User berhasil diperbarui', 'count' => User::count() ] 
+                : [ 'success' => 0, 'text' => 'Data User', 'message' => 'Data User gagal diperbarui', 'count' => 0 ];
+
+        $this->sendNotif($data);
+
+        return response()->json($this->status);
     }
 
     protected function updateUser()
@@ -53,20 +40,29 @@ class ImportUsers extends Import
             ? str_replace('+62','0',$this->item->vg_phone) 
             : null;
 
-        $update = User::updateOrCreate(
-            [ 
-                'nip' => $this->item->vg_nip 
-            ],
-            [                 
-                'name'  => $this->item->vg_nama,
-                'email' => $email,
-                'phone' => $phone,
-                'password' => $this->item->vg_password,
-                'status' => 1
-            ]
-        );
+        try {
+            $update = User::updateOrCreate(
+                [ 
+                    'nip' => $this->item->vg_nip 
+                ],
+                [                 
+                    'name'  => $this->item->vg_nama,
+                    'email' => $email,
+                    'phone' => $phone,
+                    'password' => $this->item->vg_password,
+                    'status' => 1
+                ]
+            );
+
+            if ($update) {
+                $this->data = true;
+            }
+        }
+
+        catch (Exception $e) {
+            $this->sendError($e);
+        }
 
         return $this;
     }
-
 }

@@ -36,17 +36,9 @@ class ImportGempa extends Import
                 ->gempaTerasa();
         });
 
-        $this->data 
-            ? [ 'success' => 1, 'message' => 'Data Kegempaan berhasil diperbarui', 'count' => VarGempa::jumlah() ]
-            : [ 'success' => 0, 'message' => 'Data Kegempaan gagal diperbarui', 'count' => 0 ];
+        $data = [ 'success' => 1, 'text' => 'Data Kegempaan', 'message' => 'Data Kegempaan berhasil diperbarui', 'count' => VarGempa::jumlah() ];
 
-        $this->sendNotif(
-            [
-                'text' => 'Data Kegempaan',
-                'message' => 'Data Kegampaan berhasil diperbarui',
-                'count' => VarGempa::jumlah()
-            ] 
-        );
+        $this->sendNotif($data);
 
         return response()->json($this->status);
     }
@@ -404,5 +396,4 @@ class ImportGempa extends Import
 
         return $this;
     }
-    
 }
