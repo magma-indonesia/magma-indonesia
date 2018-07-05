@@ -11,4 +11,9 @@ class VonaSubscriber extends Model
     protected $table = 'magma_subscribe';
 
     protected $primaryKey = 'no';
+
+    public function getNamaAttribute($value)
+    {
+        return !empty($value) ? $value : 'Guest';
+    }
 }
