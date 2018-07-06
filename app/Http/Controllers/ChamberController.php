@@ -15,7 +15,8 @@ class ChamberController extends Controller
     public function index()
     {
 
-        return view('chambers.index');
+        $vars = \App\MagmaVar::count();
+        return view('chambers.index', compact('vars'));
 
     }
 }

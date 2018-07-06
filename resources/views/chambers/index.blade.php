@@ -37,11 +37,11 @@
                         <div class="row">
                             <div class="col-md-3 text-center">
                                 <div class="small">
-                                    <i class="fa fa-bolt"></i> Jumlah Data MAGMA
+                                    <i class="fa fa-bolt"></i> Jumlah Data MAGMA-VAR
                                 </div>
                                 <div>
                                     <h1 class="font-extra-bold m-t-xl m-b-xs">
-                                        226,802
+                                            {{ number_format($vars,0,',','.') }}
                                     </h1>
                                     <small>Data Gunung Api</small>
                                 </div>
