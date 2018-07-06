@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\MagmaVar;
 use App\VarPj;
 use App\VarVerifikator;
+use App\VarKeteranganLain;
 use App\v1\MagmaVar as OldVar;
 use App\Traits\ImportHelper;
 
@@ -13,7 +14,7 @@ class ImportMagmaVar extends Import
 {
     use ImportHelper;
 
-    protected $obscode, $noticenumber, $pj, $verifikator;
+    protected $obscode, $noticenumber, $pj, $verifikator, $lainnya;
 
     public function __construct()
     {
@@ -34,7 +35,8 @@ class ImportMagmaVar extends Import
                 $this->setItem($item)
                     ->createVar()
                     ->createPj()
-                    ->createVerifikator();
+                    ->createVerifikator()
+                    ->createLainnya();
             }
         });
 
@@ -65,6 +67,8 @@ class ImportMagmaVar extends Import
 
         $this->obscode = $this->obscode($gacode,$var_source);
         $this->noticenumber = $this->obscode.$this->item->var_noticenumber;
+
+        $this->lainnya = $this->item->var_ketlain;
 
         try {
             $create = MagmaVar::firstOrCreate(
@@ -131,6 +135,28 @@ class ImportMagmaVar extends Import
         }
 
         return $this;
+    }
+
+    protected function createLainnya()
+    {
+        if (!empty($this->lainnya)) {
+            try {
+                $create = VarKeteranganLain::firstOrCreate(
+                    [
+                        'noticenumber_id' => $this->noticenumber
+                    ],
+                    [
+                        'deskripsi' => ucfirst($this->lainnya)
+                    ]
+                );
+
+                return $this;
+            }
+
+            catch (Exception $e) {
+                $this->sendError($e);
+            }            
+        }
     }
 
 }
