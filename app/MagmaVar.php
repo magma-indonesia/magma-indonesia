@@ -31,6 +31,11 @@ class MagmaVar extends Model
         'status_deskripsi'
     ];
 
+    protected $with = [
+        'user:nip,name',
+        'gunungapi'
+    ];
+
     public function getStatusDeskripsiAttribute()
     {
         switch ($this->attributes['status']) {
@@ -139,6 +144,16 @@ class MagmaVar extends Model
     public function gempa()
     {
         return $this->hasOne('App\VarGempa','noticenumber_id','noticenumber');
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return App\VarKeteranganLain
+     */
+    public function keterangan()
+    {
+        return $this->hasOne('App\VarKeteranganLain','noticenumber_id','noticenumber');
     }
 
 }
