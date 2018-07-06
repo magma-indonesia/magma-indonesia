@@ -15,11 +15,12 @@ class PosResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'code_ga'   => $this->code_id,
-            'gunungapi' => $this->gunungapi->name,
-            'obscode'   => $this->obscode,
-            'nama'      => $this->observatory,
-            'alamat'    => $this->address
+            'obscode' => $this->obscode,
+            'nama' => $this->observatory, 
+            'alamat' => $this->address,
+            'elevation' => $this->elevation,
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
         ];
     }
 }
