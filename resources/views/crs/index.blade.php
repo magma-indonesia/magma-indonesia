@@ -267,7 +267,7 @@
                                         <td>{{ $item->latitude }}</td>
                                         <td>{{ $item->longitude }}</td>
                                         <td>{{ $item->sumber }}</td>
-                                        <td>{{ $item->tsc .', '. $item->ksc }}</td>                                      
+                                        <td>{{ $item->tsc->formatLocalized('%A, %d %B %Y').', '. $item->ksc }}</td>                                      
                                     </tr>
                                     @endforeach
                                 </tbody>
