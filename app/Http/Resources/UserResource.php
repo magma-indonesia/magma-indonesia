@@ -17,7 +17,7 @@ class UserResource extends JsonResource
         return [
             'nip'       => $this->nip,
             'name'      => $this->name,
-            'bidang'    => new BidangResource($this->bidang->deskriptif)
+            'bidang'    => $this->bidang->deskriptif->nama
         ];
     }
 }
