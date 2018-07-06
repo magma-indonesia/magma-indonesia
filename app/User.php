@@ -131,7 +131,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function var()
     {
-        return $this->hasMany('App\MagmaVar','nip','nip_pelapor');
+        return $this->hasMany('App\MagmaVar','nip_pelapor','nip');
     }
 
     /**     
@@ -141,6 +141,18 @@ class User extends Authenticatable implements JWTSubject
      */
     public function crs()
     {
-        return $this->hasMany('App\SigertanCrsValidasi','nip','nip_id');
+        return $this->hasMany('App\SigertanCrsValidasi','nip_id','nip');
+    }
+
+    /**
+     * Setiap user bisa memiliki lebih dari 1 absensi
+     *
+     * @return void
+     */
+    public function absensi()
+    {
+        return $this->hasMany('App\Absensi','nip_id','nip')
+            ->select('nip_id','kantor_id','checkin','checkout')
+            ->orderBy('checkin');
     }
 }
