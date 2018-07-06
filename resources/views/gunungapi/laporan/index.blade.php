@@ -9,7 +9,7 @@
 @endsection
 
 @section('content-body')   
-    <div class="content animate-panel">
+    <div class="content animate-panel content-boxed">
         <div class="row">
             <div class="col-lg-12 text-center m-t-md">
                 <h2>
@@ -79,7 +79,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($vars as $var)
-                                    <tr class="click-here" data-href="{{ route('chambers.laporan.show',$var->noticenumber ) }}" title="{{ $var->status_deskripsi }}" target="_blank" style="cursor: pointer;">
+                                    <tr>
                                         <td class="{{ $var->status }}">Laporan Gunungapi {{ $var->gunungapi->name }}
                                             <br/>
                                             <small>
@@ -122,10 +122,6 @@
     <script>
 
         $(document).ready(function () {
-
-            $('.click-here').click(function() {
-                window.open($(this).data('href'),'_blank');
-            });
 
             // Initialize table
             $('.table-daily').dataTable({

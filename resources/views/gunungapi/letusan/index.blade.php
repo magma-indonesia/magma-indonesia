@@ -77,7 +77,7 @@
                                     <tr>
                                         <td>{{ $vens->firstItem()+$key }}</td>
                                         <td><a href="{{ route('chambers.letusan.show',['uuid' => $ven->uuid]) }}" target="_blank">{{ $ven->gunungapi->name }}</a></td>
-                                        <td>{{ $ven->date->formatLocalized('%d %B %Y').', '.$ven->time.' '.$ven->gunungapi->zonearea }}</td>
+                                        <td>{{ $ven->date->formatLocalized('%d %B %Y').', '.$ven->date->format('H:i').' '.$ven->gunungapi->zonearea }}</td>
                                         <td>{{ $ven->visibility ? 'Teramati':'Tidak Teramati' }}</td>
                                         <td>{{ $ven->height }}</td>
                                         <td>{{ $ven->wasap ?  implode(', ',$ven->wasap) : '-' }}</td>

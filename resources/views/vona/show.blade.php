@@ -48,6 +48,10 @@
                         <i class="fa fa-eye"> </i> {{ $vona->page_views }}
                     </div>
                     <div class="panel-body">
+                        @if ($vona->sent == 0) 
+                        <h3><span class="label label-danger">DRAFT VONA</span></h3>
+                        <div class="hr-line-dashed"></div>
+                        @endif
                         <h4>{{ $vona->gunungapi->name.' '.$vona->issued_utc }}</h4>
                         <div class="table-responsive">
                             <table id="table-vona" class="table table-striped table-hover">
@@ -146,6 +150,10 @@
                             </table>
                         </div>
                         <h4>{{ $vona->gunungapi->name.' '.$vona->issued_utc }}</h4>
+                        @if ($vona->sent == 0) 
+                        <div class="hr-line-dashed"></div>
+                        <h3><span class="label label-danger">DRAFT VONA</span></h3>
+                        @endif
                     </div>
                 </div>
             </div>

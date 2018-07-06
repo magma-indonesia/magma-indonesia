@@ -32,7 +32,7 @@
 @endsection
 
 @section('content-body')
-    <div class="content animate-panel">
+    <div class="content animate-panel content-boxed">
         <div class="row">
             <div class="col-lg-12">
                 <div class="hpanel">
@@ -41,16 +41,19 @@
                     </div>
                     <div class="panel-body float-e-margins">
                         <div class="row">
-                            <div class="col-md-4 col-lg-2 col-sm-12 col-xs-12">
+                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
                                 <a href="{{ route('chambers.vona.create') }}" class="btn btn-outline btn-block btn-magma" type="button">Buat VONA Baru</a>
                             </div>
-                            <div class="col-md-4 col-lg-2 col-sm-12 col-xs-12">
+                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
                                 <a href="{{ route('chambers.vona.draft') }}" class="btn btn-outline btn-block btn-magma" type="button">Draft VONA</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="hpanel">
+                    <div class="panel-heading">
+                        Cari VONA
+                    </div>
                     <div class="panel-body">
                         <form role="form" id="form" method="GET" action="{{ route('chambers.vona.search') }}">
                             <div class="input-group">
@@ -63,6 +66,9 @@
                     </div>
                 </div>
                 <div class="hpanel">
+                    <div class="panel-heading">
+                        Daftar VONA Terkirim
+                    </div>
                     <div class="panel-body">
                         {{ $vonas->links() }}
                         <div class="table-responsive">
@@ -72,12 +78,12 @@
                                         <th>#</th>
                                         <th>Volcano</th>
                                         <th>Issued (UTC)</th>
-                                        <th>Current Aviation Colour Code</th>
-                                        <th>Previous Aviation Colour Code</th>
-                                        <th>Volcano Cloud Height (ASL)</th>
+                                        <th>Current Code</th>
+                                        <th>Previous Code</th>
+                                        <th>Cloud Height (ASL)</th>
                                         <th>Sender</th>
                                         @role('Super Admin')
-                                        <th>Action</th>
+                                        <th style="min-width: 180px;">Action</th>
                                         @endrole
                                     </tr>
                                 </thead>
@@ -92,12 +98,13 @@
                                         <td>{{ $vona->vch_asl > 0 ? $vona->vch_asl.' meter' : 'Tidak teramati' }}</td>
                                         <td>{{ $vona->user->name }}</td>
                                         <td>
-                                            <a href="{{ route('chambers.vona.edit',['uuid'=>$vona->uuid]) }}" class="btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">Edit</a>                                                                                        
+                                            <a href="{{ route('chambers.vona.show',['uuid'=>$vona->uuid]) }}" class="m-t-xs m-b-xs btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">View</a>
+                                            <a href="{{ route('chambers.vona.edit',['uuid'=>$vona->uuid]) }}" class="m-t-xs m-b-xs btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>
                                             @role('Super Admin')
                                             <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.vona.destroy',['uuid'=>$vona->uuid]) }}" accept-charset="UTF-8">
                                                 @method('DELETE')
                                                 @csrf
-                                                <button value="Delete" class="btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
+                                                <button value="Delete" class="m-t-xs m-b-xs btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
                                             </form>
                                             @endrole
                                         </td>                      
@@ -122,6 +129,11 @@
 @section('add-script')
     <script>
         $(document).ready(function () {
+
+            $('.click-here').click(function() {
+                window.open($(this).data('href'),'_blank');
+            });
+
             $('body').on('submit','#deleteForm',function (e) {
                 e.preventDefault();                
 

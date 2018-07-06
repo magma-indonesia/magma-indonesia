@@ -50,7 +50,7 @@
                     </div>
                     @endif
                     <div class="panel-body table-responsive">
-                        <table id="table-pos" class="table table-striped table-bordered table-hover">
+                        <table id="table-pos" class="table table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th>#</th>

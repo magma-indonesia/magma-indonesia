@@ -53,16 +53,16 @@
                     <div class="text-muted">
                     @switch($var->status)
                         @case(1)
-                        <span class="label label-normal">{{ $var->status->status }}</span>
+                        <span class="label label-normal">{{ $var->status_deskripsi }}</span>
                         @break
                         @case(2)
-                        <span class="label label-waspada">{{ $var->status->status }}</span>
+                        <span class="label label-waspada">{{ $var->status_deskripsi }}</span>
                         @break
                         @case(3)
-                        <span class="label label-siaga">{{ $var->status->status }}</span>
+                        <span class="label label-siaga">{{ $var->status_deskripsi }}</span>
                         @break
                         @default
-                        <span class="label label-awas">{{ $var->status->status }}</span>
+                        <span class="label label-awas">{{ $var->status_deskripsi }}</span>
                     @endswitch
                     </div>
                 </div>
@@ -80,18 +80,18 @@
                 <div class="panel-heading hbuilt">
                     <div class="p-xs h4">
                         <small class="pull-right">
-                        @switch($var->statuses_desc_id)
+                        @switch($var->status)
                             @case(1)
-                            <span class="label label-normal">{{ $var->status->status }}</span>
+                            <span class="label label-normal">{{ $var->status_deskripsi }}</span>
                             @break
                             @case(2)
-                            <span class="label label-waspada">{{ $var->status->status }}</span>
+                            <span class="label label-waspada">{{ $var->status_deskripsi }}</span>
                             @break
                             @case(3)
-                            <span class="label label-siaga">{{ $var->status->status }}</span>
+                            <span class="label label-siaga">{{ $var->status_deskripsi }}</span>
                             @break
                             @default
-                            <span class="label label-awas">{{ $var->status->status }}</span>
+                            <span class="label label-awas">{{ $var->status_deskripsi }}</span>
                         @endswitch
                         </small>
                         Laporan Aktivitas Gunung Api {{ $var->gunungapi->name }}
@@ -150,7 +150,7 @@
                             <h4>Kegempaan </h4>
                             <p>{{ empty($gempa) ? 'Kegempaan nihil.' : $gempa }}</p>
                             <h4>Keterangan Lainnya</h4>
-                            <p></p>
+                            <p>{{ optional($var->keterangan)->deskripsi ? $var->keterangan->deskripsi : 'Nihil' }}</p>
                         </div>
                     </div>
                     <div class="row border-bottom">

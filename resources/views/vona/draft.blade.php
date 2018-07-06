@@ -32,19 +32,22 @@
 @endsection
 
 @section('content-body')
-    <div class="content animate-panel">
+    <div class="content animate-panel content-boxed">
         <div class="row">
             <div class="col-lg-12">
                 <div class="hpanel">
                     <div class="panel-heading">
-                        VONA
+                        DRAFT VONA
                     </div>
                     <div class="panel-body float-e-margins m-b">
                         <div class="row text-center">
-                            <div class="col-md-4 col-lg-2 col-sm-6 col-xs-12">
+                            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
                                 <a href="{{ route('chambers.vona.create') }}" class="btn btn-outline btn-block btn-magma" type="button">Buat VONA Baru</a>
                             </div>
                         </div>
+                    </div>
+                    <div class="panel-heading">
+                        Daftar Draft
                     </div>
                     <div class="panel-body">
                         {{ $vonas->links() }}
@@ -65,7 +68,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach($vonas as $key => $vona)
-                                    <tr>
+                                    <tr class="click-here" data-href="{{ route('chambers.vona.show',['uuid'=>$vona->uuid]) }}" title="{{ $vona->gunungapi->name }}" target="_blank" style="cursor: pointer;">
                                         <td>{{ $vonas->firstItem()+$key }}</td>
                                         <td>{{ $vona->gunungapi->name }}</td>
                                         <td>{{ $vona->issued }}</td>
@@ -103,6 +106,11 @@
 @section('add-script')
     <script>
         $(document).ready(function () {
+
+            $('.click-here').click(function() {
+                window.open($(this).data('href'),'_blank');
+            });
+
             $('body').on('submit','#deleteForm',function (e) {
                 e.preventDefault();                
 
