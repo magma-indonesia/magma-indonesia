@@ -3,6 +3,7 @@
 namespace App\v1;
 
 use Illuminate\Database\Eloquent\Model;
+use Indonesia;
 
 class GertanCrs extends Model
 {
@@ -37,6 +38,11 @@ class GertanCrs extends Model
     public function getCrsBwdAttribute($value)
     {
         return title_case($value);
+    }
+
+    public function getCrsFtpAttribute($value)
+    {
+        return empty($value) ? null : $value;
     }
 
 }

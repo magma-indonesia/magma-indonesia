@@ -14,6 +14,10 @@ class SigertanCrs extends Model
     */
     protected $dates = ['waktu_kejadian','tsc'];
 
+    protected $casts = [
+        'status' => 'boolean'
+    ];
+
     /**
      * Fillable columns
      *
