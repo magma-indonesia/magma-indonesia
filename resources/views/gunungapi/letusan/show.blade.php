@@ -87,7 +87,7 @@
                         <span class="pull-right">
                             <i class="fa fa-user"> </i> {{ $ven->user->name }}
                         </span>
-                        <i class="fa fa-eye"> </i> {{ $ven->page_views }}
+                        <i class="fa fa-eye"> </i> {{ $ven->getViews() }}
                     </div>
                     <div class="panel-footer">
                     <img style="max-width: 60px;float: left;display: inline-block;" src="{{ url('/') }}/images/logo/esdm.gif">

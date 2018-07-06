@@ -5,10 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Uuid;
 use Carbon\Carbon;
+use CyrildeWit\EloquentViewable\Viewable;
 
 class MagmaVen extends Model
 {
-    use Uuid;
+    use Uuid,Viewable;
     //
     public $incrementing = false;
 

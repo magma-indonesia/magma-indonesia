@@ -57,7 +57,7 @@
                     <div class="panel-body">
                         {{ $vens->links() }}
                         <div class="table-responsive">
-                            <table id="table-ven" class="table  table-striped table-hover">
+                            <table id="table-ven" class="table table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th>#</th>

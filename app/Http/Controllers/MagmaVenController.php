@@ -194,6 +194,7 @@ class MagmaVenController extends Controller
     {
         $ven = MagmaVen::findOrFail($id);
         $visual = $this->visualLetusan($ven);
+        $ven->addView();
         return view('gunungapi.letusan.show',compact('ven','visual'));
     }
 
