@@ -38,6 +38,8 @@ class VarResource extends JsonResource
             'visual'            => new VisualResource($this->visual),
             'klimatologi'       => new KlimatologiResource($this->klimatologi),
             'gempa'             => new GempaResource($this->gempa),
+            'rekomendasi'       => $this->rekomendasi,
+            'keterangan'        => $this->keterangan->deskripsi,
             
         ];
     }
