@@ -25,6 +25,10 @@ class MagmaVar extends OldModelVar
         'var_data_date' => 'date:Y-m-d'
     ];
 
+    public function getVarKetlainAttribute($value)
+    {
+        return (empty($value) || strlen($value) < 7) ? null : $value;
+    }
     
     // protected $dates = ['var_data_date'];
 }
