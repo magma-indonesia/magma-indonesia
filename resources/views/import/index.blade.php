@@ -78,32 +78,32 @@
                 </div>
             </div>
             <div class="col-lg-3">
-                    <div class="hpanel">
-                        <div class="panel-heading">
-                            Data Absensi Pegawai
-                        </div>
-                        <div class="panel-body text-center h-200">
-                            <i class="pe-7s-look fa-4x"></i>
-                            <br>
-                            <h1 class="m-xs jumlah-absensi">{{ $absensi }}</h1>
-    
-                            <h3 class="font-extra-bold no-margins text-magma">
-                                Absensi Pegawai
-                            </h3>
-                            <small>Jumlah Absen</small>
-                        </div>
-                        <div class="panel-footer text-center">
-                            <form role="form" id="form-import" method="POST"
-                            data-import="absensi" action="{{ route('chambers.import.absensi') }}">
-                                @csrf
-                                <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
-                                    <span class="ladda-label">Import Data Absensi</span>
-                                    <span class="ladda-spinner"></span>
-                                </button>
-                            </form>
-                        </div>
+                <div class="hpanel">
+                    <div class="panel-heading">
+                        Data Absensi Pegawai
+                    </div>
+                    <div class="panel-body text-center h-200">
+                        <i class="pe-7s-look fa-4x"></i>
+                        <br>
+                        <h1 class="m-xs jumlah-absensi">{{ $absensi }}</h1>
+
+                        <h3 class="font-extra-bold no-margins text-magma">
+                            Absensi Pegawai
+                        </h3>
+                        <small>Jumlah Absen</small>
+                    </div>
+                    <div class="panel-footer text-center">
+                        <form role="form" id="form-import" method="POST"
+                        data-import="absensi" action="{{ route('chambers.import.absensi') }}">
+                            @csrf
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
+                                <span class="ladda-label">Import Data Absensi</span>
+                                <span class="ladda-spinner"></span>
+                            </button>
+                        </form>
                     </div>
                 </div>
+            </div>
             <div class="col-lg-3">
                 <div class="hpanel">
                     <div class="panel-heading">
@@ -307,6 +307,43 @@
             <div class="col-lg-3">
                 <div class="hpanel stats">
                         <div class="panel-heading">
+                            Data Rekomendasi Gunung Api
+                        </div>
+                    <div class="panel-body h-200">
+                        <div class="stats-title pull-left">
+                            <h4>Var Rekomendasi</h4>
+                        </div>
+                        <div class="stats-icon pull-right">
+                            <i class="pe-7s-ribbon fa-4x"></i>
+                        </div>
+                        <div class="m-t-xl">
+                            <h1 class="text-magma jumlah-rekomendasi">{{ $rekomendasi }}</h1>
+                            <span class="font-bold no-margins">
+                                Rekomendasi Gunung Api
+                            </span>
+                            <br/>
+                            <small>
+                                Panel ini memberikan informasi tentang
+                                <strong>rekomendasi Gunung Api
+                                </strong>, berdasarkan status aktivitasnya.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="panel-footer text-center">
+                        <form role="form" id="form-import" method="POST"
+                        data-import="rekomendasi" action="{{ route('chambers.import.rekomendasi') }}">
+                            @csrf
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
+                                <span class="ladda-label">Import Rekomendasi</span>
+                                <span class="ladda-spinner"></span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div> 
+            <div class="col-lg-3">
+                <div class="hpanel stats">
+                        <div class="panel-heading">
                             Data VAR Harian
                         </div>
                     <div class="panel-body h-200">
@@ -319,7 +356,7 @@
                         <div class="m-t-xl">
                             <h1 class="text-magma jumlah-dailies">{{ $vardailies }}</h1>
                             <span class="font-bold no-margins">
-                                Volcanic Activiy Report
+                                Volcanic Activity Report
                             </span>
                             <br/>
                             <small>
@@ -340,15 +377,15 @@
                         </form>
                     </div>
                 </div>
-            </div>   
+            </div>
             <div class="col-lg-3">
                 <div class="hpanel stats">
                     <div class="panel-heading">
-                        Data Informasi Letusan (VEN)
+                            Volcanic Eruption Notice (VEN)
                     </div>
                     <div class="panel-body list">
                         <div class="stats-title pull-left">
-                            <h4>Informasi Letusan</h4>
+                            <h4>Data Informasi Letusan</h4>
                         </div>
                         <div class="stats-icon pull-right">
                             <i class="pe-7s-graph3 fa-4x"></i>
@@ -359,13 +396,13 @@
                             </span>
                             <br/>
                             <small>
-                                Panel ini digunakan untuk meng-import data Informasi Letusan
+                                Panel ini digunakan untuk meng-import data Informasi Letusan Gunung Api
                             </small>
                         </div>
                         <div class="row m-t-md">
                             <div class="col-lg-6">
                                 <h3 class="no-margins font-extra-bold text-magma jumlah-vens">{{ number_format($vens,0,',','.') }}</h3>
-                                <div class="font-bold"><i class="fa fa-level-up text-magma"></i> Jumlah data Informasi Letusan</div>
+                                <div class="font-bold"><i class="fa fa-level-up text-magma"></i> Informasi Letusan</div>
                             </div>
                         </div>
                     </div>
@@ -421,6 +458,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-lg-3">
                 <div class="hpanel stats">
                     <div class="panel-heading">
@@ -461,8 +500,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col-lg-3">
                 <div class="hpanel stats">
                     <div class="panel-heading">
