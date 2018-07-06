@@ -61,7 +61,7 @@
                             Masukkan semua data-data yang dibutuhkan untuk merubah pengguna ke dalam MAGMA.
                         </p>
 
-                        <form role="form" id="form" method="POST" action="{{ route('chambers.users.update',$user->id) }}">
+                        <form role="form" id="form" method="POST" action="{{ route('chambers.users.update',$user->id) }} enctype="multipart/form-data"">
                             @method('PUT')
                             @csrf
                             <input name="_type" value="base" type="hidden">
@@ -231,8 +231,6 @@
             reader.readAsDataURL(this.files[0]);
             
         });
-
-        
 
         $("#form").validate({
             rules: {
