@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use JWTAuth;
 use Exception;
+use Carbon\Carbon;
 use App\User;
 use App\UserPhoto;
 use App\UserBidang;
@@ -54,26 +55,20 @@ class UserController extends Controller
         $thumbnail = Image::make($url);
         $thumbnail->resize(76, 76)->save(storage_path('app/users/photo/thumb/'.$photoName));
 
-        if ($uploadPhoto)
-        {
+        if ($uploadPhoto) {
             $success = $user->photo()->updateOrCreate(
                 [
                     'user_id' => $user->id
                 ],
                 [
                     'filename' => $photoName
-                ]);
+                ]
+            );
         } else {
             return redirect()->back()->with('flash_message','Gagal upload photo User.');    
         }
 
-        if ($success)
-        {
-            return true;
-        }
-        
-        return redirect()->back()->with('flash_message','Gagal upload photo User.');    
-    
+        return $success ? true : false;
     }
 
     /** 
@@ -83,17 +78,20 @@ class UserController extends Controller
     */
     protected function loginAttempt($request)
     {
-        $username   = $request->username;
-        $username   = filter_var($username, FILTER_VALIDATE_EMAIL) ? 'email' : 'nip';
+        $username = $request->username;
+        $username = filter_var($username, FILTER_VALIDATE_EMAIL) ? 'email' : 'nip';
         $request->merge([$username => $request->username]);
 
         $credentials = $request->only($username, 'password');
 
         try {
 
-            if (Auth::attempt([$username => $request->username, 'password' => $request->password, 'status' => 1]))
-            {
+            if (Auth::attempt([$username => $request->username, 'password' => $request->password, 'status' => 1])) {
                 $user = Auth::user();
+                $user->update([
+                    'last_login_at' => Carbon::now()->toDateTimeString(),
+                    'last_login_ip' => $request->getClientIp()
+                ]);
 
                 try {
                     $user->notify(new UserLogin('web',$user));
@@ -122,9 +120,7 @@ class UserController extends Controller
         } 
         
         catch (JWTException $e) {
-            
             return response()->json(['success' => false,'error' => 'could_not_create_token'], 500);
-            
         }
 
     }
@@ -150,15 +146,11 @@ class UserController extends Controller
     {
         $logout = Auth::logout();
 
-        if(Auth::check())
-        {
-
+        if(Auth::check()) {
             return 'Masih Login';
-
         }
 
         return redirect()->route('home');
-
     }
 
     /**
@@ -168,10 +160,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
-        $users      = User::all();
-        return view('users.index',compact('users'));
-
+        $users = User::all();
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -204,7 +194,7 @@ class UserController extends Controller
             'status' => 'required|boolean'
         ]);
 
-        $input  = $request->except(['bidang','imagebase64','file']);
+        $input = $request->except(['bidang','imagebase64']);
      
         $user = User::create($input);
 
@@ -213,7 +203,7 @@ class UserController extends Controller
             'user_bidang_desc_id' => $request->bidang
         ]);
         
-        $request->has('file') ? $uploadPhoto = $this->uploadPhoto($user,$request->imagebase64,$request->filetype) : $uploadPhoto = true;
+        $uploadPhoto = !empty($request->filetype) ? $this->uploadPhoto($user, $request->imagebase64, $request->filetype) : true;
 
         if ($user AND $uploadPhoto)
         {
@@ -262,7 +252,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
         $user = User::findOrFail($id);
         
         $this->validate($request, [
@@ -274,19 +264,14 @@ class UserController extends Controller
             'status' => 'required|boolean'
         ]);
 
-        $input = $request->except(['imagebase64','file']);
+        $input = $request->except(['imagebase64']);
         $name  = $request->name;        
         $roles = $request['roles'];
         $user->fill($input)->save();
             
-        $request->file ? $uploadPhoto = $this->uploadPhoto($user,$request->imagebase64,$request->filetype) : $uploadPhoto = true;
+        $uploadPhoto = !empty($request->filetype) ? $this->uploadPhoto($user,$request->imagebase64,$request->filetype) : true;
 
-        if (isset($roles)) {        
-            $user->roles()->sync($roles); 
-        }        
-        else {
-            $user->roles()->detach();
-        }
+        isset($roles) ? $user->roles()->sync($roles) : $user->roles()->detach();
 
         $user->notify(new UserNotification('update',$user));        
 
@@ -303,9 +288,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user   = User::findOrFail($id);
-        $nama   = $user->name;
-        if ($user->delete()){
+        $user = User::findOrFail($id);
+        $nama = $user->name;
+        if ($user->delete()) {
             $user->notify(new UserNotification('delete',$user));            
         }
 
