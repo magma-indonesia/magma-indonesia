@@ -12,7 +12,11 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasRoles,Notifiable;
 
-    protected $dates = ['deleted_at'];    
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'last_login_at'
+    ];    
 
     protected $casts = [
         'status' => 'boolean'
@@ -61,7 +65,9 @@ class User extends Authenticatable implements JWTSubject
         'password',
         'status',
         'api_token',
-        'remember_token'
+        'remember_token',
+        'last_login_at',
+        'last_login_ip'
     ];
 
     /**
@@ -73,9 +79,6 @@ class User extends Authenticatable implements JWTSubject
         'password', 
         'remember_token',
         'status',
-        'created_at',
-        'updated_at',
-        'deleted_at',
     ];
 
     protected $guarded  = [
