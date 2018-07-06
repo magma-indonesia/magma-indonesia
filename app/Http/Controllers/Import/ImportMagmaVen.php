@@ -23,17 +23,11 @@ class ImportMagmaVen extends Import
                 ->createVen();
         });
 
-        $this->data
-            ? [ 'success' => 1, 'message' => 'Magma Ven berhasil diperbarui', 'count' => MagmaVen::count() ] 
-            : [ 'success' => 0, 'message' => 'Magma Ven gagal diperbarui', 'count' => 0 ];
+        $data = $this->data
+            ? [ 'success' => 1, 'text' => 'Data MAGMA-VEN', 'message' => 'Magma Ven berhasil diperbarui', 'count' => MagmaVen::count() ] 
+            : [ 'success' => 0, 'Data MAGMA-VEN' => 'Data MAGMA-VEN', 'message' => 'Magma Ven gagal diperbarui', 'count' => 0 ];
 
-        $this->sendNotif(
-            [
-                'text' => 'Data MAGMA-VEN',
-                'message' => 'Data MAGMA-VEN berhasil diperbarui',
-                'count' => MagmaVen::count()
-            ] 
-        );
+        $this->sendNotif($data);
 
         return response()->json($this->status);
     }
@@ -66,7 +60,7 @@ class ImportMagmaVen extends Import
             );
 
             if ($create) {
-                $this->data = $this->tempTable('ven',$no) ? true : false;
+                $this->data = $this->tempTable('ven',$no);
             }
 
             return $this;
