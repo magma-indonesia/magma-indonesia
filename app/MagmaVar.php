@@ -28,12 +28,20 @@ class MagmaVar extends Model
     ];
 
     protected $appends = [
-        'status_deskripsi'
+        'status_deskripsi',
+        'rekomendasi'
     ];
 
     protected $with = [
-        'user:nip,name',
-        'gunungapi'
+        'user.bidang',
+        'pj',
+        'pos',
+        'gunungapi',
+        'verifikator',
+        'visual',
+        'klimatologi',
+        'gempa',
+        'keterangan'
     ];
 
     public function getStatusDeskripsiAttribute()
@@ -144,6 +152,18 @@ class MagmaVar extends Model
     public function gempa()
     {
         return $this->hasOne('App\VarGempa','noticenumber_id','noticenumber');
+    }
+
+    /**
+     * Mendapatkan rekomendasi langsung dari Data Dasar
+     *
+     * @return void
+     */
+    public function getRekomendasiAttribute()
+    {
+        return $this->gunungapi
+                ->rekomendasi->where('status',$this->attributes['status'])
+                ->first()->rekomendasi;
     }
 
     /**
