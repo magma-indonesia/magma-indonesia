@@ -43,7 +43,7 @@
                         Volcano Eruption Notice
                     </div>
                     <div class="panel-body">
-                        <div class="col-md-4 col-lg-2 col-sm-6 col-xs-12">
+                        <div class="col-md-4 col-xs-12">
                             <a href="{{ route('chambers.letusan.create') }}" class="btn btn-outline btn-block btn-magma" type="button">Buat Informasi Letusan</a>
                         </div>
                     </div>
