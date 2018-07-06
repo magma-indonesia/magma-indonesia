@@ -22,7 +22,7 @@ class MagmaVenController extends Controller
     public function index()
     {
         $vens = MagmaVen::orderBy('date','desc')
-            ->orderBy('time','desc')
+            ->orderBy('date','desc')
             ->paginate(30,['*'],'ven_page');
 
         return view('gunungapi.letusan.index',compact('vens'));
@@ -115,14 +115,14 @@ class MagmaVenController extends Controller
 
     protected function draftVona($ven,$vona)
     {
-        $issued = Carbon::createFromFormat('Y-m-d H:i',$ven->date->format('Y-m-d').' '.$ven->time,'Asia/Jakarta')
+        $issued = Carbon::createFromFormat('Y-m-d H:i:s', $ven->date, 'Asia/Jakarta')
             ->setTimezone('UTC')
             ->toDateTimeString();
 
         $location = $this->location('lat',$ven->gunungapi->latitude).$this->location('lon',$ven->gunungapi->longitude);
 
         $issued_utc = Carbon::createFromFormat('Y-m-d H:i:s',$issued)->format('Hi');
-        $issued_lt = Carbon::createFromFormat('Y-m-d H:i',$ven->date->format('Y-m-d').' '.$ven->time,'Asia/Jakarta')->format('Hi');
+        $issued_lt = Carbon::createFromFormat('Y-m-d H:i:s', $ven->date, 'Asia/Jakarta')->format('Hi');
 
         if ($ven->visibility == '1') {
             $vas = 'Eruption with volcanic ash cloud at '.$issued_utc.'Z ('.$issued_lt.' LT).';
@@ -232,7 +232,7 @@ class MagmaVenController extends Controller
     {
         $ven = MagmaVen::findOrFail($id);
 
-        $message = 'Laporan Letusan Gunung '.$ven->gunungapi->name.', tanggal '.$ven->date.' pukul '.$ven->time.' '.$ven->gunungapi->zonearea;
+        $message = 'Laporan Letusan Gunung '.$ven->gunungapi->name.', tanggal '.$ven->date.' pukul '.$ven->date->format('H:i').' '.$ven->gunungapi->zonearea;
 
         if($ven->delete()){
             $data = [
