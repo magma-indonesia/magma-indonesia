@@ -40,7 +40,7 @@
                                 <tbody>
                                     @foreach ($gadds as $gadd)
                                     <tr>
-                                        <td class="{{ $gadd->latestVar->statuses_desc_id }}">{{ $gadd->name }}</td>
+                                        <td class="{{ $gadd->latestVar->status }}">{{ $gadd->name }}</td>
                                         <td>
                                             <span class="pie">{{ $gadd->latestVar->var_data_date->formatLocalized('%A, %d %B %Y').', '.$gadd->latestVar->periode }}</span>
                                         </td>  
