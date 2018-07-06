@@ -19,7 +19,7 @@ class CreateAbsensisTable extends Migration
             $table->foreign('nip_id')->references('nip')->on('users')->onDelete('cascade');
             $table->char('kantor_id',4)->index();
             $table->foreign('kantor_id')->references('code')->on('kantors');
-            $table->dateTime('checkin')->nullable();
+            $table->dateTime('checkin');
             $table->string('checkin_image')->nullable();
             $table->float('checkin_latitude',10,6)->default(0);
             $table->float('checkin_longitude',10,6)->default(0);
