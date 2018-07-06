@@ -40,7 +40,7 @@ class ImportBidang extends Import
         $user = User::where('nip', $this->item->vg_nip)->firstOrFail();
 
         try {
-            $create = UserBidang::firstOrCreate(
+            $create = UserBidang::updateOrCreate(
                 [
                     'user_id' => $user->id
                 ],
@@ -62,7 +62,7 @@ class ImportBidang extends Import
 
     protected function convertBidang()
     {
-        $bidang = $this->item->bidang;
+        $bidang = $this->item->vg_bid;
 
         if (empty($bidang) || strlen($bidang)<3 )
         {
