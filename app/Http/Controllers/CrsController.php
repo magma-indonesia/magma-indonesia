@@ -78,17 +78,14 @@ class CrsController extends Controller
         switch ($valid) {
             case 'not':
                 return $crs->doesntHave('validator');
-                break;
             case 'all':
                 return $crs;
-                break;
             default:
                 $valid == 'valid' ? $valid = 1 : $valid;
                 $valid == 'invalid' ? $valid = 0 : $valid;
                 return $crs->whereHas('validator', function($query) use ($valid){
                             $query->where('valid','like',$valid);
                         });
-                break;
         }
 
     }
