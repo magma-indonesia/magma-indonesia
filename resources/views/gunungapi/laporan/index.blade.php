@@ -39,8 +39,8 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($gadds as $gadd)
-                                    <tr title="{{ $gadd->latestVar->status->status }}">
-                                        <td class="{{ $gadd->latestVar->statuses_desc_id }}">{{ $gadd->name }}</td>
+                                    <tr title="{{ $gadd->latestVar->status_deskripsi }}">
+                                        <td class="{{ $gadd->latestVar->status }}">{{ $gadd->name }}</td>
                                         <td>
                                             <span class="pie">{{ $gadd->latestVar->var_data_date->formatLocalized('%A, %d %B %Y').', '.$gadd->latestVar->periode }}</span>
                                         </td>  
@@ -79,8 +79,8 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($vars as $var)
-                                    <tr class="click-here" data-href="{{ route('chambers.laporan.show',$var->noticenumber ) }}" title="{{ $var->status->status }}" target="_blank" style="cursor: pointer;">
-                                        <td class="{{ $var->status->id }}">Laporan Gunungapi {{ $var->gunungapi->name }}
+                                    <tr class="click-here" data-href="{{ route('chambers.laporan.show',$var->noticenumber ) }}" title="{{ $var->status_deskripsi }}" target="_blank" style="cursor: pointer;">
+                                        <td class="{{ $var->status }}">Laporan Gunungapi {{ $var->gunungapi->name }}
                                             <br/>
                                             <small>
                                                 <i class="fa fa-clock-o"></i> Tanggal : {{ $var->var_data_date->formatLocalized('%d %B %Y') }}</small>

@@ -51,7 +51,7 @@
                         Dibuat oleh <span class="font-bold">{{ $var->user->name }}</span>
                     </div>
                     <div class="text-muted">
-                    @switch($var->statuses_desc_id)
+                    @switch($var->status)
                         @case(1)
                         <span class="label label-normal">{{ $var->status->status }}</span>
                         @break
@@ -140,7 +140,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-lg-6 border-right">
+                        <div class="col-lg-6">
                             <h4>Pengamatan Visual </h4>
                             <p>{!! $visual !!}</p>
                             <h4>Keterangan Visual Lainnya </h4>
@@ -149,6 +149,14 @@
                         <div class="col-lg-6">
                             <h4>Kegempaan </h4>
                             <p>{{ empty($gempa) ? 'Kegempaan nihil.' : $gempa }}</p>
+                            <h4>Keterangan Lainnya</h4>
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="row border-bottom">
+                        <div class="col-lg-12">
+                            <h4>Rekomendasi</h4>
+                            <p>{!! nl2br($var->gunungapi->rekomendasi->where('status',$var->status)->first()->rekomendasi) !!}</p>
                         </div>
                     </div>
                     <div class="row">
