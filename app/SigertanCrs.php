@@ -55,6 +55,10 @@ class SigertanCrs extends Model
         'id'
     ];
 
+    protected $with = [
+        'validator.user'
+    ];
+
     /**
      * Menambahkan array dalam json
      *
