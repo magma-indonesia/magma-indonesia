@@ -69,6 +69,7 @@ class ActivityGaController extends Controller
                 ->letusan($var->visual->letusan ?? '')
                 ->getVisual();
 
+        $var->addView();        
         $var = new VarResource($var);
         
         return view('gunungapi.laporan.show', compact('var','visual','gempa','pj'));
