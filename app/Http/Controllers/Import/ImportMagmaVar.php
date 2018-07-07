@@ -32,11 +32,13 @@ class ImportMagmaVar extends Import
     {
         $this->old->chunk(5000, function ($items) {
             foreach ($items as $key => $item) {
-                $this->setItem($item)
-                    ->createVar()
-                    ->createPj()
-                    ->createVerifikator()
-                    ->createLainnya();
+                if (!empty($item->var_data_date)) {
+                    $this->setItem($item)
+                        ->createVar()
+                        ->createPj()
+                        ->createVerifikator()
+                        ->createLainnya();
+                }
             }
         });
 
