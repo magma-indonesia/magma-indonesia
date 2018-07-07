@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use CyrildeWit\EloquentViewable\Viewable;
 
 class MagmaVar extends Model
 {
+
+    use Viewable;
 
     public $timestamps = false;
 
