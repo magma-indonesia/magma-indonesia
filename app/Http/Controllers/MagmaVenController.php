@@ -148,11 +148,7 @@ class MagmaVenController extends Controller
         $vona->vch_other = $other;
         $vona->nip_pelapor = auth()->user()->nip;
         
-        if ($vona->save()) {
-            return true;
-        }
-
-        return false;
+        return $vona->save() ? true : false;
         
     }
 
