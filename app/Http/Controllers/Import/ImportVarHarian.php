@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\MagmaVar;
 use App\Gadd;
 use App\VarDaily;
-use App\v1\MagmaVar as OldVar;
 use App\Traits\ImportHelper;
 
 class ImportVarHarian extends Import
@@ -17,6 +16,7 @@ class ImportVarHarian extends Import
 
     public function __construct()
     {
+        ini_set('max_execution_time', 1200);
         $this->old = Gadd::with('latestVar')
             ->whereNotIn('code',['TEO','SBG'])
             ->get();
