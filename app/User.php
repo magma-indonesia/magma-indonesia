@@ -106,6 +106,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne('App\UserBidang','user_id','id');
     }
 
+    public function administrasi()
+    {
+        return $this->hasOne('App\UserAdministratif','user_id','id');
+    }
+
     /**     
      *   Masing-masing user hanya memiliki 1 Foto
      */
