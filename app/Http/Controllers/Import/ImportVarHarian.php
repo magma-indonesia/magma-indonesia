@@ -18,6 +18,7 @@ class ImportVarHarian extends Import
     {
         ini_set('max_execution_time', 1200);
         $this->old = Gadd::with('latestVar')
+            ->select('code')
             ->whereNotIn('code',['TEO','SBG'])
             ->get();
     }
