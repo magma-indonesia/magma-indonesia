@@ -54,7 +54,7 @@ class ImportAbsensi extends Import
         $nip_ver = empty($this->item->nip_ver) ?  null : $this->item->nip_ver;
         $keterangan = $this->item->ket_abs;
 
-        if ($this->item->date_abs != '0000-00-00' || $checkin != null)
+        if ($checkin != null)
         {
             try {
                 $create = Absensi::firstOrCreate(
