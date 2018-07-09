@@ -7,6 +7,7 @@ use App\MagmaVar;
 use App\VarPj;
 use App\VarVerifikator;
 use App\VarKeteranganLain;
+use App\VarRekomendasi;
 use App\v1\MagmaVar as OldVar;
 use App\Traits\ImportHelper;
 
@@ -26,6 +27,8 @@ class ImportMagmaVar extends Import
             'var_nip_pemeriksa_pj','var_nip_pemeriksa','var_log','var_ketlain')
         ->whereBetween('no',[$this->startNo('vars'),$this->endNo('var')])
         ->orderBy('no');
+
+        $this->rekomendasi = VarRekomendasi::all();
     }
 
     public function __invoke()
@@ -84,6 +87,8 @@ class ImportMagmaVar extends Import
                     'var_perwkt'            => $this->item->var_perwkt,
                     'obscode_id'            => $this->obscode,
                     'status'                => $this->item->cu_status,
+                    'rekomendasi_id'        => $this->rekomendasi->where('code_id',$this->item->ga_code)
+                                                    ->where('status',$this->item->cu_status)->first()->id,
                     'nip_pelapor'           => $var_nip_pelapor,
                     'created_at'            => $this->item->var_issued,
                     'updated_at'            => $this->item->var_log
