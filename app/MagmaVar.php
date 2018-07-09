@@ -25,26 +25,15 @@ class MagmaVar extends Model
         'var_perwkt',
         'obscode_id',
         'status',
+        'rekomendasi_id',
         'nip_pelapor',
         'created_at',
-        'updated_at'
+        'updated_at'    
     ];
 
     protected $appends = [
         'status_deskripsi',
         'rekomendasi'
-    ];
-
-    protected $with = [
-        'user.bidang',
-        'pj',
-        'pos',
-        'gunungapi',
-        'verifikator',
-        'visual',
-        'klimatologi',
-        'gempa',
-        'keterangan'
     ];
 
     public function getStatusDeskripsiAttribute()
@@ -164,9 +153,7 @@ class MagmaVar extends Model
      */
     public function getRekomendasiAttribute()
     {
-        return $this->gunungapi
-                ->rekomendasi->where('status',$this->attributes['status'])
-                ->first()->rekomendasi;
+        return $this->gunungapi->rekomendasi;
     }
 
     /**
