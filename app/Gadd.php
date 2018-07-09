@@ -70,7 +70,7 @@ class Gadd extends Model
      */
     public function latestVar()
     {
-        return $this->hasOne('App\MagmaVar','code_id','code')->orderBy('var_data_date','desc');
+        return $this->hasOne('App\MagmaVar','code_id','code')->latest();
     }
 
     /**     
