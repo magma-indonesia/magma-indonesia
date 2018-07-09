@@ -14,4 +14,9 @@ class User extends Model
 
     protected $table = 'vg_peg';
 
+    public function kantor()
+    {
+        return $this->hasOne('App\v1\Kantor','vg_nip','vg_nip');
+    }
+
 }
