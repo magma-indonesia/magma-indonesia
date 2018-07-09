@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class VarRekomendasi extends Model
 {
+    public $timestamps = false;
+
     protected $fillable = [
         'code_id',
         'status',
-        'rekomendasi'
+        'rekomendasi',
+        'created_at'
     ];
 
     /**     
