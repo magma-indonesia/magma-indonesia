@@ -53,7 +53,16 @@ class ActivityGaController extends Controller
         // sudo locale-gen id_ID.UTF-8
         // sudo dpkg-reconfigure locales
 
-        $var = MagmaVar::with('pj')
+        $var = MagmaVar::with(
+            'user.bidang',
+            'pj',
+            'pos',
+            'gunungapi',
+            'verifikator',
+            'visual',
+            'klimatologi',
+            'gempa',
+            'keterangan')
             ->where('noticenumber',$id)
             ->firstOrFail();
 
