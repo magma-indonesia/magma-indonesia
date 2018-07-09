@@ -17,4 +17,5 @@ Route::post('vens','Import\ImportMagmaVen')->name('vens');
 Route::post('vona','Import\ImportVona')->name('vona');
 Route::post('subscribers','Import\Importsubscriber')->name('subscribers');
 Route::post('roq','Import\ImportRoq')->name('roq');
+Route::post('adm','Import\ImportUserAdm')->name('adm');
 Route::get('status','ImportController@status')->name('status');
