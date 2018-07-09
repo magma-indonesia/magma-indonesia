@@ -73,7 +73,7 @@
                     <span class="pull-right">
                         <i class="fa fa-comments-o"> </i> 22 comments
                     </span>
-                    <i class="fa fa-eye"> </i> 142 views
+                    <i class="fa fa-eye"> </i> {{ $var->getViews() }} views
                 </div>
             </div>
             <div class="hpanel">
@@ -221,11 +221,9 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="panel-footer text-right">
-                    <div class="btn-group">
-                        <button class="btn btn-outline btn-block btn-magma"><i class="fa fa-arrow-right"></i> Verifikasi Magma v1</button>
-                    </div>
+                <div class="panel-footer">
+                    
+                        <button class="btn btn-outline btn-magma pull-right"><i class="fa fa-arrow-right"></i> Verifikasi Magma v1</button>
                 </div>
             </div>
         </div>
