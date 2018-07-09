@@ -13,46 +13,41 @@ class UserAdministratif extends Model
      */
     protected $fillable = [
         'user_id',
-        'bidang',
+        'bidang_id',
         'tanggal_lahir',
         'tempat_lahir',
         'agama',
         'kelamin',
         'status_nikah',
-        'jabatan',
+        'jabatan_id',
         'pangkat',
         'golongan',
         'pendidikan_terakhir',
-        'kantor'
+        'jurusan_terakhir',
+        'kantor_id'
     ];
 
     protected $guarded  = [
         'id'
     ];
 
-    public function getBidangAttribute($value)
+    public function user()
     {
-        switch ($value) {
-            case 1:
-                $bidang = 'Pusat Vulkanologi dan Mitigasi Bencana Geologi';
-                break;
-            case 2:
-                $bidang = 'Mitigasi Gunung Api';
-                break;
-            case 3:
-                $bidang = 'Mitigasi Gerakan Tanah';
-                break;
-            case 4:
-                $bidang = 'Mitigasi Gempa Bumi dan Tsunami';
-                break;
-            case 5:
-                $bidang = 'Balai Penyelidikan dan Pengembangan Teknologi Kebencanaan Geologi';
-                break;
-            default:
-                $bidang = 'Tata Usaha';
-                break;
-        }
+        return $this->belongsTo('App\User');
+    }
 
-        return $bidang;
+    public function bidang()
+    {
+        return $this->belongsTo('App\UserBidangDesc','bidang_id','id');
+    }
+
+    public function jabatan()
+    {
+        return $this->belongsTo('App\Jabatan');
+    }
+
+    public function kantor()
+    {
+        return $this->belongsTo('App\Kantor','kantor_id','code');
     }
 }
