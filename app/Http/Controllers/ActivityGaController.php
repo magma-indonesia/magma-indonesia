@@ -68,13 +68,13 @@ class ActivityGaController extends Controller
 
         $gempa = $this->deskripsi($var->gempa)->getGempa();
 
-        $visual = $this->cuaca($var->klimatologi->cuaca)
+        $visual = $this->visibility($var->visual->visibility)
+                ->asap($var->visual->visual_asap, $var->visual->asap ?? '')
+                ->cuaca($var->klimatologi->cuaca)
                 ->angin($var->klimatologi->kecangin,$var->klimatologi->arahangin)
                 ->suhu($var->klimatologi->suhumin,$var->klimatologi->suhumax)
                 ->kelembaban($var->klimatologi->lembabmin,$var->klimatologi->lembabmax)
                 ->tekanan($var->klimatologi->tekmin,$var->klimatologi->tekmax)
-                ->visibility($var->visual->visibility)
-                ->asap($var->visual->visual_asap, $var->visual->asap ?? '')
                 ->letusan($var->visual->letusan ?? '')
                 ->getVisual();
 
