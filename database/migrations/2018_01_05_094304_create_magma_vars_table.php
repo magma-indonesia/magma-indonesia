@@ -24,9 +24,12 @@ class CreateMagmaVarsTable extends Migration
             $table->char('obscode_id',4)->index();
             $table->foreign('obscode_id')->references('obscode')->on('pos_pgas');
             $table->enum('status',['1','2','3','4']);
+            $table->integer('rekomendasi_id')->unsigned();
+            $table->foreign('rekomendasi_id')->references('id')->on('var_rekomendasis');
             $table->char('nip_pelapor',18)->index();
             $table->foreign('nip_pelapor')->references('nip')->on('users');
             $table->index(['code_id','var_data_date']);
+            $table->index(['obscode_id','var_data_date']);
             $table->timestamps();
         });
     }
