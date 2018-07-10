@@ -83,11 +83,11 @@
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->nip }}</td>
-                                    <td>{{ optional(optional($user->bidang)->deskriptif)->nama }}</td>
+                                    <td>{{ $user->administrasi->bidang->nama }}</td>
+                                    <td>{{ $user->administrasi->kantor->nama ?? '-'}}</td>
                                     <td>null</td>
                                     <td>null</td>
-                                    <td>null</td>
-                                    <td>null</td>
+                                    <td>{{ $user->administrasi->golongan ?? '-'}}</td>
                                     <td>null</td>
                                 </tr>
                                 @endforeach
