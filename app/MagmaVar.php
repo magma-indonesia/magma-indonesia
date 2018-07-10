@@ -153,7 +153,7 @@ class MagmaVar extends Model
      */
     public function getRekomendasiAttribute()
     {
-        return $this->gunungapi->rekomendasi;
+        return $this->gunungapi->rekomendasi->where('status',$this->attributes['status'])->first()->rekomendasi;
     }
 
     /**
