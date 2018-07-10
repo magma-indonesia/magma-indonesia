@@ -45,7 +45,7 @@
                         <span class="pull-right">
                             <i class="fa fa-user"> </i> {{ $vona->user->name }}
                         </span>
-                        <i class="fa fa-eye"> </i> {{ $vona->page_views }}
+                        <i class="fa fa-eye"> </i> {{ $vona->getViews() }}
                     </div>
                     <div class="panel-body">
                         @if ($vona->sent == 0) 
