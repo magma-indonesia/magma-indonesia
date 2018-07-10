@@ -172,7 +172,7 @@ class VonaController extends Controller
     public function show(Vona $vona)
     {
         $vona = Vona::findOrFail($vona->uuid);
-        // $vona->addPageViewThatExpiresAt(Carbon::now()->addHours(1));
+        $vona->addView();
         return view('vona.show',compact('vona'));
     }
 
