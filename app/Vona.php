@@ -4,11 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Uuid;
+use CyrildeWit\EloquentViewable\Viewable;
 use Carbon\Carbon;
 
 class Vona extends Model
 {
-    use Uuid;
+    use Uuid,Viewable;
 
     public $incrementing = false;
 
