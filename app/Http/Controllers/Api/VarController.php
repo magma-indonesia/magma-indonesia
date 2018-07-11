@@ -4,16 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\SearchGunungApi;
-use Carbon\Carbon;
-use App\Gadd;
-use App\MagmaVar;
 use App\VarDaily;
+use App\MagmaVar;
 use App\Http\Resources\VarResource;
-use App\Http\Resources\VarCollection;
-use App\Http\Resources\GunungApiCollection;
 use App\Http\Resources\LatestVarCollection;
-
 
 class VarController extends Controller 
 {
@@ -25,14 +19,8 @@ class VarController extends Controller
      */
     public function show($id)
     {
-        $var = MagmaVar::where('noticenumber',$id)->first();
-
-        Carbon::setLocale('id');             
+        $var = MagmaVar::where('noticenumber',$id)->first();      
         return new VarResource($var);
-            
-        // return $var;
-        
-        return view('gunungapi.laporan.show', compact('var'));
     }
 
     /**
@@ -43,11 +31,7 @@ class VarController extends Controller
      */
     public function latest()
     {
-        $gadds = Gadd::orderBy('name')
-                    ->whereNotIn('code',['TEO','SBG'])
-                    ->get();
-            
-        return $vars = new LatestVarCollection($gadds);
-        
+        $latest = VarDaily::orderBy('code_id')->get();
+        return new LatestVarCollection($latest);
     }
 }
