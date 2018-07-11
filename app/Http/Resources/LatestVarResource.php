@@ -20,21 +20,9 @@ class LatestVarResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'name'          => $this->name,
-            'code'          => $this->code,
-            'noticenumber'  => $this->latestVar->noticenumber,
-            'issued'        => $this->latestVar->var_issued,
-            'issued_day'    => $this->convertToDay($this->latestVar->var_issued, ' %H:%I:%S'),
-            'data_date'     => $this->latestVar->var_data_date->toDateString(),
-            'data_date_day' => $this->convertToDay($this->latestVar->var_data_date),
-            'created'       => $this->latestVar->created_at,
-            'created_day'   => $this->convertToDay($this->latestVar->created_at, ' %H:%I:%S'),
-            'periode'       => intval($this->latestVar->var_perwkt),
-            'pelapor'       => new UserResource($this->latestVar->user),
-            'status'        => $this->latestVar->statuses_desc_id,
-            'visual'        => new VisualResource($this->latestVar->visual),
-            'klimatologi'   => new KlimatologiResource($this->latestVar->klimatologi),
-            'gempa'         => new GempaResource($this->latestVar->gempa),
+            'code' => $this->code_id,
+            'gunungapi' => $this->gunungapi->name,
+            'noticenumber' => $this->noticenumber_id,
         ];
     }
 }
