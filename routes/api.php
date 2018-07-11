@@ -21,7 +21,7 @@ Route::group(['prefix' => 'tesuser'], function() {
     Route::get('mgb','TesUserMgbController@index');
 });
 
-Route::group(['middleware' => ['auth:api']], function () {
+Route::group(['middleware' => ['jwt.auth']], function () {
     Route::group(['prefix' => 'v1'], function () {
         Route::get('import/vona','Api\ImportController@vona');       
         Route::get('user','Api\UserController@index');
@@ -30,7 +30,6 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('var/{id}','Api\VarController@show');
         Route::get('vona','Api\VonaController@index');
         Route::get('vona/{uuid}','Api\VonaController@show');
-
         Route::resource('roq','Api\OldRoqController', ['except' => [
             'create','edit','store','destroy'
         ]]);
