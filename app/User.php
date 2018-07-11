@@ -103,7 +103,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function bidang()
     {
-        return $this->hasOne('App\UserBidang','user_id','id');
+        return $this->hasOne('App\UserAdministratif','user_id','id');
     }
 
     public function administrasi()
