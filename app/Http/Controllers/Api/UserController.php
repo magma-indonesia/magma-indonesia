@@ -15,19 +15,42 @@ use App\Notifications\User As UserNotification;
 
 class UserController extends Controller
 {
+    use AuthenticatesUsers;
 
-    // public function __construct()
-    // {
-    //     $this->middleware('guest')->except('logout');
-    // }
+    /**
+     * Get the token array structure.
+     *
+     * @param  string $token
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'token' => $token,
+            'type' => 'bearer',
+            'expires_days' => Auth::guard('api')->factory()->getTTL() / 1440
+        ]);
+    }
 
+    /**
+     * Get index users
+     *
+     * @param Request $request
+     * @return void
+     */
     public function index(Request $request)
     {
-    
-        $request->has('bidang') ? $bidang = $request->bidang : $bidang = '%';
-        $users = User::whereHas('bidang.deskriptif', function($query) use($bidang){
-            $query->where('code','like',$bidang);
-        })->paginate(30);  
+        $users = User::query();
+
+        if ($request->has('bidang')) {
+            $bidang = $request->bidang;
+            $users = $users->whereHas('bidang.bidang', function($query) use ($bidang){
+                $query->where('code','like',$bidang);
+            });
+        }
+
+        $users = $users->paginate(30);  
         return new UserCollection($users);
         
     }
@@ -37,27 +60,21 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return View
     */
-    protected function loginAttempt($request)
+    protected function loginAttempt($request,$ttl)
     {
-        $username   = $request->username;
-        $username   = filter_var($username, FILTER_VALIDATE_EMAIL) ? 'email' : 'nip';
-        $request->merge([$username => $request->username]);
-
-        $credentials = $request->only($username, 'password');
-
         try {
+            $username = $request->username;
+            $username = filter_var($username, FILTER_VALIDATE_EMAIL) ? 'email' : 'nip';
+            $request->request->add(['status' => 1]);
+            $request->merge([$username => $request->username]);
+    
+            $credentials = $request->only($username, 'password', 'status');
 
-            if (Auth::once([$username => $request->username, 'password' => $request->password, 'status' => 1]))
-            {
-                $user = Auth::user();
+            if ($user = Auth::once($credentials)) {
+                $token = Auth::guard('api')->setTTL($ttl)->attempt($credentials);
+                $user = auth()->user();
                 $user->notify(new UserLogin('api',$user));
-                $token = Auth::guard('api')->attempt($credentials);
-
-                return response()->json([
-                    'success' => true,
-                    'data' => new UserResource($user),
-                    'token' => $token
-                ]);
+                return $this->respondWithToken($token);
             }
 
             if ($this->hasTooManyLoginAttempts($request)) {
@@ -67,19 +84,13 @@ class UserController extends Controller
             }
 
             $this->incrementLoginAttempts($request);
-
-            throw ValidationException::withMessages([
-                $request->username => [trans('auth.failed')],
-            ]);
-
-        } 
-        
-        catch (JWTException $e) {
-            
-            return response()->json(['success' => false,'error' => 'could_not_create_token'], 500);
-            
+    
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
 
+        catch (JWTException $e) {
+            return response()->json(['success' => false, 'error' => 'Token tidak bisa dibuat'], 500);
+        }
     }
 
     /*
@@ -100,7 +111,9 @@ class UserController extends Controller
             'password' => 'required|string',
         ]);
 
-        return $this->loginAttempt($request);
+        $ttl = $request->has('ttl') ? $request->ttl*1440 : 1440 ;
+
+        return $this->loginAttempt($request,$ttl);
 
     }
 
@@ -112,10 +125,23 @@ class UserController extends Controller
      */
     public function show($nip)
     {   
-        $user = User::where('nip',$nip)->first();
-        return new UserResource($user);
+        try {
+            $user = User::where('nip',$nip)->first();
+            return new UserResource($user); 
+        }
+
+        catch (JWTException $e) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
     }
 
+    /**
+     * Add token to blaclist
+     *
+     * @param Request $request
+     * @return void
+     */
     public function logout(Request $request)
     {
         $user = JWTAuth::setToken($request->token)->invalidate();
@@ -124,6 +150,5 @@ class UserController extends Controller
             'data' => [ 'success' => true, 'message' => 'Berhasil menghapus token'],
         ]);
     }
-    
 
 }
