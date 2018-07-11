@@ -17,6 +17,11 @@ class VarDaily extends Model
         'id'
     ];
 
+    public function gunungapi()
+    {
+        return $this->belongsTo('App\Gadd','code_id','code');
+    }
+
     public function var()
     {
         return $this->belongsTo('App\MagmaVar','noticenumber_id','noticenumber');
