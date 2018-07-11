@@ -42,6 +42,8 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $users = User::query();
+            
+        $users = $users->select('id','name','nip','email','phone','last_login_at','last_login_ip');
 
         if ($request->has('bidang')) {
             $bidang = $request->bidang;
