@@ -17,14 +17,15 @@ class ImportVarHarian extends Import
     public function __construct()
     {
         ini_set('max_execution_time', 1200);
+    }
+
+    public function import()
+    {
         $this->old = Gadd::with('latestVar')
             ->select('code')
             ->whereNotIn('code',['TEO','SBG'])
             ->get();
-    }
-
-    public function __invoke()
-    {
+            
         $this->old->each(function ($item, $key) {
             $this->setItem($item)->updateDaily();
         });

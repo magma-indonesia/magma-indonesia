@@ -17,11 +17,12 @@ class ImportAbsensi extends Import
     public function __construct()
     {
         ini_set('max_execution_time', 1200);
-        $this->old = OldAbsensi::whereBetween('id_abs',[$this->startNo('abs'),$this->endNo('abs')])->get();
     }
 
-    public function __invoke()
+    public function import()
     {
+        $this->old = OldAbsensi::whereBetween('id_abs',[$this->startNo('abs'),$this->endNo('abs')])->get();
+
         $this->old->each(function ($item, $key) {
             $this->setItem($item)->createAbsensi();
         });

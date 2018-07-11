@@ -13,11 +13,12 @@ class ImportMagmaVen extends Import
 
     public function __construct()
     {
-        $this->old = OldVen::whereBetween('erupt_id',[$this->startNo('ven'),$this->endNo('ven')])->get();
+        ini_set('max_execution_time', 1200);
     }
 
-    public function __invoke()
+    public function import()
     {
+        $this->old = OldVen::whereBetween('erupt_id',[$this->startNo('ven'),$this->endNo('ven')])->get();
         $this->old->each(function ($item, $key) {
             $this->setItem($item)
                 ->createVen();

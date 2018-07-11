@@ -20,6 +20,10 @@ class ImportMagmaVar extends Import
     public function __construct()
     {
         ini_set('max_execution_time', 1200);
+    }
+
+    public function import()
+    {
         $this->old = OldVar::select(
             'no','ga_code','var_noticenumber',
             'cu_status','var_issued','var_data_date',
@@ -29,10 +33,7 @@ class ImportMagmaVar extends Import
         ->orderBy('no');
 
         $this->rekomendasi = VarRekomendasi::all();
-    }
 
-    public function __invoke()
-    {
         $this->old->chunk(5000, function ($items) {
             foreach ($items as $key => $item) {
                 if (!empty($item->var_data_date)) {

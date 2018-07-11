@@ -15,11 +15,11 @@ class ImportBidang extends Import
     public function __construct()
     {
         ini_set('max_execution_time', 1200);
-        $this->old = OldUser::orderBy('id')->get();
     }
 
-    public function __invoke()
+    public function import()
     {
+        $this->old = OldUser::orderBy('id')->get();
         $this->old->each(function ($item, $key) {
             $this->setItem($item)
                 ->convertBidang()

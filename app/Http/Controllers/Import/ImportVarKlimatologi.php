@@ -17,19 +17,20 @@ class ImportVarKlimatologi extends Import
     public function __construct()
     {
         ini_set('max_execution_time', 1200);
-        $this->old = OldVar::select(
-                'no','ga_code','var_noticenumber','var_source',
-                'var_cuaca','var_curah_hujan',
-                'var_suhumin','var_suhumax',
-                'var_kelembabanmin','var_kelembabanmax',
-                'var_tekananmin','var_tekananmax',
-                'var_kecangin','var_arangin')
-            ->whereBetween('no',[$this->startNo('klima'),$this->endNo('var')])
-            ->orderBy('no','asc');
     }
 
-    public function __invoke()
+    public function import()
     {
+        $this->old = OldVar::select(
+            'no','ga_code','var_noticenumber','var_source',
+            'var_cuaca','var_curah_hujan',
+            'var_suhumin','var_suhumax',
+            'var_kelembabanmin','var_kelembabanmax',
+            'var_tekananmin','var_tekananmax',
+            'var_kecangin','var_arangin')
+        ->whereBetween('no',[$this->startNo('klima'),$this->endNo('var')])
+        ->orderBy('no','asc');
+        
         $this->old->chunk(5000, function ($items) {
             foreach ($items as $key => $item) {
                 $this->setItem($item)->createKlimatologi();

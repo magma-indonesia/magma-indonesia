@@ -20,12 +20,12 @@ class ImportGempa extends Import
     public function __construct()
     {
         ini_set('max_execution_time', 1200);
-        $this->gempa = collect($this->jenisgempa());
     }
 
-    public function __invoke()
+    public function import()
     {
         // return $this->gempa;
+        $this->gempa = collect($this->jenisgempa());
         $this->gempa->each(function ($item, $key) {
             $this->setItem($item)
                 ->gempaSp()

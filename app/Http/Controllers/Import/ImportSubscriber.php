@@ -13,15 +13,17 @@ class ImportSubscriber extends Import
 
     public function __construct()
     {
+        ini_set('max_execution_time', 1200);
+    }
+
+    public function import()
+    {
         $this->old = OldSub::whereBetween('no',[$this->startNo('subs'),$this->endNo('subs')])->get();
 
         $this->old = $this->old->reject(function ($value, $key) {
             return !filter_var($value->email, FILTER_VALIDATE_EMAIL);
         });
-    }
-
-    public function __invoke()
-    {
+        
         $this->old->each(function ($item,$key) {
             $this->setItem($item)->createSubscriber();
         });

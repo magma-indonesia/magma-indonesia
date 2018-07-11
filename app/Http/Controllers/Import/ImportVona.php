@@ -13,11 +13,13 @@ class ImportVona extends Import
 
     public function __construct()
     {
-        $this->old = OldVona::all();
+        ini_set('max_execution_time', 1200);
     }
 
-    public function __invoke()
+    public function import()
     {
+        $this->old = OldVona::all();
+
         $this->old->each(function ($item,$key) {
             $this->setItem($item)
                 ->createVona();

@@ -15,11 +15,12 @@ class ImportRoq extends Import
 
     public function __construct()
     {
-        $this->old = OldRoq::whereBetween('no',[$this->startNo('roq'),$this->endNo('roq')])->get();
+        ini_set('max_execution_time', 1200);
     }
 
-    public function __invoke()
+    public function import()
     {
+        $this->old = OldRoq::whereBetween('no',[$this->startNo('roq'),$this->endNo('roq')])->get();
         $this->old->each(function ($item,$key){
             $this->setItem($item)
                 ->createRoq()

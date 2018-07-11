@@ -19,11 +19,11 @@ class ImportUserAdm extends Import
     public function __construct()
     {
         ini_set('max_execution_time', 1200);
-        $this->old = OldUser::with('kantor')->orderBy('id')->get();
     }
 
-    public function __invoke()
+    public function import()
     {
+        $this->old = OldUser::with('kantor')->orderBy('id')->get();
         $this->old->each(function ($item, $key) {
             $this->setItem($item)
                 ->setUser()

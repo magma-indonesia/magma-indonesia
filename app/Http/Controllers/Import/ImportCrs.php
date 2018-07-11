@@ -18,9 +18,12 @@ class ImportCrs extends Import
     public function __construct()
     {
         ini_set('max_execution_time', 1200);
+    }
 
+    public function import()
+    {
         $this->old = OldCrs::whereBetween('idx',[$this->startNo('crs'),$this->endNo('crs')])->get();
-
+        
         $this->mapping = $this->old->map(function ($item,$key) {
             $item->crs_pho = strlen($item->crs_pho) >14 
                 ? substr($item->crs_pho, 0, 14) 
@@ -44,10 +47,7 @@ class ImportCrs extends Import
             $item->crs_val = $item->crs_val == 'VALID' ? 1 : 0;
             return $item;
         });
-    }
 
-    public function __invoke()
-    {
         $this->mapping->each(function ($item, $key) {
             $this->setItem($item)->createCrs();
         });

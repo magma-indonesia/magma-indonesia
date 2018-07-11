@@ -18,11 +18,13 @@ class ImportVarRekomendasi extends Import
 
     public function __construct()
     {
-        $this->old = OldDd::with('normal','waspada','siaga','awas')->select('ga_code')->get();
+        ini_set('max_execution_time', 1200);
     }
 
-    public function __invoke()
+    public function import()
     {
+        $this->old = OldDd::with('normal','waspada','siaga','awas')->select('ga_code')->get();
+
         $this->old->each(function ($item,$key) {
             $this->setItem($item)
                 ->createRekomendasi();

@@ -17,17 +17,19 @@ class ImportVarVisual extends Import
 
     public function __construct()
     {
-        $this->old = OldVar::select(
-                'no','ga_code','var_image','var_image_create',
-                'var_issued','var_source','var_noticenumber','var_visibility',
-                'var_asap','var_tasap_min','var_tasap','var_wasap',
-                'var_intasap','var_tekasap','var_viskawah')
-            ->whereBetween('no',[$this->startNo('visuals'),$this->endNo('var')])
-            ->orderBy('no','asc');
+        ini_set('max_execution_time', 1200);
     }
 
-    public function __invoke()
+    public function import()
     {
+        $this->old = OldVar::select(
+            'no','ga_code','var_image','var_image_create',
+            'var_issued','var_source','var_noticenumber','var_visibility',
+            'var_asap','var_tasap_min','var_tasap','var_wasap',
+            'var_intasap','var_tekasap','var_viskawah')
+        ->whereBetween('no',[$this->startNo('visuals'),$this->endNo('var')])
+        ->orderBy('no','asc');
+
         $this->old->chunk(5000, function($items) {
             foreach ($items as $key => $item) {
                 $this->setItem($item)

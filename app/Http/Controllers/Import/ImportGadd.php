@@ -16,12 +16,12 @@ class ImportGadd extends Import
     public function __construct()
     {
         ini_set('max_execution_time', 1200);
-        $this->old = OldDd::orderBy('no')->get();
     }
 
-    public function __invoke()
+    public function import()
     {
 
+        $this->old = OldDd::orderBy('no')->get();
         $this->old->each(function ($item, $key) {
             $this->setItem($item)->createGadd();
         });

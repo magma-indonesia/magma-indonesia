@@ -29,6 +29,11 @@ class ImportSigertan extends Import
 
     public function __construct()
     {
+        ini_set('max_execution_time', 1200);
+    }
+
+    public function import()
+    {
         $this->old = OldSigertan::whereBetween('qls_idx',[$this->startNo('qls'),$this->endNo('qls')])->get();
 
         $this->oldRekomendasi = OldSigertanRekomendasi::whereBetween('rec_idx',[$this->startNo('qls_rec'),$this->endNo('qls_rec')])->get();
@@ -42,10 +47,7 @@ class ImportSigertan extends Import
         $this->oldKejadian = OldSigertanKejadian::whereBetween('fst_idx',[$this->startNo('qls_kej'),$this->endNo('qls_kej')])->get();
 
         $this->oldSosialisasi = OldSigertanSosialisasi::whereBetween('sos_idx',[$this->startNo('qls_sos'),$this->endNo('qls_sos')])->get();
-    }
-
-    public function __invoke()
-    {
+        
         $this->old->each(function ($item,$key) {
             $this->setItem($item)->createSigertan();
         });
