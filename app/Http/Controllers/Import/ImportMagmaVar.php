@@ -25,7 +25,7 @@ class ImportMagmaVar extends Import
     public function import()
     {
         $this->old = OldVar::select(
-            'no','ga_code','var_noticenumber',
+            'no','ga_code','var_noticenumber','ga_nama_gapi',
             'cu_status','var_issued','var_data_date',
             'periode','var_perwkt','var_source','var_nip_pelapor',
             'var_nip_pemeriksa_pj','var_nip_pemeriksa','var_log','var_ketlain')
@@ -71,6 +71,8 @@ class ImportMagmaVar extends Import
         $var_nip_pelapor = $var_nip_pelapor == '196807071992051001' || $var_nip_pelapor == '196807071992031001' 
             ? '196807071992031018' : $var_nip_pelapor;
 
+        $slug = 'laporan gunung api '.$this->item->ga_nama_gapi.' tanggal '.$this->item->var_data_date->format('Y-m-d').' periode '.$this->item->periode;
+
         $this->obscode = $this->obscode($gacode,$var_source);
         $this->noticenumber = $this->obscode.$this->item->var_noticenumber;
 
@@ -82,6 +84,7 @@ class ImportMagmaVar extends Import
                     'noticenumber'          => $this->noticenumber
                 ],
                 [
+                    'slug'                  => str_slug($slug,'-'),
                     'code_id'               => $this->item->ga_code,
                     'var_data_date'         => $this->item->var_data_date,
                     'periode'               => $this->item->periode,
