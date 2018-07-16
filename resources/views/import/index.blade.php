@@ -107,6 +107,35 @@
             <div class="col-lg-3">
                 <div class="hpanel">
                     <div class="panel-heading">
+                        Data Pengajuan
+                    </div>
+                    <div class="panel-body text-center h-200">
+                        <i class="pe-7s-help1 fa-4x"></i>
+                        <br>
+                        <h1 class="m-xs jumlah-pengajuan">{{ $pengajuan }}</h1>
+
+                        <h3 class="font-extra-bold no-margins text-magma">
+                            Data Pengajuan
+                        </h3>
+                        <small>Jumlah Pengajuan</small>
+                    </div>
+                    <div class="panel-footer text-center">
+                        <form role="form" id="form-import" method="POST"
+                        data-import="pengajuan" action="{{ route('chambers.import.pengajuan') }}">
+                            @csrf
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
+                                <span class="ladda-label">Import Data Pengajuan</span>
+                                <span class="ladda-spinner"></span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="hpanel">
+                    <div class="panel-heading">
                         Data Dasar Gunung Api
                     </div>
                     <div class="panel-body text-center h-200">
@@ -131,8 +160,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col-lg-3">
                 <div class="hpanel stats">
                     <div class="panel-heading">
@@ -261,7 +288,9 @@
                         </form>
                     </div>
                 </div>
-            </div>
+            </div> 
+        </div>
+        <div class="row">
             <div class="col-lg-3">
                 <div class="hpanel stats">
                     <div class="panel-heading">
@@ -301,9 +330,7 @@
                         </form>
                     </div>
                 </div>
-            </div>     
-        </div>
-        <div class="row">
+            </div>    
             <div class="col-lg-3">
                 <div class="hpanel stats">
                         <div class="panel-heading">
@@ -418,6 +445,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-lg-3">
                 <div class="hpanel stats">
                     <div class="panel-heading">
@@ -458,8 +487,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col-lg-3">
                 <div class="hpanel stats">
                     <div class="panel-heading">
@@ -580,6 +607,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-lg-3">
                 <div class="hpanel stats">
                     <div class="panel-heading">
