@@ -96,6 +96,11 @@
                     <span class="nav-label">CRS</span>
                 </a>
             </li>
+            <li class="{{ active('chambers.pengajuan.*') }}">
+                <a href="{{ route('chambers.pengajuan.index') }}">
+                    <span class="nav-label">Pengajuan</span>
+                </a>
+            </li>
             <li class="{{ active(['chambers.users.*','chambers.absensi.*']) }}">
                 <a href="#">
                     <span class="nav-label">Users</span>
