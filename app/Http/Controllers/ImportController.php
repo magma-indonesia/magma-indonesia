@@ -20,6 +20,7 @@ use App\VonaSubscriber;
 use App\SigertanCrs;
 use App\MagmaSigertan;
 use App\MagmaRoq;
+use App\Pengajuan;
 use App\v1\MagmaVar as OldVar;
 
 class ImportController extends Controller
@@ -51,6 +52,7 @@ class ImportController extends Controller
         $absensi = Absensi::count();
         $sigertan = MagmaSigertan::count();
         $rekomendasi = VarRekomendasi::count();
+        $pengajuan = Pengajuan::count();
         
         return view('import.index',compact(
             'users',
@@ -69,7 +71,8 @@ class ImportController extends Controller
             'roq',
             'absensi',
             'sigertan',
-            'rekomendasi'
+            'rekomendasi',
+            'pengajuan'
             )
         );
     }
