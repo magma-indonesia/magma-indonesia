@@ -13,12 +13,12 @@ class MagmaVar extends Model
     public $timestamps = false;
 
     protected $dates = [
-        'deleted_at',
         'var_data_date'
     ];
 
     protected $fillable = [
         'noticenumber',
+        'slug',
         'code_id',
         'var_data_date',
         'periode',
