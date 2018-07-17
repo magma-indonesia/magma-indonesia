@@ -1,6 +1,7 @@
 <?php
 
 Route::get('/','ImportController@index')->name('index');
+Route::any('pengajuan','Import\ImportPengajuan@import')->name('pengajuan');
 Route::post('crs','Import\ImportCrs@import')->name('crs');
 Route::post('sigertan','Import\ImportSigertan@import')->name('sigertan');
 Route::post('gadds','Import\ImportGadd@import')->name('gadds');
