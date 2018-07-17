@@ -4,6 +4,10 @@
     Create VAR
 @endsection
 
+@section('add-vendor-css')
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap-datepicker-master/dist/css/bootstrap-datepicker3.min.css') }}" />
+@endsection
+
 @section('content-header')
     <div class="small-header">
         <div class="hpanel">
@@ -22,7 +26,7 @@
                     </ol>
                 </div>
                 <h2 class="font-light m-b-xs">
-                    Buat Laporan Gunung Api baru
+                   Form laporan MAGMA-VAR (Volcanic Activity Report)
                 </h2>
                 <small>Buat laporan gunung api terbaru.</small>
             </div>
@@ -31,155 +35,160 @@
 @endsection
 
 @section('content-body')
-    <div class="content animate-panel">
+    <div class="content animate-panel content-boxed">
         <div class="row">
             <div class="col-lg-12">
                 <div class="hpanel">
                     <div class="panel-heading">
-                        <div class="panel-tools">
-                            <a class="showhide"><i class="fa fa-chevron-up"></i></a>
-                            <a class="closebox"><i class="fa fa-times"></i></a>
-                        </div>
-                        Example fo wizard form
+                        Form MAGMA-VAR
                     </div>
                     <div class="panel-body">
-    
-                        <form name="simpleForm" novalidate id="simpleForm" action="#" method="post">
-    
+                    <form role="form" id="form" method="POST" action="{{ route('chambers.laporan.store')}}" enctype="multipart/form-data">
+                            @csrf
                             <div class="text-center m-b-md" id="wizardControl">
-    
-                                <a class="btn btn-primary" href="#step1" data-toggle="tab">Step 1 - Personal data</a>
-                                <a class="btn btn-default" href="#step2" data-toggle="tab">Step 2 - Payment data</a>
-                                <a class="btn btn-default" href="#step3" data-toggle="tab">Step 3 - Approval</a>
-    
+                                <a class="btn btn-primary" href="#" >Step 1 - Data Laporan</a>
+                                <a class="btn btn-default" href="#" disabled>Step 2 - Data Visual</a>
+                                <a class="btn btn-default" href="#" disabled>Step 3 - Data Kegempaan</a>
                             </div>
     
                             <div class="tab-content">
-                            <div id="step1" class="p-m tab-pane active">
-    
-                                <div class="row">
-                                    <div class="col-lg-3 text-center">
-                                        <i class="pe-7s-user fa-5x text-muted"></i>
-                                        <p class="small m-t-md">
-                                            <strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.
-                                            <br/><br/>Lorem Ipsum has been the industry's dummy text of the printing and typesetting
-                                        </p>
-                                    </div>
-                                    <div class="col-lg-9">
-                                        <div class="row">
-                                            <div class="form-group col-lg-12">
-                                                <label>Username</label>
-                                                <input type="" value="" id="" class="form-control" name="username" placeholder="username">
-                                            </div>
-                                            <div class="form-group col-lg-6">
-                                                <label>Password</label>
-                                                <input type="password" value="" id="" class="form-control" name="" placeholder="******" name="password">
-                                            </div>
-                                            <div class="form-group col-lg-6">
-                                                <label>Company</label>
-                                                <input type="text" value="" id="" class="form-control" name="" placeholder="Company Name" name="company">
-                                            </div>
-                                            <div class="form-group col-lg-6">
-                                                <label>Email Address</label>
-                                                <input type="" value="" id="" class="form-control" name="" placeholder="user@email.com" name="email">
-                                            </div>
-                                            <div class="form-group col-lg-6">
-                                                <label>Country</label>
-                                                <input type="text" value="" id="" class="form-control" name="" name="country" placeholder="UK">
-                                            </div>
+                                <div id="step1" class="p-m tab-pane active">
+        
+                                    <div class="row">
+                                        <div class="col-lg-3 text-center">
+                                            <i class="pe-7s-note fa-4x text-muted"></i>
+                                            <p class="m-t-md">
+                                                <strong>Buat Laporan MAGMA-VAR</strong>, form ini digunakan untuk input data laporan gunung api, meliputi laporan visual dan instrumental.
+                                                <br/><br/>Semua laporan yang dibuat akan dipublikasikan secara realtime melalui aplikasi <strong>MAGMA Indonesia</strong>
+                                            </p>
                                         </div>
-                                    </div>
-                                </div>
-    
-                                <div class="text-right m-t-xs">
-                                    <a class="btn btn-default prev" href="#">Previous</a>
-                                    <a class="btn btn-default next" href="#">Next</a>
-                                </div>
-    
-                            </div>
-    
-                            <div id="step2" class="p-m tab-pane">
-    
-                                <div class="row">
-                                    <div class="col-lg-3 text-center">
-                                        <i class="pe-7s-credit fa-5x text-muted"></i>
-                                        <p class="small m-t-md">
-                                            <strong>It is a long</strong> established fact that a reader will be distracted by the readable
-                                            <br/><br/>Many desktop publishing packages and web page editors now use
-                                        </p>
-                                    </div>
-                                    <div class="col-lg-9">
-                                        <div class="row">
-                                            <div class="form-group col-lg-12">
-                                                <label>Name on Card</label>
-                                                <input type="" value="" id="" class="form-control" name="card_name">
-                                            </div>
-                                            <div class="form-group col-lg-6">
-                                                <label>Card Number</label>
-                                                <input type="text" value="" id="" class="form-control" name="" name="card_number">
-                                            </div>
-                                            <div class="form-group col-lg-6">
-                                                <label>Billing Address</label>
-                                                <input type="text" value="" id="" class="form-control" name="" name="billing_address">
-                                            </div>
-                                            <div class="form-group col-lg-12">
-                                                <div class="row">
-                                                    <div class="col-xs-4 form-group">
-                                                        <label>CVC</label>
-                                                        <input class="form-control" placeholder="ex. 381"  type="text" name="cvc">
-                                                    </div>
-                                                    <div class="col-xs-4 form-group">
-                                                        <label>Expiration</label>
-                                                        <input class="form-control" placeholder="MM" type="text" name="expire_month">
-                                                    </div>
-                                                    <div class="col-xs-4 form-group">
-                                                        <label></label>
-                                                        <input class="form-control" placeholder="YYYY" type="text" name="expire_year">
-                                                    </div>
+                                        <div class="col-lg-9">
+                                            <div class="row">
+                                                <div class="form-group col-lg-12">
+                                                    <label>Nama Pembuat</label>
+                                                    <input type="text" value="{{ auth()->user()->name }}" id="name" class="form-control" name="name" placeholder="Nama Pembuat Laporan" disabled>
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <label>Gunung Api</label>
+                                                    @if( $errors->has('code'))
+                                                    <label class="error" for="code">{{ ucfirst($errors->first('code')) }}</label>
+                                                    @endif
+                                                    <select id="code" class="form-control" name="code">
+                                                        @foreach($gadds as $gadd)
+                                                        <option value="{{ $gadd->code }}" {{ old('code') == $gadd->code ? 'selected' : ''}}>{{ $gadd->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <label>Status</label>
+                                                    @if( $errors->has('status'))
+                                                    <label class="error" for="status">{{ ucfirst($errors->first('status')) }}</label>
+                                                    @endif
+                                                    <select id="status" class="form-control" name="status">
+                                                        <option value="1" {{ old('status') == '1' ? 'selected' : ''}}>Level I (Normal)</option>
+                                                        <option value="2" {{ old('status') == '2' ? 'selected' : ''}}>Level II (Waspada)</option>
+                                                        <option value="3" {{ old('status') == '3' ? 'selected' : ''}}>Level III (Siaga)</option>
+                                                        <option value="4" {{ old('status') == '4' ? 'selected' : ''}}>Level IV (Awas)</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <label>Tanggal Laporan</label>
+                                                    @if( $errors->has('date'))
+                                                    <label class="error" for="date">{{ ucfirst($errors->first('date')) }}</label>
+                                                    @endif
+                                                    <input name="date" id="date" class="form-control" type="text" value="{{ empty(old('date')) ? now()->format('Y-m-d') : old('date') }}">
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <label>Periode</label>
+                                                    @if( $errors->has('periode'))
+                                                    <label class="error" for="periode">{{ ucfirst($errors->first('periode')) }}</label>
+                                                    @endif
+                                                    <select id="periode" class="form-control" name="periode">
+                                                        <optgroup label="24 Jam">
+                                                            <option value="00:00-24:00" {{ old('periode') == '00:00-24:00' ? 'selected' : ''}}>00:00-24:00</option>
+                                                        </optgroup>
+                                                        <optgroup label="6 Jam">
+                                                                <option value="00:00-06:00" {{ old('periode') == '00:00-06:00' ? 'selected' : ''}}>00:00-06:00</option>
+                                                                <option value="06:00-12:00" {{ old('periode') == '06:00-12:00' ? 'selected' : ''}}>06:00-12:00</option>
+                                                                <option value="12:00-18:00" {{ old('periode') == '12:00-18:00' ? 'selected' : ''}}>12:00-18:00</option>
+                                                                <option value="18:00-24:00" {{ old('periode') == '18:00-24:00' ? 'selected' : ''}}>18:00-24:00</option>
+                                                        </optgroup>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="text-right m-t-xs">
-                                    <a class="btn btn-default prev" href="#">Previous</a>
-                                    <a class="btn btn-default next" href="#">Next</a>
-                                </div>
-    
-                            </div>
-                            <div id="step3" class="tab-pane">
-                                <div class="row text-center m-t-lg m-b-lg">
-                                    <div class="col-lg-12">
-                                        <i class="pe-7s-check fa-5x text-muted"></i>
-                                        <p class="small m-t-md">
-                                            <strong>There are many</strong> variations of passages of Lorem Ipsum available, but the majority have suffered
-                                        </p>
+        
+                                    <div class="text-right m-t-xs">
+                                        <button type="submit" class="btn btn-default" href="#">Submit</a>
+                                        <button type="button" class="btn btn-default next" href="#">Next</a>
                                     </div>
-                                    <div class="checkbox col-lg-12">
-                                        <input type="checkbox" class="i-checks approveCheck" name="approve">
-                                        Approve this form
-                                    </div>
+        
                                 </div>
-                                <div class="text-right m-t-xs">
-                                    <a class="btn btn-default prev" href="#">Previous</a>
-                                    <a class="btn btn-default next" href="#">Next</a>
-                                    <a class="btn btn-success submitWizard" href="#">Submit</a>
-                                </div>
-                            </div>
                             </div>
                         </form>
-    
-                        <div class="m-t-md">
-    
-                            <p>
-                                This is an example of a wizard form which can be easy adjusted. Since each step is a tab, and each clik to next tab is a function you can easily add validation or any other functionality.
-                            </p>
-    
-                        </div>
-    
                     </div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+
+@section('add-vendor-script')
+    <script src="{{ asset('vendor/moment/moment.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.min.js') }}"></script>
+@endsection
+
+@section('add-script')
+    <script>
+        $(document).ready(function () {
+
+            var data = {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                code: $('#code').val(),
+                date: $('#date').val()
+            };
+
+            $.fn.datepicker.dates['id'] = {
+                days: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
+                daysShort: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
+                daysMin: ['Mi', 'Se', 'Sl', 'Rb', 'Km', 'Jm', 'Sa'],
+                months: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+                monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+                today: 'Hari ini',
+                clear: 'Bersihkan',
+                format: 'yyyy-mm-dd',
+                titleFormat: 'MM yyyy',
+                weekStart: 1
+            };
+
+            $('#date').datepicker({
+                startDate: '2015-05-01',
+                endDate: '{{ now()->format('Y-m-d') }}',
+                language: 'id',
+                todayHighlight: true,
+                todayBtn: 'linked',
+                enableOnReadonly: true,
+                minViewMode: 0,
+                maxViewMode: 2
+            });
+
+            function exist(data) {
+                console.log(data);
+                $.ajax({
+                    url: "{{ route('chambers.laporan.exists') }}",
+                    type: 'POST',
+                    data: data,
+                    success: function(response, status, xhr) {
+                        console.log(response);
+                    },
+                    error: function(response) {
+                        console.log(response.responseJSON);
+                    }
+                });
+            };
+
+            exist(data);
+        });
+    </script>
 @endsection
