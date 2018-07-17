@@ -12,8 +12,8 @@ class MagmaVar extends Model
 
     public $timestamps = false;
 
-    protected $dates = [
-        'var_data_date'
+    protected $casts = [
+        'var_data_date' => 'date:Y-m-d'
     ];
 
     protected $fillable = [
@@ -33,7 +33,6 @@ class MagmaVar extends Model
 
     protected $appends = [
         'status_deskripsi',
-        'rekomendasi'
     ];
 
     public function getStatusDeskripsiAttribute()
@@ -151,9 +150,9 @@ class MagmaVar extends Model
      *
      * @return void
      */
-    public function getRekomendasiAttribute()
+    public function rekomendasi()
     {
-        return $this->gunungapi->rekomendasi->where('status',$this->attributes['status'])->first()->rekomendasi;
+        return $this->belongsTo('App\VarRekomendasi','rekomendasi_id','id');
     }
 
     /**
