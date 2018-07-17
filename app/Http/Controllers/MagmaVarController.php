@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Gadd;
+use App\MagmaVar;
 
 class MagmaVarController extends Controller
 {
@@ -25,7 +26,7 @@ class MagmaVarController extends Controller
      */
     public function create()
     {
-        $gadds = Gadd::select('code','name')->get();
+        $gadds = Gadd::select('code','name')->orderBy('name')->get();
         return view('gunungapi.laporan.create',compact('gadds'));
     }
 
@@ -37,7 +38,7 @@ class MagmaVarController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $request;
     }
 
     /**
@@ -83,5 +84,16 @@ class MagmaVarController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function exists(Request $request)
+    {
+        $var = MagmaVar::select('status','code_id','var_data_date','periode','var_perwkt')
+                ->where('code_id',$request->code)
+                ->where('var_data_date',$request->date)
+                ->orderBy('created_at')
+                ->get();
+
+        return response()->json($var);
     }
 }
