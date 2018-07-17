@@ -51,23 +51,21 @@ class RoleController extends Controller
     {
         $this->validate($request, [
                 'name'=>'required|max:50|unique:roles',
-                'permissions' =>'required',
             ]
         );
 
-        $name = $request['name'];
         $role = new Role();
-        $role->name = $name;
-
-        $permissions = $request['permissions'];
-
+        $role->name = $request->name;
         $role->save();
 
-        foreach ($permissions as $permission) {
-            $p = Permission::where('id', '=', $permission)->firstOrFail(); 
-
-            $role = Role::where('name', '=', $name)->first(); 
-            $role->givePermissionTo($p);
+        if ($request->has('permissions')) {
+            $name = $request->name;
+            $permissions = $request->permissions;
+            foreach ($permissions as $permission) {
+                $p = Permission::where('id', '=', $permission)->firstOrFail(); 
+                $role = Role::where('name', '=', $name)->first(); 
+                $role->givePermissionTo($p);
+            }
         }
 
         return redirect()->route('chambers.roles.index')

@@ -14,6 +14,7 @@ use App\Traits\VisualLetusan;
 class MagmaVenController extends Controller
 {
     use VisualLetusan;
+    
     /**
      * Display a listing of the resource.
      *
