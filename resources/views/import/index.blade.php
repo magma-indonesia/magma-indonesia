@@ -707,12 +707,13 @@
                             $button.removeAttr('disabled');
                         }
                     },
-                    error: function(data){
+                    error: function(response){
                         var $errors ={
-                            'status': data.status,
-                            'exception': data.responseJSON.exception,
-                            'file': data.responseJSON.file,
-                            'line': data.responseJSON.line
+                            'status': response.status+', '+response.statusText,
+                            'exception': response.responseJSON.exception,
+                            'file': response.responseJSON.file,
+                            'line': response.responseJSON.line,
+                            'message': response.responseJSON.message,
                         };
                         console.log($errors);
                         l.stop();
