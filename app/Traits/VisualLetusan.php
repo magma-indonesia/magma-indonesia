@@ -69,8 +69,8 @@ trait VisualLetusan
             ? str_replace_last(', ',' hingga ', strtolower(implode(', ',$ven->wasap))) 
             : strtolower($ven->wasap[0]);
 
-        $intensitas = !empty($ven->intensitas) 
-            ? strtolower($ven->intensitas[0]).' hingga '.strtolower(last($ven->intensitas)) 
+        $intensitas = !empty($ven->intensitas)
+            ? str_replace_last(', ',' hingga ', strtolower(implode(', ',$ven->intensitas))) 
             : strtolower($ven->intensitas[0]);
 
         $arah = !empty($ven->arah_asap)
