@@ -156,7 +156,7 @@
                     <div class="row border-bottom">
                         <div class="col-lg-12">
                             <h4>Rekomendasi</h4>
-                            <p>{!! nl2br($var->gunungapi->rekomendasi->where('status',$var->status)->first()->rekomendasi) !!}</p>
+                            <p>{!! nl2br($var->rekomendasi) !!}</p>
                         </div>
                     </div>
                     <div class="row">
