@@ -22,8 +22,8 @@ class CreateGempaterasa extends Migration
         $table->smallInteger('jumlah')->default(0);
         $table->float('amin',5,2)->default(0.0);
         $table->float('amax',5,2)->default(0.0);
-        $table->float('spmin',4,2)->default(0.0);
-        $table->float('spmax',4,2)->default(0.0);
+        $table->float('spmin',5,2)->default(0.0);
+        $table->float('spmax',5,2)->default(0.0);
         $table->float('dmin',6,2)->default(0.0);
         $table->float('dmax',6,2)->default(0.0);
         $table->char('skala',40)->nullable();
