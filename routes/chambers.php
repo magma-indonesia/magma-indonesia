@@ -48,8 +48,10 @@ Route::group(['prefix' => 'gunungapi'], function () {
     Route::post('laporan/verifikasiv1','ActivityGaController@verifikasiv1')->name('laporan.verifikasiv1');
     Route::post('laporan/validasi','ActivityGaController@validasi')->name('laporan.validasi');
     Route::get('laporan/create','MagmaVarController@create')->name('laporan.create');
+    Route::post('laporan/store','MagmaVarController@store')->name('laporan.store');
+    Route::post('laporan/exists','MagmaVarController@exists')->name('laporan.exists');
     Route::resource('laporan','ActivityGaController', ['except' => [
-        'create','edit','update','destroy'
+        'create','store','edit','update','destroy'
     ]]);
 });
 
