@@ -62,6 +62,7 @@ class ActivityGaController extends Controller
                 'visual',
                 'klimatologi',
                 'gempa',
+                'rekomendasi',
                 'keterangan')
             ->where('noticenumber',$id)
             ->firstOrFail();
