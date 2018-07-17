@@ -97,7 +97,7 @@ class ActivityGaController extends Controller
                     ->get();
 
         $users = User::whereHas('bidang', function($query){
-                    $query->where('user_bidang_desc_id','like',2);
+                    $query->where('bidang_id','like',2);
                 })->orderBy('name')->get();
 
         $request->flash();
