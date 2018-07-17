@@ -20,6 +20,7 @@ Route::get('/','ChamberController@index')->name('index');
 |
 */
 Route::resource('crs','CrsController');
+Route::resource('pengajuan','PengajuanController');
 Route::post('crs/lokasi','CrsController@getCities')->name('crs.getcities');
 Route::get('export/{type}','ExportController@index')->name('export');
 
@@ -46,7 +47,10 @@ Route::group(['prefix' => 'gunungapi'], function () {
     Route::get('laporan/search','ActivityGaController@search')->name('laporan.search');
     Route::post('laporan/verifikasiv1','ActivityGaController@verifikasiv1')->name('laporan.verifikasiv1');
     Route::post('laporan/validasi','ActivityGaController@validasi')->name('laporan.validasi');
-    Route::resource('laporan','ActivityGaController');
+    Route::get('laporan/create','MagmaVarController@create')->name('laporan.create');
+    Route::resource('laporan','ActivityGaController', ['except' => [
+        'create','edit','update','destroy'
+    ]]);
 });
 
 Route::name('gerakantanah.')->group(function() {
