@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Gadd;
+use App\PosPga;
 use App\MagmaVar;
 
 class MagmaVarController extends Controller
@@ -26,8 +27,8 @@ class MagmaVarController extends Controller
      */
     public function create()
     {
-        $gadds = Gadd::select('code','name')->orderBy('name')->get();
-        return view('gunungapi.laporan.create',compact('gadds'));
+        $pgas = PosPga::select('code_id','obscode')->orderBy('obscode')->get();
+        return view('gunungapi.laporan.create',compact('pgas'));
     }
 
     /**
@@ -88,8 +89,9 @@ class MagmaVarController extends Controller
 
     public function exists(Request $request)
     {
-        $var = MagmaVar::select('status','code_id','var_data_date','periode','var_perwkt')
-                ->where('code_id',$request->code)
+        $code = PosPga::where('obscode',$request->code)->firstOrFail()->code_id;
+        $var = MagmaVar::select('status','code_id','var_data_date','periode','var_perwkt','noticenumber')
+                ->where('code_id',$code)
                 ->where('var_data_date',$request->date)
                 ->orderBy('created_at')
                 ->get();
