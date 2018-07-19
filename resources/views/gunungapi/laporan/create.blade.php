@@ -69,13 +69,13 @@
                                                     <input type="text" value="{{ auth()->user()->name }}" id="name" class="form-control" name="name" placeholder="Nama Pembuat Laporan" disabled>
                                                 </div>
                                                 <div class="form-group col-lg-6">
-                                                    <label>Gunung Api</label>
+                                                    <label>Pos Gunung Api</label>
                                                     @if( $errors->has('code'))
                                                     <label class="error" for="code">{{ ucfirst($errors->first('code')) }}</label>
                                                     @endif
                                                     <select id="code" class="form-control" name="code">
-                                                        @foreach($gadds as $gadd)
-                                                        <option value="{{ $gadd->code }}" {{ old('code') == $gadd->code ? 'selected' : ''}}>{{ $gadd->name }}</option>
+                                                        @foreach($pgas as $pga)
+                                                        <option value="{{ $pga->obscode }}" {{ old('code') == $pga->obscode ? 'selected' : ''}}>{{ $pga->observatory }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -105,23 +105,49 @@
                                                     @endif
                                                     <select id="periode" class="form-control" name="periode">
                                                         <optgroup label="24 Jam">
-                                                            <option value="00:00-24:00" {{ old('periode') == '00:00-24:00' ? 'selected' : ''}}>00:00-24:00</option>
+                                                            <option value="00:00-24:00" {{ old('periode') == '00:00-24:00' ? 'selected' : ''}}>Pukul 00:00-24:00</option>
                                                         </optgroup>
                                                         <optgroup label="6 Jam">
-                                                                <option value="00:00-06:00" {{ old('periode') == '00:00-06:00' ? 'selected' : ''}}>00:00-06:00</option>
-                                                                <option value="06:00-12:00" {{ old('periode') == '06:00-12:00' ? 'selected' : ''}}>06:00-12:00</option>
-                                                                <option value="12:00-18:00" {{ old('periode') == '12:00-18:00' ? 'selected' : ''}}>12:00-18:00</option>
-                                                                <option value="18:00-24:00" {{ old('periode') == '18:00-24:00' ? 'selected' : ''}}>18:00-24:00</option>
+                                                                <option value="00:00-06:00" {{ old('periode') == '00:00-06:00' ? 'selected' : ''}}>Pukul 00:00-06:00</option>
+                                                                <option value="06:00-12:00" {{ old('periode') == '06:00-12:00' ? 'selected' : ''}}>Pukul 06:00-12:00</option>
+                                                                <option value="12:00-18:00" {{ old('periode') == '12:00-18:00' ? 'selected' : ''}}>Pukul 12:00-18:00</option>
+                                                                <option value="18:00-24:00" {{ old('periode') == '18:00-24:00' ? 'selected' : ''}}>Pukul 18:00-24:00</option>
                                                         </optgroup>
                                                     </select>
                                                 </div>
+
+                                                <div class="form group col-lg-12">
+                                                    <ul class="list-group">
+                                                        <li class="list-group-item">
+                                                            00:00-06:00
+                                                            <span class="pull-right"><i class="periode_1 text-danger fa fa-close"></i></span>
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                            06:00-12:00
+                                                            <span class="pull-right"><i class="periode_2 text-danger fa fa-close"></i></span>
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                            12:00-18:00
+                                                            <span class="pull-right"><i class="periode_3 text-danger fa fa-close"></i></span>
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                            18:00-24:00
+                                                            <span class="pull-right"><i class="periode_4 text-danger fa fa-close"></i></span>
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                            00:00-24:00
+                                                            <span class="pull-right"><i class="periode_5 text-danger fa fa-close"></i></span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
         
                                     <div class="text-right m-t-xs">
-                                        <button type="submit" class="btn btn-default" href="#">Submit</a>
-                                        <button type="button" class="btn btn-default next" href="#">Next</a>
+                                        <button type="submit" class="btn btn-default" href="#">Submit</button>
+                                        <button type="button" class="btn btn-default next" href="#">Next</button>
                                     </div>
         
                                 </div>
@@ -143,11 +169,72 @@
     <script>
         $(document).ready(function () {
 
-            var data = {
-                _token: $('meta[name="csrf-token"]').attr('content'),
-                code: $('#code').val(),
-                date: $('#date').val()
+            var $showUrl = '{{ route('chambers.laporan.index') }}/',
+                data = {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    code: $('#code').val(),
+                    date: $('#date').val(),
+                    periode: $('#periode').val()
+                };
+
+            function exist(data) {
+                $.ajax({
+                    url: "{{ route('chambers.laporan.exists') }}",
+                    type: 'POST',
+                    data: data,
+                    success: function(response, status, xhr) {
+                        replaceClass(response);
+                    },
+                    error: function(response) {
+                        resetClass();
+                        console.log(response.responseJSON);
+                    }
+                });
             };
+
+            function replaceIfExists(element) {
+                var $exists = 'text-success fa-check-circle',
+                    $notExists = 'text-danger fa-close';
+                
+                console.log('exists');
+                element.removeClass($notExists);
+                element.addClass($exists);
+            }
+
+            function getElement(periode) {
+                switch (periode) {
+                    case '00:00-06:00':
+                        replaceIfExists($('.periode_1'));
+                        break;
+                    case '06:00-12:00':
+                        replaceIfExists($('.periode_2'));
+                        break;
+                    case '12:00-18:00':
+                        replaceIfExists($('.periode_3'));
+                        break;
+                    case '18:00-24:00':
+                        replaceIfExists($('.periode_4'));
+                        break;
+                    default:
+                        replaceIfExists($('.periode_5'));
+                        break;
+                }
+            }
+
+            function resetClass() {
+                var $element = $('*[class^="periode_"]'),
+                    $exists = 'text-success fa-check-circle text-danger fa-close',
+                    $notExists = 'text-danger fa-close';
+                $element.removeClass($exists);
+                $element.addClass($notExists);
+            }
+
+            function replaceClass(response) {
+                resetClass();
+                $.each(response, function(index, value) {
+                   getElement(value.periode);
+                });
+            }
 
             $.fn.datepicker.dates['id'] = {
                 days: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
@@ -170,23 +257,27 @@
                 todayBtn: 'linked',
                 enableOnReadonly: true,
                 minViewMode: 0,
-                maxViewMode: 2
+                maxViewMode: 2,
+                readOnly: true,
+            }).on('changeDate',function(e) {
+                var data = {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    code: $('#code').val(),
+                    date: this.value,
+                    periode: $('#periode').val()
+                };
+                exist(data);
             });
 
-            function exist(data) {
-                console.log(data);
-                $.ajax({
-                    url: "{{ route('chambers.laporan.exists') }}",
-                    type: 'POST',
-                    data: data,
-                    success: function(response, status, xhr) {
-                        console.log(response);
-                    },
-                    error: function(response) {
-                        console.log(response.responseJSON);
-                    }
-                });
-            };
+            $('#code, #periode').change(function(e) {
+                var data = {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    code: $('#code').val(),
+                    date: $('#date').val(),
+                    periode: $('#periode').val()
+                };
+                exist(data);
+            });
 
             exist(data);
         });
