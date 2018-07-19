@@ -89,10 +89,10 @@
             </div>
         </div>
         <script>
-            
+
         function showTime() {
             var utc = new Date();
-            document.getElementById('time').innerHTML = utc.toLocaleString('id-ID', { hour12: false })+' WIB';
+            document.getElementById('time').innerHTML = utc.toLocaleString('id-ID', { hour12: false, timeZone: 'Asia/Jakarta' })+' WIB';
         }
 
         setInterval(showTime, 1000);
