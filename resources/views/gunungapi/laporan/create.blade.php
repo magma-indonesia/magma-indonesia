@@ -21,7 +21,7 @@
                             <a href="{{ route('chambers.laporan.index') }}">Gunung Api</a>
                         </li>
                         <li class="active">
-                            <a href="{{ route('chambers.laporan.create') }}">Buat VAR</a>
+                            <a href="{{ route('chambers.laporan.create.1') }}">Buat VAR - Step 1</a>
                         </li>
                     </ol>
                 </div>
@@ -43,7 +43,7 @@
                         Form MAGMA-VAR
                     </div>
                     <div class="panel-body">
-                    <form role="form" id="form" method="POST" action="{{ route('chambers.laporan.store')}}" enctype="multipart/form-data">
+                    <form role="form" id="form" method="POST" action="{{ route('chambers.laporan.store.1')}}" enctype="multipart/form-data">
                             @csrf
                             <div class="text-center m-b-md" id="wizardControl">
                                 <a class="btn btn-primary" href="#" >Step 1 - Data Laporan</a>
@@ -63,6 +63,19 @@
                                             </p>
                                         </div>
                                         <div class="col-lg-9">
+                                            
+                                            @if ($errors->any())
+                                            <div class="row m-b-md">
+                                                <div class="col-lg-12">
+                                                    <div class="alert alert-danger">
+                                                    @foreach ($errors->all() as $error)
+                                                        <p>{{ $error }}</p>
+                                                    @endforeach
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endif
+
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
                                                     <label>Nama Pembuat</label>
