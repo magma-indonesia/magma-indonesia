@@ -120,23 +120,23 @@
                                                     <ul class="list-group">
                                                         <li class="list-group-item">
                                                             00:00-06:00
-                                                            <span class="pull-right"><i class="periode_1 text-danger fa fa-close"></i></span>
+                                                            <span class="pull-right"><i class="periode_0 text-danger fa fa-close"></i></span>
                                                         </li>
                                                         <li class="list-group-item">
                                                             06:00-12:00
-                                                            <span class="pull-right"><i class="periode_2 text-danger fa fa-close"></i></span>
+                                                            <span class="pull-right"><i class="periode_1 text-danger fa fa-close"></i></span>
                                                         </li>
                                                         <li class="list-group-item">
                                                             12:00-18:00
-                                                            <span class="pull-right"><i class="periode_3 text-danger fa fa-close"></i></span>
+                                                            <span class="pull-right"><i class="periode_2 text-danger fa fa-close"></i></span>
                                                         </li>
                                                         <li class="list-group-item">
                                                             18:00-24:00
-                                                            <span class="pull-right"><i class="periode_4 text-danger fa fa-close"></i></span>
+                                                            <span class="pull-right"><i class="periode_3 text-danger fa fa-close"></i></span>
                                                         </li>
                                                         <li class="list-group-item">
                                                             00:00-24:00
-                                                            <span class="pull-right"><i class="periode_5 text-danger fa fa-close"></i></span>
+                                                            <span class="pull-right"><i class="periode_4 text-danger fa fa-close"></i></span>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -146,8 +146,7 @@
                                     </div>
         
                                     <div class="text-right m-t-xs">
-                                        <button type="submit" class="btn btn-default" href="#">Submit</button>
-                                        <button type="button" class="btn btn-default next" href="#">Next</button>
+                                        <button type="submit" class="submit btn btn-primary" href="#">Step 1 - Submit</button>
                                     </div>
         
                                 </div>
@@ -183,6 +182,7 @@
                     type: 'POST',
                     data: data,
                     success: function(response, status, xhr) {
+                        response.length == 5 ? $('.submit').hide() : $('.submit').show();
                         replaceClass(response);
                     },
                     error: function(response) {
@@ -192,47 +192,43 @@
                 });
             };
 
-            function replaceIfExists(element) {
-                var $exists = 'text-success fa-check-circle',
-                    $notExists = 'text-danger fa-close';
-                
+            function replaceIfExists(index,noticenumber) {
+                var $exists = '<a href="'+$showUrl+noticenumber+'" class="periode_'+index+' btn btn-xs btn-outline btn-success" target="_blank">View <i class="text-sucees fa fa-check"></i></a>';
+                $('.periode_'+index).replaceWith($exists);
                 console.log('exists');
-                element.removeClass($notExists);
-                element.addClass($exists);
             }
 
-            function getElement(periode) {
+            function getElement(periode,noticenumber) {
                 switch (periode) {
                     case '00:00-06:00':
-                        replaceIfExists($('.periode_1'));
+                        replaceIfExists('0',noticenumber);
                         break;
                     case '06:00-12:00':
-                        replaceIfExists($('.periode_2'));
+                        replaceIfExists('1',noticenumber);
                         break;
                     case '12:00-18:00':
-                        replaceIfExists($('.periode_3'));
+                        replaceIfExists('2',noticenumber);
                         break;
                     case '18:00-24:00':
-                        replaceIfExists($('.periode_4'));
+                        replaceIfExists('3',noticenumber);
                         break;
                     default:
-                        replaceIfExists($('.periode_5'));
+                        replaceIfExists('4',noticenumber);
                         break;
                 }
             }
 
             function resetClass() {
-                var $element = $('*[class^="periode_"]'),
-                    $exists = 'text-success fa-check-circle text-danger fa-close',
-                    $notExists = 'text-danger fa-close';
-                $element.removeClass($exists);
-                $element.addClass($notExists);
+                $('[class^="periode_"]').each(function(index) {
+                    var $default = '<i class="periode_'+index+' text-danger fa fa-close"></i>';
+                    $('.periode_'+index).replaceWith($default);
+                });
             }
 
             function replaceClass(response) {
                 resetClass();
                 $.each(response, function(index, value) {
-                   getElement(value.periode);
+                   getElement(value.periode,value.noticenumber);
                 });
             }
 
