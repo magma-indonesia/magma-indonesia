@@ -31,10 +31,6 @@ class MagmaVar extends Model
         'updated_at'    
     ];
 
-    protected $appends = [
-        'status_deskripsi',
-    ];
-
     public function getStatusDeskripsiAttribute()
     {
         switch ($this->attributes['status']) {
