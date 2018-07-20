@@ -47,8 +47,12 @@ Route::group(['prefix' => 'gunungapi'], function () {
     Route::get('laporan/search','ActivityGaController@search')->name('laporan.search');
     Route::post('laporan/verifikasiv1','ActivityGaController@verifikasiv1')->name('laporan.verifikasiv1');
     Route::post('laporan/validasi','ActivityGaController@validasi')->name('laporan.validasi');
-    Route::get('laporan/create','MagmaVarController@create')->name('laporan.create');
-    Route::post('laporan/store','MagmaVarController@store')->name('laporan.store');
+    Route::get('laporan/create-step1','MagmaVarController@createStep1')->name('laporan.create.1');
+    Route::get('laporan/create-step2','MagmaVarController@createStep2')->name('laporan.create.2');
+    Route::get('laporan/create-step3','MagmaVarController@createStep3')->name('laporan.create.3');
+    Route::post('laporan/create-step1','MagmaVarController@storeStep1')->name('laporan.store.1');
+    Route::post('laporan/create-step2','MagmaVarController@storeStep2')->name('laporan.store.2');
+    Route::post('laporan/create-step3','MagmaVarController@storeStep3')->name('laporan.store.3');
     Route::post('laporan/exists','MagmaVarController@exists')->name('laporan.exists');
     Route::resource('laporan','ActivityGaController', ['except' => [
         'create','store','edit','update','destroy'
