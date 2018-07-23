@@ -8,6 +8,9 @@ use App\User;
 use App\Gadd;
 use App\PosPga;
 use App\MagmaVar;
+use App\VarVisual;
+use App\Http\Requests\CreateVarStep1;
+use App\Http\Requests\CreateVarStep2;
 
 class MagmaVarController extends Controller
 {
@@ -36,120 +39,92 @@ class MagmaVarController extends Controller
         return view('gunungapi.laporan.create',compact('pgas','var'));
     }
 
-    public function createStep2()
+    public function createStep2(Request $request)
     {
-        return 'create2';
+        if (empty($request->session()->get('var'))) {
+            return redirect()->route('chambers.laporan.create.1');
+        }
+        
+        return view('gunungapi.laporan.create2');
     }
 
-    public function createStep3()
+    public function createStep3(Request $request)
     {
+        // $request->session()->forget('var');
+        return $request->session()->get('var');
         return 'create3';
     }
 
-    protected function setObscode($obscode)
+    /**
+     * Set session untuk variable VAR
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\MagmaVar $var
+     * @return void
+     */
+    protected function setVarSession($request, $var)
     {
-        $this->obscode = $obscode;
+        $pga = PosPga::where('obscode',$request->code)->first();
+        $gunungapi = $pga->gunungapi->name;
+        $slug = 'laporan gunung api '.$gunungapi.' tanggal '.$request->date.' periode '.$request->periode;
+
+        $var->fill([
+            'noticenumber' => $request->noticenumber,
+            'slug' => str_slug($slug),
+            'code_id' => substr($request->code,0,3),
+            'var_data_date' => $request->date,
+            'periode' => $request->periode,
+            'var_perwkt' => $request->perwkt,
+            'obscode_id' => $request->code,
+            'status' => $request->status,
+            'nip_pelapor' => auth()->user()->nip
+        ]);
+
+        $request->session()->put('var',$var);
         return $this;
     }
 
-    protected function setDataDate($date)
+    protected function setVarVisualSession($request, $varVisual)
     {
-        $this->data_date = str_replace('-','',$date);
+        $varVisual->fill([
+            'noticenumber_id' => $request->session()->get('var')->noticenumber,
+            'visibility' => $request->visibility,
+            'visual_asap' => $request->visual_asap,
+            'visual_kawah' => $request->visual_kawah
+        ]);
+
+        $request->session()->put('var_visual',$varVisual);
         return $this;
-    }
-
-    protected function setPeriode($periode)
-    {
-        $this->periode = $periode != '00:00-24:00' ? substr($periode,0,2).'00' : '2400';
-        $this->perwkt = $periode != '00:00-24:00' ? '6' : '24';
-        return $this;
-    }
-
-    protected function setNoticenumber($request)
-    {
-        $this->setObscode($request->code)->setDataDate($request->date)->setPeriode($request->periode);
-        $this->noticenumber = $this->obscode.$this->data_date.$this->periode;
-        return $this;
-    }
-
-    protected function getNoticenumber()
-    {
-        return $this->noticenumber;
-    }
-
-    protected function getPerwkt()
-    {
-        return $this->perwkt;
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\CreateVarStep1  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeStep1(Request $request)
+    public function storeStep1(CreateVarStep1 $request)
     {
-        $this->setNoticenumber($request);
-        $request->merge(['noticenumber' => $this->getNoticenumber()]);
-        $request->merge(['perwkt' => $this->getPerwkt()]);
-
-        $messages = [
-            'required' => 'Semua form harus diisi.',
-            'size' => 'Pos Gunung Api tidak valid.',
-            'status.in' => 'Status Gunung Api tidak valid.',
-            'date.date_format' => 'Format tanggal tidak valid (Y-m-d).',
-            'date.before_or_equal' => 'Tanggal tidak boleh lebih dari hari ini.',
-            'periode.in' => 'Periode waktu tidak valid.', 
-            'noticenumber.unique' => 'Laporan sudah pernah dibuat.'
-        ];
-        
-        $validator = Validator::make($request->all(),[
-            'code' => 'required|size:4',
-            'status' => 'required|in:1,2,3,4',
-            'date' => 'required|date_format:Y-m-d|before_or_equal:today',
-            'periode' => 'required|in:00:00-24:00,00:00-06:00,06:00-12:00,12:00-24:00',
-            'noticenumber' => 'required|unique:magma_vars,noticenumber'
-        ],$messages)->validate();
-
-        $pga = PosPga::where('obscode',$request->code)->first();
-        $gunungapi = $pga->gunungapi->name;
-        $slug = 'laporan gunung api '.$gunungapi.' tanggal '.$request->date.' periode '.$request->periode;
-
-        if (empty($request->session()->get('var'))) {
-            $var = new MagmaVar();
-            $var->fill([
-                'noticenumber' => $request->noticenumber,
-                'slug' => str_slug($slug),
-                'code_id' => substr($request->code,0,3),
-                'var_data_date' => $request->date,
-                'periode' => $request->periode,
-                'var_perwkt' => $request->perwkt,
-                'obscode_id' => $request->code,
-                'status' => $request->status
-            ]);
-        } else {
-            $var = $request->session()->get('var');
-            $var->fill([
-                'noticenumber' => $request->noticenumber,
-                'slug' => str_slug($slug),
-                'code_id' => substr($request->code,0,3),
-                'var_data_date' => $request->date,
-                'periode' => $request->periode,
-                'var_perwkt' => $request->perwkt,
-                'obscode_id' => $request->code,
-                'status' => $request->status
-            ]);
-        }
-
-        $request->session()->put('var',$var);
+        empty($request->session()->get('var')) 
+            ? $this->setVarSession($request, new MagmaVar()) 
+            : $this->setVarSession($request, $request->session()->get('var'));
 
         return redirect()->route('chambers.laporan.create.2');
     }
 
-    public function storeStep2(Request $request)
+    /**
+     * Undocumented function
+     *
+     * @param \App\Http\Requests\CreateVarStep2 $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeStep2(CreateVarStep2 $request)
     {
-        return $request;
+        empty($request->session()->get('var_visual')) 
+            ? $this->setVarVisualSession($request, new VarVisual()) 
+            : $this->setVarVisualSession($request, $request->session()->get('var_visual'));
+            
+        return $request->session()->get('var_visual');
     }
 
     public function storeStep3(Request $request)
