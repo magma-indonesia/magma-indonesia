@@ -100,7 +100,7 @@ class VonaController extends Controller
         $gadds = Gadd::select('name','code')->orderBy('name')->get();
 
         $users = User::whereHas('bidang', function($query){
-            $query->where('user_bidang_desc_id','like',2);
+            $query->where('bidang_id','like',2);
         })->orderBy('name')->get();
         
         return view('vona.create',compact('gadds','users'));
