@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    Create VAR
+    VAR - Step 1
 @endsection
 
 @section('add-vendor-css')
@@ -83,54 +83,48 @@
                                                 </div>
                                                 <div class="form-group col-lg-6">
                                                     <label>Pos Gunung Api</label>
-                                                    @if( $errors->has('code'))
-                                                    <label class="error" for="code">{{ ucfirst($errors->first('code')) }}</label>
-                                                    @endif
                                                     <select id="code" class="form-control" name="code">
                                                         @foreach($pgas as $pga)
-                                                        <option value="{{ $pga->obscode }}" {{ old('code') == $pga->obscode ? 'selected' : ''}}>{{ $pga->observatory }}</option>
+                                                        <option value="{{ $pga->obscode }}" {{ (old('code') == $pga->obscode) || (optional($var)->obscode_id == $pga->obscode) ? 'selected' : ''}}>{{ $pga->observatory }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-lg-6">
                                                     <label>Status</label>
-                                                    @if( $errors->has('status'))
-                                                    <label class="error" for="status">{{ ucfirst($errors->first('status')) }}</label>
-                                                    @endif
                                                     <select id="status" class="form-control" name="status">
-                                                        <option value="1" {{ old('status') == '1' ? 'selected' : ''}}>Level I (Normal)</option>
-                                                        <option value="2" {{ old('status') == '2' ? 'selected' : ''}}>Level II (Waspada)</option>
-                                                        <option value="3" {{ old('status') == '3' ? 'selected' : ''}}>Level III (Siaga)</option>
-                                                        <option value="4" {{ old('status') == '4' ? 'selected' : ''}}>Level IV (Awas)</option>
+                                                        <option value="1" {{ (old('status') == '1') || (optional($var)->status == '1') ? 'selected' : ''}}>Level I (Normal)</option>
+                                                        <option value="2" {{ (old('status') == '2') || (optional($var)->status == '2')? 'selected' : ''}}>Level II (Waspada)</option>
+                                                        <option value="3" {{ (old('status') == '3') || (optional($var)->status == '3')? 'selected' : ''}}>Level III (Siaga)</option>
+                                                        <option value="4" {{ (old('status') == '4') || (optional($var)->status == '4')? 'selected' : ''}}>Level IV (Awas)</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-lg-6">
                                                     <label>Tanggal Laporan</label>
-                                                    @if( $errors->has('date'))
-                                                    <label class="error" for="date">{{ ucfirst($errors->first('date')) }}</label>
+                                                    @if (!empty(old('date')))
+                                                    <input name="date" id="date" class="form-control" type="text" value="{{ old('date')->format('Y-m-d') }}">
+                                                    @elseif (!empty(optional($var)->var_data_date))
+                                                    <input name="date" id="date" class="form-control" type="text" value="{{ optional($var)->var_data_date->format('Y-m-d') }}">
+                                                    @else
+                                                    <input name="date" id="date" class="form-control" type="text" value="{{ now()->format('Y-m-d') }}">
                                                     @endif
-                                                    <input name="date" id="date" class="form-control" type="text" value="{{ empty(old('date')) ? now()->format('Y-m-d') : old('date') }}">
                                                 </div>
                                                 <div class="form-group col-lg-6">
                                                     <label>Periode</label>
-                                                    @if( $errors->has('periode'))
-                                                    <label class="error" for="periode">{{ ucfirst($errors->first('periode')) }}</label>
-                                                    @endif
                                                     <select id="periode" class="form-control" name="periode">
                                                         <optgroup label="24 Jam">
-                                                            <option value="00:00-24:00" {{ old('periode') == '00:00-24:00' ? 'selected' : ''}}>Pukul 00:00-24:00</option>
+                                                            <option value="00:00-24:00" {{ (old('periode') == '00:00-24:00') || (optional($var)->periode == '00:00-24:00') ? 'selected' : ''}}>Pukul 00:00-24:00</option>
                                                         </optgroup>
                                                         <optgroup label="6 Jam">
-                                                                <option value="00:00-06:00" {{ old('periode') == '00:00-06:00' ? 'selected' : ''}}>Pukul 00:00-06:00</option>
-                                                                <option value="06:00-12:00" {{ old('periode') == '06:00-12:00' ? 'selected' : ''}}>Pukul 06:00-12:00</option>
-                                                                <option value="12:00-18:00" {{ old('periode') == '12:00-18:00' ? 'selected' : ''}}>Pukul 12:00-18:00</option>
-                                                                <option value="18:00-24:00" {{ old('periode') == '18:00-24:00' ? 'selected' : ''}}>Pukul 18:00-24:00</option>
+                                                            <option value="00:00-06:00" {{ (old('periode') == '00:00-06:00') || (optional($var)->periode == '00:00-06:00') ? 'selected' : ''}}>Pukul 00:00-06:00</option>
+                                                            <option value="06:00-12:00" {{ (old('periode') == '06:00-12:00') || (optional($var)->periode == '06:00-12:00') ? 'selected' : ''}}>Pukul 06:00-12:00</option>
+                                                            <option value="12:00-18:00" {{ (old('periode') == '12:00-18:00') || (optional($var)->periode == '12:00-18:00') ? 'selected' : ''}}>Pukul 12:00-18:00</option>
+                                                            <option value="18:00-24:00" {{ (old('periode') == '18:00-24:00') || (optional($var)->periode == '18:00-24:00') ? 'selected' : ''}}>Pukul 18:00-24:00</option>
                                                         </optgroup>
                                                     </select>
                                                 </div>
-
                                                 <div class="form group col-lg-12">
-                                                    <ul class="list-group">
+                                                    <label>Status Laporan</label>
+                                                    <ul class="list-group form-group">
                                                         <li class="list-group-item">
                                                             00:00-06:00
                                                             <span class="pull-right"><i class="periode_0 text-danger fa fa-close"></i></span>
@@ -153,13 +147,13 @@
                                                         </li>
                                                     </ul>
                                                 </div>
-
                                             </div>
+
+                                            <div class="text-left m-t-xs">
+                                                <button type="submit" class="submit btn btn-primary" href="#">Step 1 - Submit</button>
+                                            </div>
+
                                         </div>
-                                    </div>
-        
-                                    <div class="text-right m-t-xs">
-                                        <button type="submit" class="submit btn btn-primary" href="#">Step 1 - Submit</button>
                                     </div>
         
                                 </div>
