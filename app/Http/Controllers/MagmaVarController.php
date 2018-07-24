@@ -9,6 +9,7 @@ use App\Gadd;
 use App\PosPga;
 use App\MagmaVar;
 use App\VarVisual;
+use App\VarAsap;
 use App\Http\Requests\CreateVarStep1;
 use App\Http\Requests\CreateVarStep2;
 
@@ -44,13 +45,15 @@ class MagmaVarController extends Controller
         if (empty($request->session()->get('var'))) {
             return redirect()->route('chambers.laporan.create.1');
         }
+
+        $visual = $request->session()->get('var_visual');
         
-        return view('gunungapi.laporan.create2');
+        return view('gunungapi.laporan.create2',compact('visual'));
     }
 
     public function createStep3(Request $request)
     {
-        // $request->session()->forget('var');
+        // $request->session()->forget('var_visual');
         return $request->session()->get('var');
         return 'create3';
     }
@@ -84,16 +87,15 @@ class MagmaVarController extends Controller
         return $this;
     }
 
-    protected function setVarVisualSession($request, $varVisual)
+    /**
+     * Set session untuk variable Var Visual
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return void
+     */
+    protected function setVarVisualSession($request)
     {
-        $varVisual->fill([
-            'noticenumber_id' => $request->session()->get('var')->noticenumber,
-            'visibility' => $request->visibility,
-            'visual_asap' => $request->visual_asap,
-            'visual_kawah' => $request->visual_kawah
-        ]);
-
-        $request->session()->put('var_visual',$varVisual);
+        $request->session()->put('var_visual',$request->except(['_token']));
         return $this;
     }
 
@@ -120,10 +122,7 @@ class MagmaVarController extends Controller
      */
     public function storeStep2(CreateVarStep2 $request)
     {
-        empty($request->session()->get('var_visual')) 
-            ? $this->setVarVisualSession($request, new VarVisual()) 
-            : $this->setVarVisualSession($request, $request->session()->get('var_visual'));
-            
+        $this->setVarVisualSession($request);            
         return $request->session()->get('var_visual');
     }
 
