@@ -111,7 +111,7 @@
                                     <span class="label-file">Browse </span> 
                                     <input accept="image/*" class="file" name="file" type="file" style="display: none;">
                                     <input type="hidden" id="imagebase64" name="imagebase64">
-                                    <input type="hidden" id="filetype" name="filetype">                                  
+                                    <input type="hidden" id="filetype" name="filetype">
                                 </label>
                                 @if( $errors->has('file'))
                                 <label id="file-error" class="error" for="file">{{ ucfirst($errors->first('file')) }}</label>
