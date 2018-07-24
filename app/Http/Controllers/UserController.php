@@ -145,10 +145,7 @@ class UserController extends Controller
     public function logout(Request $request)
     {
         $logout = Auth::logout();
-
-        if(Auth::check()) {
-            return 'Masih Login';
-        }
+        $request->session()->flush();
 
         return redirect()->route('home');
     }
