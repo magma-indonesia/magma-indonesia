@@ -149,3 +149,7 @@ table tr td[class*="4"] {
 .vertical-timeline-content .btn {
   float: none;
 }
+
+.error-container {
+	padding: 6%;
+}
