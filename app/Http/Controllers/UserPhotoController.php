@@ -11,12 +11,9 @@ class UserPhotoController extends Controller
 {
     private function quality($photo,$quality)
     {
-        if ($quality == 'high')
-        {
-            return Storage::disk('user')->get($photo);                
-        }
-
-        return Storage::disk('user-thumb')->get($photo);    
+        return $quality == 'high' 
+            ? Storage::disk('user')->get($photo)
+            : Storage::disk('user-thumb')->get($photo);
     }
 
     public function photo($id = null, $quality = null)
