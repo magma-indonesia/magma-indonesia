@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>{{ config('app.name') }}</title>
+        <link href="{{ asset('favicon.png') }}" rel="shortcut icon">
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
@@ -80,6 +81,7 @@
             @endif
 
             <div class="content">
+                <img alt="logo" class="p-m" src="{{ url('/').'/images/volcano.svg' }}" style="width: 120px;">
                 <div class="title m-b-md">MAGMA v2</div>            
                 <div id="time" class="title m-b-md">Loading . . .</div>
 
