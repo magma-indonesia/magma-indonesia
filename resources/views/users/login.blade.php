@@ -31,7 +31,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="text-center m-b-md">
-					<h2>Login</h2>
+					<h2>Login</h2>					
 				</div>
 				<div class="hpanel">
 					<div class="panel-body">
@@ -60,8 +60,7 @@
 							</div>
 							@endif
 
-							<button type="submit" class="btn btn-success btn-block">Login</button>
-							<a class="btn btn-default btn-block" href="{{ route('chambers.users.create') }}">Register</a>
+							<button type="submit" class="btn btn-magma btn-block">Login</button>
 						</form>
 					</div>
 				</div>
@@ -69,8 +68,10 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12 text-center">
-				<strong>PVMBG</strong> - MAGMA Indonesia
-				<br/> 2015 Copyright Kementerian Energi dan Sumber Daya Mineral
+				<img style="max-width: 60px;" src="{{ url('/') }}/images/logo/esdm.gif">
+				<br>
+				<strong>Badan Geologi, PVMBG</strong> - MAGMA Indonesia
+				<br/> 2015 &copy; Kementerian Energi dan Sumber Daya Mineral
 			</div>
 		</div>
 	</div>
