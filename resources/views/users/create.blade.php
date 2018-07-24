@@ -5,7 +5,7 @@
 @endsection
 
 @section('add-vendor-css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.1/croppie.min.css" />
+    <link rel="stylesheet" href="{{ asset('vendor/croppie/croppie.min.css') }}" />
 @endsection
 
 @section('content-header')
@@ -141,7 +141,7 @@
 
 @section('add-vendor-script')
 <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.1/croppie.min.js"></script>
+<script src="{{ asset('vendor/croppie/croppie.min.js') }}"></script>
 <script src="{{ asset('vendor/exif-js/exif.js') }}"></script>
 @endsection 
 
