@@ -97,7 +97,6 @@
                             <h5 class="font-extra-bold">Pusat Vulkanologi dan Mitigasi Bencana Geologi</h5>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
