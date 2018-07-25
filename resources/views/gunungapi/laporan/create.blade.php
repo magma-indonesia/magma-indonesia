@@ -101,7 +101,7 @@
                                                 <div class="form-group col-lg-6">
                                                     <label>Tanggal Laporan</label>
                                                     @if (!empty(old('date')))
-                                                    <input name="date" id="date" class="form-control" type="text" value="{{ old('date')->format('Y-m-d') }}">
+                                                    <input name="date" id="date" class="form-control" type="text" value="{{ old('date') }}">
                                                     @elseif (!empty(optional($var)->var_data_date))
                                                     <input name="date" id="date" class="form-control" type="text" value="{{ optional($var)->var_data_date->format('Y-m-d') }}">
                                                     @else
