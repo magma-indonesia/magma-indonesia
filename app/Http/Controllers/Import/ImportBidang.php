@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Import;
 
 use Illuminate\Http\Request;
-use App\UserBidang;
+use App\UserAdministratif;
 use App\User;
 use App\v1\User as OldUser;
 
@@ -27,7 +27,7 @@ class ImportBidang extends Import
         });
 
         $data = $this->data
-                ? [ 'success' => 1, 'text' =>'User Bidang', 'message' => 'User Bidang berhasil diperbarui', 'count' => UserBidang::count() ] 
+                ? [ 'success' => 1, 'text' =>'User Bidang', 'message' => 'User Bidang berhasil diperbarui', 'count' => UserAdministratif::count() ] 
                 : [ 'success' => 0, 'text' => 'User Bidang', 'message' => 'User Bidang gagal diperbarui', 'count' => 0 ];
 
         $this->sendNotif($data);
@@ -40,12 +40,12 @@ class ImportBidang extends Import
         $user = User::where('nip', $this->item->vg_nip)->firstOrFail();
 
         try {
-            $create = UserBidang::updateOrCreate(
+            $create = UserAdministratif::updateOrCreate(
                 [
                     'user_id' => $user->id
                 ],
                 [
-                    'user_bidang_desc_id' => $this->bidang 
+                    'bidang_id' => $this->bidang
                 ]
             );
 
