@@ -9,7 +9,7 @@ use Exception;
 use Carbon\Carbon;
 use App\User;
 use App\UserPhoto;
-use App\UserBidang;
+use App\UserAdministratif;
 use App\UserBidangDesc as Bidang;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Validation\ValidationException;
@@ -195,9 +195,9 @@ class UserController extends Controller
      
         $user = User::create($input);
 
-        $bidang = UserBidang::create([
+        $bidang = UserAdministratif::create([
             'user_id' => $user->id,
-            'user_bidang_desc_id' => $request->bidang
+            'bidang_id' => $request->bidang
         ]);
         
         $uploadPhoto = !empty($request->filetype) ? $this->uploadPhoto($user, $request->imagebase64, $request->filetype) : true;
@@ -206,7 +206,7 @@ class UserController extends Controller
         {
             $user->notify(new UserNotification('create',$user));
             return redirect()->route('chambers.users.index')->with('flash_message',$request->name.' berhasil ditambahkan.');
-        } 
+        }
 
         return redirect()->route('chambers.users.index')->with('flash_message','User gagal ditambahkan.');    
     }
@@ -259,6 +259,11 @@ class UserController extends Controller
             'phone' => 'nullable|digits_between:11,12',
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
             'status' => 'required|boolean'
+        ]);
+
+        $bidang = $user->bidang()->update([
+            'user_id' => $user->id,
+            'bidang_id' => $request->bidang
         ]);
 
         $input = $request->except(['imagebase64']);
