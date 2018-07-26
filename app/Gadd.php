@@ -65,12 +65,39 @@ class Gadd extends Model
     }
 
     /**     
+     *   Masing-masing Gunungapi bisa memiliki lebih
+     *   dari 1 VEN
+     */
+    public function ven()
+    {
+        return $this->has('App\MagmaVen','code_id','code');
+    }
+
+    /**     
      *   Masing-masing Gunungapi hanya memiliki 
      *   1 laporan harian
      */
     public function latestVar()
     {
         return $this->hasOne('App\MagmaVar','code_id','code')->latest();
+    }
+
+    /**     
+     *   Masing-masing Gunungapi hanya memiliki 
+     *   1 laporan VEN Terkini
+     */
+    public function latestVen()
+    {
+        return $this->hasOne('App\MagmaVen','code_id','code')->orderBy('id','desc');
+    }
+
+    /**     
+     *   Masing-masing Gunungapi hanya memiliki 
+     *   1 laporan VONA Terkini
+     */
+    public function latestVona()
+    {
+        return $this->hasOne('App\Vona','code_id','code')->latest();
     }
 
     /**     
