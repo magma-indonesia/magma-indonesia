@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Gadd;
 use App\VarDaily;
 use App\MagmaVar;
 use App\Http\Resources\VarResource;
 use App\Http\Resources\LatestVarCollection;
+use App\Http\Resources\GunungApiCollection;
 
 class VarController extends Controller 
 {
@@ -31,7 +33,7 @@ class VarController extends Controller
      */
     public function latest()
     {
-        $latest = VarDaily::orderBy('code_id')->get();
-        return new LatestVarCollection($latest);
+        $gadd = Gadd::orderBy('name')->get();
+        return new GunungApiCollection($gadd);
     }
 }
