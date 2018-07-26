@@ -18,9 +18,7 @@ npm-debug.log
 yarn-error.log
 .env
 *.rar
-public/js/popup_chat_trigger_demo.js
+*.sql
 resources/views/tes/index.blade.php
 app/Http/Controllers/TesController.php
 .vscode/launch.json
-*.sql
-app/Http/Controllers/TesController.php
