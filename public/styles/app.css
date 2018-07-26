@@ -153,3 +153,10 @@ table tr td[class*="4"] {
 .error-container {
 	padding: 6%;
 }
+
+.label-center {
+  display: block;
+  text-align: center;
+  max-width: 100px;
+  margin: 0px auto;
+}
