@@ -20,7 +20,13 @@ class GunungApiResource extends JsonResource
             'tzone'     => $this->tzone,
             'tarea'     => $this->zonearea,
             'address'   => $this->district.', '.$this->province,
-            'latest'    => $this->latestVar->noticenumber,
+            'latitude'  => $this->latitude,
+            'longitude' => $this->longitude,
+            'elevation'     => $this->elevation,
+            'latest_var'    => optional($this->latestVar)->noticenumber,
+            'latest_ven'    => optional($this->latestVen)->uuid,
+            'latest_vona'   => optional($this->latestVona)->uuid
+            
         ];
     }
 }
