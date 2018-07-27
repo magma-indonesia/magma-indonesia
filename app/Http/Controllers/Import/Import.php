@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Import;
 
+use App\Http\Controllers\Controller;
 use App\Import as ImportApp;
 use App\Notifications\ImportNotification;
 
-class Import extends \App\Http\Controllers\Controller
+class Import extends Controller
 {
     protected $old;
 
