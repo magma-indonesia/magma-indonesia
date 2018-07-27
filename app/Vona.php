@@ -88,6 +88,11 @@ class Vona extends Model
         return $this->belongsTo('App\User','nip_pelapor','nip');
     }
 
+    public function pengirim()
+    {
+        return $this->belongsTo('App\User','nip_pengirim','nip');
+    }
+
     public function ven()
     {
         return $this->belongsTo('App\MagmaVen','ven_uuid','uuid');
