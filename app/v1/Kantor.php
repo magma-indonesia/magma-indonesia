@@ -10,7 +10,13 @@ class Kantor extends Model
 
     public $timestamps = false;
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'vg_nip';
 
     protected $table = 'pga_pos';
+
+    protected $fillable = [
+        'vg_nip',
+        'ga_code',
+        'obscode'
+    ];
 }
