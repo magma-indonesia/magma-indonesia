@@ -18,6 +18,7 @@ class Absensi extends Model
         'checkin_image',
         'checkin_latitude',
         'checkin_longitude',
+        'checkin_distance',
         'checkout',
         'checkout_image',
         'checkout_latitude',
