@@ -23,7 +23,6 @@ class MagmaVenController extends Controller
     public function index()
     {
         $vens = MagmaVen::orderBy('date','desc')
-            ->orderBy('date','desc')
             ->paginate(30,['*'],'ven_page');
 
         return view('gunungapi.letusan.index',compact('vens'));
