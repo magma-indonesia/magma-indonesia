@@ -17,6 +17,36 @@ class Vona extends Model
 
     protected $table = 'ga_vona';
 
+    protected $fillable = [
+        'issued',
+        'type',
+        'vona_image',
+        'ga_nama_gapi',
+        'ga_id_smithsonian',
+        'ga_code',
+        'cu_avcode',
+        'pre_avcode',
+        'source',
+        'notice_number',
+        'volcano_location',
+        'area',
+        'summit_elevation',
+        'volcanic_act_summ',
+        'vc_height',
+        'vc_height_text',
+        'other_vc_info',
+        'remarks',
+        'contacts',
+        'next_notice',
+        'sent',
+        'log',
+        'nip',
+        'nama',
+        'sender'
+    ];
+
+    protected $guard = ['no'];
+
     public function getIssuedAttribute($value)
     {
         $this->year = substr($value,0,4);
