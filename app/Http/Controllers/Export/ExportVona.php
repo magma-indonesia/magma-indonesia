@@ -72,7 +72,7 @@ class ExportVona extends Export
                     'remarks' => optional($this->item)->remarks ? $this->item->remarks : '-',
                     'contacts' => $contacts,
                     'next_notice' => $notice,
-                    'sent' => $this->item->sent,
+                    'sent' => $this->item->sent ? '1' : '0',
                     'nip' => $this->item->nip_pelapor,
                     'nama' => $this->item->user->name,
                     'sender' => optional($this->item->pengirim)->name ? $this->item->pengirim->name : null,
