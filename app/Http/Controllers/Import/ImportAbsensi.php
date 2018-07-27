@@ -68,11 +68,12 @@ class ImportAbsensi extends Import
                         'checkin_image' => $checkin_image,
                         'checkin_latitude' => $checkin_latitude,
                         'checkin_longitude' => $checkin_longitude,
+                        'checkin_distance' => $this->item->checkin_dist,
                         'checkout' => $checkout,
                         'checkout_image' => $checkout_image,
                         'checkout_latitude' => $checkout_latitude,
                         'checkout_longitude' => $checkout_longitude,
-                        'distance' => $distance,
+                        'distance' => $this->item->checkout_dist,
                         'duration' => $duration,
                         'nip_verifikator' => $nip_ver,
                         'keterangan' => $keterangan
