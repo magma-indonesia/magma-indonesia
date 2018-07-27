@@ -39,6 +39,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapWebRoutes();
         $this->mapChamberRoutes();
         $this->mapImportRoutes();
+        $this->mapExportRoutes();
     }
 
     /**
@@ -96,5 +97,19 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware(['web','auth','revalidate'])
              ->namespace($this->namespace)
              ->group(base_path('routes/import.php'));
+    }
+
+    /**
+     * Define the "export" routes for MAGMA dashboard.
+     *
+     * @return void
+     */
+    protected function mapExportRoutes()
+    {
+        Route::prefix('chambers/v1/export')
+             ->name('chambers.v1.export.')
+             ->middleware(['web','auth','revalidate'])
+             ->namespace($this->namespace)
+             ->group(base_path('routes/export.php'));
     }
 }
