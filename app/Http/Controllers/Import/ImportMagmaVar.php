@@ -60,8 +60,8 @@ class ImportMagmaVar extends Import
         $no = $this->item->no;
         $gacode = $this->item->ga_code;
         $var_nip_pelapor = $this->item->var_nip_pelapor;
-        $this->pj = $this->item->var_nip_pemeriksa_pj;
-        $this->verifikator = $this->item->var_nip_pemeriksa;
+        $this->pj = $this->item->var_nip_pemeriksa_pj == ' ' ? '' : $this->item->var_nip_pemeriksa_pj;
+        $this->verifikator = $this->item->var_nip_pemeriksa == ' ' ? '' : $this->item->var_nip_pemeriksa;
         $var_source = $this->item->var_source;
 
         $var_nip_pelapor = empty($var_nip_pelapor) 
