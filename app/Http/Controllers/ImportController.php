@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\User;
 use App\UserBidang;
+use App\UserAdministratif;
 use App\Absensi;
 use App\Gadd;
 use App\MagmaVar;
@@ -35,7 +36,7 @@ class ImportController extends Controller
     {
 
         $users = User::count();
-        $bidang = UserBidang::count();
+        $bidang = UserAdministratif::count();
         $gadds = Gadd::count();
         $varsv1 = OldVar::count();
         $vars = MagmaVar::count();
