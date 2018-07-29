@@ -19,6 +19,7 @@ class Vona extends Model
 
     protected $fillable = [
         'issued',
+        'issued_time',
         'type',
         'vona_image',
         'ga_nama_gapi',
