@@ -49,12 +49,13 @@ class ExportVona extends Export
         $notice = 'A new VONA will be issued if conditions change significantly or the colour code is changes.<br>Latest Volcanic information is posted at <strong>VONA | MAGMA Indonesia</strong> Website<br>Link : <a href="https://magma.vsi.esdm.go.id/vona/">https://magma.vsi.esdm.go.id/vona/</a>';
 
         try {
-            $update = OldVona::firstOrCreate(
+            $update = OldVona::updateOrCreate(
                 [
                     'notice_number' => $this->item->noticenumber
                 ],
                 [
                     'issued' => $this->item->issued_utc,
+                    'issued_time' => $this->item->issued,
                     'type' => $this->item->type,
                     'ga_nama_gapi' => $this->item->gunungapi->name,
                     'ga_id_smithsonian' => $this->item->gunungapi->smithsonian_id,
