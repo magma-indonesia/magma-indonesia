@@ -4,11 +4,6 @@
     VAR - Step 2
 @endsection
 
-@section('add-vendor-css')
-    <link rel="stylesheet" href="{{ asset('vendor/bootstrap-datepicker-master/dist/css/bootstrap-datepicker3.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('vendor/croppie/croppie.min.css') }}" />
-@endsection
-
 @section('content-header')
     <div class="small-header">
         <div class="hpanel">
@@ -123,14 +118,43 @@
                                                 <div class="foto-visual" style="{{ old('isfoto') == '0' ? 'Display:none' : ''}}">
                                                     <div class="form-group col-lg-12">
                                                         <label>Upload Foto Visual</label>
-                                                        <div class="upload-message">Upload Foto Visual</div>
-                                                        <div class="upload-photo" style="display:none"></div>
-                                                        <label class="form-control btn btn-primary btn-file">
-                                                            <span class="label-file">Browse </span> 
-                                                            <input accept="image/*" class="file" name="file" type="file" style="display: none;">
-                                                            <input type="hidden" id="imagebase64" name="imagebase64">
-                                                            <input type="hidden" id="filetype" name="filetype"> 
-                                                        </label>
+                                                        <div class="form-group" dis>
+                                                            <img class="img-responsive border-top border-bottom border-right border-left p-xs image-file" src="#" style="display:none;">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="w-xs btn btn-outline btn-default btn-file">
+                                                                <i class="fa fa-upload"></i>
+                                                                <span class="label-file">Browse </span> 
+                                                                <input accept="image/*" class="file" name="file" type="file" style="display: none;">
+                                                                <input id="file" type="hidden" name="foto">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-lg-12">
+                                                        <label>Foto Visual Tambahan (opsional)</label>
+                                                        <div class="form-group">
+                                                            <label class="w-xs btn btn-outline btn-default btn-file">
+                                                                <i class="fa fa-plus"></i>
+                                                                <span id="label-file-1" class="label-file-lainnya">Browse </span> 
+                                                                <input id="file-1" accept="image/*" class="file-lainnya" name="file_lainnya[]" type="file" style="display: none;">
+                                                                <input id="x-file-1" type="hidden" name="foto_lainnya[]">
+                                                            </label>
+                                                            <label class="w-xs btn btn-outline btn-default btn-file">
+                                                                <i class="fa fa-plus"></i>
+                                                                <span id="label-file-2" class="label-file-lainnya">Browse </span> 
+                                                                <input id="file-2" accept="image/*" class="file-lainnya" name="file_lainnya[]" type="file" style="display: none;">
+                                                                <input id="x-file-2" type="hidden" name="foto_lainnya[]">
+                                                            </label>
+                                                            <label class="w-xs btn btn-outline btn-default btn-file">
+                                                                <i class="fa fa-plus"></i>
+                                                                <span id="label-file-3" class="label-file-lainnya">Browse </span> 
+                                                                <input id="file-3" accept="image/*" class="file-lainnya" name="file_lainnya[]" type="file" style="display: none;">
+                                                                <input id="x-file-3" type="hidden" name="foto_lainnya[]">
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <button type="button" class="w-xs btn btn-danger clear-file"><i class="fa fa-trash"></i> Hapus Foto Tambahan</button>
+                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -218,16 +242,14 @@
     </div>
 @endsection
 
-@section('add-vendor-script')
-    <script src="{{ asset('vendor/moment/moment.js') }}"></script>
-    <script src="{{ asset('vendor/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ asset('vendor/croppie/croppie.min.js') }}"></script>
-    <script src="{{ asset('vendor/exif-js/exif.js') }}"></script>
-@endsection
-
 @section('add-script')
     <script>
         $(document).ready(function () {
+
+            var height = window.screen.height;
+            console.log(height > 480);
+
+            height = height > 480 ? height/4 : 360;
 
             $('.asap').on('ifChecked', function(e) {
                 $(this).val() == 'Teramati' ? $('.visual-asap').show() : $('.visual-asap').hide();
@@ -237,51 +259,43 @@
                 $(this).val() == '1' ? $('.foto-visual').show() : $('.foto-visual').hide();
             });
 
-            $uploadCrop = $('.upload-photo').croppie({
-                enableExif: true,
-                viewport: {
-                    width: 480,
-                    height: 270
-                },
-                boundary: {
-                    width:490,
-                    height:280
-                }
-            });
-
-            $('input.file').on('change', function() {
-                $('.upload-message').hide();
-                $('.upload-photo').show();
-            
+            $('input.file').on('change', function(e) {
                 var input = $(this),
-                    label = input.val().replace(/\\/g, '/').replace(/.*\//, ''),
-                    filetype = '.'+label.split('.').pop();
+                    label = input.val()
+                                .replace(/\\/g, '/')
+                                .replace(/.*\//, ''),
                     reader = new FileReader();
 
                 $('.label-file').html(label);
-                console.log('Nama file : '+label+', tipe : '+filetype);
-                $('#filetype').val(filetype);
-
                 reader.onload = function (e) {
-                    $uploadCrop.croppie('bind', {
-                        url: e.target.result,
-                        orientation: 1
-                    }).then(function(){
-                        console.log('Binding Berhasil');
-                    });
+                    $('.image-file')
+                        .show()
+                        .attr('src',e.target.result)
+                        .css('max-height', height+'px');
+                    $('#file').val(e.target.result);
                 }
 
                 reader.readAsDataURL(this.files[0]);
-                
-                $uploadCrop.croppie('result', {
-                    type: 'canvas',
-                    size: 'viewport'
-                }).then(function (resp){
-                    $('#imagebase64').val(resp);
-                    console.log($('#imagebase64').val());
-                });
-                
             });
+
+            $('input.file-lainnya').on('change', function(e) {
+                var $id = $(this).attr('id'),
+                    input = $(this),
+                    label = input.val().replace(/\\/g, '/').replace(/.*\//, ''),
+                    reader = new FileReader();
+                
+                $('#label-'+$id).html(label);
+                reader.onload = function (e) {
+                    $('#x-'+$id).val(e.target.result);
+                }
+
+                reader.readAsDataURL(this.files[0]);
+            });
+
+            $('.clear-file').on('click', function(e) {
+                $('.file-lainnya').val(null);
+                $('.label-file-lainnya').html('Browse');
+            })
 
         });
     </script>
