@@ -47,10 +47,10 @@
                             @csrf
                             <div class="text-center m-b-md" id="wizardControl">
                                 <a class="btn btn-primary" href="#" >Step 1 - Data Laporan</a>
-                                <a class="btn btn-default" href="#" disabled>Step 2 - Data Visual</a>
-                                <a class="btn btn-default" href="#" disabled>Step 3 - Data Kegempaan</a>
+                                <a class="btn btn-default hidden-xs" href="#" disabled>Step 2 - Data Visual</a>
+                                <a class="btn btn-default hidden-xs" href="#" disabled>Step 3 - Data Kegempaan</a>
                             </div>
-    
+                            <hr>
                             <div class="tab-content">
                                 <div id="step1" class="p-m tab-pane active">
         

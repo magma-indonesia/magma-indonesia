@@ -42,11 +42,11 @@
                     <form role="form" id="form" method="POST" action="{{ route('chambers.laporan.store.2')}}" enctype="multipart/form-data">
                             @csrf
                             <div class="text-center m-b-md" id="wizardControl">
-                                <a class="btn btn-default" href="#" disabled>Step 1 - Data Laporan</a>
+                                <a class="btn btn-default hidden-xs" href="#" disabled>Step 1 - <span class="hidden-xs">Data Laporan</span></a>
                                 <a class="btn btn-primary" href="#">Step 2 - Data Visual</a>
-                                <a class="btn btn-default" href="#" disabled>Step 3 - Data Kegempaan</a>
+                                <a class="btn btn-default hidden-xs" href="#" disabled>Step 3 - Data Kegempaan</a>
                             </div>
-    
+                            <hr>
                             <div class="tab-content">
                                 <div id="step2" class="p-m tab-pane active">
         
