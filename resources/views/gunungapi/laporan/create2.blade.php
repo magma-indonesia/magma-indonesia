@@ -105,7 +105,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-lg-12">
-                                                    <label>Foto Visual</label>
+                                                    <label {{$errors->has('isfoto') ? 'class=text-danger' : ''}}>Foto Visual</label>
                                                     <div class="checkbox">
                                                         <label class="checkbox-inline"><input name="isfoto" value="1" type="radio" class="i-checks isfoto" {{ (old('isfoto') == '1' || empty(old('isfoto'))) ? 'checked' : ''}}> Ada </label>
                                                     </div>
@@ -125,7 +125,7 @@
                                                             <label class="w-xs btn btn-outline btn-default btn-file">
                                                                 <i class="fa fa-upload"></i>
                                                                 <span class="label-file">Browse </span> 
-                                                                <input accept="image/*" class="file" name="file" type="file" style="display: none;">
+                                                                <input accept="image/jpeg" class="file" name="file" type="file" style="display: none;">
                                                                 <input id="file" type="hidden" name="foto">
                                                             </label>
                                                         </div>
@@ -136,19 +136,19 @@
                                                             <label class="w-xs btn btn-outline btn-default btn-file">
                                                                 <i class="fa fa-plus"></i>
                                                                 <span id="label-file-1" class="label-file-lainnya">Browse </span> 
-                                                                <input id="file-1" accept="image/*" class="file-lainnya" name="file_lainnya[]" type="file" style="display: none;">
+                                                                <input id="file-1" accept="image/jpeg" class="file-lainnya" name="file_lainnya[]" type="file" style="display: none;">
                                                                 <input id="x-file-1" type="hidden" name="foto_lainnya[]">
                                                             </label>
                                                             <label class="w-xs btn btn-outline btn-default btn-file">
                                                                 <i class="fa fa-plus"></i>
                                                                 <span id="label-file-2" class="label-file-lainnya">Browse </span> 
-                                                                <input id="file-2" accept="image/*" class="file-lainnya" name="file_lainnya[]" type="file" style="display: none;">
+                                                                <input id="file-2" accept="image/jpeg" class="file-lainnya" name="file_lainnya[]" type="file" style="display: none;">
                                                                 <input id="x-file-2" type="hidden" name="foto_lainnya[]">
                                                             </label>
                                                             <label class="w-xs btn btn-outline btn-default btn-file">
                                                                 <i class="fa fa-plus"></i>
                                                                 <span id="label-file-3" class="label-file-lainnya">Browse </span> 
-                                                                <input id="file-3" accept="image/*" class="file-lainnya" name="file_lainnya[]" type="file" style="display: none;">
+                                                                <input id="file-3" accept="image/jpeg" class="file-lainnya" name="file_lainnya[]" type="file" style="display: none;">
                                                                 <input id="x-file-3" type="hidden" name="foto_lainnya[]">
                                                             </label>
                                                         </div>
