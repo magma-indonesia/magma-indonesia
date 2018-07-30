@@ -30,6 +30,8 @@ class CreateVarStep2 extends FormRequest
             'in' => 'Nilai dari form tidak ada terdaftar dalam list',
             'tasap_max.required_if' => 'Tinggi Asap Maximum <b>wajib diisi</b> jika Visual Asap Kawah <b>Teramati</b>',
             'tasap_min.required_if' => 'Tinggi Asap Minimum <b>wajib diisi</b> jika Visual Asap Kawah <b>Teramati</b>',
+            'boolean' => 'Parameter salah',
+            'base64image' => 'Format gambar harus <b>JPG</b> atau <b>JPEG</b>',
             'lte' => 'Tinggi Asap Minimum <b>harus kurang dari</b> Tinggi Asap Maksimum',
             'digits_between' => 'Tinggi Asap <b>minimal</b> 100 dan <b>maksimum</b> 10000 meter',
             'wasap.required_if' => 'Warna Asap <b>wajib diisi</b> jika Visual Asap Kawah <b>Teramati</b>',
@@ -48,12 +50,16 @@ class CreateVarStep2 extends FormRequest
 
         $tasap_max = $request->visual_asap == 'Teramati' ? '|digits_between:3,5' : '';
         $tasap_min = $request->visual_asap == 'Teramati' ? '|digits_between:3,5|lte:tasap_max' : '';
+        $foto = $request->isfoto ? '|base64image' : '';
 
         return [
             'visibility' => 'required|array',
             'visibility.*' => 'required|in:Jelas,Kabut 0-I,Kabut 0-II,Kabut 0-III',
             'visual_asap' => 'required|in:Nihil,Teramati,Tidak Teramati',
             'visual_kawah' => 'nullable',
+            'isfoto' => 'required|boolean',
+            'foto' => 'required_if:isfoto,1'.$foto,
+            'foto_lainnya.*' => 'nullable|base64image',
             'tasap_max' => 'required_if:visual_asap,Teramati'.$tasap_max,
             'tasap_min' => 'required_if:visual_asap,Teramati'.$tasap_min,
             'wasap' => 'required_if:visual_asap,Teramati|array',
