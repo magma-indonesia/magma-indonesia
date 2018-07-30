@@ -67,6 +67,19 @@ return [
             'strict' => false
         ],
 
+        'wovo' => [
+            'driver' => 'mysql',
+            'host' => env('WOVO_HOST', 'forge'),
+            'port' => env('WOVO_PORT', 'forge'),
+            'database' => env('WOVO_DATABASE', 'forge'),
+            'username' => env('WOVO_USERNAME', 'forge'),
+            'password' => env('WOVO_PASSWORD', 'forge'),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => false
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', '127.0.0.1'),
