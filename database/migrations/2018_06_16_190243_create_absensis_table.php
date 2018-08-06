@@ -23,6 +23,7 @@ class CreateAbsensisTable extends Migration
             $table->string('checkin_image')->nullable();
             $table->float('checkin_latitude',10,6)->default(0);
             $table->float('checkin_longitude',10,6)->default(0);
+            $table->integer('checkin_distance')->default(0);
             $table->dateTime('checkout')->nullable();
             $table->string('checkout_image')->nullable();
             $table->float('checkout_latitude',10,6)->nullable();
