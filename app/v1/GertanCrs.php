@@ -14,6 +14,36 @@ class GertanCrs extends Model
     protected $primaryKey = 'idx';
 
     protected $table = 'magma_crs';
+
+    protected $fillable = [
+        'crs_usr',
+        'crs_pho',
+        'crs_ids',
+        'crs_dtm',
+        'crs_zon',
+        'crs_typ',
+        'crs_prv',
+        'crs_cty',
+        'crs_rgn',
+        'crs_vil',
+        'crs_bwd',
+        'crs_lat',
+        'crs_lon',
+        'crs_brd',
+        'crs_fsr',
+        'crs_tsc',
+        'crs_ksc',
+        'crs_ksc',
+        'crs_ftp',
+        'crs_val',
+        'crs_vor',
+        'crs_sta',
+        'crs_soa',
+        'crs_dvc',
+        'crs_log',
+        'lat_usr',
+        'long_usr'
+    ];
     
     public function getCrsPrvAttribute($value)
     {
