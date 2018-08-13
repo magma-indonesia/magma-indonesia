@@ -16,7 +16,7 @@ Route::post('gempa','Import\ImportGempa@import')->name('gempa');
 Route::post('rekomendasi','Import\ImportVarRekomendasi@import')->name('rekomendasi');
 Route::post('vens','Import\ImportMagmaVen@import')->name('vens');
 Route::post('vona','Import\ImportVona@import')->name('vona');
-Route::post('subscribers','Import\Importsubscriber@import')->name('subscribers');
+Route::post('subscribers','Import\ImportSubscriber@import')->name('subscribers');
 Route::post('roq','Import\ImportRoq@import')->name('roq');
 Route::post('adm','Import\ImportUserAdm@import')->name('adm');
 Route::get('status','ImportController@status')->name('status');
