@@ -8,11 +8,36 @@
         <title>{{ config('app.name') }}</title>
         <link href="{{ asset('favicon.png') }}" rel="shortcut icon">
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
         <!-- Styles -->
         <style>
+            /* raleway-100 - latin */
+            @font-face {
+            font-family: 'Raleway';
+            font-style: normal;
+            font-weight: 100;
+            src: url('/fonts/raleway-v12-latin-100.eot'); /* IE9 Compat Modes */
+            src: local('Raleway Thin'), local('Raleway-Thin'),
+                url('/fonts/raleway-v12-latin-100.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+                url('/fonts/raleway-v12-latin-100.woff2') format('woff2'), /* Super Modern Browsers */
+                url('/fonts/raleway-v12-latin-100.woff') format('woff'), /* Modern Browsers */
+                url('/fonts/raleway-v12-latin-100.ttf') format('truetype'), /* Safari, Android, iOS */
+                url('/fonts/raleway-v12-latin-100.svg#Raleway') format('svg'); /* Legacy iOS */
+            }
+
+            /* raleway-600 - latin */
+            @font-face {
+            font-family: 'Raleway';
+            font-style: normal;
+            font-weight: 600;
+            src: url('/fonts/raleway-v12-latin-600.eot'); /* IE9 Compat Modes */
+            src: local('Raleway SemiBold'), local('Raleway-SemiBold'),
+                url('/fonts/raleway-v12-latin-600.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+                url('/fonts/raleway-v12-latin-600.woff2') format('woff2'), /* Super Modern Browsers */
+                url('/fonts/raleway-v12-latin-600.woff') format('woff'), /* Modern Browsers */
+                url('/fonts/raleway-v12-latin-600.ttf') format('truetype'), /* Safari, Android, iOS */
+                url('/fonts/raleway-v12-latin-600.svg#Raleway') format('svg'); /* Legacy iOS */
+            }
+            
             html, body {
                 background-color: #fff;
                 color: #636b6f;
