@@ -17,6 +17,7 @@ Route::post('rekomendasi','Import\ImportVarRekomendasi@import')->name('rekomenda
 Route::post('vens','Import\ImportMagmaVen@import')->name('vens');
 Route::post('vona','Import\ImportVona@import')->name('vona');
 Route::post('subscribers','Import\ImportSubscriber@import')->name('subscribers');
+Route::any('subscribers/excercise','Import\ImportExerciseSubscriber@import')->name('exercise_subscribers');
 Route::post('roq','Import\ImportRoq@import')->name('roq');
 Route::post('adm','Import\ImportUserAdm@import')->name('adm');
 Route::get('status','ImportController@status')->name('status');

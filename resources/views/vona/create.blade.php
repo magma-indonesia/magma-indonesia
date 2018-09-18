@@ -82,7 +82,7 @@
                                     <option value="green" {{ old('cucode') == 'green' ? 'selected' : ''}}>Green</option>
                                     <option value="yellow" {{ old('cucode') == 'yellow' ? 'selected' : ''}}>Yellow</option>
                                     <option value="orange" {{ old('cucode') == 'orange' ? 'selected' : ''}}>Orange</option>
-                                    <option value="Red" {{ old('cucode') == 'red' ? 'selected' : ''}}>Red</option>
+                                    <option value="red" {{ old('cucode') == 'red' ? 'selected' : ''}}>Red</option>
                                 </select>
                                 @if( $errors->has('cucode'))
                                 <label class="error" for="cucode">{{ ucfirst($errors->first('cucode')) }}</label>

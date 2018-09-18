@@ -59,6 +59,17 @@ trait ImportHelper
             $end        = $end->no;
         }
 
+        if($type == 'exer_subs')
+        {
+            $end        = DB::connection('magma')
+                        ->table('magma_subscribe_exer')
+                        ->select('no')
+                        ->orderBy('no','desc')
+                        ->first();
+
+            $end        = $end->no;
+        }
+
         if($type == 'ven')
         {
             $end        = DB::connection('magma')

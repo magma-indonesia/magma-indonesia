@@ -87,4 +87,5 @@ Route::get('vona/draft','VonaController@draft')->name('vona.draft');
 Route::get('vona/search','VonaController@search')->name('vona.search');
 Route::post('vona/send','VonaController@send')->name('vona.send');
 Route::resource('vona/subscribers','VonaSubscriberController');
+Route::resource('vona/exercise','VonaExerciseSubscriberController');
 Route::resource('vona', 'VonaController');

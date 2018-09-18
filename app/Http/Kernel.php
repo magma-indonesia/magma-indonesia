@@ -62,5 +62,6 @@ class Kernel extends HttpKernel
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'revalidate' => \App\Http\Middleware\RevalidateBackHistory::class,
+        'set.locale' => \App\Http\Middleware\SetDefaultLocaleForUrls::class,
     ];
 }

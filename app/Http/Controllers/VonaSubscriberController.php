@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Vona;
 use App\VonaSubscriber as Subscription;
 use App\Gadd;
 use App\User;
