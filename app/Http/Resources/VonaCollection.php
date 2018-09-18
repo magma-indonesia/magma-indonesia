@@ -24,7 +24,7 @@ class VonaCollection extends ResourceCollection
                     'location' => 'Lokasi koordinat gunung api',
                     'vas' => 'Volcanic Activity Summary, ringkasan kejadian letusan gunung api. Meliputi waktu terjadinya letusan (Local dan UTC) serta tinggi letusan',
                     'vch_summit' => 'Volcano Cloud Height (VCH) Above Summit, tinggi kolom abu letusan dalam satuan meter dihitung dari atas puncak (berdasarkan pengukuran di darat)',
-                    'vch_asl' => 'Volcano Cloud Height (VCH) Above Sea Level, tinggi kolom abu letusan dalam satuan ,meter dihitung di atas permukaan laut',
+                    'vch_asl' => 'Volcano Cloud Height (VCH) Above Sea Level, tinggi kolom abu letusan dalam satuan meter dihitung di atas permukaan laut',
                     'vch_other' => 'Memberikan keterangan lainnya terkait kolom abu letusan, bisa meliputi arah, warna ataupun intensitas letusan',
                     'remarks' => 'Keterangan tambahan yang tidak berhubungan dengan kolom abu letusan, seperti kegempaan maupun keterangan visual lainnya'
                 ]
