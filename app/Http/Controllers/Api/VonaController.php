@@ -22,7 +22,7 @@ class VonaController extends Controller
     public function index(Request $request)
     {        
         $vonas = Vona::orderBy('issued','desc')
-                    ->where('sent',1)
+                    // ->where('sent',1)
                     ->paginate(30,['*'],'vona_page');
         return new VonaCollection($vonas);
     }

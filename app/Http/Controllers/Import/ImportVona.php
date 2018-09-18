@@ -41,6 +41,8 @@ class ImportVona extends Import
         $pelapor = empty($this->item->nip) ? '198803152015031005' : $this->item->nip;
         $pelapor = $pelapor == '196807071992051001' || $pelapor == '196807071992031001' ? '196807071992031018' : $pelapor;
 
+        $type = $this->item->type == 'REAL' ? 'REAL' : 'EXERCISE';
+
         try {
             $create = Vona::firstOrCreate(
                 [
@@ -48,7 +50,7 @@ class ImportVona extends Import
                 ],
                 [
                     'issued' => $this->item->issued,
-                    'type' => $this->item->type,
+                    'type' => $type,
                     'code_id' => $this->item->ga_code,
                     'cu_code' => $this->item->cu_avcode,
                     'prev_code' => $this->item->pre_avcode,                    
