@@ -30,6 +30,7 @@ class VonaResource extends JsonResource
             'vch_other' => $this->vch_other,
             'remarks' => $this->remarks,
             'issued_utc' => $this->issued_utc,
+            'type' => $this->type,
             'sent' => $this->sent ? true : false
         ];
     }
