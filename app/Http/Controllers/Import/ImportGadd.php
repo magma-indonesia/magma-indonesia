@@ -80,7 +80,7 @@ class ImportGadd extends Import
     protected function createGadd()
     {
         try {
-            $create = Gadd::firstOrCreate(
+            $create = Gadd::updateOrCreate(
                 [   
                     'code'              => $this->item->ga_code
                 ],
