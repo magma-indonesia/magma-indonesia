@@ -31,7 +31,7 @@ class OldModelVar extends Model
             return $inter;
         }
 
-        return collect([]);
+        return collect($inter)->values();
     }
 
     /**
