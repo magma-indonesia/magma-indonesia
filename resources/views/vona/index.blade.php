@@ -94,8 +94,8 @@
                                         <td><a href="{{ route('chambers.vona.show',['uuid' => $vona->uuid])}}" target="_blank">{{ $vona->gunungapi->name }}</a></td>
                                         <td>{{ $vona->issued }}</td>
                                         <td>{{ title_case($vona->cu_code) }}</td>
-                                        <td>{{ strtolower($vona->cu_code) }}</td>
-                                        <td>{{ $vona->vch_asl > 0 ? $vona->vch_asl.' meter' : 'Tidak teramati' }}</td>
+                                        <td>{{ strtolower($vona->prev_code) }}</td>
+                                        <td>{{ $vona->vch_asl > 0 ? round($vona->vch_asl*0.3048).' meter' : 'Tidak teramati' }}</td>
                                         <td>{{ $vona->user->name }}</td>
                                         <td>
                                             <a href="{{ route('chambers.vona.show',['uuid'=>$vona->uuid]) }}" class="m-t-xs m-b-xs btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">View</a>
