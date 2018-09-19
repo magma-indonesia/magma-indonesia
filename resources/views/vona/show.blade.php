@@ -52,7 +52,11 @@
                         <h3><span class="label label-danger">DRAFT VONA</span></h3>
                         <div class="hr-line-dashed"></div>
                         @endif
+                        @if ($vona->type != 'REAL')
+                        <h4> VA EXERCISE APAC VOLCEX 18/02</h4>
+                        @else
                         <h4>{{ $vona->gunungapi->name.' '.$vona->issued_utc }}</h4>
+                        @endif
                         <div class="table-responsive">
                             <table id="table-vona" class="table table-striped table-hover">
                                 <tbody>
@@ -124,10 +128,16 @@
                                         <td>(12)</td>
                                         <td><b>Volcanic Cloud Height</b></td>
                                         <td><b>:</b></td>
-                                        <td>Best estimate of ash-cloud top is around {{ round($vona->vch_asl) }} FT ({{ $vona->vch_asl*0.3048 }} M) above sea level, may be higher than what can be observed clearly. Source of height data: ground observer. </td>
+                                        <td>Best estimate of ash-cloud top is around {{ round($vona->vch_asl) }} FT ({{ round($vona->vch_asl*0.3048) }} M) above sea level, may be higher than what can be observed clearly. Source of height data: ground observer. </td>
                                     </tr>
                                     <tr>
                                         <td>(13)</td>
+                                        <td><b>Other Volcanic Cloud Information</b></td>
+                                        <td><b>:</b></td>
+                                        <td>{{ $vona->vch_other ?? '-' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>(14)</td>
                                         <td><b>Remarks</b></td>
                                         <td><b>:</b></td>
                                         <td>{{ $vona->remarks ?? '-' }}</td>
@@ -149,7 +159,11 @@
                                 </tbody>
                             </table>
                         </div>
+                        @if ($vona->type != 'REAL')
+                        <h4> VA EXERCISE VA EXERCISE VA EXERCISE </h4>
+                        @else
                         <h4>{{ $vona->gunungapi->name.' '.$vona->issued_utc }}</h4>
+                        @endif
                         @if ($vona->sent == 0) 
                         <div class="hr-line-dashed"></div>
                         <h3><span class="label label-danger">DRAFT VONA</span></h3>
