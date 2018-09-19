@@ -128,7 +128,12 @@
                                         <td>(12)</td>
                                         <td><b>Volcanic Cloud Height</b></td>
                                         <td><b>:</b></td>
-                                        <td>Best estimate of ash-cloud top is around {{ round($vona->vch_asl) }} FT ({{ round($vona->vch_asl*0.3048) }} M) above sea level, may be higher than what can be observed clearly. Source of height data: ground observer. </td>
+                                        <td>
+                                        @if($vona->vch_asl > 0)
+                                        Best estimate of ash-cloud top is around {{ round($vona->vch_asl) }} FT ({{ round($vona->vch_asl*0.3048) }} M) above sea level, may be higher than what can be observed clearly. Source of height data: ground observer. 
+                                        @else
+                                        Volcanic ash not visbile/observed.
+                                        @endif</td>
                                     </tr>
                                     <tr>
                                         <td>(13)</td>
