@@ -18,7 +18,7 @@ class OldModelVar extends Model
      * @param array $b
      * @return object
      */
-    protected function intersect(array $a,array $b) : object
+    protected function intersectVar(array $a,array $b) : object
     {
 
         $inter = array_intersect($a,$b);
@@ -52,7 +52,7 @@ class OldModelVar extends Model
 
         $arah = explode(',',$data);
 
-        return $this->intersect($s_arah,$arah);
+        return $this->intersectVar($s_arah,$arah);
     }
     
     /**
@@ -161,7 +161,7 @@ class OldModelVar extends Model
         $wasap = str_replace('Coklat','Cokelat',$wasap);
         $wasap = explode(',',$wasap);
 
-        return $this->intersect($s_wasap,$wasap);
+        return $this->intersectVar($s_wasap,$wasap);
     }
 
     protected function skala(string $value)
@@ -172,7 +172,7 @@ class OldModelVar extends Model
 
         $skala = explode(',',$data);
 
-        return $this->intersect($s_skala,$skala);
+        return $this->intersectVar($s_skala,$skala);
     }
     //endregion
 
@@ -375,7 +375,7 @@ class OldModelVar extends Model
 
         $visibility = explode(',',$value);
 
-        return $this->intersect($s_visibility,$visibility);
+        return $this->intersectVar($s_visibility,$visibility);
     }
 
     /**
@@ -392,7 +392,7 @@ class OldModelVar extends Model
         $cuaca = empty($cuaca) ? 'Cerah' : $cuaca;
         $cuaca = explode(',',$cuaca);
 
-        return $this->intersect($s_cuaca,$cuaca);
+        return $this->intersectVar($s_cuaca,$cuaca);
     }
 
     /**
@@ -408,7 +408,7 @@ class OldModelVar extends Model
         $data = str_replace('#',',',$data);
         $kec = explode(',',$data);
 
-        return $this->intersect($s_kec,$kec);
+        return $this->intersectVar($s_kec,$kec);
     }
 
     /**
@@ -456,7 +456,7 @@ class OldModelVar extends Model
         }
 
         $asap = explode(',',$asap);
-        $asap = $this->intersect($s_asap,$asap);
+        $asap = $this->intersectVar($s_asap,$asap);
 
         return $asap[0];
     }
@@ -548,7 +548,7 @@ class OldModelVar extends Model
         }
 
         $intasap = explode(',',$intasap);
-        return $this->intersect($s_intasap,$intasap);
+        return $this->intersectVar($s_intasap,$intasap);
     }
 
     /**
@@ -569,11 +569,11 @@ class OldModelVar extends Model
 
         if (empty($tekasap)) {
             $tekasap = ['Lemah'];
-            return $this->intersect($s_tekasap,$tekasap);
+            return $this->intersectVar($s_tekasap,$tekasap);
         }
 
         $tekasap = explode(',',$tekasap);
-        return $this->intersect($s_tekasap,$tekasap);
+        return $this->intersectVar($s_tekasap,$tekasap);
     }
 
     /**
