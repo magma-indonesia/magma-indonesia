@@ -124,7 +124,7 @@ class PosPgaController extends Controller
         $pga->keterangan = $request->keterangan;
 
         $updateKantor = $pga->kantor()->update([
-            'observatory' => $request->name,
+            'nama' => $request->name,
             'address' => $request->alamat,
             'elevation' => $request->ketinggian,
             'latitude' => $request->latitude,
