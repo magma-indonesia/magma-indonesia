@@ -121,19 +121,22 @@ class PosPgaController extends Controller
         ]);
 
         $pga->code_id = $request->code;
-        $pga->observatory = $request->name;
-        $pga->address = $request->alamat;
-        $pga->elevation = $request->ketinggian;
-        $pga->latitude = $request->latitude;
-        $pga->longitude = $request->longitude;
         $pga->keterangan = $request->keterangan;
 
-        if ($pga->save())
+        $updateKantor = $pga->kantor()->update([
+            'observatory' => $request->name,
+            'address' => $request->alamat,
+            'elevation' => $request->ketinggian,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+        ]);
+
+        if ($pga->save() AND $updateKantor)
         {
-            return redirect()->route('pos.index')->with('flash_message',$request->name.' berhasil dirubah.');
+            return redirect()->route('chambers.pos.index')->with('flash_message',$request->name.' berhasil dirubah.');
         }
 
-        return redirect()->route('pos.index')->with('flash_message','Pos pengamatan gagal dirubah.');
+        return redirect()->route('chambers.pos.index')->with('flash_message','Pos pengamatan gagal dirubah.');
 
     }
 
