@@ -45,9 +45,21 @@
             </li>            
             <li class="{{ active('chambers.import.*') }}">
                 <a href="{{ route('chambers.import.index') }}">
-                    <span class="nav-label">Import</span>
-                    <span class="label label-magma pull-right">v.1</span>
+                    <span class="label label-magma">v.1</span>
+                    <span class="nav-label"> Import</span>
                 </a>
+            </li>
+            <li class="{{ active('chambers.v1.*') }}">
+                <a href="#">
+                    <span class="label label-magma">v.1</span>
+                    <span class="nav-label"> Magma</span>
+                    <span class="fa arrow"></span>                    
+                </a>
+                <ul class="nav nav-second-level">
+                    <li class="{{ active('chambers.v1.press.index') }}">
+                        <a href="{{ route('chambers.v1.press.index') }}">Press Release</a>
+                    </li>
+                </ul>
             </li>
             <li class="{{ active('chambers.roles.*') }}">
                 <a href="#">
@@ -187,14 +199,14 @@
                     </li>
                 </ul>
             </li>
-            <li class="{{ active('chambers.press.*') }}">
+            <li class="{{ active(['chambers.press.*']) }}">
                 <a href="#">
                     <span class="nav-label">Press Release</span>
                     <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
                     <li class="{{ active('chambers.press.index') }}">
-                        <a href="{{ route('chambers.press.index') }}">List Press</a>
+                        <a href="{{ route('chambers.press.index') }}">Index Press Release</a>
                     </li>
                     <li class="{{ active('chambers.press.create') }}">
                         <a href="{{ route('chambers.press.create') }}">Buat Press Release</a>
