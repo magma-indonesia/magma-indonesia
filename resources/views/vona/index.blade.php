@@ -82,9 +82,7 @@
                                         <th>Previous Code</th>
                                         <th>Cloud Height (ASL)</th>
                                         <th>Sender</th>
-                                        @role('Super Admin')
                                         <th style="min-width: 180px;">Action</th>
-                                        @endrole
                                     </tr>
                                 </thead>
                                 <tbody>
