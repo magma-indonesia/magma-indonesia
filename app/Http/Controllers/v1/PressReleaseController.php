@@ -4,6 +4,7 @@ namespace App\Http\Controllers\v1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use App\v1\PressRelease as Press;
 use App\User;
 use Carbon\Carbon;
@@ -43,7 +44,8 @@ class PressReleaseController extends Controller
         $this->validate($request,[
             'nama'      => 'required',
             'judul'     => 'required|min:10|max:200',
-            'deskripsi' => 'required|min:140'
+            'deskripsi' => 'required|min:140',
+            'file'      => 'nullable|image|mimes:jpg,png,jpeg,gif|max:700'
         ]);
 
         $press = new Press();
@@ -52,6 +54,18 @@ class PressReleaseController extends Controller
         $press->judul = $request->judul;
         $press->deskripsi = $request->deskripsi;
         $press->sent = 1;
+
+        if ($request->hasFile('file')) 
+        {
+            $filename = 'v2_'.time().'.'.$request->file->getClientOriginalExtension();
+            $upload = $request->file('file')
+                        ->storeAs(
+                            'img/pr',
+                            $filename,
+                            'magma-old-ftp'
+                        );
+            $press->fotolink = 'https://magma.vsi.esdm.go.id/'.$upload;   
+        }
 
         $messages = $press->save() ? 
                         'Press Release : '. $request->judul.' telah ditambahkan!' :
