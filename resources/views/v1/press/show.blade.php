@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="panel-image">
-                    <img class="img-responsive" src="{{ $press->fotolink}}" style="margin: auto;">
+                    <img class="img-responsive" src="{{ $press->fotolink}}" style="margin: auto;max-height: 360px;">
                 </div>
                 <div class="panel-body press-release" style="text-align: justify;">
                     {!! htmlspecialchars_decode($press->deskripsi) !!}

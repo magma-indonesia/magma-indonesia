@@ -42,7 +42,7 @@ v1 - Press Release
 				<div class="alert alert-success">
 					<i class="fa fa-bolt"></i> {!! session('flash_message') !!}
 				</div>
-				@endif
+                @endif
                 <div class="hpanel">
                     <div class="panel-heading">
                         Press Release untuk MAGMA v1
