@@ -12,7 +12,7 @@ class PressRelease extends Model
 
     protected $primaryKey = 'id';
 
-    protected $table = 'magma_press_tes';
+    protected $table = 'magma_press';
 
     protected $casts = [
         'log' => 'date:Y-m-d H:i:s'
