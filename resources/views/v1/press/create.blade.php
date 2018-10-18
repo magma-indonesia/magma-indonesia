@@ -39,7 +39,7 @@
 <div class="content animate-panel">
     <div class="row">
         <div class="col-lg-12">
-            <form role="form" id="form" method="POST" action="{{ route('chambers.v1.press.store') }}">
+            <form role="form" id="form" method="POST" action="{{ route('chambers.v1.press.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="hpanel">
                     <div class="panel-heading">
@@ -48,6 +48,15 @@
                         </div>
                         Content dari Press Release
                     </div>
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                     <div class="panel-body">
                         <div class="form-group">
                             <label>Pembuat Laporan</label>
@@ -56,27 +65,34 @@
                                 <option value="{{ $user->name}}" {{ $user->id == auth()->user()->id ? 'selected' : ''}}>{{ $user->name }}</option>      
                                 @endforeach
                             </select>
-                            @if( $errors->has('nama'))
-                            <label class="error" for="nama">{{ ucfirst($errors->first('nama')) }}</label>
-                            @endif
                         </div>
                         <div class="form-group">
                             <label>Judul Press Release</label>
                             <input name="judul" type="text" class="form-control" value="{{ old('judul') }}" required>
-                            @if( $errors->has('judul'))
-                            <label class="error" for="judul">{{ ucfirst($errors->first('judul')) }}</label>
-                            @endif
                         </div>
                         <div class="form-group">
                             <label>Isi Press Release</label>
-                            @if( $errors->has('deskripsi'))
-                            <label class="error" for="deskripsi">{{ ucfirst($errors->first('deskripsi')) }}</label>
-                            @endif
                             <textarea name="deskripsi" class="summernote">{{ old('deskripsi') }}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <img class="img-responsive border-top border-bottom border-right border-left p-xs image-file" src="#" style="display:none;max-width: 200px;">
+                        </div>
+                        <div class="form-group">
+                            <label>Upload Foto</label>
+                            <br>
+                            <label class="w-xs btn btn-outline btn-default btn-file">
+                                <i class="fa fa-upload"></i>
+                                <span class="label-file">Browse </span> 
+                                <input accept="image/jpeg" class="file" name="file" type="file" style="display: none;">
+                                <input id="file" type="hidden" name="foto">
+                            </label>
+                            <button type="button" class="w-xs btn btn-danger clear-file"><i class="fa fa-trash"></i> Hapus Foto</button>
+                            <br>
+                            <label class="error">Maximum 700KB, disarankan <b>Landscape</b></label>
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <button class="btn btn-sm btn-primary submit" type="submit">Submit</button>     
+                        <button class="w-xs btn btn-primary submit" type="submit">Submit</button>
                     </div>  
                 </div>
             </form>
@@ -95,6 +111,36 @@
 <script>
 
     $(document).ready(function () {
+
+        var height = window.screen.height;
+        console.log(height > 480);
+
+        height = height > 480 ? height/4 : 360;
+
+        $('input.file').on('change', function(e) {
+            var input = $(this),
+                label = input.val()
+                            .replace(/\\/g, '/')
+                            .replace(/.*\//, ''),
+                reader = new FileReader();
+
+            $('.label-file').html(label);
+            reader.onload = function (e) {
+                $('.image-file')
+                    .show()
+                    .attr('src',e.target.result)
+                    .css('max-height', height+'px');
+                $('#file').val(e.target.result);
+            }
+
+            reader.readAsDataURL(this.files[0]);
+        });
+
+        $('.clear-file').on('click', function(e) {
+            $('.image-file').hide();
+            $('.file').val(null);
+            $('.label-file').html('Browse');
+        })
 
         // Initialize summernote plugin
         $('.summernote').summernote({
