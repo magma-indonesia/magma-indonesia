@@ -72,6 +72,14 @@ return [
             'visibility' => 'public',
         ],
 
+        'magma-old-ftp' => [
+            'driver' => 'sftp',
+            'host' => env('MAGMA_HOST', 'forge'),
+            'username' => env('MAGMA_FTP_USERNAME', 'forge'),
+            'password' => env('MAGMA_FTP_PASSWORD', 'forge'),
+            'root' => env('MAGMA_FTP_ROOT', 'forge')
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
