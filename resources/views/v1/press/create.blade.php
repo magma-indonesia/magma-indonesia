@@ -1,43 +1,47 @@
 @extends('layouts.default') 
-
-@section('title') 
-    Create Press Release 
+@section('title') Create Press Release
 @endsection
-
+ 
 @section('add-vendor-css')
-    <link rel="stylesheet" href="{{ asset('vendor/summernote/dist/summernote.css') }}" />
-    <link rel="stylesheet" href="{{ asset('vendor/summernote/dist/summernote-bs3.css') }}" />
+<link rel="stylesheet" href="{{ asset('vendor/summernote/dist/summernote.css') }}" />
+<link rel="stylesheet" href="{{ asset('vendor/summernote/dist/summernote-bs3.css') }}" />
 @endsection
-
+ 
 @section('content-header')
 <div class="small-header">
-	<div class="hpanel">
-		<div class="panel-body">
-			<div id="hbreadcrumb" class="pull-right">
-				<ol class="hbreadcrumb breadcrumb">
-					<li>
-						<a href="{{ route('chambers.index') }}">Chamber</a>
-					</li>
-					<li>
-						<span>Press Release</span>
-					</li>
-					<li class="active">
-						<span>Create </span>
-					</li>
-				</ol>
-			</div>
-			<h2 class="font-light m-b-xs">
-				Create Press Release
-			</h2>
-			<small>Menu ini digunakan untuk mmembuat Press Release terkait berita kebencanaan</small>
-		</div>
-	</div>
+    <div class="hpanel">
+        <div class="panel-body">
+            <div id="hbreadcrumb" class="pull-right">
+                <ol class="hbreadcrumb breadcrumb">
+                    <li>
+                        <a href="{{ route('chambers.index') }}">Chamber</a>
+                    </li>
+                    <li>
+                        <span>Press Release</span>
+                    </li>
+                    <li class="active">
+                        <span>Create </span>
+                    </li>
+                </ol>
+            </div>
+            <h2 class="font-light m-b-xs">
+                Create Press Release
+            </h2>
+            <small>Menu ini digunakan untuk mmembuat Press Release terkait berita kebencanaan</small>
+        </div>
+    </div>
 </div>
 @endsection
-
+ 
 @section('content-body')
 <div class="content animate-panel">
     <div class="row">
+        <div class="col-lg-12">
+            <div class="alert alert-info">
+                <i class="fa fa-bolt"></i> 
+                <strong> Mohon dibaca kembali sebelum membuat press release kepada publik. </strong>
+            </div>
+        </div>
         <div class="col-lg-12">
             <form role="form" id="form" method="POST" action="{{ route('chambers.v1.press.store') }}" enctype="multipart/form-data">
                 @csrf
@@ -52,7 +56,7 @@
                     <div class="alert alert-danger">
                         <ul>
                             @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
+                            <li>{{ $error }}</li>
                             @endforeach
                         </ul>
                     </div>
@@ -93,23 +97,21 @@
                     </div>
                     <div class="panel-footer">
                         <button class="w-xs btn btn-primary submit" type="submit">Submit</button>
-                    </div>  
+                    </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
 @endsection
-
+ 
 @section('add-vendor-script')
 <script src="{{ asset('vendor/summernote/dist/summernote.min.js') }}"></script>
 <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
-
 @endsection
-
+ 
 @section('add-script')
 <script>
-
     $(document).ready(function () {
 
         var height = window.screen.height;

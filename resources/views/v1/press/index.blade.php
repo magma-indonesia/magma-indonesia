@@ -43,6 +43,7 @@ v1 - Press Release
 					<i class="fa fa-bolt"></i> {!! session('flash_message') !!}
 				</div>
                 @endif
+                @role('Super Admin|Humas PVMBG')
                 <div class="hpanel">
                     <div class="panel-heading">
                         Press Release untuk MAGMA v1
@@ -55,6 +56,7 @@ v1 - Press Release
                         </div>
                     </div>
                 </div>
+                @endrole
                 <div class="hpanel">
                     <div class="panel-heading">
                         Daftar Press Release
@@ -80,11 +82,13 @@ v1 - Press Release
                                         <td>
                                             <a href="{{ route('chambers.v1.press.show',['id'=>$press->id]) }}" class="m-t-xs m-b-xs btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">View</a>
                                             <a href="{{ route('chambers.v1.press.edit',['id'=>$press->id]) }}" class="m-t-xs m-b-xs btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>
+                                            @role('Super Admin|Humas PVMBG')
                                             <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.v1.press.destroy',['id'=>$press->id]) }}" accept-charset="UTF-8">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button value="Delete" class="m-t-xs m-b-xs btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
                                             </form>
+                                            @endrole
                                         </td>
                                     </tr>
                                     @endforeach
