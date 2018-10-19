@@ -12,6 +12,19 @@ use Carbon\Carbon;
 class PressReleaseController extends Controller
 {
     /**
+     * Adding middleware for protecttion
+     * 
+     * @return boolean
+     */
+    public function __construct()
+    {
+        $this->middleware(
+            'role:Super Admin|Humas PVMBG',
+            ['except' => 'index','show']
+        );
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -65,6 +78,8 @@ class PressReleaseController extends Controller
                             'magma-old-ftp'
                         );
             $press->fotolink = 'https://magma.vsi.esdm.go.id/'.$upload;   
+        } else {
+            $press->fotolink = 'https://magma.vsi.esdm.go.id/img/empty-esdm.jpg';
         }
 
         $messages = $press->save() ? 
@@ -96,7 +111,9 @@ class PressReleaseController extends Controller
      */
     public function edit($id)
     {
-        return 'edit';
+        $press = Press::findOrFail($id);
+        $users = User::orderBy('name')->get();
+        return view('v1.press.edit',compact('press','users'));
     }
 
     /**
@@ -108,7 +125,38 @@ class PressReleaseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'nama'      => 'required',
+            'judul'     => 'required|min:10|max:200',
+            'deskripsi' => 'required|min:140',
+            'file'      => 'nullable|image|mimes:jpg,png,jpeg,gif|max:700'
+        ]);
+
+        $press =  Press::findOrFail($id);
+        $press->press_pelapor = $request->nama;
+        $press->press_editor = $request->nama;
+        $press->judul = $request->judul;
+        $press->deskripsi = $request->deskripsi;
+        $press->sent = 1;
+
+        if ($request->hasFile('file')) 
+        {
+            $filename = 'v2_'.time().'.'.$request->file->getClientOriginalExtension();
+            $upload = $request->file('file')
+                        ->storeAs(
+                            'img/pr',
+                            $filename,
+                            'magma-old-ftp'
+                        );
+            $press->fotolink = 'https://magma.vsi.esdm.go.id/'.$upload;   
+        }
+
+        $messages = $press->save() ? 
+                        'Press Release : '. $request->judul.' berhasil dirubah!' :
+                        'Press Release : '. $request->judul.' gagal dirubah!' ;
+
+        return redirect()->route('chambers.v1.press.index')
+                    ->with('flash_message',$messages);
     }
 
     /**
