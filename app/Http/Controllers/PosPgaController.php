@@ -44,8 +44,9 @@ class PosPgaController extends Controller
     {
 
         $pga = PosPga::select('obscode')->where('code_id',$request->code)->orderBy('obscode','desc')->firstOrFail();
+        $timeZone = $pga->gunungapi->zonearea;
 
-        $jumlahpos = (int) filter_var($pga, FILTER_SANITIZE_NUMBER_INT)+1;
+        $jumlahpos = (int) filter_var($pga->obscode, FILTER_SANITIZE_NUMBER_INT)+1;
 
         $this->validate($request, [
             'code' => 'required|string|max:3',
@@ -60,19 +61,24 @@ class PosPgaController extends Controller
         $pga = new PosPga();
         $pga->code_id = $request->code;
         $pga->obscode = $request->code.$jumlahpos;
-        $pga->observatory = $request->name;
-        $pga->address = $request->alamat;
-        $pga->elevation = $request->ketinggian;
-        $pga->latitude = $request->latitude;
-        $pga->longitude = $request->longitude;
-        $pga->keterangan = $request->keterangan; 
+        $pga->keterangan = $request->keterangan;
 
-        if ($pga->save())
+        $createKantor = $pga->kantor()->create([
+            'code' => $request->code.$jumlahpos,
+            'nama' => $request->name,
+            'tzone' => $pga->gunungapi->zonearea,
+            'address' => $request->alamat,
+            'elevation' => $request->ketinggian,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+        ]);
+
+        if ($pga->save() AND $createKantor)
         {
-            return redirect()->route('pos.index')->with('flash_message',$request->name.' berhasil ditambahkan.');
+            return redirect()->route('chambers.pos.index')->with('flash_message',$request->name.' berhasil ditambahkan.');
         }
 
-        return redirect()->route('pos.index')->with('flash_message','Pos pengamatan gagal ditambahkan.');    
+        return redirect()->route('chambers.pos.index')->with('flash_message','Pos pengamatan gagal ditambahkan.');    
 
     }
 
@@ -108,7 +114,6 @@ class PosPgaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $pga = PosPga::findOrFail($id);
 
         $this->validate($request, [
             'code' => 'required|string|max:3',
@@ -120,11 +125,13 @@ class PosPgaController extends Controller
             'keterangan' => 'nullable'
         ]);
 
+        $pga = PosPga::findOrFail($id);
         $pga->code_id = $request->code;
         $pga->keterangan = $request->keterangan;
 
         $updateKantor = $pga->kantor()->update([
             'nama' => $request->name,
+            'tzone' => $pga->gunungapi->zonearea,
             'address' => $request->alamat,
             'elevation' => $request->ketinggian,
             'latitude' => $request->latitude,
@@ -146,8 +153,8 @@ class PosPgaController extends Controller
      * @param  \App\PosPga  $posPga
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PosPga $posPga)
+    public function destroy(Request $request, $id)
     {
-        //
+        return $id;
     }
 }
