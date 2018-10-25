@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 use App\User;
 use App\Gadd;
 use App\PosPga;
@@ -65,13 +67,12 @@ class MagmaVarController extends Controller
      * @param \App\MagmaVar $var
      * @return void
      */
-    protected function setVarSession($request, $var)
+    protected function setVarSession($request)
     {
         $pga = PosPga::where('obscode',$request->code)->first();
-        $gunungapi = $pga->gunungapi->name;
-        $slug = 'laporan gunung api '.$gunungapi.' tanggal '.$request->date.' periode '.$request->periode;
+        $slug = 'laporan gunung api '.$pga->gunungapi->name.' level '.$request->status.' tanggal '.$request->date.' periode '.$request->periode;
 
-        $var->fill([
+        $var = [
             'noticenumber' => $request->noticenumber,
             'slug' => str_slug($slug),
             'code_id' => substr($request->code,0,3),
@@ -81,7 +82,7 @@ class MagmaVarController extends Controller
             'obscode_id' => $request->code,
             'status' => $request->status,
             'nip_pelapor' => auth()->user()->nip
-        ]);
+        ];
 
         $request->session()->put('var',$var);
         return $this;
@@ -95,7 +96,34 @@ class MagmaVarController extends Controller
      */
     protected function setVarVisualSession($request)
     {
-        $request->session()->put('var_visual',$request->except(['_token']));
+        $filename = $request->hasfoto == '1' ?
+                        'var_'.time().'.'.request()->foto->getClientOriginalExtension() :
+                        null;
+
+        $foto = $request->hasfoto == '1' ?
+                    $request->foto->storeAs('var',$filename,'temp') :
+                    null;
+
+        $visual = [
+            'visibility' => $request->visibility,
+            'visual_asap' => $request->visual_asap,
+            'foto' => $foto,
+        ];
+        
+        $request->session()->put('var_visual',$visual);
+
+        return $this;
+    }
+
+        /**
+     * Set session untuk variable Var Visual
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return void
+     */
+    protected function setVarAsapSession($request)
+    {
+        $request->session()->put('var_asap',$request->except(['_token']));
         return $this;
     }
 
@@ -107,9 +135,7 @@ class MagmaVarController extends Controller
      */
     public function storeStep1(CreateVarStep1 $request)
     {
-        empty($request->session()->get('var')) 
-            ? $this->setVarSession($request, new MagmaVar()) 
-            : $this->setVarSession($request, $request->session()->get('var'));
+        $this->setVarSession($request);
 
         return redirect()->route('chambers.laporan.create.2');
     }
@@ -122,8 +148,18 @@ class MagmaVarController extends Controller
      */
     public function storeStep2(CreateVarStep2 $request)
     {
-        $this->setVarVisualSession($request);            
+        $this->setVarVisualSession($request);
         return $request->session()->get('var_visual');
+        // return $request;
+
+
+        // foreach ($request->file_lainnya as $file) {
+        //     $path = $file->store('public');
+        //     echo Storage::url($path).'<br>';
+        // }
+        // return;
+        // $this->setVarVisualSession($request);            
+        // return $request->session()->get('var_visual');
     }
 
     public function storeStep3(Request $request)
