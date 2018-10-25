@@ -145,7 +145,7 @@
                 var $url = $(this).attr('action'),
                     $data = $(this).serialize();
 
-                var $tableuser = $('#table-users').DataTable();
+                var $tableuser = $('#table-pos').DataTable();
                 var $row = $tableuser.row($(this).parents('tr'));
 
                 swal({
@@ -165,6 +165,7 @@
                             data: $data,
                             type: 'POST',
                             success: function(data){
+                                console.log(data);
                                 if (data.success){
                                     swal("Berhasil!", data.message, "success");
                                     $row.remove().draw();
