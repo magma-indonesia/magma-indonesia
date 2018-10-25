@@ -148,7 +148,7 @@
                                                     </ul>
                                                 </div>
                                             </div>
-
+                                            <hr>
                                             <div class="text-left m-t-xs">
                                                 <button type="submit" class="submit btn btn-primary" href="#">Step 1 - Submit</button>
                                             </div>
