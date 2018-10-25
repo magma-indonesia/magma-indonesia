@@ -65,6 +65,16 @@ return [
             'root' => storage_path('app/users/photo/thumb'),
         ],
 
+        'var' => [
+            'driver' => 'local',
+            'root' => storage_path('app/var'),
+        ],
+
+        'temp' => [
+            'driver' => 'local',
+            'root' => storage_path('app/temp'),
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
