@@ -18,7 +18,7 @@ class ImportVona extends Import
 
     public function import()
     {
-        $this->old = OldVona::all();
+        $this->old = OldVona::whereBetween('no',[$this->startNo('vona'),$this->endNo('vona')])->orderBy('no');
 
         $this->old->each(function ($item,$key) {
             $this->setItem($item)
