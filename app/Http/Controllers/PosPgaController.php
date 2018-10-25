@@ -43,8 +43,7 @@ class PosPgaController extends Controller
     public function store(Request $request)
     {
 
-        $pga = PosPga::select('obscode')->where('code_id',$request->code)->orderBy('obscode','desc')->firstOrFail();
-        $timeZone = $pga->gunungapi->zonearea;
+        $pga = PosPga::select('obscode','code_id')->where('code_id',$request->code)->orderBy('obscode','desc')->firstOrFail();
 
         $jumlahpos = (int) filter_var($pga->obscode, FILTER_SANITIZE_NUMBER_INT)+1;
 
