@@ -184,18 +184,18 @@
                 },
                 ketinggian: {
                     required: false,
-                    digits: true,
+                    number: true,
                     maxlength: 4
                 },
                 latitude: {
                     required: false,
-                    digits: true,
-                    maxlength: 4
+                    number: true,
+                    maxlength: 9
                 },
                 longitude: {
                     required: false,
-                    digits: true,
-                    maxlength: 4
+                    number: true,
+                    maxlength: 9
                 },
             },
             messages: {
@@ -210,17 +210,17 @@
                 ketinggian: {
                     required: 'Format masih belum benar',
                     digits: 'Format dalam numeric (angka)',
-                    maxlength: 'Panjang karakter maksimal adalah 4 digit'
+                    maxlength: 'Panjang karakter maksimal adalah 9 digit'
                 },
                 latitude: {
                     required: 'Format masih belum benar',
                     digits: 'Format dalam numeric (angka)',
-                    maxlength: 'Panjang karakter maksimal adalah 4 digit'
+                    maxlength: 'Panjang karakter maksimal adalah 9 digit'
                 },
                 longitude: {
                     required: 'Format masih belum benar',
                     digits: 'Format dalam numeric (angka)',
-                    maxlength: 'Panjang karakter maksimal adalah 4 digit'
+                    maxlength: 'Panjang karakter maksimal adalah 9 digit'
                 },
             },
             submitHandler: function(form) {
