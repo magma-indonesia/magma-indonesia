@@ -1,10 +1,12 @@
-@extends('layouts.default')
+@extends('layouts.default') 
 
-@section('title')
-    VONA | Volcano Observatory Notice for Aviation
+@section('title') 
+v1 - Press Release 
 @endsection
 
 @section('add-vendor-css')
+    <link rel="stylesheet" href="{{ asset('vendor/summernote/dist/summernote.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/summernote/dist/summernote-bs3.css') }}" />
     <link rel="stylesheet" href="{{ asset('vendor/sweetalert/lib/sweet-alert.css') }}" />
 @endsection
 
@@ -14,104 +16,86 @@
             <div class="panel-body">
                 <div id="hbreadcrumb" class="pull-right">
                     <ol class="hbreadcrumb breadcrumb">
+                        <li><a href="{{ route('chambers.index') }}">Chamber</a></li>
                         <li>
-                            <a href="{{ route('chambers.index') }}">Chamber</a>
+                            <span>MAGMA v1</span>
                         </li>
                         <li class="active">
-                            <a href="{{ route('chambers.vona.index') }}">VONA</a>
+                            <span>Press Release </span>
                         </li>
                     </ol>
                 </div>
                 <h2 class="font-light m-b-xs">
-                    Daftar VONA
+                    Daftar Press Release
                 </h2>
-                <small>Daftar VONA yang pernah dibuat dan dikirim kepada stakeholder terkait.</small>
+                <small>Daftar Press Release yang pernah dibuat oleh PVMBG.</small>
             </div>
         </div>
     </div>
 @endsection
 
 @section('content-body')
-    <div class="content animate-panel content-boxed">
+    <div class="content animate-panel">
         <div class="row">
             <div class="col-lg-12">
+				@if(Session::has('flash_message'))
+				<div class="alert alert-success">
+					<i class="fa fa-bolt"></i> {!! session('flash_message') !!}
+				</div>
+                @endif
+                @role('Super Admin|Humas PVMBG')
                 <div class="hpanel">
                     <div class="panel-heading">
-                        VONA
+                        Press Release untuk MAGMA v1
                     </div>
                     <div class="panel-body float-e-margins">
                         <div class="row">
                             <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
-                                <a href="{{ route('chambers.vona.create') }}" class="btn btn-outline btn-block btn-magma" type="button">Buat VONA Baru</a>
-                            </div>
-                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
-                                <a href="{{ route('chambers.vona.draft') }}" class="btn btn-outline btn-block btn-magma" type="button">Draft VONA</a>
+                                <a href="{{ route('chambers.v1.press.create') }}" class="btn btn-outline btn-block btn-magma" type="button">Buat Press Release</a>
                             </div>
                         </div>
                     </div>
                 </div>
+                @endrole
                 <div class="hpanel">
                     <div class="panel-heading">
-                        Cari VONA
+                        Daftar Press Release
                     </div>
                     <div class="panel-body">
-                        <form role="form" id="form" method="GET" action="{{ route('chambers.vona.search') }}">
-                            <div class="input-group">
-                                <input name="q" class="form-control" type="text" placeholder="Cari VONA ...">
-                                <div class="input-group-btn">
-                                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="hpanel">
-                    <div class="panel-heading">
-                        Daftar VONA Terkirim
-                    </div>
-                    <div class="panel-body">
-                        {{ $vonas->links() }}
+                        {{ $presses->onEachSide(1)->links() }}
                         <div class="table-responsive">
-                            <table id="table-jabatan" class="table table-striped table-hover">
+                            <table id="table-press" class="table table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Volcano</th>
-                                        <th>Issued (UTC)</th>
-                                        <th>Current Code</th>
-                                        <th>Previous Code</th>
-                                        <th>Cloud Height (ASL)</th>
-                                        <th>Sender</th>
+                                        <th>Judul</th>
+                                        <th>Waktu</th>
                                         <th style="min-width: 180px;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($vonas as $key => $vona)
+                                    @foreach($presses as $key => $press)
                                     <tr>
-                                        <td>{{ $vonas->firstItem()+$key }}</td>
-                                        <td><a href="{{ route('chambers.vona.show',['uuid' => $vona->uuid])}}" target="_blank">{{ $vona->gunungapi->name }}</a></td>
-                                        <td>{{ $vona->issued }}</td>
-                                        <td>{{ title_case($vona->cu_code) }}</td>
-                                        <td>{{ strtolower($vona->prev_code) }}</td>
-                                        <td>{{ $vona->vch_asl > 0 ? round($vona->vch_asl*0.3048).' meter' : 'Tidak teramati' }}</td>
-                                        <td>{{ $vona->user->name }}</td>
+                                        <td>{{ $presses->firstItem()+$key }}</td>
+                                        <td>{{ $press->judul }}</td>
+                                        <td>{{ $press->log }}</td>
                                         <td>
-                                            <a href="{{ route('chambers.vona.show',['uuid'=>$vona->uuid]) }}" class="m-t-xs m-b-xs btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">View</a>
-                                            <a href="{{ route('chambers.vona.edit',['uuid'=>$vona->uuid]) }}" class="m-t-xs m-b-xs btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>
-                                            @role('Super Admin')
-                                            <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.vona.destroy',['uuid'=>$vona->uuid]) }}" accept-charset="UTF-8">
+                                            <a href="{{ route('chambers.v1.press.show',['id'=>$press->id]) }}" class="m-t-xs m-b-xs btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">View</a>
+                                            <a href="{{ route('chambers.v1.press.edit',['id'=>$press->id]) }}" class="m-t-xs m-b-xs btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>
+                                            @role('Super Admin|Humas PVMBG')
+                                            <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.v1.press.destroy',['id'=>$press->id]) }}" accept-charset="UTF-8">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button value="Delete" class="m-t-xs m-b-xs btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
                                             </form>
                                             @endrole
-                                        </td>                      
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
-                        {{ $vonas->links() }}                        
+                        {{ $presses->onEachSide(1)->links() }}
                     </div>
                 </div>
             </div>

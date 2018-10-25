@@ -124,7 +124,7 @@
             },
             messages: {
                 title: {
-                    required: 'Harap Masukkan Nama Role',
+                    required: 'Harap Masukkan Judul Press Release',
                     minlength: 'Minimal 10 karakter'
                 }
             },

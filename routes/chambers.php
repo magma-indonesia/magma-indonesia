@@ -81,7 +81,7 @@ Route::resource('roles', 'RoleController', ['except' => [
     'show'
 ]]);
 
-Route::resource('press', 'PressController');
+Route::resource('press','PressController');
 
 Route::get('vona/draft','VonaController@draft')->name('vona.draft');
 Route::get('vona/search','VonaController@search')->name('vona.search');
@@ -89,3 +89,9 @@ Route::post('vona/send','VonaController@send')->name('vona.send');
 Route::resource('vona/subscribers','VonaSubscriberController');
 Route::resource('vona/exercise','VonaExerciseSubscriberController');
 Route::resource('vona', 'VonaController');
+
+Route::name('v1.')->group(function () {
+    Route::group(['prefix' => 'v1'], function () {
+        Route::resource('press','v1\PressReleaseController');
+    });
+});
