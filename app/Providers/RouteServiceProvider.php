@@ -40,6 +40,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapChamberRoutes();
         $this->mapImportRoutes();
         $this->mapExportRoutes();
+        $this->mapFunRoutes();
     }
 
     /**
@@ -111,5 +112,19 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware(['web','auth','revalidate'])
              ->namespace($this->namespace)
              ->group(base_path('routes/export.php'));
+    }
+
+    /**
+     * Define the "fun for FPL" routes for MAGMA dashboard.
+     *
+     * @return void
+     */
+    protected function mapFunRoutes()
+    {
+        Route::prefix('chambers/fun')
+             ->name('chambers.fun.')
+             ->middleware(['web','auth','revalidate'])
+             ->namespace($this->namespace)
+             ->group(base_path('routes/fun.php'));
     }
 }
