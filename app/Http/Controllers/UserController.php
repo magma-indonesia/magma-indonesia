@@ -271,7 +271,9 @@ class UserController extends Controller
         $roles = $request['roles'];
         $user->fill($input)->save();
             
-        $uploadPhoto = !empty($request->filetype) ? $this->uploadPhoto($user,$request->imagebase64,$request->filetype) : true;
+        $uploadPhoto = !empty($request->filetype) ? 
+                            $this->uploadPhoto($user,$request->imagebase64,$request->filetype) : 
+                            true;
 
         isset($roles) ? $user->roles()->sync($roles) : $user->roles()->detach();
 
