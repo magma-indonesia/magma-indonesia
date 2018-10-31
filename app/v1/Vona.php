@@ -48,8 +48,9 @@ class Vona extends Model
 
     protected $guard = ['no'];
 
-    public function getIssuedAttribute($value)
+    public function getIssuedTimeAttribute()
     {
+        $value = $this->attributes['issued'];
         $this->year = substr($value,0,4);
         $this->month = substr($value,4,2);
         $this->day = substr($value,6,2);
