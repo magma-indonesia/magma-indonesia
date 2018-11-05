@@ -53,7 +53,7 @@
             <div class="col-lg-3">
                 <div class="hpanel">
                     <div class="panel-heading">
-                        Data Bidang Users
+                        Data Administrasi
                     </div>
                     <div class="panel-body text-center h-200">
                         <i class="pe-7s-shuffle fa-4x"></i>
@@ -61,16 +61,16 @@
                         <h1 class="m-xs jumlah-bidang">{{ $bidang }}</h1>
 
                         <h3 class="font-extra-bold no-margins text-magma">
-                            Bidang User
+                            Administrasi User
                         </h3>
                         <small>Jumlah yang terdata</small>
                     </div>
                     <div class="panel-footer text-center">
                         <form role="form" id="form-import" method="POST"
-                        data-import="bidang" action="{{ route('chambers.import.bidang') }}">
+                        data-import="administrasi" action="{{ route('chambers.import.administrasi') }}">
                             @csrf
                             <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
-                                <span class="ladda-label">Import Data Bidang</span>
+                                <span class="ladda-label">Import Data Administrasi</span>
                                 <span class="ladda-spinner"></span>
                             </button>
                         </form>

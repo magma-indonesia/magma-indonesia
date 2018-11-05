@@ -7,7 +7,7 @@ Route::post('sigertan','Import\ImportSigertan@import')->name('sigertan');
 Route::post('gadds','Import\ImportGadd@import')->name('gadds');
 Route::post('absensi','Import\ImportAbsensi@import')->name('absensi');   
 Route::post('users','Import\ImportUsers@import')->name('users');
-Route::post('bidang','Import\ImportBidang@import')->name('bidang');
+Route::post('administrasi','Import\ImportAdministratif@import')->name('administrasi');
 Route::post('vars','Import\ImportMagmaVar@import')->name('vars');
 Route::post('dailies','Import\ImportVarHarian@import')->name('dailies');
 Route::post('visuals','Import\ImportVarVisual@import')->name('visuals');
