@@ -57,7 +57,9 @@ class FplPvmbgController extends Controller
         
         $chart = new FplPvmbg;
         $chart->labels($labels);
-        $chart->dataset('PVMBG League 18/19 - Points Race','bar',$dataset);
+        $chart->dataset('PVMBG League 18/19 - Points Race','bar',$dataset)->options([
+            'color' => '#007fff'
+        ]);
         $chart->options([
                     'legend' => [
                         'selectedMode' => false,
@@ -72,6 +74,7 @@ class FplPvmbgController extends Controller
                         'data' => $labels
                     ],
                 ]);
+        $chart->height(800);
         $chart->export(true,'FPL 18/19');
 
         return view('fun.fpl.index',compact('fpls','top','value','chart'));
