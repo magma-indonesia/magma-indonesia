@@ -156,8 +156,6 @@ class User extends Authenticatable implements JWTSubject
      */
     public function absensi()
     {
-        return $this->hasMany('App\Absensi','nip_id','nip')
-            ->select('nip_id','kantor_id','checkin','checkout')
-            ->orderBy('checkin');
+        return $this->hasMany('App\Absensi','nip_id','nip');
     }
 }
