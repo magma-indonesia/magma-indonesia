@@ -31,6 +31,27 @@ class Absensi extends Model
 
     protected $guarded = ['id'];
 
+    public function getKeteranganAttribute($value)
+    {
+        switch ($value) {
+            case 0:
+                return '<span class="label label-danger">Alpha</span>';
+            case 1:
+                return '<span class="label label-success">Hadir</span>';
+            case 2:
+                return '<span class="label label-info">Sakit</span>';
+            case 3:
+                return '<span class="label label-info">Izin</span>';
+            case 4:
+                return '<span class="label label-info">Cuti</span>';
+            case 5:
+                return '<span class="label label-info">Tugas Belajar</span>';
+            default:
+                return '<span class="label label-info">Dinas Luar</span>';
+                break;
+        }
+    }
+
     /**     
      *   Masing-masing Var hanya dimiliki
      *   oleh 1 User
