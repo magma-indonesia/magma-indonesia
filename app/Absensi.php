@@ -29,11 +29,15 @@ class Absensi extends Model
         'keterangan'
     ];
 
+    protected $appends = [
+        'keterangan_label'
+    ];
+
     protected $guarded = ['id'];
 
-    public function getKeteranganAttribute($value)
+    public function getKeteranganLabelAttribute()
     {
-        switch ($value) {
+        switch ($this->attributes['keterangan']) {
             case 0:
                 return '<span class="label label-danger">Alpha</span>';
             case 1:
