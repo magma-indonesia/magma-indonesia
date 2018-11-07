@@ -158,4 +158,14 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany('App\Absensi','nip_id','nip');
     }
+
+    /**
+     * Setiap user bisa memiliki lebih dari 1 absensi
+     *
+     * @return void
+     */
+    public function latestAbsensi()
+    {
+        return $this->hasOne('App\Absensi','nip_id','nip')->orderBy('duration','desc');
+    }
 }
