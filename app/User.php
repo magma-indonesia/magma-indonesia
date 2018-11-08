@@ -164,8 +164,8 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return void
      */
-    public function latestAbsensi()
+    public function latest_absensi()
     {
-        return $this->hasOne('App\Absensi','nip_id','nip')->orderBy('duration','desc');
+        return $this->hasOne('App\Absensi','nip_id','nip');
     }
 }
