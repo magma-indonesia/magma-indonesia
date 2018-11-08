@@ -21,7 +21,8 @@ class ImportAbsensi extends Import
 
     public function import()
     {
-        $this->old = OldAbsensi::whereBetween('id_abs',[$this->startNo('abs'),$this->endNo('abs')])->get();
+        // $this->old = OldAbsensi::whereBetween('id_abs',[$this->startNo('abs'),$this->endNo('abs')])->get();
+        $this->old = OldAbsensi::all();
 
         $this->old->each(function ($item, $key) {
             $this->setItem($item)->createAbsensi();
@@ -58,7 +59,7 @@ class ImportAbsensi extends Import
         if ($checkin != null)
         {
             try {
-                $create = Absensi::firstOrCreate(
+                $create = Absensi::updateOrCreate(
                     [
                         'nip_id' => $nip,
                         'checkin' => $checkin
@@ -81,7 +82,7 @@ class ImportAbsensi extends Import
                 );
     
                 if ($create) {
-                    $this->data = $this->tempTable('abs',$no);
+                    $this->data = true;
                 }
             }
             catch (Exception $e) {
