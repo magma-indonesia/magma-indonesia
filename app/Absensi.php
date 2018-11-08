@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Absensi extends Model
 {
@@ -30,10 +31,37 @@ class Absensi extends Model
     ];
 
     protected $appends = [
-        'keterangan_label'
+        'keterangan_label',
+        'keterangan_tambahan'
     ];
 
     protected $guarded = ['id'];
+
+    public function getKeteranganTambahanAttribute()
+    {
+        $tambahan = [];
+        if ($this->attributes['checkout'])
+        {
+            $start = Carbon::createFromFormat('Y-m-d H:i:s', $this->attributes['checkin']);
+            $end = Carbon::createFromFormat('Y-m-d H:i:s', $this->attributes['checkout']);
+
+            $start->diffInHours($end) <7.6 ?
+                    $tambahan[] = 'Jam kerja kurang dari 7.5 jam':
+                    false;
+        } else {
+            $tambahan[] = 'Belum checkout';
+        }
+
+        $this->attributes['checkin_distance'] > 500 ? 
+                $tambahan[] = 'Radius checkin lebih dari 500m' :
+                false;
+
+        $this->attributes['distance'] > 500 ?
+                $tambahan[] = 'Radius checkout lebih dari 500m':
+                false;
+
+        return $tambahan;
+    }
 
     public function getKeteranganLabelAttribute()
     {
@@ -66,6 +94,18 @@ class Absensi extends Model
     public function user()
     {
         return $this->belongsTo('App\User','nip_id','nip');
+    }
+
+    /**     
+     *   Masing-masing User hanya memiliki
+     *   1 kantor
+     * 
+     *   @return \App\User 
+     * 
+     */
+    public function kantor()
+    {
+        return $this->belongsTo('App\Kantor','kantor_id','code');
     }
 
     /**
