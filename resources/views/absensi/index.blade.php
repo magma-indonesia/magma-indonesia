@@ -45,22 +45,43 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6 col-xs-12">
                 <div class="hpanel">
                     <div class="panel-heading">
-                        Ganti Tanggal
+                        Daftar Absensi Hari {{ Carbon\Carbon::createFromFormat('Y-m-d', $date)->formatLocalized('%A, Tanggal %d %B %Y') }}
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body m-b">
                         <form role="form" id="form" method="GET" action="{{ route('chambers.absensi.index') }}">
                             <div class="row">
-                                <div class="form-group col-xs-12 col-lg-3">
+                                <div class="form-group col-xs-12 col-lg-6">
                                     <input id="date" type="text" class="form-control" value="{{ empty(old('date')) ? now()->format('Y-m-d') : old('date')}}" name="date">
                                 </div>
-                                <div class="form-group col-xs-12 col-lg-3">
-                                    <button class="btn btn-magma btn-block" type="submit">Apply</button>
+                                <div class="form-group col-xs-12 col-lg-6">
+                                    <button class="btn btn-magma btn-block" type="submit">Ganti Tanggal</button>
                                 </div>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="hpanel">
+                    <div class="panel-heading">
+                        Lihat Absensi per Pegawai
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-12 col-lg-6">
+                                <select id="nip" class="form-control m-b" name="nip">
+                                    @foreach($users as $user)
+                                    <option value="{{ $user->nip }}" {{ auth()->user()->nip == $user->nip ? 'selected' : '' }}>{{ $user->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-xs-12 col-lg-6">
+                                <a id="showAbsensi" href="{{ route('chambers.absensi.show',['nip' => auth()->user()->nip]) }}" target="_blank" type="button" class="btn btn-magma btn-block" type="submit">Lihat Absensi</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -68,9 +89,6 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="hpanel">
-                    <div class="panel-heading">
-                        Daftar Absensi Hari {{ Carbon\Carbon::createFromFormat('Y-m-d', $date)->formatLocalized('%A, Tanggal %d %B %Y') }}
-                    </div>
                     <div class="panel-body">
                         <div class="table-responsive">
                             <table id="table-absensi" class="table  table-striped table-hover">
@@ -138,6 +156,13 @@
 <script>
     $(document).ready(function() {
         // Initialize table
+
+        $('#nip').on('change', function() {
+            var $nip = $(this).val(),
+                $show = $('#showAbsensi');
+            $show.attr('href','{{ route("chambers.absensi.show",["nip" => "/"]) }}/'+$nip);
+        });
+
         $('#table-absensi').dataTable({
             dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
             "lengthMenu": [[50, 100, 150, -1], [50, 100, 150, "All"]],
