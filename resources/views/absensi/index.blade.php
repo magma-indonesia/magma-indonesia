@@ -38,13 +38,6 @@
 @section('content-body')
     <div class="content animate-panel">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="alert alert-info">
-                    <i class="fa fa-bolt"></i><b> TIPS </b> Gunakan <b>Ctrl+F</b> untuk mencari nama dengan cepat
-                </div>
-            </div>
-        </div>
-        <div class="row">
             <div class="col-md-6 col-xs-12">
                 <div class="hpanel">
                     <div class="panel-heading">
@@ -53,10 +46,10 @@
                     <div class="panel-body m-b">
                         <form role="form" id="form" method="GET" action="{{ route('chambers.absensi.index') }}">
                             <div class="row">
-                                <div class="form-group col-xs-12 col-lg-6">
+                                <div class="col-xs-12 col-lg-6">
                                     <input id="date" type="text" class="form-control" value="{{ empty(old('date')) ? now()->format('Y-m-d') : old('date')}}" name="date">
                                 </div>
-                                <div class="form-group col-xs-12 col-lg-6">
+                                <div class="col-xs-12 col-lg-6">
                                     <button class="btn btn-magma btn-block" type="submit">Ganti Tanggal</button>
                                 </div>
                             </div>
@@ -72,7 +65,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-xs-12 col-lg-6">
-                                <select id="nip" class="form-control m-b" name="nip">
+                                <select id="nip" class="form-control" name="nip">
                                     @foreach($users as $user)
                                     <option value="{{ $user->nip }}" {{ auth()->user()->nip == $user->nip ? 'selected' : '' }}>{{ $user->name }}</option>
                                     @endforeach
