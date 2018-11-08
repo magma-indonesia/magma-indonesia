@@ -75,6 +75,11 @@ table tr td[class*="4"] {
   background-color: #007fff;
   border-right: 0px solid #007fff;
 }
+
+.progress-alpha {
+	background-color: #e74c3c;
+}
+
 .vertical-date small {
   color: #007fff;
 }

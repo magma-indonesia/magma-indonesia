@@ -121,15 +121,26 @@
                     <span class="nav-label">Pengajuan</span>
                 </a>
             </li>
-            <li class="{{ active(['chambers.users.*','chambers.absensi.*']) }}">
+            <li class="{{ active(['chambers.absensi.*']) }}">
+                <a href="#">
+                    <span class="nav-label">Absensi</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li class="{{ active('chambers.absensi.index') }}">
+                        <a href="{{ route('chambers.absensi.index') }}">Daftar Absensi</a>
+                    </li>
+                    <li class="{{ active('chambers.absensi.search') }}">
+                        <a href="{{ route('chambers.absensi.search') }}">Cari Absensi</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="{{ active(['chambers.users.*']) }}">
                 <a href="#">
                     <span class="nav-label">Users</span>
                     <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
-                    <li class="{{ active('chambers.absensi.index') }}">
-                        <a href="{{ route('chambers.absensi.index') }}">Absensi Pegawai</a>
-                    </li>
                     <li class="{{ active('chambers.users.index') }}">
                         <a href="{{ route('chambers.users.index') }}">Daftar Users</a>
                     </li>
