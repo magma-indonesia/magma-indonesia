@@ -28,6 +28,7 @@ Route::name('administratif.')->group(function () {
     Route::resource('jabatan','JabatanController');
 });
 
+Route::get('absensi/search','AbsensiController@search')->name('absensi.search');
 Route::resource('absensi','AbsensiController');
 
 Route::name('users.administrasi.')->group(function() {
