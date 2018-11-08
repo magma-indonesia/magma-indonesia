@@ -15,4 +15,10 @@ class Kantor extends Model
         'latitude',
         'longitude'
     ];
+
+    public function pos_pga()
+    {
+        return $this->belongsTo('App\PosPga','code','obscode');
+    }
+
 }
