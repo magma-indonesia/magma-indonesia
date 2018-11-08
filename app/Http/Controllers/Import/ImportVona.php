@@ -49,7 +49,7 @@ class ImportVona extends Import
                     'noticenumber' => $noticenumber,
                 ],
                 [
-                    'issued' => $this->item->issued,
+                    'issued' => $this->item->issued_time,
                     'type' => $type,
                     'code_id' => $this->item->ga_code,
                     'cu_code' => $this->item->cu_avcode,
