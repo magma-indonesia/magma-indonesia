@@ -22,7 +22,7 @@ class ImportAbsensi extends Import
     public function import()
     {
         // $this->old = OldAbsensi::whereBetween('id_abs',[$this->startNo('abs'),$this->endNo('abs')])->get();
-        $this->old = OldAbsensi::all();
+        $this->old = OldAbsensi::orderBy('date_abs', 'desc')->take(200)->get();
 
         $this->old->each(function ($item, $key) {
             $this->setItem($item)->createAbsensi();
@@ -62,7 +62,8 @@ class ImportAbsensi extends Import
                 $create = Absensi::updateOrCreate(
                     [
                         'nip_id' => $nip,
-                        'checkin' => $checkin
+                        'checkin' => $checkin,
+                        'checkout' => $checkout
                     ],
                     [
                         'kantor_id' => $kantor,
@@ -70,7 +71,6 @@ class ImportAbsensi extends Import
                         'checkin_latitude' => $checkin_latitude,
                         'checkin_longitude' => $checkin_longitude,
                         'checkin_distance' => $this->item->checkin_dist,
-                        'checkout' => $checkout,
                         'checkout_image' => $checkout_image,
                         'checkout_latitude' => $checkout_latitude,
                         'checkout_longitude' => $checkout_longitude,
