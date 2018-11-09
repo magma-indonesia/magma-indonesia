@@ -52,6 +52,7 @@ class Import extends Controller
             $this->status['success'] = $data['success'];
             $this->status['message'] = $data['message'];
             $this->status['count'] = $data['count'];
+            $this->status['others'] = $data['others'] ?? [];
 
             return $this;
         }

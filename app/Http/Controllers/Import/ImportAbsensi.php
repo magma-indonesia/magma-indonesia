@@ -21,20 +21,30 @@ class ImportAbsensi extends Import
 
     public function import()
     {
-        // $this->old = OldAbsensi::whereBetween('id_abs',[$this->startNo('abs'),$this->endNo('abs')])->get();
-        $this->old = OldAbsensi::orderBy('date_abs', 'desc')->take(200)->get();
+
+        $this->old = Absensi::count() ? 
+                        OldAbsensi::whereBetween('date_abs',$this->lastDateAbsensi()) :
+                        OldAbsensi::all();
 
         $this->old->each(function ($item, $key) {
             $this->setItem($item)->createAbsensi();
         });
 
         $data = $this->data
-                ? [ 'success' => 1, 'text' => 'Absensi', 'message' => 'Data Absensi berhasil diperbarui','count' => Absensi::count() ] 
+                ? [ 'success' => 1, 'text' => 'Absensi', 'message' => 'Data Absensi berhasil diperbarui','count' => Absensi::count(), 'others' => $this->lastDateAbsensi() ] 
                 : [ 'success' => 0, 'text' => 'Absensi', 'message' => 'Data Absensi gagal diperbarui','count' => 0 ];
 
         $this->sendNotif($data);
 
         return response()->json($this->status);
+    }
+
+    protected function lastDateAbsensi()
+    {
+        return [
+            Absensi::orderBy('checkin','desc')->first()->checkin->format('Y-m-d'),
+            OldAbsensi::orderBy('date_abs','desc')->first()->date_abs,
+        ];
     }
 
     protected function createAbsensi()
@@ -63,7 +73,6 @@ class ImportAbsensi extends Import
                     [
                         'nip_id' => $nip,
                         'checkin' => $checkin,
-                        'checkout' => $checkout
                     ],
                     [
                         'kantor_id' => $kantor,
@@ -72,6 +81,7 @@ class ImportAbsensi extends Import
                         'checkin_longitude' => $checkin_longitude,
                         'checkin_distance' => $this->item->checkin_dist,
                         'checkout_image' => $checkout_image,
+                        'checkout' => $checkout,
                         'checkout_latitude' => $checkout_latitude,
                         'checkout_longitude' => $checkout_longitude,
                         'distance' => $this->item->checkout_dist,
