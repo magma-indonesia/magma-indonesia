@@ -149,7 +149,10 @@ class AbsensiController extends Controller
         $user = User::where('nip',$nip)->firstOrFail();
         $kantor = $user->administrasi->kantor;
 
-        $absensi = $user->absensi()->orderBy('checkin')->get();
+        $absensi = $user->absensi()
+                    ->whereBetween('checkin',['2018-11-01 00:00:00',now()->format('Y-m-d H:i:s')])
+                    ->orderBy('checkin')
+                    ->get();
 
         $jumlah = [
             'total' => $absensi->count(),
@@ -164,7 +167,7 @@ class AbsensiController extends Controller
 
         $durasi = round($absensi->sum('duration')/60);
 
-        $period = CarbonPeriod::create('2018-06-01', now()->format('Y-m-d'));
+        $period = CarbonPeriod::create('2018-11-01', now()->format('Y-m-d'));
         foreach($period as $date) {
             $range[$date->format('Y-m-d')] = array();
         }
