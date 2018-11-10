@@ -108,7 +108,12 @@
                                         <td>{{ $key+1 }}</td>
                                         <td>{{ $absensi->nip }}</td>
                                         <td>{{ $absensi->name }}</td>
-                                        <td>{{ explode(' ',$absensi->latest_absensi->kantor->nama, 5)[4] }}</td>
+                                        <td>{{ 
+                                            strlen($absensi->latest_absensi->kantor->code) < 4 ?
+                                                $absensi->latest_absensi->kantor->nama :
+                                                explode(' ',$absensi->latest_absensi->kantor->nama, 5)[4]
+                                            }}
+                                        </td>
                                         <td>{{ $absensi->latest_absensi->checkin->format('Y-m-d') }}</td>
                                         <td>{{ optional($absensi->latest_absensi->checkin)->formatLocalized('%H:%M:%S') ?? 'Manual'}}</td>
                                         <td>{{ optional($absensi->latest_absensi->checkout)->formatLocalized('%H:%M:%S') ?? '-'}}</td>
