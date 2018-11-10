@@ -17,14 +17,14 @@
                         <img alt="logo" class="img-circle m-b m-t-md" src="http://chamber.localhost/images/user/photo/1">
                         <h3><a href="">{{ $user->name }}</a></h3>
                         <dl>
-                            <dt>Pos PGA</dt>
+                            <dt>Penempatan</dt>
                             <dd>{{ $kantor->nama }}</dd>
-                            <dt>Alamat Pos</dt>
+                            <dt>Alamat</dt>
                             <dd>{{ $kantor->address }}</dd>
                             <dt>Ketinggian</dt>
                             <dd>{{ $kantor->elevation }} meter</dd>
-                            <dt>Koordinat Pos</dt>
-                            <dd>{{ $kantor->longitude.' °BT' }} - {{ $kantor->latitude.' °LU' }}</dd>
+                            <dt>Koordinat</dt>
+                            <dd>{{ $kantor->longitude.' °BT' }}, {{ $kantor->latitude.' °LU' }}</dd>
                         </dl>
                     </div>
                     <div class="border-right border-bottom border-left p-m bg-light text-center">
@@ -123,8 +123,8 @@
                                     <th data-breakpoints="all" data-title="Foto Checkout">Foto Checkout</th>
                                     <th data-breakpoints="all" data-title="Radius Checkin">Radius Checkin</th>
                                     <th data-breakpoints="all" data-title="Radius Checkout">Radius Checkout</th>
-                                    <th data-breakpoints="all" data-title="Latitude">Latitude</th>
-                                    <th data-breakpoints="all" data-title="Longitude">Longitude</th>
+                                    <th data-breakpoints="all" data-title="Koordinat Checkin">Koordinat Checkin</th>
+                                    <th data-breakpoints="all" data-title="Koordinat Checkout">Koordinat Checkout</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -148,8 +148,8 @@
                                     </td>
                                     <td>{{ $value[0]->checkin_distance }} meter</td>
                                     <td>{{ $value[0]->distance }} meter</td>
-                                    <td>{{ $value[0]->checkin_longitude }}°BT</td>
-                                    <td>{{ $value[0]->checkin_latitude }}°LU </td>
+                                    <td>{{ $value[0]->checkin_longitude.'°BT, '.$value[0]->checkin_latitude.'°LU' }}</td>
+                                    <td>{{ $value[0]->checkout ? $value[0]->checkout_longitude.'°BT, '.$value[0]->checkout_latitude.'°LU' : '-'}} </td>
                                 </tr>
                                 @else
                                 <tr>
