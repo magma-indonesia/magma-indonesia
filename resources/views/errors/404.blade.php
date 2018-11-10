@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 
 <head>
     <meta charset="utf-8">
@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- Page title -->
-    <title>Not Found</title>
+    <title>Halaman Tidak Ditemukan</title>
     <link href="{{ asset('favicon.png') }}" rel="shortcut icon">
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap/dist/css/bootstrap.css') }}" />
     <link rel="stylesheet" href="{{ asset('styles/style.css') }}">
@@ -16,7 +16,7 @@
 
 </head>
 
-<body class="blank">
+<body class="blank" style="line-height: 2em; background-color: #fff;">
     <div class="error-container" style="text-align: center;padding-bottom: 0;">
         <svg viewBox="0 0 1320 300">
             <!--pattern-->
@@ -65,14 +65,16 @@
         <h2>Halaman Tidak Ditemukan</h2>
         <hr>
         <h4 style="line-height: inherit;">
-            Halaman yang Anda cari tidak ditemukan. Coba tinjau kembali URL yang Anda tuju, dan coba klik tombol refresh pada browser
-            Anda.
+            Halaman yang Anda cari tidak ditemukan.
+        </h4>
+        <h4 style="line-height: inherit;">
+            Tinjau kembali URL yang Anda tuju, dan klik tombol refresh pada browser Anda.
         </h4>
         <br>
-        <a href="{{ route('home') }}" class="btn btn-magma">Kembali ke Halaman Awal</a>
+        <a href="{{ route('home') }}" class="btn btn-lg btn-magma">Kembali ke Halaman Awal</a>
         <hr>
     </div>
-    <div class="error-container" style="text-align: center;padding: 0;">
+    <div class="error-container" style="text-align: center;padding: 0;line-height: 1.42857143;">
         <img style="max-width: 60px;margin-bottom: 15px;" src="{{ url('/') }}/images/logo/esdm.gif">
         <br>
         <strong>Badan Geologi, PVMBG</strong> - MAGMA Indonesia
