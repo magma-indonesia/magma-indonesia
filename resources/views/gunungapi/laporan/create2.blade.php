@@ -36,10 +36,10 @@
             <div class="col-lg-12">
                 <div class="hpanel">
                     <div class="panel-heading">
-                        Form MAGMA-VAR
+                        Form MAGMA-VAR data Pengamatan Visual
                     </div>
                     <div class="panel-body">
-                    <form role="form" id="form" method="POST" action="{{ route('chambers.laporan.store.2')}}" enctype="multipart/form-data">
+                        <form role="form" id="form" method="POST" action="{{ route('chambers.laporan.store.2')}}" enctype="multipart/form-data">
                             @csrf
                             <div class="text-center m-b-md" id="wizardControl">
                                 <a class="btn btn-default hidden-xs" href="#" disabled>Step 1 - <span class="hidden-xs">Data Laporan</span></a>
@@ -54,7 +54,7 @@
                                         <div class="col-lg-3 text-center">
                                             <i class="pe-7s-camera fa-4x text-muted"></i>
                                             <p class="m-t-md">
-                                                <strong>Buat Laporan MAGMA-VAR</strong>, form ini digunakan untuk input data laporan gunung api, meliputi laporan visual dan instrumental.
+                                                <strong>Input Laporan Visual MAGMA-VAR</strong>, form ini digunakan untuk input data visual gunung api yang meliputi foto visual, kawah, asap dan keterangan visual lainnya.
                                                 <br/><br/>Semua laporan yang dibuat akan dipublikasikan secara realtime melalui aplikasi <strong>MAGMA Indonesia</strong>
                                             </p>
                                         </div>
@@ -130,9 +130,9 @@
                                                         <div class="form-group">
                                                             <div class="col-lg-6 col-xs-12">
                                                                 <div class="input-group">
-                                                                    <input placeholder="Minimum" name="tasap_min" class="form-control" type="text" value="{{ empty(old('tasap_min')) ? '' : old('tasap_min') }}">
+                                                                    <input placeholder="Minimum" name="tasap_min" class="form-control" type="text" value="{{ empty(old('tasap_min')) ? '0' : old('tasap_min') }}">
                                                                     <span class="input-group-addon" style="min-width: 75px;"> - </span>
-                                                                    <input placeholder="Maximum" name="tasap_max" class="form-control" type="text" value="{{ empty(old('tasap_max')) ? '' : old('tasap_max') }}">
+                                                                    <input placeholder="Maximum" name="tasap_max" class="form-control" type="text" value="{{ empty(old('tasap_max')) ? '0' : old('tasap_max') }}">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -186,9 +186,9 @@
                                                         <div class="form-group">
                                                             <div class="col-lg-6 col-xs-12">
                                                                 <div class="input-group">
-                                                                    <input placeholder="Minimum" name="tasap_min" class="form-control" type="text" value="{{ $visual['tasap_min'] ?? '-' }}">
+                                                                    <input placeholder="Minimum" name="tasap_min" class="form-control" type="text" value="{{ $visual['tasap_min'] ?? '0' }}">
                                                                     <span class="input-group-addon" style="min-width: 75px;"> - </span>
-                                                                    <input placeholder="Maximum" name="tasap_max" class="form-control" type="text" value="{{ $visual['tasap_max'] ?? '-'  }}">
+                                                                    <input placeholder="Maximum" name="tasap_max" class="form-control" type="text" value="{{ $visual['tasap_max'] ?? '0'  }}">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -259,8 +259,8 @@
                                                     <hr>
                                                 </div>
 
-                                                {{-- Extended Foto Visual --}}
-                                                <div class="foto-visual" style="{{ $errors->has('foto') || empty(old('hasfoto')) || $visual['hasfoto'] ?  '' : 'Display:none'}}">
+                                                {{-- Extended Foto Visual --}}`
+                                                <div class="foto-visual" style="{{ $errors->has('foto') || $visual['hasfoto'] == '1' ?  '' : 'Display:none'}}">
                                                     <div class="form-group col-lg-12">
                                                         <label {{$errors->has('foto') || $errors->has('foto') ? 'class=text-danger' : ''}}>Upload Foto Visual (max 2MB)</label>
                                                         <div class="form-group">
