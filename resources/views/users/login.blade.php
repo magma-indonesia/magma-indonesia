@@ -17,63 +17,82 @@
 
 	<!-- App styles -->
 	<link rel="stylesheet" href="{{ asset('styles/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+	<link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+	
+	<style>
+		.full-img {
+			background-image: url('/svg/login.svg');
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: left;
+			min-height: 100vh;
+			width: 100%;
+		}
+	</style>
 
 </head>
 
 <body class="blank">
 
-    @include('includes.loader')
-
-	<div class="color-line"></div>
-
-	<div class="login-container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="text-center m-b-md">
-					<h2>Login</h2>					
+	@include('includes.loader')
+	<div class="row">
+		<div class="col-lg-8 hidden-xs hidden-sm hidden-md">
+			<div class="full-img"></div>
+		</div>
+		<div class="col-lg-4">
+			<div class="login-container" style="padding-top: 25%;>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="text-center m-b-md">
+							<img alt="logo" class="p-m" src="{{ url('/').'/images/volcano.svg' }}" style="width: 120px;">
+							<h2>Login MAGMA</h2>					
+						</div>
+						<div class="hpanel">
+							<div class="panel-body" style="background: transparent;border: 0;">
+								<form method="POST" action="{{ route('login') }}" id="loginForm">
+									@csrf
+									<div class="form-group">
+										<label class="control-label" for="username">NIP/Email</label>
+										<input type="text" placeholder="Masukkan NIP atau email Anda" title="NIP/Email" name="username" id="username" class="form-control"
+											required>
+									</div>
+									<div class="form-group">
+										<label class="control-label" for="password">Password</label>
+										<input type="password" title="Password" placeholder="******" name="password" id="password"
+											class="form-control" required>
+									</div>
+		
+									@if(count($errors) > 0)
+									<div class="form-group">
+										<div class="alert alert-danger">
+											<ul class="list-unstyled">
+												@foreach ($errors->all() as $error)
+													<li>{{ $error }}</li>
+												@endforeach
+											</ul>
+										</div>
+									</div>
+									@endif
+		
+									<button type="submit" class="btn btn-magma btn-block">Login</button>
+								</form>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div class="hpanel">
-					<div class="panel-body">
-						<form method="POST" action="{{ route('login') }}" id="loginForm">
-                            @csrf
-							<div class="form-group">
-								<label class="control-label" for="username">NIP/Email</label>
-								<input type="text" placeholder="Masukkan NIP atau email Anda" title="NIP/Email" name="username" id="username" class="form-control"
-								 required>
-							</div>
-							<div class="form-group">
-								<label class="control-label" for="password">Password</label>
-								<input type="password" title="Password" placeholder="******" name="password" id="password"
-								 class="form-control" required>
-							</div>
-
-							@if(count($errors) > 0)
-							<div class="form-group">
-                                <div class="alert alert-danger">
-									<ul class="list-unstyled">
-										@foreach ($errors->all() as $error)
-											<li>{{ $error }}</li>
-										@endforeach
-									</ul>
-                                </div>
-							</div>
-							@endif
-
-							<button type="submit" class="btn btn-magma btn-block">Login</button>
-						</form>
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<img style="max-width: 60px;" src="{{ url('/') }}/images/logo/esdm.gif">
+						<br>
+						<strong>Badan Geologi, PVMBG</strong> - MAGMA Indonesia
+						<br/> 2015 &copy; Kementerian Energi dan Sumber Daya Mineral
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12 text-center">
-				<img style="max-width: 60px;" src="{{ url('/') }}/images/logo/esdm.gif">
-				<br>
-				<strong>Badan Geologi, PVMBG</strong> - MAGMA Indonesia
-				<br/> 2015 &copy; Kementerian Energi dan Sumber Daya Mineral
-			</div>
-		</div>
+		</div>	
 	</div>
 
 	<!-- Vendor scripts -->
