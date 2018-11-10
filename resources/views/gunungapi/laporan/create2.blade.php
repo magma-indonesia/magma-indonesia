@@ -79,6 +79,7 @@
                                                 </div>
                                                 <div class="form-group col-lg-12">
                                                     <label {{$errors->has('visibility') ? 'class=text-danger' : ''}}>Visual Gunung Api</label>
+                                                    @if(session()->has('var_visual'))
                                                     <div class="checkbox">
                                                         <label><input name="visibility[]" value="Jelas" type="checkbox" class="i-checks" {{ (is_array(old('visibility')) AND in_array('Jelas',old('visibility'))) || in_array('Jelas',$visual['visibility']) || empty(old('visibility')) ? 'checked' : ''}}> Terlihat Jelas </label>
                                                     </div>
@@ -91,6 +92,21 @@
                                                     <div class="checkbox">
                                                         <label><input name="visibility[]" value="Kabut 0-III" type="checkbox" class="i-checks" {{ (is_array(old('visibility')) AND in_array('Kabut 0-III',old('visibility'))) || in_array('Kabut 0-III',$visual['visibility'])? 'checked' : ''}}> Tertutup Kabut 0-III </label>
                                                     </div>
+                                                    @else
+                                                    <div class="checkbox">
+                                                        <label><input name="visibility[]" value="Jelas" type="checkbox" class="i-checks" {{ (is_array(old('visibility')) AND in_array('Jelas',old('visibility'))) || empty(old('visibility')) ? 'checked' : ''}}> Terlihat Jelas </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="visibility[]" value="Kabut 0-I" type="checkbox" class="i-checks" {{ (is_array(old('visibility')) AND in_array('Kabut 0-I',old('visibility'))) ? 'checked' : ''}}> Tertutup Kabut 0-I </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="visibility[]" value="Kabut 0-II" type="checkbox" class="i-checks" {{ (is_array(old('visibility')) AND in_array('Kabut 0-II',old('visibility'))) ? 'checked' : ''}}> Tertutup Kabut 0-II </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input name="visibility[]" value="Kabut 0-III" type="checkbox" class="i-checks" {{ (is_array(old('visibility')) AND in_array('Kabut 0-III',old('visibility'))) ? 'checked' : ''}}> Tertutup Kabut 0-III </label>
+                                                    </div>
+                                                    @endif
+                                                    <hr>
                                                 </div>
                                                 <div class="form-group col-lg-12">
                                                     <label {{$errors->has('visual_asap') ? 'class=text-danger' : ''}}>Visual Asap Kawah</label>
@@ -103,62 +119,15 @@
                                                     <div class="checkbox">
                                                         <label class="checkbox-inline"><input name="visual_asap" value="Tidak Teramati" type="radio" class="i-checks asap" {{ old('visual_asap') == 'Tidak Teramati' || ($visual['visual_asap'] == 'Tidak Teramati') ? 'checked' : ''}}> Tidak Teramati </label>
                                                     </div>
-                                                </div>
-                                                <div class="form-group col-lg-12">
-                                                    <label {{$errors->has('hasfoto') ? 'class=text-danger' : ''}}>Foto Visual</label>
-                                                    <div class="checkbox">
-                                                        <label class="checkbox-inline"><input name="hasfoto" value="1" type="radio" class="i-checks hasfoto" {{ (old('hasfoto') == '1') || ($visual['hasfoto'] == '1') || empty(old('hasfoto')) ? 'checked' : ''}}> Ada </label>
-                                                    </div>
-                                                    <div class="checkbox">
-                                                        <label class="checkbox-inline"><input name="hasfoto" value="0" type="radio" class="i-checks hasfoto" {{ old('hasfoto') == '0' || ($visual['hasfoto'] == '0') ? 'checked' : ''}}> Tidak Ada </label>
-                                                    </div>
-                                                </div>
-
-                                                {{-- Extended Foto Visual --}}
-                                                <div class="foto-visual" style="{{ old('hasfoto') == '0' || $visual['hasfoto'] == '0' ? 'Display:none' : ''}}">
-                                                    <div class="form-group col-lg-12">
-                                                        <label {{$errors->has('foto') || $errors->has('foto') ? 'class=text-danger' : ''}}>Upload Foto Visual</label>
-                                                        <div class="form-group">
-                                                            <img class="img-responsive border-top border-bottom border-right border-left p-xs image-file" src="#" style="display:none;">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="w-xs btn btn-outline btn-default btn-file">
-                                                                <i class="fa fa-upload"></i>
-                                                                <span class="label-file">Browse </span> 
-                                                                <input accept="image/jpeg" class="file" type="file" name="foto" style="display: none;">
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group col-lg-12">
-                                                        <label>Foto Visual Tambahan (opsional)</label>
-                                                        <div class="form-group">
-                                                            <label class="w-xs btn btn-outline btn-default btn-file">
-                                                                <i class="fa fa-plus"></i>
-                                                                <span id="label-file-1" class="label-file-lainnya">Browse </span> 
-                                                                <input id="file-1" accept="image/jpeg" class="file-lainnya" type="file" name="foto_lainnya[]" style="display: none;">
-                                                            </label>
-                                                            <label class="w-xs btn btn-outline btn-default btn-file">
-                                                                <i class="fa fa-plus"></i>
-                                                                <span id="label-file-2" class="label-file-lainnya">Browse </span> 
-                                                                <input id="file-2" accept="image/jpeg" class="file-lainnya" type="file" name="foto_lainnya[]" style="display: none;">
-                                                            </label>
-                                                            <label class="w-xs btn btn-outline btn-default btn-file">
-                                                                <i class="fa fa-plus"></i>
-                                                                <span id="label-file-3" class="label-file-lainnya">Browse </span> 
-                                                                <input id="file-3" accept="image/jpeg" class="file-lainnya" type="file" name="foto_lainnya[]" style="display: none;">
-                                                            </label>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <button type="button" class="w-xs btn btn-danger clear-file"><i class="fa fa-trash"></i> Hapus Foto Tambahan</button>
-                                                        </div>
-                                                    </div>
+                                                    <hr>
                                                 </div>
 
                                                 {{-- Extended Form Visual Asap --}}
-                                                <div class="visual-asap" style="{{ old('visual_asap') != 'Teramati' ? 'Display:none;' : '' }}">
+                                                @if (count($errors))
+                                                <div class="visual-asap" style="{{ old('visual_asap') == 'Teramati' ? '' : 'Display:none;' }}">
                                                     <div class="form-group col-lg-12">
-                                                        <label {{$errors->has('tasap_max') || $errors->has('tasap_min')? 'class=text-danger' : ''}}>Tinggi Asap Dari Atas Puncak (meter)</label>
-                                                        <div class="form-group row">
+                                                        <label {{$errors->has('tasap_max') || $errors->has('tasap_min')? 'class=text-danger' : ''}}>Tinggi Asap Dari Atas Puncak (Minimal 50 meter)</label>
+                                                        <div class="form-group">
                                                             <div class="col-lg-6 col-xs-12">
                                                                 <div class="input-group">
                                                                     <input placeholder="Minimum" name="tasap_min" class="form-control" type="text" value="{{ empty(old('tasap_min')) ? '' : old('tasap_min') }}">
@@ -203,22 +172,144 @@
                                                         <label {{$errors->has('tekasap') ? 'class=text-danger' : ''}}>Tekanan Asap</label>
                                                         <div class="form-group row">
                                                             <div class="col-sm-6">
-                                                                <label class="checkbox-inline"><input name="tekasap[]" value="Lemah" type="checkbox" class="i-checks intensitas" {{ (is_array(old('tekasap')) AND in_array('Tipis',old('tekasap'))) ? 'checked' : ''}}> Tipis </label>
+                                                                <label class="checkbox-inline"><input name="tekasap[]" value="Lemah" type="checkbox" class="i-checks intensitas" {{ (is_array(old('tekasap')) AND in_array('Lemah',old('tekasap'))) ? 'checked' : ''}}> Lemah </label>
                                                                 <label class="checkbox-inline"><input name="tekasap[]" value="Sedang" type="checkbox" class="i-checks intensitas" {{ (is_array(old('tekasap')) AND in_array('Sedang',old('tekasap'))) ? 'checked' : ''}}> Sedang </label>
-                                                                <label class="checkbox-inline"><input name="tekasap[]" value="Kuat" type="checkbox" class="i-checks intensitas" {{ (is_array(old('tekasap')) AND in_array('Tebal',old('tekasap'))) ? 'checked' : ''}}> Tebal </label>
+                                                                <label class="checkbox-inline"><input name="tekasap[]" value="Kuat" type="checkbox" class="i-checks intensitas" {{ (is_array(old('tekasap')) AND in_array('Kuat',old('tekasap'))) ? 'checked' : ''}}> Kuat </label>
                                                             </div>
                                                         </div>
                                                     </div>         
                                                 </div>
+                                                @else
+                                                <div class="visual-asap" style="{{ $visual['visual_asap'] == 'Teramati' ? '' : 'Display:none;' }}">
+                                                    <div class="form-group col-lg-12">
+                                                        <label>Tinggi Asap Dari Atas Puncak (Minimal 50 meter)</label>
+                                                        <div class="form-group">
+                                                            <div class="col-lg-6 col-xs-12">
+                                                                <div class="input-group">
+                                                                    <input placeholder="Minimum" name="tasap_min" class="form-control" type="text" value="{{ $visual['tasap_min'] ?? '-' }}">
+                                                                    <span class="input-group-addon" style="min-width: 75px;"> - </span>
+                                                                    <input placeholder="Maximum" name="tasap_max" class="form-control" type="text" value="{{ $visual['tasap_max'] ?? '-'  }}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-lg-12">
+                                                        <label>Warna Asap</label>
+                                                        <div class="row">
+                                                            <div class="col-sm-3 col-xs-6">
+                                                                <div class="checkbox">
+                                                                    <label><input name="wasap[]" value="Putih" type="checkbox" class="i-checks wasap" {{ (is_array($visual['wasap']) AND in_array('Putih',$visual['wasap'])) ? 'checked' : ''}}> Putih </label>
+                                                                </div>
+                                                                <div class="checkbox">
+                                                                    <label><input name="wasap[]" value="Kelabu" type="checkbox" class="i-checks wasap" {{ (is_array($visual['wasap']) AND in_array('Kelabu',$visual['wasap'])) ? 'checked' : ''}}> Kelabu </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3 col-xs-6">
+                                                                <div class="checkbox">
+                                                                    <label><input name="wasap[]" value="Coklat" type="checkbox" class="i-checks wasap" {{ (is_array($visual['wasap']) AND in_array('Coklat',$visual['wasap'])) ? 'checked' : ''}}> Coklat </label>
+                                                                </div>
+                                                                <div class="checkbox">
+                                                                    <label><input name="wasap[]" value="Hitam" type="checkbox" class="i-checks wasap" {{ (is_array($visual['wasap']) AND in_array('Hitam',$visual['wasap'])) ? 'checked' : ''}}> Hitam </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form group col-lg-12">
+                                                        <label>Intensitas Asap</label>
+                                                        <div class="form-group row">
+                                                            <div class="col-sm-6">
+                                                                <label class="checkbox-inline"><input name="intasap[]" value="Tipis" type="checkbox" class="i-checks intensitas" {{ (is_array($visual['intasap']) AND in_array('Tipis',$visual['intasap'])) ? 'checked' : ''}}> Tipis </label>
+                                                                <label class="checkbox-inline"><input name="intasap[]" value="Sedang" type="checkbox" class="i-checks intensitas" {{ (is_array($visual['intasap']) AND in_array('Sedang',$visual['intasap'])) ? 'checked' : ''}}> Sedang </label>
+                                                                <label class="checkbox-inline"><input name="intasap[]" value="Tebal" type="checkbox" class="i-checks intensitas" {{ (is_array($visual['intasap']) AND in_array('Tebal',$visual['intasap'])) ? 'checked' : ''}}> Tebal </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form group col-lg-12">
+                                                        <label>Tekanan Asap</label>
+                                                        <div class="form-group row">
+                                                            <div class="col-sm-6">
+                                                                <label class="checkbox-inline"><input name="tekasap[]" value="Lemah" type="checkbox" class="i-checks intensitas" {{ (is_array($visual['tekasap']) AND in_array('Lemah',$visual['tekasap'])) ? 'checked' : ''}}> Lemah </label>
+                                                                <label class="checkbox-inline"><input name="tekasap[]" value="Sedang" type="checkbox" class="i-checks intensitas" {{ (is_array($visual['tekasap']) AND in_array('Sedang',$visual['tekasap'])) ? 'checked' : ''}}> Sedang </label>
+                                                                <label class="checkbox-inline"><input name="tekasap[]" value="Kuat" type="checkbox" class="i-checks intensitas" {{ (is_array($visual['tekasap']) AND in_array('Kuat',$visual['tekasap'])) ? 'checked' : ''}}> Kuat </label>
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                    </div>         
+                                                </div>
+                                                @endif
+                                                
+                                                {{-- Foto Visual --}}
+                                                <div class="form-group col-lg-12">
+                                                    <label {{$errors->has('foto') ? 'class=text-danger' : ''}}>Foto Visual</label>
+                                                    @if($errors->has('foto'))
+                                                    <div class="checkbox">
+                                                        <label class="checkbox-inline"><input name="hasfoto" value="1" type="radio" class="i-checks hasfoto" {{ old('hasfoto') == '1' || empty(old('hasfoto')) ? 'checked' : ''}}> Ada </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label class="checkbox-inline"><input name="hasfoto" value="0" type="radio" class="i-checks hasfoto" {{ old('hasfoto') == '0' ? 'checked' : ''}}> Tidak Ada </label>
+                                                    </div>
+                                                    @else
+                                                    <div class="checkbox">
+                                                        <label class="checkbox-inline"><input name="hasfoto" value="1" type="radio" class="i-checks hasfoto" {{ ($visual['hasfoto'] == '1') || empty(old('hasfoto')) ? 'checked' : ''}}> Ada </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label class="checkbox-inline"><input name="hasfoto" value="0" type="radio" class="i-checks hasfoto" {{ ($visual['hasfoto'] == '0') ? 'checked' : ''}}> Tidak Ada </label>
+                                                    </div>
+                                                    @endif
+                                                    <hr>
+                                                </div>
 
+                                                {{-- Extended Foto Visual --}}
+                                                <div class="foto-visual" style="{{ $errors->has('foto') || empty(old('hasfoto')) || $visual['hasfoto'] ?  '' : 'Display:none'}}">
+                                                    <div class="form-group col-lg-12">
+                                                        <label {{$errors->has('foto') || $errors->has('foto') ? 'class=text-danger' : ''}}>Upload Foto Visual (max 2MB)</label>
+                                                        <div class="form-group">
+                                                            <img class="img-responsive border-top border-bottom border-right border-left p-xs image-file" src="#" style="display:none;">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="w-xs btn btn-outline btn-default btn-file">
+                                                                <i class="fa fa-upload"></i>
+                                                                <span class="label-file">Browse </span> 
+                                                                <input accept="image/jpeg" class="file" type="file" name="foto" style="display: none;">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-lg-12">
+                                                        <label>Foto Visual Tambahan (opsional - per file Max 2MB)</label>
+                                                        <div class="form-group">
+                                                            <label class="w-xs btn btn-outline btn-default btn-file">
+                                                                <i class="fa fa-plus"></i>
+                                                                <span id="label-file-1" class="label-file-lainnya">Browse </span> 
+                                                                <input id="file-1" accept="image/jpeg" class="file-lainnya" type="file" name="foto_lainnya[]" style="display: none;">
+                                                            </label>
+                                                            <label class="w-xs btn btn-outline btn-default btn-file">
+                                                                <i class="fa fa-plus"></i>
+                                                                <span id="label-file-2" class="label-file-lainnya">Browse </span> 
+                                                                <input id="file-2" accept="image/jpeg" class="file-lainnya" type="file" name="foto_lainnya[]" style="display: none;">
+                                                            </label>
+                                                            <label class="w-xs btn btn-outline btn-default btn-file">
+                                                                <i class="fa fa-plus"></i>
+                                                                <span id="label-file-3" class="label-file-lainnya">Browse </span> 
+                                                                <input id="file-3" accept="image/jpeg" class="file-lainnya" type="file" name="foto_lainnya[]" style="display: none;">
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <button type="button" class="w-xs btn btn-danger clear-file"><i class="fa fa-trash"></i> Hapus Foto Tambahan</button>
+                                                        </div>
+                                                        <hr>
+                                                    </div>
+                                                </div>
+
+                                                {{-- Keterangan Visual Lainnya --}}
                                                 <div class="form-group col-lg-12">
                                                     <label {{$errors->has('visual_kawah') ? 'class=text-danger' : ''}}>Keterangan Visual Lainnya</label>
                                                     <div class="row">
                                                         <div class="col-xs-12">
-                                                            <textarea placeholder="Kosongi jika tidak ada" name="visual_kawah" class="form-control" rows="3">{{ old('visual_kawah')}}</textarea>
+                                                            <textarea placeholder="Kosongi jika tidak ada" name="visual_kawah" class="form-control" rows="3">{{ $errors->has('visual_kawah') ? old('visual_kawah') : $visual['visual_kawah'] }}</textarea>
                                                         </div>
                                                     </div>
                                                 </div>
+
                                             </div>
                                             <hr>
                                             <div class="text-left m-t-xs">
