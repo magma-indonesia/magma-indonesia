@@ -14,6 +14,11 @@ class User extends Model
 
     protected $table = 'vg_peg';
 
+    protected $hidden = [
+        'vg_password',
+        'vg_pass',
+    ];
+
     public function kantor()
     {
         return $this->hasOne('App\v1\Kantor','vg_nip','vg_nip');
