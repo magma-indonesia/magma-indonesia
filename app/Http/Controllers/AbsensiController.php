@@ -178,18 +178,10 @@ class AbsensiController extends Controller
 
         $absensi = collect($range)->sortByDesc(function ($item,$key) {
             return $key;
-        })->merge($absensi);
-
-        // $absensi = $absensi->groupBy(function ($item,$key) {
-        //                 return \Carbon\Carbon::parse($item->checkin)->format('Y-m');
-        //             })
-        //             ->sortByDesc(function ($item,$key) {
-        //                 return $key;
-        //             });
-        
+        })->merge($absensi);        
                         
         return view('absensi.show',compact('user','kantor','absensi','jumlah','durasi'));
-        return ['user' => $user, 'absensi' => $absensi, 'jumlah' => $jumlah];
+
     }
 
     /**
