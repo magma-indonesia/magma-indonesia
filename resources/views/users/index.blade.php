@@ -69,7 +69,7 @@
                                     <td>{{ $user->roles()->pluck('name')->implode(', ') }}</td>                                        
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->phone }}</td>
-                                    <td>{{ $user->status ? 'Aktif':'Tidak Aktif' }}</span>
+                                    <td>{{ $user->status ? 'Aktif':'Tidak Aktif' }}
                                     </td>
                                     <td>
                                         <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.users.destroy',['id'=>$user->id]) }}" accept-charset="UTF-8">
