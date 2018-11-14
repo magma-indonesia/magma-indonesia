@@ -1,7 +1,7 @@
-@extends('layouts.default')
+@extends('layouts.default') 
 
-@section('title')
-    MAGMA | List Users
+@section('title') 
+v1 - Users
 @endsection
 
 @section('add-vendor-css')
@@ -17,17 +17,17 @@
                     <ol class="hbreadcrumb breadcrumb">
                         <li><a href="{{ route('chambers.index') }}">Chamber</a></li>
                         <li>
-                            <span>Users</span>
+                            <span>MAGMA v1</span>
                         </li>
                         <li class="active">
-                            <span>List </span>
+                            <span>Users </span>
                         </li>
                     </ol>
                 </div>
                 <h2 class="font-light m-b-xs">
-                    List Users
+                    Daftar Pengguna MAGMA Indonesia v1
                 </h2>
-                <small>Daftar pengguna MAGMA Indonesia -  Pusat Vulkanologi dan Mitigasi Bencana Geologi</small>
+                <small>Pengguna MAGMA Indonesia - PVMBG, Badan Geologi, Kementerian ESDM.</small>
             </div>
         </div>
     </div>
@@ -53,7 +53,6 @@
                                     <th>Nama</th>
                                     <th>NIP</th>
                                     <th>Bidang</th>
-                                    <th>Roles</th>
                                     <th>Email</th>
                                     <th>Phone</th>
                                     <th>Status</th>
@@ -63,20 +62,21 @@
                             <tbody>
                                 @foreach($users as $user)
                                 <tr>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{!! strlen($user->nip)<18 ? $user->nip.'<b>KTP</b>' : $user->nip !!}</td>
-                                    <td>{{ optional(optional($user->bidang)->deskriptif)->nama }}</td>
-                                    <td>{{ $user->roles()->pluck('name')->implode(', ') }}</td>                                        
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->phone }}</td>
-                                    <td>{{ $user->status ? 'Aktif':'Tidak Aktif' }}
+                                    <td>{{ $user->vg_nama }}</td>
+                                    <td>{!! strlen($user->vg_nip)<18 ? $user->vg_nip.'<b>KTP</b>' : $user->vg_nip !!}</td>
+                                    <td>{{ $user->vg_bid }}</td>
+                                    <td>{{ $user->vg_email }}</td>
+                                    <td>{{ $user->vg_hp }}</td>
+                                    <td>{{ 'Aktif' }}
                                     </td>
                                     <td>
-                                        <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.users.destroy',['id'=>$user->id]) }}" accept-charset="UTF-8">
+                                        <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.v1.users.destroy',['id'=>$user->id]) }}" accept-charset="UTF-8">
                                             @method('DELETE')
                                             @csrf
-                                            <a href="{{ route('chambers.users.edit',['id'=>$user->id]) }}" class="btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">Edit</a>                                            
+                                            <a href="{{ route('chambers.v1.users.edit',['id'=>$user->id]) }}" class="btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">Edit</a>                            
+                                            @role('Super Admin')                
                                             <button value="Delete" class="btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
+                                            @endrole
                                         </form>
                                     </td>
                                 </tr>
@@ -114,14 +114,13 @@
             // Initialize table
             $('#table-users').dataTable({
                 dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
-                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "lengthMenu": [[30, 60, 100, -1], [30, 60, 100, "All"]],
                 buttons: [
                     { extend: 'copy', className: 'btn-sm'},
-                    { extend: 'csv', title: 'Daftar Users', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6 ]} },
-                    { extend: 'pdf', title: 'Daftar Users', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6 ]} },
-                    { extend: 'print', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6 ]} }
+                    { extend: 'csv', title: 'Daftar Users', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5 ]} },
+                    { extend: 'pdf', title: 'Daftar Users', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5 ]} },
+                    { extend: 'print', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5 ]} }
                 ]
-
             });
 
             $('body').on('submit','#deleteForm',function (e) {

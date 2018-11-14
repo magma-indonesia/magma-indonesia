@@ -68,6 +68,11 @@
                         <a href="{{ route('chambers.v1.press.index') }}">Press Release</a>
                     </li>
                 </ul>
+                <ul class="nav nav-second-level">
+                    <li class="{{ active('chambers.v1.users.index') }}">
+                        <a href="{{ route('chambers.v1.users.index') }}">Users</a>
+                    </li>
+                </ul>
             </li>
             <li class="{{ active('chambers.roles.*') }}">
                 <a href="#">
