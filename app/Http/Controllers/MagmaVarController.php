@@ -14,53 +14,16 @@ use App\VarVisual;
 use App\VarAsap;
 use App\Http\Requests\CreateVarStep1;
 use App\Http\Requests\CreateVarStep2;
+use App\Http\Requests\CreateVarStep3;
+
+use App\Traits\JenisGempaVar;
 
 class MagmaVarController extends Controller
 {
 
-    protected $obscode, $periode, $perwkt, $data_date, $noticenumber;
+    use JenisGempaVar;
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function createStep1(Request $request)
-    {
-        $var = $request->session()->get('var');
-        $pgas = PosPga::select('code_id','obscode')->orderBy('obscode')->get();
-        return view('gunungapi.laporan.create',compact('pgas','var'));
-    }
-
-    public function createStep2(Request $request)
-    {
-        if (empty($request->session()->get('var'))) {
-            return redirect()->route('chambers.laporan.create.1');
-        }
-
-        $visual = $request->session()->get('var_visual');
-        
-        return view('gunungapi.laporan.create2',compact('visual'));
-    }
-
-    public function createStep3(Request $request)
-    {
-        // $request->session()->forget('var_visual');
-        return $request->session()->get('var');
-        return 'create3';
-    }
-
-    /**
+   /**
      * Set session untuk variable VAR
      *
      * @param \Illuminate\Http\Request $request
@@ -97,7 +60,7 @@ class MagmaVarController extends Controller
     protected function setVarVisualSession($request)
     {
         $filename = $request->hasfoto == '1' ?
-                        'var_'.time().'.'.request()->foto->getClientOriginalExtension() :
+                        'var_temp_'.time().'.'.$request->foto->getClientOriginalExtension() :
                         null;
 
         $foto = $request->hasfoto == '1' ?
@@ -105,9 +68,16 @@ class MagmaVarController extends Controller
                     null;
 
         $visual = [
-            'visibility' => $request->visibility,
+            'visibility' => $request->visibility ? $request->visibility : array(),
             'visual_asap' => $request->visual_asap,
-            'foto' => $foto,
+            'hasfoto' => $request->hasfoto,
+            'foto' => $filename,
+            'tasap_min' => $request->tasap_min,
+            'tasap_max' => $request->tasap_max,
+            'wasap' => $request->wasap,
+            'intasap' => $request->intasap,
+            'tekasap' => $request->tekasap,
+            'visual_kawah' => $request->visual_kawah,
         ];
         
         $request->session()->put('var_visual',$visual);
@@ -115,16 +85,55 @@ class MagmaVarController extends Controller
         return $this;
     }
 
-        /**
-     * Set session untuk variable Var Visual
+    /**
+     * Set session untuk data kegempaan
      *
      * @param \Illuminate\Http\Request $request
      * @return void
      */
-    protected function setVarAsapSession($request)
+    protected function setVarKegempaan($request)
     {
-        $request->session()->put('var_asap',$request->except(['_token']));
-        return $this;
+
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createStep1(Request $request)
+    {
+        $var = $request->session()->get('var');
+        $pgas = PosPga::select('code_id','obscode')->orderBy('obscode')->get();
+        return view('gunungapi.laporan.create',compact('pgas','var'));
+    }
+
+    public function createStep2(Request $request)
+    {
+        if (empty($request->session()->get('var'))) {
+            return redirect()->route('chambers.laporan.create.1');
+        }
+
+        $visual = $request->session()->get('var_visual');
+        
+        return view('gunungapi.laporan.create2',compact('visual'));
+    }
+
+    public function createStep3(Request $request)
+    {
+        $jenisgempa = collect($this->jenisgempa())->chunk(10);
+        return view('gunungapi.laporan.create3',compact('jenisgempa'));
+        return 'create3';
     }
 
     /**
@@ -149,6 +158,8 @@ class MagmaVarController extends Controller
     public function storeStep2(CreateVarStep2 $request)
     {
         $this->setVarVisualSession($request);
+        // return $request;
+
         return $request->session()->get('var_visual');
         // return $request;
 
@@ -162,7 +173,7 @@ class MagmaVarController extends Controller
         // return $request->session()->get('var_visual');
     }
 
-    public function storeStep3(Request $request)
+    public function storeStep3(CreateVarStep3 $request)
     {
         return $request;
     }
