@@ -296,7 +296,7 @@
                                                     <label {{$errors->has('visual_kawah') ? 'class=text-danger' : ''}}>Keterangan Visual Lainnya</label>
                                                     <div class="row">
                                                         <div class="col-xs-12">
-                                                            <textarea placeholder="Kosongi jika tidak ada" name="visual_kawah" class="form-control" rows="3">{{ $errors->has('visual_kawah') ? old('visual_kawah') : $visual['visual_kawah'] }}</textarea>
+                                                            <textarea placeholder="Kosongi jika tidak ada" name="visual_kawah" class="form-control" rows="3">{{ $errors->any() ? old('visual_kawah') : $visual['visual_kawah'] }}</textarea>
                                                         </div>
                                                     </div>
                                                 </div>
