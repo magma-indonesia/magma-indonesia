@@ -241,26 +241,17 @@
                                                 {{-- Foto Visual --}}
                                                 <div class="form-group col-lg-12">
                                                     <label {{$errors->has('foto') ? 'class=text-danger' : ''}}>Foto Visual</label>
-                                                    @if($errors->has('foto'))
                                                     <div class="checkbox">
-                                                        <label class="checkbox-inline"><input name="hasfoto" value="1" type="radio" class="i-checks hasfoto" {{ old('hasfoto') == '1' || empty(old('hasfoto')) ? 'checked' : ''}}> Ada </label>
+                                                        <label class="checkbox-inline"><input name="hasfoto" value="1" type="radio" class="i-checks hasfoto" {{ ($visual['hasfoto'] == '1') || old('hasfoto') == '1' || empty(old('hasfoto')) ? 'checked' : ''}}> Ada </label>
                                                     </div>
                                                     <div class="checkbox">
-                                                        <label class="checkbox-inline"><input name="hasfoto" value="0" type="radio" class="i-checks hasfoto" {{ old('hasfoto') == '0' ? 'checked' : ''}}> Tidak Ada </label>
+                                                        <label class="checkbox-inline"><input name="hasfoto" value="0" type="radio" class="i-checks hasfoto" {{ ($visual['hasfoto'] == '0') || old('hasfoto') == '0' ? 'checked' : ''}}> Tidak Ada </label>
                                                     </div>
-                                                    @else
-                                                    <div class="checkbox">
-                                                        <label class="checkbox-inline"><input name="hasfoto" value="1" type="radio" class="i-checks hasfoto" {{ ($visual['hasfoto'] == '1') || empty(old('hasfoto')) ? 'checked' : ''}}> Ada </label>
-                                                    </div>
-                                                    <div class="checkbox">
-                                                        <label class="checkbox-inline"><input name="hasfoto" value="0" type="radio" class="i-checks hasfoto" {{ ($visual['hasfoto'] == '0') ? 'checked' : ''}}> Tidak Ada </label>
-                                                    </div>
-                                                    @endif
                                                     <hr>
                                                 </div>
 
                                                 {{-- Extended Foto Visual --}}`
-                                                <div class="foto-visual" style="{{ $errors->has('foto') || $visual['hasfoto'] == '1' ?  '' : 'Display:none'}}">
+                                                <div class="foto-visual" style="{{ $errors->has('foto') || ($visual['hasfoto'] == '1') || empty($visual) ?  '' : 'Display:none'}}">
                                                     <div class="form-group col-lg-12">
                                                         <label {{$errors->has('foto') || $errors->has('foto') ? 'class=text-danger' : ''}}>Upload Foto Visual (max 2MB)</label>
                                                         <div class="form-group">
