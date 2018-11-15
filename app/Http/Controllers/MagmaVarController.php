@@ -23,7 +23,21 @@ class MagmaVarController extends Controller
 
     use JenisGempaVar;
 
-   /**
+    /**
+     * Properti untuk session var_visual
+     *
+     * @var array
+     */
+    protected $varVisual;
+
+    /**
+     * properti untuk request var_visual (bukan session)
+     *
+     * @param \Illuminate\Http\Request $request
+     */
+    protected $requestVarVisual;
+
+    /**
      * Set session untuk variable VAR
      *
      * @param \Illuminate\Http\Request $request
@@ -52,6 +66,80 @@ class MagmaVarController extends Controller
     }
 
     /**
+     * Set Variable session Visual untuk memeriksa foto visual temporary 
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return void
+     */
+    protected function setVarVisual($request)
+    {
+        $this->requestVarVisual = $request;
+        $this->varVisual = $request->session()->has('var_visual') ? 
+                                $request->session()->get('var_visual') : 
+                                ['foto' => null];
+
+        return $this;
+    }
+
+    /**
+     * Delete temporary photo sebelum finisihing upload
+     *
+     * @return void
+     */
+    protected function deletePhoto()
+    {
+        $this->varVisual['foto'] ?
+                    Storage::disk('temp')->delete('var/'.$this->varVisual['foto']) :
+                    false;
+        
+        return $this;
+    }
+
+    /**
+     * Updating file foto visual
+     *
+     * @return String $filename
+     */
+    protected function updatePhoto()
+    {
+        $filename = $this->requestVarVisual->hasfoto == '1' ?
+                                'var_temp_'.time().'.'.$this->requestVarVisual->foto->getClientOriginalExtension() :
+                                null;
+
+        $this->requestVarVisual->hasfoto == '1' ?
+                    $this->requestVarVisual->foto->storeAs('var',$filename ,'temp') :
+                    null;
+        
+        return $filename;
+    }
+
+    protected function deletePhotoLainnya()
+    {
+        if (!empty($this->varVisual['foto_lainnya']))
+        {
+            foreach ($this->varVisual['foto_lainnya'] as $key => $value) 
+            {
+                Storage::disk('temp')->delete('var/'.$value);
+            }
+        }
+        
+        return $this;
+    }
+
+    protected function updatePhotoLainnya($filename_others = array())
+    {
+        if ($this->requestVarVisual->has('foto_lainnya'))
+        {
+            foreach ($this->requestVarVisual->foto_lainnya as $key => $others) {
+                $filename_others[] = 'var_temp_lainnya_'.time().'_'.uniqid( ).'.'.$others->getClientOriginalExtension();
+                $others->storeAs('var',$filename_others[$key],'temp');
+            }
+        }
+
+        return $filename_others;
+    }
+
+    /**
      * Set session untuk variable Var Visual
      *
      * @param \Illuminate\Http\Request $request
@@ -59,19 +147,13 @@ class MagmaVarController extends Controller
      */
     protected function setVarVisualSession($request)
     {
-        $filename = $request->hasfoto == '1' ?
-                        'var_temp_'.time().'.'.$request->foto->getClientOriginalExtension() :
-                        null;
-
-        $foto = $request->hasfoto == '1' ?
-                    $request->foto->storeAs('var',$filename,'temp') :
-                    null;
 
         $visual = [
             'visibility' => $request->visibility ? $request->visibility : array(),
             'visual_asap' => $request->visual_asap,
             'hasfoto' => $request->hasfoto,
-            'foto' => $filename,
+            'foto' => $this->setVarVisual($request)->deletePhoto()->updatePhoto(),
+            'foto_lainnya' => $this->setVarVisual($request)->deletePhotoLainnya()->updatePhotoLainnya(),
             'tasap_min' => $request->tasap_min,
             'tasap_max' => $request->tasap_max,
             'wasap' => $request->wasap,
@@ -107,7 +189,8 @@ class MagmaVarController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Create laporab MAGMA-VAR langkah 1
+     * Meliputi data dasar laporan
      *
      * @return \Illuminate\Http\Response
      */
@@ -118,6 +201,12 @@ class MagmaVarController extends Controller
         return view('gunungapi.laporan.create',compact('pgas','var'));
     }
 
+    /**
+     * Create laporab MAGMA-VAR langkah 2
+     * Meliputi data dasar Visual laporan
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function createStep2(Request $request)
     {
         if (empty($request->session()->get('var'))) {
@@ -158,19 +247,8 @@ class MagmaVarController extends Controller
     public function storeStep2(CreateVarStep2 $request)
     {
         $this->setVarVisualSession($request);
-        // return $request;
 
-        return $request->session()->get('var_visual');
-        // return $request;
-
-
-        // foreach ($request->file_lainnya as $file) {
-        //     $path = $file->store('public');
-        //     echo Storage::url($path).'<br>';
-        // }
-        // return;
-        // $this->setVarVisualSession($request);            
-        // return $request->session()->get('var_visual');
+        return redirect()->route('chambers.laporan.create.3');
     }
 
     public function storeStep3(CreateVarStep3 $request)
