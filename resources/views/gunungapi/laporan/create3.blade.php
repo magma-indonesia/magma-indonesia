@@ -241,59 +241,61 @@
                                                 <div class="row" data-code="{{ $value['kode'] }}" data-jenis="{{ $value['jenis']}}">
                                                     <div class="col-lg-10">
                                                         <label class="control-label">{{ $value['nama'] }}</label>
-                                                        {{-- Jumlah --}}
-                                                        <input placeholder="Jumlah" name="{{ $value['kode'] }}[jumlah]" class="form-control" type="text" value="">                       
-                                                        {{-- Amplitudo --}}
-                                                        <div class="input-group m-t-sm">
-                                                            <input placeholder="A-min" name="{{ $value['kode'] }}[amin]" class="form-control" type="text" value="">
-                                                            <span class="input-group-addon" style="min-width: 30px;"> - </span>
-                                                            <input placeholder="A-max" name="{{ $value['kode'] }}[amax]" class="form-control" type="text" value="">
-                                                        </div>
-                                                        {{-- Durasi --}}
-                                                        <div class="input-group m-t-sm">
-                                                            <input placeholder="Durasi min" name="{{ $value['kode'] }}[dmin]" class="form-control" type="text" value="">
-                                                            <span class="input-group-addon" style="min-width: 30px;"> - </span>
-                                                            <input placeholder="Durasi max" name="{{ $value['kode'] }}[dmax]" class="form-control" type="text" value="">
-                                                        </div>
-                                                        {{-- Jarak Luncur --}}
-                                                        <div class="input-group m-t-sm">
-                                                            <input placeholder="Jarak Luncur min" name="{{ $value['kode'] }}[rmin]" class="form-control" type="text" value="">
-                                                            <span class="input-group-addon" style="min-width: 30px;"> - </span>
-                                                            <input placeholder="Jarak Luncur max" name="{{ $value['kode'] }}[rmax]" class="form-control" type="text" value="">
-                                                        </div>
-                                                        {{-- Arah Luncuran --}}
-                                                        <label class="m-t-sm">Arah Luncuran</label>
-                                                        <div class="form-group row">
-                                                            <div class="col-sm-6">
-                                                                <div class="checkbox">
-                                                                    <label><input name="{{ $value['kode'] }}[alun][]" value="Utara" type="checkbox" class="i-checks alun"> Utara </label>
+                                                        <div class="p-sm">
+                                                            {{-- Jumlah --}}
+                                                            <input placeholder="Jumlah" name="{{ $value['kode'] }}[jumlah]" class="form-control" type="text" value="">                       
+                                                            {{-- Amplitudo --}}
+                                                            <div class="input-group m-t-sm">
+                                                                <input placeholder="A-min" name="{{ $value['kode'] }}[amin]" class="form-control" type="text" value="">
+                                                                <span class="input-group-addon" style="min-width: 30px;"> - </span>
+                                                                <input placeholder="A-max" name="{{ $value['kode'] }}[amax]" class="form-control" type="text" value="">
+                                                            </div>
+                                                            {{-- Durasi --}}
+                                                            <div class="input-group m-t-sm">
+                                                                <input placeholder="Durasi min" name="{{ $value['kode'] }}[dmin]" class="form-control" type="text" value="">
+                                                                <span class="input-group-addon" style="min-width: 30px;"> - </span>
+                                                                <input placeholder="Durasi max" name="{{ $value['kode'] }}[dmax]" class="form-control" type="text" value="">
+                                                            </div>
+                                                            {{-- Jarak Luncur --}}
+                                                            <div class="input-group m-t-sm">
+                                                                <input placeholder="Jarak Luncur min" name="{{ $value['kode'] }}[rmin]" class="form-control" type="text" value="">
+                                                                <span class="input-group-addon" style="min-width: 30px;"> - </span>
+                                                                <input placeholder="Jarak Luncur max" name="{{ $value['kode'] }}[rmax]" class="form-control" type="text" value="">
+                                                            </div>
+                                                            {{-- Arah Luncuran --}}
+                                                            <label class="m-t-sm">Arah Luncuran</label>
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="checkbox">
+                                                                        <label><input name="{{ $value['kode'] }}[alun][]" value="Utara" type="checkbox" class="i-checks alun"> Utara </label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input name="{{ $value['kode'] }}[alun][]" value="Timur" type="checkbox" class="i-checks alun"> Timur </label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input name="{{ $value['kode'] }}[alun][]" value="Tenggara" type="checkbox" class="i-checks alun"> Tenggara </label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input name="{{ $value['kode'] }}[alun][]" value="Selaran" type="checkbox" class="i-checks alun"> Selatan </label>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="checkbox">
-                                                                    <label><input name="{{ $value['kode'] }}[alun][]" value="Timur" type="checkbox" class="i-checks alun"> Timur </label>
-                                                                </div>
-                                                                <div class="checkbox">
-                                                                    <label><input name="{{ $value['kode'] }}[alun][]" value="Tenggara" type="checkbox" class="i-checks alun"> Tenggara </label>
-                                                                </div>
-                                                                <div class="checkbox">
-                                                                    <label><input name="{{ $value['kode'] }}[alun][]" value="Selaran" type="checkbox" class="i-checks alun"> Selatan </label>
+                                                                <div class="col-sm-6">
+                                                                    <div class="checkbox">
+                                                                        <label><input name="{{ $value['kode'] }}[alun][]" value="Barat" type="checkbox" class="i-checks alun"> Barat </label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input name="{{ $value['kode'] }}[alun][]" value="Barat Daya" type="checkbox" class="i-checks alun"> Barat Daya </label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input name="{{ $value['kode'] }}[alun][]" value="Barat Laut" type="checkbox" class="i-checks alun"> Barat Laut </label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input name="{{ $value['kode'] }}[alun][]" value="Timur Laut" type="checkbox" class="i-checks alun"> Timur Laut </label>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-sm-6">
-                                                                <div class="checkbox">
-                                                                    <label><input name="{{ $value['kode'] }}[alun][]" value="Barat" type="checkbox" class="i-checks alun"> Barat </label>
-                                                                </div>
-                                                                <div class="checkbox">
-                                                                    <label><input name="{{ $value['kode'] }}[alun][]" value="Barat Daya" type="checkbox" class="i-checks alun"> Barat Daya </label>
-                                                                </div>
-                                                                <div class="checkbox">
-                                                                    <label><input name="{{ $value['kode'] }}[alun][]" value="Barat Laut" type="checkbox" class="i-checks alun"> Barat Laut </label>
-                                                                </div>
-                                                                <div class="checkbox">
-                                                                    <label><input name="{{ $value['kode'] }}[alun][]" value="Timur Laut" type="checkbox" class="i-checks alun"> Timur Laut </label>
-                                                                </div>
-                                                            </div>
+                                                            <hr style="margin-top:5px;">
                                                         </div>
-                                                        <hr style="margin-top:5px;">
                                                     </div>
                                                 </div>
 
