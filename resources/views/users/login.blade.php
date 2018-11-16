@@ -39,10 +39,10 @@
 
 	@include('includes.loader')
 	<div class="row">
-		<div class="col-lg-8 hidden-xs hidden-sm hidden-md">
+		<div class="col-lg-6 hidden-xs hidden-sm hidden-md">
 			<div class="full-img"></div>
 		</div>
-		<div class="col-lg-4">
+		<div class="col-lg-6">
 			<div class="login-container" style="padding-top: 25%;>
 				<div class="row">
 					<div class="col-md-12">
