@@ -67,6 +67,7 @@
                                         <th>Teams</th>
                                         <th>Manager</th>
                                         <th>Total Points</th>
+                                        <th style="min-width:15%;"></th>
                                         <th>Points Race</th>
                                         <th>Team Value</th>
                                         <th>GW Points</th>
@@ -86,6 +87,13 @@
                                         <td>{{ $fpl['entry_name'] }}</td>
                                         <td>{{ $fpl['player_name'] }}</td>
                                         <td>{{ $fpl['total'] }}</td>
+                                        <td>
+                                            <div class="progress m-t-xs full progress-small" style="background-color: #D32F2F;">
+                                                <div style="width: {{ $fpl['total']/$top*100 }}%;background-color: #BDBDBD;" aria-valuemax="{{ $top }}" aria-valuemin="0" aria-valuenow="{{ $fpl['total'] }}" role="progressbar" class="progress-bar progress-bar-success">
+                                                        <span class="sr-only"></span>
+                                                    </div>
+                                            </div>
+                                        </td>
                                         <td>{{ $fpl['total']-$top }}</td>
                                         <td>{{ $value[$key]['value'] + $value[$key]['bank'] }}</td>
                                         <td>{{ $fpl['event_total'] }}</td>
@@ -127,6 +135,11 @@
                         "targets": 0,
                         "orderable": false,
                         "searchable": false
+                    },
+                    { 
+                        "targets": 5,
+                        "orderable": false,
+                        "searchable": false
                     }
                 ],
                 order: [
@@ -138,8 +151,8 @@
                 "lengthMenu": [[40, 50, 100, -1], [40, 50, 100, "All"]],
                 buttons: [
                     { extend: 'copy', className: 'btn-sm'},
-                    { extend: 'csv', title: 'PVMBG FPL League', className: 'btn-sm', exportOptions: { columns: [ 1, 2, 3, 4, 5, 6,7 ]} },
-                    { extend: 'pdf', title: 'PVMBG FPL League', className: 'btn-sm', exportOptions: { columns: [ 1, 2, 3, 4, 5, 6,7 ]} },
+                    { extend: 'csv', title: 'PVMBG FPL League', className: 'btn-sm', exportOptions: { columns: [ 1, 2, 3, 4,  6,7 ]} },
+                    { extend: 'pdf', title: 'PVMBG FPL League', className: 'btn-sm', exportOptions: { columns: [ 1, 2, 3, 4,  6,7 ]} },
                     { extend: 'print', className: 'btn-sm', exportOptions: { columns: [ 1, 2, 3, 4, 5, 6,7 ]} }
                 ]
 
