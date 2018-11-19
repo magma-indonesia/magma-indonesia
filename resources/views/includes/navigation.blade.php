@@ -45,8 +45,8 @@
             </li>
             <li class="{{ active('chambers.fun.fpl') }}">
                 <a href="{{ route('chambers.fun.fpl.index') }}">
-                    <span class="label label-magma"><i class="fa fa-gamepad"></i></span>
-                    <span class="nav-label">Fpl </span>
+                    <i class="fa fa-soccer-ball-o"></i>
+                    <span class="nav-label"> Fpl </span>
                 </a>
             </li> 
             <li class="{{ active('chambers.import.*') }}">
