@@ -43,14 +43,12 @@
                     <span class="nav-label">Magma Chamber</span>
                 </a>
             </li>
-            @if(auth()->user()->nip == '198010202006041002' || auth()->user()->nip == '198803152015031005')
             <li class="{{ active('chambers.fun.fpl') }}">
                 <a href="{{ route('chambers.fun.fpl.index') }}">
                     <span class="label label-magma"><i class="fa fa-gamepad"></i></span>
                     <span class="nav-label">Fpl </span>
                 </a>
-            </li>
-            @endif   
+            </li> 
             <li class="{{ active('chambers.import.*') }}">
                 <a href="{{ route('chambers.import.index') }}">
                     <span class="label label-magma">v.1</span>
