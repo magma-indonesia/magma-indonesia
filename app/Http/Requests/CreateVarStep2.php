@@ -25,7 +25,7 @@ class CreateVarStep2 extends FormRequest
      */
     public function messages()
     {
-        return [
+        $messages = [
             'required' => 'Semua form harus diisi',
             'in' => 'Nilai dari form tidak ada terdaftar dalam list',
             'tasap_max.required_if' => 'Tinggi Asap Maximum <b>wajib diisi</b> jika Visual Asap Kawah <b>Teramati</b>',
@@ -43,6 +43,8 @@ class CreateVarStep2 extends FormRequest
             'intasap.required_if' => 'Intensitas Asap <b>wajib diisi</b> jika Visual Asap Kawah <b>Teramati</b>',
             'tekasap.required_if' => 'Tekanan Asap <b>wajib diisi</b> jika Visual Asap Kawah <b>Teramati</b>',
         ];
+
+        return $messages; 
     }
 
     /**
@@ -52,12 +54,11 @@ class CreateVarStep2 extends FormRequest
      */
     public function rules(Request $request)
     {
-
         $tasap_max = $request->visual_asap == 'Teramati' ? '|numeric|between:50,10000' : '';
         $tasap_min = $request->visual_asap == 'Teramati' ? '|numeric|between:50,10000|lte:tasap_max' : '';
         $foto = $request->hasfoto ? '|image|mimes:jpeg,jpg|max:2048' : '';
 
-        return [
+        $rules = [
             'visibility' => 'required|array',
             'visibility.*' => 'required|in:Jelas,Kabut 0-I,Kabut 0-II,Kabut 0-III',
             'visual_asap' => 'required|in:Nihil,Teramati,Tidak Teramati',
@@ -74,5 +75,7 @@ class CreateVarStep2 extends FormRequest
             'tekasap'  => 'required_if:visual_asap,Teramati|array',
             'tekasap.*' => 'in:Lemah,Sedang,Kuat',
         ];
+
+        return $rules;
     }
 }
