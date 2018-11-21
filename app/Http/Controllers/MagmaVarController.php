@@ -173,10 +173,13 @@ class MagmaVarController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return void
      */
-    protected function setVarKegempaan($request)
+    protected function setVarKegempaanSession($request)
     {
+        $request->session()->put('var_gempa',$request);
 
+        return $this;
     }
+
 
     /**
      * Display a listing of the resource.
@@ -220,9 +223,17 @@ class MagmaVarController extends Controller
 
     public function createStep3(Request $request)
     {
+        if (empty($request->session()->get('var'))) {
+            return redirect()->route('chambers.laporan.create.1');
+        }
+
+        if (empty($request->session()->get('var_visual'))) {
+            return redirect()->route('chambers.laporan.create.2');
+        }
+
         $jenisgempa = collect($this->jenisgempa())->chunk(10);
+
         return view('gunungapi.laporan.create3',compact('jenisgempa'));
-        return 'create3';
     }
 
     /**
@@ -239,7 +250,7 @@ class MagmaVarController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Store session for step 2 (Visual Information)
      *
      * @param \App\Http\Requests\CreateVarStep2 $request
      * @return \Illuminate\Http\Response
@@ -251,9 +262,17 @@ class MagmaVarController extends Controller
         return redirect()->route('chambers.laporan.create.3');
     }
 
+    /**
+     * Store session for step 3 (Gempa)
+     *
+     * @param \App\Http\Requests\CreateVarStep3 $request
+     * @return \Illuminate\Http\Response
+     */
     public function storeStep3(CreateVarStep3 $request)
     {
-        return $request;
+        $this->setVarKegempaanSession($request);
+
+        return $request->session()->get('var_gempa');
     }
 
     /**
@@ -293,7 +312,7 @@ class MagmaVarController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
