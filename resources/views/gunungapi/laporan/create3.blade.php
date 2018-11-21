@@ -131,12 +131,12 @@
                                                         <label class="control-label">{{ $value['nama'] }}</label>
                                                         <div class="p-sm">
                                                             {{-- Jumlah --}}
-                                                            <input placeholder="Jumlah" name="data[{{ $value['kode'] }}][jumlah]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                            <input placeholder="Jumlah" name="data[{{ $value['kode'] }}][jumlah]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                             {{-- Amplitudo --}}
                                                             <div class="input-group m-t-sm">
-                                                                <input placeholder="A-min" name="data[{{ $value['kode'] }}][amin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                                <input placeholder="A-min" name="data[{{ $value['kode'] }}][amin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                                 <span class="input-group-addon" style="min-width: 30px;"> - </span>
-                                                                <input placeholder="A-max" name="data[{{ $value['kode'] }}][amax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                                <input placeholder="A-max" name="data[{{ $value['kode'] }}][amax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                             </div>
                                                             {{-- SP --}}
                                                             <div class="input-group m-t-sm">
@@ -146,9 +146,9 @@
                                                             </div>
                                                             {{-- Durasi --}}
                                                             <div class="input-group m-t-sm">
-                                                                <input placeholder="Durasi min" name="data[{{ $value['kode'] }}][dmin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                                <input placeholder="Durasi min" name="data[{{ $value['kode'] }}][dmin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                                 <span class="input-group-addon" style="min-width: 30px;"> - </span>
-                                                                <input placeholder="Durasi max" name="data[{{ $value['kode'] }}][dmax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                                <input placeholder="Durasi max" name="data[{{ $value['kode'] }}][dmax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                             </div>
                                                         </div>
                                                         <hr style="margin-top:5px;">
@@ -171,16 +171,16 @@
                                                             </div>
                                                             {{-- Durasi --}}
                                                             <div class="input-group m-t-sm">
-                                                                <input placeholder="Durasi min" name="data[{{ $value['kode'] }}][dmin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                                <input placeholder="Durasi min" name="data[{{ $value['kode'] }}][dmin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                                 <span class="input-group-addon" style="min-width: 30px;"> - </span>
-                                                                <input placeholder="Durasi max" name="data[{{ $value['kode'] }}][dmax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                                <input placeholder="Durasi max" name="data[{{ $value['kode'] }}][dmax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                             </div>
                                                             {{-- Tinggi Letusan --}}
                                                             <label class="m-t-sm">Tinggi Abu Letusan</label>
                                                             <div class="input-group">
-                                                                <input placeholder="Tinggi min" name="data[{{ $value['kode'] }}][tmin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                                <input placeholder="Tinggi min" name="data[{{ $value['kode'] }}][tmin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                                 <span class="input-group-addon" style="min-width: 30px;"> - </span>
-                                                                <input placeholder="Durasi max" name="data[{{ $value['kode'] }}][tmax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                                <input placeholder="Durasi max" name="data[{{ $value['kode'] }}][tmax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                             </div>
                                                             {{-- Warna Asap --}}
                                                             <label class="m-t-sm">Warna Abu Letusan</label>
@@ -214,18 +214,18 @@
                                                         <label class="control-label">{{ $value['nama'] }}</label>
                                                         {{-- Jumlah --}}
                                                         <div class="p-sm">
-                                                            <input placeholder="Jumlah" name="data[{{ $value['kode'] }}][jumlah]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">                       
+                                                            <input placeholder="Jumlah" name="data[{{ $value['kode'] }}][jumlah]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                             {{-- Amplitudo --}}
                                                             <div class="input-group m-t-sm">
-                                                                <input placeholder="A-min" name="data[{{ $value['kode'] }}][amin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                                <input placeholder="A-min" name="data[{{ $value['kode'] }}][amin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                                 <span class="input-group-addon" style="min-width: 30px;"> - </span>
-                                                                <input placeholder="A-max" name="data[{{ $value['kode'] }}][amax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                                <input placeholder="A-max" name="data[{{ $value['kode'] }}][amax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                             </div>
                                                             {{-- Durasi --}}
                                                             <div class="input-group m-t-sm">
-                                                                <input placeholder="Durasi min" name="data[{{ $value['kode'] }}][dmin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                                <input placeholder="Durasi min" name="data[{{ $value['kode'] }}][dmin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                                 <span class="input-group-addon" style="min-width: 30px;"> - </span>
-                                                                <input placeholder="Durasi max" name="data[{{ $value['kode'] }}][dmax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                                <input placeholder="Durasi max" name="data[{{ $value['kode'] }}][dmax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                             </div>
                                                         </div>
                                                         <hr style="margin-top:5px;">
@@ -239,15 +239,15 @@
                                                         <label class="control-label">{{ $value['nama'] }}</label>
                                                         <div class="p-sm">
                                                             {{-- Jumlah --}}
-                                                            <input placeholder="Jumlah" name="data[{{ $value['kode'] }}][jumlah]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">                       
+                                                            <input placeholder="Jumlah" name="data[{{ $value['kode'] }}][jumlah]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>                       
                                                             {{-- Amplitudo --}}
                                                             <div class="input-group m-t-sm m-b-sm">
-                                                                <input placeholder="A-min" name="data[{{ $value['kode'] }}][amin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                                <input placeholder="A-min" name="data[{{ $value['kode'] }}][amin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                                 <span class="input-group-addon" style="min-width: 30px;"> - </span>
-                                                                <input placeholder="A-max" name="data[{{ $value['kode'] }}][amax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                                <input placeholder="A-max" name="data[{{ $value['kode'] }}][amax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                             </div>
                                                             {{-- Dominan --}}
-                                                            <input placeholder="Amplitudo Dominan" name="data[{{ $value['kode'] }}][adom]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                            <input placeholder="Amplitudo Dominan" name="data[{{ $value['kode'] }}][adom]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                         </div>
                                                         <hr>
                                                     </div>
@@ -260,24 +260,24 @@
                                                         <label class="control-label">{{ $value['nama'] }}</label>
                                                         <div class="p-sm">
                                                             {{-- Jumlah --}}
-                                                            <input placeholder="Jumlah" name="data[{{ $value['kode'] }}][jumlah]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">                       
+                                                            <input placeholder="Jumlah" name="data[{{ $value['kode'] }}][jumlah]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                             {{-- Amplitudo --}}
                                                             <div class="input-group m-t-sm">
-                                                                <input placeholder="A-min" name="data[{{ $value['kode'] }}][amin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                                <input placeholder="A-min" name="data[{{ $value['kode'] }}][amin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                                 <span class="input-group-addon" style="min-width: 30px;"> - </span>
-                                                                <input placeholder="A-max" name="data[{{ $value['kode'] }}][amax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                                <input placeholder="A-max" name="data[{{ $value['kode'] }}][amax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                             </div>
                                                             {{-- Durasi --}}
                                                             <div class="input-group m-t-sm">
-                                                                <input placeholder="Durasi min" name="data[{{ $value['kode'] }}][dmin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                                <input placeholder="Durasi min" name="data[{{ $value['kode'] }}][dmin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                                 <span class="input-group-addon" style="min-width: 30px;"> - </span>
-                                                                <input placeholder="Durasi max" name="data[{{ $value['kode'] }}][dmax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                                <input placeholder="Durasi max" name="data[{{ $value['kode'] }}][dmax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                             </div>
                                                             {{-- Jarak Luncur --}}
                                                             <div class="input-group m-t-sm">
-                                                                <input placeholder="Jarak Luncur min" name="data[{{ $value['kode'] }}][rmin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                                <input placeholder="Jarak Luncur min" name="data[{{ $value['kode'] }}][rmin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                                 <span class="input-group-addon" style="min-width: 30px;"> - </span>
-                                                                <input placeholder="Jarak Luncur max" name="data[{{ $value['kode'] }}][rmax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                                <input placeholder="Jarak Luncur max" name="data[{{ $value['kode'] }}][rmax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                             </div>
                                                             {{-- Arah Luncuran --}}
                                                             <label class="m-t-sm">Arah Luncuran</label>
@@ -323,24 +323,24 @@
                                                         <label class="control-label">{{ $value['nama'] }}</label>
                                                         <div class="p-sm">
                                                             {{-- Jumlah --}}
-                                                            <input placeholder="Jumlah" name="data[{{ $value['kode'] }}][jumlah]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">                       
+                                                            <input placeholder="Jumlah" name="data[{{ $value['kode'] }}][jumlah]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>                       
                                                             {{-- Amplitudo --}}
                                                             <div class="input-group m-t-sm">
-                                                                <input placeholder="A-min" name="data[{{ $value['kode'] }}][amin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                                <input placeholder="A-min" name="data[{{ $value['kode'] }}][amin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                                 <span class="input-group-addon" style="min-width: 30px;"> - </span>
-                                                                <input placeholder="A-max" name="data[{{ $value['kode'] }}][amax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                                <input placeholder="A-max" name="data[{{ $value['kode'] }}][amax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                             </div>
                                                             {{-- SP --}}
                                                             <div class="input-group m-t-sm">
-                                                                <input placeholder="SP-min" name="data[{{ $value['kode'] }}][spmin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                                <input placeholder="SP-min" name="data[{{ $value['kode'] }}][spmin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                                 <span class="input-group-addon" style="min-width: 30px;"> - </span>
-                                                                <input placeholder="SP-max" name="data[{{ $value['kode'] }}][spmax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                                <input placeholder="SP-max" name="data[{{ $value['kode'] }}][spmax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                             </div>
                                                             {{-- Durasi --}}
                                                             <div class="input-group m-t-sm">
-                                                                <input placeholder="Durasi min" name="data[{{ $value['kode'] }}][dmin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                                <input placeholder="Durasi min" name="data[{{ $value['kode'] }}][dmin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                                 <span class="input-group-addon" style="min-width: 30px;"> - </span>
-                                                                <input placeholder="Durasi max" name="data[{{ $value['kode'] }}][dmax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="">
+                                                                <input placeholder="Durasi max" name="data[{{ $value['kode'] }}][dmax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="text" value="" required>
                                                             </div>
                                                             {{-- Skala Terasa --}}
                                                             <label class="m-t-sm">Skala Gempa</label>
