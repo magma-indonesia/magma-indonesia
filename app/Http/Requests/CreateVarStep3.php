@@ -80,8 +80,52 @@ class CreateVarStep3 extends FormRequest
                 $messages['data.'.$code.'.'.$key.'.between'] = 'SP Maximum '.$this->namaGempa($code).' antara 0.5-24 detik';
                 $messages['data.'.$code.'.'.$key.'.gte'] = 'SP Maximum '.$this->namaGempa($code).' harus lebih besar dari SP Minimum';
                 break;
+            case 'adom':
+                $messages['data.'.$code.'.'.$key.'.required'] = 'Amplitudo Dominan '.$this->namaGempa($code).' harus diisi';
+                $messages['data.'.$code.'.'.$key.'.numeric'] = 'Amplitudo Dominan'.$this->namaGempa($code).' bertipe numeric';
+                $messages['data.'.$code.'.'.$key.'.between'] = 'Amplitudo Dominaan '.$this->namaGempa($code).' antara 0.5 - 24mm';
+                break;
+            case 'rmin':
+                $messages['data.'.$code.'.'.$key.'.required'] = 'Jarak Luncuran Minimum '.$this->namaGempa($code).' harus diisi';
+                $messages['data.'.$code.'.'.$key.'.numeric'] = 'Jarak Luncuran Minimum '.$this->namaGempa($code).' bertipe numeric';
+                $messages['data.'.$code.'.'.$key.'.between'] = 'Jarak Luncuran Minimum '.$this->namaGempa($code).' antara 0-10.000 meter';
+                $messages['data.'.$code.'.'.$key.'.lte'] = 'Jarak Luncuran Minimum '.$this->namaGempa($code).' harus kurang dari Jarak Luncuran Maksimum';
+                break;
+            case 'rmax':
+                $messages['data.'.$code.'.'.$key.'.required'] = 'Jarak Luncuran Maximum '.$this->namaGempa($code).' harus diisi';
+                $messages['data.'.$code.'.'.$key.'.numeric'] = 'Jarak Luncuran Maximum '.$this->namaGempa($code).' bertipe numeric';
+                $messages['data.'.$code.'.'.$key.'.between'] = 'Jarak Luncuran Maximum '.$this->namaGempa($code).' antara 0-10.000 meter';
+                break;      
+            case 'alun':
+                $messages['data.'.$code.'.'.$key.'.required'] = 'Arah Luncuran '.$this->namaGempa($code).' harus dipilih minimal 1';
+                $messages['data.'.$code.'.'.$key.'.array'] = 'Arah Luncuran '.$this->namaGempa($code).' tidak ada dalam list';
+                $messages['data.'.$code.'.'.$key.'.*.in'] = 'Arah Luncuran '.$this->namaGempa($code).' tidak ada dalam list';
+                break;
+            case 'tmin':
+                $messages['data.'.$code.'.'.$key.'.required'] = 'Tinggi Letusan Minimum '.$this->namaGempa($code).' harus diisi';
+                $messages['data.'.$code.'.'.$key.'.numeric'] = 'Tinggi Letusan Minimum '.$this->namaGempa($code).' bertipe numeric';
+                $messages['data.'.$code.'.'.$key.'.between'] = 'Tinggi Letusan Minimum '.$this->namaGempa($code).' antara 0-10.000 meter';
+                $messages['data.'.$code.'.'.$key.'.lte'] = 'Tinggi Letusan Minimum '.$this->namaGempa($code).' harus kurang dari Tinggi Letusan Maksimum';
+                break;
+            case 'tmax':
+                $messages['data.'.$code.'.'.$key.'.required'] = 'Jarak Luncuran Maximum '.$this->namaGempa($code).' harus diisi';
+                $messages['data.'.$code.'.'.$key.'.numeric'] = 'Jarak Luncuran Maximum '.$this->namaGempa($code).' bertipe numeric';
+                $messages['data.'.$code.'.'.$key.'.between'] = 'Jarak Luncuran Maximum '.$this->namaGempa($code).' antara 0-10.000 meter';
+                break;
+            case 'wasap':
+                $messages['data.'.$code.'.'.$key.'.required'] = 'Warna Asap '.$this->namaGempa($code).' harus dipilih minimal 1';
+                $messages['data.'.$code.'.'.$key.'.array'] = 'Warna Asap '.$this->namaGempa($code).' tidak ada dalam list';
+                $messages['data.'.$code.'.'.$key.'.*.in'] = 'Warna Asap '.$this->namaGempa($code).' tidak ada dalam list';
+                break;
+            case 'skala':
+                $messages['data.'.$code.'.'.$key.'.required'] = 'Skala Gempa '.$this->namaGempa($code).' belum diisi';
+                $messages['data.'.$code.'.'.$key.'.array'] = 'Skala Gempa '.$this->namaGempa($code).' tidak ada dalam list';
+                $messages['data.'.$code.'.'.$key.'.*.required'] = 'Skala Gempa Minimum/Maximum '.$this->namaGempa($code).' belum dipilih';
+                $messages['data.'.$code.'.'.$key.'.*.numeric'] = 'Skala Gempa Minimum/Maximum '.$this->namaGempa($code).' harus bertipe numeric';
+                $messages['data.'.$code.'.'.$key.'.*.between'] = 'Skala Gempa Minimum/Maximum '.$this->namaGempa($code).' antara 1-7';
+                $messages['data.'.$code.'.'.$key.'.0.lte'] = 'Skala Gempa Minimum '.$this->namaGempa($code).' harus lebih kecil dari Skala Maximum';
+                break;
             default:
-                # code...
                 break;
         }
 
@@ -107,6 +151,7 @@ class CreateVarStep3 extends FormRequest
 
             foreach ($request->tipe_gempa as $key => $codeGempa) {
                 foreach ($request->data[$codeGempa] as $key => $value) {
+                    
                     switch ($key) {
                         case 'jumlah':
                             $rules['data.'.$codeGempa.'.'.$key] = 'required|numeric|min:1';
@@ -128,6 +173,34 @@ class CreateVarStep3 extends FormRequest
                             break;
                         case 'spmax':
                             $rules['data.'.$codeGempa.'.'.$key] = 'required|numeric|between:0.5,20|gte:data.'.$codeGempa.'.spmin';
+                            break;
+                        case 'adom':
+                            $rules['data.'.$codeGempa.'.'.$key] = 'required|numeric|between:0.5,24';
+                            break;
+                        case 'rmin':
+                            $rules['data.'.$codeGempa.'.'.$key] = 'required|numeric|between:0,10000|lte:data.'.$codeGempa.'.rmax';
+                            break;
+                        case 'rmax':
+                            $rules['data.'.$codeGempa.'.'.$key] = 'required|numeric|between:0,10000';
+                            break;
+                        case 'alun':
+                            $rules['data.'.$codeGempa.'.'.$key] = 'required|array';
+                            $rules['data.'.$codeGempa.'.'.$key.'.*'] = 'in:Timur,Tenggara,Selatan,Barat Daya,Barat,Barat Laut,Utara,Timur Laut';
+                            break;
+                        case 'tmin':
+                            $rules['data.'.$codeGempa.'.'.$key] = 'required|numeric|between:0,10000|lte:data.'.$codeGempa.'.tmax';
+                            break;
+                        case 'tmax':
+                            $rules['data.'.$codeGempa.'.'.$key] = 'required|numeric|between:0,10000';
+                            break;
+                        case 'wasap':
+                            $rules['data.'.$codeGempa.'.'.$key] = 'required|array';
+                            $rules['data.'.$codeGempa.'.'.$key.'.*'] = 'in:Putih,Kelabu,Coklat,Hitam';
+                            break;
+                        case 'skala':
+                            $rules['data.'.$codeGempa.'.'.$key] = 'required|array';
+                            $rules['data.'.$codeGempa.'.'.$key.'.0'] = 'required|numeric|between:1,7|lte:data.'.$codeGempa.'.'.$key.'.1';
+                            $rules['data.'.$codeGempa.'.'.$key.'.1'] = 'required|numeric|between:1,7';
                             break;
                         default:
                             # code...
