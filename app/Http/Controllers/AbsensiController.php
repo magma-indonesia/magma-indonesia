@@ -158,11 +158,12 @@ class AbsensiController extends Controller
             'total' => $absensi->count(),
             'alpha' => $absensi->where('keterangan',0)->count(),
             'hadir' => $absensi->where('keterangan',1)->count(),
-            'sakit' => $absensi->where('keterangan',2)->count(),
+            'libur' => $absensi->where('keterangan',2)->count(),
             'izin' => $absensi->where('keterangan',3)->count(),
-            'cuti' => $absensi->where('keterangan',4)->count(),
-            'tugas_belajar' => $absensi->where('keterangan',5)->count(),
-            'dinas_luar' => $absensi->where('keterangan',6)->count(),
+            'sakit' => $absensi->where('keterangan',4)->count(),
+            'cuti' => $absensi->where('keterangan',10)->count(),
+            'tugas_belajar' => $absensi->where('keterangan',6)->count(),
+            'dinas_luar' => $absensi->where('keterangan',7)->count(),
         ];
 
         $durasi = round($absensi->sum('duration')/60);
