@@ -71,15 +71,49 @@ class Absensi extends Model
             case 1:
                 return '<span class="label label-success">Hadir</span>';
             case 2:
-                return '<span class="label label-info">Sakit</span>';
+                return '<span class="label label-info">Libur</span>';
             case 3:
                 return '<span class="label label-info">Izin</span>';
             case 4:
-                return '<span class="label label-info">Cuti</span>';
+                return '<span class="label label-info">Sakit</span>';
             case 5:
-                return '<span class="label label-info">Tugas Belajar</span>';
+                return '<span class="label label-info">Kursus</span>';
+            case 6:
+                return '<span class="label label-info">Pendidikan dan Latihan</span>';
+            case 7:
+                return '<span class="label label-info">Dinas Luar Kota (SPPD)</span>';
+            case 8:
+                return '<span class="label label-info">Dinas Dalam/Luar Kota (Non SPPD)</span>';
+            case 9:
+                return '<span class="label label-info">Dinas Dalam Kota</span>';
+            case 10:
+                return '<span class="label label-info">Cuti Tahunan</span>';
+            case 11:
+                return '<span class="label label-info">Cuti Alasan Penting</span>';
+            case 12:
+                return '<span class="label label-info">Cuti Besar</span>';
+            case 13:
+                return '<span class="label label-info">Cuti Diluar Tanggungan Negara</span>';
+            case 14:
+                return '<span class="label label-info">Cuti Sakit</span>';
+            case 15:
+                return '<span class="label label-info">Pulang Cepat dengan Alasan</span>';
+            case 16:
+                return '<span class="label label-info">Lupa Absen Datang</span>';
+            case 17:
+                return '<span class="label label-info">Lupa Absen Pulang</span>';
+            case 18:
+                return '<span class="label label-info">Diperbantukan</span>';
+            case 19:
+                return '<span class="label label-info">Darurat/Bencana (Force Majure)/Kebijakan Pimpinan</span>';
+            case 20:
+                return '<span class="label label-info">Masa Persiapan Pensiun (MPP)</span>';
+            case 21:
+                return '<span class="label label-info">Diliburkan Pemerintah Setempat</span>';
+            case 22:
+                return '<span class="label label-info">Bebas Sementara dari Pegawai Negeri Sipil</span>';
             default:
-                return '<span class="label label-info">Dinas Luar</span>';
+                return '<span class="label label-danger">Tidak ada dalam daftar</span>';
                 break;
         }
     }
