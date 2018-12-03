@@ -32,7 +32,7 @@ class ImportVarRekomendasi extends Import
 
         $data = $this->data
             ? [ 'success' => 1, 'text' => 'Var Rekomendasi', 'message' => 'Var Rekomendasi berhasil diperbarui', 'count' => VarRekomendasi::count() ] 
-            : [ 'success' => 0, 'text' => 'Var Rekomendasi', 'message' => 'DVar Rekomendasi gagal diperbarui', 'count' => 0 ];
+            : [ 'success' => 0, 'text' => 'Var Rekomendasi', 'message' => 'Var Rekomendasi gagal diperbarui', 'count' => 0 ];
 
         $this->sendNotif($data);
 
@@ -48,10 +48,10 @@ class ImportVarRekomendasi extends Import
                     $create = VarRekomendasi::firstOrCreate(
                         [
                             'code_id' => $this->item->ga_code,
-                            'status' => $this->item->$value->cu_status
+                            'status' => $this->item->$value->cu_status,
+                            'rekomendasi' => $this->item->$value->var_rekom,
                         ],
                         [
-                            'rekomendasi' => $this->item->$value->var_rekom,
                             'created_at' => $this->item->$value->var_data_date
                         ]
                     );
