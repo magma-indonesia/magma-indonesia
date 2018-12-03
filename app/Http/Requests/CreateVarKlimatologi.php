@@ -32,7 +32,7 @@ class CreateVarKlimatologi extends FormRequest
             'array' => 'Nilai tidak dalam format array',
             'in' => 'Nilai tidak ada dalam list',
             'numeric' => 'Nilai harus dalam format numeric',
-            'curah_hujan.min' => 'Nilai curah hujan minimal 1',
+            'curah_hujan.min' => 'Nilai curah hujan harus lebih besar atau sama dengan 0',
             'suhu_min.between' => 'Nilai suhu udara minimum harus dalam range 0-45°C',
             'suhu_min.lte' => 'Nilai suhu udara minimum harus lebih kecil dari Suhu Maximum',
             'suhu_max.between' => 'Nilai suhu udara maximum harus dalam range 0-45°C',
