@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
-class CreateVarStep1 extends FormRequest
+class CreateVar extends FormRequest
 {
 
     public function __construct(Request $request)

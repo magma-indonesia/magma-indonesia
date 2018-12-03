@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    VAR - Step 1
+    Step 1 - VAR Data Awal
 @endsection
 
 @section('add-vendor-css')
@@ -21,7 +21,7 @@
                             <a href="{{ route('chambers.laporan.index') }}">Gunung Api</a>
                         </li>
                         <li class="active">
-                            <a href="{{ route('chambers.laporan.create.1') }}">Buat VAR - Step 1</a>
+                            <a href="{{ route('chambers.laporan.create.var') }}">Step 1 - VAR Data Awal</a>
                         </li>
                     </ol>
                 </div>
@@ -43,12 +43,13 @@
                         Form MAGMA-VAR
                     </div>
                     <div class="panel-body">
-                    <form role="form" id="form" method="POST" action="{{ route('chambers.laporan.store.1')}}" enctype="multipart/form-data">
+                    <form role="form" id="form" method="POST" action="{{ route('chambers.laporan.store.var')}}" enctype="multipart/form-data">
                             @csrf
                             <div class="text-center m-b-md" id="wizardControl">
                                 <a class="btn btn-primary" href="#" >Step 1 - Data Laporan</a>
-                                <a class="btn btn-default hidden-xs" href="#" disabled>Step 2 - Data Visual</a>
-                                <a class="btn btn-default hidden-xs" href="#" disabled>Step 3 - Data Kegempaan</a>
+                                <a class="btn btn-default hidden-xs" href="#" disabled>Step 2 - Visual</a>
+                                <a class="btn btn-default hidden-xs" href="#" disabled>Step 3 - Klimatologi</a>
+                                <a class="btn btn-default hidden-xs" href="#" disabled>Step 4 - Kegempaan</a>
                             </div>
                             <hr>
                             <div class="tab-content">

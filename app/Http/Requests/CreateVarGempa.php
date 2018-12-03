@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use App\Traits\JenisGempaVar;
 
-class CreateVarStep3 extends FormRequest
+class CreateVarGempa extends FormRequest
 {
     use JenisGempaVar;
 

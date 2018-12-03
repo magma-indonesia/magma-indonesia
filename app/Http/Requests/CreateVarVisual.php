@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
-class CreateVarStep2 extends FormRequest
+class CreateVarVisual extends FormRequest
 {
 
     /**

@@ -181,7 +181,7 @@
                         <a href="{{ route('chambers.laporan.index') }}">Daftar Laporan</a>
                     </li>
                     <li class="{{ active('chambers.laporan.create.*') }}">
-                        <a href="{{ route('chambers.laporan.create.1') }}">Buat Laporan</a>
+                        <a href="{{ route('chambers.laporan.create.var') }}">Buat Laporan</a>
                     </li>
                     <li class="{{ active('chambers.laporan.search') }}">
                         <a href="{{ route('chambers.laporan.search') }}">Cari Laporan</a>
