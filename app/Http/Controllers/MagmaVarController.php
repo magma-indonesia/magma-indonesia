@@ -12,9 +12,10 @@ use App\PosPga;
 use App\MagmaVar;
 use App\VarVisual;
 use App\VarAsap;
-use App\Http\Requests\CreateVarStep1;
-use App\Http\Requests\CreateVarStep2;
-use App\Http\Requests\CreateVarStep3;
+use App\Http\Requests\CreateVar;
+use App\Http\Requests\CreateVarVisual;
+use App\Http\Requests\CreateVarGempa;
+use App\Http\Requests\CreateVarKlimatologi;
 
 use App\Traits\JenisGempaVar;
 
@@ -180,6 +181,11 @@ class MagmaVarController extends Controller
         return $this;
     }
 
+    protected function setVarKlimatologiSession($request)
+    {
+
+    }
+
 
     /**
      * Display a listing of the resource.
@@ -192,83 +198,105 @@ class MagmaVarController extends Controller
     }
 
     /**
-     * Create laporab MAGMA-VAR langkah 1
+     * Create laporan MAGMA-VAR langkah 1
      * Meliputi data dasar laporan
      *
      * @return \Illuminate\Http\Response
      */
-    public function createStep1(Request $request)
+    public function createVar(Request $request)
     {
         $var = $request->session()->get('var');
         $pgas = PosPga::select('code_id','obscode')->orderBy('obscode')->get();
-        return view('gunungapi.laporan.create',compact('pgas','var'));
+        return view('gunungapi.laporan.createVar',compact('pgas','var'));
     }
 
     /**
-     * Create laporab MAGMA-VAR langkah 2
+     * Create laporan MAGMA-VAR langkah 2
      * Meliputi data dasar Visual laporan
      *
      * @return \Illuminate\Http\Response
      */
-    public function createStep2(Request $request)
+    public function createVarVisual(Request $request)
     {
         if (empty($request->session()->get('var'))) {
-            return redirect()->route('chambers.laporan.create.1');
+            return redirect()->route('chambers.laporan.create.var');
         }
 
         $visual = $request->session()->get('var_visual');
         
-        return view('gunungapi.laporan.create2',compact('visual'));
+        return view('gunungapi.laporan.createVarVisual',compact('visual'));
     }
 
-    public function createStep3(Request $request)
+    public function createVarKlimatologi(Request $request)
+    {
+        return view('gunungapi.laporan.createVarKlimatologi');
+    }
+
+    /**
+     * Create laporan MAGMA-VAR langkah 3
+     * Input data-data kegempaan Gunung Api
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createVarGempa(Request $request)
     {
         if (empty($request->session()->get('var'))) {
-            return redirect()->route('chambers.laporan.create.1');
+            return redirect()->route('chambers.laporan.create.var');
         }
 
         if (empty($request->session()->get('var_visual'))) {
-            return redirect()->route('chambers.laporan.create.2');
+            return redirect()->route('chambers.laporan.create.var.visual');
         }
 
         $jenisgempa = collect($this->jenisgempa())->chunk(10);
 
-        return view('gunungapi.laporan.create3',compact('jenisgempa'));
+        return view('gunungapi.laporan.createVarGempa',compact('jenisgempa'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\CreateVarStep1  $request
+     * @param  \App\Http\Requests\CreateVar  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeStep1(CreateVarStep1 $request)
+    public function storeVar(CreateVar $request)
     {
         $this->setVarSession($request);
 
-        return redirect()->route('chambers.laporan.create.2');
+        return redirect()->route('chambers.laporan.create.var.visual');
     }
 
     /**
-     * Store session for step 2 (Visual Information)
+     * Store session for Visual Information
      *
-     * @param \App\Http\Requests\CreateVarStep2 $request
+     * @param \App\Http\Requests\CreateVarVisual $request
      * @return \Illuminate\Http\Response
      */
-    public function storeStep2(CreateVarStep2 $request)
+    public function storeVarVisual(CreateVarVisual $request)
     {
         $this->setVarVisualSession($request);
 
-        return redirect()->route('chambers.laporan.create.3');
+        return redirect()->route('chambers.laporan.create.var.klimatologi');
     }
 
     /**
-     * Store session for step 3 (Gempa)
+     * Store session for Klimatologi
      *
-     * @param \App\Http\Requests\CreateVarStep3 $request
+     * @param \App\Http\Requests\CreateVarKlimatologi $request
      * @return \Illuminate\Http\Response
      */
-    public function storeStep3(CreateVarStep3 $request)
+    public function storeVarKlimatologi(CreateVarKlimatologi $request)
+    {
+        return $request;
+    }
+
+    /**
+     * Store session for Gempa
+     *
+     * @param \App\Http\Requests\CreateVarGempa $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeVarGempa(CreateVarGempa $request)
     {
         $this->setVarKegempaanSession($request);
 
