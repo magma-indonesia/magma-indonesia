@@ -221,10 +221,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel-footer">
-                    
-                        <button class="btn btn-outline btn-magma pull-right"><i class="fa fa-arrow-right"></i> Verifikasi Magma v1</button>
-                </div>
             </div>
         </div>
     </div>
