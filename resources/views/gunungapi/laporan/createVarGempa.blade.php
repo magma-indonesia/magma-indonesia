@@ -58,10 +58,10 @@
                         <form role="form" id="form" method="POST" action="{{ route('chambers.laporan.store.var.gempa')}}" enctype="multipart/form-data">
                             @csrf
                             <div class="text-center m-b-md" id="wizardControl">
-                                    <a class="btn btn-default hidden-xs" href="#" disabled>Step 1 - Data Laporan</a>
-                                    <a class="btn btn-default hidden-xs" href="#" disabled>Step 2 - Visual</a>
-                                    <a class="btn btn-default hidden-xs" href="#" disabled>Step 3 - Klimatologi</a>
-                                    <a class="btn btn-primary" href="#">Step 4 - Kegempaan</a>
+                                <a class="btn btn-default hidden-xs" href="#" disabled>Step 1 - Data Laporan</a>
+                                <a class="btn btn-default hidden-xs" href="#" disabled>Step 2 - Visual</a>
+                                <a class="btn btn-default hidden-xs" href="#" disabled>Step 3 - Klimatologi</a>
+                                <a class="btn btn-primary" href="#">Step 4 - Kegempaan</a>
                             </div>
                             <hr>
                             <div class="tab-content">
