@@ -48,12 +48,22 @@ Route::group(['prefix' => 'gunungapi'], function () {
     Route::get('laporan/search','ActivityGaController@search')->name('laporan.search');
     Route::post('laporan/verifikasiv1','ActivityGaController@verifikasiv1')->name('laporan.verifikasiv1');
     Route::post('laporan/validasi','ActivityGaController@validasi')->name('laporan.validasi');
-    Route::get('laporan/create-step-1','MagmaVarController@createStep1')->name('laporan.create.1');
-    Route::get('laporan/create-step-2','MagmaVarController@createStep2')->name('laporan.create.2');
-    Route::get('laporan/create-step-3','MagmaVarController@createStep3')->name('laporan.create.3');
-    Route::post('laporan/create-step-1','MagmaVarController@storeStep1')->name('laporan.store.1');
-    Route::post('laporan/create-step-2','MagmaVarController@storeStep2')->name('laporan.store.2');
-    Route::post('laporan/create-step-3','MagmaVarController@storeStep3')->name('laporan.store.3');
+    Route::get('laporan/create-var','MagmaVarController@createVar')
+        ->name('laporan.create.var');
+    Route::get('laporan/create-var-visual','MagmaVarController@createVarVisual')
+        ->name('laporan.create.var.visual');
+    Route::get('laporan/create-var-klimatologi','MagmaVarController@createVarKlimatologi')
+        ->name('laporan.create.var.klimatologi');
+    Route::get('laporan/create-var-gempa','MagmaVarController@createVarGempa')
+        ->name('laporan.create.var.gempa');
+    Route::post('laporan/create-var','MagmaVarController@storeVar')
+        ->name('laporan.store.var');
+    Route::post('laporan/create-var-visual','MagmaVarController@storeVarVisual')
+        ->name('laporan.store.var.visual');
+    Route::post('laporan/create-var-klimatologi','MagmaVarController@storeVarKlimatologi')
+        ->name('laporan.store.var.klimatologi');
+    Route::post('laporan/create-var-gempa','MagmaVarController@storeVarGempa')
+        ->name('laporan.store.var.gempa');
     Route::post('laporan/exists','MagmaVarController@exists')->name('laporan.exists');
     Route::resource('laporan','ActivityGaController', ['except' => [
         'create','store','edit','update','destroy'
