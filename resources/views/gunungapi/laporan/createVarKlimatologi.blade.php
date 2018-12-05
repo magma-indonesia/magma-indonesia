@@ -269,7 +269,7 @@
                                                                 <label><input name="arah_angin[]" value="Tenggara" type="checkbox" class="i-checks"> Tenggara </label>
                                                             </div>
                                                             <div class="checkbox">
-                                                                <label><input name="arah_angin[]" value="Selaran" type="checkbox" class="i-checks"> Selatan </label>
+                                                                <label><input name="arah_angin[]" value="Selatan" type="checkbox" class="i-checks"> Selatan </label>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-4">
