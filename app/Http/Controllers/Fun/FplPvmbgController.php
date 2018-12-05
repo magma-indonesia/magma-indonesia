@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Fun;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
-use App\Charts\FplPvmbg;
 
 class FplPvmbgController extends Controller
 {
@@ -54,30 +53,8 @@ class FplPvmbgController extends Controller
         }
 
         $value = $this->team_value;
-        
-        $chart = new FplPvmbg;
-        $chart->labels($labels);
-        $chart->dataset('PVMBG League 18/19 - Points Race','bar',$dataset)->options([
-            'color' => '#007fff'
-        ]);
-        $chart->options([
-                    'legend' => [
-                        'selectedMode' => false,
-                    ],
-                    'xAxis' => [
-                        'type' => 'value',
-                    ],
-                    'yAxis' => [
-                        'position' => 'right',
-                        'name'  => 'Team',
-                        'type' => 'category',
-                        'data' => $labels
-                    ],
-                ]);
-        $chart->height(800);
-        $chart->export(true,'FPL 18/19');
 
-        return view('fun.fpl.index',compact('fpls','top','value','chart'));
+        return view('fun.fpl.index',compact('fpls','top','value'));
     }
 
 }
