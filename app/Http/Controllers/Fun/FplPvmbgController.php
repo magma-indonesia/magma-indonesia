@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Fun;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Cache;
 
 class FplPvmbgController extends Controller
 {
     protected $client;
+
+    protected $cache;
 
     protected $team_value = array();
 
@@ -26,10 +29,31 @@ class FplPvmbgController extends Controller
         ]);
     }
 
-    public function index()
+    public function hasCache($id)
     {
-        $league = $this->client->get(self::API_LEAGUE.'18239');
+        return Cache::store('redis')->has('fpls'.$id) ? true :false;
+    }
+
+    public function setCache($id)
+    {
+        $league = $this->client->get(self::API_LEAGUE.$id);
         $fpls = json_decode($league->getBody(), true);
+        $this->cache = Cache::store('redis')->put('fpls'.$id, $fpls, 120);
+        return $this;
+    }
+
+    public function getCache($id)
+    {
+        return Cache::store('redis')->get('fpls'.$id);
+    }
+
+    public function index($id = '18239')
+    {
+
+        $fpls = $this->hasCache($id) ? 
+                    $this->getCache($id) : 
+                    $this->setCache($id)->getCache($id);
+
         $fpls = $fpls['standings']['results'];
         $top = $fpls[0]['total'];
 
@@ -54,7 +78,7 @@ class FplPvmbgController extends Controller
 
         $value = $this->team_value;
 
-        return view('fun.fpl.index',compact('fpls','top','value'));
+        return view('fun.fpl.index',compact('id','fpls','top','value'));
     }
 
 }
