@@ -51,13 +51,6 @@
             <div class="col-lg-12">
                 <div class="hpanel">
                     <div class="panel-body">
-                        {!! $chart->container() !!}
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="hpanel">
-                    <div class="panel-body">
                         <div class="table-responsive">
                             <table id="table-fpl" class="table table-striped table-hover">
                                 <thead>
@@ -120,9 +113,6 @@
     <script src="{{ asset('vendor/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('vendor/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
     <script src="{{ asset('vendor/datatables.net-buttons-bs/js/buttons.bootstrap.min.js') }}"></script>
-    <!-- Echarts scripts -->    
-    <script src="{{ asset('vendor/echarts/echarts-en.min.js') }}" charset="utf-8"></script>
-    {!! $chart->script() !!}
 @endsection
 
 @section('add-script')
