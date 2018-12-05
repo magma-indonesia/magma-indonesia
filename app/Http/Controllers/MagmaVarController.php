@@ -32,11 +32,18 @@ class MagmaVarController extends Controller
     protected $varVisual;
 
     /**
-     * properti untuk request var_visual (bukan session)
+     * Properti untuk request var_visual (bukan session)
      *
      * @param \Illuminate\Http\Request $request
      */
     protected $requestVarVisual;
+
+    /**
+     * Initiate for saving status
+     *
+     * @param Boolean
+     */
+    protected $hasSaved = false;
 
     /**
      * Set session untuk variable VAR
@@ -340,6 +347,81 @@ class MagmaVarController extends Controller
         $this->setVarKegempaanSession($request);
 
         return $request->session()->all();
+    }
+
+    protected function saveVar()
+    {
+        try {
+
+            $this->hasSaved = true;
+            return $this;
+        } 
+        
+        catch (Exception $e) {
+            $this->hasSaved = false;
+            return $this;
+        }
+    }
+
+    protected function saveVarVisual()
+    {
+        try {
+
+            $this->hasSaved = true;
+            return $this;
+        } 
+        
+        catch (Exception $e) {
+            $this->hasSaved = false;
+            return $this;
+        }
+    }
+
+    protected function saveVarKlimatologi()
+    {
+        try {
+
+            $this->hasSaved = true;
+            return $this;
+        } 
+        
+        catch (Exception $e) {
+            $this->hasSaved = false;
+            return $this;
+        }
+    }
+
+    protected function saveVarGempa()
+    {
+        try {
+
+            $this->hasSaved = true;
+            return $this;
+        } 
+        
+        catch (Exception $e) {
+            $this->hasSaved = false;
+            return $this;
+        }
+    }
+
+    protected function validateSaveVar()
+    {
+        return $this->hasSaved ? true : false;
+    }
+
+    /**
+     * Save to database
+     *
+     * @return Boolean 
+     */
+    protected function saveVarSession()
+    {
+        return $this->saveVar()
+                ->saveVarVisual()
+                ->saveVarKlimatologi()
+                ->saveVarGempa()
+                ->validateSaveVar();
     }
 
     /**
