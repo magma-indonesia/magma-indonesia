@@ -114,6 +114,11 @@ class MagmaVarController extends Controller
         return $filename;
     }
 
+    /**
+     * Delete file foto tambahan lainnya
+     *
+     * @return void
+     */
     protected function deletePhotoLainnya()
     {
         if (!empty($this->varVisual['foto_lainnya']))
@@ -127,6 +132,11 @@ class MagmaVarController extends Controller
         return $this;
     }
 
+    /**
+     * Updating file foto lainnya
+     *
+     * @return String $filename_others
+     */
     protected function updatePhotoLainnya($filename_others = array())
     {
         if ($this->requestVarVisual->has('foto_lainnya'))
@@ -169,23 +179,30 @@ class MagmaVarController extends Controller
     }
 
     /**
-     * Set session untuk data kegempaan
+     * Set session untuk data Kegempaan
      *
      * @param \Illuminate\Http\Request $request
      * @return void
      */
     protected function setVarKegempaanSession($request)
     {
-        $request->session()->put('var_gempa',$request);
+        $request->session()->put('var_gempa',$request->except(['_token']));
 
         return $this;
     }
 
+    /**
+     * Set session untuk Klimatologi
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return void
+     */
     protected function setVarKlimatologiSession($request)
     {
+        $request->session()->put('var_klimatologi',$request->except(['_token']));
 
+        return $this;
     }
-
 
     /**
      * Display a listing of the resource.
@@ -227,13 +244,29 @@ class MagmaVarController extends Controller
         return view('gunungapi.laporan.createVarVisual',compact('visual'));
     }
 
+    /**
+     * Create laporan MAGMA-VAR langkah 3
+     * Input data-data klimatologi Gunung Api
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function createVarKlimatologi(Request $request)
     {
-        return view('gunungapi.laporan.createVarKlimatologi');
+        if (empty($request->session()->get('var'))) {
+            return redirect()->route('chambers.laporan.create.var');
+        }
+
+        if (empty($request->session()->get('var_visual'))) {
+            return redirect()->route('chambers.laporan.create.var.visual');
+        }
+
+        $klimatologi = $request->session()->get('var_klimatologi');
+
+        return view('gunungapi.laporan.createVarKlimatologi',compact('var_klimatologi'));
     }
 
     /**
-     * Create laporan MAGMA-VAR langkah 3
+     * Create laporan MAGMA-VAR langkah 4
      * Input data-data kegempaan Gunung Api
      *
      * @return \Illuminate\Http\Response
@@ -246,6 +279,10 @@ class MagmaVarController extends Controller
 
         if (empty($request->session()->get('var_visual'))) {
             return redirect()->route('chambers.laporan.create.var.visual');
+        }
+
+        if (empty($request->session()->get('var_klimatologi'))) {
+            return redirect()->route('chambers.laporan.create.var.klimatologi');
         }
 
         $jenisgempa = collect($this->jenisgempa())->chunk(10);
@@ -287,7 +324,9 @@ class MagmaVarController extends Controller
      */
     public function storeVarKlimatologi(CreateVarKlimatologi $request)
     {
-        return $request;
+        $this->setVarKlimatologiSession($request);
+
+        return redirect()->route('chambers.laporan.create.var.gempa');
     }
 
     /**
@@ -300,7 +339,7 @@ class MagmaVarController extends Controller
     {
         $this->setVarKegempaanSession($request);
 
-        return $request->session()->get('var_gempa');
+        return $request->session()->all();
     }
 
     /**
@@ -348,6 +387,12 @@ class MagmaVarController extends Controller
         //
     }
 
+    /**
+     * Check existing VAR
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function exists(Request $request)
     {
         $code = PosPga::where('obscode',$request->code)->firstOrFail()->code_id;
