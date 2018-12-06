@@ -29,8 +29,8 @@ class RekomendasiExists implements Rule
         if ($value != '9999')
         {
             $exists = VarRekomendasi::where('id',$value)
-            ->where('code_id',session('var')['code_id'])
-            ->first();
+                        ->where('code_id',session('var')['code_id'])
+                        ->first();
         } else {
             $exists = true;
         }
