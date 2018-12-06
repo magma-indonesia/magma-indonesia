@@ -152,7 +152,7 @@
                                             </div>
                                             <hr>
                                             <div class="text-left m-t-xs">
-                                                <button type="submit" class="submit btn btn-primary" href="#">Berikutnya </button>
+                                                <button type="submit" class="submit btn btn-primary" href="#"> Berikutnya <i class="fa fa-angle-double-right"></i></button>
                                             </div>
 
                                         </div>
