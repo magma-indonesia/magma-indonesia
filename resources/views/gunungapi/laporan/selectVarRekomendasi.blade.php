@@ -84,7 +84,7 @@ Step 2 - Rekomendasi
                                                     <div class="hpanel hblue {{ $key != 0 ? 'collapsed' : ''}}">
                                                         <div class="panel-heading hbuilt">
                                                             <div class="panel-tools">
-                                                            <a class="showhide-rekomendasi"><i class="fa fa-chevron-circle-up fa-4x"></i></a>
+                                                            <a class="showhide-rekomendasi"><i class="fa {{ $key != 0 ? 'fa-chevron-circle-down' : 'fa-chevron-circle-up'}} fa-4x"></i></a>
                                                             </div>
                                                             <div class="p-xs" style="max-width: 50%;">
                                                                 <div class="checkbox">
