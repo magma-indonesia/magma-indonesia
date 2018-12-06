@@ -50,6 +50,8 @@ Route::group(['prefix' => 'gunungapi'], function () {
     Route::post('laporan/validasi','ActivityGaController@validasi')->name('laporan.validasi');
     Route::get('laporan/create-var','MagmaVarController@createVar')
         ->name('laporan.create.var');
+    Route::get('laporan/select-var-rekomendasi','MagmaVarController@selectVarRekomendasi')
+        ->name('laporan.select.var.rekomendasi');
     Route::get('laporan/create-var-visual','MagmaVarController@createVarVisual')
         ->name('laporan.create.var.visual');
     Route::get('laporan/create-var-klimatologi','MagmaVarController@createVarKlimatologi')
@@ -58,6 +60,8 @@ Route::group(['prefix' => 'gunungapi'], function () {
         ->name('laporan.create.var.gempa');
     Route::post('laporan/create-var','MagmaVarController@storeVar')
         ->name('laporan.store.var');
+    Route::post('laporan/select-var','MagmaVarController@storeVarRekomendasi')
+        ->name('laporan.store.var.rekomendasi');
     Route::post('laporan/create-var-visual','MagmaVarController@storeVarVisual')
         ->name('laporan.store.var.visual');
     Route::post('laporan/create-var-klimatologi','MagmaVarController@storeVarKlimatologi')
