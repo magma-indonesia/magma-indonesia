@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    Step 1 - VAR Data Awal
+    Step 1 - Data Laporan
 @endsection
 
 @section('add-vendor-css')
@@ -21,7 +21,7 @@
                             <a href="{{ route('chambers.laporan.index') }}">Gunung Api</a>
                         </li>
                         <li class="active">
-                            <a href="{{ route('chambers.laporan.create.var') }}">Step 1 - VAR Data Awal</a>
+                            <a href="{{ route('chambers.laporan.create.var') }}">Step 1 - Data Laporan</a>
                         </li>
                     </ol>
                 </div>
@@ -46,10 +46,11 @@
                     <form role="form" id="form" method="POST" action="{{ route('chambers.laporan.store.var')}}" enctype="multipart/form-data">
                             @csrf
                             <div class="text-center m-b-md" id="wizardControl">
-                                <a class="btn btn-primary" href="#" >Step 1 - Data Laporan</a>
-                                <a class="btn btn-default hidden-xs" href="#" disabled>Step 2 - Visual</a>
-                                <a class="btn btn-default hidden-xs" href="#" disabled>Step 3 - Klimatologi</a>
-                                <a class="btn btn-default hidden-xs" href="#" disabled>Step 4 - Kegempaan</a>
+                                <a class="btn btn-primary m-b" href="#">Step 1 - <span class="hidden-xs">Data Laporan</span></a>
+                                <a class="btn btn-default hidden-xs m-b" href="#" disabled>Step 2 - Rekomendasi</a>
+                                <a class="btn btn-default hidden-xs m-b" href="#" disabled>Step 3 - Visual</a>
+                                <a class="btn btn-default hidden-xs m-b" href="#" disabled>Step 4 - Klimatologi</a>
+                                <a class="btn btn-default hidden-xs m-b" href="#" disabled>Step 5 - Kegempaan</a>
                             </div>
                             <hr>
                             <div class="tab-content">
@@ -151,7 +152,7 @@
                                             </div>
                                             <hr>
                                             <div class="text-left m-t-xs">
-                                                <button type="submit" class="submit btn btn-primary" href="#">Step 1 - Submit</button>
+                                                <button type="submit" class="submit btn btn-primary" href="#">Berikutnya </button>
                                             </div>
 
                                         </div>
