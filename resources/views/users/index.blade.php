@@ -114,7 +114,7 @@
             // Initialize table
             $('#table-users').dataTable({
                 dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
-                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "lengthMenu": [[30, 60, 100, -1], [30, 60, 100, "All"]],
                 buttons: [
                     { extend: 'copy', className: 'btn-sm'},
                     { extend: 'csv', title: 'Daftar Users', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6 ]} },
