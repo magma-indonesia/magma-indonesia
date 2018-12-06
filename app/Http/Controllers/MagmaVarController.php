@@ -12,7 +12,9 @@ use App\PosPga;
 use App\MagmaVar;
 use App\VarVisual;
 use App\VarAsap;
+use App\VarRekomendasi;
 use App\Http\Requests\CreateVar;
+use App\Http\Requests\SelectVarRekomendasi;
 use App\Http\Requests\CreateVarVisual;
 use App\Http\Requests\CreateVarGempa;
 use App\Http\Requests\CreateVarKlimatologi;
@@ -30,6 +32,13 @@ class MagmaVarController extends Controller
      * @var array
      */
     protected $varVisual;
+
+    /**
+     * Save id rekomendasi after created
+     *
+     * @var array
+     */
+    protected $rekomendasi_id;
 
     /**
      * Properti untuk request var_visual (bukan session)
@@ -70,6 +79,40 @@ class MagmaVarController extends Controller
         ];
 
         $request->session()->put('var',$var);
+        return $this;
+    }
+
+
+    /**
+     * Set session untuk data Kegempaan
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return void
+     */
+    protected function createRekomendasi($request)
+    {
+
+        $rekomendasi = new VarRekomendasi;
+        $rekomendasi->code_id = session('var')['code_id'];
+        $rekomendasi->status = session('var')['status'];
+        $rekomendasi->rekomendasi = $request->rekomendasi_text;
+        $rekomendasi->save();
+
+        $this->rekomendasi_id = $rekomendasi->id;
+ 
+        return $this;
+    }
+
+
+    /**
+     * Add rekomendasi to VAR Session
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return void
+     */
+    protected function setVarRekomendasiSession($request)
+    {
+        $request->session()->put('var.rekomendasi_id',$this->rekomendasi_id);
         return $this;
     }
 
@@ -222,7 +265,7 @@ class MagmaVarController extends Controller
     }
 
     /**
-     * Create laporan MAGMA-VAR langkah 1
+     * Create laporan MAGMA-VAR 
      * Meliputi data dasar laporan
      *
      * @return \Illuminate\Http\Response
@@ -235,7 +278,28 @@ class MagmaVarController extends Controller
     }
 
     /**
-     * Create laporan MAGMA-VAR langkah 2
+     * Create laporan MAGMA-VAR 
+     * Pilih data rekomendasi
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function selectVarRekomendasi(Request $request)
+    {
+        if (empty($request->session()->get('var'))) {
+            return redirect()->route('chambers.laporan.create.var');
+        }
+
+        $rekomendasi = VarRekomendasi::select('id','code_id','rekomendasi')
+                            ->where('code_id',session('var')['code_id'])
+                            ->where('status',session('var')['status'])
+                            ->orderByDesc('created_at')
+                            ->get();
+
+        return view('gunungapi.laporan.selectVarRekomendasi',compact('rekomendasi'));
+    }
+
+    /**
+     * Create laporan MAGMA-VAR
      * Meliputi data dasar Visual laporan
      *
      * @return \Illuminate\Http\Response
@@ -252,7 +316,7 @@ class MagmaVarController extends Controller
     }
 
     /**
-     * Create laporan MAGMA-VAR langkah 3
+     * Create laporan MAGMA-VAR
      * Input data-data klimatologi Gunung Api
      *
      * @return \Illuminate\Http\Response
@@ -273,7 +337,7 @@ class MagmaVarController extends Controller
     }
 
     /**
-     * Create laporan MAGMA-VAR langkah 4
+     * Create laporan MAGMA-VAR
      * Input data-data kegempaan Gunung Api
      *
      * @return \Illuminate\Http\Response
@@ -306,6 +370,23 @@ class MagmaVarController extends Controller
     public function storeVar(CreateVar $request)
     {
         $this->setVarSession($request);
+
+        return redirect()->route('chambers.laporan.select.var.rekomendasi');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \App\Http\Requests\SelectVarRekomendasi  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeVarRekomendasi(SelectVarRekomendasi $request)
+    {
+        $this->rekomendasi_id = $request->rekomendasi;
+
+        $request->rekomendasi == '9999' ? 
+                $this->createRekomendasi($request)->setVarRekomendasiSession($request) :
+                $this->setVarRekomendasiSession($request);
 
         return redirect()->route('chambers.laporan.create.var.visual');
     }
