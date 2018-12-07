@@ -82,7 +82,6 @@ class MagmaVarController extends Controller
         return $this;
     }
 
-
     /**
      * Set session untuk data Kegempaan
      *
@@ -91,7 +90,6 @@ class MagmaVarController extends Controller
      */
     protected function createRekomendasi($request)
     {
-
         $rekomendasi = new VarRekomendasi;
         $rekomendasi->code_id = session('var')['code_id'];
         $rekomendasi->status = session('var')['status'];
@@ -102,7 +100,6 @@ class MagmaVarController extends Controller
  
         return $this;
     }
-
 
     /**
      * Add rekomendasi to VAR Session
