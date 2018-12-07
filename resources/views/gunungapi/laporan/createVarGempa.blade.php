@@ -379,11 +379,11 @@
                                             {{-- Button Footer --}}
                                             <hr>
                                             <div class="text-left m-t-xs">
-                                                <a href="{{ route('chambers.laporan.create.var') }}" type="button" class="btn btn-default">Data Laporan</a>
-                                                <a href="{{ route('chambers.laporan.select.var.rekomendasi') }}" type="button" class="btn btn-default">Rekomendasi</a>
-                                                <a href="{{ route('chambers.laporan.create.var.visual') }}" type="button" class="btn btn-default">Visual</a>
-                                                <a href="{{ route('chambers.laporan.create.var.gempa') }}" type="button" class="btn btn-default">Kegempaan</a>
-                                                <button type="submit" class="submit btn btn-primary" href="#"> Berikutnya <i class="fa fa-angle-double-right"></i></button>
+                                                <a href="{{ route('chambers.laporan.create.var') }}" type="button" class="btn btn-default">Data Laporan <i class="text-success fa fa-check"></i></a>
+                                                <a href="{{ route('chambers.laporan.select.var.rekomendasi') }}" type="button" class="btn btn-default">Rekomendasi <i class="text-success fa fa-check"></i></a>
+                                                <a href="{{ route('chambers.laporan.create.var.visual') }}" type="button" class="btn btn-default">Visual <i class="text-success fa fa-check"></i></a>
+                                                <a href="{{ route('chambers.laporan.create.var.klimatologi') }}" type="button" class="btn btn-default">Klimatologi <i class="text-success fa fa-check"></i></a>
+                                                <button type="submit" class="submit btn btn-primary" href="#"> Preview <i class="fa fa-angle-double-right"></i></button>
                                             </div>
                                         </div>
                                     </div>

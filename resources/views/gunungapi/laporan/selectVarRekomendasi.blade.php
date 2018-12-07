@@ -125,7 +125,7 @@ Step 2 - Rekomendasi
                                             </div>
                                             <hr>
                                             <div class="text-left m-t-xs">
-                                                <a href="{{ route('chambers.laporan.create.var') }}" type="button" class="btn btn-default">Data Laporan</a>
+                                                <a href="{{ route('chambers.laporan.create.var') }}" type="button" class="btn btn-default">Data Laporan <i class="text-success fa fa-check"></i></a>
                                                 <button type="submit" class="submit btn btn-primary" href="#"> Berikutnya <i class="fa fa-angle-double-right"></i></button>
                                             </div>
                                         </div>
