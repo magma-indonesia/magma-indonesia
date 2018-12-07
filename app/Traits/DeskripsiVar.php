@@ -140,7 +140,7 @@ trait DeskripsiVar
 
     protected function gempaTerasa($data,$code)
     {
-        $result = $data['jumlah'].' kali gempa '.$this->namaGempa($code).', skala '.$$this->skala($data['skala']).' dengan amplitudo '.$this->minMax($data['amin'],$data['amax']).' mm, S-P '.$this->sp($data['spmin'],$data['spmax']).' dan lama gempa '.$this->minMax($data['dmin'],$data['dmax']).' detik. ';
+        $result = $data['jumlah'].' kali gempa '.$this->namaGempa($code).', skala '.$this->skala($data['skala']).' dengan amplitudo '.$this->minMax($data['amin'],$data['amax']).' mm, S-P '.$this->sp($data['spmin'],$data['spmax']).' dan lama gempa '.$this->minMax($data['dmin'],$data['dmax']).' detik. ';
 
         return $result;
     }
