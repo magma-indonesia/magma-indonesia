@@ -179,7 +179,7 @@ class AbsensiController extends Controller
 
         $absensi = collect($range)->sortByDesc(function ($item,$key) {
             return $key;
-        })->merge($absensi);        
+        })->merge($absensi);
                         
         return view('absensi.show',compact('user','kantor','absensi','jumlah','durasi'));
 
