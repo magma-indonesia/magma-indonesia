@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-Step 2 - Visual
+Step 3 - Visual
 @endsection
 
 @section('content-header')
@@ -17,7 +17,7 @@ Step 2 - Visual
                             <a href="{{ route('chambers.laporan.index') }}">Gunung Api</a>
                         </li>
                         <li class="active">
-                            <a href="{{ route('chambers.laporan.create.var.visual') }}">Step 2 - Visual</a>
+                            <a href="{{ route('chambers.laporan.create.var.visual') }}">Step 3 - Visual</a>
                         </li>
                     </ol>
                 </div>
@@ -42,10 +42,11 @@ Step 2 - Visual
                         <form role="form" id="form" method="POST" action="{{ route('chambers.laporan.store.var.visual')}}" enctype="multipart/form-data">
                             @csrf
                             <div class="text-center m-b-md" id="wizardControl">
-                                <a class="btn btn-default hidden-xs" href="#" disabled>Step 1 - <span class="hidden-xs">Data Laporan</span></a>
-                                <a class="btn btn-primary" href="#">Step 2 - Visual</a>
-                                <a class="btn btn-default hidden-xs" href="#" disabled>Step 3 - Klimatologi</a>
-                                <a class="btn btn-default hidden-xs" href="#" disabled>Step 4 - Kegempaan</a>
+                                <a class="btn btn-default hidden-xs m-b" href="{{ route('chambers.laporan.create.var') }}">Step 1 - <span class="hidden-xs">Data Laporan</span></a>
+                                <a class="btn btn-default hidden-xs m-b" href="{{ route('chambers.laporan.select.var.rekomendasi') }}">Step 2 - Rekomendasi</a>
+                                <a class="btn btn-primary m-b" href="#">Step 3 - Visual</a>
+                                <a class="btn btn-default hidden-xs m-b" href="#" disabled>Step 4 - Klimatologi</a>
+                                <a class="btn btn-default hidden-xs m-b" href="#" disabled>Step 5 - Kegempaan</a>
                             </div>
                             <hr>
                             <div class="tab-content">
@@ -305,8 +306,9 @@ Step 2 - Visual
                                             </div>
                                             <hr>
                                             <div class="text-left m-t-xs">
-                                                <a href="{{ route('chambers.laporan.create.var') }}" type="button" class="btn btn-default">Step 1 - Data Laporan</a>
-                                                <button type="submit" class="submit btn btn-primary">Step 2 - Submit</button>
+                                                <a href="{{ route('chambers.laporan.create.var') }}" type="button" class="btn btn-default">Data Laporan</a>
+                                                <a href="{{ route('chambers.laporan.select.var.rekomendasi') }}" type="button" class="btn btn-default">Rekomendasi</a>
+                                                <button type="submit" class="submit btn btn-primary" href="#"> Berikutnya <i class="fa fa-angle-double-right"></i></button>
                                             </div>
                                         </div>
                                     </div>
