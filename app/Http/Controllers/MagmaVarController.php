@@ -15,6 +15,7 @@ use App\VarAsap;
 use App\VarRekomendasi;
 use App\Http\Requests\CreateVar;
 use App\Http\Requests\SelectVarRekomendasi;
+use App\Http\Requests\DeleteVarRekomendasi;
 use App\Http\Requests\CreateVarVisual;
 use App\Http\Requests\CreateVarGempa;
 use App\Http\Requests\CreateVarKlimatologi;
@@ -545,6 +546,20 @@ class MagmaVarController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyVarRekomendasi(DeleteVarRekomendasi $request, $id)
+    {
+        $rekomendasi = VarRekomendasi::findOrFail($id);
+        return $rekomendasi->delete() ? 
+                    [ 'success' => 1, 'message' => 'Rekomendasi berhasil dihapus'] : 
+                    [ 'success' => 0, 'message' => 'Rekomendasi gagal dihapus'];
     }
 
     /**
