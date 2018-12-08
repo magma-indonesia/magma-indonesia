@@ -4,6 +4,10 @@
 Step 2 - Rekomendasi
 @endsection
 
+@section('add-vendor-css')
+    <link rel="stylesheet" href="{{ asset('vendor/sweetalert/lib/sweet-alert.css') }}" />
+@endsection
+
 @section('content-header')
     <div class="small-header">
         <div class="hpanel">
@@ -81,7 +85,7 @@ Step 2 - Rekomendasi
                                                 <div class="form-group col-lg-12">
                                                     <label>Pilih Rekomendasi</label>
                                                     @foreach ($rekomendasi as $key => $item)
-                                                    <div class="hpanel hblue {{ $key != 0 ? 'collapsed' : ''}}">
+                                                    <div class="hpanel hblue rekomendasi-{{ $item->id }} {{ $key != 0 ? 'collapsed' : ''}}">
                                                         <div class="panel-heading hbuilt">
                                                             <div class="panel-tools">
                                                             <a class="showhide-rekomendasi"><i class="fa {{ $key != 0 ? 'fa-chevron-circle-down' : 'fa-chevron-circle-up'}} fa-4x"></i></a>
@@ -89,7 +93,7 @@ Step 2 - Rekomendasi
                                                             <div class="p-xs" style="max-width: 50%;">
                                                                 <div class="checkbox">
                                                                     <label class="checkbox-inline">
-                                                                    <input name="rekomendasi" value="{{ $item->id }}" type="radio" class="i-checks" {{ $key == 0 ? 'checked' : '' }}>
+                                                                    <input name="rekomendasi" value="{{ $item->id }}" type="radio" class="i-checks" {{ $key == 0 ? 'checked' : '' }} required>
                                                                         Pilih Rekomendasi {{ $key+1 }} {!! $key == 0 ? '<span class="label label-magma">default</span>' : '' !!}
                                                                     </label>
                                                                 </div>
@@ -100,6 +104,13 @@ Step 2 - Rekomendasi
                                                                 <p style="line-height: 1.6;">{!! nl2br($item->rekomendasi) !!}</p>
                                                             </div>
                                                         </div>
+                                                        @role('Super Admin')
+                                                        <div class="panel-footer text-right">
+                                                            <div class="btn-group">
+                                                                <button class="btn btn-danger delete-rekomendasi" type="button" rekomendasi-id="{{ $item->id }}" value="{{ route('chambers.laporan.destroy.var.rekomendasi',['id' => $item->id]) }}"><i class="fa fa-trash"></i> Delete</button>
+                                                            </div>
+                                                        </div>
+                                                        @endrole
                                                     </div>
                                                     @endforeach
 
@@ -111,14 +122,14 @@ Step 2 - Rekomendasi
                                                             <div class="p-xs" style="max-width: 50%;">
                                                                 <div class="checkbox">
                                                                     <label class="checkbox-inline">
-                                                                    <input name="rekomendasi" value="9999" type="radio" class="i-checks" {{ count($rekomendasi)  ? '' : 'checked'}}>
+                                                                    <input id="create-rekomendasi" name="rekomendasi" value="9999" type="radio" class="i-checks" {{ count($rekomendasi)  ? '' : 'checked'}} required>
                                                                         Buat Rekomendasi Baru
                                                                     </label>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="panel-body">
-                                                            <textarea placeholder="Gunakan tata bahasa Indonesia yang baik dan benar dan hindari penggunaan singkatan." name="rekomendasi_text" class="form-control p-m" rows="4"></textarea>
+                                                            <textarea id="rekomendasi_text" placeholder="Gunakan tata bahasa Indonesia yang baik dan benar dan hindari penggunaan singkatan." name="rekomendasi_text" class="form-control p-m" rows="4"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -141,6 +152,10 @@ Step 2 - Rekomendasi
     </div>
 @endsection
 
+@section('add-vendor-script')
+    <script src="{{ asset('vendor/sweetalert/lib/sweet-alert.min.js') }}"></script>
+@endsection
+
 @section('add-script')
     <script>
         $(document).ready(function() {
@@ -161,6 +176,53 @@ Step 2 - Rekomendasi
                     hpanel.find('[id^=map-]').resize();
                 }, 50);
             });
+
+            $('#rekomendasi_text').on('click',function(e) {
+                $('#create-rekomendasi').iCheck('check');
+            });
+
+            $('.delete-rekomendasi').on('click', function(e) {
+                var $url = $(this).val(),
+                    $id = $(this).attr('rekomendasi-id');
+                    $rekomendasi = $('.rekomendasi-'+$id);
+                
+                console.log($id);
+
+                swal({
+                    title: "Anda yakin?",
+                    text: "Data yang telah dihapus tidak bisa dikembalikan",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, hapus!",
+                    cancelButtonText: "Gak jadi deh!",
+                    closeOnConfirm: false,
+                    closeOnCancel: true },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        
+                        $.ajax({
+                            url: $url,
+                            type: 'POST',
+                            success: function(data) {
+                                if (data.success){
+                                    swal("Berhasil!", data.message, "success");
+                                    $rekomendasi.remove();
+                                }
+                            },
+                            error: function(data){
+                                console.log(data);
+                            }
+                        });
+                    }
+                });
+
+            })
         });
     </script>
 @endsection
