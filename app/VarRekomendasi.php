@@ -12,6 +12,10 @@ class VarRekomendasi extends Model
         'rekomendasi',
     ];
 
+    protected $guard = [
+        'id'
+    ];
+
     /**     
      *   Masing-masing Var hanya dimiliki
      *   oleh 1 Gunungapi
