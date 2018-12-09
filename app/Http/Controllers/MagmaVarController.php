@@ -76,6 +76,7 @@ class MagmaVarController extends Controller
             'var_perwkt' => $request->perwkt,
             'obscode_id' => $request->code,
             'status' => $request->status,
+            'rekomendasi_id' => null,
             'nip_pelapor' => auth()->user()->nip
         ];
 
@@ -304,7 +305,11 @@ class MagmaVarController extends Controller
      */
     public function createVarVisual(Request $request)
     {
-        if (empty($request->session()->get('var'))) {
+        if (!$request->session()->has('users')) {
+            return redirect()->route('chambers.laporan.create.var');
+        }
+
+        if (session('var')['rekomendasi_id'] === NULL) {
             return redirect()->route('chambers.laporan.create.var');
         }
 
