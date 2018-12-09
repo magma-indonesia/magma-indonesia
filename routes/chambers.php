@@ -68,6 +68,8 @@ Route::group(['prefix' => 'gunungapi'], function () {
         ->name('laporan.store.var.klimatologi');
     Route::post('laporan/create-var-gempa','MagmaVarController@storeVarGempa')
         ->name('laporan.store.var.gempa');
+    Route::post('laporan/delete-var-rekomendasi/{id}','MagmaVarController@destroyVarRekomendasi')
+        ->name('laporan.destroy.var.rekomendasi');
     Route::post('laporan/exists','MagmaVarController@exists')->name('laporan.exists');
     Route::resource('laporan','ActivityGaController', ['except' => [
         'create','store','edit','update','destroy'
