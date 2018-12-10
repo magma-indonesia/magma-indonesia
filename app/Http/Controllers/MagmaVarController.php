@@ -436,8 +436,24 @@ class MagmaVarController extends Controller
     protected function saveVar()
     {
         try {
-
-            $this->hasSaved = true;
+            $var = session('var');
+            $save = MagmaVar::updateOrCreate(
+                        [
+                            'noticenumber' => $var['noticenumber']
+                        ],
+                        [
+                            'slug' => $var['slug'],
+                            'code_id' => $var['code_id'],
+                            'var_data_date' => $var['var_data_date'],
+                            'periode' => $var['periode'],
+                            'var_perwkt' => $var['var_perwkt'],
+                            'obscode_id' => $var['obscode_id'],
+                            'status' => $var['status'],
+                            'rekomendasi_id' => $var['rekomendasi_id'],
+                            'nip_pelapor' => $var['nip_pelapor'],
+                        ]
+                    );
+            $this->hasSaved = $save ? true : false;
             return $this;
         } 
         
@@ -499,7 +515,7 @@ class MagmaVarController extends Controller
      *
      * @return Boolean 
      */
-    protected function saveVarSession()
+    protected function saveMagmaVar()
     {
         return $this->saveVar()
                 ->saveVarVisual()
