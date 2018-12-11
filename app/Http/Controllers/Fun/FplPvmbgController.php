@@ -31,28 +31,14 @@ class FplPvmbgController extends Controller
 
     public function hasCache($id)
     {
-        return Cache::store('redis')->has('fpls'.$id) ? true :false;
+        // Key stored in redis using prefix magma_indonesia_cache:
+        return Cache::store('redis')->has('magma_indonesia_cache:fpls'.$id) ? true :false;
     }
 
     public function setCache($id)
     {
         $league = $this->client->get(self::API_LEAGUE.$id);
         $fpls = json_decode($league->getBody(), true);
-        $this->cache = Cache::store('redis')->put('fpls'.$id, $fpls, 120);
-        return $this;
-    }
-
-    public function getCache($id)
-    {
-        return Cache::store('redis')->get('fpls'.$id);
-    }
-
-    public function index($id = '18239')
-    {
-
-        $fpls = $this->hasCache($id) ? 
-                    $this->getCache($id) : 
-                    $this->setCache($id)->getCache($id);
 
         $fpls = $fpls['standings']['results'];
         $top = $fpls[0]['total'];
@@ -77,6 +63,24 @@ class FplPvmbgController extends Controller
         }
 
         $value = $this->team_value;
+        Cache::store('redis')->put('magma_indonesia_cache:fpls'.$id, $fpls, 120);
+        Cache::store('redis')->put('magma_indonesia_cache:fpls_value'.$id, $value, 120);
+        return $this;
+    }
+
+    public function getCache($id)
+    {
+        return Cache::store('redis')->get('magma_indonesia_cache:fpls'.$id);
+    }
+
+    public function index($id = '18239')
+    {
+        $fpls = $this->hasCache($id) ? 
+                    $this->getCache($id) : 
+                    $this->setCache($id)->getCache($id);
+
+        $top = $fpls[0]['total'];
+        $value = Cache::store('redis')->get('magma_indonesia_cache:fpls_value'.$id);
 
         return view('fun.fpl.index',compact('id','fpls','top','value'));
     }
