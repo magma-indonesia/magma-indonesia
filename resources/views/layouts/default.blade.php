@@ -26,6 +26,8 @@
 <!-- Vendor scripts -->
 @include('includes.script')
 
+{{-- Protect from Telkom Shit ad injection --}}
+<!-- </body></html> -->
 </body>
 
 </html>

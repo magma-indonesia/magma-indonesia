@@ -22,5 +22,6 @@
     <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
 
     @yield('add-css')
-
+    {{-- Protect from Telkom Shit ad injection --}}
+    <!-- </head> -->
 </head>
