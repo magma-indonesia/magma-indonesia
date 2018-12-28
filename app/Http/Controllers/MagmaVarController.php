@@ -305,7 +305,7 @@ class MagmaVarController extends Controller
      */
     public function createVarVisual(Request $request)
     {
-        if (!$request->session()->has('users')) {
+        if (!$request->session()->has('var')) {
             return redirect()->route('chambers.laporan.create.var');
         }
 
@@ -466,7 +466,6 @@ class MagmaVarController extends Controller
     protected function saveVarVisual()
     {
         try {
-
             $this->hasSaved = true;
             return $this;
         } 
