@@ -43,7 +43,7 @@
                         Form MAGMA-VAR
                     </div>
                     <div class="panel-body">
-                    <form role="form" id="form" method="POST" action="{{ route('chambers.laporan.store.var')}}" enctype="multipart/form-data">
+                        <form role="form" id="form" method="POST" action="{{ route('chambers.laporan.store.var')}}" enctype="multipart/form-data">
                             @csrf
                             <div class="text-center m-b-md" id="wizardControl">
                                 <a class="btn btn-primary m-b" href="#">Step 1 - <span class="hidden-xs">Data Laporan</span></a>
