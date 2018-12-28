@@ -41,7 +41,8 @@ class MagmaRoqController extends Controller
      */
     public function create()
     {
-        //
+        $user = auth()->user();
+        return view('v1.gempabumi.create',compact('user'));
     }
 
     /**
@@ -52,7 +53,7 @@ class MagmaRoqController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $request;
     }
 
     /**
@@ -75,7 +76,7 @@ class MagmaRoqController extends Controller
     public function edit($id)
     {
         $roq = MagmaRoq::findOrFail($id);
-        
+
     }
 
     /**
