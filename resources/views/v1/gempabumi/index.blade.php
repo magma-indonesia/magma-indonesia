@@ -36,15 +36,29 @@
     <div class="content animate-panel">
         <div class="row">
             <div class="col-lg-12">
+                @if(Session::has('flash_message'))
+                <div class="alert alert-success">
+                    <i class="fa fa-bolt"></i> {!! session('flash_message') !!}
+                </div>
+                @endif
+
+                <div class="hpanel">
+                    <div class="panel-heading">
+                        Kejadian Gempa Bumi - v1
+                    </div>
+                    <div class="panel-body float-e-margins">
+                        <div class="row">
+                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                <a href="{{ route('chambers.v1.gempabumi.create') }}" class="btn btn-outline btn-block btn-magma" type="button">Tambah Kejadian</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="hpanel">
                     <div class="panel-heading">
                         Kejadian Gempa Bumi dari MAGMA v1
                     </div>
-                    @if(Session::has('flash_message'))
-                    <div class="alert alert-success">
-                        <i class="fa fa-bolt"></i> {!! session('flash_message') !!}
-                    </div>
-                    @endif
                     <div class="panel-body">
                         {{ $roqs->links() }}
                         <div class="table-responsive">
