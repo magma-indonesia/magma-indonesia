@@ -184,6 +184,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Laravolt\Indonesia\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Orchestra\Parser\XmlServiceProvider::class,
         // CyrildeWit\EloquentViewable\EloquentViewableServiceProvider::class,
     ],
 
@@ -240,6 +241,7 @@ return [
         'Indonesia' => Laravolt\Indonesia\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Client' => App\Helpers\Client::class,
+        'XmlParser' => Orchestra\Parser\Xml\Facade::class,
 
     ],
 

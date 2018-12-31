@@ -18,5 +18,5 @@ yarn-error.log
 *.rar
 *.sql
 resources/views/tes/index.blade.php
-.vscode/launch.json
+.vscode/*
 app/Http/Controllers/TesController.php
