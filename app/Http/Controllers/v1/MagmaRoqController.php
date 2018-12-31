@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\v1\MagmaRoq;
+use App\Http\Requests\v1\CreateRoqRequest;
 
 class MagmaRoqController extends Controller
 {
@@ -48,31 +49,52 @@ class MagmaRoqController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\v1\CreateRoqRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateRoqRequest $request)
     {
-        $this->validate($request,[
-            'datetime_wib' => 'required|date_format:Y-m-d H:i|before:tomorrow',
-            'lat_lima' => 'required|numeric|between:-10,12',
-            'lat_lima' => 'required|numeric|between:94,142',
-            'magnitude' => 'required|numeric|between:0,9',
-            'depth' => 'required|numeric|between:9,500',
-            'area' => 'required',
-            'koter' => 'required',
-            'roq_tanggapan' => 'required|boolean',
-            'roq_title' => 'required_if:roq_tanggapan,1',
-            'roq_intro' => 'required_if:roq_tanggapan,1',
-            'roq_konwil' => 'required_if:roq_tanggapan,1',
-            'roq_mekanisme' => 'required_if:roq_tanggapan,1',
-            'roq_efek' => 'required_if:roq_tanggapan,1',
-            'roq_rekom' => 'required_if:roq_tanggapan,1',
-            'roq_source' => 'required_if:roq_tanggapan,1|array',
-            'roq_source.*' => 'required_if:roq_tanggapan,1|in:BMKG,GFZ,USGS',
-            'roq_tsunami' => 'required_if:roq_tanggapan,1|boolean'
-        ]);
-        return $request;
+        $roq = MagmaRoq::updateOrCreate(
+            [
+                'id_lap' => $request->id_lap
+            ],
+            [
+                'datetime_wib' => $request->datetime_wib,
+                'datetime_wib_str' => $request->datetime_wib_str,
+                'datetime_utc' => $request->datetime_utc,
+                'magnitude' => $request->magnitude,
+                'magtype' => $request->magtype,
+                'depth' => $request->depth,
+                'dep_unit' => $request->dep_unit,
+                'lon_lima' => $request->lon_lima,
+                'lat_lima' => $request->lat_lima,
+                'latlon_text'  => $request->latlon_text,
+                'area' => $request->area,
+                'koter'  => $request->koter,
+                'mmi' => $request->mmi,
+                'nearest_volcano' => $request->nearest_volcano,
+                'roq_tanggapan' => $request->roq_tanggapan ? 'YA' : 'TIDAK',
+                'roq_title' => $request->roq_title,
+                'roq_tsu' => $request->roq_tsu ? 'YA' : 'TIDAK',
+                'roq_intro' => $request->roq_intro,
+                'roq_konwil' => $request->roq_konwil,
+                'roq_mekanisme' => $request->roq_mekanisme,
+                'roq_efek' => $request->roq_efek,
+                'roq_rekom' => $request->roq_rekom,
+                'roq_source' => $request->roq_source,
+                'roq_nama_pelapor' => $request->roq_nama_pelapor,
+                'roq_nip_pelapor' => $request->roq_nip_pelapor,
+                'roq_nama_pemeriksa' => $request->roq_nama_pemeriksa,
+                'roq_nip_pemeriksa' => $request->roq_nip_pemeriksa,
+            ]
+        );
+
+        $messages = $roq ? 
+                        'Kejadian Gempa Bumi berhasil ditambahkan!' :
+                        'Kejadian Gempa Bumi gagal ditambahkan!' ;
+
+        return redirect()->route('chambers.v1.gempabumi.index')
+                    ->with('flash_message',$messages);
     }
 
     /**
@@ -118,6 +140,23 @@ class MagmaRoqController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $roq = MagmaRoq::findOrFail($id);
+
+        if ($roq->delete())
+        {
+            $data = [
+                'success' => 1,
+                'message' => 'Kejadian Gempa Bumi berhasil dihapus.'
+            ];
+
+            return response()->json($data);
+        }
+
+        $data = [
+            'success' => 0,
+            'message' => 'Gagal dihapus.'
+        ];
+
+        return response()->json($data);
     }
 }
