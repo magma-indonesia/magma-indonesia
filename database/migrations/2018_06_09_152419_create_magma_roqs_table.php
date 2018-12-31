@@ -17,7 +17,7 @@ class CreateMagmaRoqsTable extends Migration
             $table->increments('id');
             $table->char('noticenumber',17)->unique()->index();
             $table->dateTime('utc');
-            $table->float('magnitude');
+            $table->float('magnitude',4,2);
             $table->char('type',3);
             $table->float('depth');
             $table->float('latitude',10,6)->nullable();
