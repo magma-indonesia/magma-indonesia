@@ -38,7 +38,7 @@ class CreateRoqRequest extends FormRequest
             'magtype' => 'SR',
             'dep_unit' => 'Km',
             'latlon_text' => $latlon_text,
-            'mmi' => '-belum ada keterangan-',
+            'mmi' => null,
             'nearest_volcano' => null,
             'roq_nama_pemeriksa' => $pemeriksa['nama'],
             'roq_nip_pemeriksa' => $pemeriksa['nip'],
