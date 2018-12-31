@@ -117,7 +117,7 @@
                                             <div class="form-group col-lg-8">
                                                 <label>Bujur</label>
                                                 <div class="input-group">
-                                                    <input name="lon_lima" id="longitude" class="form-control" type="text" value="" required>
+                                                    <input name="lon_lima" id="longitude" class="form-control" type="text" value="{{old('lon_lima')}}" required>
                                                     <span class="input-group-addon" style="min-width: 75px;">&deg;BT</span>
                                                 </div>
                                             </div>
@@ -127,7 +127,7 @@
                                             <div class="form-group col-lg-8">
                                                 <label>Magnitudo</label>
                                                 <div class="input-group">
-                                                    <input name="magnitude" id="magnitude" class="form-control" type="text" value="" required>
+                                                    <input name="magnitude" id="magnitude" class="form-control" type="text" value="{{old('magnitude')}}" required>
                                                     <span class="input-group-addon" style="min-width: 75px;"> SR </span>
                                                 </div>
                                             </div>
@@ -146,14 +146,14 @@
                                         <div class="row">
                                             <div class="form-group col-lg-8">
                                                 <label>Wilayah</label>
-                                                <input name="area" id="area" class="form-control" type="text" value="" placeholder="Contoh: 55 km Tenggara MANOKWARISEL-PAPUABRT" required>
+                                                <input name="area" id="area" class="form-control" type="text" value="{{old('area')}}" placeholder="Contoh: 55 km Tenggara MANOKWARISEL-PAPUABRT" required>
                                             </div>
                                         </div>
 
                                         <div class="row">
                                             <div class="form-group col-lg-8">
                                                 <label>MMI*</label>
-                                                <input name="mmi" id="mmi" class="form-control" type="text" value="" placeholder="Contoh: VII Mataram">
+                                                <input name="mmi" id="mmi" class="form-control" type="text" value="{{old('mmi')}}" placeholder="Contoh: VII Mataram">
                                                 <span class="help-block m-b-none"><b>*Kosongi</b> jika tidak ada</span>
                                             </div>
                                         </div>
@@ -161,7 +161,7 @@
                                         <div class="row">
                                             <div class="form-group col-lg-8">
                                                 <label>Kota Terdekat</label>
-                                                <input name="koter" id="koter" class="form-control" type="text" value="" placeholder="Contoh: MANOKWARISEL-PAPUABRT" required>
+                                                <input name="koter" id="koter" class="form-control" type="text" value="{{old('koter')}}" placeholder="Contoh: MANOKWARISEL-PAPUABRT" required>
                                                 <span class="help-block m-b-none">Biasanya menggunakan <b>akhiran dari Wilayah</b>, contoh 55 km Tenggara <b>MANOKWARISEL-PAPUABRT</b>.</span>
                                             </div>
                                         </div>
@@ -183,42 +183,42 @@
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
                                                     <label>Nama Daerah</label>
-                                                    <input name="roq_title" id="roq_title" class="form-control" type="text" value="">
+                                                    <input name="roq_title" id="roq_title" class="form-control" type="text" value="{{old('roq_title')}}">
                                                 </div>
                                             </div>
         
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
                                                     <label>Pendahuluan</label>
-                                                    <textarea id="roq_intro" placeholder="Gunakan tata bahasa Indonesia yang baik dan benar dan hindari penggunaan singkatan." name="roq_intro" class="form-control p-m" rows="4"></textarea>
+                                                    <textarea id="roq_intro" placeholder="Gunakan tata bahasa Indonesia yang baik dan benar dan hindari penggunaan singkatan." name="roq_intro" class="form-control p-m" rows="4">{{old('roq_intro')}}</textarea>
                                                 </div>
                                             </div>
         
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
                                                     <label>Kondisi Wilayah</label>
-                                                    <textarea id="roq_konwil" placeholder="Gunakan tata bahasa Indonesia yang baik dan benar dan hindari penggunaan singkatan." name="roq_konwil" class="form-control p-m" rows="4"></textarea>
+                                                    <textarea id="roq_konwil" placeholder="Gunakan tata bahasa Indonesia yang baik dan benar dan hindari penggunaan singkatan." name="roq_konwil" class="form-control p-m" rows="4">{{old('roq_konwil')}}</textarea>
                                                 </div>
                                             </div>
         
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
                                                     <label>Mekanisme</label>
-                                                    <textarea id="roq_mekanisme" placeholder="Gunakan tata bahasa Indonesia yang baik dan benar dan hindari penggunaan singkatan." name="roq_mekanisme" class="form-control p-m" rows="4"></textarea>
+                                                    <textarea id="roq_mekanisme" placeholder="Gunakan tata bahasa Indonesia yang baik dan benar dan hindari penggunaan singkatan." name="roq_mekanisme" class="form-control p-m" rows="4">{{old('roq_mekanisme')}}</textarea>
                                                 </div>
                                             </div>
         
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
                                                     <label>Efek</label>
-                                                    <textarea id="roq_efek" placeholder="Gunakan tata bahasa Indonesia yang baik dan benar dan hindari penggunaan singkatan." name="roq_efek" class="form-control p-m" rows="4"></textarea>
+                                                    <textarea id="roq_efek" placeholder="Gunakan tata bahasa Indonesia yang baik dan benar dan hindari penggunaan singkatan." name="roq_efek" class="form-control p-m" rows="4">{{old('roq_efek')}}</textarea>
                                                 </div>
                                             </div>
         
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
                                                     <label>Rekomendasi</label>
-                                                    <textarea id="roq_rekom" placeholder="Gunakan tata bahasa Indonesia yang baik dan benar dan hindari penggunaan singkatan." name="roq_rekom" class="form-control p-m" rows="4"></textarea>
+                                                    <textarea id="roq_rekom" placeholder="Gunakan tata bahasa Indonesia yang baik dan benar dan hindari penggunaan singkatan." name="roq_rekom" class="form-control p-m" rows="4">{{old('roq_rekom')}}</textarea>
                                                 </div>
                                             </div>
         
