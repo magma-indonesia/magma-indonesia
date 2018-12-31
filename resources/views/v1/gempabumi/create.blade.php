@@ -8,22 +8,6 @@
 <link rel="stylesheet" href="{{ asset('vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}" />
 @endsection
 
-@section('add-css')
-<style>
-    /* For Firefox */
-    input[type='number'] {
-        -moz-appearance:textfield;
-    }
-
-    /* Webkit browsers like Safari and Chrome */
-    input[type=number]::-webkit-inner-spin-button,
-    input[type=number]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-</style>
-@endsection
-
 @section('content-header')
 <div class="small-header">
     <div class="hpanel">
