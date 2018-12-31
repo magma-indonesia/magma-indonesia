@@ -71,7 +71,7 @@ class MagmaRoqController extends Controller
                 'latlon_text'  => $request->latlon_text,
                 'area' => $request->area,
                 'koter'  => $request->koter,
-                'mmi' => $request->mmi,
+                'mmi' => empty($request->mmi) ? null : $request->mmi,
                 'nearest_volcano' => $request->nearest_volcano,
                 'roq_tanggapan' => $request->roq_tanggapan ? 'YA' : 'TIDAK',
                 'roq_title' => $request->roq_title,
