@@ -94,11 +94,7 @@
                                         <td>{{ $roq->nearest_volcano ?? 'Belum ada data' }}</td>
                                         <td>{{ $roq->roq_tanggapan }}</td>
                                         <td>
-                                            @if($roq->roq_tanggapan == 'YA')
                                             <a href="{{ route('chambers.v1.gempabumi.edit',['id'=> $roq->no]) }}" class="btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>
-                                            @else
-                                            <a href="{{ route('chambers.v1.gempabumi.create') }}" class="btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">Buat</a>
-                                            @endif
                                             @role('Super Admin')
                                             <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.v1.gempabumi.destroy',['id' => $roq->no]) }}" accept-charset="UTF-8">
                                                 @method('DELETE')
@@ -125,4 +121,55 @@
 @endsection
 
 @section('add-script')
+    <script>
+        $(document).ready(function () {
+            $('body').on('submit','#deleteForm',function (e) {
+                e.preventDefault();                
+
+                var $url = $(this).attr('action'),
+                    $data = $(this).serialize();
+
+                swal({
+                    title: "Anda yakin?",
+                    text: "Data yang telah dihapus tidak bisa dikembalikan",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, hapus!",
+                    cancelButtonText: "Gak jadi deh!",
+                    closeOnConfirm: false,
+                    closeOnCancel: true },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: $url,
+                            data: $data,
+                            type: 'POST',
+                            success: function(data){
+                                console.log(data);
+                                if (data.success){
+                                    swal("Berhasil!", data.message, "success");
+                                    setTimeout(function(){
+                                        location.reload();
+                                    },2000);
+                                }
+                            },
+                            error: function(data){
+                                var $errors = {
+                                    'status': data.status,
+                                    'exception': data.responseJSON.exception,
+                                    'file': data.responseJSON.file,
+                                    'line': data.responseJSON.line
+                                };
+                                console.log($errors);
+                                swal("Gagal!", data.responseJSON.exception, "error");
+                            }
+                        });
+                    }
+                });
+
+                return false;
+            });
+        });
+    </script>
 @endsection

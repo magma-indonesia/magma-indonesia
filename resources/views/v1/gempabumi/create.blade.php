@@ -61,6 +61,9 @@
                 <div class="panel-body">
                     <form role="form" id="form" method="POST" action="{{ route('chambers.v1.gempabumi.store') }}" enctype="multipart/form-data">
                         @csrf
+                        <input type="hidden" value="{{ $user->name }}" name="roq_nama_pelapor">
+                        <input name="roq_nip_pelapor" type="hidden" value="{{ $user->nip }}">
+
                         <div class="text-center m-b-md" id="wizardControl">
                             <a class="btn btn-primary m-b" href="{{ route('chambers.v1.gempabumi.create') }}">Form Kejadian</a>
                         </div>
@@ -88,14 +91,7 @@
                                             </div>
                                         </div>
                                         @endif
-        
-                                        <div class="row">
-                                            <div class="form-group col-lg-8">
-                                                <label>Nama Pembuat</label>
-                                                <input type="text" value="{{ $user->name }}" id="name" class="form-control" name="name" placeholder="Nama Pembuat Laporan" disabled>
-                                            </div>
-                                        </div>
-        
+
                                         <div class="row">
                                             <div class="form-group col-lg-8">
                                                 <label>Waktu Gempa</label>
@@ -222,9 +218,9 @@
                                                 <div class="form-group col-lg-12">
                                                     <label>Sumber Data</label>
                                                     <div class="checkbox">
-                                                        <label><input name="roq_source[]" value="BMKG" type="checkbox" class="i-checks source" checked> BMKG </label>
-                                                        <label><input name="roq_source[]" value="GFZ" type="checkbox" class="i-checks source"> GFZ </label>
-                                                        <label><input name="roq_source[]" value="USGS" type="checkbox" class="i-checks source"> USGS </label>
+                                                        <label><input name="roq_source_code[]" value="BMKG" type="checkbox" class="i-checks source" checked> BMKG </label>
+                                                        <label><input name="roq_source_code[]" value="GFZ" type="checkbox" class="i-checks source"> GFZ </label>
+                                                        <label><input name="roq_source_code[]" value="USGS" type="checkbox" class="i-checks source"> USGS </label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -281,7 +277,8 @@
                 format: 'YYYY-MM-DD HH:mm:ss',
             });
 
-            $('.tanggapan').on('ifChecked', function(e) {
+            $('.i-checks.tanggapan').on('ifChecked', function(e) {
+                console.log($(this).attr('class'));
                 $(this).val() == '1' ? $('.tanggapan').show() : $('.tanggapan').hide();
             });
 
