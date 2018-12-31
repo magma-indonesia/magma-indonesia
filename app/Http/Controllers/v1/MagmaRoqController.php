@@ -116,8 +116,10 @@ class MagmaRoqController extends Controller
      */
     public function edit($id)
     {
+        $user = auth()->user();
         $roq = MagmaRoq::findOrFail($id);
-        return $roq;
+
+        return view('v1.gempabumi.edit', compact('roq','user'));
     }
 
     /**
