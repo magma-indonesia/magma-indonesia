@@ -149,6 +149,14 @@
                                                 <input name="area" id="area" class="form-control" type="text" value="" placeholder="Contoh: 55 km Tenggara MANOKWARISEL-PAPUABRT" required>
                                             </div>
                                         </div>
+
+                                        <div class="row">
+                                            <div class="form-group col-lg-8">
+                                                <label>MMI*</label>
+                                                <input name="mmi" id="mmi" class="form-control" type="text" value="" placeholder="Contoh: VII Mataram">
+                                                <span class="help-block m-b-none"><b>*Kosongi</b> jika tidak ada</span>
+                                            </div>
+                                        </div>
         
                                         <div class="row">
                                             <div class="form-group col-lg-8">
