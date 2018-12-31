@@ -82,7 +82,7 @@
                                             <div class="col-lg-12">
                                                 <div class="alert alert-danger">
                                                 @foreach ($errors->all() as $error)
-                                                    <p>{{ $error }}</p>
+                                                    <p>{!! $error !!}</p>
                                                 @endforeach
                                                 </div>
                                             </div>
@@ -98,22 +98,32 @@
         
                                         <div class="row">
                                             <div class="form-group col-lg-8">
-                                                <label>Waktu Gempa (WIB)</label>
-                                                <input name="datetime_wib" id="datepicker" class="form-control" type="text" value="{{ empty(old('datetime_wib')) ? now()->format('Y-m-d H:i') : old('datetime_wib') }}" required>
+                                                <label>Waktu Gempa</label>
+                                                <div class="input-group">
+                                                    <input name="datetime_wib" id="datepicker" class="form-control" type="text" value="{{ empty(old('datetime_wib')) ? now()->format('Y-m-d H:i:s') : old('datetime_wib') }}" required>
+                                                    <span class="input-group-addon" style="min-width: 75px;">WIB</span>
+                                                </div>
                                             </div>
                                         </div>
         
                                         <div class="row">
                                             <div class="form-group col-lg-8">
                                                 <label>Lintang</label>
-                                                <input name="lat_lima" id="latitude" class="form-control" type="text" value="" required>
+                                                <div class="input-group">
+                                                    <input name="lat_lima" id="latitude" class="form-control" type="text" value="{{old('lat_lima')}}" required>
+                                                    <span class="input-group-addon" style="min-width: 75px;">&deg;LU</span>
+                                                </div>
+                                                <span class="help-block m-b-none">BMKG menggunakan acuan <b>Lintang Utara (LU)</b></span>
                                             </div>
                                         </div>
         
                                         <div class="row">
                                             <div class="form-group col-lg-8">
                                                 <label>Bujur</label>
-                                                <input name="lon_lima" id="longitude" class="form-control" type="text" value="" required>
+                                                <div class="input-group">
+                                                    <input name="lon_lima" id="longitude" class="form-control" type="text" value="" required>
+                                                    <span class="input-group-addon" style="min-width: 75px;">&deg;BT</span>
+                                                </div>
                                             </div>
                                         </div>
         
@@ -165,7 +175,7 @@
                                             </div>
                                         </div>
         
-                                        <div class="tanggapan" style="display: none;">
+                                        <div class="tanggapan" style="{{ (old('roq_tanggapan') == '0') || empty(old('roq_tanggapan')) ? 'display: none;' : ''}}">
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
                                                     <label>Nama Daerah</label>
@@ -210,7 +220,7 @@
         
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
-                                                    <label>Sumber</label>
+                                                    <label>Sumber Data</label>
                                                     <div class="checkbox">
                                                         <label><input name="roq_source[]" value="BMKG" type="checkbox" class="i-checks source" checked> BMKG </label>
                                                         <label><input name="roq_source[]" value="GFZ" type="checkbox" class="i-checks source"> GFZ </label>
@@ -268,7 +278,7 @@
                 maxDate: '{{ now()->addDay(1)->format('Y-m-d')}}',
                 sideBySide: true,
                 locale: 'id',
-                format: 'YYYY-MM-DD HH:mm',
+                format: 'YYYY-MM-DD HH:mm:ss',
             });
 
             $('.tanggapan').on('ifChecked', function(e) {
