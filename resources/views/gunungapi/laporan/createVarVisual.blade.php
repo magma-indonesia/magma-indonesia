@@ -252,7 +252,7 @@ Step 3 - Visual
                                                     <hr>
                                                 </div>
 
-                                                {{-- Extended Foto Visual --}}`
+                                                {{-- Extended Foto Visual --}}
                                                 <div class="foto-visual" style="{{ $errors->has('foto') || ($visual['hasfoto'] == '1') || empty($visual) ?  '' : 'Display:none'}}">
                                                     <div class="form-group col-lg-12">
                                                         <label {{$errors->has('foto') || $errors->has('foto') ? 'class=text-danger' : ''}}>Upload Foto Visual (max 2MB)</label>
