@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 trait DeskripsiVar
 {
-    protected $gempa;
+    protected $gempa = array();
 
     protected $codes = [
         'lts' => 'Letusan/Erupsi',
@@ -178,7 +178,7 @@ trait DeskripsiVar
                 in_array($code,$terasa) ?
                     $result = $this->gempaTerasa($data,$code) : $result .= '';
 
-                $this->gempa .= $result;
+                array_push($this->gempa, $result);
             }
         }
 
