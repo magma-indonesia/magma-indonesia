@@ -45,6 +45,7 @@
                 <div class="panel-body">
                     <form role="form" id="form" method="POST" action="{{ route('chambers.v1.gempabumi.update',['id' => $roq->no]) }}" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <input type="hidden" value="{{ $user->name }}" name="roq_nama_pelapor">
                         <input name="roq_nip_pelapor" type="hidden" value="{{ $user->nip }}">
 
