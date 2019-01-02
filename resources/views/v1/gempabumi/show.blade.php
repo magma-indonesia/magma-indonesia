@@ -8,7 +8,6 @@
 <div class="content animate-panel content-boxed">
     <div class="row">
         <div class="col-lg-12">
-            @if($roq->roq_tanggapan == 'YA')
             <div class="hpanel blog-box blog-article-box">
                 <div class="panel-heading">
                     <h4>{{ $roq->roq_title }}</h4>
@@ -37,20 +36,6 @@
                     <b>Sumber Data : </b>{{ $roq->roq_source}}
                 </div>
             </div>
-            @else
-            <div class="hpanel">
-                <div class="panel-heading hbuilt">
-                    <h4>{{ $roq->area }}</h4>
-                </div>
-                <div class="panel-body no-padding">
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            {{ $roq->koter }}
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            @endif
         </div>
     </div>
 </div>
