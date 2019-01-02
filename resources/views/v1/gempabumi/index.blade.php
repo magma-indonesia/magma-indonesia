@@ -94,6 +94,7 @@
                                         <td>{{ $roq->nearest_volcano ?? 'Belum ada data' }}</td>
                                         <td>{{ $roq->roq_tanggapan }}</td>
                                         <td>
+                                            <a href="{{ route('chambers.v1.gempabumi.show',['id'=> $roq->no]) }}" class="btn btn-sm btn-info btn-outline" style="margin-right: 3px;">View</a>
                                             <a href="{{ route('chambers.v1.gempabumi.edit',['id'=> $roq->no]) }}" class="btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>
                                             @role('Super Admin')
                                             <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.v1.gempabumi.destroy',['id' => $roq->no]) }}" accept-charset="UTF-8">
