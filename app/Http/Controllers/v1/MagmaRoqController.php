@@ -105,7 +105,10 @@ class MagmaRoqController extends Controller
      */
     public function show($id)
     {
-        //
+        $roq = MagmaRoq::where('no',$id)
+                ->where('roq_tanggapan','like','YA')
+                ->firstOrFail();
+        return view('v1.gempabumi.show', compact('roq'));
     }
 
     /**
@@ -129,9 +132,47 @@ class MagmaRoqController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateRoqRequest $request, $id)
     {
-        //
+        $roq = MagmaRoq::findOrFail($id);
+        $roq = $roq->update(
+            [
+                'datetime_wib' => $request->datetime_wib,
+                'datetime_wib_str' => $request->datetime_wib_str,
+                'datetime_utc' => $request->datetime_utc,
+                'magnitude' => $request->magnitude,
+                'magtype' => $request->magtype,
+                'depth' => $request->depth,
+                'dep_unit' => $request->dep_unit,
+                'lon_lima' => $request->lon_lima,
+                'lat_lima' => $request->lat_lima,
+                'latlon_text'  => $request->latlon_text,
+                'area' => $request->area,
+                'koter'  => $request->koter,
+                'mmi' => empty($request->mmi) ? null : $request->mmi,
+                'nearest_volcano' => $request->nearest_volcano,
+                'roq_tanggapan' => $request->roq_tanggapan ? 'YA' : 'TIDAK',
+                'roq_title' => $request->roq_title,
+                'roq_tsu' => $request->roq_tsu ? 'YA' : 'TIDAK',
+                'roq_intro' => $request->roq_intro,
+                'roq_konwil' => $request->roq_konwil,
+                'roq_mekanisme' => $request->roq_mekanisme,
+                'roq_efek' => $request->roq_efek,
+                'roq_rekom' => $request->roq_rekom,
+                'roq_source' => $request->roq_source,
+                'roq_nama_pelapor' => $request->roq_nama_pelapor,
+                'roq_nip_pelapor' => $request->roq_nip_pelapor,
+                'roq_nama_pemeriksa' => $request->roq_nama_pemeriksa,
+                'roq_nip_pemeriksa' => $request->roq_nip_pemeriksa,
+            ]
+        );
+
+        $messages = $roq ? 
+                        'Kejadian Gempa Bumi berhasil ditambahkan!' :
+                        'Kejadian Gempa Bumi gagal ditambahkan!' ;
+
+        return redirect()->route('chambers.v1.gempabumi.index')
+                    ->with('flash_message',$messages);
     }
 
     /**
