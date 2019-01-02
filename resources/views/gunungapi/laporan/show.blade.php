@@ -78,27 +78,35 @@
             </div>
             <div class="hpanel" style="line-height: 1.6;">
                 <div class="panel-heading hbuilt">
-                    <div class="p-xs h4">
-                        <small class="pull-right">
-                        @switch($var->status)
-                            @case(1)
-                            <span class="label label-normal">{{ $var->status_deskripsi }}</span>
-                            @break
-                            @case(2)
-                            <span class="label label-waspada">{{ $var->status_deskripsi }}</span>
-                            @break
-                            @case(3)
-                            <span class="label label-siaga">{{ $var->status_deskripsi }}</span>
-                            @break
-                            @default
-                            <span class="label label-awas">{{ $var->status_deskripsi }}</span>
-                        @endswitch
-                        </small>
-                        Laporan Aktivitas Gunung Api {{ $var->gunungapi->name }}
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="p-xs h4">
+                            Laporan Aktivitas Gunung Api {{ $var->gunungapi->name }}
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="p-xs h4">
+                                <small class="pull-right">
+                                @switch($var->status)
+                                    @case(1)
+                                    <span class="label label-normal">{{ $var->status_deskripsi }}</span>
+                                    @break
+                                    @case(2)
+                                    <span class="label label-waspada">{{ $var->status_deskripsi }}</span>
+                                    @break
+                                    @case(3)
+                                    <span class="label label-siaga">{{ $var->status_deskripsi }}</span>
+                                    @break
+                                    @default
+                                    <span class="label label-awas">{{ $var->status_deskripsi }}</span>
+                                @endswitch
+                                </small>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="border-top border-left border-right bg-light">
-                    <div class="row p-m">
+                    <div class="row p-xs">
                         <div class="col-sm-2">
                             <div class="profile-picture">
                                 <img alt="logo" class="img-circle p-m" src="{{ route('user.photo',['id' => $var->user->id]) }}">
@@ -139,7 +147,7 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div class="row p-m">
+                    <div class="row p-xs">
                         <div class="col-lg-6">
                             <h4>Pengamatan Visual </h4>
                             <p>{!! $visual !!}</p>
@@ -163,13 +171,13 @@
                             <p>{{ optional($var->keterangan)->deskripsi ? $var->keterangan->deskripsi : 'Nihil' }}</p>
                         </div>
                     </div>
-                    <div class="row border-bottom border-top p-m">
+                    <div class="row border-bottom border-top p-xs">
                         <div class="col-lg-12">
                             <h4>Rekomendasi</h4>
                             <p>{!! nl2br($var->rekomendasi->rekomendasi) !!}</p>
                         </div>
                     </div>
-                    <div class="row p-m">
+                    <div class="row p-xs">
                         <div class="col-xs-12">
                             <form class="m-t" id="validasi" method="POST" action="{{ route('chambers.laporan.validasi') }}" accept-charset="UTF-8">
                                 @csrf
@@ -180,7 +188,7 @@
                     </div>
                 </div>
 
-                <div class="border-bottom border-left border-right bg-white p-m">
+                <div class="border-bottom border-left border-right bg-white p-xs">
                     <h4 class="font-bold">Validasi untuk MAGMA v1 </h4>
                     <form id="validasiv1" method="POST" action="{{ route('chambers.laporan.verifikasiv1') }}" accept-charset="UTF-8">
                         @csrf
