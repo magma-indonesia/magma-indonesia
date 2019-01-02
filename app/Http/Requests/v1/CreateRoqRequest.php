@@ -143,7 +143,7 @@ class CreateRoqRequest extends FormRequest
             'lat_lima.between' => 'Nilai <b>Lintang</b> antara -11 hingga 6.',
             'lon_lima.required' => '<b>Bujur</b> harus diisi.',
             'lon_lima.numeric' => '<b>Bujur</b> harus dalam tipe numeric.',
-            'lon_lima.between' => 'Nilai <b>Bujur</b> antara 95 hingga 141.',
+            'lon_lima.between' => 'Nilai <b>Bujur</b> antara 94 hingga 141.',
             'magnitude.required' => '<b>Magnitudo</b> harus diisi.',
             'magnitude.numeric' => '<b>Magnitudo</b> harus dalam tipe numeric.',
             'magnitude.between' => 'Nilai <b>Magnitudo</b> antara 1 hingga 10.',
@@ -179,7 +179,7 @@ class CreateRoqRequest extends FormRequest
         return [
             'datetime_wib' => 'required|date_format:Y-m-d H:i:s|before:tomorrow',
             'lat_lima' => 'required|numeric|between:-11,6',
-            'lon_lima' => 'required|numeric|between:95,141',
+            'lon_lima' => 'required|numeric|between:94,141',
             'magnitude' => 'required|numeric|between:1,10',
             'depth' => 'required|numeric|between:1,500',
             'area' => 'required',
