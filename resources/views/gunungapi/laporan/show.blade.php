@@ -98,8 +98,8 @@
                     </div>
                 </div>
                 <div class="border-top border-left border-right bg-light">
-                    <div class="row">
-                        <div class="col-sm-2 hidden-xs">
+                    <div class="row p-m">
+                        <div class="col-sm-2">
                             <div class="profile-picture">
                                 <img alt="logo" class="img-circle p-m" src="{{ route('user.photo',['id' => $var->user->id]) }}">
                             </div>
