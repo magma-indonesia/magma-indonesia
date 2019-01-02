@@ -139,7 +139,7 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div class="row">
+                    <div class="row p-m">
                         <div class="col-lg-6">
                             <h4>Pengamatan Visual </h4>
                             <p>{!! $visual !!}</p>
@@ -148,18 +148,28 @@
                         </div>
                         <div class="col-lg-6">
                             <h4>Kegempaan </h4>
-                            <p>{{ empty($gempa) ? 'Kegempaan nihil.' : $gempa }}</p>
+                            @if(empty($gempa))
+                            <p>Kegempaan nihil.</p>
+                            @else
+                            <ul class="list-group">
+                            @foreach($gempa as $key => $value)
+                                <li class="list-group-item">
+                                    {{ $value}}
+                                </li>
+                            @endforeach
+                            </ul>
+                            @endif
                             <h4>Keterangan Lainnya</h4>
                             <p>{{ optional($var->keterangan)->deskripsi ? $var->keterangan->deskripsi : 'Nihil' }}</p>
                         </div>
                     </div>
-                    <div class="row border-bottom">
+                    <div class="row border-bottom p-m">
                         <div class="col-lg-12">
                             <h4>Rekomendasi</h4>
                             <p>{!! nl2br($var->rekomendasi->rekomendasi) !!}</p>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row p-m">
                         <div class="col-xs-12">
                             <form class="m-t" id="validasi" method="POST" action="{{ route('chambers.laporan.validasi') }}" accept-charset="UTF-8">
                                 @csrf
