@@ -76,7 +76,7 @@
                     <i class="fa fa-eye"> </i> {{ $var->getViews() }} views
                 </div>
             </div>
-            <div class="hpanel">
+            <div class="hpanel" style="line-height: 1.6;">
                 <div class="panel-heading hbuilt">
                     <div class="p-xs h4">
                         <small class="pull-right">
@@ -163,7 +163,7 @@
                             <p>{{ optional($var->keterangan)->deskripsi ? $var->keterangan->deskripsi : 'Nihil' }}</p>
                         </div>
                     </div>
-                    <div class="row border-bottom p-m">
+                    <div class="row border-bottom border-top p-m">
                         <div class="col-lg-12">
                             <h4>Rekomendasi</h4>
                             <p>{!! nl2br($var->rekomendasi->rekomendasi) !!}</p>
