@@ -66,8 +66,8 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Waktu Kejadian (UTC)</th>
                                         <th>Waktu Kejadian (WIB)</th>
+                                        <th>Waktu Kejadian (UTC)</th>
                                         <th>Magnitude</th>
                                         <th>MMI</th>
                                         <th>Kedalaman (km)</th>
@@ -83,8 +83,8 @@
                                     @foreach($roqs as $key => $roq)
                                     <tr>
                                         <td>{{ $roqs->firstItem()+$key }}</td>
-                                        <td>{{ $roq->datetime_utc }}</td>
                                         <td>{{ $roq->datetime_wib }}</td>
+                                        <td>{{ $roq->datetime_utc }}</td>
                                         <td>{{ $roq->magnitude.' '.$roq->magtype }}</td>
                                         <td>{{ $roq->mmi ?? 'Belum ada data' }}</td>
                                         <td>{{ $roq->depth }}</td>
@@ -94,7 +94,9 @@
                                         <td>{{ $roq->nearest_volcano ?? 'Belum ada data' }}</td>
                                         <td>{{ $roq->roq_tanggapan }}</td>
                                         <td>
+                                            @if($roq->roq_tanggapan == 'YA')
                                             <a href="{{ route('chambers.v1.gempabumi.show',['id'=> $roq->no]) }}" class="btn btn-sm btn-info btn-outline" style="margin-right: 3px;">View</a>
+                                            @endif
                                             <a href="{{ route('chambers.v1.gempabumi.edit',['id'=> $roq->no]) }}" class="btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>
                                             @role('Super Admin')
                                             <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.v1.gempabumi.destroy',['id' => $roq->no]) }}" accept-charset="UTF-8">
