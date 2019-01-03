@@ -13,12 +13,14 @@ use App\MagmaVar;
 use App\VarVisual;
 use App\VarAsap;
 use App\VarRekomendasi;
+use App\DraftMagmaVar;
 use App\Http\Requests\CreateVar;
 use App\Http\Requests\SelectVarRekomendasi;
 use App\Http\Requests\DeleteVarRekomendasi;
 use App\Http\Requests\CreateVarVisual;
-use App\Http\Requests\CreateVarGempa;
 use App\Http\Requests\CreateVarKlimatologi;
+use App\Http\Requests\CreateVarGempa;
+use App\Http\Requests\CreateMagmaVar;
 
 use App\Traits\JenisGempaVar;
 
@@ -26,6 +28,13 @@ class MagmaVarController extends Controller
 {
 
     use JenisGempaVar;
+
+    /**
+     * Noticenumber Magma Var
+     *
+     * @var string
+     */
+    protected $noticenumber;
 
     /**
      * Properti untuk session var_visual
@@ -365,6 +374,40 @@ class MagmaVarController extends Controller
     }
 
     /**
+     * Create laporan MAGMA-VAR
+     * Input data-data kegempaan Gunung Api
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function previewMagmaVar(Request $request)
+    {
+        if (empty($request->session()->get('var'))) {
+            return redirect()->route('chambers.laporan.create.var');
+        }
+
+        if (empty($request->session()->get('var_visual'))) {
+            return redirect()->route('chambers.laporan.create.var.visual');
+        }
+
+        if (empty($request->session()->get('var_klimatologi'))) {
+            return redirect()->route('chambers.laporan.create.var.klimatologi');
+        }
+
+        if (empty($request->session()->get('var_gempa'))) {
+            return redirect()->route('chambers.laporan.create.var.gempa');
+        }
+    
+        $var = session('var');
+        $var_visual = session('var_visual');
+        $var_klimatologi = session('var_klimatologi');
+        $var_gempa = session('var_gempa');
+
+        $this->saveDraft();
+ 
+        return view('gunungapi.laporan.previewMagmaVar',compact('var','var_visual','var_klimatologi','var_gempa'));
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\CreateVar  $request
@@ -430,12 +473,75 @@ class MagmaVarController extends Controller
     {
         $this->setVarKegempaanSession($request);
 
+        return redirect()->route('chambers.laporan.preview.magma.var');
+    }
+
+    /**
+     * Store all session - Final
+     *
+     * @param \App\Http\Requests\CreateMagmaVar $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storePreviewMagmaVar(CreateMagmaVar $request)
+    {
         return $request->session()->all();
+    }
+
+    /**
+     * Set Noticenumber
+     *
+     * @return void
+     */
+    protected function setNoticenumber()
+    {
+        $this->noticenumber = session('var')['noticenumber'];
+        return $this;
+    }
+
+    /**
+     * Get Noticenumber
+     *
+     * @return noticenumber
+     */
+    protected function getNoticenumber()
+    {
+        return $this->noticenumber;
+    }
+
+    /**
+     * Save Draft to App\DraftMagmaVar
+     *
+     * @return boolean
+     */
+    protected function saveDraft()
+    {
+        try {
+            $draft = DraftMagmaVar::updateOrCreate(
+                [
+                    'noticenumber' => $this->setNoticenumber()->getNoticenumber(),
+                ],
+                [
+                    'code_id' => session('var')['code_id'],
+                    'nip_pelapor' => session('var')['nip_pelapor'],
+                    'var' => session('var'),
+                    'var_visual' => session('var_visual'),
+                    'var_klimatologi' => session('var_klimatologi'),
+                    'var_gempa' => session('var_gempa')
+                ]
+            );
+
+            return $draft ? true : false;
+        }
+
+        catch (Exception $e) {
+            return false;
+        }        
     }
 
     protected function saveVar()
     {
         try {
+            $this->setNoticenumber();
             $var = session('var');
             $save = MagmaVar::updateOrCreate(
                         [
@@ -453,12 +559,18 @@ class MagmaVarController extends Controller
                             'nip_pelapor' => $var['nip_pelapor'],
                         ]
                     );
-            $this->hasSaved = $save ? true : false;
+
+            if ($save)
+            {
+                $draft = DraftMagmaVar::findOrFail($this->getNoticenumber());
+                $draft->var_saved = 1;
+                $draft->save();
+            }
+
             return $this;
         } 
         
         catch (Exception $e) {
-            $this->hasSaved = false;
             return $this;
         }
     }
@@ -466,12 +578,59 @@ class MagmaVarController extends Controller
     protected function saveVarVisual()
     {
         try {
-            $this->hasSaved = true;
+
+            $var = MagmaVar::where('noticenumber',$this->getNoticenumber())->firstorFail();
+
+            $visual = session('var_visual');
+            $var_visual = new VarVisual(
+                [
+                    'noticenumber_id' => $this->getNoticenumber(),
+                    'visibility' => $visual['visibility'],
+                    'visual_asap' => $visual['visual_asap'],
+                    'visual_kawah' => $visual['visual_kawah'],
+                ]
+            );
+
+            $is_visual_saved = $var->visual()->save($var_visual);
+
+            if ($visual['visual_asap'] == 'Teramati')
+            {
+                $var_visual = VarVisual::where('noticenumber',$this->getNoticenumber())->firstorFail();
+
+                $var_asap = new VarAsap(
+                    [
+                        'tasap_min' =>  $visual['tasap_min'],
+                        'tasap_max' =>  $visual['tasap_max'],
+                        'wasap' =>  $visual['wasap'],
+                        'intasap' =>  $visual['intasap'],
+                        'tekasap' =>  $visual['tekasap'],
+                    ]
+                );
+
+                $is_asap_saved = $var_visual->asap()->save($var_asap);
+
+                if ($is_visual_saved == $is_asap_saved)
+                {
+                    $draft = DraftMagmaVar::findOrFail($this->getNoticenumber());
+                    $draft->var_visual = 1;
+                    $draft->save();
+                }
+
+                return $this;
+            }
+
+            if ($is_visual_saved)
+            {
+                $draft = DraftMagmaVar::findOrFail($this->getNoticenumber());
+                $draft->var_visual = 1;
+                $draft->save();
+            }
+
             return $this;
+
         } 
         
         catch (Exception $e) {
-            $this->hasSaved = false;
             return $this;
         }
     }
@@ -516,7 +675,8 @@ class MagmaVarController extends Controller
      */
     protected function saveMagmaVar()
     {
-        return $this->saveVar()
+        return $this->setNoticenumber()
+                ->saveVar()
                 ->saveVarVisual()
                 ->saveVarKlimatologi()
                 ->saveVarGempa()
