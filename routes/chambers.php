@@ -58,6 +58,8 @@ Route::group(['prefix' => 'gunungapi'], function () {
         ->name('laporan.create.var.klimatologi');
     Route::get('laporan/create-var-gempa','MagmaVarController@createVarGempa')
         ->name('laporan.create.var.gempa');
+    Route::get('laporan/preview-magma-var','MagmaVarController@previewMagmaVar')
+        ->name('laporan.preview.magma.var');
     Route::post('laporan/create-var','MagmaVarController@storeVar')
         ->name('laporan.store.var');
     Route::post('laporan/select-var','MagmaVarController@storeVarRekomendasi')
