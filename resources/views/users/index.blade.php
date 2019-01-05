@@ -65,7 +65,7 @@
                                 <tr>
                                     <td>{{ $user->name }}</td>
                                     <td>{!! strlen($user->nip)<18 ? $user->nip.'<b>KTP</b>' : $user->nip !!}</td>
-                                    <td>{{ optional(optional($user->bidang)->deskriptif)->nama }}</td>
+                                    <td>{{ $user->administrasi->bidang->nama }}</td>
                                     <td>{{ $user->roles()->pluck('name')->implode(', ') }}</td>                                        
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->phone }}</td>
