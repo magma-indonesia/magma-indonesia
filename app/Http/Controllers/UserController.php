@@ -52,8 +52,9 @@ class UserController extends Controller
 
         $url = Storage::disk('user')->get($photoName);
 
-        $thumbnail = Image::make($url);
-        $thumbnail->resize(76, 76)->save(storage_path('app/users/photo/thumb/'.$photoName));
+        $thumbnail = Image::make($url)->resize(76, 76)->stream();
+
+        $thumbnail = Storage::disk('user-thumb')->put($photoName,$thumbnail);
 
         if ($uploadPhoto) {
             $success = $user->photo()->updateOrCreate(
