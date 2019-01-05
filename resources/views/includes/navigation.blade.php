@@ -3,7 +3,7 @@
         {{--  Mini Profile  --}}
         <div class="profile-picture">
             <a href="{{ route('chambers.users.edit',['id' => auth()->user()->id]) }}">
-            <img class="img-circle m-b" src="{{ route('user.photo',['id' => auth()->user()->id]) }}" style="max-width: 76px;">
+            <img class="img-circle m-b" src="{{ auth()->user()->photo ? '/images/user/photo/'.auth()->user()->id : Storage::url('thumb/user.png') }}" style="max-width: 76px;">
             </a>
 
             <div class="stats-label text-color">
