@@ -76,7 +76,7 @@
                                         <td>{!! $sub->status ? '<span class="label label-magma">Subscribe</span>' : '<span class="label label-danger">Unsubscribe</span>'!!}</td>
                                         <td>
                                             <a href="#" class="btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">Edit</a>
-                                            <form id="deleteForm" style="display:inline" method="POST" action="#" accept-charset="UTF-8">
+                                            <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.subscribers.destroy',['id' => $sub->id ]) }}" accept-charset="UTF-8">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button value="Delete" class="btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
