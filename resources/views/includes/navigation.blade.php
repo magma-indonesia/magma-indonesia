@@ -62,18 +62,23 @@
                     <span class="fa arrow"></span>                    
                 </a>
                 <ul class="nav nav-second-level">
-                    <li class="{{ active('chambers.v1.press.index') }}">
-                        <a href="{{ route('chambers.v1.press.index') }}">Press Release</a>
-                    </li>
-                </ul>
-                <ul class="nav nav-second-level">
                     <li class="{{ active('chambers.v1.users.index') }}">
                         <a href="{{ route('chambers.v1.users.index') }}">Users</a>
                     </li>
                 </ul>
                 <ul class="nav nav-second-level">
+                    <li class="{{ active('chambers.v1.press.index') }}">
+                        <a href="{{ route('chambers.v1.press.index') }}">Press Release</a>
+                    </li>
+                </ul>
+                <ul class="nav nav-second-level">
                     <li class="{{ active('chambers.v1.gempabumi.index') }}">
                         <a href="{{ route('chambers.v1.gempabumi.index') }}">Gempa Bumi</a>
+                    </li>
+                </ul>
+                <ul class="nav nav-second-level">
+                    <li class="{{ active('chambers.v1.subscribers.index') }}">
+                        <a href="{{ route('chambers.v1.subscribers.index') }}">VONA Subscribers</a>
                     </li>
                 </ul>
             </li>
