@@ -114,5 +114,6 @@ Route::name('v1.')->group(function () {
         Route::resource('press','v1\PressReleaseController');
         Route::resource('users','v1\UserController');
         Route::resource('gempabumi','v1\MagmaRoqController');
+        Route::resource('subscribers','v1\VonaSubscriberController');
     });
 });
