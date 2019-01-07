@@ -32,4 +32,29 @@ class DraftMagmaVar extends Model
         'var_klimatologi_saved',
         'var_gempa_saved'
     ];
+
+    /**     
+     *   Masing-masing Var hanya dimiliki
+     *   oleh 1 User
+     * 
+     *   @return \App\User 
+     * 
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User','nip_pelapor','nip');
+    }
+
+    /**     
+     *   Masing-masing Var hanya dimiliki
+     *   oleh 1 Gunungapi
+     * 
+     *   @return \App\Gadd
+     * 
+     */
+    public function gunungapi()
+    {
+        return $this->belongsTo('App\Gadd','code_id','code');
+    }
+
 }
