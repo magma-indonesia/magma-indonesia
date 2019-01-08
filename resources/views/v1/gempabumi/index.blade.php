@@ -76,7 +76,7 @@
                                         <th>Kota Terdekat</th>
                                         <th>Gunung Api Terdekat</th>
                                         <th>Tanggapan</th>
-                                        <th style="min-width: 240px;">Action</th>
+                                        <th style="min-width: 240px;">Buat/Edit Tanggapan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -92,7 +92,7 @@
                                         <td>{{ $roq->lon_lima }}</td>
                                         <td>{{ $roq->area ?? 'Belum ada data' }}</td>
                                         <td>{{ $roq->nearest_volcano ?? 'Belum ada data' }}</td>
-                                        <td>{{ $roq->roq_tanggapan }}</td>
+                                        <td>{{ $roq->roq_tanggapan == 'YA' ? 'Ada' : 'Belum Ada' }}</td>
                                         <td>
                                             @if($roq->roq_tanggapan == 'YA')
                                             <a href="{{ route('chambers.v1.gempabumi.show',['id'=> $roq->no]) }}" class="btn btn-sm btn-info btn-outline" style="margin-right: 3px;">View</a>
