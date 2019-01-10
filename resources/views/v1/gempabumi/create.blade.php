@@ -141,6 +141,14 @@
                                                 <input name="area" id="area" class="form-control" type="text" value="{{old('area')}}" placeholder="Contoh: 55 km Tenggara MANOKWARISEL-PAPUABRT" required>
                                             </div>
                                         </div>
+
+                                        <div class="row">
+                                            <div class="form-group col-lg-8">
+                                                <label>Kota Terdekat</label>
+                                                <input name="koter" id="koter" class="form-control" type="text" value="{{old('koter')}}" placeholder="Contoh: MANOKWARISEL-PAPUABRT" required>
+                                                <span class="help-block m-b-none">Biasanya menggunakan <b>akhiran dari Wilayah</b>, contoh 55 km Tenggara <b>MANOKWARISEL-PAPUABRT</b>.</span>
+                                            </div>
+                                        </div>
         
                                         <div class="row">
                                             <div class="form-group col-lg-8">
