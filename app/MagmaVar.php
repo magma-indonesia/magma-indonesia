@@ -10,8 +10,6 @@ class MagmaVar extends Model
 
     use Viewable;
 
-    public $timestamps = false;
-
     protected $casts = [
         'var_data_date' => 'date:Y-m-d'
     ];
@@ -27,8 +25,6 @@ class MagmaVar extends Model
         'status',
         'rekomendasi_id',
         'nip_pelapor',
-        'created_at',
-        'updated_at'    
     ];
 
     public function getStatusDeskripsiAttribute()
