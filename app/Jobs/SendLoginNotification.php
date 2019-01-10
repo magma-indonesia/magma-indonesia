@@ -44,7 +44,6 @@ class SendLoginNotification implements ShouldQueue
      */
     public function handle()
     {
-        Log::info('Dispatched User Login : '.$user->name);
         $this->user->notify(new UserLogin($this->type,$this->user));
     }
 
