@@ -67,6 +67,19 @@ return [
             'strict' => false
         ],
 
+        'magma_backup' => [
+            'driver' => 'mysql',
+            'host' => env('MAGMA_HOST', 'forge'),
+            'port' => env('MAGMA_PORT', 'forge'),
+            'database' => 'magma_db_backup',
+            'username' => env('MAGMA_USERNAME', 'forge'),
+            'password' => env('MAGMA_PASSWORD', 'forge'),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => false
+        ],
+
         'wovo' => [
             'driver' => 'mysql',
             'host' => env('WOVO_HOST', 'forge'),
@@ -140,6 +153,13 @@ return [
             'port' => env('REDIS_PORT', 6379),
             'database' => 0,
             'read_write_timeout' => 60,
+        ],
+
+        'job' => [
+            'host' => env('REDIS_HOST', '127.0.0.1'),
+            'password' => env('REDIS_PASSWORD', null),
+            'port' => env('REDIS_PORT', 6379),
+            'database' => env('REDIS_CACHE_DB', 1),
         ],
 
     ],
