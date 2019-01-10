@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use App\Notifications\UserLogin;
 use App\Notifications\User As UserNotification;
+use App\Jobs\SendLoginNotification;
+use Log;
 
 //Importing laravel-permission models
 use Spatie\Permission\Models\Role;
@@ -94,12 +96,10 @@ class UserController extends Controller
                     'last_login_ip' => $request->getClientIp()
                 ]);
 
-                try {
-                    $user->notify(new UserLogin('web',$user));
-                }
-                catch (Exception $e){
+                SendLoginNotification::dispatch('web',$user)
+                    ->delay(now()->addSeconds(30));
 
-                }
+                Log::info('Dispatched User Login : '.$user->name);
                 
                 $token = Auth::guard('api')->attempt($credentials);
 
