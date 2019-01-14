@@ -10,7 +10,7 @@
 Route::group(['middleware' => ['web','guest']], function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/login', 'UserController@showLoginForm')->name('login')->middleware('revalidate');
-    Route::post('/login', 'UserController@login');
+    Route::post('/login', 'UserController@login')->name('login');
 });
 
 Route::get('/logout', 'UserController@logout')->name('logout');
