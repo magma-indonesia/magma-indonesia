@@ -33,8 +33,16 @@ class MagmaVarController extends Controller
      * @param  \App\Vona  $vona
      * @return \Illuminate\Http\Response
      */
-    public function show($code)
+    public function show($code, $noticenumber = null)
     {
+        if ($noticenumber) {
+            $var = MagmaVar::where('ga_code',$code)
+                    ->where('var_noticenumber',$noticenumber)
+                    ->firstOrFail();
+            
+            return new MagmaVarResource($var);
+        }
+
         $var = MagmaVar::where('ga_code',$code)
                     ->orderBy('var_data_date','desc')
                     ->orderBy('periode','desc')

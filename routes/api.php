@@ -34,7 +34,7 @@ Route::group(['middleware' => ['jwt.auth']], function () {
             'create','edit','store','destroy'
         ]]);
         Route::get('magma-var','Api\v1\MagmaVarController@index');
-        Route::get('magma-var/{code}','Api\v1\MagmaVarController@show');
+        Route::get('magma-var/{code}/{noticenumber?}','Api\v1\MagmaVarController@show');
     });
 });
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
