@@ -45,4 +45,10 @@ class Gadd extends Model
                     ->where('cu_status','Level IV (Awas)')
                     ->orderBy('var_data_date','desc');
     }
+
+    public function var()
+    {
+        return $this->hasOne('App\v1\MagmaVar','ga_code','ga_code')
+                    ->orderBy('var_log','desc');
+    }
 }
