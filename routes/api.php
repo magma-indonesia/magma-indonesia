@@ -33,6 +33,7 @@ Route::group(['middleware' => ['jwt.auth']], function () {
         Route::resource('roq','Api\OldRoqController', ['except' => [
             'create','edit','store','destroy'
         ]]);
+        Route::get('magma-var','Api\v1\MagmaVarController@index');
     });
 });
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
