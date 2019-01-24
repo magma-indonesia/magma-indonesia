@@ -20,7 +20,7 @@ class OldRoqController extends Controller
      */
     public function index()
     {
-        $roqs = MagmaRoq::paginate(30);
+        $roqs = MagmaRoq::orderBy('datetime_wib','desc')->paginate(30);
 
         return new OldRoqCollection($roqs);
     }
