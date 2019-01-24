@@ -23,7 +23,7 @@ class MagmaVarController extends Controller
      */
     public function index(Request $request)
     {
-        $vars = Gadd::with('var')->get();
+        $vars = Gadd::with('var')->paginate(5);
         return new MagmaVarCollection($vars);
     }
 
