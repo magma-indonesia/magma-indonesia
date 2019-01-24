@@ -36,6 +36,7 @@ Route::group(['middleware' => ['jwt.auth']], function () {
         Route::get('magma-var','Api\v1\MagmaVarController@index');
         Route::get('magma-var/{code}/{noticenumber?}','Api\v1\MagmaVarController@show');
         Route::get('magma-sigertan','Api\v1\MagmaSigertanController@index');
+        Route::get('press-release','Api\v1\PressController@index');
     });
 });
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
