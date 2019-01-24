@@ -18,7 +18,10 @@ class MagmaVenController extends Controller
     public function index(Request $request)
     {
         $vars = MagmaVen::with('gunungapi:ga_code,ga_nama_gapi,ga_elev_gapi')
+                    ->orderBy('erupt_tgl','desc')
+                    ->orderBy('erupt_jam','desc')
                     ->paginate(5);
+
         return new MagmaVenCollection($vars);
     }
 }
