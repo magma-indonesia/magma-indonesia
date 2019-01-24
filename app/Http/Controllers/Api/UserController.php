@@ -29,7 +29,7 @@ class UserController extends Controller
         return response()->json([
             'token' => $token,
             'type' => 'bearer',
-            'expires_days' => Auth::guard('api')->factory()->getTTL() / 1440
+            'expires_in' => Auth::guard('api')->factory()->getTTL() / 1440,
         ]);
     }
 
@@ -73,7 +73,7 @@ class UserController extends Controller
             $credentials = $request->only($username, 'password', 'status');
 
             if ($user = Auth::once($credentials)) {
-                $token = Auth::guard('api')->setTTL($ttl)->attempt($credentials);
+                $token = auth('api')->setTTL($ttl)->attempt($credentials);   
                 $user = auth()->user();
                 $user->notify(new UserLogin('api',$user));
                 return $this->respondWithToken($token);

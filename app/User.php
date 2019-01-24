@@ -49,7 +49,10 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getJWTCustomClaims()
     {
-        return [];
+        return [
+            'source' => 'MAGMA Indonesia',
+            'api_version' => 'v1'
+        ];
     }
 
     /**
