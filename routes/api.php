@@ -30,9 +30,8 @@ Route::group(['middleware' => ['jwt.auth']], function () {
         Route::get('var/{id}','Api\VarController@show');
         Route::get('vona','Api\v1\VonaController@index');
         Route::get('vona/{uuid}','Api\v1\VonaController@show');
-        Route::resource('roq','Api\OldRoqController', ['except' => [
-            'create','edit','store','destroy'
-        ]]);
+        Route::get('roq','Api\OldRoqController@index');
+        Route::get('roq/{no}','Api\OldRoqController@show');
         Route::get('magma-var','Api\v1\MagmaVarController@index');
         Route::get('magma-var/{code}/{noticenumber?}','Api\v1\MagmaVarController@show');
     });

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\v1\GempaRoq as OldRoq;
+use App\v1\MagmaRoq;
 use App\User;
 
 use Validator;
@@ -20,7 +20,7 @@ class OldRoqController extends Controller
      */
     public function index()
     {
-        $roqs = OldRoq::paginate(30);
+        $roqs = MagmaRoq::paginate(30);
 
         return new OldRoqCollection($roqs);
     }
@@ -33,7 +33,7 @@ class OldRoqController extends Controller
      */
     public function show($no)
     {
-        $roq = OldRoq::findOrFail($no);
+        $roq = MagmaRoq::findOrFail($no);
 
         return new OldRoqResource($roq);        
     }
@@ -47,7 +47,7 @@ class OldRoqController extends Controller
      */
     public function update(Request $request, $no)
     {
-        $roq = OldRoq::findOrFail($no);
+        $roq = MagmaRoq::findOrFail($no);
 
         $validator = Validator::make($request->all(), [
             'tanggapan' => 'required',
