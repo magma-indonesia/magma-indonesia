@@ -75,4 +75,8 @@ class GertanCrs extends Model
         return empty($value) ? null : $value;
     }
 
+    public function tanggapan()
+    {
+        return $this->hasOne('App\v1\MagmaSigertan','crs_ids','crs_ids');
+    }
 }

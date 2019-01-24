@@ -14,6 +14,11 @@ class MagmaSigertan extends Model
 
     protected $table = 'magma_sigertan';
 
+    protected $with = [ 
+        'anggota','foto_kejadian',
+        'foto_sosialisasi','rekomendasi','status','verifikator'
+    ];
+
     /**
      * Satuan Bentang Alam
      *
@@ -152,5 +157,40 @@ class MagmaSigertan extends Model
     public function getQlsCauAttribute(string $value)
     {
         return empty($value) ? null : explode('#',$value);
+    }
+
+    public function crs()
+    {
+        return $this->belongsTo('App\v1\GertanCrs','crs_ids','crs_ids');
+    }
+
+    public function anggota()
+    {
+        return $this->hasOne('App\v1\SigertanAnggotaTim','qls_ids','qls_ids');
+    }
+
+    public function foto_kejadian()
+    {
+        return $this->hasMany('App\v1\SigertanFotoKejadian','qls_ids','qls_ids');
+    }
+
+    public function foto_sosialisasi()
+    {
+        return $this->hasMany   ('App\v1\SigertanFotoSosialisasi','qls_ids','qls_ids');
+    }
+
+    public function rekomendasi()
+    {
+        return $this->hasOne('App\v1\SigertanRekomendasi','qls_ids','qls_ids');
+    }
+
+    public function status()
+    {
+        return $this->hasOne('App\v1\SigertanStatus','qls_ids','qls_ids');
+    }
+
+    public function verifikator()
+    {
+        return $this->hasOne('App\v1\SigertanVerifikator','qls_ids','qls_ids');
     }
 }
