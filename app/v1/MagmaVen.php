@@ -120,4 +120,9 @@ class MagmaVen extends Model
     {
         return $value == '-' ? null : $value;
     }
+
+    public function gunungapi()
+    {
+        return $this->belongsTo('App\v1\Gadd','ga_code','ga_code');
+    }
 }

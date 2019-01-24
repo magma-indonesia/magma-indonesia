@@ -32,6 +32,7 @@ Route::group(['middleware' => ['jwt.auth']], function () {
         Route::get('vona/{uuid}','Api\v1\VonaController@show');
         Route::get('magma-roq','Api\OldRoqController@index');
         Route::get('magma-roq/{no}','Api\OldRoqController@show');
+        Route::get('magma-ven','Api\v1\MagmaVenController@index');
         Route::get('magma-var','Api\v1\MagmaVarController@index');
         Route::get('magma-var/{code}/{noticenumber?}','Api\v1\MagmaVarController@show');
         Route::get('magma-sigertan','Api\v1\MagmaSigertanController@index');
