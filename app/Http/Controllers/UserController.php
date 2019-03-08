@@ -93,7 +93,7 @@ class UserController extends Controller
                 $user = Auth::user();
                 $user->update([
                     'last_login_at' => Carbon::now()->toDateTimeString(),
-                    'last_login_ip' => $request->getClientIp()
+                    'last_login_ip' => last($request->getClientIps())    
                 ]);
 
                 SendLoginNotification::dispatch('web',$user)

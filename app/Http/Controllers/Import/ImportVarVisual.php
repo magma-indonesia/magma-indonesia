@@ -62,7 +62,8 @@ class ImportVarVisual extends Import
                 ],
                 [   'visibility'        => $this->item->var_visibility,
                     'visual_asap'       => $this->item->var_asap,
-                    'visual_kawah'      => $this->item->var_viskawah
+                    'visual_kawah'      => $this->item->var_viskawah,
+                    'file_old'          => $this->item->var_image
                 ]   
             );
 

@@ -708,6 +708,7 @@
                         }
                     },
                     error: function(response){
+                        console.log('response : '+response);
                         var $errors ={
                             'status': response.status+', '+response.statusText,
                             'exception': response.responseJSON.exception,

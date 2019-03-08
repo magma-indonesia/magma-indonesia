@@ -77,7 +77,7 @@ class CreateVar extends FormRequest
             'date.date_format' => 'Format tanggal tidak valid (Y-m-d).',
             'date.before_or_equal' => 'Tanggal tidak boleh lebih dari hari ini.',
             'periode.in' => 'Range periode waktu tidak valid. ', 
-            'noticenumber.unique' => 'Laporan sudah pernah dibuat.'
+            'noticenumber.unique' => 'Laporan sudah dibuat.'
         ];
     }
 

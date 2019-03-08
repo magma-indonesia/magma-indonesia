@@ -14,7 +14,7 @@
             <div class="col-md-3 col-xs-12">
                 <div class="hpanel">
                     <div class="panel-body">
-                        <img alt="logo" class="img-circle m-b m-t-md" src="http://chamber.localhost/images/user/photo/1">
+                        <img alt="logo" class="img-circle m-b m-t-md" src="{{ $user->photo ? '/images/user/photo/'.$user->id : Storage::url('thumb/user.png') }}">
                         <h3><a href="">{{ $user->name }}</a></h3>
                         <dl>
                             <dt>Penempatan</dt>

@@ -125,4 +125,9 @@ class MagmaVen extends Model
     {
         return $this->belongsTo('App\v1\Gadd','ga_code','ga_code');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\v1\User','erupt_usr','vg_nip');
+    }
 }

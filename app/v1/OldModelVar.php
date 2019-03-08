@@ -128,6 +128,17 @@ class OldModelVar extends Model
     }
 
     /**
+     * Mengambil 1 nama pelapor
+     *
+     * @param string $value
+     * @return string
+     */
+    protected function getVarNamaPelaporAttribute(string $value) : string
+    {
+        return explode('#',$value)[0];
+    }
+
+    /**
      * Merubah status dari string menjadi integer
      *
      * @param string $value

@@ -12,6 +12,11 @@ class DraftMagmaVar extends Model
 
     protected $guarded = ['id'];
 
+    protected $with = [
+        'user',
+        'gunungapi'
+    ];
+
     protected $casts = [
         'var' => 'array',
         'var_visual' => 'array',

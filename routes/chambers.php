@@ -41,6 +41,14 @@ Route::group(['prefix' => 'activities'], function(){
     Route::get('/', 'ActivityController@index')->name('activities.index');
 });
 
+Route::name('indonesia.')->group(function () {
+    Route::group(['prefix' => 'indonesia'], function () {
+        Route::get('provinsi','IndonesiaController@getProvinsi')->name('provinsi');
+        Route::get('provinsi/{id_provinsi}','IndonesiaController@getKota')->name('kota');
+        Route::get('provinsi/{id_provinsi}/{id_kota}','IndonesiaController@getKabupaten')->name('kabupaten');
+    });
+});
+
 Route::group(['prefix' => 'gunungapi'], function () {
     Route::resource('datadasar','DataDasar');
     Route::resource('pos','PosPgaController');
@@ -48,31 +56,66 @@ Route::group(['prefix' => 'gunungapi'], function () {
     Route::get('laporan/search','ActivityGaController@search')->name('laporan.search');
     Route::post('laporan/verifikasiv1','ActivityGaController@verifikasiv1')->name('laporan.verifikasiv1');
     Route::post('laporan/validasi','ActivityGaController@validasi')->name('laporan.validasi');
+
+    /**
+     * Create and Store Var
+     */
     Route::get('laporan/create-var','MagmaVarController@createVar')
         ->name('laporan.create.var');
-    Route::get('laporan/select-var-rekomendasi','MagmaVarController@selectVarRekomendasi')
-        ->name('laporan.select.var.rekomendasi');
-    Route::get('laporan/create-var-visual','MagmaVarController@createVarVisual')
-        ->name('laporan.create.var.visual');
-    Route::get('laporan/create-var-klimatologi','MagmaVarController@createVarKlimatologi')
-        ->name('laporan.create.var.klimatologi');
-    Route::get('laporan/create-var-gempa','MagmaVarController@createVarGempa')
-        ->name('laporan.create.var.gempa');
-    Route::get('laporan/preview-magma-var','MagmaVarController@previewMagmaVar')
-        ->name('laporan.preview.magma.var');
     Route::post('laporan/create-var','MagmaVarController@storeVar')
         ->name('laporan.store.var');
-    Route::post('laporan/select-var','MagmaVarController@storeVarRekomendasi')
+
+    /**
+     * Select, Create, Store, and Delete Rekomendasi
+     */
+    Route::get('laporan/select-var-rekomendasi','MagmaVarController@selectVarRekomendasi')
+        ->name('laporan.select.var.rekomendasi');
+    Route::post('laporan/select-var-rekomendasi','MagmaVarController@storeVarRekomendasi')
         ->name('laporan.store.var.rekomendasi');
-    Route::post('laporan/create-var-visual','MagmaVarController@storeVarVisual')
-        ->name('laporan.store.var.visual');
-    Route::post('laporan/create-var-klimatologi','MagmaVarController@storeVarKlimatologi')
-        ->name('laporan.store.var.klimatologi');
-    Route::post('laporan/create-var-gempa','MagmaVarController@storeVarGempa')
-        ->name('laporan.store.var.gempa');
     Route::post('laporan/delete-var-rekomendasi/{id}','MagmaVarController@destroyVarRekomendasi')
         ->name('laporan.destroy.var.rekomendasi');
+
+    /**
+     * Create and Store Var Visual
+     */
+    Route::get('laporan/create-var-visual','MagmaVarController@createVarVisual')
+        ->name('laporan.create.var.visual');
+    Route::post('laporan/create-var-visual','MagmaVarController@storeVarVisual')
+        ->name('laporan.store.var.visual');
+        
+    /**
+     * Create and Store Var Klimatologi
+     */
+    Route::get('laporan/create-var-klimatologi','MagmaVarController@createVarKlimatologi')
+        ->name('laporan.create.var.klimatologi');
+    Route::post('laporan/create-var-klimatologi','MagmaVarController@storeVarKlimatologi')
+        ->name('laporan.store.var.klimatologi');
+
+    /**
+     * Create and Store Var Gempa
+     */
+    Route::get('laporan/create-var-gempa','MagmaVarController@createVarGempa')
+        ->name('laporan.create.var.gempa');
+    Route::post('laporan/create-var-gempa','MagmaVarController@storeVarGempa')
+        ->name('laporan.store.var.gempa');
+
+    /**
+     * Preview MAGMA-VAR
+     */
+    Route::get('laporan/preview-magma-var','MagmaVarController@previewMagmaVar')
+        ->name('laporan.preview.magma.var');
+    Route::post('laporan/preview-magma-var','MagmaVarController@storePreviewMagmaVar')
+        ->name('laporan.store.magma.var');
+
+    /**
+     * Check Existing VAR
+     */
     Route::post('laporan/exists','MagmaVarController@exists')->name('laporan.exists');
+
+    /**
+     * Draft VAR
+     */
+    Route::resource('laporan/draft','MagmaVarDraftController');
     Route::resource('laporan','ActivityGaController', ['except' => [
         'create','store','edit','update','destroy'
     ]]);
@@ -115,5 +158,13 @@ Route::name('v1.')->group(function () {
         Route::resource('users','v1\UserController');
         Route::resource('gempabumi','v1\MagmaRoqController');
         Route::resource('subscribers','v1\VonaSubscriberController');
+        Route::name('gunungapi.')->group(function () {
+            Route::group(['prefix' => 'gunungapi'], function () {
+                Route::get('laporan/filter','v1\MagmaVarController@filter')->name('laporan.filter');
+                Route::resource('laporan','v1\MagmaVarController');
+                Route::get('ven','v1\MagmaVenController@index')->name('ven.index');
+                Route::get('ven/{id}','v1\MagmaVenController@show')->name('ven.show');
+            });
+        });
     });
 });

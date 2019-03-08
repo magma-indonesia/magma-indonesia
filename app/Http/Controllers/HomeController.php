@@ -9,7 +9,7 @@ class HomeController extends Controller
     public function __construct(Request $request)
     {
 
-        $this->middleware('set.locale');
+        // $this->middleware('set.locale');
 
     }
     /**

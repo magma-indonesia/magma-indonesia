@@ -31,6 +31,7 @@ Route::group(['middleware' => ['web','auth']], function () {
         Route::group(['prefix' => 'user'], function () {
             Route::get('photo/{id?}/{high?}','UserPhotoController@photo')->name('user.photo');
         });
+        Route::get('var/{noticenumber}/{draft?}','MagmaVarPhotoController@show')->name('var.show');
     });    
     Route::group(['prefix' => 'img'], function (){
         Route::get('/user/{id}', 'ImageController@user');

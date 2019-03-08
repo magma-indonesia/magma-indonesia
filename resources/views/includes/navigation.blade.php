@@ -29,7 +29,7 @@
                 <div id="sparkline1" class="small-chart m-t-sm"></div>
                 <div>
                     <h4 class="font-extra-bold m-b-xs">
-                        {!! request()->ip() !!}
+                        {!! last(request()->getClientIps()) !!}
                     </h4>
                     <small class="text-muted">IP address yang sedang digunakan oleh Anda.</small>
                 </div>
@@ -72,13 +72,30 @@
                     </li>
                 </ul>
                 <ul class="nav nav-second-level">
-                    <li class="{{ active('chambers.v1.gempabumi.index') }}">
-                        <a href="{{ route('chambers.v1.gempabumi.index') }}">Gempa Bumi</a>
+                    <li class="{{ active(['chambers.v1.gunungapi.*','chambers.v1.subscribers.*']) }}">
+                        <a href="#">
+                            <span class="nav-label"> Gunung Api</span>
+                            <span class="fa arrow"></span>                    
+                        </a>
+                        <ul class="nav nav-third-level m-l">
+                            <li class="{{ active('chambers.v1.gunungapi.laporan.index') }}">
+                                <a href="{{ route('chambers.v1.gunungapi.laporan.index') }}">Laporan</a>
+                            </li>
+                            <li class="{{ active('chambers.v1.gunungapi.laporan.filter') }}">
+                                <a href="{{ route('chambers.v1.gunungapi.laporan.filter') }}">Cari Laporan</a>
+                            </li>
+                            <li class="{{ active('chambers.v1.gunungapi.ven.index') }}">
+                                <a href="{{ route('chambers.v1.gunungapi.ven.index') }}">VEN</a>
+                            </li>
+                            <li class="{{ active('chambers.v1.subscribers.index') }}">
+                                <a href="{{ route('chambers.v1.subscribers.index') }}">VONA Subscribers</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
                 <ul class="nav nav-second-level">
-                    <li class="{{ active('chambers.v1.subscribers.index') }}">
-                        <a href="{{ route('chambers.v1.subscribers.index') }}">VONA Subscribers</a>
+                    <li class="{{ active('chambers.v1.gempabumi.index') }}">
+                        <a href="{{ route('chambers.v1.gempabumi.index') }}">Gempa Bumi</a>
                     </li>
                 </ul>
             </li>
@@ -177,7 +194,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="{{ active(['chambers.datadasar.*','chambers.laporan.*','chambers.laporan.search','chambers.pos.*','chambers.letusan.*']) }}">
+            <li class="{{ active(['chambers.datadasar.*','chambers.laporan.*','chambers.laporan.search','chambers.pos.*','chambers.letusan.*','chambers.draft.*']) }}">
                 <a href="#">
                     <span class="nav-label">Gunung Api</span>
                     <span class="fa arrow"></span>
@@ -189,6 +206,9 @@
                     @yield('nav-edit-volcano')
                     <li class="{{ active('chambers.laporan.index') }}">
                         <a href="{{ route('chambers.laporan.index') }}">Daftar Laporan</a>
+                    </li>
+                    <li class="{{ active('chambers.draft.*') }}">
+                        <a href="{{ route('chambers.draft.index') }}">Draft Laporan</a>
                     </li>
                     <li class="{{ active('chambers.laporan.create.*') }}">
                         <a href="{{ route('chambers.laporan.create.var') }}">Buat Laporan</a>

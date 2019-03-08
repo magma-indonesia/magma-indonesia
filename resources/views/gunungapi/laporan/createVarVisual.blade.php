@@ -4,6 +4,12 @@
 Step 3 - Visual
 @endsection
 
+@section('add-vendor-css')
+    @role('Super Admin')
+    <link rel="stylesheet" href="{{ asset('vendor/json-viewer/jquery.json-viewer.css') }}" />
+    @endrole
+@endsection
+
 @section('content-header')
     <div class="small-header">
         <div class="hpanel">
@@ -34,6 +40,13 @@ Step 3 - Visual
     <div class="content animate-panel content-boxed">
         <div class="row">
             <div class="col-lg-12">
+                @role('Super Admin')
+                @component('components.json-var')
+                    @slot('title')
+                        For Developer
+                    @endslot
+                @endcomponent
+                @endrole
                 <div class="hpanel">
                     <div class="panel-heading">
                         Form MAGMA-VAR data Pengamatan Visual
@@ -125,7 +138,7 @@ Step 3 - Visual
                                                 </div>
 
                                                 {{-- Extended Form Visual Asap --}}
-                                                @if (count($errors))
+                                                @if ($errors->any())
                                                 <div class="visual-asap" style="{{ old('visual_asap') == 'Teramati' ? '' : 'Display:none;' }}">
                                                     <div class="form-group col-lg-12">
                                                         <label {{$errors->has('tasap_max') || $errors->has('tasap_min')? 'class=text-danger' : ''}}>Tinggi Asap Dari Atas Puncak (Minimal 50 meter)</label>
@@ -256,38 +269,65 @@ Step 3 - Visual
                                                 <div class="foto-visual" style="{{ $errors->has('foto') || ($visual['hasfoto'] == '1') || empty($visual) ?  '' : 'Display:none'}}">
                                                     <div class="form-group col-lg-12">
                                                         <label {{$errors->has('foto') || $errors->has('foto') ? 'class=text-danger' : ''}}>Upload Foto Visual (max 2MB)</label>
+                                                        @if(!empty($visual['foto']))
                                                         <div class="form-group">
-                                                            <img class="img-responsive border-top border-bottom border-right border-left p-xs image-file" src="#" style="display:none;">
+                                                            <div class="row">
+                                                                <div class="col-lg-6 col-xs-12">
+                                                                    <img class="img-responsive border-top border-bottom border-right border-left p-xs image-file" src="{{ '/images/var/'.session('var')['noticenumber'].'/draft' }}">
+                                                                </div>
+                                                            </div>
                                                         </div>
+                                                        @else
+                                                        <div class="form-group">
+                                                            <div class="row">
+                                                                <div class="col-lg-6 col-xs-12">
+                                                                    <img class="img-responsive border-top border-bottom border-right border-left p-xs image-file" src="#" style="display:none;">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @endif
                                                         <div class="form-group">
                                                             <label class="w-xs btn btn-outline btn-default btn-file">
                                                                 <i class="fa fa-upload"></i>
                                                                 <span class="label-file">Browse </span> 
-                                                                <input accept="image/jpeg" class="file" type="file" name="foto" style="display: none;">
+                                                                <input class="file" accept="image/jpeg" class="file" type="file" name="foto" style="display: none;">
                                                             </label>
                                                         </div>
                                                     </div>
                                                     <div class="form-group col-lg-12">
                                                         <label>Foto Visual Tambahan (opsional - per file Max 2MB)</label>
+                                                        <input name="hasfoto_lainnya" value="0" class="hidden hasfoto_lainnya">
+                                                        @if(!empty($visual['foto_lainnya']))
+                                                        <div class="form-group">
+                                                            <div class="row">
+                                                                @foreach($visual['foto_lainnya'] as $key => $value)
+                                                                <div class="col-lg-4 col-xs-4">
+                                                                    <img class="image-file-lainnya img-responsive border-top border-bottom border-right border-left p-xs file-lainnya_{{ $key }}" src="{{ '/images/var/'.session('var')['noticenumber'].'/draft?others='.$key }}">
+                                                                </div>
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+                                                        @endif
                                                         <div class="form-group">
                                                             <label class="w-xs btn btn-outline btn-default btn-file">
                                                                 <i class="fa fa-plus"></i>
                                                                 <span id="label-file-1" class="label-file-lainnya">Browse </span> 
-                                                                <input id="file-1" accept="image/jpeg" class="file-lainnya" type="file" name="foto_lainnya[]" style="display: none;">
+                                                                <input id="file-1" accept="image/jpeg" class="file-lainnya" type="file" name="foto_lainnya[0]" style="display: none;">
                                                             </label>
                                                             <label class="w-xs btn btn-outline btn-default btn-file">
                                                                 <i class="fa fa-plus"></i>
                                                                 <span id="label-file-2" class="label-file-lainnya">Browse </span> 
-                                                                <input id="file-2" accept="image/jpeg" class="file-lainnya" type="file" name="foto_lainnya[]" style="display: none;">
+                                                                <input id="file-2" accept="image/jpeg" class="file-lainnya" type="file" name="foto_lainnya[1]" style="display: none;">
                                                             </label>
                                                             <label class="w-xs btn btn-outline btn-default btn-file">
                                                                 <i class="fa fa-plus"></i>
                                                                 <span id="label-file-3" class="label-file-lainnya">Browse </span> 
-                                                                <input id="file-3" accept="image/jpeg" class="file-lainnya" type="file" name="foto_lainnya[]" style="display: none;">
+                                                                <input id="file-3" accept="image/jpeg" class="file-lainnya" type="file" name="foto_lainnya[2]" style="display: none;">
                                                             </label>
                                                         </div>
+                                                        <input class="hapus-foto-lainnya" name="hapus_foto_lainnya" type="hidden" value="0">
                                                         <div class="form-group">
-                                                            <button type="button" class="w-xs btn btn-danger clear-file"><i class="fa fa-trash"></i> Hapus Foto Tambahan</button>
+                                                            <button type="button" class="w-xs btn btn-danger clear-file-lainnya"><i class="fa fa-trash"></i> Hapus Foto Tambahan</button>
                                                         </div>
                                                         <hr>
                                                     </div>
@@ -323,9 +363,18 @@ Step 3 - Visual
     </div>
 @endsection
 
+@section('add-vendor-script')
+    @role('Super Admin')
+    <script src="{{ asset('vendor/json-viewer/jquery.json-viewer.js') }}"></script>
+    @endrole
+@endsection
+
 @section('add-script')
     <script>
         $(document).ready(function () {
+            @role('Super Admin')
+            $('#json-renderer').jsonViewer(@json(session()->all()), {collapsed: true});
+            @endrole
 
             var height = window.screen.height;
             console.log(height > 480);
@@ -351,8 +400,7 @@ Step 3 - Visual
                 reader.onload = function (e) {
                     $('.image-file')
                         .show()
-                        .attr('src',e.target.result)
-                        .css('max-height', height+'px');
+                        .attr('src',e.target.result);
                 }
 
                 reader.readAsDataURL(this.files[0]);
@@ -366,7 +414,9 @@ Step 3 - Visual
                 $('#label-'+$id).html(label);
             });
 
-            $('.clear-file').on('click', function(e) {
+            $('.clear-file-lainnya').on('click', function(e) {
+                $('.hapus-foto-lainnya').val(1);
+                $('.image-file-lainnya').hide();
                 $('.file-lainnya').val(null);
                 $('.label-file-lainnya').html('Browse');
             })

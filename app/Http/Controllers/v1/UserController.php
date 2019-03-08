@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\v1\User;
+use Illuminate\Support\Facades\Cache;
 
 class UserController extends Controller
 {
@@ -28,7 +29,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = Cache::remember('users_all', 120, function () {
+            return User::all();
+        });
+
         return view('v1.users.index', compact('users'));
     }
 
@@ -61,7 +65,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        return User::findOrFail($id);
     }
 
     /**
@@ -72,7 +76,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        return User::findOrFail($id);
     }
 
     /**

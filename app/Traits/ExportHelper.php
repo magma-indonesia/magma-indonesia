@@ -4,9 +4,27 @@ namespace App\Traits;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\TempTable;
 
 trait ExportHelper 
 {
+    
+    protected function getStartDate()
+    {
+        $start = TempTable::select('others')->where('jenis','restore')->first();
+        return empty($start) ? '2016-05-01' : $start->others;
+    }
+
+    protected function setStartDate($var_data_date)
+    {
+        $temp = TempTable::updateOrCreate(
+            [   'jenis' => 'restore' ],
+            [   'others' => $var_data_date]
+        );
+
+        return $temp;
+    }
+
     protected function setNoticeNumber()
     {
         $this->noticenumber = $this->item->var_perwkt == '24' 

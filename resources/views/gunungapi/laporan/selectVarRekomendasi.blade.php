@@ -5,6 +5,9 @@ Step 2 - Rekomendasi
 @endsection
 
 @section('add-vendor-css')
+    @role('Super Admin')
+    <link rel="stylesheet" href="{{ asset('vendor/json-viewer/jquery.json-viewer.css') }}" />
+    @endrole
     <link rel="stylesheet" href="{{ asset('vendor/sweetalert/lib/sweet-alert.css') }}" />
 @endsection
 
@@ -38,6 +41,13 @@ Step 2 - Rekomendasi
     <div class="content animate-panel content-boxed">
         <div class="row">
             <div class="col-lg-12">
+                @role('Super Admin')
+                @component('components.json-var')
+                    @slot('title')
+                        For Developer
+                    @endslot
+                @endcomponent
+                @endrole
                 <div class="hpanel">
                     <div class="panel-heading">
                         Form MAGMA-VAR pilih Rekomendasi
@@ -79,7 +89,7 @@ Step 2 - Rekomendasi
 
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
-                                                    <label>Nama Pembuat</label>
+                                                    <label>Nama Pembuat Laporan</label>
                                                     <input type="text" value="{{ auth()->user()->name }}" id="name" class="form-control" name="name" placeholder="Nama Pembuat Laporan" disabled>
                                                 </div>
                                                 <div class="form-group col-lg-12">
@@ -154,11 +164,17 @@ Step 2 - Rekomendasi
 
 @section('add-vendor-script')
     <script src="{{ asset('vendor/sweetalert/lib/sweet-alert.min.js') }}"></script>
+    @role('Super Admin')
+    <script src="{{ asset('vendor/json-viewer/jquery.json-viewer.js') }}"></script>
+    @endrole
 @endsection
 
 @section('add-script')
     <script>
         $(document).ready(function() {
+            @role('Super Admin')
+            $('#json-renderer').jsonViewer(@json(session()->all()), {collapsed: true});
+            @endrole
             $('.showhide-rekomendasi').on('click', function (event) {
                 event.preventDefault();
                 var hpanel = $(this).closest('div.hpanel');

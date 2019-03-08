@@ -109,7 +109,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::prefix('chambers/v1/export')
              ->name('chambers.v1.export.')
-             ->middleware(['web','auth','revalidate'])
+             ->middleware(['web','auth','revalidate','role:Super Admin'])
              ->namespace($this->namespace)
              ->group(base_path('routes/export.php'));
     }

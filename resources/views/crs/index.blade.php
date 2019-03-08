@@ -336,6 +336,10 @@
             
             $('#provinsi').on('change',function(e){
                 var $id = $('#provinsi').val();
+                var $city = $('#kota'),
+                    $kota = '<option value="*" selected="">Semua Kota</option>';
+                    $city.empty().append('<option value="*" selected="">Loading ...</option>');
+
                 console.log($id);
                 
                 $.ajax({
@@ -343,8 +347,6 @@
                     data: {id:$id},
                     type: 'POST',
                     success: function(data){
-                        var $city = $('#kota'),
-                            $kota = '<option value="*" selected="">Semua Kota</option>';
                         $city.empty();
                         $.each(data, function(index,value){
                             var $element = '<option value="'+value.id+'" >'+value.name+'</option>';

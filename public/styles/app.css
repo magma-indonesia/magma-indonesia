@@ -99,6 +99,19 @@ table tr td[class*="4"] {
 .label-magma {
   background-color: #007fff;
 }
+.label-normal {
+  background-color: #8BC34A;
+}
+.label-waspada {
+  background-color: #FFEB3B;
+}
+.label-siaga {
+  background-color: #EF6C00;
+}
+.label-awas {
+  background-color: #F44336;
+}
+
 .checkbox-magma input[type="checkbox"]:checked + label::before {
   background-color: #007fff;
   border-color: #007fff;

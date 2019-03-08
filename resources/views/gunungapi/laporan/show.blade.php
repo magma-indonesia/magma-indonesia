@@ -150,6 +150,9 @@
                     <div class="row p-xs">
                         <div class="col-lg-6">
                             <h4>Pengamatan Visual </h4>
+                            @if($var->visual->file_old)
+                            <img class="img-responsive border-top border-bottom border-right border-left p-xs m-b" src="{{ $var->visual->file_old }}">
+                            @endif
                             <p>{!! $visual !!}</p>
                             <h4>Keterangan Visual Lainnya </h4>
                             <p>{{ $var->visual->visual_kawah }}</p>

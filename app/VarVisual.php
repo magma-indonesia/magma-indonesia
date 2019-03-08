@@ -15,7 +15,12 @@ class VarVisual extends Model
         'noticenumber_id',
         'visibility',
         'visual_asap',
-        'visual_kawah'
+        'visual_kawah',
+        'filename_0',
+        'filename_1',
+        'filename_2',
+        'filename_3',
+        'file_old'
     ];
 
     protected $hidden  = [

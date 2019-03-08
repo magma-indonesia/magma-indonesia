@@ -6,6 +6,9 @@
 
 @section('add-vendor-css')
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap-datepicker-master/dist/css/bootstrap-datepicker3.min.css') }}" />
+    @role('Super Admin')
+    <link rel="stylesheet" href="{{ asset('vendor/json-viewer/jquery.json-viewer.css') }}" />
+    @endrole
 @endsection
 
 @section('content-header')
@@ -38,6 +41,13 @@
     <div class="content animate-panel content-boxed">
         <div class="row">
             <div class="col-lg-12">
+                @role('Super Admin')
+                @component('components.json-var')
+                    @slot('title')
+                        For Developer
+                    @endslot
+                @endcomponent
+                @endrole
                 <div class="hpanel">
                     <div class="panel-heading">
                         Form MAGMA-VAR
@@ -80,32 +90,32 @@
 
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
-                                                    <label>Nama Pembuat</label>
+                                                    <label>Nama Pembuat Laporan</label>
                                                     <input type="text" value="{{ auth()->user()->name }}" id="name" class="form-control" name="name" placeholder="Nama Pembuat Laporan" disabled>
                                                 </div>
                                                 <div class="form-group col-lg-6">
                                                     <label>Pos Gunung Api</label>
                                                     <select id="code" class="form-control" name="code">
                                                         @foreach($pgas as $pga)
-                                                        <option value="{{ $pga->obscode }}" {{ (old('code') == $pga->obscode) || (optional($var)->obscode_id == $pga->obscode) ? 'selected' : ''}}>{{ $pga->observatory }}</option>
+                                                        <option value="{{ $pga->obscode }}" {{ (old('code') == $pga->obscode) || ($var['obscode_id'] == $pga->obscode) ? 'selected' : ''}}>{{ $pga->observatory }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-lg-6">
                                                     <label>Status</label>
                                                     <select id="status" class="form-control" name="status">
-                                                        <option value="1" {{ (old('status') == '1') || (optional($var)->status == '1') ? 'selected' : ''}}>Level I (Normal)</option>
-                                                        <option value="2" {{ (old('status') == '2') || (optional($var)->status == '2')? 'selected' : ''}}>Level II (Waspada)</option>
-                                                        <option value="3" {{ (old('status') == '3') || (optional($var)->status == '3')? 'selected' : ''}}>Level III (Siaga)</option>
-                                                        <option value="4" {{ (old('status') == '4') || (optional($var)->status == '4')? 'selected' : ''}}>Level IV (Awas)</option>
+                                                        <option value="1" {{ (old('status') == '1') || ($var['status'] == '1') ? 'selected' : ''}}>Level I (Normal)</option>
+                                                        <option value="2" {{ (old('status') == '2') || ($var['status'] == '2')? 'selected' : ''}}>Level II (Waspada)</option>
+                                                        <option value="3" {{ (old('status') == '3') || ($var['status'] == '3')? 'selected' : ''}}>Level III (Siaga)</option>
+                                                        <option value="4" {{ (old('status') == '4') || ($var['status'] == '4')? 'selected' : ''}}>Level IV (Awas)</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-lg-6">
-                                                    <label>Tanggal Laporan</label>
-                                                    @if (!empty(old('date')))
+                                                    <label>Tanggal Laporan </label>
+                                                    @if (!empty($var['var_data_date']))
+                                                    <input name="date" id="date" class="form-control" type="text" value="{{ $var['var_data_date'] }}">
+                                                    @elseif (!empty(old('date')))
                                                     <input name="date" id="date" class="form-control" type="text" value="{{ old('date') }}">
-                                                    @elseif (!empty(optional($var)->var_data_date))
-                                                    <input name="date" id="date" class="form-control" type="text" value="{{ optional($var)->var_data_date->format('Y-m-d') }}">
                                                     @else
                                                     <input name="date" id="date" class="form-control" type="text" value="{{ now()->format('Y-m-d') }}">
                                                     @endif
@@ -114,13 +124,13 @@
                                                     <label>Periode</label>
                                                     <select id="periode" class="form-control" name="periode">
                                                         <optgroup label="24 Jam">
-                                                            <option value="00:00-24:00" {{ (old('periode') == '00:00-24:00') || (optional($var)->periode == '00:00-24:00') ? 'selected' : ''}}>Pukul 00:00-24:00</option>
+                                                            <option value="00:00-24:00" {{ (old('periode') == '00:00-24:00') || ($var['periode'] == '00:00-24:00') ? 'selected' : ''}}>Pukul 00:00-24:00</option>
                                                         </optgroup>
                                                         <optgroup label="6 Jam">
-                                                            <option value="00:00-06:00" {{ (old('periode') == '00:00-06:00') || (optional($var)->periode == '00:00-06:00') ? 'selected' : ''}}>Pukul 00:00-06:00</option>
-                                                            <option value="06:00-12:00" {{ (old('periode') == '06:00-12:00') || (optional($var)->periode == '06:00-12:00') ? 'selected' : ''}}>Pukul 06:00-12:00</option>
-                                                            <option value="12:00-18:00" {{ (old('periode') == '12:00-18:00') || (optional($var)->periode == '12:00-18:00') ? 'selected' : ''}}>Pukul 12:00-18:00</option>
-                                                            <option value="18:00-24:00" {{ (old('periode') == '18:00-24:00') || (optional($var)->periode == '18:00-24:00') ? 'selected' : ''}}>Pukul 18:00-24:00</option>
+                                                            <option value="00:00-06:00" {{ (old('periode') == '00:00-06:00') || ($var['periode'] == '00:00-06:00') ? 'selected' : ''}}>Pukul 00:00-06:00</option>
+                                                            <option value="06:00-12:00" {{ (old('periode') == '06:00-12:00') || ($var['periode'] == '06:00-12:00') ? 'selected' : ''}}>Pukul 06:00-12:00</option>
+                                                            <option value="12:00-18:00" {{ (old('periode') == '12:00-18:00') || ($var['periode'] == '12:00-18:00') ? 'selected' : ''}}>Pukul 12:00-18:00</option>
+                                                            <option value="18:00-24:00" {{ (old('periode') == '18:00-24:00') || ($var['periode'] == '18:00-24:00') ? 'selected' : ''}}>Pukul 18:00-24:00</option>
                                                         </optgroup>
                                                     </select>
                                                 </div>
@@ -169,6 +179,9 @@
 @endsection
 
 @section('add-vendor-script')
+    @role('Super Admin')
+    <script src="{{ asset('vendor/json-viewer/jquery.json-viewer.js') }}"></script>
+    @endrole
     <script src="{{ asset('vendor/moment/moment.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.min.js') }}"></script>
 @endsection
@@ -176,7 +189,10 @@
 @section('add-script')
     <script>
         $(document).ready(function () {
-
+            @role('Super Admin')
+            $('#json-renderer').jsonViewer(@json(session()->all()), {collapsed: true});
+            @endrole
+            
             var $showUrl = '{{ route('chambers.laporan.index') }}/',
                 data = {
                     _token: $('meta[name="csrf-token"]').attr('content'),

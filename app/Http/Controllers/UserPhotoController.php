@@ -9,27 +9,25 @@ use App\User;
 
 class UserPhotoController extends Controller
 {
-    private function quality($photo,$quality)
+    private function quality($filename,$quality)
     {
         return $quality == 'high' 
-            ? Storage::disk('user')->get($photo)
-            : Storage::disk('user-thumb')->get($photo);
+            ? Storage::disk('user')->path($filename)
+            : Storage::disk('user-thumb')->path($filename);
     }
 
     public function photo($id = null, $quality = null)
     {
         $user = User::findOrFail($id);
-        $photo = optional($user->photo)->filename;
+        $filename = optional($user->photo)->filename;
 
-        if ($photo)
+        if ($filename)
         {
-
-            $file = $this->quality($photo,$quality);          
-            return response($file, 200)->header('Content-Type', 'image/jpg');
-                    
+            $file = $this->quality($filename,$quality);          
+            return response()->file($file);
         }
 
-        $file = Storage::disk('public')->get('thumb/user.png');
-        return response($file, 200)->header('Content-Type', 'image/png');
+        $file = Storage::disk('public')->path('thumb/user.png');
+        return response()->file($file);
     }
 }

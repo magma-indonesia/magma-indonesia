@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\SigertanCrs;
 use App\IndonesiaProvince as Provinsi;
 use DB;
-use Indonesia;
+use Illuminate\Support\Facades\Cache;
 
 class CrsController extends Controller
 {
@@ -18,7 +18,10 @@ class CrsController extends Controller
      */
     public function getCities(Request $request)
     {
-        $cities = Provinsi::findOrFail($request->id)->cities;
+        $cities = Cache::remember('cities_'.$request->id, 120, function () use ($request) {
+            return Provinsi::findOrFail($request->id)->cities;
+        });
+
         return $cities;
     }
 
@@ -97,8 +100,10 @@ class CrsController extends Controller
      */
     public function index(Request $request)
     {
-        
-        $provinsi = Provinsi::orderBy('name')->get();
+
+        $provinsi = Cache::remember('provinsi', 120, function () {
+            return Provinsi::orderBy('name')->get();
+        });
         
         $crs = $this->applyFilter($request);
   

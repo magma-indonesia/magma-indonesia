@@ -4,6 +4,12 @@
     Step 4 - Klimatologi
 @endsection
 
+@section('add-vendor-css')
+    @role('Super Admin')
+    <link rel="stylesheet" href="{{ asset('vendor/json-viewer/jquery.json-viewer.css') }}" />
+    @endrole
+@endsection
+
 @section('add-css')
 <style>
     /* For Firefox */
@@ -50,6 +56,13 @@
     <div class="content animate-panel content-boxed">
         <div class="row">
             <div class="col-lg-12">
+                @role('Super Admin')
+                @component('components.json-var')
+                    @slot('title')
+                        For Developer
+                    @endslot
+                @endcomponent
+                @endrole
                 <div class="hpanel">
                     <div class="panel-heading">
                         Form MAGMA-VAR data Klimatologi
@@ -219,72 +232,71 @@
                                             </div>
 
                                             @else
-
                                             <div class="row">
                                                 {{-- Cuaca --}}
                                                 <div class="form-group col-lg-12">
-                                                    <label {{$errors->has('cuaca') ? 'class=text-danger' : ''}}>Cuaca</label>
+                                                    <label>Cuaca</label> 
                                                     <div class="checkbox">
-                                                        <label><input name="cuaca[]" value="Cerah" type="checkbox" class="i-checks"> Cerah </label>
+                                                        <label><input name="cuaca[]" value="Cerah" type="checkbox" class="i-checks" {{ (is_array($klimatologi['cuaca']) AND in_array('Cerah',$klimatologi['cuaca'])) ? 'checked' : ''}}> Cerah </label>
                                                     </div>
                                                     <div class="checkbox">
-                                                        <label><input name="cuaca[]" value="Berawan" type="checkbox" class="i-checks"> Berawan</label>
+                                                        <label><input name="cuaca[]" value="Berawan" type="checkbox" class="i-checks" {{ (is_array($klimatologi['cuaca']) AND in_array('Berawan',$klimatologi['cuaca'])) ? 'checked' : ''}}> Berawan</label>
                                                     </div>
                                                     <div class="checkbox">
-                                                        <label><input name="cuaca[]" value="Mendung" type="checkbox" class="i-checks"> Mendung</label>
+                                                        <label><input name="cuaca[]" value="Mendung" type="checkbox" class="i-checks" {{ (is_array($klimatologi['cuaca']) AND in_array('Mendung',$klimatologi['cuaca'])) ? 'checked' : ''}}> Mendung</label>
                                                     </div>
                                                     <div class="checkbox">
-                                                        <label><input name="cuaca[]" value="Hujan" type="checkbox" class="i-checks"> Hujan</label>
+                                                        <label><input name="cuaca[]" value="Hujan" type="checkbox" class="i-checks" {{ (is_array($klimatologi['cuaca']) AND in_array('Hujan',$klimatologi['cuaca'])) ? 'checked' : ''}}> Hujan</label>
                                                     </div>
                                                     <div class="checkbox">
-                                                        <label><input name="cuaca[]" value="Badai" type="checkbox" class="i-checks"> Badai</label>
+                                                        <label><input name="cuaca[]" value="Badai" type="checkbox" class="i-checks" {{ (is_array($klimatologi['cuaca']) AND in_array('Badai',$klimatologi['cuaca'])) ? 'checked' : ''}}> Badai</label>
                                                     </div>
                                                 </div>
 
                                                 {{-- Kecepatan Angin --}}
                                                 <div class="form-group col-lg-12">
-                                                    <label {{$errors->has('kecepatan_angin') ? 'class=text-danger' : ''}}>Kecepatan Angin</label>
+                                                    <label>Kecepatan Angin</label>
                                                     <div class="checkbox">
-                                                        <label><input name="kecepatan_angin[]" value="Lemah" type="checkbox" class="i-checks"> Lemah </label>
+                                                        <label><input name="kecepatan_angin[]" value="Lemah" type="checkbox" class="i-checks" {{ (is_array($klimatologi['kecepatan_angin']) AND in_array('Lemah',$klimatologi['kecepatan_angin'])) ? 'checked' : ''}}> Lemah </label>
                                                     </div>
                                                     <div class="checkbox">
-                                                        <label><input name="kecepatan_angin[]" value="Sedang" type="checkbox" class="i-checks"> Sedang</label>
+                                                        <label><input name="kecepatan_angin[]" value="Sedang" type="checkbox" class="i-checks" {{ (is_array($klimatologi['kecepatan_angin']) AND in_array('Sedang',$klimatologi['kecepatan_angin'])) ? 'checked' : ''}}> Sedang</label>
                                                     </div>
                                                     <div class="checkbox">
-                                                        <label><input name="kecepatan_angin[]" value="Kencang" type="checkbox" class="i-checks"> Kencang</label>
+                                                        <label><input name="kecepatan_angin[]" value="Kencang" type="checkbox" class="i-checks" {{ (is_array($klimatologi['kecepatan_angin']) AND in_array('Kencang',$klimatologi['kecepatan_angin'])) ? 'checked' : ''}}> Kencang</label>
                                                     </div>
                                                 </div>
 
                                                 {{-- Arah Angin --}}
                                                 <div class="form-group col-lg-12">
-                                                    <label {{$errors->has('arah_angin') ? 'class=text-danger' : ''}}>Arah Angin</label>
+                                                    <label>Arah Angin</label>
                                                     <div class="row">
                                                         <div class="col-sm-4">
                                                             <div class="checkbox">
-                                                                <label><input name="arah_angin[]" value="Utara" type="checkbox" class="i-checks"> Utara </label>
+                                                                <label><input name="arah_angin[]" value="Utara" type="checkbox" class="i-checks" {{ (is_array($klimatologi['arah_angin']) AND in_array('Utara',$klimatologi['arah_angin'])) ? 'checked' : ''}}> Utara </label>
                                                             </div>
                                                             <div class="checkbox">
-                                                                <label><input name="arah_angin[]" value="Timur" type="checkbox" class="i-checks"> Timur </label>
+                                                                <label><input name="arah_angin[]" value="Timur" type="checkbox" class="i-checks" {{ (is_array($klimatologi['arah_angin']) AND in_array('Timur',$klimatologi['arah_angin'])) ? 'checked' : ''}}> Timur </label>
                                                             </div>
                                                             <div class="checkbox">
-                                                                <label><input name="arah_angin[]" value="Tenggara" type="checkbox" class="i-checks"> Tenggara </label>
+                                                                <label><input name="arah_angin[]" value="Tenggara" type="checkbox" class="i-checks" {{ (is_array($klimatologi['arah_angin']) AND in_array('Tenggara',$klimatologi['arah_angin'])) ? 'checked' : ''}}> Tenggara </label>
                                                             </div>
                                                             <div class="checkbox">
-                                                                <label><input name="arah_angin[]" value="Selatan" type="checkbox" class="i-checks"> Selatan </label>
+                                                                <label><input name="arah_angin[]" value="Selatan" type="checkbox" class="i-checks" {{ (is_array($klimatologi['arah_angin']) AND in_array('Selatan',$klimatologi['arah_angin'])) ? 'checked' : ''}}> Selatan </label>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-4">
                                                             <div class="checkbox">
-                                                                <label><input name="arah_angin[]" value="Barat" type="checkbox" class="i-checks"> Barat </label>
+                                                                <label><input name="arah_angin[]" value="Barat" type="checkbox" class="i-checks" {{ (is_array($klimatologi['arah_angin']) AND in_array('Barat',$klimatologi['arah_angin'])) ? 'checked' : ''}}> Barat </label>
                                                             </div>
                                                             <div class="checkbox">
-                                                                <label><input name="arah_angin[]" value="Barat Daya" type="checkbox" class="i-checks"> Barat Daya </label>
+                                                                <label><input name="arah_angin[]" value="Barat Daya" type="checkbox" class="i-checks" {{ (is_array($klimatologi['arah_angin']) AND in_array('Barat Daya',$klimatologi['arah_angin'])) ? 'checked' : ''}}> Barat Daya </label>
                                                             </div>
                                                             <div class="checkbox">
-                                                                <label><input name="arah_angin[]" value="Barat Laut" type="checkbox" class="i-checks"> Barat Laut </label>
+                                                                <label><input name="arah_angin[]" value="Barat Laut" type="checkbox" class="i-checks" {{ (is_array($klimatologi['arah_angin']) AND in_array('Barat Laut',$klimatologi['arah_angin'])) ? 'checked' : ''}}> Barat Laut </label>
                                                             </div>
                                                             <div class="checkbox">
-                                                                <label><input name="arah_angin[]" value="Timur Laut" type="checkbox" class="i-checks"> Timur Laut </label>
+                                                                <label><input name="arah_angin[]" value="Timur Laut" type="checkbox" class="i-checks" {{ (is_array($klimatologi['arah_angin']) AND in_array('Timur Laut',$klimatologi['arah_angin'])) ? 'checked' : ''}}> Timur Laut </label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -296,7 +308,7 @@
                                                     <div class="form-group">
                                                         <div class="col-lg-6 col-xs-12">
                                                             <div class="input-group">
-                                                                <input placeholder="Curah hujan" name="curah_hujan" class="form-control" type="number" value="0" required>
+                                                                <input placeholder="Curah hujan" name="curah_hujan" class="form-control" type="number" value="{{ $klimatologi['curah_hujan'] ?? '0'}}" required>
                                                                 <span class="input-group-addon"> mm </span>
                                                             </div>
                                                         </div>
@@ -309,9 +321,9 @@
                                                     <div class="form-group">
                                                         <div class="col-lg-6 col-xs-12">
                                                             <div class="input-group">
-                                                                <input placeholder="Suhu min" name="suhu_min" class="form-control" type="number" value="0" required>
+                                                                <input placeholder="Suhu min" name="suhu_min" class="form-control" type="number" value="{{ $klimatologi['suhu_min'] ?? '0'}}" required>
                                                                 <span class="input-group-addon"> - </span>
-                                                                <input placeholder="Suhu max" name="suhu_max" class="form-control" type="number" value="0" required>
+                                                                <input placeholder="Suhu max" name="suhu_max" class="form-control" type="number" value="{{ $klimatologi['suhu_max'] ?? '0'}}" required>
                                                                 <span class="input-group-addon">°C</span>
                                                             </div>
                                                         </div>
@@ -324,9 +336,9 @@
                                                     <div class="form-group">
                                                         <div class="col-lg-6 col-xs-12">
                                                             <div class="input-group">
-                                                                <input placeholder="Kelembaban Min" name="kelembaban_min" class="form-control" type="number" value="0" required>
+                                                                <input placeholder="Kelembaban Min" name="kelembaban_min" class="form-control" type="number" value="{{ $klimatologi['kelembaban_min'] ?? '0'}}" required>
                                                                 <span class="input-group-addon"> - </span>
-                                                                <input placeholder="Kelembaban Max" name="kelembaban_max" class="form-control" type="number" value="0" required>
+                                                                <input placeholder="Kelembaban Max" name="kelembaban_max" class="form-control" type="number" value="{{ $klimatologi['kelembaban_max'] ?? '0'}}" required>
                                                                 <span class="input-group-addon">%</span>
                                                             </div>
                                                         </div>
@@ -339,9 +351,9 @@
                                                     <div class="form-group">
                                                         <div class="col-lg-6 col-xs-12">
                                                             <div class="input-group">
-                                                                <input placeholder="Tekanan Min" name="tekanan_min" class="form-control" type="number" value="0" required>
+                                                                <input placeholder="Tekanan Min" name="tekanan_min" class="form-control" type="number" value="{{ $klimatologi['tekanan_min'] ?? '0'}}" required>
                                                                 <span class="input-group-addon"> - </span>
-                                                                <input placeholder="Tekanan Max" name="tekanan_max" class="form-control" type="number" value="0" required>
+                                                                <input placeholder="Tekanan Max" name="tekanan_max" class="form-control" type="number" value="{{ $klimatologi['tekanan_max'] ?? '0'}}" required>
                                                                 <span class="input-group-addon">mmHg</span>
                                                             </div>
                                                         </div>
@@ -350,7 +362,6 @@
 
                                             </div>
                                             @endif
-
 
                                             {{-- Button Footer --}}
                                             <hr>
@@ -372,10 +383,18 @@
     </div>
 @endsection
 
+@section('add-vendor-script')
+    @role('Super Admin')
+    <script src="{{ asset('vendor/json-viewer/jquery.json-viewer.js') }}"></script>
+    @endrole
+@endsection
+
 @section('add-script')
     <script>
         $(document).ready(function () {
-
+            @role('Super Admin')
+            $('#json-renderer').jsonViewer(@json(session()->all()), {collapsed: true});
+            @endrole
         });
     </script>
 @endsection

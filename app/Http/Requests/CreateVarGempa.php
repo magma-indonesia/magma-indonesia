@@ -120,10 +120,7 @@ class CreateVarGempa extends FormRequest
             case 'skala':
                 $messages['data.'.$code.'.'.$key.'.required'] = 'Skala Gempa '.$this->namaGempa($code).' belum diisi';
                 $messages['data.'.$code.'.'.$key.'.array'] = 'Skala Gempa '.$this->namaGempa($code).' tidak ada dalam list';
-                $messages['data.'.$code.'.'.$key.'.*.required'] = 'Skala Gempa Minimum/Maximum '.$this->namaGempa($code).' belum dipilih';
-                $messages['data.'.$code.'.'.$key.'.*.numeric'] = 'Skala Gempa Minimum/Maximum '.$this->namaGempa($code).' harus bertipe numeric';
-                $messages['data.'.$code.'.'.$key.'.*.between'] = 'Skala Gempa Minimum/Maximum '.$this->namaGempa($code).' antara 1-7';
-                $messages['data.'.$code.'.'.$key.'.0.lte'] = 'Skala Gempa Minimum '.$this->namaGempa($code).' harus lebih kecil dari Skala Maximum';
+                $messages['data.'.$code.'.'.$key.'.*.in'] = 'Skala Gempa :input '.$this->namaGempa($code).' tidak ada dalam list';
                 break;
             default:
                 break;
@@ -137,14 +134,14 @@ class CreateVarGempa extends FormRequest
     protected function setCustomRules($request)
     {
         $rules = [
-            'hasgempa' => 'required|boolean',
+            'has_gempa' => 'required|boolean',
         ];
 
         $this->customMessages = [
-            'hasgempa.required' => 'Pilihan Gempa harus dipilih',
+            'has_gempa.required' => 'Pilihan Gempa harus dipilih',
         ];
 
-        if ($request->hasgempa)
+        if ($request->has_gempa)
         {
             $rules['tipe_gempa'] = 'required|array';
             $rules['tipe_gempa.*'] = 'required|in:tej,tel,vlp,dpt,dev,vta,vtb,hyb,lof,tor,hrm,tre,mtr,hbs,gug,apg,apl,lts,gtb,trs';
@@ -154,7 +151,7 @@ class CreateVarGempa extends FormRequest
                     
                     switch ($key) {
                         case 'jumlah':
-                            $rules['data.'.$codeGempa.'.'.$key] = 'required|numeric|min:1';
+                            $rules['data.'.$codeGempa.'.'.$key] = 'required|numeric|integer|min:1';
                             break;
                         case 'amin':
                             $rules['data.'.$codeGempa.'.'.$key] = 'required|numeric|between:0.5,24|lte:data.'.$codeGempa.'.amax';
@@ -175,7 +172,7 @@ class CreateVarGempa extends FormRequest
                             $rules['data.'.$codeGempa.'.'.$key] = 'required|numeric|between:0.5,20|gte:data.'.$codeGempa.'.spmin';
                             break;
                         case 'adom':
-                            $rules['data.'.$codeGempa.'.'.$key] = 'required|numeric|between:0.5,24';
+                            $rules['data.'.$codeGempa.'.'.$key] = 'required|numeric|lte:data.'.$codeGempa.'.amax|gte:data.'.$codeGempa.'.amin';
                             break;
                         case 'rmin':
                             $rules['data.'.$codeGempa.'.'.$key] = 'required|numeric|between:0,10000|lte:data.'.$codeGempa.'.rmax';
@@ -195,12 +192,11 @@ class CreateVarGempa extends FormRequest
                             break;
                         case 'wasap':
                             $rules['data.'.$codeGempa.'.'.$key] = 'required|array';
-                            $rules['data.'.$codeGempa.'.'.$key.'.*'] = 'in:Putih,Kelabu,Coklat,Hitam';
+                            $rules['data.'.$codeGempa.'.'.$key.'.*'] = 'in:Putih,Kelabu,Cokelat,Hitam';
                             break;
                         case 'skala':
                             $rules['data.'.$codeGempa.'.'.$key] = 'required|array';
-                            $rules['data.'.$codeGempa.'.'.$key.'.0'] = 'required|numeric|between:1,7|lte:data.'.$codeGempa.'.'.$key.'.1';
-                            $rules['data.'.$codeGempa.'.'.$key.'.1'] = 'required|numeric|between:1,7';
+                            $rules['data.'.$codeGempa.'.'.$key.'.*'] = 'in:I,II,III,IV,V,VI,VII';
                             break;
                         default:
                             # code...
