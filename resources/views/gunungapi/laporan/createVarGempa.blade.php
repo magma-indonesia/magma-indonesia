@@ -201,7 +201,7 @@
                                                             <div class="input-group">
                                                                 <input placeholder="Tinggi min" name="data[{{ $value['kode'] }}][tmin]" class="input-gempa form-control input-{{ $value['kode'] }}" type="number" step=50 value="{{ isset($gempa['data'][$value['kode']]) ? $gempa['data'][$value['kode']]['tmin'] : '' }}" required {{ isset($gempa['data'][$value['kode']]) ? '' : 'disabled' }}>
                                                                 <span class="input-group-addon" style="min-width: 30px;"> - </span>
-                                                                <input placeholder="Durasi max" name="data[{{ $value['kode'] }}][tmax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="number" step=50 value="{{ isset($gempa['data'][$value['kode']]) ? $gempa['data'][$value['kode']]['tmax'] : '' }}" required {{ isset($gempa['data'][$value['kode']]) ? '' : 'disabled' }}>
+                                                                <input placeholder="Tinggi max" name="data[{{ $value['kode'] }}][tmax]" class="input-gempa form-control input-{{ $value['kode'] }}" type="number" step=50 value="{{ isset($gempa['data'][$value['kode']]) ? $gempa['data'][$value['kode']]['tmax'] : '' }}" required {{ isset($gempa['data'][$value['kode']]) ? '' : 'disabled' }}>
                                                             </div>
                                                             {{-- Warna Asap --}}
                                                             <label class="m-t-sm">Warna Abu Letusan</label>
@@ -307,7 +307,7 @@
                                                             <div class="input-group m-t-sm">
                                                                 <input placeholder="Jarak Luncur min" name="data[{{ $value['kode'] }}][rmin]" class="input-gempa form-control input-{{ $value['kode'] }}" step=10 type="number" value="{{ isset($gempa['data'][$value['kode']]) ? $gempa['data'][$value['kode']]['rmin'] : '' }}" required {{ isset($gempa['data'][$value['kode']]) ? '' : 'disabled' }}>
                                                                 <span class="input-group-addon" style="min-width: 30px;"> - </span>
-                                                                <input placeholder="Jarak Luncur min" name="data[{{ $value['kode'] }}][rmax]" class="input-gempa form-control input-{{ $value['kode'] }}" step=10 type="number" value="{{ isset($gempa['data'][$value['kode']]) ? $gempa['data'][$value['kode']]['rmax'] : '' }}" required {{ isset($gempa['data'][$value['kode']]) ? '' : 'disabled' }}>
+                                                                <input placeholder="Jarak Luncur max" name="data[{{ $value['kode'] }}][rmax]" class="input-gempa form-control input-{{ $value['kode'] }}" step=10 type="number" value="{{ isset($gempa['data'][$value['kode']]) ? $gempa['data'][$value['kode']]['rmax'] : '' }}" required {{ isset($gempa['data'][$value['kode']]) ? '' : 'disabled' }}>
                                                             </div>
                                                             {{-- Arah Luncuran --}}
                                                             <label class="m-t-sm">Arah Luncuran</label>

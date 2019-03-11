@@ -83,7 +83,8 @@ class CreateVarGempa extends FormRequest
             case 'adom':
                 $messages['data.'.$code.'.'.$key.'.required'] = 'Amplitudo Dominan '.$this->namaGempa($code).' harus diisi';
                 $messages['data.'.$code.'.'.$key.'.numeric'] = 'Amplitudo Dominan'.$this->namaGempa($code).' bertipe numeric';
-                $messages['data.'.$code.'.'.$key.'.between'] = 'Amplitudo Dominaan '.$this->namaGempa($code).' antara 0.5 - 24mm';
+                $messages['data.'.$code.'.'.$key.'.lte'] = 'Amplitudo Dominan '.$this->namaGempa($code).' harus kurang dari Amplitudo Maksimum';
+                $messages['data.'.$code.'.'.$key.'.gte'] = 'Amplitudo Dominan '.$this->namaGempa($code).' harus lebih dari Amplitudo Minimum';
                 break;
             case 'rmin':
                 $messages['data.'.$code.'.'.$key.'.required'] = 'Jarak Luncuran Minimum '.$this->namaGempa($code).' harus diisi';
