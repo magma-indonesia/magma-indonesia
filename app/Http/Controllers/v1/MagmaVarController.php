@@ -22,14 +22,19 @@ class MagmaVarController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $vars = OldVar::select(
+        $last = OldVar::select('no')->orderBy('no','desc')->first();
+        $page = $request->has('page') ? $request->page : 1;
+
+        $vars = Cache::remember('v1/vars-'.$last->no.'-page-'.$page, 30, function () {
+            return OldVar::select(
                 'no','var_data_date','periode',
                 'ga_nama_gapi','cu_status','var_nama_pelapor')
                 ->orderBy('var_data_date','desc')
                 ->orderBy('periode','desc')
                 ->paginate(30);
+        });
 
         return view('v1.gunungapi.laporan.index',compact('vars'));
     }
@@ -42,19 +47,19 @@ class MagmaVarController extends Controller
      */
     public function filter(Request $request)
     {
-        $gadds = Cache::remember('gadds', 120, function () {
-                    return Gadd::select('no','ga_code','ga_nama_gapi')
-                        ->whereNotIn('ga_code',['TEO','SBG'])
-                        ->orderBy('ga_nama_gapi','asc')
-                        ->get();
-                });
+        $gadds = Cache::remember('v1/gadds', 120, function () {
+            return Gadd::select('no','ga_code','ga_nama_gapi')
+                ->whereNotIn('ga_code',['TEO','SBG'])
+                ->orderBy('ga_nama_gapi','asc')
+                ->get();
+        });
         
-        $users = Cache::remember('users', 120, function () {
-                    return User::select('id','vg_nip','vg_nama')
-                        ->where('vg_bid','Pengamatan dan Penyelidikan Gunungapi')
-                        ->orderBy('vg_nama','asc')
-                        ->get();
-                });
+        $users = Cache::remember('v1/users-mga', 120, function () {
+            return User::select('id','vg_nip','vg_nama')
+                ->where('vg_bid','Pengamatan dan Penyelidikan Gunungapi')
+                ->orderBy('vg_nama','asc')
+                ->get();
+        });
 
         if (count($request->all()))
         {
@@ -127,13 +132,17 @@ class MagmaVarController extends Controller
      */
     public function show($id)
     {
-        $var = OldVar::findOrFail($id);
+        $var = Cache::remember('v1/var-show-'.$id, 60, function () use($id) {
+            return OldVar::findOrFail($id); 
+        });
 
-        $others = OldVar::select('no','ga_code','var_data_date','periode','cu_status')
+        $others = Cache::remember('v1/var-show-others-'.$id, 60, function () use($var) {
+            return OldVar::select('no','ga_code','var_data_date','periode','cu_status')
                     ->where('ga_code',$var->ga_code)
                     ->where('var_data_date','like',$var->var_data_date->format('Y-m-d'))
                     ->whereIn('periode',['00:00-06:00','06:00-12:00','12:00-18:00','18:00-24:00','00:00-24:00'])
                     ->get();
+        });
         
         $asap = (object) [
             'wasap' => isset($var->var_wasap) ? $var->var_wasap->toArray() : [],
@@ -142,13 +151,17 @@ class MagmaVarController extends Controller
             'tasap_max' => $var->var_tasap,
         ];
 
-        $visual = $this->visibility($var->var_visibility->toArray())
-                ->asap($var->var_asap, $asap)
-                ->cuaca($var->var_cuaca->toArray())
-                ->angin($var->var_kecangin->toArray(),$var->var_arangin->toArray())
-                ->getVisual();
+        $visual = Cache::remember('v1/var-show-visual-'.$id, 60, function () use($var,$asap) {
+            return $this->visibility($var->var_visibility->toArray())
+                    ->asap($var->var_asap, $asap)
+                    ->cuaca($var->var_cuaca->toArray())
+                    ->angin($var->var_kecangin->toArray(),$var->var_arangin->toArray())
+                    ->getVisual();
+        });
         
-        $gempa = $this->getDeskripsiGempa($var);
+        $gempa = Cache::remember('v1/var-show-gempa-'.$id, 60, function () use($var) {
+            return $this->getDeskripsiGempa($var);
+        });
 
         return view('v1.gunungapi.laporan.show',compact('var','others','visual','gempa'));
     }

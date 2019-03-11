@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\v1\MagmaVen;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 
 class MagmaVenController extends Controller
 {
@@ -14,9 +15,15 @@ class MagmaVenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $vens = MagmaVen::orderBy('erupt_tsp','desc')->paginate(30);
+        $last = MagmaVen::select('erupt_id')->orderBy('erupt_id','desc')->first();
+        $page = $request->has('page') ? $request->page : 1;
+
+        $vens = Cache::remember('v1/vens-'.$last->erupt_id.'-page-'.$page, 120, function() {
+            return MagmaVen::orderBy('erupt_tsp','desc')->paginate(30);
+        });
+
         return view('v1.gunungapi.ven.index',compact('vens'));
     }
 

@@ -24,4 +24,9 @@ class User extends Model
         return $this->hasOne('App\v1\Kantor','vg_nip','vg_nip');
     }
 
+    public function absensi()
+    {
+        return $this->hasMany('App\v1\Absensi','vg_nip','vg_nip');
+    }
+
 }

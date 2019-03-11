@@ -67,12 +67,17 @@
                     </li>
                 </ul>
                 <ul class="nav nav-second-level">
+                    <li class="{{ active('chambers.v1.absensi.index') }}">
+                        <a href="{{ route('chambers.v1.absensi.index') }}">Absensi</a>
+                    </li>
+                </ul>
+                <ul class="nav nav-second-level">
                     <li class="{{ active('chambers.v1.press.index') }}">
                         <a href="{{ route('chambers.v1.press.index') }}">Press Release</a>
                     </li>
                 </ul>
                 <ul class="nav nav-second-level">
-                    <li class="{{ active(['chambers.v1.gunungapi.*','chambers.v1.subscribers.*']) }}">
+                    <li class="{{ active(['chambers.v1.gunungapi.*','chambers.v1.subscribers.*','chambers.v1.vona.*']) }}">
                         <a href="#">
                             <span class="nav-label"> Gunung Api</span>
                             <span class="fa arrow"></span>                    
@@ -87,8 +92,8 @@
                             <li class="{{ active('chambers.v1.gunungapi.ven.index') }}">
                                 <a href="{{ route('chambers.v1.gunungapi.ven.index') }}">VEN</a>
                             </li>
-                            <li class="{{ active('chambers.v1.subscribers.index') }}">
-                                <a href="{{ route('chambers.v1.subscribers.index') }}">VONA Subscribers</a>
+                            <li class="{{ active('chambers.v1.vona.*') }}">
+                                <a href="{{ route('chambers.v1.vona.index') }}">VONA</a>
                             </li>
                         </ul>
                     </li>

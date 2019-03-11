@@ -35,4 +35,14 @@ class Absensi extends Model
     ];
 
     protected $guard = ['id_abs'];
+
+    public function user()
+    {
+        return $this->belongsTo('App\v1\User','vg_nip','vg_nip');
+    }
+
+    public function pos()
+    {
+        return $this->belongsTo('App\v1\PosPga','obscode','obscode');
+    }
 }

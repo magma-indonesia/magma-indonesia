@@ -158,6 +158,7 @@ Route::name('v1.')->group(function () {
         Route::resource('users','v1\UserController');
         Route::resource('gempabumi','v1\MagmaRoqController');
         Route::resource('subscribers','v1\VonaSubscriberController');
+
         Route::name('gunungapi.')->group(function () {
             Route::group(['prefix' => 'gunungapi'], function () {
                 Route::get('laporan/filter','v1\MagmaVarController@filter')->name('laporan.filter');
@@ -165,6 +166,16 @@ Route::name('v1.')->group(function () {
                 Route::get('ven','v1\MagmaVenController@index')->name('ven.index');
                 Route::get('ven/{id}','v1\MagmaVenController@show')->name('ven.show');
             });
+        });
+
+        Route::name('vona.')->group(function() {
+            Route::get('vona','v1\VonaController@index')->name('index');
+            Route::get('vona/{no}','v1\VonaController@show')->name('show');
+            Route::delete('vona/{no}','v1\VonaController@destroy')->name('destroy');
+        });
+
+        Route::name('absensi.')->group(function() {
+            Route::get('absensi','v1\AbsensiController@index')->name('index');
         });
     });
 });

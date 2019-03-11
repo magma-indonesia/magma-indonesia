@@ -45,13 +45,13 @@
                             <i class="pe-7s-graph3 fa-4x"></i>
                         </div>
                         <div class="m-t-xl">
-                            <h3 class="m-b-xs jumlah-vars">{{ $jumlah['total'] }} ({{ round($jumlah['hadir']/$jumlah['total']*100,2) }}%)</h3>
+                            <h3 class="m-b-xs jumlah-vars">{{ $jumlah['total'] }} ({{ $jumlah['total'] ? round($jumlah['hadir']/$jumlah['total']*100,2) : 0 }}%)</h3>
                             <span class="font-bold no-margins">
                                 Jumlah Absensi
                             </span>
                             <div class="progress m-t-xs full progress-small">
-                                <div style="width: {{ $jumlah['hadir']/$jumlah['total']*100 }}%" aria-valuemax="{{ $jumlah['total'] }}" aria-valuemin="0" aria-valuenow="{{ $jumlah['hadir'] }}" role="progressbar" class=" progress-bar progress-bar-magma">
-                                    <span class="sr-only">{{ $jumlah['hadir']/$jumlah['total']*100 }}% Hadir</span>
+                                <div style="width: {{ $jumlah['total'] ? $jumlah['hadir']/$jumlah['total']*100 : 0 }}%" aria-valuemax="{{ $jumlah['total'] }}" aria-valuemin="0" aria-valuenow="{{ $jumlah['hadir'] }}" role="progressbar" class=" progress-bar progress-bar-magma">
+                                    <span class="sr-only">{{ $jumlah['total'] ? $jumlah['hadir']/$jumlah['total']*100 : 0 }}% Hadir</span>
                                 </div>
                             </div>
                             <div class="row">

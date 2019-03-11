@@ -84,7 +84,7 @@
                 <div class="hpanel">
                     <div class="panel-body">
                         <div class="table-responsive">
-                            <table id="table-absensi" class="table  table-striped table-hover">
+                            <table id="table-absensi" class="table table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th>#</th>

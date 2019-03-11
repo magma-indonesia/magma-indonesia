@@ -18,9 +18,15 @@ class VonaController extends Controller
      */
     public function index(Request $request)
     {        
-        $vonas = Vona::orderBy('no','desc')
-                    ->where('sent',1)
-                    ->paginate(30,['*'],'vona_page');
+        $last_vona = Vona::select('no')->orderBy('no','desc')->first();
+        $page = $request->has('vona_page') ? $request->vona_page : 1;
+
+        $vonas = Cache::remember('v1/api/vonas-'.$last_vona->no.'-page-'.$page, 30, function() {
+            return Vona::orderBy('no','desc')
+                ->where('sent',1)
+                ->paginate(30,['*'],'vona_page');
+        });
+
         return new VonaCollection($vonas);
     }
 
