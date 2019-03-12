@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\v1\Vona;
 use App\Http\Resources\v1\VonaResource;
 use App\Http\Resources\v1\VonaCollection;
+use Illuminate\Support\Facades\Cache;
 
 class VonaController extends Controller
 {
