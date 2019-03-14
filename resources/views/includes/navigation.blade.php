@@ -82,17 +82,23 @@
                             <span class="nav-label"> Gunung Api</span>
                             <span class="fa arrow"></span>                    
                         </a>
-                        <ul class="nav nav-third-level m-l">
-                            <li class="{{ active('chambers.v1.gunungapi.laporan.index') }}">
-                                <a href="{{ route('chambers.v1.gunungapi.laporan.index') }}">Laporan</a>
+                        <ul class="nav nav-third-level">
+                            <li class="{{ active('chambers.v1.gunungapi.data-dasar.index') }} p-xxs">
+                                <a href="{{ route('chambers.v1.gunungapi.data-dasar.index') }}">Data Dasar</a>
                             </li>
-                            <li class="{{ active('chambers.v1.gunungapi.laporan.filter') }}">
+                            <li class="{{ active('chambers.v1.gunungapi.laporan.index') }} p-xxs">
+                                <a href="{{ route('chambers.v1.gunungapi.laporan.index') }}">Daftar Laporan</a>
+                            </li>
+                            <li class="{{ active('chambers.v1.gunungapi.laporan.create.var') }} p-xxs">
+                                <a href="{{ route('chambers.v1.gunungapi.laporan.create.var') }}">Buat Laporan</a>
+                            </li>
+                            <li class="{{ active('chambers.v1.gunungapi.laporan.filter') }} p-xxs">
                                 <a href="{{ route('chambers.v1.gunungapi.laporan.filter') }}">Cari Laporan</a>
                             </li>
-                            <li class="{{ active('chambers.v1.gunungapi.ven.index') }}">
+                            <li class="{{ active('chambers.v1.gunungapi.ven.index') }} p-xxs">
                                 <a href="{{ route('chambers.v1.gunungapi.ven.index') }}">VEN</a>
                             </li>
-                            <li class="{{ active('chambers.v1.vona.*') }}">
+                            <li class="{{ active('chambers.v1.vona.*') }} p-xxs">
                                 <a href="{{ route('chambers.v1.vona.index') }}">VONA</a>
                             </li>
                         </ul>

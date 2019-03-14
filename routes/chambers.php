@@ -160,9 +160,27 @@ Route::name('v1.')->group(function () {
         Route::resource('subscribers','v1\VonaSubscriberController');
 
         Route::name('gunungapi.')->group(function () {
+
             Route::group(['prefix' => 'gunungapi'], function () {
+
+                Route::resource('data-dasar','v1\GaddController');
+
                 Route::get('laporan/filter','v1\MagmaVarController@filter')->name('laporan.filter');
-                Route::resource('laporan','v1\MagmaVarController');
+                
+                Route::get('laporan/create-var','v1\MagmaVarController@createVar')
+                    ->name('laporan.create.var');
+                Route::post('laporan/store-var','v1\MagmaVarController@storeVar')
+                    ->name('laporan.store.var');
+
+                Route::post('laporan/exists','v1\MagmaVarController@exists')
+                    ->name('laporan.exists');
+
+                Route::get('laporan','v1\MagmaVarController@index')
+                    ->name('laporan.index');
+
+                Route::get('laporan/{id}','v1\MagmaVarController@show')
+                    ->name('laporan.show');
+
                 Route::get('ven','v1\MagmaVenController@index')->name('ven.index');
                 Route::get('ven/{id}','v1\MagmaVenController@show')->name('ven.show');
             });
