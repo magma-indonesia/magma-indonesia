@@ -67,7 +67,7 @@
                                         <td>(5)</td>
                                         <td><b>Previous Aviation Colour Code</b></td>
                                         <td><b>:</b></td>
-                                        <td>{{ $vona->pre_avcode }}</td>
+                                        <td>{{ strtolower($vona->pre_avcode) }}</td>
                                     </tr>
                                     <tr>
                                         <td>(6)</td>
@@ -113,7 +113,7 @@
                                         @if($vona->vch_height > 0)
                                             {{ $vona->vch_height_text }}
                                         @else
-                                        Volcanic ash not visbile/observed.
+                                        Volcanic ash is not visible/observed.
                                         @endif</td>
                                     </tr>
                                     <tr>

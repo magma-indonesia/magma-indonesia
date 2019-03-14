@@ -74,7 +74,7 @@
                                         <td>{{ $vona->ga_nama_gapi }}</td>
                                         <td>{{ $vona->issued_time }}</td>
                                         <td>{{ $vona->cu_avcode }}</td>
-                                        <td>{{ $vona->pre_avcode }}</td>
+                                        <td>{{ strtolower($vona->pre_avcode) }}</td>
                                         <td>{{ $vona->vc_height ? $vona->vc_height.' m' : 'Not observed' }}</td>
                                         <td>{{ $vona->nama }}</td>
                                         <td>
