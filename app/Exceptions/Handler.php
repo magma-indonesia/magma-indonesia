@@ -6,6 +6,8 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
@@ -53,19 +55,43 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($exception instanceof UnauthorizedHttpException) {
 
-            if ($exception->getPrevious() instanceof TokenExpiredException) {
-                return response()->json(['status' => 'expired'], $exception->getStatusCode());
+        if ($request->ajax() || $request->wantsJson()) {
+
+            if ($exception instanceof UnauthorizedHttpException) {
+
+                if ($exception->getPrevious() instanceof TokenExpiredException)
+                    return $this->ApiException($exception->getStatusCode(), 'Token Expired');
+                
+                if ($exception->getPrevious() instanceof TokenInvalidException)
+                    return $this->ApiException($exception->getStatusCode(), 'Token Invalid');
+                
+                if ($exception->getPrevious() instanceof TokenBlacklistedException)
+                    return $this->ApiException($exception->getStatusCode(), 'Token Blacklisted');
+                
             }
-            else if ($exception->getPrevious() instanceof TokenInvalidException) {
-                return response()->json(['status' => 'invalid'], $exception->getStatusCode());
-            }
-            else if ($exception->getPrevious() instanceof TokenBlacklistedException) {
-                return response()->json(['status' => 'blacklisted'], $exception->getStatusCode());
-            }
+
+            return $exception instanceof ModelNotFoundException ? 
+                $this->ApiException(404, 'Data tidak ditemukan.') :
+                $this->ApiException(400, 'Bad request.');
+
         }
 
         return parent::render($request, $exception);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param int $code
+     * @param string $message
+     * @return json
+     */
+    protected function ApiException(int $code, string $message)
+    {
+        return response()->json([
+            'status' => 'false',
+            'code' => $code,
+            'message' => $message], $code);
     }
 }
