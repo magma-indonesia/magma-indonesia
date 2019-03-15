@@ -38,8 +38,9 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            'throttle:60,1',
+            'throttle:15,1',
             'bindings',
+            'json'
         ],
     ];
 
@@ -63,5 +64,6 @@ class Kernel extends HttpKernel
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'revalidate' => \App\Http\Middleware\RevalidateBackHistory::class,
         'set.locale' => \App\Http\Middleware\SetDefaultLocaleForUrls::class,
+        'json' => \App\Http\Middleware\EnforceJson::class,
     ];
 }

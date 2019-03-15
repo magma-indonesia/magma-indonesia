@@ -39,6 +39,10 @@ Route::group(['middleware' => ['jwt.auth']], function () {
         Route::get('press-release','Api\v1\PressController@index');
     });
 });
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return new UserResource(User::find(1));
-// });
+
+Route::fallback(function(){
+    return response()->json([
+        'status' => 'false',
+        'code' => '404',
+        'message' => 'URL tidak ditemukan'], 404);
+});
