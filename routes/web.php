@@ -13,6 +13,12 @@ Route::group(['middleware' => ['web','guest']], function () {
     Route::post('/login', 'UserController@login')->name('login');
 });
 
+Route::name('v1.')->group(function () {
+    Route::group(['prefix' => 'v1'], function () {
+        Route::get('/','v1\HomeController@index')->name('index');
+    });
+});
+
 Route::get('/logout', 'UserController@logout')->name('logout');
 Route::get('/tes', 'TesController@index');
 Route::get('/tes/image/', 'TesController@imageCrop');
