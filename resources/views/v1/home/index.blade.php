@@ -279,9 +279,9 @@
             function zoomResponsive() {
                 var width = screen.width;
                     if (width <= 767) {
-                        return 10;
+                        return 5;
                     }
-                    return 3;
+                    return 5;
             }
             
             // Map Inititiation
@@ -290,7 +290,7 @@
                         center: [0, 116.1475],
                         zoom: zoomResponsive(),
                         attributionControl:false
-                    }).setMinZoom(5)
+                    }).setMinZoom(3)
                     .setMaxZoom(11);
 
             // Add Layers
