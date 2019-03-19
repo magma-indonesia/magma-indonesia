@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
         <meta name="description" content="MAGMA Indonesia - Bridging the will of nature to society">
         <meta name="author" content="Kementerian ESDM">
-        <link rel="icon" href="favicon.png">
+        <link href="{{ asset('favicon.png') }}" rel="shortcut icon">
         <title>MAGMA Indonesia - Bridging the will of nature to society</title>
 
         <!-- Calcite Maps Bootstrap -->
@@ -73,8 +73,8 @@
 
             <!-- Title -->
             <div class="calcite-title calcite-overflow-hidden">
-                <a href="https://www.esdm.go.id/" target="_blank"><img src="logo-esdm.png" style="height:24px;"></a>
-                <img src="favicon.png" style="height:24px;margin-left:15px;">
+                <a href="https://www.esdm.go.id/" target="_blank"><img src="{{ asset('logo-esdm.png') }}" style="height:24px;"></a>
+                <img src="{{ asset('favicon.png') }}" style="height:24px;margin-left:15px;">
                 <span class="calcite-title-main" style="margin-left:15px;"> MAGMA Indonesia</span>
                 <span class="calcite-title-sub hidden-xs" style="margin-left:15px;">Bridging the will of nature to society</span>
                 <span class="calcite-title-divider hidden-xs"></span>
@@ -257,20 +257,20 @@
 
         <script>
 
-            var url = '{{ route('v1.index') }}'; 
+            var url = '{{ url('/') }}'; 
 
             // Icon Gunung Api
             var ga_icon = L.Icon.extend({
                     options: {
-                        iconSize: [24, 24]
+                        iconSize: [32, 32]
                     }
                 });
 
             var here = new ga_icon({iconUrl: url+'/icon/here.png'}),
-            ga_normal = new ga_icon({iconUrl: url+'/icon/normal.png'}),
-            ga_waspada = new ga_icon({iconUrl: url+'/icon/waspada.png'}),
-            ga_siaga = new ga_icon({iconUrl: url+'/icon/siaga.png'}),
-            ga_awas = new ga_icon({iconUrl: url+'/icon/awas.png'});
+            ga_normal = new ga_icon({iconUrl: url+'/icon/1.png'}),
+            ga_waspada = new ga_icon({iconUrl: url+'/icon/2.png'}),
+            ga_siaga = new ga_icon({iconUrl: url+'/icon/3.png'}),
+            ga_awas = new ga_icon({iconUrl: url+'/icon/4.png'});
 
             // Batas Map Indonesia
             var bounds = new L.LatLngBounds(new L.LatLng(-14.349547837185362, 88.98925781250001), new L.LatLng(14.3069694978258, 149.01855468750003));
@@ -299,23 +299,54 @@
             var layerKrb = L.esri.featureLayer({
                         url: "https://services9.arcgis.com/BvrmTdn7GU5knQXz/arcgis/rest/services/Kawasan_Rawan_Bencana_Gunungapi/FeatureServer/0",
                     });
+            var layerLabels = null
 
             layerKrb.bindPopup(function(layer) {
                 console.log(layer);
                 return L.Util.template('<h3>LCODE nya {LCODE}</h3><hr /><p>Remarknya {REMARK}</p>', layer.feature.properties);
             });
 
-            //Get High Accuracy Location
-            map.locate({enableHighAccuracy:true})
-                .on('locationfound',function(e){
-                    L.marker([e.latitude, e.longitude],{icon: here})
-                    .addTo(map)
-                    .bindPopup('Anda Berada di Sini',{
-                        closeButton:false
-                    })
-                    .openPopup();
-                    map.flyTo([e.latitude, e.longitude], 8, {duration:5});
+            var latlongControl = L.control.coordinates({
+                position:"bottomright", //optional default "bootomright"
+                decimals:2, //optional default 4
+                decimalSeperator:".", //optional default "."
+                labelTemplateLat:"Latitude: {y}", //optional default "Lat: {y}"
+                labelTemplateLng:"Longitude: {x}", //optional default "Lng: {x}"
+                enableUserInput:false, //optional default true
+                useDMS:false, //optional default false
+                useLatLngOrder: true, //ordering of labels, default false-> lng-lat
+                markerType: L.marker, //optional default L.marker
+                markerProps: {} //optional default {},
             });
+
+            var rulerControl = L.control.ruler({
+                position: 'bottomright'
+            });
+
+            if (!(L.Browser.mobile)){
+                latlongControl.addTo(map);
+                rulerControl.addTo(map);
+            };
+
+            L.control.defaultExtent().addTo(map);
+            L.control.scale().addTo(map);
+            L.control.zoom({position:'bottomright',}).addTo(map);
+            L.control.attribution({position:'bottomright'})
+                .setPrefix('MAGMA Indonesia')
+                .addAttribution('<a href="http://esdm.go.id" title="Badan Geologi, ESDM" target="_blank">Badan Geologi, ESDM</a>')
+                .addTo(map);
+
+            //Get High Accuracy Location
+            // map.locate({enableHighAccuracy:true})
+            //     .on('locationfound',function(e){
+            //         L.marker([e.latitude, e.longitude],{icon: here})
+            //         .addTo(map)
+            //         .bindPopup('Anda Berada di Sini',{
+            //             closeButton:false
+            //         })
+            //         .openPopup();
+            //         map.flyTo([e.latitude, e.longitude], 8, {duration:5});
+            // });
             
         </script>
         <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
@@ -324,11 +355,168 @@
         <script src="{{ asset('js/calcitemaps-v0.3.js') }}"></script>
         <script>
         $(document).ready(function () {
+
             var gunung_api = $('#gunung_api'),
-                markersGunungApi = @json($gadds);
+                markersGunungApi = @json($gadds),
+                maxHeight = 0.7 * ($(window).height()),
+                markers = {};
 
             gunung_api.on('change', function() {
                 layerKrb.setWhere($(this).val()).addTo(map);
+            });
+
+            // Set Marker Gunung Api
+            $.each(markersGunungApi, function(index, gunungapi) {
+                var ga_code = gunungapi.ga_code,
+                    setTitle = gunungapi.ga_nama_gapi,
+                    setLongitude = gunungapi.ga_lon_gapi,
+                    setLatitude = gunungapi.ga_lat_gapi,
+                    setStatus = gunungapi.ga_status;
+
+                switch (setStatus) {
+                    case 1:
+                        var gaicon = ga_normal,
+                            status ='Level I (Normal)';
+                        break;
+                    case 2:
+                        var gaicon = ga_waspada,
+                            status ='Level II (Waspada)';
+                        break;
+                    case 3:
+                        var gaicon = ga_siaga,
+                            status ='Level III (Siaga)';
+                        break;
+                    default:
+                        var gaicon = ga_awas,
+                        status ='Level IV (Awas)';
+                };
+
+                var markerId = L.marker([gunungapi.ga_lat_gapi, gunungapi.ga_lon_gapi], {
+                                    icon: gaicon,
+                                    title: setTitle
+                                })
+                                .addTo(map)
+                                .bindPopup('Loading',{
+                                    closeButton: true,
+                                    maxHeight: maxHeight
+                                })
+                                .on('click ', function(e) {
+                                    markerFunction(ga_code);
+                                });
+
+                if (!(L.Browser.mobile)) {
+                    markerId.bindTooltip(setTitle+' - '+status);
+                };
+
+                markers[ga_code] = markerId;
+
+            });
+
+            function markerFunction(ga_code) {
+                var updateWidth = markers[ga_code]._popup.options;
+                    updateWidth.maxWidth = maxPopUpWidth();
+                    updateWidth.minWidth = maxPopUpWidth();
+                var popup = markers[ga_code].getPopup(),
+                    gempa = '';
+
+                var newData;
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    global: true,
+                    url: '{{ route('v1.json.var.show') }}',
+                    type: 'POST',
+                    data: {ga_code:ga_code},
+                    success: function(response) {
+                        newData = response;
+                        if (response.success) {
+                            console.log(newData);
+                        }
+
+                        switch (newData.data.status) {
+                            case 1:
+                                var bg = 'text-green',
+                                    status = 'Level I (Normal)';
+                                break;
+                            case 2:
+                                var bg = 'text-yellow',
+                                status = 'Level II (Waspada)';
+                                break;
+                            case 3:
+                                var bg = 'text-orange',
+                                status = 'Level III (Siaga)';
+                                break;
+                            default:
+                                var bg = 'text-red',
+                                status = 'Level IV (Awas)';
+                        };
+
+                        $.each(newData.data.gempa, function(index, value) {
+                            gempa = gempa+'<p>'+ value +'</p>'
+                        });
+
+                        var setPopUpContent = '<div class="panel panel-default bg-black no-border"><div class="panel-heading bg-black text-bold ' + bg + '"><h4>' + newData.data.nama + '</h4></div><div class="panel-body"><img src="' + newData.data.image + '" class="img-thumbnail" alt="' + newData.data.nama + '"></div><ul class="list-group"><li class="list-group-item bg-black"><button type="button" id="load_krb" value="' + ga_code + '" data-loading-text="Loading..." class="btn btn-primary" autocomplete="off">Peta KRB</button></li><li class="list-group-item bg-black"><h5><b>Lokasi Administratif dan Geografis :</b></h5> ' +newData.data.gunungapi+ '</li><li class="list-group-item bg-black"><h5><b>Periode Pengamatan :</b></h5> ' + newData.data.laporan + '</li><li class="list-group-item bg-black"><h5><b>Pengamatan Visual :</b></h5>' + newData.data.visual+'<h5><b>Visual Lainnya :</b></h5>' + newData.data.visual_lainnya + '</li><li class="list-group-item bg-black"><h5><b>Pengamatan Kegempaan :</b></h5>' + gempa +'<img src="' + newData.data.grafik_gempa +'" class="img-thumbnail" alt="' + newData.data.nama + '"></li><li class="list-group-item bg-black"><h5><b>Kesimpulan :</b></h5> Tingkat Aktivitas Gunungapi '+ newData.data.nama +' <b class="' + bg + '">'+status+'</b></li><li class="list-group-item bg-black"><h5><b>Rekomendasi :</b></h5>'+ newData.data.rekomendasi+'</li><li class="list-group-item bg-black"><h5><b>Pembuat Laporan :</b></h5>' + newData.data.pembuat_laporan + '</li></ul></div>';
+
+                        popup.setContent(setPopUpContent);
+                        popup.update();
+                        markers[ga_code].openPopup();
+
+                        $('.panel-default').slimScroll({
+                            height: maxHeight,
+                            railVisible: false,
+                            size: '10px',
+                            alwaysVisible: false
+                        });  
+                    }
+                });
+            }
+
+            function maxPopUpWidth() {
+                var width = $(window).width(),
+                    maxWidth = 0.25 * width;
+                if (width <= 767) {
+                    return 320;
+                }
+                return maxWidth;
+            }
+
+            function setBasemap(basemap) {
+                if (layerEsriStreets) {
+                    map.removeLayer(layerEsriStreets);
+                }
+
+                if (basemap === 'OpenStreetMap') {
+                    layerEsriStreets = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+                }
+                else {
+                    layerEsriStreets = L.esri.basemapLayer(basemap);
+                }
+
+                map.addLayer(layerEsriStreets);
+                if (layerLabels) {
+                    map.removeLayer(layerLabels);
+                }
+
+                if (basemap === 'ShadedRelief' || basemap === 'Oceans' || basemap === 'Gray' || basemap === 'DarkGray' || basemap === 'Imagery' || basemap === 'Terrain') {
+                    layerLabels = L.esri.basemapLayer(basemap + 'Labels');
+                    map.addLayer(layerLabels);
+                }
+                    
+                if (basemap === 'Imagery') {
+                        worldTransportation.addTo(map);            
+                    } else if (map.hasLayer(worldTransportation)) {
+                        map.removeLayer(worldTransportation);
+                    }
+            }
+
+            $('#gunung_api').change(function () {
+                markerFunction(this.value);
+            });
+
+            $("#selectStandardBasemap").on("change", function (e) {
+                setBasemap($(this).val());
             });
         });
         </script>

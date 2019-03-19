@@ -16,6 +16,7 @@ Route::group(['middleware' => ['web','guest']], function () {
 Route::name('v1.')->group(function () {
     Route::group(['prefix' => 'v1'], function () {
         Route::get('/','v1\HomeController@index')->name('index');
+        Route::post('json/var','v1\Json\MapController@show')->name('json.var.show');
     });
 });
 

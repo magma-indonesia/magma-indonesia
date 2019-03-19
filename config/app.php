@@ -55,6 +55,7 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+    'magma_old_url' => env('MAGMA_URL', 'https://magma.vsi.esdm.go.id/'),
 
     /*
     |--------------------------------------------------------------------------

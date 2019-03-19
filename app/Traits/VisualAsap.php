@@ -146,4 +146,10 @@ trait VisualAsap
     {
         return $this->visual;
     }
+
+    public function clearVisual()
+    {
+        $this->visual = '';
+        return $this;
+    }
 }
