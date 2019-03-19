@@ -171,7 +171,7 @@ trait DeskripsiGempa
 
     protected function setSkala()
     {
-        $this->skala = str_replace_last(', ',' dan ', strtolower(implode(', ',$this->var->{'var_'.$this->code_gempa.'_skalamin'})));
+        $this->skala = implode(' hingga ',$this->var->{'var_'.$this->code_gempa.'_skalamin'}->toArray()).' MMI';
         return $this;
     }
 
