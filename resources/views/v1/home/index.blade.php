@@ -134,7 +134,6 @@
                 <div id="collapseVolcanoes" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingVolcanoes">
                     <div class="panel-body">
                         <select id="gunung_api" class="form-control">
-                            <option value="NAMOBJ='AGUNG'">Agung TEST</option>
                             @foreach ($gadds as $key => $gadd)
                             <option value="{{ $gadd->ga_code }}">{{ $gadd->ga_nama_gapi }}</option>
                             @endforeach
@@ -185,10 +184,10 @@
                                         <br>
                                         <div class="form-inline">
                                             <div class="form-group">
-                                                <button type="button" class="btn btn-info" data-dismiss="modal">Sumber Data</a>
+                                                <button type="button" class="btn btn-info" data-dismiss="modal">Sumber Data</button>
                                             </div>
                                             <div class="form-group">
-                                                <button type="button" class="btn btn-info" data-dismiss="modal">Penghargaan</a>
+                                                <button type="button" class="btn btn-info" data-dismiss="modal">Penghargaan</button>
                                             </div>
                                         </div>
                                         <br> 
@@ -242,7 +241,7 @@
                                         <hr>
                                         <div class="form-inline">
                                             <div class="form-group">
-                                                <button type="button" class="btn btn-info" data-dismiss="modal">Close</a>
+                                                <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
                                             </div>
                                         </div>
                                         <br> 
@@ -255,9 +254,12 @@
             </div>
         </div>
 
+        <!-- ======= -->
+        <!-- Leaflet --> 
+        <!-- ======= -->
         <script>
 
-            var url = '{{ url('/') }}'; 
+            var url = '{{ url('/') }}';
 
             // Icon Gunung Api
             var ga_icon = L.Icon.extend({
@@ -270,7 +272,8 @@
             ga_normal = new ga_icon({iconUrl: url+'/icon/1.png'}),
             ga_waspada = new ga_icon({iconUrl: url+'/icon/2.png'}),
             ga_siaga = new ga_icon({iconUrl: url+'/icon/3.png'}),
-            ga_awas = new ga_icon({iconUrl: url+'/icon/4.png'});
+            ga_awas = new ga_icon({iconUrl: url+'/icon/4.png'}),
+            icon_gertan = new ga_icon({iconUrl: url+'/icon/gt.png'});
 
             // Batas Map Indonesia
             var bounds = new L.LatLngBounds(new L.LatLng(-14.349547837185362, 88.98925781250001), new L.LatLng(14.3069694978258, 149.01855468750003));
@@ -279,9 +282,9 @@
             function zoomResponsive() {
                 var width = screen.width;
                     if (width <= 767) {
-                        return 10;
+                        return 4;
                     }
-                    return 3;
+                    return 5;
             }
             
             // Map Inititiation
@@ -289,22 +292,16 @@
                         zoomControl: false,
                         center: [0, 116.1475],
                         zoom: zoomResponsive(),
-                        attributionControl:false
+                        attributionControl:false,
                     }).setMinZoom(5)
-                    .setMaxZoom(11);
+                    .setMaxZoom(12)
+                    .setMaxBounds(bounds);
 
             // Add Layers
             var layerEsriStreets = L.esri.basemapLayer('Imagery').addTo(map);
             var layerWorldTransportation = L.esri.basemapLayer('ImageryTransportation',{attributionControl: false}).addTo(map);
-            var layerKrb = L.esri.featureLayer({
-                        url: "https://services9.arcgis.com/BvrmTdn7GU5knQXz/arcgis/rest/services/Kawasan_Rawan_Bencana_Gunungapi/FeatureServer/0",
-                    });
-            var layerLabels = null
 
-            layerKrb.bindPopup(function(layer) {
-                console.log(layer);
-                return L.Util.template('<h3>LCODE nya {LCODE}</h3><hr /><p>Remarknya {REMARK}</p>', layer.feature.properties);
-            });
+            var layerLabels = null
 
             var latlongControl = L.control.coordinates({
                 position:"bottomright", //optional default "bootomright"
@@ -328,8 +325,8 @@
                 rulerControl.addTo(map);
             };
 
-            L.control.defaultExtent().addTo(map);
             L.control.scale().addTo(map);
+            L.control.defaultExtent().addTo(map);
             L.control.zoom({position:'bottomright',}).addTo(map);
             L.control.attribution({position:'bottomright'})
                 .setPrefix('MAGMA Indonesia')
@@ -349,22 +346,36 @@
             // });
             
         </script>
+        
         <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
         <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('vendor/slimScroll/jquery.slimscroll.min.js') }}"></script>
         <script src="{{ asset('js/calcitemaps-v0.3.js') }}"></script>
+
+        <!-- ====== -->
+        <!-- jQuery --> 
+        <!-- ====== -->
         <script>
         $(document).ready(function () {
 
-            var gunung_api = $('#gunung_api'),
-                markersGunungApi = @json($gadds),
+            // ==========
+            // Gunung Api
+            // ==========
+
+            var markersGunungApi = @json($gadds),
                 maxHeight = 0.7 * ($(window).height()),
+                GunungapiNormal = [],
+                GunungapiWaspada = [],
+                GunungapiSiaga = [],
+                GunungapiAwas = [],
+                layerNormal,
+                layerWaspada,
+                layerSiaga,
+                layerAwas,
+                addKrb = [],
                 markers = {};
 
-            gunung_api.on('change', function() {
-                layerKrb.setWhere($(this).val()).addTo(map);
-            });
-
+            
             // Set Marker Gunung Api
             $.each(markersGunungApi, function(index, gunungapi) {
                 var ga_code = gunungapi.ga_code,
@@ -395,8 +406,7 @@
                                     icon: gaicon,
                                     title: setTitle
                                 })
-                                .addTo(map)
-                                .bindPopup('Loading',{
+                                .bindPopup('Loading ...',{
                                     closeButton: true,
                                     maxHeight: maxHeight
                                 })
@@ -404,12 +414,73 @@
                                     markerFunction(ga_code);
                                 });
 
+                switch (setStatus) {
+                    case 1:
+                        GunungapiNormal.push(markerId);
+                        break;
+                    case 2:
+                        GunungapiWaspada.push(markerId);
+                        break;
+                    case 3:
+                        GunungapiSiaga.push(markerId);
+                        break;
+                    default:
+                        GunungapiAwas.push(markerId);
+                        break;
+                }
+                
                 if (!(L.Browser.mobile)) {
                     markerId.bindTooltip(setTitle+' - '+status);
                 };
 
                 markers[ga_code] = markerId;
 
+            });
+
+            layerNormal = L.layerGroup(GunungapiNormal).addTo(map);
+            layerWaspada = L.layerGroup(GunungapiWaspada).addTo(map);
+            layerSiaga = L.layerGroup(GunungapiSiaga).addTo(map);
+            layerAwas = L.layerGroup(GunungapiAwas).addTo(map);
+
+            $('#gunung_api').change(function () {
+                markerFunction(this.value);
+            });
+
+            $("#selectStandardBasemap").on("change", function (e) {
+                setBasemap($(this).val());
+            });
+
+            $(document).on('click', '#load_krb', function() {
+                var $button = $(this);
+                var layerKrb = L.esri.featureLayer({
+                        url: "https://services9.arcgis.com/BvrmTdn7GU5knQXz/arcgis/rest/services/KRB_GA_ID/FeatureServer/0",
+                    }).bindPopup(function(layer) {
+                        switch (layer.feature.properties.INDGA) {
+                            case 1:
+                                var krb = 'Kawasan Rawan Bencana (KRB) I';
+                                break;
+                        case 2:
+                                var krb = 'Kawasan Rawan Bencana (KRB) II';                        
+                                break;
+                            default:
+                                var krb = 'Kawasan Rawan Bencana (KRB) III';
+                                break;
+                        }
+                        return L.Util.template('<h3>'+krb+'</h3><hr/><p>{REMARK}</p>', layer.feature.properties);
+                    });
+
+                var mapKrb = layerKrb.setWhere($(this).val())
+                    .on('loading', function() {
+                        $button.button('loading');
+                    }).on('load', function() {
+                        $button.button('reset');
+                    });
+
+                addKrb.push(mapKrb);
+                console.log(addKrb);
+                L.layerGroup(addKrb).addTo(map);
+                // map.addLayer(mapKrb);
+                
             });
 
             function markerFunction(ga_code) {
@@ -422,20 +493,18 @@
                 var newData;
 
                 $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     global: true,
                     url: '{{ route('v1.json.var.show') }}',
                     type: 'POST',
                     data: {ga_code:ga_code},
                     success: function(response) {
-                        newData = response;
+                        newData = response.data;
                         if (response.success) {
                             console.log(newData);
                         }
 
-                        switch (newData.data.status) {
+                        switch (newData.gunungapi.status) {
                             case 1:
                                 var bg = 'text-green',
                                     status = 'Level I (Normal)';
@@ -453,15 +522,16 @@
                                 status = 'Level IV (Awas)';
                         };
 
-                        $.each(newData.data.gempa, function(index, value) {
+                        $.each(newData.gempa.deskripsi, function(index, value) {
                             gempa = gempa+'<p>'+ value +'</p>'
                         });
 
-                        var setPopUpContent = '<div class="panel panel-default bg-black no-border"><div class="panel-heading bg-black text-bold ' + bg + '"><h4>' + newData.data.nama + '</h4></div><div class="panel-body"><img src="' + newData.data.image + '" class="img-thumbnail" alt="' + newData.data.nama + '"></div><ul class="list-group"><li class="list-group-item bg-black"><button type="button" id="load_krb" value="' + ga_code + '" data-loading-text="Loading..." class="btn btn-primary" autocomplete="off">Peta KRB</button></li><li class="list-group-item bg-black"><h5><b>Lokasi Administratif dan Geografis :</b></h5> ' +newData.data.gunungapi+ '</li><li class="list-group-item bg-black"><h5><b>Periode Pengamatan :</b></h5> ' + newData.data.laporan + '</li><li class="list-group-item bg-black"><h5><b>Pengamatan Visual :</b></h5>' + newData.data.visual+'<h5><b>Visual Lainnya :</b></h5>' + newData.data.visual_lainnya + '</li><li class="list-group-item bg-black"><h5><b>Pengamatan Kegempaan :</b></h5>' + gempa +'<img src="' + newData.data.grafik_gempa +'" class="img-thumbnail" alt="' + newData.data.nama + '"></li><li class="list-group-item bg-black"><h5><b>Kesimpulan :</b></h5> Tingkat Aktivitas Gunungapi '+ newData.data.nama +' <b class="' + bg + '">'+status+'</b></li><li class="list-group-item bg-black"><h5><b>Rekomendasi :</b></h5>'+ newData.data.rekomendasi+'</li><li class="list-group-item bg-black"><h5><b>Pembuat Laporan :</b></h5>' + newData.data.pembuat_laporan + '</li></ul></div>';
+                        var setPopUpContent = '<div class="panel panel-default bg-black no-border"><div class="panel-heading bg-black text-bold ' + bg + '"><h4>' + newData.gunungapi.nama + '</h4></div><div class="panel-body"><img src="' + newData.visual.foto + '" class="img-thumbnail" alt="' + newData.gunungapi.nama + '"></div><ul class="list-group"><li class="list-group-item bg-black"><button type="button" id="load_krb" value="MAG_CODE=\''+ga_code+'\'" data-loading-text="Loading..." class="btn btn-primary" autocomplete="off">Peta KRB</button></li><li class="list-group-item bg-black"><h5><b>Lokasi Administratif dan Geografis :</b></h5> ' +newData.gunungapi.deskripsi+ '</li><li class="list-group-item bg-black"><h5><b>Periode Pengamatan :</b></h5> ' + newData.laporan.tanggal + '</li><li class="list-group-item bg-black"><h5><b>Klimatologi :</b></h5>' + newData.klimatologi.deskripsi+'</li><li class="list-group-item bg-black"><h5><b>Pengamatan Visual :</b></h5>' + newData.visual.deskripsi+'<h5><b>Visual Lainnya :</b></h5>' + newData.visual.lainnya + '</li><li class="list-group-item bg-black"><h5><b>Pengamatan Kegempaan :</b></h5>' + gempa +'<img src="' + newData.gempa.grafik +'" class="img-thumbnail" alt="' + newData.gunungapi.nama + '"></li><li class="list-group-item bg-black"><h5><b>Kesimpulan :</b></h5> Tingkat Aktivitas Gunungapi '+ newData.gunungapi.nama +' <b class="' + bg + '">'+status+'</b></li><li class="list-group-item bg-black"><h5><b>Rekomendasi :</b></h5>'+ newData.rekomendasi+'</li><li class="list-group-item bg-black"><h5><b>Pembuat Laporan :</b></h5>' + newData.laporan.pembuat + '</li></ul></div>';
 
                         popup.setContent(setPopUpContent);
                         popup.update();
                         markers[ga_code].openPopup();
+                        map.flyTo(newData.gunungapi.koordinat, 12);
 
                         $('.panel-default').slimScroll({
                             height: maxHeight,
@@ -511,13 +581,111 @@
                     }
             }
 
-            $('#gunung_api').change(function () {
-                markerFunction(this.value);
+            // =============
+            // Gerakan Tanah
+            // =============
+
+            var markersGerakanTanah = @json($gertans),
+                GerakanTanah = [],
+                layerGertan,
+                markers_gertan = {};
+
+            // Set Marker Gerakan Tanah
+            $.each(markersGerakanTanah, function(index, gertan) {
+                var markerGertan = gertan.crs_ids,
+                    setTooltips = gertan.crs_prv+', '+gertan.crs_cty,
+                    setTitle = 'Gerakan Tanah '+gertan.crs_dtm+' '+gertan.crs_zon,
+                    setLongitude = gertan.crs_lon,
+                    setLatitude = gertan.crs_lat;
+
+                var markerId = L.marker([setLatitude, setLongitude], {
+                                    icon: icon_gertan,
+                                    title: setTitle
+                                })
+                                .bindPopup('Loading ...',{
+                                    closeButton: true,
+                                    maxHeight: maxHeight
+                                })
+                                .on('click ', function(e) {
+                                    markerGertanFunction(markerGertan);
+                                });
+
+                GerakanTanah.push(markerId);
+
+                if (!(L.Browser.mobile)) {
+                    markerId.bindTooltip(setTitle);
+                };
+
+                markers_gertan[markerGertan] = markerId;
             });
 
-            $("#selectStandardBasemap").on("change", function (e) {
-                setBasemap($(this).val());
-            });
+            layerGertan = L.layerGroup(GerakanTanah).addTo(map);
+
+            
+            function markerGertanFunction(markerGertan) {
+                var updateWidth = markers_gertan[markerGertan]._popup.options;
+                    updateWidth.maxWidth = maxPopUpWidth();
+                    updateWidth.minWidth = maxPopUpWidth();
+                var popup = markers_gertan[markerGertan].getPopup();
+                    
+                $.ajax({
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    global: true,
+                    url: '{{ route('v1.json.sigertan.show') }}',
+                    type: 'POST',
+                    data: {id:markerGertan},
+                    success: function(response) {
+                        console.log(response);
+                        $gertan = response.data;
+                        var setTitle = $gertan.laporan.judul,
+                            setPeta = $gertan.laporan.peta,
+                            setUpdatedAt = $gertan.laporan.updated_at,
+                            setDeskripsi = $gertan.laporan.deskripsi,
+                            setTipeGertan = $gertan.tanggapan.tipe,
+                            setDampak = $gertan.tanggapan.dampak,
+                            setMorfologi = $gertan.tanggapan.kondisi.morfologi,
+                            setGeologi = $gertan.tanggapan.kondisi.geologi,
+                            setKeairan = $gertan.tanggapan.kondisi.keairan,
+                            setLahan = $gertan.tanggapan.kondisi.tata_guna_lahan,
+                            setKerentanan = $gertan.tanggapan.kondisi.kerentanan,
+                            setPenyebab = $gertan.tanggapan.kondisi.penyebab,
+                            setRekomendasi = $gertan.rekomendasi;
+
+                        // var setKoordinat = 
+
+                        var setPopUpContent = '<div class="panel panel-default bg-black no-border"><div class="panel-heading bg-black text-bold text-white"><h4>' + setTitle + '</h4></div><div class="panel-body"><img src="' + setPeta + '" class="img-thumbnail" alt="' + setTitle + '"><small>'+setUpdatedAt+'</small></div><ul class="list-group"><li class="list-group-item bg-black"><h5><b>Lokasi dan Waktu Kejadian :</b></h5> ' + setDeskripsi + '</li><li class="list-group-item bg-black"><h5><b>Tipe Gerakan Tanah :</b></h5> ' + setTipeGertan + '</li><li class="list-group-item bg-black"><h5><b>Dampak Gerakan Tanah :</b></h5> ' + setDampak + '</li><li class="list-group-item bg-black"><h5><b>Kondisi Daerah Bencana :</b></h5><p><b>Morfologi :</b> ' + setMorfologi + '</p><p><b>Geologi :</b> ' + setGeologi + '</p><p><b>Keairan :</b> ' + setKeairan + '</p><p><b>Tata Guna Lahan :</b> ' + setLahan + '</p><p><b>Kerentanan Gerakan Tanah :</b> ' + setKerentanan + '</p></li><li class="list-group-item bg-black"><h5><b>Faktor Penyebab Gerakan Tanah :</b></h5> ' + setPenyebab + '</li><li class="list-group-item bg-black"><h5><b>Rekomendasi :</b></h5> ' + setRekomendasi + '</li></ul></div>';
+
+                        popup.setContent(setPopUpContent);
+                        popup.update();
+                        markers_gertan[markerGertan].openPopup();
+                        // map.flyTo(newData.gunungapi.koordinat, 12);
+
+                        $('.panel-default').slimScroll({
+                            height: maxHeight,
+                            railVisible: false,
+                            size: '10px',
+                            alwaysVisible: false
+                        });  
+                    },
+                    error: function(error) {
+                        console.log(markerGertan);
+                        console.log(error);
+                    }
+                });
+            };
+
+            // ==========
+            // Gempa Bumi
+            // ==========
+            L.control.layers(null, {
+                    'Gerakan Tanah': layerGertan,
+                    'Gunung Api - Level I (Normal)': layerNormal,
+                    'Gunung Api - Level II (Waspada)': layerWaspada,
+                    'Gunung Api - Level III (Siaga)': layerSiaga,
+                    'Gunung Api - Level IV (Awas)': layerAwas,
+            }, {
+                position: 'bottomleft'
+            }).addTo(map);
         });
         </script>
     </body>
