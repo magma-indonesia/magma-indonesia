@@ -260,11 +260,19 @@
         <script>
 
             var url = '{{ url('/') }}';
+            console.log(screen.width);
+            console.log(screen.height);
 
             // Icon Gunung Api
             var ga_icon = L.Icon.extend({
                     options: {
                         iconSize: [32, 32]
+                    }
+                });
+            
+            var gempa_icon = L.Icon.extend({
+                    options: {
+                        iconSize: [32, 39]
                     }
                 });
 
@@ -274,10 +282,12 @@
             ga_siaga = new ga_icon({iconUrl: url+'/icon/3.png'}),
             ga_awas = new ga_icon({iconUrl: url+'/icon/4.png'}),
             icon_gertan = new ga_icon({iconUrl: url+'/icon/gt.png'}),
-            icon_gempa = new ga_icon({iconUrl: url+'/icon/gb.png'});
+            icon_gertan_t = new gempa_icon({iconUrl: url+'/icon/gt-t.png'}),
+            icon_gempa = new ga_icon({iconUrl: url+'/icon/gb.png'}),
+            icon_gempa_t = new gempa_icon({iconUrl: url+'/icon/gb-t.png'});
 
             // Batas Map Indonesia
-            var bounds = new L.LatLngBounds(new L.LatLng(-14.349547837185362, 88.98925781250001), new L.LatLng(14.3069694978258, 149.01855468750003));
+            var bounds = new L.LatLngBounds(new L.LatLng(-21.41, 153.41), new L.LatLng(14.3069694978258, 73.65));
 
             //Zoom changer
             function zoomResponsive() {
@@ -285,18 +295,18 @@
                     if (width <= 767) {
                         return 4;
                     }
-                    return 5;
+                    return 6;
             }
             
             // Map Inititiation
             var map = L.map('map', {
                         zoomControl: false,
-                        center: [0, 116.1475],
+                        center: [-4.26, 115.66],
                         zoom: zoomResponsive(),
                         attributionControl:false,
                     }).setMinZoom(5)
-                    .setMaxZoom(12)
-                    .setMaxBounds(bounds);
+                    .setMaxZoom(12);
+                    // .setMaxBounds(bounds);
 
             // Add Layers
             var layerNg = L.esri.basemapLayer('NationalGeographic').addTo(map);
@@ -601,8 +611,14 @@
                     setLongitude = gertan.crs_lon,
                     setLatitude = gertan.crs_lat;
 
+                if (gertan.tanggapan.rekomendasi) {
+                    icongertan = icon_gertan_t;
+                } else {
+                    icongertan = icon_gertan;
+                }
+
                 var markerId = L.marker([setLatitude, setLongitude], {
-                                    icon: icon_gertan,
+                                    icon: icongertan,
                                     title: setTitle
                                 })
                                 .bindPopup('Loading ...',{
@@ -637,7 +653,6 @@
                     type: 'POST',
                     data: {id:markerGertan},
                     success: function(response) {
-                        console.log(response);
                         $gertan = response.data;
                         var setTitle = $gertan.laporan.judul,
                             setPeta = $gertan.laporan.peta,
@@ -652,8 +667,6 @@
                             setKerentanan = $gertan.tanggapan.kondisi.kerentanan,
                             setPenyebab = $gertan.tanggapan.kondisi.penyebab,
                             setRekomendasi = $gertan.rekomendasi;
-
-                        // var setKoordinat = 
 
                         var setPopUpContent = '<div class="panel panel-default bg-black no-border"><div class="panel-heading bg-black text-bold text-white"><h4>' + setTitle + '</h4></div><div class="panel-body"><img src="' + setPeta + '" class="img-thumbnail" alt="' + setTitle + '"><small>'+setUpdatedAt+'</small></div><ul class="list-group"><li class="list-group-item bg-black"><h5><b>Lokasi dan Waktu Kejadian :</b></h5> ' + setDeskripsi + '</li><li class="list-group-item bg-black"><h5><b>Tipe Gerakan Tanah :</b></h5> ' + setTipeGertan + '</li><li class="list-group-item bg-black"><h5><b>Dampak Gerakan Tanah :</b></h5> ' + setDampak + '</li><li class="list-group-item bg-black"><h5><b>Kondisi Daerah Bencana :</b></h5><p><b>Morfologi :</b> ' + setMorfologi + '</p><p><b>Geologi :</b> ' + setGeologi + '</p><p><b>Keairan :</b> ' + setKeairan + '</p><p><b>Tata Guna Lahan :</b> ' + setLahan + '</p><p><b>Kerentanan Gerakan Tanah :</b> ' + setKerentanan + '</p></li><li class="list-group-item bg-black"><h5><b>Faktor Penyebab Gerakan Tanah :</b></h5> ' + setPenyebab + '</li><li class="list-group-item bg-black"><h5><b>Rekomendasi :</b></h5> ' + setRekomendasi + '</li></ul></div>';
 
@@ -687,7 +700,8 @@
 
             $.each(markersGempa, function(index, gempa) {
                 var markerGempa = gempa.no,
-                    setTitle = 'Gempa Bumi '+gempa.koter
+                    setTanggapan = gempa.roq_tanggapan,
+                    setTitle = 'Gempa Bumi '+gempa.koter,
                     setMagnitudo = gempa.magnitude,
                     setTooltips = setTitle+', '+gempa.magnitude+'SR',
                     setLongitude = gempa.lon_lima,
@@ -696,8 +710,14 @@
                     setGunungapi = gempa.nearest_volcano,
                     setIntensitas = gempa.mmi;
 
+                if (setTanggapan == 'YA') {
+                    icongempa = icon_gempa_t;
+                } else {
+                    icongempa = icon_gempa;
+                }
+
                 var markerId = L.marker([setLatitude, setLongitude], {
-                                    icon: icon_gempa,
+                                    icon: icongempa,
                                     title: setTitle
                                 })
                                 .bindPopup('Loading ...',{
@@ -732,7 +752,44 @@
                     type: 'POST',
                     data: {id:markerGempa},
                     success: function(response) {
-                        console.log(response);
+                        $gempa = response.data;
+                        var setTitle = $gempa.laporan.title,
+                            setMagnitudo = $gempa.laporan.magnitude,
+                            setPelapor = $gempa.laporan.pelapor,
+                            setWaktu = $gempa.laporan.waktu,
+                            setKoter = $gempa.laporan.kota_terdekat,
+                            setKoordinat = $gempa.laporan.latitude+' '+$gempa.laporan.longitude+', '+$gempa.laporan.kedalaman,
+                            setGunung = $gempa.laporan.gunung_terdekat,
+                            setPeta = $gempa.laporan.map ? '<img src="'+$gempa.laporan.map +'" class="img-thumbnail" alt="'+ setTitle +'"><small>'+setWaktu+'</small>' : '<p>Belum ada data.</p>' ,
+                            setSumber = $gempa.laporan.sumber,
+                            setIntensitas = $gempa.laporan.intensitas,
+                            setTsunami = $gempa.tanggapan.tsunami,
+                            setDeskripsi = $gempa.tanggapan.pendahuluan,
+                            setKondisi = $gempa.tanggapan.kondisi,
+                            setMekanisme = $gempa.tanggapan.mekanisme,
+                            setDampak = $gempa.tanggapan.efek,
+                            setRekomendasi = $gempa.rekomendasi;
+
+                        if($gempa.laporan.has_tanggapan) {
+                            var setTanggapan = '<li class="list-group-item bg-black"><h5><b>Deskripsi :</b></h5> ' + setDeskripsi + '</li><li class="list-group-item bg-black"><h5><b>Kondisi Wilayah :</b></h5> ' + setKondisi + '</li><li class="list-group-item bg-black"><h5><b>Mekanisme :</b></h5> ' + setMekanisme + '</li><li class="list-group-item bg-black"><h5><b>Dampak :</b></h5> ' + setDampak + '</li></li><li class="list-group-item bg-black"><h5><b>Rekomendasi :</b></h5> ' + setRekomendasi + '</li><li class="list-group-item bg-black"><h5><b>Pelapor :</b></h5> ' + setPelapor + '</li>';
+                        } else {
+                            var setTanggapan = '<li class="list-group-item bg-black"><h5><b>Tanggapan :</b></h5>Belum ada tanggapan.</li>';
+                        }
+                        
+                        var setPopUpContent = '<div class="panel panel-default bg-black no-border"><div class="panel-heading bg-black text-bold text-white"><h4><b>' + setTitle + '</b></h4></div><div class="panel-body"><h5><b>Peta :</b>'+setPeta+'</div><ul class="list-group"><li class="list-group-item bg-black"><h5><b>Magnitudo :</b></h5> ' + setMagnitudo + '</li><li class="list-group-item bg-black"><h5><b>Waktu Kejadian :</b></h5> ' + setWaktu + '</li><li class="list-group-item bg-black"><h5><b>Koordinat dan Kedalaman :</b></h5> ' + setKoordinat + '</li><li class="list-group-item bg-black"><h5><b>Wilayah :</b></h5> ' + setTitle + '</li><li class="list-group-item bg-black"><h5><b>Intensitas gempa (Skala MMI): :</b></h5> ' + setIntensitas + '</li><li class="list-group-item bg-black"><h5><b>Gunung Api Terdekat :</b></h5> ' + setGunung + '</li>' + setTanggapan + '<li class="list-group-item bg-black"><h5><b>Sumber Data :</b></h5> ' + setSumber + '</li></ul></div>';
+
+                        popup.setContent(setPopUpContent);
+                        popup.update();
+                        markers_gempa[markerGempa].openPopup();
+                        // map.flyTo(newData.gunungapi.koordinat, 12);
+
+                        $('.panel-default').slimScroll({
+                            height: maxHeight,
+                            railVisible: false,
+                            size: '10px',
+                            alwaysVisible: false
+                        });  
+
                     },
                     error: function(error) {
                         console.log(markerGempa);

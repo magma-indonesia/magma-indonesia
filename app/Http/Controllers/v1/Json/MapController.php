@@ -25,9 +25,42 @@ class MapController extends Controller
 
     public function showGempa(Request $request) 
     {
-        $roq = MagmaRoq::where('no',$request->id)->first();
+        $id = $request ? $request->id : $id;
 
-        return $roq;
+        $roq = Cache::remember('v1/json/show-roq-'.$id, 60, function() use($id) {
+            return MagmaRoq::where('no',$id)->first();
+        });
+
+        $data = [
+            'success' => '1',
+            'data' => [
+                'laporan' => [
+                    'title' => $roq->area,
+                    'pelapor' => $roq->roq_nama_pelapor ? $roq->roq_nama_pelapor : 'Belum ada.',
+                    'waktu' => $roq->datetime_wib->formatLocalized('%d %B %Y, %H:%I:%M').' WIB',
+                    'kota_terdekat' => $roq->koter ? $roq->koter : 'Belum ada data.',
+                    'latitude' => $roq->lat_lima.'&deg;LU',
+                    'longitude' => $roq->lon_lima.'&deg;BT',
+                    'kedalaman' => $roq->depth.' Km',
+                    'magnitude' => $roq->magnitude.' SR',
+                    'gunung_terdekat' => $roq->nearest_volcano ? $roq->nearest_volcano : 'Belum ada data.',
+                    'map' => $roq->roq_maplink ? $roq->roq_maplink : '',
+                    'sumber' => $roq->roq_source,
+                    'intensitas' => $roq->mmi ? $roq->mmi : 'Belum ada data.',
+                    'has_tanggapan' => $roq->roq_tanggapan == 'YA' ? true : false,
+                ],
+                'tanggapan' => [
+                    'tsunami' => (empty($roq->roq_tsu) || $roq->roq_tsu=='TIDAK') ? 'Tidak berpotensi Tsunami' : 'Berpotensi terjadi Tsunami',
+                    'pendahuluan' => $roq->roq_tanggapan == 'YA' ? $roq->roq_intro : 'Belum ada tanggapan.',
+                    'kondisi' => $roq->roq_tanggapan == 'YA' ? $roq->roq_konwil :  'Belum ada tanggapan.',
+                    'mekanisme' => $roq->roq_tanggapan == 'YA' ? $roq->roq_mekanisme :  'Belum ada tanggapan.',
+                    'efek' => $roq->roq_tanggapan == 'YA' ? $roq->roq_efek :  'Belum ada tanggapan.',
+                ],
+                'rekomendasi' => $roq->roq_tanggapan == 'YA' ? nl2br($roq->roq_rekom) :  'Belum ada rekomendasi.',
+            ]
+        ];
+
+        return $data;
     }
 
     public function showSigertan(Request $request)
