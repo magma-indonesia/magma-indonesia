@@ -45,13 +45,13 @@ class MapController extends Controller
 
         $struktur = $gertan->tanggapan->qls_str ? ' Struktur berupa '.$gertan->tanggapan->qls_str : '';
 
-        $kedalaman_air = $gertan->tanggapan->qls_dep ? ' dengan kedalaman air tanah sekitar '.$gertan->tanggapan->qls_air.' meter di bawah permukaan.' : '.';
+        $kedalaman_air = $gertan->tanggapan->qls_dep ? ' dengan kedalaman air tanah sekitar '.$gertan->tanggapan->qls_dep.' meter di bawah permukaan.' : '.';
 
         $data = [
             'success' => '1',
             'data' => [
                 'laporan' => [
-                    'peta' => $gertan->tanggapan->qls_pst ? $gertan->tanggapan->qls_pst : 'https://magma.vsi.esdm.go.id/img/empty_sgt.png',
+                    'peta' => empty($gertan->tanggapan->qls_pst) ? 'https://magma.vsi.esdm.go.id/img/empty_sgt.png' : $gertan->tanggapan->qls_pst,
                     'pelapor' => $gertan->crs_usr,
                     'judul' => 'Laporan Tanggapan Gerakan Tanah di '.$gertan->crs_vil.', '.$gertan->crs_rgn.', '.$gertan->crs_cty.', '.$gertan->crs_prv,
                     'updated_at' => 'Diperbarui pada tanggal '.$gertan->crs_log->formatLocalized('%d %B %Y').' pukul '.$gertan->crs_log->format('H:i:s').' WIB',
@@ -69,7 +69,7 @@ class MapController extends Controller
                         'penyebab' => empty($gertan->tanggapan->qls_cau) ? 'Belum dilaporkan.' : title_case(implode('<br>',$gertan->tanggapan->qls_cau))
                     ]
                 ],
-                'rekomendasi' => nl2br(optional($gertan->tanggapan->rekomendasi)->qls_rec) ?? 'Belum ada rekomendasi.'
+                'rekomendasi' => empty($gertan->tanggapan->rekomendasi) ? 'Belum ada rekomendasi.' : nl2br($gertan->tanggapan->rekomendasi->qls_rec)
             ]
         ];
 
@@ -123,7 +123,7 @@ class MapController extends Controller
             'data' => [
                 'gunungapi' => [
                     'nama' => $gadd->ga_nama_gapi,
-                    'deskripsi' => 'Terletak di Kab\Kota '.$gadd->ga_kab_gapi.', '.$gadd->ga_prov_gapi.' dengan posisi geografis di Latitude '.$gadd->ga_lat_gapi.', Longitude '.$gadd->ga_lon_gapi.' dan memiliki ketinggian '.$gadd->ga_elev_gapi.' mdpl',
+                    'deskripsi' => 'Terletak di Kab\Kota '.$gadd->ga_kab_gapi.', '.$gadd->ga_prov_gapi.' dengan posisi geografis di Latitude '.$gadd->ga_lat_gapi.'&deg;LU, Longitude '.$gadd->ga_lon_gapi.'&deg;BT dan memiliki ketinggian '.$gadd->ga_elev_gapi.' mdpl',
                     'status' => $var->cu_status,
                     'koordinat' => [$gadd->ga_lat_gapi,$gadd->ga_lon_gapi],
                 ],
