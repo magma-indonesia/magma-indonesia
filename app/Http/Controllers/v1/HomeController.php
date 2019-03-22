@@ -9,6 +9,7 @@ use App\v1\Gadd;
 use App\v1\MagmaVar as OldVar;
 use App\v1\PosPga;
 use App\v1\GertanCrs as Crs;
+use App\v1\MagmaRoq as Roq;
 use App\v1\MagmaSigertan;
 use DB;
 
@@ -53,6 +54,10 @@ class HomeController extends Controller
                     ->get();
         });
 
-        return view('v1.home.index',compact('gadds','gertans'));
+        $gempas = Cache::remember('v1/home/gempa',10, function() {
+            return Roq::orderBy('datetime_wib','desc')->limit(30)->get();
+        });
+        
+        return view('v1.home.index',compact('gadds','gertans','gempas'));
     }
 }

@@ -10,6 +10,7 @@ use App\v1\User;
 use App\v1\PosPga;
 use App\v1\GertanCrs as Crs;
 use App\v1\MagmaSigertan;
+use App\v1\MagmaRoq;
 use App\Http\Requests\v1\CreateVar;
 use App\Http\Requests\v1\CreateVarRekomendasi;
 use Illuminate\Support\Facades\Cache;
@@ -22,7 +23,14 @@ class MapController extends Controller
 {
     use VisualAsap,DeskripsiGempa;
 
-    public function showSigertan(Request $request, $id = 'CRS20180124010502')
+    public function showGempa(Request $request) 
+    {
+        $roq = MagmaRoq::where('no',$request->id)->first();
+
+        return $roq;
+    }
+
+    public function showSigertan(Request $request)
     {
         $crs_id = $request ? $request->id : $id;
 
@@ -133,7 +141,7 @@ class MapController extends Controller
                 ],
                 'visual' => [
                     'deskripsi' => $visual,
-                    'lainnya' => $var->Var_ketlain ? $var->Var_ketlain : 'Nihil',
+                    'lainnya' => $var->var_ketlain ? title_case($var->var_ketlain) : 'Nihil',
                     'foto' => $var->var_image,
                 ],
                 'klimatologi' => [

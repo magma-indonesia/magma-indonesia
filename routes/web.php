@@ -21,7 +21,8 @@ Route::name('v1.')->group(function () {
         Route::name('json.')->group(function () {
             Route::group(['prefix' => 'json'], function () {
                 Route::post('var','v1\Json\MapController@showVar')->name('var.show');
-                Route::any('gertan/{id?}','v1\Json\MapController@showSigertan')->name('sigertan.show');
+                Route::post('gertan','v1\Json\MapController@showSigertan')->name('sigertan.show');
+                Route::post('gempa','v1\Json\MapController@showGempa')->name('gempa.show');
             });
         });
     });

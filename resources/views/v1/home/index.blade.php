@@ -135,7 +135,7 @@
                     <div class="panel-body">
                         <select id="gunung_api" class="form-control">
                             @foreach ($gadds as $key => $gadd)
-                            <option value="{{ $gadd->ga_code }}">{{ $gadd->ga_nama_gapi }}</option>
+                            <option value="{{ $gadd->ga_code }}">{{ $gadd->ga_nama_gapi.', '.$gadd->ga_prov_gapi }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -154,8 +154,8 @@
                     <div class="panel-body">
                         <select id="selectStandardBasemap" class="form-control">
                             <option value="Streets">Streets</option>
-                            <option selected value="Imagery">Satellite</option>
-                            <option value="NationalGeographic">National Geographic</option>
+                            <option value="Imagery">Satellite</option>
+                            <option selected value="NationalGeographic">National Geographic</option>
                             <option value="Topographic">Topographic</option>
                             <option value="Gray">Gray</option>
                             <option value="DarkGray">Dark Gray</option>
@@ -273,7 +273,8 @@
             ga_waspada = new ga_icon({iconUrl: url+'/icon/2.png'}),
             ga_siaga = new ga_icon({iconUrl: url+'/icon/3.png'}),
             ga_awas = new ga_icon({iconUrl: url+'/icon/4.png'}),
-            icon_gertan = new ga_icon({iconUrl: url+'/icon/gt.png'});
+            icon_gertan = new ga_icon({iconUrl: url+'/icon/gt.png'}),
+            icon_gempa = new ga_icon({iconUrl: url+'/icon/gb.png'});
 
             // Batas Map Indonesia
             var bounds = new L.LatLngBounds(new L.LatLng(-14.349547837185362, 88.98925781250001), new L.LatLng(14.3069694978258, 149.01855468750003));
@@ -298,8 +299,9 @@
                     .setMaxBounds(bounds);
 
             // Add Layers
-            var layerEsriStreets = L.esri.basemapLayer('Imagery').addTo(map);
-            var layerWorldTransportation = L.esri.basemapLayer('ImageryTransportation',{attributionControl: false}).addTo(map);
+            var layerNg = L.esri.basemapLayer('NationalGeographic').addTo(map);
+            var layerEsriStreets = L.esri.basemapLayer('Imagery');
+            var layerWorldTransportation = L.esri.basemapLayer('ImageryTransportation',{attributionControl: false});
 
             var layerLabels = null
 
@@ -553,6 +555,7 @@
             }
 
             function setBasemap(basemap) {
+                console.log(basemap);
                 if (layerEsriStreets) {
                     map.removeLayer(layerEsriStreets);
                 }
@@ -613,7 +616,7 @@
                 GerakanTanah.push(markerId);
 
                 if (!(L.Browser.mobile)) {
-                    markerId.bindTooltip(setTitle);
+                    markerId.bindTooltip(setTooltips);
                 };
 
                 markers_gertan[markerGertan] = markerId;
@@ -621,7 +624,6 @@
 
             layerGertan = L.layerGroup(GerakanTanah).addTo(map);
 
-            
             function markerGertanFunction(markerGertan) {
                 var updateWidth = markers_gertan[markerGertan]._popup.options;
                     updateWidth.maxWidth = maxPopUpWidth();
@@ -677,8 +679,71 @@
             // ==========
             // Gempa Bumi
             // ==========
+
+            var markersGempa = @json($gempas),
+                GempaBumi = [],
+                layerGempa,
+                markers_gempa = {};
+
+            $.each(markersGempa, function(index, gempa) {
+                var markerGempa = gempa.no,
+                    setTitle = 'Gempa Bumi '+gempa.koter
+                    setMagnitudo = gempa.magnitude,
+                    setTooltips = setTitle+', '+gempa.magnitude+'SR',
+                    setLongitude = gempa.lon_lima,
+                    setLatitude = gempa.lat_lima,
+                    setWilayah = gempa.area,
+                    setGunungapi = gempa.nearest_volcano,
+                    setIntensitas = gempa.mmi;
+
+                var markerId = L.marker([setLatitude, setLongitude], {
+                                    icon: icon_gempa,
+                                    title: setTitle
+                                })
+                                .bindPopup('Loading ...',{
+                                    closeButton: true,
+                                    maxHeight: maxHeight
+                                })
+                                .on('click ', function(e) {
+                                    markerGempaFunction(markerGempa);
+                                });
+
+                GempaBumi.push(markerId);
+
+                if (!(L.Browser.mobile)) {
+                    markerId.bindTooltip(setTooltips);
+                };
+
+                markers_gempa[markerGempa] = markerId;
+            });
+
+            layerGempa = L.layerGroup(GempaBumi).addTo(map);
+
+            function markerGempaFunction(markerGempa) {
+                var updateWidth = markers_gempa[markerGempa]._popup.options;
+                    updateWidth.maxWidth = maxPopUpWidth();
+                    updateWidth.minWidth = maxPopUpWidth();
+                var popup = markers_gempa[markerGempa].getPopup();
+                    
+                $.ajax({
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    global: true,
+                    url: '{{ route('v1.json.gempa.show') }}',
+                    type: 'POST',
+                    data: {id:markerGempa},
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function(error) {
+                        console.log(markerGempa);
+                        console.log(error);
+                    }
+                });
+            };
+
             L.control.layers(null, {
                     'Gerakan Tanah': layerGertan,
+                    'Gempa Bumi': layerGempa,
                     'Gunung Api - Level I (Normal)': layerNormal,
                     'Gunung Api - Level II (Waspada)': layerWaspada,
                     'Gunung Api - Level III (Siaga)': layerSiaga,

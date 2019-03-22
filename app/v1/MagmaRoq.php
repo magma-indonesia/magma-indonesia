@@ -12,6 +12,10 @@ class MagmaRoq extends Model
 
     protected $primaryKey = 'no';
 
+    protected $dates = [
+        'datetime_wib'
+    ];
+
     protected $table = 'magma_roq';
 
     protected $guarded = [
