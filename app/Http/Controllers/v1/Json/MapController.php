@@ -143,16 +143,18 @@ class MapController extends Controller
                     ->first();
         });
 
-        $vona = Cache::remember('v1/json/show-vona-'.$ga_code.'/'.$vona->log, 30, function() use($ga_code) {
-            return Vona::select(
-                'issued','cu_avcode','volcanic_act_summ',
-                'vc_height_text','other_vc_info','remarks')
-            ->where('ga_code',$ga_code)
-            ->where('type','REAL')
-            ->where('sent',1)
-            ->orderBy('log','desc')
-            ->first();
-        });
+        if ($vona) {
+            $vona = Cache::remember('v1/json/show-vona-'.$ga_code.'/'.$vona->log, 30, function() use($ga_code) {
+                return Vona::select(
+                    'issued','cu_avcode','volcanic_act_summ',
+                    'vc_height_text','other_vc_info','remarks')
+                ->where('ga_code',$ga_code)
+                ->where('type','REAL')
+                ->where('sent',1)
+                ->orderBy('log','desc')
+                ->first();
+            });
+        }
 
         $this->failed($var);
 

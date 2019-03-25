@@ -434,8 +434,7 @@
                     setLongitude = gunungapi.ga_lon_gapi,
                     setLatitude = gunungapi.ga_lat_gapi,
                     hasVona = gunungapi.has_vona,
-                    setStatus = gunungapi.ga_status,
-                    vona;
+                    setStatus = gunungapi.ga_status;
 
                 switch (setStatus) {
                     case 1:
@@ -598,6 +597,9 @@
                             size: '10px',
                             alwaysVisible: false
                         });  
+                    },
+                    error: function(response) {
+                        console.log(response);
                     }
                 });
             }
