@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v1\Json;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\v1\MagmaVar as OldVar;
+use App\v1\Vona;
 use App\v1\Gadd;
 use App\v1\User;
 use App\v1\PosPga;
@@ -126,11 +127,11 @@ class MapController extends Controller
     public function showVar(Request $request)
     {
         $ga_code = $request->ga_code;
-        $var = OldVar::select('var_noticenumber')->where('ga_code',$ga_code)
+        $var = OldVar::select('var_log')->where('ga_code',$ga_code)
                             ->orderBy('var_noticenumber','desc')
                             ->first();
 
-        $var = Cache::remember('v1/json/show-var-'.$ga_code.$var->var_noticenumber, 30, function() use($ga_code) {
+        $var = Cache::remember('v1/json/show-var-'.$ga_code.'/'.$var->var_log, 30, function() use($ga_code) {
             return OldVar::where('ga_code',$ga_code)
                     ->orderBy('var_noticenumber','desc')
                     ->first();
@@ -189,6 +190,24 @@ class MapController extends Controller
         ];
         
         return response()->json($data);
+    }
+
+    public function hasVona(Request $request)
+    {
+        return $gadds = Gadd::whereHas('vona', function ($query) {
+                            $query->whereBetween('log',[now()->subWeek(),now()]);
+                        })
+                        ->with('one_vona')
+                        ->select('ga_code','ga_nama_gapi')
+                        ->first();
+    }
+
+    public function hasEruptions(Request $request)
+    {
+        return $eruptions = Gadd::whereHas('var', function ($query) {
+                                $query->where('var_lts','>=',1)
+                                    ->whereBetween('var_data_date',[now()->subWeek(),now()]);
+                            })->select('ga_code','ga_nama_gapi')->get();
     }
 
     protected function failed($var)

@@ -34,15 +34,23 @@ class HomeController extends Controller
 
         $ga_code = $gadds->pluck('ga_code');
 
-        $vars = OldVar::select(DB::raw('t.*'))
-                        ->from(DB::raw('(SELECT ga_code,cu_status,var_data_date,periode,var_perwkt,var_noticenumber,var_nama_pelapor FROM magma_var ORDER BY var_noticenumber DESC) t'))
-                        ->whereIn('ga_code',$ga_code)
-                        ->groupBy('t.ga_code')
-                        ->get();
+        $vars = Cache::remember('v1/home/var', 10, function() use($ga_code) {
+            return OldVar::select(DB::raw('t.*'))
+                ->from(DB::raw('(SELECT ga_code,cu_status,var_data_date,periode,var_perwkt,var_noticenumber,var_nama_pelapor FROM magma_var ORDER BY var_noticenumber DESC) t'))
+                ->whereIn('ga_code',$ga_code)
+                ->groupBy('t.ga_code')
+                ->get();
+        });
 
-        $gadds = $gadds->map(function ($gadd, $key) use($vars) {
+        $vona = Gadd::whereHas('vona', function ($query) {
+            $query->whereBetween('log',[now()->subWeek(),now()]);
+        })->select('ga_code','ga_nama_gapi')->get();
+
+        $gadds = $gadds->map(function ($gadd, $key) use($vars,$vona) {
             $var = $vars->where('ga_code',$gadd->ga_code)->first();
+            $vona = $vona->where('ga_code',$gadd->ga_code)->first();
             $gadd->ga_status = $var->cu_status;
+            $gadd->has_vona = isset($vona->ga_code) ? true : false ;
             return $gadd;
         });
 
