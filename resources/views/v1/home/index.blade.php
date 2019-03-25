@@ -269,10 +269,24 @@
                         iconSize: [32, 32]
                     }
                 });
+
+            var ga_icon_b = L.Icon.extend({
+                    options: {
+                        iconSize: [48, 58],
+                        className:'gb-blinking'
+                    }
+                });
             
             var gempa_icon = L.Icon.extend({
                     options: {
                         iconSize: [32, 39]
+                    }
+                });
+
+            var gempa_icon_b = L.Icon.extend({
+                    options: {
+                        iconSize: [48, 58],
+                        className:'gb-blinking'
                     }
                 });
 
@@ -282,9 +296,13 @@
             ga_siaga = new ga_icon({iconUrl: url+'/icon/3.png'}),
             ga_awas = new ga_icon({iconUrl: url+'/icon/4.png'}),
             icon_gertan = new ga_icon({iconUrl: url+'/icon/gt.png'}),
+            icon_gertan_b = new ga_icon_b({iconUrl: url+'/icon/gt.png'}),
             icon_gertan_t = new gempa_icon({iconUrl: url+'/icon/gt-t.png'}),
+            icon_gertan_t_b = new gempa_icon_b({iconUrl: url+'/icon/gt-t.png'}),
             icon_gempa = new ga_icon({iconUrl: url+'/icon/gb.png'}),
-            icon_gempa_t = new gempa_icon({iconUrl: url+'/icon/gb-t.png'});
+            icon_gempa_b = new gempa_icon_b({iconUrl: url+'/icon/gb.png'}),
+            icon_gempa_t = new gempa_icon({iconUrl: url+'/icon/gb-t.png'}),
+            icon_gempa_t_b = new gempa_icon_b({iconUrl: url+'/icon/gb-t.png'});
 
             // Batas Map Indonesia
             var bounds = new L.LatLngBounds(new L.LatLng(-21.41, 153.41), new L.LatLng(14.3069694978258, 73.65));
@@ -613,13 +631,20 @@
 
                 if (gertan.tanggapan.rekomendasi) {
                     icongertan = icon_gertan_t;
+                    if (index == 0) {
+                        icongertan = icon_gertan_t_b;
+                    }
                 } else {
                     icongertan = icon_gertan;
+                    if (index == 0) {
+                        icongertan = icon_gertan_b;
+                    }
                 }
 
                 var markerId = L.marker([setLatitude, setLongitude], {
                                     icon: icongertan,
-                                    title: setTitle
+                                    title: setTitle,
+                                    zIndexOffset: index == 0 ? 100 : 0,
                                 })
                                 .bindPopup('Loading ...',{
                                     closeButton: true,
@@ -712,13 +737,20 @@
 
                 if (setTanggapan == 'YA') {
                     icongempa = icon_gempa_t;
+                    if (index == 0) {
+                        icongempa = icon_gempa_t_b;
+                    }
                 } else {
                     icongempa = icon_gempa;
+                    if (index == 0) {
+                        icongempa = icon_gempa_b;
+                    }
                 }
 
                 var markerId = L.marker([setLatitude, setLongitude], {
                                     icon: icongempa,
-                                    title: setTitle
+                                    title: setTitle,
+                                    zIndexOffset: index == 0 ? 100 : 0,
                                 })
                                 .bindPopup('Loading ...',{
                                     closeButton: true,

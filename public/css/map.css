@@ -222,3 +222,11 @@ body {
 .leaflet-pane {
 	margin-top: 45px;
 }
+
+@keyframes fade { 
+    from { opacity: 0.2; } 
+}
+
+.gb-blinking {
+	animation: fade 0.75s linear alternate infinite;
+}
