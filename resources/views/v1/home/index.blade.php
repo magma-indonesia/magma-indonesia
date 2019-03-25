@@ -63,9 +63,9 @@
                 <ul class="dropdown-menu calcite-bg-custom" style="background-color: rgb(0, 127, 255, 0.8);">
                     <li><a role="button" data-target="#modalSplash" data-toggle="modal" aria-haspopup="true"><span class="glyphicon glyphicon-info-sign"></span> Tentang MAGMA</a></li>
                     <li><a role="button" data-target="#modalSources" data-toggle="modal" data-dismiss="modal" aria-haspopup="true"><span class="glyphicon glyphicon-info-sign"></span> Sumber Data</a></li>
-                    <li><a role="button" data-target="#panelInfo" aria-haspopup="true"><span class="glyphicon glyphicon-tasks"></span> Legenda</a></li>
-                    <li><a class="visible-xs" role="button" data-target="#panelSearch" aria-haspopup="true"><span class="glyphicon glyphicon-search"></span> Search</a></li>
-                    <li><a role="button" data-target="#panelVolcanoes" aria-haspopup="true"><span class="glyphicon glyphicon-th-list"></span> Gunungapi</a></li>
+                    <li><a role="button" data-target="#panelInfo" aria-haspopup="true"><span class="glyphicon glyphicon-tasks"></span> Status Gunung Api</a></li>
+                    <li><a role="button" data-target="#panelVolcanoes" aria-haspopup="true"><span class="glyphicon glyphicon-th-list"></span> Gunung Api</a></li>
+                    <li class="visible-xs"><a href="#"><span class="glyphicon glyphicon-th-list"></span> VONA</a></li>
                     <li><a role="button" data-target="#panelBasemaps" aria-haspopup="true"><span class="glyphicon glyphicon-th-large"></span> Basemaps</a></li>
                     <li><a role="button" id="calciteToggleNavbar" aria-haspopup="true"><span class="glyphicon glyphicon-fullscreen"></span> Full Map</a></li>
                 </ul>
@@ -78,8 +78,8 @@
                 <span class="calcite-title-main" style="margin-left:15px;"> MAGMA Indonesia</span>
                 <span class="calcite-title-sub hidden-xs" style="margin-left:15px;">Bridging the will of nature to society</span>
                 <span class="calcite-title-divider hidden-xs"></span>
-                <span class="calcite-title-sub hidden-xs"><a href="#">Gunung Api</a></span>
-                <span class="calcite-title-divider hidden-xs"></span>
+                {{-- <span class="calcite-title-sub hidden-xs"><a role="button" data-target="#panelVolcanoes" aria-haspopup="true">Gunung Api</a></span> --}}
+                {{-- <span class="calcite-title-divider hidden-xs"></span> --}}
                 <span class="calcite-title-sub hidden-xs"><a href="#">VONA</a></span>
                 <span class="calcite-title-divider hidden-xs"></span>
                 <span class="calcite-title-sub hidden-xs"><a href="#">Press Release</a></span>
@@ -99,25 +99,62 @@
             <div id="panelInfo" style="background-color: rgba(0, 127, 255, 0.8)" class="panel collapse">
                 <div id="headingInfo" class="panel-heading" role="tab">
                     <div class="panel-title">
-                        <a class="panel-toggle" role="button" data-toggle="collapse" href="#collapseInfo" aria-expanded="true" aria-controls="collapseInfo"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span><span class="panel-label">Info</span></a> 
+                        <a class="panel-toggle" role="button" data-toggle="collapse" href="#collapseInfo" aria-expanded="true" aria-controls="collapseInfo"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span><span class="panel-label">Informasi Gunung Api</span></a> 
                         <a class="panel-close" role="button" data-toggle="collapse" data-target="#panelInfo"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>  
                     </div>
                 </div>
                 <div id="collapseInfo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingInfo">
-                    <div class="panel-body">            
-                        <p>The main styles used in this app are:</p>
-                        Body
-                        <li>calcite-nav-bottom</li>
-                        <li>calcite-layout-large-title</li>
-                        <br>
-                        Nav
-                        <li>calcite-bgcolor-dark-green</li>
-                        <li>calcite-text-light</li>
-                        <br>
-                        Panels
-                        <li>calcite-panels-left</li>
-                        <li>calcite-bgcolor-dark-green</li>
-                        <li>calcite-bg-custom</li>
+                    <div class="panel-body" style="background-color: white;color: black;">
+                        <h4 class="text-bold">Level IV - (Awas)</h4>
+                        @if($gadds->where('ga_status',4)->count())
+                        Berjumlah {{$gadds->where('ga_status',4)->count()}} Gunung Api, yaitu
+                            <ul style="padding-left:15px;">
+                            @foreach ($gadds->where('ga_status',4)->all() as $key => $gadd)
+                            <li>{{ $gadd->ga_nama_gapi}} - {{ $gadd->ga_prov_gapi}}</li>
+                            @endforeach
+                            </ul>
+                        @else
+                        <p>Tidak ada gunung api berstatus Level IV - (Awas)</p>
+                        @endif
+
+                        <hr>
+                        <h4 class="text-bold">Level III - (Siaga)</h4>
+                        @if($gadds->where('ga_status',3)->count())
+                        Berjumlah {{$gadds->where('ga_status',3)->count()}} Gunung Api, yaitu Gunung
+                            <ul style="padding-left:15px;">
+                            @foreach ($gadds->where('ga_status',3)->all() as $key => $gadd)
+                            <li>{{ $gadd->ga_nama_gapi}} - {{ $gadd->ga_prov_gapi}}</li>
+                            @endforeach
+                            </ul>
+                        @else
+                        <p>Tidak ada gunung api berstatus Level III - (Siaga)</p>
+                        @endif
+
+                        <hr>
+                        <h4 class="text-bold">Level II - (Waspada)</h4>
+                        @if($gadds->where('ga_status',2)->count())
+                        Berjumlah {{$gadds->where('ga_status',2)->count()}} Gunung Api, yaitu Gunung
+                            <ul style="padding-left:15px;">
+                            @foreach ($gadds->where('ga_status',2)->all() as $key => $gadd)
+                            <li>{{ $gadd->ga_nama_gapi}} - {{ $gadd->ga_prov_gapi}}</li>
+                            @endforeach
+                            </ul>
+                        @else
+                        <p>Tidak ada gunung api berstatus Level II - (Waspada)</p>
+                        @endif
+
+                        <hr>
+                        <h4 class="text-bold">Level I - (Normal)</h4>
+                        @if($gadds->where('ga_status',1)->count())
+                        Berjumlah {{$gadds->where('ga_status',1)->count()}} Gunung Api, yaitu:
+                            <ul style="padding-left:15px;">
+                            @foreach ($gadds->where('ga_status',1)->all() as $key => $gadd)
+                            <li>{{ $gadd->ga_nama_gapi}} - {{ $gadd->ga_prov_gapi}}</li>
+                            @endforeach
+                            </ul>
+                        @else
+                        <p>Tidak ada gunung api berstatus Level I - (Normal)</p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -264,37 +301,21 @@
             console.log(screen.height);
 
             // Icon Gunung Api
-            var ga_icon = L.Icon.extend({
-                    options: {
-                        iconSize: [32, 32]
-                    }
-                });
+            var ga_icon = L.Icon.extend({options: {iconSize: [32, 32]}});
+            var ga_icon_b = L.Icon.extend({options: {iconSize: [48, 58],className:'gb-blinking'}});
+            var erupt = L.Icon.extend({options: {iconSize: [48, 72]}});
+            var gempa_icon = L.Icon.extend({options: {iconSize: [32, 39]}});
+            var gempa_icon_b = L.Icon.extend({options: {iconSize: [48, 58],className:'gb-blinking'}});
 
-            var ga_icon_b = L.Icon.extend({
-                    options: {
-                        iconSize: [48, 58],
-                        className:'gb-blinking'
-                    }
-                });
-            
-            var gempa_icon = L.Icon.extend({
-                    options: {
-                        iconSize: [32, 39]
-                    }
-                });
-
-            var gempa_icon_b = L.Icon.extend({
-                    options: {
-                        iconSize: [48, 58],
-                        className:'gb-blinking'
-                    }
-                });
-
-            var here = new ga_icon({iconUrl: url+'/icon/here.png'}),
+            here = new ga_icon({iconUrl: url+'/icon/here.png'}),
             ga_normal = new ga_icon({iconUrl: url+'/icon/1.png'}),
             ga_waspada = new ga_icon({iconUrl: url+'/icon/2.png'}),
             ga_siaga = new ga_icon({iconUrl: url+'/icon/3.png'}),
             ga_awas = new ga_icon({iconUrl: url+'/icon/4.png'}),
+            erupt_4 = new erupt({iconUrl: url+'/icon/erupt4.gif'}),
+            erupt_3 = new erupt({iconUrl: url+'/icon/erupt3.gif'}),
+            erupt_2 = new erupt({iconUrl: url+'/icon/erupt2.gif'}),
+            erupt_1 = new erupt({iconUrl: url+'/icon/erupt1.gif'}),
             icon_gertan = new ga_icon({iconUrl: url+'/icon/gt.png'}),
             icon_gertan_b = new ga_icon_b({iconUrl: url+'/icon/gt.png'}),
             icon_gertan_t = new gempa_icon({iconUrl: url+'/icon/gt-t.png'}),
@@ -327,9 +348,9 @@
                     // .setMaxBounds(bounds);
 
             // Add Layers
-            var layerNg = L.esri.basemapLayer('NationalGeographic').addTo(map);
-            var layerEsriStreets = L.esri.basemapLayer('Imagery');
-            var layerWorldTransportation = L.esri.basemapLayer('ImageryTransportation',{attributionControl: false});
+            var layerNg = L.esri.basemapLayer('NationalGeographic');
+            var layerEsriStreets = L.esri.basemapLayer('Imagery').addTo(map);
+            var layerWorldTransportation = L.esri.basemapLayer('ImageryTransportation',{attributionControl: false}).addTo(map);
 
             var layerLabels = null
 
@@ -412,29 +433,31 @@
                     setTitle = gunungapi.ga_nama_gapi,
                     setLongitude = gunungapi.ga_lon_gapi,
                     setLatitude = gunungapi.ga_lat_gapi,
+                    hasVona = gunungapi.has_vona,
                     setStatus = gunungapi.ga_status;
 
                 switch (setStatus) {
                     case 1:
-                        var gaicon = ga_normal,
+                        var gaicon = hasVona ? erupt_1 : ga_normal,
                             status ='Level I (Normal)';
                         break;
                     case 2:
-                        var gaicon = ga_waspada,
+                        var gaicon = hasVona ? erupt_2 : ga_waspada,
                             status ='Level II (Waspada)';
                         break;
                     case 3:
-                        var gaicon = ga_siaga,
+                        var gaicon = hasVona ? erupt_3 : ga_siaga,
                             status ='Level III (Siaga)';
                         break;
                     default:
-                        var gaicon = ga_awas,
+                        var gaicon = hasVona ? erupt_4 : ga_awas,
                         status ='Level IV (Awas)';
                 };
 
                 var markerId = L.marker([gunungapi.ga_lat_gapi, gunungapi.ga_lon_gapi], {
                                     icon: gaicon,
-                                    title: setTitle
+                                    title: setTitle,
+                                    zIndexOffset: hasVona ? 100 : 0,
                                 })
                                 .bindPopup('Loading ...',{
                                     closeButton: true,
@@ -624,7 +647,7 @@
             // Set Marker Gerakan Tanah
             $.each(markersGerakanTanah, function(index, gertan) {
                 var markerGertan = gertan.crs_ids,
-                    setTooltips = gertan.crs_prv+', '+gertan.crs_cty,
+                    setTooltips = 'Gerakan Tanah - '+gertan.crs_prv+', '+gertan.crs_cty,
                     setTitle = 'Gerakan Tanah '+gertan.crs_dtm+' '+gertan.crs_zon,
                     setLongitude = gertan.crs_lon,
                     setLatitude = gertan.crs_lat;
