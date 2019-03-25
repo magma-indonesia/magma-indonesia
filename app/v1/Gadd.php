@@ -60,8 +60,9 @@ class Gadd extends Model
 
     public function one_vona()
     {
-        return $this->hasOne('App\v1\Vona','ga_code','ga_code')
-                ->orderBy('issued_time','desc');
+        return $this->hasMany('App\v1\Vona','ga_code','ga_code')
+                ->orderBy('issued_time','desc')
+                ->limit(1);
     }
     
 }

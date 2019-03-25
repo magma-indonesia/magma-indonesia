@@ -131,10 +131,27 @@ class MapController extends Controller
                             ->orderBy('var_noticenumber','desc')
                             ->first();
 
+        $vona = Vona::select('log')
+                    ->where('sent',1)
+                    ->where('ga_code',$ga_code)
+                    ->orderBy('log','desc')
+                    ->first();
+
         $var = Cache::remember('v1/json/show-var-'.$ga_code.'/'.$var->var_log, 30, function() use($ga_code) {
             return OldVar::where('ga_code',$ga_code)
                     ->orderBy('var_noticenumber','desc')
                     ->first();
+        });
+
+        $vona = Cache::remember('v1/json/show-vona-'.$ga_code.'/'.$vona->log, 30, function() use($ga_code) {
+            return Vona::select(
+                'issued','cu_avcode','volcanic_act_summ',
+                'vc_height_text','other_vc_info','remarks')
+            ->where('ga_code',$ga_code)
+            ->where('type','REAL')
+            ->where('sent',1)
+            ->orderBy('log','desc')
+            ->first();
         });
 
         $this->failed($var);
@@ -159,6 +176,15 @@ class MapController extends Controller
                     ->getVisual();
 
         $gempa = $this->getDeskripsiGempa($var);
+                
+        $vona = !empty($vona) ? [
+            'issued' => $vona->issued,
+            'color_code' => $vona->cu_avcode,
+            'summary' => $vona->volcanic_act_summ,
+            'vch' => $vona->vc_height_text,
+            'other_vch' => $vona->other_vc_info,
+            'remarks' => $vona->remarks,
+        ] : [];
 
         $data = [
             'success' => '1',
@@ -168,6 +194,7 @@ class MapController extends Controller
                     'deskripsi' => 'Terletak di Kab\Kota '.$gadd->ga_kab_gapi.', '.$gadd->ga_prov_gapi.' dengan posisi geografis di Latitude '.$gadd->ga_lat_gapi.'&deg;LU, Longitude '.$gadd->ga_lon_gapi.'&deg;BT dan memiliki ketinggian '.$gadd->ga_elev_gapi.' mdpl',
                     'status' => $var->cu_status,
                     'koordinat' => [$gadd->ga_lat_gapi,$gadd->ga_lon_gapi],
+                    'has_vona' => !empty($vona) ? '1' : '0',
                 ],
                 'laporan' => [
                     'tanggal' => 'Laporan per '.$var->var_perwkt.' jam, tanggal '.$var->var_data_date->format('Y-m-d').' pukul '.$var->periode,
@@ -186,6 +213,7 @@ class MapController extends Controller
                     'grafik' => env('MAGMA_URL').'img/eqhist/'.$gadd->ga_code.'.png',
                 ],
                 'rekomendasi' => nl2br($var->var_rekom),
+                'vona' => $vona,
             ]
         ];
         
@@ -194,12 +222,11 @@ class MapController extends Controller
 
     public function hasVona(Request $request)
     {
-        return $gadds = Gadd::whereHas('vona', function ($query) {
+        return $gadds = Gadd::whereHas('one_vona', function ($query) {
                             $query->whereBetween('log',[now()->subWeek(),now()]);
                         })
-                        ->with('one_vona')
                         ->select('ga_code','ga_nama_gapi')
-                        ->first();
+                        ->get();
     }
 
     public function hasEruptions(Request $request)

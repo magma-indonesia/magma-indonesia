@@ -434,7 +434,8 @@
                     setLongitude = gunungapi.ga_lon_gapi,
                     setLatitude = gunungapi.ga_lat_gapi,
                     hasVona = gunungapi.has_vona,
-                    setStatus = gunungapi.ga_status;
+                    setStatus = gunungapi.ga_status,
+                    vona;
 
                 switch (setStatus) {
                     case 1:
@@ -552,6 +553,7 @@
                     type: 'POST',
                     data: {ga_code:ga_code},
                     success: function(response) {
+                        var vona;
                         newData = response.data;
                         if (response.success) {
                             console.log(newData);
@@ -579,7 +581,11 @@
                             gempa = gempa+'<p>'+ value +'</p>'
                         });
 
-                        var setPopUpContent = '<div class="panel panel-default bg-black no-border"><div class="panel-heading bg-black text-bold ' + bg + '"><h4>' + newData.gunungapi.nama + '</h4></div><div class="panel-body"><img src="' + newData.visual.foto + '" class="img-thumbnail" alt="' + newData.gunungapi.nama + '"></div><ul class="list-group"><li class="list-group-item bg-black"><button type="button" id="load_krb" value="MAG_CODE=\''+ga_code+'\'" data-loading-text="Loading..." class="btn btn-primary" autocomplete="off">Peta KRB</button></li><li class="list-group-item bg-black"><h5><b>Lokasi Administratif dan Geografis :</b></h5> ' +newData.gunungapi.deskripsi+ '</li><li class="list-group-item bg-black"><h5><b>Periode Pengamatan :</b></h5> ' + newData.laporan.tanggal + '</li><li class="list-group-item bg-black"><h5><b>Klimatologi :</b></h5>' + newData.klimatologi.deskripsi+'</li><li class="list-group-item bg-black"><h5><b>Pengamatan Visual :</b></h5>' + newData.visual.deskripsi+'<h5><b>Visual Lainnya :</b></h5>' + newData.visual.lainnya + '</li><li class="list-group-item bg-black"><h5><b>Pengamatan Kegempaan :</b></h5>' + gempa +'<img src="' + newData.gempa.grafik +'" class="img-thumbnail" alt="' + newData.gunungapi.nama + '"></li><li class="list-group-item bg-black"><h5><b>Kesimpulan :</b></h5> Tingkat Aktivitas Gunungapi '+ newData.gunungapi.nama +' <b class="' + bg + '">'+status+'</b></li><li class="list-group-item bg-black"><h5><b>Rekomendasi :</b></h5>'+ newData.rekomendasi+'</li><li class="list-group-item bg-black"><h5><b>Pembuat Laporan :</b></h5>' + newData.laporan.pembuat + '</li></ul></div>';
+                        if (newData.gunungapi.has_vona) {
+                            var vona = '<li class="list-group-item bg-black"><h5 class="text-orange"><b>Volcano Observatory Notice for Aviation (VONA): </b></h5><p><b>Last Issued: </b>' + newData.vona.issued + '</p><p><b>Current Aviation Color Code: </b>' + newData.vona.color_code + '</p><p><b>Volcanic Activity Summary: </b>' + newData.vona.summary + '</p><p><b>Volcanic Cloud Height: </b>' + newData.vona.vch + '</p><p><b>Other Volcanic Cloud Information: </b>' + newData.vona.other_vch + '</p><p><b>Remarks: </b>' + newData.vona.remarks + '</p></li>';
+                        }
+
+                        var setPopUpContent = '<div class="panel panel-default bg-black no-border"><div class="panel-heading bg-black text-bold ' + bg + '"><h4>' + newData.gunungapi.nama + '</h4></div><div class="panel-body"><img src="' + newData.visual.foto + '" class="img-thumbnail" alt="' + newData.gunungapi.nama + '"></div><ul class="list-group"><li class="list-group-item bg-black"><button type="button" id="load_krb" value="MAG_CODE=\''+ga_code+'\'" data-loading-text="Loading..." class="btn btn-primary" autocomplete="off">Peta KRB</button></li><li class="list-group-item bg-black"><h5><b>Lokasi Administratif dan Geografis :</b></h5> ' +newData.gunungapi.deskripsi+ '</li><li class="list-group-item bg-black"><h5><b>Periode Pengamatan :</b></h5> ' + newData.laporan.tanggal + '</li><li class="list-group-item bg-black"><h5><b>Klimatologi :</b></h5>' + newData.klimatologi.deskripsi+'</li><li class="list-group-item bg-black"><h5><b>Pengamatan Visual :</b></h5>' + newData.visual.deskripsi+'<h5><b>Visual Lainnya :</b></h5>' + newData.visual.lainnya + '</li><li class="list-group-item bg-black"><h5><b>Pengamatan Kegempaan :</b></h5>' + gempa +'<img src="' + newData.gempa.grafik +'" class="img-thumbnail" alt="' + newData.gunungapi.nama + '"></li><li class="list-group-item bg-black"><h5><b>Kesimpulan :</b></h5> Tingkat Aktivitas Gunungapi '+ newData.gunungapi.nama +' <b class="' + bg + '">'+status+'</b></li><li class="list-group-item bg-black"><h5><b>Rekomendasi :</b></h5>'+ newData.rekomendasi+'</li>' + vona +'<li class="list-group-item bg-black"><h5><b>Pembuat Laporan :</b></h5>' + newData.laporan.pembuat + '</li></ul></div>';
 
                         popup.setContent(setPopUpContent);
                         popup.update();
