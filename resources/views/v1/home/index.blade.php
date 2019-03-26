@@ -552,7 +552,7 @@
                     type: 'POST',
                     data: {ga_code:ga_code},
                     success: function(response) {
-                        var vona;
+                        var vona='';
                         newData = response.data;
                         if (response.success) {
                             console.log(newData);
@@ -580,7 +580,7 @@
                             gempa = gempa+'<p>'+ value +'</p>'
                         });
 
-                        if (newData.gunungapi.has_vona) {
+                        if (newData.gunungapi.has_vona == '1') {
                             var vona = '<li class="list-group-item bg-black"><h5 class="text-orange"><b>Volcano Observatory Notice for Aviation (VONA): </b></h5><p><b>Last Issued: </b>' + newData.vona.issued + '</p><p><b>Current Aviation Color Code: </b>' + newData.vona.color_code + '</p><p><b>Volcanic Activity Summary: </b>' + newData.vona.summary + '</p><p><b>Volcanic Cloud Height: </b>' + newData.vona.vch + '</p><p><b>Other Volcanic Cloud Information: </b>' + newData.vona.other_vch + '</p><p><b>Remarks: </b>' + newData.vona.remarks + '</p></li>';
                         }
 

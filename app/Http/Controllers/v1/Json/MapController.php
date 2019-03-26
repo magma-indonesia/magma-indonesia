@@ -134,6 +134,7 @@ class MapController extends Controller
         $vona = Vona::select('log')
                     ->where('sent',1)
                     ->where('ga_code',$ga_code)
+                    ->whereBetween('log',[now()->subWeek(),now()])
                     ->orderBy('log','desc')
                     ->first();
 
