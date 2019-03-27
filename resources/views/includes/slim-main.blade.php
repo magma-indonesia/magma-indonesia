@@ -5,7 +5,7 @@
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 @yield('breadcrumb')
             </ol>
-            <h6 class="slim-pagetitle">VONA</h6>
+            <h6 class="slim-pagetitle">@yield('page-title')</h6>
         </div>
 
         @yield('main')

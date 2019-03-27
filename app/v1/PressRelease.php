@@ -3,9 +3,12 @@
 namespace App\v1;
 
 use Illuminate\Database\Eloquent\Model;
+use CyrildeWit\EloquentViewable\Viewable;
 
 class PressRelease extends Model
 {
+    use Viewable;
+    
     protected $connection = 'magma';
 
     public $timestamps = false;
@@ -15,7 +18,8 @@ class PressRelease extends Model
     protected $table = 'magma_press';
 
     protected $casts = [
-        'log' => 'date:Y-m-d H:i:s'
+        'datetime' => 'datetime:Y-m-d H:i:s',
+        'log' => 'datetime:Y-m-d H:i:s',
     ];
 
     protected $fillable = [

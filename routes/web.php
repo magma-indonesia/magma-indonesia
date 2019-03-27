@@ -21,6 +21,11 @@ Route::name('v1.')->group(function () {
             ->name('vona.show')
             ->middleware('signed');
 
+        Route::get('press-release','FrontPage\v1\PressController@index')->name('press.index');
+        Route::get('press-release/{id}','FrontPage\v1\PressController@show')
+            ->name('press.show')
+            ->middleware('signed');
+
         Route::name('json.')->group(function () {
             Route::group(['prefix' => 'json'], function () {
                 Route::post('var','v1\Json\MapController@showVar')->name('var.show');

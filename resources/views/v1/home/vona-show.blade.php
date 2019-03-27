@@ -12,7 +12,7 @@ VONA - {{ $vona->ga_code }} {{ $vona->issued }}
 @section('main')
 <div class="row row-sm row-timeline">
     <div class="col-lg-12">
-        <div class="card card-table">
+        <div class="card card-table pd-l-30 pd-r-30">
             <div class="card-header">
                 <h4 class="slim-card-title tx-18">{{ $vona->ga_nama_gapi.' '.$vona->issued }}</h4>
             </div>
@@ -69,7 +69,7 @@ VONA - {{ $vona->ga_code }} {{ $vona->issued }}
                             <td>(9)</td>
                             <td><b>Area</b></td>
                             <td><b>:</b></td>
-                            <td>{{ $vona->area }}, Indonesia</td>
+                            <td>{{ $vona->area }}</td>
                         </tr>
                         <tr>
                             <td>(10)</td>
@@ -118,7 +118,7 @@ VONA - {{ $vona->ga_code }} {{ $vona->issued }}
                             <td><b>:</b></td>
                             <td>A new VONA will be issued if conditions change significantly or the colour code is changes.<br>
                             Latest Volcanic information is posted at <b>VONA | MAGMA Indonesia</b> Website.<br>
-                            Link: <a href="{{ route('chambers.v1.vona.index')}}">{{ route('chambers.v1.vona.index')}}</a></td>
+                            Link: <a href="{{ route('v1.vona.index')}}">{{ route('v1.vona.index')}}</a></td>
                         </tr>
                     </tbody>
                 </table>

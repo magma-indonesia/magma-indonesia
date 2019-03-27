@@ -17,7 +17,7 @@ return [
         'view' => [
 
             'table_name' => 'views',
-            'connection' => null,
+            'connection' => 'mysql',
 
         ],
 

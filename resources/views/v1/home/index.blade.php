@@ -65,7 +65,8 @@
                     <li><a role="button" data-target="#modalSources" data-toggle="modal" data-dismiss="modal" aria-haspopup="true"><span class="glyphicon glyphicon-info-sign"></span> Sumber Data</a></li>
                     <li><a role="button" data-target="#panelInfo" aria-haspopup="true"><span class="glyphicon glyphicon-tasks"></span> Status Gunung Api</a></li>
                     <li><a role="button" data-target="#panelVolcanoes" aria-haspopup="true"><span class="glyphicon glyphicon-th-list"></span> Gunung Api</a></li>
-                    <li class="visible-xs"><a href="#"><span class="glyphicon glyphicon-th-list"></span> VONA</a></li>
+                    <li class="visible-xs"><a href="{{ route('v1.vona.index') }}"><span class="glyphicon glyphicon-th-list"></span> VONA</a></li>
+                    <li class="visible-xs"><a href="{{ route('v1.press.index') }}"><span class="glyphicon glyphicon-th-list"></span> Press Release</a></li>
                     <li><a role="button" data-target="#panelBasemaps" aria-haspopup="true"><span class="glyphicon glyphicon-th-large"></span> Basemaps</a></li>
                     <li><a role="button" id="calciteToggleNavbar" aria-haspopup="true"><span class="glyphicon glyphicon-fullscreen"></span> Full Map</a></li>
                 </ul>
@@ -80,9 +81,9 @@
                 <span class="calcite-title-divider hidden-xs"></span>
                 {{-- <span class="calcite-title-sub hidden-xs"><a role="button" data-target="#panelVolcanoes" aria-haspopup="true">Gunung Api</a></span> --}}
                 {{-- <span class="calcite-title-divider hidden-xs"></span> --}}
-                <span class="calcite-title-sub hidden-xs"><a href="#">VONA</a></span>
+                <span class="calcite-title-sub hidden-xs"><a href="{{ route('v1.vona.index') }}">VONA</a></span>
                 <span class="calcite-title-divider hidden-xs"></span>
-                <span class="calcite-title-sub hidden-xs"><a href="#">Press Release</a></span>
+                <span class="calcite-title-sub hidden-xs"><a href="{{ route('v1.press.index') }}">Press Release</a></span>
             </div>
 
         </nav>

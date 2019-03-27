@@ -8,6 +8,10 @@ VONA
 <li class="breadcrumb-item" aria-current="page">VONA</li>
 <li class="breadcrumb-item active" aria-current="page">Issued</li>
 @endsection
+
+@section('page-title')
+VONA
+@endsection
  
 @section('main')
 <div class="row row-sm row-timeline">

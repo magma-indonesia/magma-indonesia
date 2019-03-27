@@ -20,7 +20,7 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('v1.home') }}">
+                <a class="nav-link" href="{{ route('v1.press.index') }}">
                     <i class="icon ion-ios-bookmarks-outline"></i>
                     <span>Press Release </span>
                 </a>
@@ -37,7 +37,8 @@
                             <div class="row">
                                 <div class="col">
                                     <ul>
-                                        <li><a href="#">Agung</a></li>
+                                        <li><a href="#">COMING SOON!</a></li>
+                                        {{-- <li><a href="#">Agung</a></li>
                                         <li><a href="#">Ambang</a></li>
                                         <li><a href="#">Anak Krakatau</a></li>
                                         <li><a href="#">Anak Ranakah</a></li>
@@ -55,7 +56,7 @@
                                         <li><a href="#">Dukono</a></li>
                                         <li><a href="#">Ebulobo</a></li>
                                         <li><a href="#">Egon</a></li>
-                                        <li><a href="#">Galunggung</a></li>
+                                        <li><a href="#">Galunggung</a></li> --}}
                                     </ul>
                                 </div>
                             </div>
@@ -63,17 +64,27 @@
                     </div>
                 </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('v1.home') }}">
+            <li class="nav-item with-sub">
+                <a class="nav-link" href="#">
                     <i class="icon ion-ios-albums-outline"></i>
                     <span>Gerakan Tanah </span>
                 </a>
+                <div class="sub-item">
+                    <ul>
+                        <li><a href="#">COMING SOON!</a></li>
+                    </ul>
+                </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('v1.home') }}">
+            <li class="nav-item with-sub">
+                <a class="nav-link" href="#">
                     <i class="icon ion-clipboard"></i>
                     <span>Gempa Bumi </span>
                 </a>
+                <div class="sub-item">
+                    <ul>
+                        <li><a href="#">COMING SOON!</a></li>
+                    </ul>
+                </div>
             </li>
         </ul>
     </div>
