@@ -5,7 +5,8 @@ VONA
 @endsection
  
 @section('breadcrumb')
-<li class="breadcrumb-item active" aria-current="page">VONA</li>
+<li class="breadcrumb-item" aria-current="page">VONA</li>
+<li class="breadcrumb-item active" aria-current="page">Issued</li>
 @endsection
  
 @section('main')
