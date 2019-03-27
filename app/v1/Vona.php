@@ -4,9 +4,12 @@ namespace App\v1;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use CyrildeWit\EloquentViewable\Viewable;
 
 class Vona extends Model
 {
+    use Viewable;
+
     protected $connection = 'magma';
 
     protected $issued, $year, $month, $day, $hour, $minute;
