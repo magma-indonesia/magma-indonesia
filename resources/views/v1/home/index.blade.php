@@ -11,6 +11,28 @@
         <link href="{{ asset('favicon.png') }}" rel="shortcut icon">
         <title>MAGMA Indonesia - Bridging the will of nature to society</title>
 
+        <!-- Twitter -->
+        <meta name="twitter:site" content="@id_magma">
+        <meta name="twitter:creator" content="@KementerianESDM">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{{ config('app.name') }}">
+        <meta name="twitter:description" content="{{ config('app.tag_line') }}">
+        <meta name="twitter:image" content="{{ asset('snapshot.png') }}">
+
+        <!-- Facebook -->
+        <meta property="og:url" content="{{ config('app.url') }}">
+        <meta property="og:title" content="{{ config('app.name') }}">
+        <meta property="og:description" content="{{ config('app.tag_line') }}">
+        <meta property="og:image" content="{{ asset('snapshot.png') }}">
+        <meta property="og:image:secure_url" content="{{ asset('snapshot.png') }}">
+        <meta property="og:image:type" content="image/png">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+
+        <!-- Meta -->
+        <meta name="description" content="{{ config('app.tag_line') }}">
+        <meta name="author" content="Kementerian ESDM">
+
         <!-- Calcite Maps Bootstrap -->
         <link rel="stylesheet" href="{{ asset('css/calcite-maps-bootstrap.min-v0.3.css') }}">
     
