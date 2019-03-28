@@ -15,7 +15,7 @@ Informasi Letusan
 
 @section('main')
 <div class="row row-sm row-timeline">
-    <div class="col-lg-9">
+    <div class="col-lg-8">
         <div class="card pd-30">
             {{ $vens->onEachSide(1)->links() }}
             <div class="timeline-group mg-t-20">
@@ -59,6 +59,48 @@ Informasi Letusan
             {{ $vens->onEachSide(1)->links() }}
         </div>
 
+    </div>
+
+    <div class="col-lg-4 mg-t-20 mg-lg-t-0">
+        <div class="card card-connection">
+            <label class="slim-card-title">Jumlah Letusan Tahun {{ now()->format('Y') }}</label>
+        @foreach ($counts as $ven)
+            <div class="row row-xs">
+                <div class="col-4 tx-primary">{{ $ven->total }}</div>
+                <div class="col-8">Jumlah letusan <b class="tx-orange">Gunung {{ $ven->gunungapi->ga_nama_gapi }}</b> yang pernah tercatat.</div>
+            </div>
+            @if (!$loop->last)
+            <hr>
+            @endif
+
+        @endforeach
+        </div>
+
+        <div class="card pd-20 mg-t-20">
+            <h6 class="slim-card-title">Follow Kami</h6>
+            <p>Pilih salah satu akun sosial media kami untuk mendapatkan update terkini tentang bahaya geologi di Indonesia.</p>
+            <hr>
+            <h6 class="slim-card-title">Pusat Vulkanologi dan Mitigasi Bencana Geologi</h6>
+            <div class="tx-20">
+              <a href="https://www.facebook.com/pvmbg" class="tx-primary mg-r-5"><i class="fa fa-facebook"></i></a>
+              <a href="https://twitter.com/vulkanologi_mbg" class="tx-info mg-r-5"><i class="fa fa-twitter"></i></a>
+              <a href="https://www.instagram.com/pvmbg_kesdm/" class="tx-pink mg-r-5"><i class="fa fa-instagram"></i></a>
+            </div>
+            <hr>
+            <h6 class="slim-card-title">Badan Geologi</h6>
+            <div class="tx-20">
+              <a href="https://www.facebook.com/Badan-Geologi-401815270183848/" class="tx-primary mg-r-5"><i class="fa fa-facebook"></i></a>
+              <a href="https://twitter.com/kabargeologi" class="tx-info mg-r-5"><i class="fa fa-twitter"></i></a>
+              <a href="https://www.instagram.com/kabargeologi/" class="tx-pink mg-r-5"><i class="fa fa-instagram"></i></a>
+            </div>
+            <hr>
+            <h6 class="slim-card-title">Kementerian ESDM</h6>
+            <div class="tx-20">
+              <a href="https://www.facebook.com/kesdm/" class="tx-primary mg-r-5"><i class="fa fa-facebook"></i></a>
+              <a href="https://twitter.com/kementerianesdm" class="tx-info mg-r-5"><i class="fa fa-twitter"></i></a>
+              <a href="https://www.instagram.com/kesdm/" class="tx-pink mg-r-5"><i class="fa fa-instagram"></i></a>
+            </div>
+        </div>
     </div>
 </div>
 @endsection

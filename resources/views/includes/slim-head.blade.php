@@ -36,7 +36,9 @@
     @yield('add-vendor-css')
 
     <!-- Slim CSS -->
+    <link rel="stylesheet" href="{{ asset('css/icon-magma.css') }}">
     <link rel="stylesheet" href="{{ asset('slim/css/slim.css') }}">
     <link rel="stylesheet" href="{{ asset('slim/css/slim-magma.css') }}">
+    
     @yield('add-css')
 </head>

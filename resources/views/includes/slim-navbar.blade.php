@@ -27,7 +27,7 @@
             </li>
             <li class="nav-item with-sub">
                 <a class="nav-link" href="#">
-                    <i class="icon ion-ios-chatboxes-outline"></i>
+                    <i class="icon icon-volcano-warning"></i>
                     <span>Gunung Api </span>
                 </a>
                 <div class="sub-item">
@@ -39,7 +39,7 @@
             </li>
             <li class="nav-item with-sub">
                 <a class="nav-link" href="#">
-                    <i class="icon ion-ios-albums-outline"></i>
+                    <i class="icon icon-landslide"></i>
                     <span>Gerakan Tanah </span>
                 </a>
                 <div class="sub-item">
@@ -50,7 +50,7 @@
             </li>
             <li class="nav-item with-sub">
                 <a class="nav-link" href="#">
-                    <i class="icon ion-clipboard"></i>
+                    <i class="icon icon-earthquake"></i>
                     <span>Gempa Bumi </span>
                 </a>
                 <div class="sub-item">
