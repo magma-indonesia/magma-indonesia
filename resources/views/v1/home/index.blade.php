@@ -9,7 +9,9 @@
         <meta name="description" content="MAGMA Indonesia - Bridging the will of nature to society">
         <meta name="author" content="Kementerian ESDM">
         <link href="{{ asset('favicon.png') }}" rel="shortcut icon">
-        <title>MAGMA Indonesia - Bridging the will of nature to society</title>
+        <link rel="dns-prefetch" href="{{ config('app.url') }}">
+        <link rel="dns-prefetch" href="https://magma.vsi.esdm.go.id/">
+        <title>{{ config('app.name') }} - {{ config('app.tag_line') }}</title>
 
         <!-- Twitter -->
         <meta name="twitter:site" content="@id_magma">
@@ -55,9 +57,7 @@
         <script src="{{ asset('js/Leaflet.Coordinates-0.1.5.min.js') }}"></script>
 
         <!-- Load Leaflet Ruler-->
-        <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/gokertanrisever/leaflet-ruler/master/src/leaflet-ruler.css">
         <link rel="stylesheet" href="{{ asset('css/leaflet-ruler-m.css') }}">
-        <script src="https://cdn.rawgit.com/gokertanrisever/leaflet-ruler/master/src/leaflet-ruler.js"></script>
 
         <!-- Load extend Home -->
         <link rel="stylesheet" href="{{ asset('css/leaflet.defaultextent.css') }}">
@@ -88,6 +88,7 @@
                     <li><a role="button" data-target="#panelInfo" aria-haspopup="true"><span class="glyphicon glyphicon-tasks"></span> Status Gunung Api</a></li>
                     <li><a role="button" data-target="#panelVolcanoes" aria-haspopup="true"><span class="glyphicon glyphicon-th-list"></span> Gunung Api</a></li>
                     <li class="visible-xs"><a href="{{ route('v1.vona.index') }}"><span class="glyphicon glyphicon-th-list"></span> VONA</a></li>
+                    <li class="visible-xs"><a href="{{ route('v1.gunungapi.ven') }}"><span class="glyphicon glyphicon-th-list"></span> Informasi Letusan</a></li>
                     <li class="visible-xs"><a href="{{ route('v1.press.index') }}"><span class="glyphicon glyphicon-th-list"></span> Press Release</a></li>
                     <li><a role="button" data-target="#panelBasemaps" aria-haspopup="true"><span class="glyphicon glyphicon-th-large"></span> Basemaps</a></li>
                     <li><a role="button" id="calciteToggleNavbar" aria-haspopup="true"><span class="glyphicon glyphicon-fullscreen"></span> Full Map</a></li>
@@ -104,6 +105,8 @@
                 {{-- <span class="calcite-title-sub hidden-xs"><a role="button" data-target="#panelVolcanoes" aria-haspopup="true">Gunung Api</a></span> --}}
                 {{-- <span class="calcite-title-divider hidden-xs"></span> --}}
                 <span class="calcite-title-sub hidden-xs"><a href="{{ route('v1.vona.index') }}">VONA</a></span>
+                <span class="calcite-title-divider hidden-xs"></span>
+                <span class="calcite-title-sub hidden-xs"><a href="{{ route('v1.gunungapi.ven') }}">Informasi Letusan</a></span>
                 <span class="calcite-title-divider hidden-xs"></span>
                 <span class="calcite-title-sub hidden-xs"><a href="{{ route('v1.press.index') }}">Press Release</a></span>
             </div>
@@ -390,13 +393,8 @@
                 markerProps: {} //optional default {},
             });
 
-            var rulerControl = L.control.ruler({
-                position: 'bottomright'
-            });
-
             if (!(L.Browser.mobile)){
                 latlongControl.addTo(map);
-                rulerControl.addTo(map);
             };
 
             L.control.scale().addTo(map);

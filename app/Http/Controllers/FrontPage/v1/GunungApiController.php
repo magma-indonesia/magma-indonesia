@@ -21,7 +21,7 @@ class GunungApiController extends Controller
         $vens = Cache::remember('v1/home/vens-'.$ven->erupt_id.'-page-'.$page, 120, function() {
             return MagmaVen::with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea,ga_elev_gapi','user:vg_nip,vg_nama')
                     ->orderBy('erupt_tgl','desc')
-                    ->paginate(30);
+                    ->paginate(15);
         });
 
         $grouped = $vens->groupBy('erupt_tgl');

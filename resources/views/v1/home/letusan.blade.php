@@ -35,7 +35,7 @@ Informasi Letusan
                 </div>
                 @foreach($grouped_vens as $ven)
                 <div class="timeline-item">
-                    <div class="timeline-time"><small>{{ $ven->erupt_jam}}</small></div>
+                    <div class="timeline-time"><small>{{ $ven->erupt_jam.' '.$ven->gunungapi->ga_zonearea}} </small></div>
                     <div class="timeline-body">
                         <p class="timeline-title"><a href="#">{{ $ven->gunungapi->ga_nama_gapi }}</a></p>
                         <p class="timeline-author">Dibuat oleh <a href="#">{{ $ven->user->vg_nama }}</a></p>
