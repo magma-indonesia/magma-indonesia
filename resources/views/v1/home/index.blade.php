@@ -369,8 +369,7 @@
                         center: [-4.26, 115.66],
                         zoom: zoomResponsive(),
                         attributionControl:false,
-                    }).setMinZoom(5)
-                    .setMaxZoom(12);
+                    }).setMinZoom(5);
                     // .setMaxBounds(bounds);
 
             // Add Layers
