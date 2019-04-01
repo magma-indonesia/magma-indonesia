@@ -16,8 +16,19 @@ Informasi Letusan
 @section('main')
 <div class="row row-sm row-timeline">
     <div class="col-lg-8">
+        <div class="card pd-30 mg-b-20">
+            <label class="slim-card-title">Filter Gunung Api</label>
+            <div class="row row-xs">
+                <div class="col-xs-12">
+                    @foreach ($records as $record)
+                    <a href="{{ route('v1.gunungapi.ven',['code' => $record->ga_code]) }}" type="button" class="btn btn-primary mg-b-10">{{ $record->gunungapi->ga_nama_gapi }}</a>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
         <div class="card pd-30">
-            {{ $vens->onEachSide(1)->links() }}
+            {{ $vens->appends(Request::except('page'))->onEachSide(1)->links() }}
             <div class="timeline-group mg-t-20">
                 <div class="timeline-item timeline-day">
                     <div class="timeline-time"><small>{{ now() }} WIB</small></div>
@@ -28,11 +39,13 @@ Informasi Letusan
                 </div>
 
                 @foreach ($grouped as $date => $grouped_vens)
+                @if ($date != now()->format('Y-m-d'))
                 <div class="timeline-item timeline-day">
                     <div class="timeline-time"><small>{{ $date }}</small></div>
                     <div class="timeline-body">{{ \Carbon\Carbon::createFromFormat('Y-m-d', $date)->formatLocalized('%A, %d %B %Y').', '.
                      \Carbon\Carbon::createFromFormat('Y-m-d', $date)->diffForHumans() }}</div>
                 </div>
+                @endif
                 @foreach($grouped_vens as $ven)
                 <div class="timeline-item">
                     <div class="timeline-time"><small>{{ $ven->erupt_jam.' '.$ven->gunungapi->ga_zonearea}} </small></div>
@@ -56,7 +69,7 @@ Informasi Letusan
                 @endforeach
                 @endforeach
             </div>
-            {{ $vens->onEachSide(1)->links() }}
+            {{ $vens->appends(Request::except('page'))->onEachSide(1)->links() }}
         </div>
 
     </div>

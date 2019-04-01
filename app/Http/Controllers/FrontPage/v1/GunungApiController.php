@@ -10,7 +10,30 @@ use DB;
 
 class GunungApiController extends Controller
 {
-    public function indexVen(Request $request)
+    protected function filteredVen($code, $ven, $page)
+    {
+        $vens = Cache::remember('v1/home/vens-filtered-'.$ven->erupt_id.'-page-'.$page.'-'.$code, 120, function() use($code) {
+            return MagmaVen::with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea,ga_elev_gapi','user:vg_nip,vg_nama')
+                    ->where('ga_code',$code)
+                    ->orderBy('erupt_tgl','desc')
+                    ->paginate(15);
+        });
+
+        return $vens;
+    }
+
+    protected function nonFilteredVen($ven, $page)
+    {
+        $vens = Cache::remember('v1/home/vens-'.$ven->erupt_id.'-page-'.$page, 120, function() {
+            return MagmaVen::with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea,ga_elev_gapi','user:vg_nip,vg_nama')
+                    ->orderBy('erupt_tgl','desc')
+                    ->paginate(15);
+        });
+
+        return $vens;
+}
+
+    public function indexVen(Request $request, $code = null)
     {
         $ven = MagmaVen::select('erupt_id')
                 ->orderBy('erupt_id','desc')
@@ -18,11 +41,16 @@ class GunungApiController extends Controller
 
         $page = $request->has('page') ? $request->page : 1;
 
-        $vens = Cache::remember('v1/home/vens-'.$ven->erupt_id.'-page-'.$page, 120, function() {
-            return MagmaVen::with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea,ga_elev_gapi','user:vg_nip,vg_nama')
-                    ->orderBy('erupt_tgl','desc')
-                    ->paginate(15);
+        $records = Cache::remember('v1/home/vens-records-'.$ven->erupt_id, 60, function() {
+            return MagmaVen::with('gunungapi:ga_code,ga_nama_gapi')
+                ->select('ga_code')
+                ->distinct('ga_code')
+                ->get();
         });
+
+        $vens = $code ?
+                    $this->filteredVen($code, $ven, $page) :
+                    $this->nonFilteredVen($ven, $page);
 
         $grouped = $vens->groupBy('erupt_tgl');
 
@@ -35,6 +63,6 @@ class GunungApiController extends Controller
                     ->get();
         });
 
-        return view('v1.home.letusan',compact('vens','grouped','counts'));
+        return view('v1.home.letusan',compact('vens','grouped','counts','records'));
     }
 }
