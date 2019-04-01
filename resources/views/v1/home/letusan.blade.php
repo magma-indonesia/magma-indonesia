@@ -18,8 +18,12 @@ Informasi Letusan
     <div class="col-lg-8">
         <div class="card pd-30 mg-b-20">
             <label class="slim-card-title">Filter Gunung Api</label>
+            @if (empty($ven))
+                
+            @endif
             <div class="row row-xs">
                 <div class="col-xs-12">
+                    <a href="{{ route('v1.gunungapi.ven') }}" type="button" class="btn btn-primary mg-b-10">Semua Gunung Api</a>
                     @foreach ($records as $record)
                     <a href="{{ route('v1.gunungapi.ven',['code' => $record->ga_code]) }}" type="button" class="btn btn-primary mg-b-10">{{ $record->gunungapi->ga_nama_gapi }}</a>
                     @endforeach
@@ -28,8 +32,8 @@ Informasi Letusan
         </div>
 
         <div class="card pd-30">
-            {{ $vens->appends(Request::except('page'))->onEachSide(1)->links() }}
-            <div class="timeline-group mg-t-20">
+            {{ $vens->appends(Request::except('page'))->onEachSide(1)->links('vendor.pagination.slim-simple') }}
+            <div class="timeline-group mg-t-20 mg-b-20">
                 <div class="timeline-item timeline-day">
                     <div class="timeline-time"><small>{{ now() }} WIB</small></div>
                     <div class="timeline-body">
@@ -69,7 +73,7 @@ Informasi Letusan
                 @endforeach
                 @endforeach
             </div>
-            {{ $vens->appends(Request::except('page'))->onEachSide(1)->links() }}
+            {{ $vens->appends(Request::except('page'))->onEachSide(1)->links('vendor.pagination.slim-simple') }}
         </div>
 
     </div>

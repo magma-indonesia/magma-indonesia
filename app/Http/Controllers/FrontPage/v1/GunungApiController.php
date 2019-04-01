@@ -12,6 +12,10 @@ class GunungApiController extends Controller
 {
     protected function filteredVen($code, $ven, $page)
     {
+        MagmaVen::select('ga_code')
+                ->where('ga_code',$code)
+                ->firstOrFail();
+
         $vens = Cache::remember('v1/home/vens-filtered-'.$ven->erupt_id.'-page-'.$page.'-'.$code, 120, function() use($code) {
             return MagmaVen::with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea,ga_elev_gapi','user:vg_nip,vg_nama')
                     ->where('ga_code',$code)
@@ -31,7 +35,7 @@ class GunungApiController extends Controller
         });
 
         return $vens;
-}
+    }
 
     public function indexVen(Request $request, $code = null)
     {
