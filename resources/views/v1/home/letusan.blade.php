@@ -32,7 +32,7 @@ Informasi Letusan
         </div>
 
         <div class="card pd-30">
-            {{ $vens->appends(Request::except('page'))->onEachSide(1)->links('vendor.pagination.slim-simple') }}
+            {{ $vens->appends(Request::except('page'))->onEachSide(1)->links('vendor.pagination.slim-paginate') }}
             <div class="timeline-group mg-t-20 mg-b-20">
                 <div class="timeline-item timeline-day">
                     <div class="timeline-time"><small>{{ now() }} WIB</small></div>
@@ -73,7 +73,7 @@ Informasi Letusan
                 @endforeach
                 @endforeach
             </div>
-            {{ $vens->appends(Request::except('page'))->onEachSide(1)->links('vendor.pagination.slim-simple') }}
+            {{ $vens->appends(Request::except('page'))->onEachSide(1)->links('vendor.pagination.slim-paginate') }}
         </div>
 
     </div>

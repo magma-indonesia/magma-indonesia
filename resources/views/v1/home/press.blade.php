@@ -15,9 +15,7 @@ Press Release
 @section('main')
 <div class="row row-sm row-timeline">
     <div class="col-lg-9">
-        <div class="tx-center">
         {{ $presses->links('vendor.pagination.slim-simple') }}
-        </div>
         @foreach ($presses as $press)
         <div class="card card-blog-split mg-b-20">
             <div class="row no-gutters">

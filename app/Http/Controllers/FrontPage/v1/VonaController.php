@@ -10,6 +10,20 @@ use App\v1\Vona;
 class VonaController extends Controller
 {
     //
+    protected function filteredVona()
+    {
+
+    }
+
+    protected function nonFilteredVona($vona, $page)
+    {
+        return Cache::remember('v1/home/vona-'.$vona->no.'-'.$page, 30, function() {
+            return Vona::where('sent',1)
+                ->orderBy('log','desc')
+                ->paginate(15);
+        });
+    }
+
     public function index(Request $request)
     {
         \Carbon\Carbon::setLocale('en');
@@ -21,11 +35,9 @@ class VonaController extends Controller
 
         $page = $request->has('page') ? $request->page : 1;
 
-        $vonas = Cache::remember('v1/home/vona-'.$vona->no.'-'.$page, 30, function() {
-            return Vona::where('sent',1)
-                ->orderBy('log','desc')
-                ->paginate(15);
-        });
+        $vonas = $request->has('volcano') || $request->has('code') ?
+                    $this->filteredVona() :
+                    $this->nonFilteredVona($vona, $page);
 
         return view('v1.home.vona', compact('vonas'));
     }

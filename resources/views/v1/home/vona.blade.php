@@ -25,7 +25,7 @@ VONA
         </div>
         <div class="card pd-30">
             <div class="mg-b-20">
-                {{ $vonas->appends(Request::except('page'))->onEachSide(1)->links('vendor.pagination.slim-simple') }}
+                {{ $vonas->appends(Request::except('page'))->onEachSide(1)->links('vendor.pagination.slim-paginate') }}
             </div>
             <div class="timeline-group">
                 <div class="timeline-item timeline-day">
@@ -62,7 +62,7 @@ VONA
                 @endforeach
             </div>
             <div class="mg-t-20">
-                {{ $vonas->appends(Request::except('page'))->onEachSide(1)->links('vendor.pagination.slim-simple') }}
+                {{ $vonas->appends(Request::except('page'))->onEachSide(1)->links('vendor.pagination.slim-paginate') }}
             </div>
         </div>
     </div>
