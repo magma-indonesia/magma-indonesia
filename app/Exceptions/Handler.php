@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Session\TokenMismatchException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -57,6 +58,14 @@ class Handler extends ExceptionHandler
     {
 
         if ($request->ajax() || $request->wantsJson()) {
+
+            if ($exception instanceof TokenMismatchException)
+            {
+                return response()->json([
+                        'status' => 'false',
+                        'code' => 419,
+                        'message' => 'Invalid Token'], 419);
+            }
 
             if ($exception instanceof UnauthorizedHttpException) {
 

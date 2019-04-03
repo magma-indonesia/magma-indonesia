@@ -567,7 +567,6 @@
 
                 $.ajax({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    global: true,
                     url: '{{ route('v1.json.var.show') }}',
                     type: 'POST',
                     data: {ga_code:ga_code},
@@ -618,8 +617,10 @@
                             alwaysVisible: false
                         });  
                     },
-                    error: function(response) {
-                        console.log(response);
+                    error: function(error, status) {
+                        if (error.status == 419) {
+                            location.reload();
+                        }
                     }
                 });
             }
@@ -724,7 +725,6 @@
                     
                 $.ajax({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    global: true,
                     url: '{{ route('v1.json.sigertan.show') }}',
                     type: 'POST',
                     data: {id:markerGertan},
@@ -758,9 +758,10 @@
                             alwaysVisible: false
                         });  
                     },
-                    error: function(error) {
-                        console.log(markerGertan);
-                        console.log(error);
+                    error: function(error, status) {
+                        if (error.status == 419) {
+                            location.reload();
+                        }
                     }
                 });
             };
@@ -830,7 +831,6 @@
                     
                 $.ajax({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    global: true,
                     url: '{{ route('v1.json.gempa.show') }}',
                     type: 'POST',
                     data: {id:markerGempa},
@@ -874,9 +874,10 @@
                         });  
 
                     },
-                    error: function(error) {
-                        console.log(markerGempa);
-                        console.log(error);
+                    error: function(error, status) {
+                        if (error.status == 419) {
+                            location.reload();
+                        }
                     }
                 });
             };
