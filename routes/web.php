@@ -27,6 +27,10 @@ Route::name('v1.')->group(function () {
             ->middleware('signed');
 
         Route::get('gunung-api/informasi-letusan/{code?}','FrontPage\v1\GunungApiController@indexVen')->name('gunungapi.ven');
+        Route::get('gunung-api/laporan','FrontPage\v1\GunungApiController@indexVar')->name('gunungapi.var');
+        Route::get('gunung-api/laporan/{id?}','FrontPage\v1\GunungApiController@showVar')
+            ->name('gunungapi.var.show')
+            ->middleware('signed');
 
 
         Route::name('json.')->group(function () {

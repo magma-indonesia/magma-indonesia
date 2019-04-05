@@ -33,7 +33,7 @@
                 <div class="sub-item">
                     <ul>
                         <li><a href="{{ route('v1.gunungapi.ven') }}">Informasi Letusan</a></li>
-                        <li><a href="#">Laporan Gunung Api</a></li>
+                        <li><a href="{{ route('v1.gunungapi.var') }}">Laporan Aktivitas</a></li>
                     </ul>
                 </div>
             </li>

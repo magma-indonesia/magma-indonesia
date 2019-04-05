@@ -186,6 +186,10 @@ class MagmaVar extends OldModelVar
 
     protected $guard = ['id'];
 
+    protected $appends = [
+        'data_date',
+    ];
+
     protected $casts = [
         'var_issued' => 'datetime:Y-m-d H:i:s',
         'var_log' => 'datetime:Y-m-d H:i:s',
@@ -195,6 +199,16 @@ class MagmaVar extends OldModelVar
     public function getVarKetlainAttribute($value)
     {
         return (empty($value) || strlen($value) < 7) ? null : $value;
+    }
+
+    public function getDataDateAttribute($value)
+    {
+        return $this->attributes['var_data_date'];
+    }
+
+    public function gunungapi()
+    {
+        return $this->belongsTo('App\v1\Gadd','ga_code','ga_code');
     }
     
     // protected $dates = ['var_data_date'];

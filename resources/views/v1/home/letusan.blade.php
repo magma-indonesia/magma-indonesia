@@ -18,9 +18,6 @@ Informasi Letusan
     <div class="col-lg-8">
         <div class="card pd-30 mg-b-20">
             <label class="slim-card-title">Filter Gunung Api</label>
-            @if (empty($ven))
-                
-            @endif
             <div class="row row-xs">
                 <div class="col-xs-12">
                     <a href="{{ route('v1.gunungapi.ven') }}" type="button" class="btn btn-primary mg-b-10">Semua Gunung Api</a>

@@ -9,6 +9,10 @@ VONA - {{ $vona->ga_code }} {{ $vona->issued }}
 <li class="breadcrumb-item active" aria-current="page">{{ $vona->ga_code }} {{ $vona->issued }}</li>
 @endsection
 
+@section('page-title')
+{{ $vona->ga_code }} {{ $vona->issued }}
+@endsection
+
 @section('main')
 <div class="row row-sm row-timeline">
     <div class="col-lg-12">
@@ -123,9 +127,9 @@ VONA - {{ $vona->ga_code }} {{ $vona->issued }}
                     </tbody>
                 </table>
             </div>
-            <div class="card-footer">
-                <h4 class="slim-card-title tx-18">{{ $vona->ga_nama_gapi.' '.$vona->issued }}</h4>
-            </div>
+        </div>
+        <div class="card-footer bd">
+            <h4 class="slim-card-title tx-18">{{ $vona->ga_nama_gapi.' '.$vona->issued }}</h4>
         </div>
     </div>
 </div>
