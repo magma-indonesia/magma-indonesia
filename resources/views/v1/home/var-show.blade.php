@@ -60,7 +60,7 @@ Laporan Aktivitas
                 </div>
                 <div class="media">
                     <div class="d-flex mg-r-10 wd-50">
-                        <i class="fa fa-area-chart tx-primary tx-40"></i>
+                        <i class="fa fa-sticky-note-o tx-primary tx-40"></i>
                     </div>
                     <div class="media-body">
                         <h6 class="slim-card-title">Keterangan Lainnya</h6>
