@@ -32,10 +32,12 @@ Route::name('v1.')->group(function () {
             ->name('gunungapi.var.show')
             ->middleware('signed');
 
-
         Route::name('json.')->group(function () {
             Route::group(['prefix' => 'json'], function () {
                 Route::post('var','v1\Json\MapController@showVar')->name('var.show');
+                Route::post('highcharts','v1\Json\HighCharts@homeGempaThreeMonths')
+                    ->name('highcharts')
+                    ->middleware('signed');
                 Route::post('gertan','v1\Json\MapController@showSigertan')->name('sigertan.show');
                 Route::post('gempa','v1\Json\MapController@showGempa')->name('gempa.show');
                 Route::get('has-vona','v1\Json\MapController@hasVona')->name('has.vona');

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use App\v1\MagmaVen;
 use App\v1\MagmaVar;
+use App\v1\MagmaVarOptimize;
 use App\Traits\VisualAsap;
 use App\Traits\v1\DeskripsiGempa;
 use DB;
@@ -154,18 +155,20 @@ class GunungApiController extends Controller
 
     public function showVar($id)
     {
-        $vars = MagmaVar::with('gunungapi:ga_code,ga_kab_gapi,ga_prov_gapi,ga_lat_gapi,ga_lon_gapi,ga_elev_gapi,ga_zonearea')
+
+        $vars = Cache::remember('v1/home/var-show-'.$id, 20, function() use ($id) {
+            return MagmaVar::with('gunungapi:ga_code,ga_kab_gapi,ga_prov_gapi,ga_lat_gapi,ga_lon_gapi,ga_elev_gapi,ga_zonearea')
                     ->whereNo($id)
                     ->firstOrFail();
+        });
 
         $vars = collect([$vars]);
-
         $vars->transform(function ($var, $key) {
             $this->setVisual($var);
             return (object) [
                 'id' => $var->no,
                 'gunungapi' => $var->ga_nama_gapi,
-                'intro' => 'Terletak di Kab\Kota '.$var->gunungapi->ga_kab_gapi.', '.$var->gunungapi->ga_prov_gapi.' dengan posisi geografis di Latitude '.$var->gunungapi->ga_lat_gapi.'&deg;LU, Longitude '.$var->gunungapi->ga_lon_gapi.'&deg;BT dan memiliki ketinggian '.$var->gunungapi->ga_elev_gapi.' mdpl',
+                'intro' => 'Gunung Api '.$var->ga_nama_gapi.' terletak di Kab\Kota '.$var->gunungapi->ga_kab_gapi.', '.$var->gunungapi->ga_prov_gapi.' dengan posisi geografis di Latitude '.$var->gunungapi->ga_lat_gapi.'&deg;LU, Longitude '.$var->gunungapi->ga_lon_gapi.'&deg;BT dan memiliki ketinggian '.$var->gunungapi->ga_elev_gapi.' mdpl',
                 'status' => $var->cu_status,
                 'code' => $var->ga_code,
                 'tanggal' => $var->data_date,
@@ -180,9 +183,9 @@ class GunungApiController extends Controller
                 'gempa' => $this->getDeskripsiGempa($var),
             ];
         });
-        // return $vars;
 
         $var = $vars->first();
         return view('v1.home.var-show', compact('var'));
     }
+
 }
