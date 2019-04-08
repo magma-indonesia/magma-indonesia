@@ -42,6 +42,8 @@ class GunungApiController extends Controller
             ->angin($var->var_kecangin->toArray(),$var->var_arangin->toArray())
             ->suhu($var->var_suhumin,$var->var_suhumax)
             ->kelembaban($var->var_kelembabanmin,$var->var_kelembabanmax)
+            ->tekanan($var->var_tekananmin,$var->var_tekananmax)
+            ->curah($var->var_curah_hujan)
             ->getVisual();
     }
 
@@ -123,7 +125,7 @@ class GunungApiController extends Controller
         $vars = Cache::remember('v1/home/vars-'.$last->no.'-page-'.$page, 30, function () {
                 return MagmaVar::with('gunungapi:ga_code,ga_zonearea')
                         ->orderBy('var_data_date','desc')
-                        ->orderBy('periode','desc')
+                        ->orderBy('no','desc')
                         ->paginate(10);
         });
 
