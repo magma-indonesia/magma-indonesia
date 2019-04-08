@@ -152,7 +152,11 @@ $(document).ready(function () {
         },
         success: function(data) {
             $('.loading').remove();
-            $('#container').css('height','600px');
+            var $size = screen.width <= 767 ? '400px' : '600px';
+            var $size_w = screen.width <= 767 ? 80 : 106;
+            var $size_h = screen.width <= 767 ? 38 : 51;
+            console.log($size);
+            $('#container').css('height',$size);
 
             Highcharts.chart('container', {
                 chart: {
@@ -160,7 +164,7 @@ $(document).ready(function () {
                     renderTo: 'container',
                     events: {
                         load: function() {
-                            this.renderer.image('https://magma.vsi.esdm.go.id/img/logo-esdm-magma.png', 80, 40, 106, 51)
+                            this.renderer.image('https://magma.vsi.esdm.go.id/img/logo-esdm-magma.png', 80, 40, $size_w, $size_h)
                                 .add();
                         }
                     }
@@ -203,8 +207,8 @@ $(document).ready(function () {
                 exporting: {
                     enabled: true,
                     scale: 1,
-                    sourceHeight: 1080,
-                    sourceWidth: 1920
+                    sourceHeight: 720,
+                    sourceWidth: 1080
                 }
             });
         }
