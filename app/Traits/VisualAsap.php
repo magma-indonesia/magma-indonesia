@@ -16,6 +16,16 @@ trait VisualAsap
        return $this;
     }
 
+    protected function curah($curah)
+    {
+        $curah ? 
+            $result = ' Intensitas curah hujan '.$curah.' mm per hari.' :
+            $result = '';
+        
+        $this->visual .= $result;
+        return $this;         
+    }
+
     protected function angin($kecepatan,$arah)
     {
         count($kecepatan)>1 ? 
