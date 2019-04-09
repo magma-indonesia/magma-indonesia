@@ -101,7 +101,6 @@ Laporan Aktivitas
                             <label class="form-control-label">Gunung Api: <span class="tx-danger">*</span></label>
                             <select name="code" class="form-control select2-show-search" data-placeholder="Pilih Gunung Api">
                                 <option label="Choose one"></option>
-                                <option value="GJ">Gak jelas</option>  
                                 @foreach ($gadds as $gadd)
                                 @if ($loop->first)
                                 <option value="{{ $gadd->ga_code }}" selected>{{ $gadd->ga_nama_gapi }}</option>                                                
