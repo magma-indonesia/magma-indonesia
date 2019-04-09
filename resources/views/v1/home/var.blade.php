@@ -52,12 +52,9 @@ Laporan Aktivitas
                     <div class="timeline-body">
                         <p class="timeline-title"><a href="#">{{ $var->gunungapi }}</a></p>
                         <p class="timeline-author">Dibuat oleh <span class="tx-primary">{{ $var->pelapor }}</span> - {{ \Carbon\Carbon::createFromFormat('Y-m-d', $date)->formatLocalized('%A, %d %B %Y') }}</p>
-                        <div class="card card-blog-split">
+                        <div class="card bd-0 bd-b">
                             <div class="row no-gutters">
-                                <div class="col-md-5 col-lg-6 col-xl-5">
-                                    <figure><img src="{{ $var->foto }}" class="img-fit-cover" alt=""></figure>
-                                </div>
-                                <div class="col-md-7 col-lg-6 col-xl-7">
+                                <div class="col-xs-12 col-md-8">
                                     @switch($var->status)
                                         @case('1')
                                             <h5><span class="badge badge-success">Level I (Normal)</span></h5>
