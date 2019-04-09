@@ -4,18 +4,25 @@ namespace App\Http\Controllers\FrontPage\v1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Cache;
+use Validator;
+use DB;
+use App\v1\Gadd;
 use App\v1\MagmaVen;
 use App\v1\MagmaVar;
 use App\v1\MagmaVarOptimize;
+
 use App\Traits\VisualAsap;
 use App\Traits\v1\DeskripsiGempa;
-use DB;
 
 class GunungApiController extends Controller
 {
 
     use VisualAsap,DeskripsiGempa;
+
+    protected $vars;
+    protected $grouped;
 
     protected function setVisual($var)
     {
@@ -74,14 +81,118 @@ class GunungApiController extends Controller
         return $vens;
     }
 
-    protected function filteredVar()
+    protected function filteredVar($request)
     {
+        $validator = Validator::make($request->all(), [
+            'code' => 'required|size:3|exists:magma.ga_dd,ga_code',
+            'start' => 'required|date_format:Y-m-d|before_or_equal:'.$request->end,
+            'end' => 'required|date_format:Y-m-d|before_or_equal:'.now()->format('Y-m-d'),
+        ]);
 
+        if ($validator->fails()) {
+            abort(404);
+        }
+
+        $code = $request->code;
+        $page = $request->has('page') ? $request->page : 1;
+        $start = strtotime($request->start);
+        $end = strtotime($request->end);
+
+        $vars = Cache::remember('v1/home/vars-search:'.$code.':'.$start.':'.$end.':'.$page, 30, function () use($request) {
+                return MagmaVar::with('gunungapi:ga_code,ga_zonearea')
+                        ->where('ga_code',$request->code)
+                        ->whereBetween('var_data_date',[$request->start,$request->end])
+                        ->orderBy('var_data_date','desc')
+                        ->orderBy('no','desc')
+                        ->paginate(10);
+        });
+
+        $grouped = Cache::remember('v1/home/vars-grouped-search:'.$code.':'.$start.':'.$end.':'.$page, 30, function () use ($vars) {
+            $grouped = $vars->groupBy('data_date');
+            $grouped->each(function ($vars, $key) {
+                $vars->transform(function ($var, $key) {
+                    $this->setVisual($var);
+                    return (object) [
+                        'id' => $var->no,
+                        'gunungapi' => $var->ga_nama_gapi,
+                        'status' => $var->cu_status,
+                        'code' => $var->ga_code,
+                        'tanggal' => $var->data_date,
+                        'tanggal_deskripsi' => $var->var_data_date->formatLocalized('%A, %d %B %Y'),
+                        'pelapor' => $var->var_nama_pelapor,
+                        'periode' => $var->periode.' '.$var->gunungapi->ga_zonearea,
+                        'visual' => $this->visual,
+                        'foto' => $var->var_image,
+                    ];
+                });
+            });
+
+            return $grouped;
+        });
+
+        $this->vars = $vars;
+        $this->grouped = $grouped;
+
+        return $this;
     }
 
-    protected function nonFilteredVar($var, $page, $start, $end)
+    protected function nonFilteredVar($request)
     {
+        $last = MagmaVar::select('no')->orderBy('no','desc')->first();
+        $page = $request->has('page') ? $request->page : 1;
 
+        $vars = Cache::remember('v1/home/vars-'.$last->no.'-page-'.$page, 30, function () {
+                return MagmaVar::with('gunungapi:ga_code,ga_zonearea')
+                        ->orderBy('var_data_date','desc')
+                        ->orderBy('no','desc')
+                        ->simplePaginate(10);
+        });
+
+        $grouped = Cache::remember('v1/home/vars-grouped-'.$last->no.'-page-'.$page, 30, function () use ($vars) {
+            $grouped = $vars->groupBy('data_date');
+            $grouped->each(function ($vars, $key) {
+                $vars->transform(function ($var, $key) {
+                    $this->setVisual($var);
+                    return (object) [
+                        'id' => $var->no,
+                        'gunungapi' => $var->ga_nama_gapi,
+                        'status' => $var->cu_status,
+                        'code' => $var->ga_code,
+                        'tanggal' => $var->data_date,
+                        'tanggal_deskripsi' => $var->var_data_date->formatLocalized('%A, %d %B %Y'),
+                        'pelapor' => $var->var_nama_pelapor,
+                        'periode' => $var->periode.' '.$var->gunungapi->ga_zonearea,
+                        'visual' => $this->visual,
+                        'foto' => $var->var_image,
+                    ];
+                });
+            });
+
+            return $grouped;
+        });
+
+        $this->vars = $vars;
+        $this->grouped = $grouped;
+
+        return $this;
+    }
+
+    protected function getVars()
+    {
+        return $this->vars;
+    }
+
+    protected function getGrouped()
+    {
+        return $this->grouped;
+    }
+
+    protected function getQuery($url)
+    {
+        $str = parse_url($url)['query'];
+        parse_str($str, $query);
+
+        return $query;
     }
 
     public function indexVen(Request $request, $code = null)
@@ -117,42 +228,25 @@ class GunungApiController extends Controller
         return view('v1.home.letusan',compact('vens','grouped','counts','records'));
     }
 
-    public function indexVar(Request $request)
+    public function indexVar(Request $request, $q = null)
     {
-        $last = MagmaVar::select('no')->orderBy('no','desc')->first();
-        $page = $request->has('page') ? $request->page : 1;
-
-        $vars = Cache::remember('v1/home/vars-'.$last->no.'-page-'.$page, 30, function () {
-                return MagmaVar::with('gunungapi:ga_code,ga_zonearea')
-                        ->orderBy('var_data_date','desc')
-                        ->orderBy('no','desc')
-                        ->paginate(10);
+        $gadds = Cache::remember('v1/home/gadds', 120, function() {
+            return Gadd::select('ga_code','ga_nama_gapi')
+                    ->orderBy('ga_nama_gapi')
+                    ->get();
         });
 
-        $grouped = Cache::remember('v1/home/vars-grouped-'.$last->no.'-page-'.$page, 30, function () use ($vars) {
-            $grouped = $vars->groupBy('data_date');
-            $grouped->each(function ($vars, $key) {
-                $vars->transform(function ($var, $key) {
-                    $this->setVisual($var);
-                    return (object) [
-                        'id' => $var->no,
-                        'gunungapi' => $var->ga_nama_gapi,
-                        'status' => $var->cu_status,
-                        'code' => $var->ga_code,
-                        'tanggal' => $var->data_date,
-                        'tanggal_deskripsi' => $var->var_data_date->formatLocalized('%A, %d %B %Y'),
-                        'pelapor' => $var->var_nama_pelapor,
-                        'periode' => $var->periode.' '.$var->gunungapi->ga_zonearea,
-                        'visual' => $this->visual,
-                        'foto' => $var->var_image,
-                    ];
-                });
-            });
+        $q == 'q' ? $this->filteredVar($request)
+                : $this->nonFilteredVar($request);
 
-            return $grouped;
-        });
+        $vars = $this->getVars();
+        $grouped = $this->getGrouped();
 
-        return view('v1.home.var',compact('vars','grouped'));
+        // $signed = URL::temporarySignedRoute('v1.gunungapi.var.search',now()->addMinutes(30), ['q' => 'q']);
+
+        // $query = $this->getQuery($signed);
+
+        return view('v1.home.var',compact('gadds','vars','grouped'));
     }
 
     public function showVar($id)
