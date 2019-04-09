@@ -119,7 +119,7 @@ Laporan Aktivitas
                                     <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
                                     </div>
                                 </div>
-                                <input id="start" name="start" type="text" class="form-control fc-datepicker" placeholder="{{ now()->subDays(7)->format('Y-m-d') }}">
+                                <input id="start" value="{{ now()->subDays(7)->format('Y-m-d') }}" name="start" type="text" class="form-control fc-datepicker" placeholder="{{ now()->subDays(7)->format('Y-m-d') }}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -130,7 +130,7 @@ Laporan Aktivitas
                                     <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
                                     </div>
                                 </div>
-                                <input id="end" name="end" type="text" class="form-control fc-datepicker" placeholder="{{ now()->format('Y-m-d') }}">
+                                <input id="end" value="{{ now()->format('Y-m-d') }}" name="end" type="text" class="form-control fc-datepicker" placeholder="{{ now()->format('Y-m-d') }}">
                             </div>
                         </div>
                         <hr>
