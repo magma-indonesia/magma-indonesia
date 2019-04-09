@@ -11,7 +11,7 @@
         @if ($paginator->hasMorePages())
             <li class="page-item"><a class="btn btn-primary" href="{{ $paginator->nextPageUrl() }}" rel="next">@lang('pagination.next')</a></li>
         @else
-            <li class="btn btn-primary disabled"><span class="page-link">@lang('pagination.next')</span></li>
+            <li class="page-item disabled"><span class="btn btn-primary disabled">@lang('pagination.next')</span></li>
         @endif
     </ul>
 @endif
