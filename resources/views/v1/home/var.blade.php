@@ -19,7 +19,7 @@ Laporan Aktivitas
 
 @section('main')
 <div class="row row-sm row-timeline">
-    <div class="col-lg-9">
+    <div class="col-lg-8">
 
         <div class="card pd-30 mg-b-30">
 
@@ -87,7 +87,7 @@ Laporan Aktivitas
         </div>
     </div>
 
-    <div class="col-lg-3">
+    <div class="col-lg-4">
         <div class="card card-connection">
             <label class="slim-card-title">Filter Data Laporan</label>
             <p>Cari data laporan gunung api</p>
