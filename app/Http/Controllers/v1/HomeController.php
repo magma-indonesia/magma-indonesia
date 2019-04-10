@@ -55,7 +55,11 @@ class HomeController extends Controller
         });
 
         $gertans = Cache::remember('v1/home/sigertan', 10, function() {
-            return Crs::has('tanggapan')->with('tanggapan')->whereBetween('crs_lat',[-12, 2])
+            return Crs::select('idx','crs_ids','crs_lat','crs_lon','crs_log')
+                    ->has('tanggapan')
+                    ->with('tanggapan')
+                    ->where('crs_sta','TERBIT')
+                    ->whereBetween('crs_lat',[-12, 2])
                     ->whereBetween('crs_lon',[89, 149])
                     ->orderBy('crs_log','desc')
                     ->limit(30)
