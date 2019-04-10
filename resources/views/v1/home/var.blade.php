@@ -21,6 +21,7 @@ Laporan Aktivitas
 <div class="row row-sm row-timeline">
     <div class="col-lg-8">
 
+        @if (!$grouped->isEmpty())
         <div class="card pd-30 mg-b-30">
 
             {{ $vars->appends(Request::except('page'))->onEachSide(1)->links('vendor.pagination.slim-simple') }}
@@ -85,6 +86,11 @@ Laporan Aktivitas
             {{ $vars->appends(Request::except('page'))->onEachSide(1)->links('vendor.pagination.slim-simple') }}
 
         </div>
+        @else
+        <div class="alert alert-danger pd-30 mg-b-30" role="alert">
+            <strong>Hasil pencarian tidak ditemukan!</strong> Silahkan ulangi dan ganti parameter pencarian Anda.
+        </div>
+        @endif
     </div>
 
     <div class="col-lg-4">

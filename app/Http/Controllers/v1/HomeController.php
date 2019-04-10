@@ -27,7 +27,7 @@ class HomeController extends Controller
                 'ga_code','ga_nama_gapi','ga_kab_gapi',
                 'ga_prov_gapi','ga_koter_gapi','ga_elev_gapi',
                 'ga_lon_gapi','ga_lat_gapi','ga_status')
-            ->whereNotIn('ga_code',['TEO','SBG'])
+            ->whereNotIn('ga_code',['TEO'])
             ->orderBy('ga_nama_gapi','asc')
             ->get();
         });
