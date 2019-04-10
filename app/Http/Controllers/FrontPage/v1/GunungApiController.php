@@ -60,7 +60,7 @@ class GunungApiController extends Controller
                 ->where('ga_code',$code)
                 ->firstOrFail();
 
-        $vens = Cache::remember('v1/home/vens-filtered-'.$ven->erupt_id.'-page-'.$page.'-'.$code, 120, function() use($code) {
+        $vens = Cache::remember('v1/home/vens:filtered:'.$ven->erupt_id.':'.$page.':'.$code, 120, function() use($code) {
             return MagmaVen::with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea,ga_elev_gapi','user:vg_nip,vg_nama')
                     ->where('ga_code',$code)
                     ->orderBy('erupt_tgl','desc')
@@ -72,7 +72,7 @@ class GunungApiController extends Controller
 
     protected function nonFilteredVen($ven, $page)
     {
-        $vens = Cache::remember('v1/home/vens-'.$ven->erupt_id.'-page-'.$page, 120, function() {
+        $vens = Cache::remember('v1/home/vens:'.$ven->erupt_id.':'.$page, 120, function() {
             return MagmaVen::with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea,ga_elev_gapi','user:vg_nip,vg_nama')
                     ->orderBy('erupt_tgl','desc')
                     ->paginate(15);
@@ -98,7 +98,7 @@ class GunungApiController extends Controller
         $start = strtotime($request->start);
         $end = strtotime($request->end);
 
-        $vars = Cache::remember('v1/home/vars-search:'.$code.':'.$start.':'.$end.':'.$page, 30, function () use($request) {
+        $vars = Cache::remember('v1/home/vars:search:'.$page.':'.$code.':'.$start.':'.$end, 120, function () use($request) {
                 return MagmaVar::with('gunungapi:ga_code,ga_zonearea')
                         ->where('ga_code',$request->code)
                         ->whereBetween('var_data_date',[$request->start,$request->end])
@@ -107,7 +107,7 @@ class GunungApiController extends Controller
                         ->paginate(10);
         });
 
-        $grouped = Cache::remember('v1/home/vars-grouped-search:'.$code.':'.$start.':'.$end.':'.$page, 30, function () use ($vars) {
+        $grouped = Cache::remember('v1/home/vars:grouped:search:'.$page.':'.$code.':'.$start.':'.$end, 120, function () use ($vars) {
             $grouped = $vars->groupBy('data_date');
             $grouped->each(function ($vars, $key) {
                 $vars->transform(function ($var, $key) {
@@ -141,14 +141,14 @@ class GunungApiController extends Controller
         $last = MagmaVar::select('no')->orderBy('no','desc')->first();
         $page = $request->has('page') ? $request->page : 1;
 
-        $vars = Cache::remember('v1/home/vars-'.$last->no.'-page-'.$page, 30, function () {
+        $vars = Cache::remember('v1/home/vars:'.$last->no.':'.$page, 120, function () {
                 return MagmaVar::with('gunungapi:ga_code,ga_zonearea')
                         ->orderBy('var_data_date','desc')
                         ->orderBy('no','desc')
                         ->simplePaginate(10);
         });
 
-        $grouped = Cache::remember('v1/home/vars-grouped-'.$last->no.'-page-'.$page, 30, function () use ($vars) {
+        $grouped = Cache::remember('v1/home/vars:grouped:'.$last->no.':'.$page, 120, function () use ($vars) {
             $grouped = $vars->groupBy('data_date');
             $grouped->each(function ($vars, $key) {
                 $vars->transform(function ($var, $key) {
@@ -203,7 +203,7 @@ class GunungApiController extends Controller
 
         $page = $request->has('page') ? $request->page : 1;
 
-        $records = Cache::remember('v1/home/vens-records-'.$ven->erupt_id, 60, function() {
+        $records = Cache::remember('v1/home/vens:records:'.$ven->erupt_id, 60, function() {
             return MagmaVen::with('gunungapi:ga_code,ga_nama_gapi')
                 ->select('ga_code')
                 ->distinct('ga_code')
@@ -216,7 +216,7 @@ class GunungApiController extends Controller
 
         $grouped = $vens->groupBy('erupt_tgl');
 
-        $counts = Cache::remember('v1/home/vens-count-'.$ven->erupt_id, 120, function () {
+        $counts = Cache::remember('v1/home/vens:count:'.$ven->erupt_id, 120, function () {
             return MagmaVen::with('gunungapi:ga_code,ga_nama_gapi')
                     ->select('ga_code','erupt_tgl', DB::raw('count(*) as total'))
                     ->where('erupt_tgl','like','%'.now()->format('Y').'%')
@@ -252,7 +252,7 @@ class GunungApiController extends Controller
     public function showVar($id)
     {
 
-        $vars = Cache::remember('v1/home/var-show-'.$id, 20, function() use ($id) {
+        $vars = Cache::remember('v1/home/var:show:'.$id, 120, function() use ($id) {
             return MagmaVar::with('gunungapi:ga_code,ga_kab_gapi,ga_prov_gapi,ga_lat_gapi,ga_lon_gapi,ga_elev_gapi,ga_zonearea')
                     ->whereNo($id)
                     ->firstOrFail();
