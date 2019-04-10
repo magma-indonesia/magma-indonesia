@@ -19,13 +19,13 @@
                     </ul>
                 </div>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {{ active('v1.press.index') }}">
                 <a class="nav-link" href="{{ route('v1.press.index') }}">
                     <i class="icon ion-ios-bookmarks-outline"></i>
                     <span>Press Release </span>
                 </a>
             </li>
-            <li class="nav-item with-sub">
+            <li class="nav-item with-sub {{ active(['v1.gunungapi.ven','v1.gunungapi.var']) }}">
                 <a class="nav-link" href="#">
                     <i class="icon icon-volcano-warning"></i>
                     <span>Gunung Api </span>
@@ -37,14 +37,14 @@
                     </ul>
                 </div>
             </li>
-            <li class="nav-item with-sub">
+            <li class="nav-item with-sub {{ active('v1.gertan.sigertan') }}">
                 <a class="nav-link" href="#">
                     <i class="icon icon-landslide"></i>
                     <span>Gerakan Tanah </span>
                 </a>
                 <div class="sub-item">
                     <ul>
-                        <li><a href="#">COMING SOON!</a></li>
+                        <li><a href="{{ route('v1.gertan.sigertan') }}">Tanggapan Kejadian</a></li>
                     </ul>
                 </div>
             </li>
