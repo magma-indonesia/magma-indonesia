@@ -3,6 +3,7 @@
 namespace App\v1;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 use Indonesia;
 
 class GertanCrs extends Model
@@ -16,6 +17,10 @@ class GertanCrs extends Model
     protected $dates = ['crs_log'];
 
     protected $table = 'magma_crs';
+
+    protected $appends = [
+        'date'
+    ];
 
     protected $fillable = [
         'crs_usr',
@@ -46,6 +51,11 @@ class GertanCrs extends Model
         'lat_usr',
         'long_usr'
     ];
+
+    public function getDateAttribute()
+    {
+        return Carbon::createFromFormat('Y-m-d H:i:s' ,$this->attributes['crs_log'])->format('Y-m-d');
+    }
     
     public function getCrsPrvAttribute($value)
     {

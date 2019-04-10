@@ -35,6 +35,12 @@ Route::name('v1.')->group(function () {
         Route::get('gunung-api/laporan/search/{q?}','FrontPage\v1\GunungApiController@indexVar')
             ->name('gunungapi.var.search');
 
+        Route::get('gerakan-tanah/tanggapan','FrontPage\v1\GerakanTanahController@indexGertan')
+            ->name('gertan.sigertan');
+        Route::get('gerakan-tanah/tanggapan/{id?}','FrontPage\v1\GerakanTanahController@showGertan')
+            ->name('gertan.sigertan.show')
+            ->middleware('signed');
+
         Route::name('json.')->group(function () {
             Route::group(['prefix' => 'json'], function () {
                 Route::post('var','v1\Json\MapController@showVar')->name('var.show');
