@@ -16,6 +16,7 @@ Route::group(['middleware' => ['web','guest']], function () {
 Route::name('v1.')->group(function () {
     Route::group(['prefix' => 'v1'], function () {
         Route::get('/','v1\HomeController@index')->name('home');
+
         Route::get('vona','FrontPage\v1\VonaController@index')->name('vona.index');
         Route::get('vona/{id}','FrontPage\v1\VonaController@show')
             ->name('vona.show')
@@ -26,14 +27,16 @@ Route::name('v1.')->group(function () {
             ->name('press.show')
             ->middleware('signed');
 
-        Route::get('gunung-api/informasi-letusan/{code?}','FrontPage\v1\GunungApiController@indexVen')->name('gunungapi.ven');
+        Route::get('gunung-api/informasi-letusan/{code?}','FrontPage\v1\GunungApiController@indexVen')
+            ->name('gunungapi.ven');
         Route::get('gunung-api/laporan','FrontPage\v1\GunungApiController@indexVar')
             ->name('gunungapi.var');
         Route::get('gunung-api/laporan/{id?}','FrontPage\v1\GunungApiController@showVar')
             ->name('gunungapi.var.show')
             ->middleware('signed');
         Route::get('gunung-api/laporan/search/{q?}','FrontPage\v1\GunungApiController@indexVar')
-            ->name('gunungapi.var.search');
+            ->name('gunungapi.var.search')
+            ->middleware('throttle:15,1');
 
         Route::get('gerakan-tanah/tanggapan','FrontPage\v1\GerakanTanahController@indexGertan')
             ->name('gertan.sigertan');
