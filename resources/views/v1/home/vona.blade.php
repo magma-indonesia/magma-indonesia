@@ -16,7 +16,7 @@ VONA
 @section('main')
 <div class="row row-sm row-timeline">
     <div class="col-lg-9">
-        <div class="card mg-b-20">
+        <div class="card pd-30 mg-b-20">
             <div class="card-body">
                 <h5 class="card-title tx-dark tx-medium mg-b-10">What is VONA?</h5>
                 <p class="card-text tx-thin"><b>VONA stands for Volcano Observatory Notice for Aviation</b>. It issues reports for changes, both increases and decreases, in volcanic activities, providing a description on the nature of the unrest or eruption, potential or current hazards as well as likely outcomes. See the following link (USGS) for further details. The Center for Volcanology and Geological Hazard Mitigation (CVGHM) under the Geological Agency of the Indonesian Ministry of Energy and Mineral Resources produced VONA's reports based on analysis of data from the agency's monitoring networks as well as from direct observations. VONA's alert levels are color-coded to indicate the different types of notifications addressing specific informative needs. The reports are disseminated via email to national and international stakeholders in the aviation sector. Other interested parties can avail of them through email subscription. All notifications are publicly available online.</p>
