@@ -85,11 +85,13 @@
                 <ul class="dropdown-menu calcite-bg-custom" style="background-color: rgb(0, 127, 255, 0.8);">
                     <li><a role="button" data-target="#modalSplash" data-toggle="modal" aria-haspopup="true"><span class="glyphicon glyphicon-info-sign"></span> Tentang MAGMA</a></li>
                     <li><a role="button" data-target="#modalSources" data-toggle="modal" data-dismiss="modal" aria-haspopup="true"><span class="glyphicon glyphicon-info-sign"></span> Sumber Data</a></li>
+                    <li><a role="button" data-target="#panelVolcanoes" aria-haspopup="true"><span class="glyphicon glyphicon-search"></span> Cari Gunung Api</a></li>
                     <li><a role="button" data-target="#panelInfo" aria-haspopup="true"><span class="glyphicon glyphicon-tasks"></span> Status Gunung Api</a></li>
-                    <li><a role="button" data-target="#panelVolcanoes" aria-haspopup="true"><span class="glyphicon glyphicon-th-list"></span> Gunung Api</a></li>
-                    <li class="visible-xs"><a href="{{ route('v1.vona.index') }}"><span class="glyphicon glyphicon-th-list"></span> VONA</a></li>
+                    <li class="visible-xs"><a href="{{ route('v1.gunungapi.var') }}"><span class="glyphicon glyphicon-stats"></span> Laporan Gunung Api</a></li>
                     <li class="visible-xs"><a href="{{ route('v1.gunungapi.ven') }}"><span class="glyphicon glyphicon-th-list"></span> Informasi Letusan</a></li>
-                    <li class="visible-xs"><a href="{{ route('v1.press.index') }}"><span class="glyphicon glyphicon-th-list"></span> Press Release</a></li>
+                    <li class="visible-xs"><a href="{{ route('v1.vona.index') }}"><span class="glyphicon glyphicon-plane"></span> VONA</a></li>
+                    <li class="visible-xs"><a href="{{ route('v1.gertan.sigertan') }}"><span class="glyphicon glyphicon-equalizer"></span> Gerakan Tanah</a></li>
+                    <li class="visible-xs"><a href="{{ route('v1.press.index') }}"><span class="glyphicon glyphicon-new-window"></span> Press Release</a></li>
                     <li><a role="button" data-target="#panelBasemaps" aria-haspopup="true"><span class="glyphicon glyphicon-th-large"></span> Basemaps</a></li>
                     <li><a role="button" id="calciteToggleNavbar" aria-haspopup="true"><span class="glyphicon glyphicon-fullscreen"></span> Full Map</a></li>
                 </ul>
@@ -99,14 +101,16 @@
             <div class="calcite-title calcite-overflow-hidden">
                 <a href="https://www.esdm.go.id/" target="_blank"><img src="{{ asset('logo-esdm.png') }}" style="height:24px;"></a>
                 <img src="{{ asset('favicon.png') }}" style="height:24px;margin-left:15px;">
-                <span class="calcite-title-main" style="margin-left:15px;"> MAGMA Indonesia</span>
+                <span class="calcite-title-main" style="margin-left:15px;"><a class="calcite-title-main" href="{{ route('v1.home') }}">MAGMA Indonesia</a></span>
                 <span class="calcite-title-sub hidden-xs" style="margin-left:15px;">Bridging the will of nature to society</span>
                 <span class="calcite-title-divider hidden-xs"></span>
-                {{-- <span class="calcite-title-sub hidden-xs"><a role="button" data-target="#panelVolcanoes" aria-haspopup="true">Gunung Api</a></span> --}}
-                {{-- <span class="calcite-title-divider hidden-xs"></span> --}}
-                <span class="calcite-title-sub hidden-xs"><a href="{{ route('v1.vona.index') }}">VONA</a></span>
+                <span class="calcite-title-sub hidden-xs"><a href="{{ route('v1.gunungapi.var') }}">Aktivitas Gunung Api</a></span>
                 <span class="calcite-title-divider hidden-xs"></span>
                 <span class="calcite-title-sub hidden-xs"><a href="{{ route('v1.gunungapi.ven') }}">Informasi Letusan</a></span>
+                <span class="calcite-title-divider hidden-xs"></span>
+                <span class="calcite-title-sub hidden-xs"><a href="{{ route('v1.vona.index') }}">VONA</a></span>
+                <span class="calcite-title-divider hidden-xs"></span>
+                <span class="calcite-title-sub hidden-xs"><a href="{{ route('v1.gertan.sigertan') }}">Tanggapan Gerakan Tanah</a></span>
                 <span class="calcite-title-divider hidden-xs"></span>
                 <span class="calcite-title-sub hidden-xs"><a href="{{ route('v1.press.index') }}">Press Release</a></span>
             </div>
