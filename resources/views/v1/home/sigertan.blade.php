@@ -49,7 +49,7 @@ Tanggapan Kejadian
                         <small>{{ $gertan->updated_at->format('H:i:s').' WIB' }}</small>
                     </div>
                     <div class="timeline-body">
-                        <p class="timeline-title d-none d-md-block"><a>{{ $gertan->judul }}</a></p>
+                        <p class="timeline-title"><a>{{ $gertan->judul }}</a></p>
                         <p class="timeline-author">Tanggapan dibuat oleh <a href="#"> {{ $gertan->pelapor }} </a><span class="visible-md visible-lg">, pada {{ $gertan->updated_at->format('H:i:s').' WIB' }}</span></p>
                         <div class="card pd-30">
                             <div class="row no-gutters">
