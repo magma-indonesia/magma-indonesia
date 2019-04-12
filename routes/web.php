@@ -43,6 +43,9 @@ Route::name('v1.')->group(function () {
         Route::get('gerakan-tanah/tanggapan/{id?}','FrontPage\v1\GerakanTanahController@showGertan')
             ->name('gertan.sigertan.show')
             ->middleware('signed');
+        Route::get('gerakan-tanah/tanggapan/search/{q?}','FrontPage\v1\GerakanTanahController@indexGertan')
+            ->name('gertan.sigertan.search')
+            ->middleware('throttle:15,1');
 
         Route::name('json.')->group(function () {
             Route::group(['prefix' => 'json'], function () {

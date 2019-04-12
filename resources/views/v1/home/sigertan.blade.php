@@ -81,5 +81,78 @@ Tanggapan Kejadian
         </div>
         @endif
     </div>
+
+    <div class="col-lg-4">
+        <div class="card card-connection">
+            <label class="slim-card-title">Filter Data Laporan</label>
+            <p>Cari data laporan dan tanggapan kejadian gerakan tanah</p>
+            <form class="form-layout" role="form" method="GET" action="{{ route('v1.gertan.sigertan.search',['q' => 'q'])}}">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label class="form-control-label">Pilih Tanggal Awal: <span class="tx-danger">*</span></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                    <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
+                                    </div>
+                                </div>
+                                <input id="start" value="{{ now()->subDays(7)->format('Y-m-d') }}" name="start" type="text" class="form-control fc-datepicker" placeholder="{{ now()->subDays(7)->format('Y-m-d') }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label">Pilih Tanggal Akhir: <span class="tx-danger">*</span></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                    <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
+                                    </div>
+                                </div>
+                                <input id="end" value="{{ now()->format('Y-m-d') }}" name="end" type="text" class="form-control fc-datepicker" placeholder="{{ now()->format('Y-m-d') }}">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <button type="submit" class="form-control btn btn-primary btn-block mg-b-10">Cari</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="mg-t-20">
+            @include('includes.slim-sosmed')
+        </div>
+    </div>
 </div>    
+@endsection
+
+@section('add-vendor-script')
+<script src="{{ asset('slim/lib/moment/js/moment.js') }}"></script>
+<script src="{{ asset('slim/lib/jquery-ui/js/jquery-ui.js') }}"></script>
+<script src="{{ asset('slim/lib/select2/js/select2.full.min.js') }}"></script>
+@endsection
+
+@section('add-script')
+<script>
+$(function(){
+    'use strict'
+
+    // Datepicker
+    $('.fc-datepicker').datepicker({
+        constrainInput: true,
+        dateFormat: 'yy-mm-dd',
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        maxDate: 0,
+        minDate: new Date(2018, 1 - 1, 1)
+    });
+
+    $('#start').datepicker({
+        defaultDate: -7
+    });
+
+});
+</script>
 @endsection
