@@ -98,7 +98,7 @@ Laporan Aktivitas
             <label class="slim-card-title">Filter Data Laporan</label>
             <p>Cari data laporan gunung api</p>
             <form class="form-layout" role="form" method="GET" action="{{ route('v1.gunungapi.var.search',['q' => 'q']) }}">
-                <div class="row mg-b-25">
+                <div class="row">
                     <div class="col-lg-12">
                         <div class="form-group mg-t-10">
                             <label class="form-control-label">Gunung Api: <span class="tx-danger">*</span></label>
@@ -143,6 +143,10 @@ Laporan Aktivitas
                 </div>
             </form>
         </div>
+
+        <div class="mg-t-20">
+            @include('includes.slim-sosmed')
+        </div>
     </div>
 </div>
 @endsection
@@ -170,10 +174,6 @@ $(function(){
 
     $('#start').datepicker({
         defaultDate: -7
-    });
-
-    $('.select2-show-search').select2({
-        minimumResultsForSearch: ''
     });
 
 });

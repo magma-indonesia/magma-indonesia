@@ -56,10 +56,6 @@ class GunungApiController extends Controller
 
     protected function filteredVen($code, $ven, $page)
     {
-        MagmaVen::select('ga_code')
-                ->where('ga_code',$code)
-                ->firstOrFail();
-
         $vens = Cache::remember('v1/home/vens:filtered:'.$ven->erupt_id.':'.$page.':'.$code, 120, function() use($code) {
             return MagmaVen::with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea,ga_elev_gapi','user:vg_nip,vg_nama')
                     ->where('ga_code',$code)
@@ -138,10 +134,12 @@ class GunungApiController extends Controller
 
     protected function nonFilteredVar($request)
     {
-        $last = MagmaVar::select('no')->orderBy('no','desc')->first();
+        $last = MagmaVar::select('no','var_log')->orderBy('no','desc')->first();
         $page = $request->has('page') ? $request->page : 1;
 
-        $vars = Cache::remember('v1/home/vars:'.$last->no.':'.$page, 120, function () {
+        $date = strtotime($last->var_log);
+
+        $vars = Cache::remember('v1/home/vars:'.$last->no.':'.$page.':'.$date, 120, function () {
                 return MagmaVar::with('gunungapi:ga_code,ga_zonearea')
                         ->orderBy('var_data_date','desc')
                         ->orderBy('no','desc')
