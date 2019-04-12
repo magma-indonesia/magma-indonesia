@@ -1,16 +1,16 @@
 <div class="slim-navbar">
     <div class="container">
         <ul class="nav">
-            <li class="nav-item">
+            <li class="nav-item nav-item-10">
                 <a class="nav-link" href="{{ route('v1.home') }}">
                     <i class="icon ion-map"></i>
-                    <span>Peta </span>
+                    <span class="d-none d-xl-block">Peta </span>
                 </a>
             </li>
-            <li class="nav-item with-sub {{ active(['v1.gunungapi.ven','v1.gunungapi.var']) }}">
+            <li class="nav-item nav-item-15 with-sub {{ active(['v1.gunungapi.ven','v1.gunungapi.var']) }}">
                 <a class="nav-link" href="#">
                     <i class="icon icon-volcano-warning"></i>
-                    <span>Gunung Api </span>
+                    <span class="d-none d-xl-block">Gunung Api </span>
                 </a>
                 <div class="sub-item">
                     <label class="label-section">Informasi</label>
@@ -25,10 +25,10 @@
                     </ul>
                 </div>
             </li>
-            <li class="nav-item with-sub {{ active('v1.gertan.sigertan') }}">
+            <li class="nav-item nav-item-20 with-sub {{ active('v1.gertan.sigertan') }}">
                 <a class="nav-link" href="#">
                     <i class="icon icon-landslide"></i>
-                    <span>Gerakan Tanah </span>
+                    <span class="d-none d-xl-block">Gerakan Tanah </span>
                 </a>
                 <div class="sub-item">
                     <ul>
@@ -36,21 +36,21 @@
                     </ul>
                 </div>
             </li>
-            <li class="nav-item with-sub">
+            <li class="nav-item nav-item-30 with-sub {{ active('v1.gempabumi.roq') }}">
                 <a class="nav-link" href="#">
                     <i class="icon icon-earthquake"></i>
-                    <span>Gempa Bumi </span>
+                    <span class="d-none d-xl-block">Gempa Bumi dan Tsunami</span>
                 </a>
                 <div class="sub-item">
                     <ul>
-                        <li><a href="#">COMING SOON!</a></li>
+                        <li><a href="{{ route('v1.gempabumi.roq') }}">Tanggapan Kejadian</a></li>
                     </ul>
                 </div>
             </li>
-            <li class="nav-item with-sub {{ active('v1.vona.index') }}">
+            <li class="nav-item nav-item-10 with-sub {{ active('v1.vona.index') }}">
                 <a class="nav-link" href="#">
                     <i class="icon ion-plane"></i>
-                    <span>VONA </span>
+                    <span class="d-none d-xl-block">VONA </span>
                 </a>
                 <div class="sub-item">
                     <ul>
@@ -59,10 +59,10 @@
                     </ul>
                 </div>
             </li>
-            <li class="nav-item {{ active('v1.press.index') }}">
+            <li class="nav-item nav-item-15 {{ active('v1.press.index') }}">
                 <a class="nav-link" href="{{ route('v1.press.index') }}">
                     <i class="icon ion-ios-bookmarks-outline"></i>
-                    <span>Press Release </span>
+                    <span class="d-none d-xl-block">Press Release </span>
                 </a>
             </li>
         </ul>

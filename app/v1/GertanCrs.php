@@ -14,7 +14,7 @@ class GertanCrs extends Model
 
     protected $primaryKey = 'idx';
 
-    protected $dates = ['crs_log'];
+    protected $dates = ['crs_log','crs_dtm'];
 
     protected $table = 'magma_crs';
 

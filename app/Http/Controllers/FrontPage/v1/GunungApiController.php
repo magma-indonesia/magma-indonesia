@@ -234,7 +234,7 @@ class GunungApiController extends Controller
                     ->get();
         });
 
-        $q == 'q' ? $this->filteredVar($request)
+        $q === 'q' ? $this->filteredVar($request)
                 : $this->nonFilteredVar($request);
 
         $vars = $this->getVars();

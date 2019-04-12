@@ -1,11 +1,11 @@
 @extends('layouts.slim') 
 
 @section('title')
-Tanggapan Kejadian Gerakan Tanah
+Tanggapan Kejadian Gempa Bumi
 @endsection
  
 @section('breadcrumb')
-<li class="breadcrumb-item"><a>Gerakan Tanah</a></li>
+<li class="breadcrumb-item"><a>Gempa Bumi dan Tsunami</a></li>
 <li class="breadcrumb-item active" aria-current="page">Tanggapan Kejadian</li>
 @endsection
 
@@ -18,10 +18,10 @@ Tanggapan Kejadian
     <div class="col-lg-8">
         @if (!$grouped->isEmpty())
         <div class="card pd-30 mg-b-30">
-            {{ $gertans->appends(Request::except('page'))->onEachSide(1)->links('vendor.pagination.slim-simple') }}
+            {{ $gempas->appends(Request::except('page'))->onEachSide(1)->links('vendor.pagination.slim-simple') }}
 
             <div class="timeline-group mg-t-20 mg-b-20">
-                @foreach ($grouped as $date => $grouped_gertans)
+                @foreach ($grouped as $date => $grouped_gempas)
 
                 @if ($date != now()->format('Y-m-d'))
                 <div class="timeline-item timeline-day">
@@ -39,50 +39,51 @@ Tanggapan Kejadian
                 </div>
                 @endif
 
-                @foreach ($grouped_gertans as $gertan)
+                @foreach ($grouped_gempas as $roq)
                 <div class="timeline-item">
                     <div class="timeline-time d-none d-md-block">
-                        <small>{{ $gertan->updated_at->format('H:i:s').' WIB' }}</small>
+                        <small>{{ $roq->waktu->format('H:i:s').' WIB' }}</small>
                     </div>
                     <div class="timeline-body">
-                        <p class="timeline-title"><a>{{ $gertan->judul }}</a></p>
-                        <p class="timeline-author">Tanggapan dibuat oleh <a href="#">{{ $gertan->pelapor }}</a><span class="visible-md visible-lg">, {{ $gertan->updated_at->formatLocalized('%d %B %Y').' pukul '.$gertan->updated_at->format('H:i:s').' WIB' }}</span></p>
+                        <p class="timeline-title"><a>{{ $roq->judul }}</a></p>
+                        <p class="timeline-author">Tanggapan dibuat oleh <a href="#">{{ $roq->pelapor }}</a><span class="visible-md visible-lg">, {{ $roq->waktu->formatLocalized('%d %B %Y').' pukul '.$roq->waktu->format('H:i:s').' WIB' }}</span></p>
                         <div class="card pd-30">
                             <div class="row no-gutters">
                                 <div class="col-xs-12 col-md-10">
-                                    <label class="slim-card-title">Lokasi dan Waktu Kejadian:</label>
-                                    <p class="blog-text">{{ $gertan->deskripsi }}</p>
-                                    @if ($gertan->kerentanan)
-                                    <p class="blog-text">{{ $gertan->kerentanan }}</p>
-                                    @endif
-                                    @if ($gertan->rekomendasi)
+                                    <label class="slim-card-title">Deskripsi Kejadian:</label>
+                                    <p class="blog-text">{{ $roq->pendahuluan }}</p>
                                     <label class="slim-card-title">Rekomendasi:</label>
-                                    <p class="blog-text">{{ $gertan->rekomendasi }}</p>
-                                    @endif
-                                    <a href="{{ URL::signedRoute('v1.gertan.sigertan.show', ['id' => $gertan->id]) }}" class="card-link">Lihat Detail</a>
+                                    <p class="blog-text">{!! $roq->rekomendasi !!}</p>
+                                    <p class="blog-text">
+                                        <span class="badge badge-warning pd-10 mg-t-10">{{ $roq->magnitude }}</span>
+                                        @if ($roq->intensitas AND ($roq->intensitas != '-belum ada keterangan-'))
+                                        <span class="badge badge-primary pd-10 mg-t-10">{{ $roq->intensitas }}</span>
+                                        @endif
+                                        <span class="badge badge-primary pd-10 mg-t-10">{{ $roq->tsunami }}</span>
+                                    </p>
+                                    <p class="blog-text"><a class="mg-t-20" href="{{ URL::signedRoute('v1.gempabumi.roq.show', ['id' => $roq->id]) }}" class="card-link">Lihat Detail</a></p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 @endforeach
-
+                    
                 @endforeach
             </div>
-            {{ $gertans->appends(Request::except('page'))->onEachSide(1)->links('vendor.pagination.slim-simple') }}
+            
+            {{ $gempas->appends(Request::except('page'))->onEachSide(1)->links('vendor.pagination.slim-simple') }}
         </div>
         @else
-        <div class="alert alert-danger pd-30 mg-b-30" role="alert">
-            <strong>Hasil pencarian tidak ditemukan!</strong> Silahkan ulangi dan ganti parameter pencarian Anda.
-        </div>
+
         @endif
     </div>
 
     <div class="col-lg-4">
         <div class="card card-connection">
             <label class="slim-card-title">Filter Data Laporan</label>
-            <p>Cari data laporan dan tanggapan kejadian gerakan tanah</p>
-            <form class="form-layout" role="form" method="GET" action="{{ route('v1.gertan.sigertan.search',['q' => 'q'])}}">
+            <p>Cari data laporan dan tanggapan kejadian gempa bumi dan tsunami</p>
+            <form class="form-layout" role="form" method="GET" action="{{ route('v1.gempabumi.roq.search',['q' => 'q'])}}">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="form-group">
@@ -121,7 +122,7 @@ Tanggapan Kejadian
             @include('includes.slim-sosmed')
         </div>
     </div>
-</div>    
+</div>
 @endsection
 
 @section('add-vendor-script')

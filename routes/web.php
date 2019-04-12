@@ -47,6 +47,15 @@ Route::name('v1.')->group(function () {
             ->name('gertan.sigertan.search')
             ->middleware('throttle:15,1');
 
+        Route::get('gempa-bumi-dan-tsunami/tanggapan','FrontPage\v1\GempaBumiController@indexGempa')
+            ->name('gempabumi.roq');
+        Route::get('gempa-bumi-dan-tsunami/tanggapan/{id?}','FrontPage\v1\GempaBumiController@showGempa')
+            ->name('gempabumi.roq.show')
+            ->middleware('signed');
+        Route::get('gempa-bumi-dan-tsunami/tanggapan/search/{q?}','FrontPage\v1\GerakanTanahController@indexGertan')
+            ->name('gempabumi.roq.search')
+            ->middleware('throttle:15,1');
+
         Route::name('json.')->group(function () {
             Route::group(['prefix' => 'json'], function () {
                 Route::post('var','v1\Json\MapController@showVar')->name('var.show');
