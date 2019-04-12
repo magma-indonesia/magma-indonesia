@@ -101,7 +101,7 @@ class HighCharts extends Controller
 
     protected function getData($ga_code)
     {
-        $graph = Cache::remember('v1/home/json/var-show-'.$ga_code, 30, function() use($ga_code) {
+        $graph = Cache::remember('v1/home/json/highcharts:var:show:'.$ga_code, 30, function() use($ga_code) {
             return MagmaVarOptimize::select(
                 'var_lts','var_apl','var_gug','var_apg','var_hbs',
                 'var_tre','var_tor','var_lof','var_hyb','var_vtb',
@@ -141,7 +141,7 @@ class HighCharts extends Controller
     public function homeGempaThreeMonths(Request $request)
     {
         $id = $request->id;
-        $vars = Cache::remember('v1/home/var-show-'.$id, 20, function() use ($id) {
+        $vars = Cache::remember('v1/home/highcharts:var:show:'.$id, 20, function() use ($id) {
             return MagmaVar::with('gunungapi:ga_code,ga_kab_gapi,ga_prov_gapi,ga_lat_gapi,ga_lon_gapi,ga_elev_gapi,ga_zonearea')
                     ->whereNo($id)
                     ->firstOrFail();
