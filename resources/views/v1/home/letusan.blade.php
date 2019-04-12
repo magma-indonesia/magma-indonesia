@@ -30,23 +30,25 @@ Informasi Letusan
 
         <div class="card pd-30">
             {{ $vens->appends(Request::except('page'))->onEachSide(1)->links('vendor.pagination.slim-paginate') }}
-            <div class="timeline-group mg-t-20 mg-b-20">
-                <div class="timeline-item timeline-day">
-                    <div class="timeline-time"><small>{{ now() }} WIB</small></div>
-                    <div class="timeline-body">
-                        <p class="timeline-date">Hari Ini</p>
-                        <hr>
-                    </div>
-                </div>
-
+            <div class="timeline-group mg-t-20 mg-b-20">    
                 @foreach ($grouped as $date => $grouped_vens)
+
                 @if ($date != now()->format('Y-m-d'))
                 <div class="timeline-item timeline-day">
-                    <div class="timeline-time"><small>{{ $date }}</small></div>
-                    <div class="timeline-body">{{ \Carbon\Carbon::createFromFormat('Y-m-d', $date)->formatLocalized('%A, %d %B %Y').', '.
-                     \Carbon\Carbon::createFromFormat('Y-m-d', $date)->diffForHumans() }}</div>
+                    <div class="timeline-time"></div>
+                    <div class="timeline-body">
+                        <p class="timeline-date">{{ \Carbon\Carbon::createFromFormat('Y-m-d', $date)->formatLocalized('%A, %d %B %Y').', '.
+                     \Carbon\Carbon::createFromFormat('Y-m-d', $date)->diffForHumans() }}</p></div>
+                </div>
+                @else
+                <div class="timeline-item timeline-day">
+                    <div class="timeline-time">&nbsp;</div>
+                    <div class="timeline-body">
+                        <p class="timeline-date">Hari Ini, {{ now()->formatLocalized('%A, %d %B %Y') }}</p>
+                    </div>
                 </div>
                 @endif
+
                 @foreach($grouped_vens as $ven)
                 <div class="timeline-item">
                     <div class="timeline-time"><small>{{ $ven->erupt_jam.' '.$ven->gunungapi->ga_zonearea}} </small></div>
@@ -68,6 +70,7 @@ Informasi Letusan
                     </div>
                 </div>
                 @endforeach
+                
                 @endforeach
             </div>
             {{ $vens->appends(Request::except('page'))->onEachSide(1)->links('vendor.pagination.slim-paginate') }}
