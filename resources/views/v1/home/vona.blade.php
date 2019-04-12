@@ -23,19 +23,32 @@ VONA
                 <a href="https://volcanoes.usgs.gov/vhp/notifications.html" class="card-link">USGS</a>
             </div>
         </div>
+        @if (!$grouped->isEmpty())
         <div class="card pd-30">
-            <div class="mg-b-20">
+            <div class="mg-b-30">
                 {{ $vonas->appends(Request::except('page'))->onEachSide(1)->links('vendor.pagination.slim-paginate') }}
             </div>
             <div class="timeline-group">
+
+                @foreach ($grouped as $date => $grouped_vonas)
+
+                @if ($date != now()->format('Y-m-d'))
                 <div class="timeline-item timeline-day">
-                    <div class="timeline-time"><small>{{ now()->subHours(7) }} UTC</small></div>
+                    <div class="timeline-time">&nbsp;</div>
+                    <div class="timeline-body">
+                    <p class="timeline-date">{{ \Carbon\Carbon::createFromFormat('Y-m-d', $date)->format('jS \\of F Y')}}, {{ \Carbon\Carbon::createFromFormat('Y-m-d', $date)->diffForHumans()  }}</p>
+                     </div>
+                </div>
+                @else
+                <div class="timeline-item timeline-day">
+                    <div class="timeline-time">&nbsp;</div>
                     <div class="timeline-body">
                         <p class="timeline-date">Today</p>
-                        <hr>
                     </div>
                 </div>
-                @foreach ($vonas as $vona)
+                @endif
+
+                @foreach ($grouped_vonas as $vona)
                 <div class="timeline-item">
                     <div class="timeline-time"><small>{{ $vona->issued_time}} UTC</small>
                     @switch($vona->cu_avcode)
@@ -52,19 +65,27 @@ VONA
                             <a class="btn btn-sm btn-danger">Red</a>
                     @endswitch
                     </div>
+
                     <div class="timeline-body">
                         <p class="timeline-title"><a href="#">{{ $vona->ga_nama_gapi }} - {{ $vona->issued }}</a>&nbsp;
                         <p class="timeline-author"><a href="#">{{ $vona->nama }}</a>, {{ $vona->source }} - {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $vona->issued_time)->addHours(7)->diffForHumans() }} </p>
-                        <p class="timeline-text">{{ ucfirst($vona->volcanic_act_summ).' '.$vona->vc_height_text.' '.$vona->other_vc_info }}</p>
-                        <p class="tx-12 mg-b-0"><a class="btn btn-sm btn-outline-primary" href="{{ URL::signedRoute('v1.vona.show',['id' => $vona->no ]) }}">View</a></p>
+                        <p class="timeline-text">{{ ucfirst($vona->volcanic_act_summ).' '.$vona->vc_height_text.' '.$vona->other_vc_info }}.</p>
+                        <a class="card-link" href="{{ URL::signedRoute('v1.vona.show',['id' => $vona->no ]) }}">View</a>
                     </div>
                 </div>
                 @endforeach
+
+                @endforeach
             </div>
-            <div class="mg-t-20">
+            <div class="mg-t-30">
                 {{ $vonas->appends(Request::except('page'))->onEachSide(1)->links('vendor.pagination.slim-paginate') }}
             </div>
         </div>
+        @else
+        <div class="alert alert-danger pd-30 mg-b-30" role="alert">
+            <strong>No VONA found.</strong> Please check your search parameters.
+        </div>
+        @endif
     </div>
     <div class="col-lg-3 mg-t-20 mg-lg-t-0">
         <div class="card">
