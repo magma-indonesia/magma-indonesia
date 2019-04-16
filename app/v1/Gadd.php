@@ -64,5 +64,10 @@ class Gadd extends Model
                 ->orderBy('issued_time','desc')
                 ->limit(1);
     }
+
+    public function history()
+    {
+        return $this->hasOne('App\v1\History','ga_code','ga_code');
+    }
     
 }

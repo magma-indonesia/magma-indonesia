@@ -163,7 +163,11 @@ Route::name('v1.')->group(function () {
 
             Route::group(['prefix' => 'gunungapi'], function () {
 
-                Route::resource('data-dasar','v1\GaddController');
+                Route::resource('data-dasar','v1\GaddController', [
+                    'except' => [
+                        'create','store'
+                    ]
+                ]);
 
                 Route::get('laporan/filter','v1\MagmaVarController@filter')->name('laporan.filter');
                 

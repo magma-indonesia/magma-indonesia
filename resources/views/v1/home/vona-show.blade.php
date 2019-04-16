@@ -114,7 +114,7 @@ VONA - {{ $vona->ga_code }} {{ $vona->issued }}
                             <td>(15)</td>
                             <td><b>Contacts</b></td>
                             <td><b>:</b></td>
-                            <td>Center for Volcanology and Geological Hazard Mitigation (CVGHM).<br> Tel: +62-22-727-2606.<br> Facsimile: +62-22-720-2761.<br> email : vsi@vsi.esdm.go.id</td>
+                            <td>Center for Volcanology and Geological Hazard Mitigation (CVGHM).<br> Tel: +62-22-727-2606.<br> Facsimile: +62-22-720-2761.<br> email : pvmbg@esdm.go.id</td>
                         </tr>
                         <tr>
                             <td>(16)</td>

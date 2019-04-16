@@ -58,6 +58,7 @@
                                     <th>Koordinat (Lat,Lon)</th>
                                     <th>Morfologi</th>
                                     <th>Batuan Dominan</th>
+                                    <th style="min-width: 180px;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -73,6 +74,10 @@
                                     <td>{{ $gadd->ga_lat_gapi.', '.$gadd->ga_lon_gapi }}</td>
                                     <td>{{ $gadd->ga_morf_gapi ? $gadd->ga_morf_gapi : '-' }}</td>
                                     <td>{{ $gadd->ga_rtype_gapi ? $gadd->ga_rtype_gapi : '-' }}</td>
+                                    <td>
+                                        <a href="{{ route('chambers.v1.gunungapi.data-dasar.show',['id'=>$gadd->ga_code]) }}" class="m-t-xs m-b-xs btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">View</a>
+                                        <a href="{{ route('chambers.v1.gunungapi.data-dasar.edit',['id'=>$gadd->ga_code]) }}" class="m-t-xs m-b-xs btn btn-sm btn-warning btn-outline">Edit</a>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
