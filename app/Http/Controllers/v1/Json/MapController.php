@@ -136,7 +136,7 @@ class MapController extends Controller
                     ->where('ga_code',$ga_code)
                     ->whereBetween('log',[now()->subWeek(),now()])
                     ->orderBy('log','desc')
-                    ->firstOrFail();
+                    ->first();
 
         $var = Cache::remember('v1/json/show:var:'.$ga_code.':'.$var->var_log, 30, function() use($ga_code) {
             return OldVar::where('ga_code',$ga_code)
