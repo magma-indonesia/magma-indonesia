@@ -159,6 +159,7 @@ class GerakanTanahController extends Controller
 
     public function showGertan($id)
     {
+        
         return 'Coming Soon';
     }
 

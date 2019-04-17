@@ -335,7 +335,8 @@
             var ga_icon_b = L.Icon.extend({options: {iconSize: [48, 58],className:'gb-blinking'}});
             var erupt = L.Icon.extend({options: {iconSize: [48, 72]}});
             var gempa_icon = L.Icon.extend({options: {iconSize: [32, 39]}});
-            var gempa_icon_b = L.Icon.extend({options: {iconSize: [48, 58],className:'gb-blinking'}});
+            var gempa_icon_b = L.Icon.extend({options: {iconSize: [58, 58],className:'gb-blinking'}});
+            var gertan_icon_b = L.Icon.extend({options: {iconSize: [48, 58],className:'gb-blinking'}});
 
             here = new ga_icon({iconUrl: url+'/icon/here.png'}),
             ga_normal = new ga_icon({iconUrl: url+'/icon/1.png'}),
@@ -349,7 +350,7 @@
             icon_gertan = new ga_icon({iconUrl: url+'/icon/gt.png'}),
             icon_gertan_b = new ga_icon_b({iconUrl: url+'/icon/gt.png'}),
             icon_gertan_t = new gempa_icon({iconUrl: url+'/icon/gt-t.png'}),
-            icon_gertan_t_b = new gempa_icon_b({iconUrl: url+'/icon/gt-t.png'}),
+            icon_gertan_t_b = new gertan_icon_b({iconUrl: url+'/icon/gt-t.png'}),
             icon_gempa = new ga_icon({iconUrl: url+'/icon/gb.png'}),
             icon_gempa_b = new gempa_icon_b({iconUrl: url+'/icon/gb.png'}),
             icon_gempa_t = new gempa_icon({iconUrl: url+'/icon/gb-t.png'}),
