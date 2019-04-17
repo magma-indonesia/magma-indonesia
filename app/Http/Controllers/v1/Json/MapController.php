@@ -28,7 +28,7 @@ class MapController extends Controller
     {
         $id = $request ? $request->id : $id;
 
-        $roq = Cache::remember('v1/json/show-roq-'.$id, 60, function() use($id) {
+        $roq = Cache::remember('v1/json/show:roq-'.$id, 60, function() use($id) {
             return MagmaRoq::where('no',$id)->firstOrFail();
         });
 
@@ -68,7 +68,7 @@ class MapController extends Controller
     {
         $crs_id = $request ? $request->id : $id;
 
-        $gertan = Cache::remember('v1/json/show-sigertan-'.$crs_id, 60, function() use($crs_id) {
+        $gertan = Cache::remember('v1/json/show:sigertan:'.$crs_id, 60, function() use($crs_id) {
             return Crs::with('tanggapan')->where('crs_ids',$crs_id)->firstOrFail();
         });
 
@@ -138,14 +138,14 @@ class MapController extends Controller
                     ->orderBy('log','desc')
                     ->firstOrFail();
 
-        $var = Cache::remember('v1/json/show-var-'.$ga_code.'/'.$var->var_log, 30, function() use($ga_code) {
+        $var = Cache::remember('v1/json/show:var:'.$ga_code.':'.$var->var_log, 30, function() use($ga_code) {
             return OldVar::where('ga_code',$ga_code)
                     ->orderBy('var_noticenumber','desc')
                     ->firstOrFail();
         });
 
         if ($vona) {
-            $vona = Cache::remember('v1/json/show-vona-'.$ga_code.'/'.$vona->log, 30, function() use($ga_code) {
+            $vona = Cache::remember('v1/json/show:vona:'.$ga_code.':'.$vona->log, 30, function() use($ga_code) {
                 return Vona::select(
                     'issued','cu_avcode','volcanic_act_summ',
                     'vc_height_text','other_vc_info','remarks')
