@@ -138,14 +138,14 @@ class MapController extends Controller
                     ->orderBy('log','desc')
                     ->first();
 
-        $var = Cache::remember('v1/json/show:var:'.$ga_code.':'.$var->var_log, 30, function() use($ga_code) {
+        $var = Cache::remember('v1/json/show:var:'.$ga_code.':'.strtotime($var->var_log), 30, function() use($ga_code) {
             return OldVar::where('ga_code',$ga_code)
                     ->orderBy('var_noticenumber','desc')
                     ->firstOrFail();
         });
 
         if ($vona) {
-            $vona = Cache::remember('v1/json/show:vona:'.$ga_code.':'.$vona->log, 30, function() use($ga_code) {
+            $vona = Cache::remember('v1/json/show:vona:'.$ga_code.':'.strtotime($vona->log), 30, function() use($ga_code) {
                 return Vona::select(
                     'issued','cu_avcode','volcanic_act_summ',
                     'vc_height_text','other_vc_info','remarks')
