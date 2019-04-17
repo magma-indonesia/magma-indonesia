@@ -15,4 +15,7 @@ Pemahaman awal Laravel dalam mengembangkan MAGMA akan sangat membantu memahami b
 4. MySQL
 5. Composer
 6. Redis
-7. Node 
+7. Node
+
+# Demo
+Untuk demo bisa dilihat pada link berikut [MAGMA Indonesia v2](http://103.87.160.58/v1)
