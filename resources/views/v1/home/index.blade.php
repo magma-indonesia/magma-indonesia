@@ -385,16 +385,16 @@
             var layerLabels = null
 
             var latlongControl = L.control.coordinates({
-                position:"bottomright", //optional default "bootomright"
-                decimals:2, //optional default 4
-                decimalSeperator:".", //optional default "."
-                labelTemplateLat:"Latitude: {y}", //optional default "Lat: {y}"
-                labelTemplateLng:"Longitude: {x}", //optional default "Lng: {x}"
-                enableUserInput:false, //optional default true
-                useDMS:false, //optional default false
-                useLatLngOrder: true, //ordering of labels, default false-> lng-lat
-                markerType: L.marker, //optional default L.marker
-                markerProps: {} //optional default {},
+                position:"bottomright",
+                decimals:5,
+                decimalSeperator:".",
+                labelTemplateLat:"Lat: {y}",
+                labelTemplateLng:"Lon: {x}",
+                enableUserInput:false,
+                useDMS:false,
+                useLatLngOrder: true,
+                markerType: L.marker,
+                markerProps: {}
             });
 
             if (!(L.Browser.mobile)){
@@ -572,7 +572,7 @@
 
                 $.ajax({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    url: '{{ route('v1.json.var.show') }}',
+                    url: '{{ URL::signedRoute('v1.json.var.show') }}',
                     type: 'POST',
                     data: {ga_code:ga_code},
                     success: function(response) {
@@ -730,7 +730,7 @@
                     
                 $.ajax({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    url: '{{ route('v1.json.sigertan.show') }}',
+                    url: '{{ URL::signedRoute('v1.json.sigertan.show') }}',
                     type: 'POST',
                     data: {id:markerGertan},
                     success: function(response) {
@@ -836,7 +836,7 @@
                     
                 $.ajax({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    url: '{{ route('v1.json.gempa.show') }}',
+                    url: '{{ URL::signedRoute('v1.json.gempa.show') }}',
                     type: 'POST',
                     data: {id:markerGempa},
                     success: function(response) {

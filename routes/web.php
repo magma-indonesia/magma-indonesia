@@ -58,14 +58,24 @@ Route::name('v1.')->group(function () {
 
         Route::name('json.')->group(function () {
             Route::group(['prefix' => 'json'], function () {
-                Route::post('var','v1\Json\MapController@showVar')->name('var.show');
+                Route::post('var','v1\Json\MapController@showVar')
+                    ->name('var.show')
+                    ->middleware('signed');
                 Route::post('highcharts','v1\Json\HighCharts@homeGempaThreeMonths')
                     ->name('highcharts')
                     ->middleware('signed');
-                Route::post('gertan','v1\Json\MapController@showSigertan')->name('sigertan.show');
-                Route::post('gempa','v1\Json\MapController@showGempa')->name('gempa.show');
-                Route::get('has-vona','v1\Json\MapController@hasVona')->name('has.vona');
-                Route::get('has-eruptions','v1\Json\MapController@hasEruptions')->name('has.eruptions');
+                Route::post('gertan','v1\Json\MapController@showSigertan')
+                    ->name('sigertan.show')
+                    ->middleware('signed');
+                Route::post('gempa','v1\Json\MapController@showGempa')
+                    ->name('gempa.show')
+                    ->middleware('signed');
+                Route::post('has-vona','v1\Json\MapController@hasVona')
+                    ->name('has.vona')
+                    ->middleware('signed');
+                Route::post('has-eruptions','v1\Json\MapController@hasEruptions')
+                    ->name('has.eruptions')
+                    ->middleware('signed');
             });
         });
     });
