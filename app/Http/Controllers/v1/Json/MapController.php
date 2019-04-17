@@ -29,7 +29,7 @@ class MapController extends Controller
         $id = $request ? $request->id : $id;
 
         $roq = Cache::remember('v1/json/show-roq-'.$id, 60, function() use($id) {
-            return MagmaRoq::where('no',$id)->first();
+            return MagmaRoq::where('no',$id)->firstOrFail();
         });
 
         $data = [
@@ -69,7 +69,7 @@ class MapController extends Controller
         $crs_id = $request ? $request->id : $id;
 
         $gertan = Cache::remember('v1/json/show-sigertan-'.$crs_id, 60, function() use($crs_id) {
-            return Crs::with('tanggapan')->where('crs_ids',$crs_id)->first();
+            return Crs::with('tanggapan')->where('crs_ids',$crs_id)->firstOrFail();
         });
 
         $korban = $gertan->tanggapan->qls_kmd ? '<p>'.$gertan->tanggapan->qls_kmd.' korban meninggal dunia.</p>' : '';
@@ -129,19 +129,19 @@ class MapController extends Controller
         $ga_code = $request->ga_code;
         $var = OldVar::select('var_log')->where('ga_code',$ga_code)
                             ->orderBy('var_noticenumber','desc')
-                            ->first();
+                            ->firstOrFail();
 
         $vona = Vona::select('log')
                     ->where('sent',1)
                     ->where('ga_code',$ga_code)
                     ->whereBetween('log',[now()->subWeek(),now()])
                     ->orderBy('log','desc')
-                    ->first();
+                    ->firstOrFail();
 
         $var = Cache::remember('v1/json/show-var-'.$ga_code.'/'.$var->var_log, 30, function() use($ga_code) {
             return OldVar::where('ga_code',$ga_code)
                     ->orderBy('var_noticenumber','desc')
-                    ->first();
+                    ->firstOrFail();
         });
 
         if ($vona) {
@@ -153,13 +153,13 @@ class MapController extends Controller
                 ->where('type','REAL')
                 ->where('sent',1)
                 ->orderBy('log','desc')
-                ->first();
+                ->firstOrFail();
             });
         }
 
         $this->failed($var);
 
-        $gadd = Gadd::where('ga_code',$ga_code)->first();
+        $gadd = Gadd::where('ga_code',$ga_code)->firstOrFail();
 
         $asap = (object) [
             'wasap' => isset($var->var_wasap) ? $var->var_wasap->toArray() : [],
