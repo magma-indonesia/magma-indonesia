@@ -9,6 +9,7 @@ Laporan Aktivitas - {{ $var->gunungapi }}
 @endsection
     
 @section('breadcrumb')
+<li class="breadcrumb-item"><a href="#">Gunung Api</a></li>
 <li class="breadcrumb-item"><a href="#">Laporan Aktivitas</a></li>
 <li class="breadcrumb-item active" aria-current="page">{{ $var->gunungapi }}, {{ $var->tanggal_deskripsi }}</li>
 @endsection
