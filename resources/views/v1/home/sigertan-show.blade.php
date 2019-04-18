@@ -42,11 +42,11 @@
 						<img class="d-block img-fluid" src="{{ $foto->qls_sos }}" alt="{{ $foto->qls_ids }}">
 					</div>
 					@endif
-
 					@endforeach 
+
 					@foreach ($gertan->laporan->foto_kejadian as $foto)
-					<div class="carousel-item ht-250 ">
-						<img class="d-block img-fluid" src="{{ $foto->qls_fst }}" alt="{{ $foto->qls_ids }}">
+					<div class="carousel-item ht-250 {{ ($gertan->laporan->foto_sosialisasi->isEmpty() AND $loop->first) ? 'active' : ''}}">
+						<img class="d-block img-fluid" src="{{ $foto->qls_fst }}" alt="Kejadian {{ $foto->qls_ids }}">
 					</div>
 					@endforeach
 					<a class="carousel-control-prev" href="#carousel1" role="button" data-slide="prev">
