@@ -61,7 +61,7 @@ Route::name('v1.')->group(function () {
                 Route::post('var','v1\Json\MapController@showVar')
                     ->name('var.show')
                     ->middleware('signed');
-                Route::post('highcharts','v1\Json\HighCharts@homeGempaThreeMonths')
+                Route::post('highcharts','v1\Json\HighCharts@getCharts')
                     ->name('highcharts')
                     ->middleware('signed');
                 Route::post('gertan','v1\Json\MapController@showSigertan')
