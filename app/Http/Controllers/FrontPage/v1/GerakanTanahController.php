@@ -24,23 +24,22 @@ class GerakanTanahController extends Controller
 
     protected function setDampak($gertan)
     {
-        $dampak = [
-            'korban' => $gertan->tanggapan->qls_kmd ? '<p>'.$gertan->tanggapan->qls_kmd.' korban meninggal dunia.</p>' : '',
-            
-        ];
-        $luka = $gertan->tanggapan->qls_kll ? '<p>'.$gertan->tanggapan->qls_kll.' korban luka-luka.</p>' : '';
-        $rumah_rusak = $gertan->tanggapan->qls_rrk ? '<p>'.$gertan->tanggapan->qls_rrk.' unit rumah rusak.</p>' : '';
-        $rumah_hancur = $gertan->tanggapan->qls_rhc ? '<p>'.$gertan->tanggapan->qls_rhc.' unit rumah hancur.</p>' : '';
-        $rumah_terancam = $gertan->tanggapan->qls_rtr ? '<p>'.$gertan->tanggapan->qls_rtr.' unit rumah terancam.</p>' : '';
-        $bangunan_rusak = $gertan->tanggapan->qls_blr ? '<p>'.$gertan->tanggapan->qls_blr.' unit bangunan rusak.</p>' : '';
-        $bangunan_hancur = $gertan->tanggapan->qls_blh ? '<p>'.$gertan->tanggapan->qls_blh.' unit bangunan hancur.</p>' : '';
-        $bangunan_terancam = $gertan->tanggapan->qls_bla ? '<p>'.$gertan->tanggapan->qls_bla.' unit bangunan terancam.</p>' : '';
-        $lahan_rusak = $gertan->tanggapan->qls_llp ? '<p>'.$gertan->tanggapan->qls_llp.' lahan pertanian rusak.</p>' : '';
-        $jalan_rusak = $gertan->tanggapan->qls_pjr ? '<p>'.$gertan->tanggapan->qls_pjr.' meter jalan rusak.</p>' : '';
+        $korban = $gertan->tanggapan->qls_kmd ? $gertan->tanggapan->qls_kmd.' korban meninggal dunia.' : '';
+        $luka = $gertan->tanggapan->qls_kll ? $gertan->tanggapan->qls_kll.' korban luka-luka.' : '';
+        $rumah_rusak = $gertan->tanggapan->qls_rrk ? $gertan->tanggapan->qls_rrk.' unit rumah rusak.' : '';
+        $rumah_hancur = $gertan->tanggapan->qls_rhc ? $gertan->tanggapan->qls_rhc.' unit rumah hancur.' : '';
+        $rumah_terancam = $gertan->tanggapan->qls_rtr ? $gertan->tanggapan->qls_rtr.' unit rumah terancam.' : '';
+        $bangunan_rusak = $gertan->tanggapan->qls_blr ? $gertan->tanggapan->qls_blr.' unit bangunan rusak.' : '';
+        $bangunan_hancur = $gertan->tanggapan->qls_blh ? $gertan->tanggapan->qls_blh.' unit bangunan hancur.' : '';
+        $bangunan_terancam = $gertan->tanggapan->qls_bla ? $gertan->tanggapan->qls_bla.' unit bangunan terancam.' : '';
+        $lahan_rusak = $gertan->tanggapan->qls_llp ? $gertan->tanggapan->qls_llp.' lahan pertanian rusak.' : '';
+        $jalan_rusak = $gertan->tanggapan->qls_pjr ? $gertan->tanggapan->qls_pjr.' meter jalan rusak.' : '';
 
         $dampak = $korban.$luka.$rumah_rusak.$rumah_hancur.$rumah_terancam.$bangunan_hancur.$bangunan_rusak.$bangunan_terancam.$lahan_rusak.$jalan_rusak;
 
-        $this->dampak = $dampak ?: 'Belum ada informasi mengenai dampak dari kejadian gerakan tanah ini.';
+        $dampak = explode('.',$dampak,-1);
+
+        $this->dampak = !empty($dampak) ? $dampak : [];
 
         return $this;
     }
@@ -137,7 +136,7 @@ class GerakanTanahController extends Controller
 
                     $kedalaman_air = $gertan->tanggapan->qls_dep ? ' dengan kedalaman air tanah sekitar '.$gertan->tanggapan->qls_dep.' meter di bawah permukaan.' : '.';
                     return (object) [
-                        'id' => $gertan->idx,
+                        'id' => $gertan->crs_ids,
                         'judul' => 'Laporan Tanggapan Gerakan Tanah di '.$gertan->crs_vil.', '.$gertan->crs_rgn.', '.$gertan->crs_cty.', '.$gertan->crs_prv,
                         'pelapor' => $gertan->crs_usr,
                         'updated_at' => $gertan->crs_log,
@@ -157,10 +156,47 @@ class GerakanTanahController extends Controller
         return $this;
     }
 
-    public function showGertan($id)
+    public function showGertan(Request $request, $id)
     {
-        
-        return 'Coming Soon';
+        $crs_id = $request ? $request->id : $id;
+
+        $gertan = Cache::remember('v1/json/show:sigertan:'.$crs_id, 60, function() use($crs_id) {
+            return Crs::with('tanggapan')->where('crs_ids',$crs_id)->firstOrFail();
+        });
+
+        $struktur = $gertan->tanggapan->qls_str ? ' Struktur berupa '.$gertan->tanggapan->qls_str : '';
+
+        $kedalaman_air = $gertan->tanggapan->qls_dep ? ' dengan kedalaman air tanah sekitar '.$gertan->tanggapan->qls_dep.' meter di bawah permukaan.' : '.';
+
+        $gertan = (object) [
+            'laporan' => (object) [
+                'pelapor' => $gertan->tanggapan->anggota[0]->user->vg_nama,
+                'anggota' => $gertan->tanggapan->anggota,
+                'judul' => 'Laporan Tanggapan Gerakan Tanah di '.$gertan->crs_vil.', '.$gertan->crs_rgn.', '.$gertan->crs_cty.', '.$gertan->crs_prv,
+                'updated_at' => $gertan->crs_log,
+                'deskripsi' => 'Gerakan tanah terjadi di '.$gertan->crs_vil.', '.$gertan->crs_rgn.', '.$gertan->crs_cty.', '.$gertan->crs_prv.' pada tanggal '.$gertan->crs_log->format('Y-m-d').' pukul '.$gertan->crs_log->format('H:i:s').' '.$gertan->crs_zon.'. Secara Geografis, lokasi kejadian gerakan tanah terletak pada posisi '.$gertan->crs_lat.' LU dan '.$gertan->crs_lon.' BT.',
+                'peta' => empty($gertan->tanggapan->qls_pst) ? null : $gertan->tanggapan->qls_pst,
+                'foto_sosialisasi' => $gertan->tanggapan->foto_sosialisasi,
+                'foto_kejadian' => $gertan->tanggapan->foto_kejadian,
+                'status' => $gertan->tanggapan->qls_zkg
+            ],
+            'tanggapan' => (object) [
+                'tipe' => empty($gertan->tanggapan->qls_tgt) ? 'Belum dilaporkan.' : $gertan->tanggapan->qls_tgt,
+                'dampak' => $this->setDampak($gertan)->getDampak() ?: ['Belum ada informasi mengenai dampak dari kejadian gerakan tanah ini.'],
+                'kondisi' => (object) [
+                    'morfologi' => empty($gertan->tanggapan->qls_sba) ? 'Belum dilaporkan.' : 'Secara umum lokasi gerakan tanah ini merupakan daerah '.strtolower(implode(', ',$gertan->tanggapan->qls_sba)).' yang memiliki kemiringan lereng '.implode(', ',$gertan->tanggapan->qls_mrl),
+                    'geologi' => empty($gertan->tanggapan->qls_frm) ? 'Belum dilaporkan.' : 'Berdasarkan peta geologi, lokasi bencana tersusun oleh formasi '.$gertan->tanggapan->qls_frm.'. Jenis Batuan di antaranya adalah '.$gertan->tanggapan->qls_jbt.'. Jenis Pelapukan berupa '.$gertan->tanggapan->qls_jtp.'.'.$struktur,
+                    'keairan' => empty($gertan->tanggapan->qls_air) ? 'Belum dilaporkan.' : 'Keairan di lokasi gerakan tanah berupa '.implode(', ',$gertan->tanggapan->qls_air).$kedalaman_air,
+                    'tata_guna_lahan' => empty($gertan->tanggapan->qls_tgl) ? 'Belum dilaporkan.' : 'Tata Guna Lahan  di lokasi gerakan tanah ini berupa '.implode(', ',$gertan->tanggapan->qls_tgl).'.',
+                    'kerentanan' => empty($gertan->tanggapan->qls_zkg) ? 'Belum dilaporkan.' : 'Berdasarkan Peta Potensi Gerakan Tanah yang dikeluarkan Badan Geologi, Pusat Vulkanologi dan Mitigasi Bencana Geologi pada bulan ini, lokasi bencana berada pada Zona Potensi Gerakan Tanah '.str_replace_last(', ',' hingga ',title_case(implode(', ',$gertan->tanggapan->qls_zkg))).'. Yang artinya daerah ini memiliki potensi '.strtolower(str_replace_last(', ',' hingga ',implode(', ',$gertan->tanggapan->qls_zkg))).' untuk terjadi gerakan tanah.',
+                    'penyebab' => empty($gertan->tanggapan->qls_cau) ? 'Belum dilaporkan.' : title_case(implode('<br>',$gertan->tanggapan->qls_cau))
+                ]
+            ],
+            'rekomendasi' => empty($gertan->tanggapan->rekomendasi) ? 'Belum ada rekomendasi.' : nl2br($gertan->tanggapan->rekomendasi->qls_rec)
+        ];
+
+        // return collect($gertan);
+        return view('v1.home.sigertan-show', compact('gertan'));
     }
 
     public function indexGertan(Request $request, $q = null)
