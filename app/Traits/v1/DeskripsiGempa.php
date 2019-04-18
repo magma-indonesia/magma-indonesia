@@ -29,8 +29,8 @@ trait DeskripsiGempa
     protected $codes = [
         'lts' => 'Letusan/Erupsi',
         'apl' => 'Awan Panas Letusan',
-        'gug' => 'Guguran',
         'apg' => 'Awan Panas Guguran',
+        'gug' => 'Guguran',
         'hbs' => 'Hembusan',
         'tre' => 'Tremor Non-Harmonik',
         'tor' => 'Tornillo',
@@ -76,9 +76,9 @@ trait DeskripsiGempa
     protected $code_dominan = ['mtr'];
 
     protected $code_luncuran = [
-        'gug',
         'apg',
-        'apl'
+        'apl',
+        'gug',
     ];
 
     protected $code_erupsi = ['lts'];
