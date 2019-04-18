@@ -171,10 +171,10 @@ $(document).ready(function () {
                 },
                 credits: {
                     enabled: true,
-                    text: 'Highcharts | MAGMA Indonesia - Kementerian ESDM'
+                    text: 'Highcharts | MAGMA Indonesia - PVMBG, Badan Geologi, Kementerian ESDM'
                 },
                 title: {
-                    text: 'Data Kegempaan 90 hari Terakhir'
+                    text: 'Kegempaan {{ $var->gunungapi }} 90 hari Terakhir'
                 },
                 xAxis: {
                     categories: data.categories,

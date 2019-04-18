@@ -166,7 +166,7 @@ class MagmaSigertan extends Model
 
     public function anggota()
     {
-        return $this->hasOne('App\v1\SigertanAnggotaTim','qls_ids','qls_ids');
+        return $this->hasMany('App\v1\SigertanAnggotaTim','qls_ids','qls_ids');
     }
 
     public function foto_kejadian()
