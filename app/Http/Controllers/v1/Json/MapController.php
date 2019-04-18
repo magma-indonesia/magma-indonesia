@@ -28,7 +28,7 @@ class MapController extends Controller
     {
         $id = $request ? $request->id : $id;
 
-        $roq = Cache::remember('v1/json/show:roq-'.$id, 60, function() use($id) {
+        $roq = Cache::remember('v1/json/show:roq:'.$id, 60, function() use($id) {
             return MagmaRoq::where('no',$id)->firstOrFail();
         });
 
