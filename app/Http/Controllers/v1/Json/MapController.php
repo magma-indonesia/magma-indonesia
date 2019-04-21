@@ -46,7 +46,7 @@ class MapController extends Controller
                     'magnitude' => $roq->magnitude.' SR',
                     'gunung_terdekat' => $roq->nearest_volcano ? $roq->nearest_volcano : 'Belum ada data.',
                     'map' => $roq->roq_maplink ? $roq->roq_maplink : '',
-                    'sumber' => $roq->roq_source,
+                    'sumber' => $roq->roq_source ?: 'Badan Meteorologi, Klimatologi dan Geofisika (BMKG)',
                     'intensitas' => $roq->mmi ? $roq->mmi : 'Belum ada data.',
                     'has_tanggapan' => $roq->roq_tanggapan == 'YA' ? true : false,
                 ],

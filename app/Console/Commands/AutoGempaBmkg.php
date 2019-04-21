@@ -135,6 +135,7 @@ class AutoGempaBmkg extends Command
                 'latlon_text' => $this->getLatitude().' LU '.$this->getLongitude().' BT',
                 'area' => $this->getArea()?: null,
                 'koter' => $this->getKoter(),
+                'roq_source' => 'Badan Meteorologi, Klimatologi dan Geofisika (BMKG)'
             ];
         });
 
