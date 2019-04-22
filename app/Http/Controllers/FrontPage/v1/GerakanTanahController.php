@@ -115,10 +115,12 @@ class GerakanTanahController extends Controller
 
     protected function nonFilteredGertan($request)
     {
-        $last = Crs::select('idx')->orderBy('idx','desc')->first();
+        $last = Crs::select('idx','crs_log')->orderBy('idx','desc')->first();
         $page = $request->has('page') ? $request->page : 1;
 
-        $gertans = Cache::remember('v1/home/sigertan:'.$page, 120, function() {
+        $date = strtotime($last->crs_log);
+
+        $gertans = Cache::remember('v1/home/sigertan:'.$page.':'.$date, 120, function() {
             return Crs::has('tanggapan')
                     ->with('tanggapan')
                     ->where('crs_sta','TERBIT')
@@ -128,7 +130,7 @@ class GerakanTanahController extends Controller
                     ->simplePaginate(10);
         });
 
-        $grouped = Cache::remember('v1/home/sigertan:grouped'.$page, 120, function() use($gertans) {
+        $grouped = Cache::remember('v1/home/sigertan:grouped:'.$page.':'.$date, 120, function() use($gertans) {
             $grouped = $gertans->groupBy('date');
             $grouped->each(function ($gertans, $key) {
                 $gertans->transform(function ($gertan, $key) {

@@ -69,6 +69,8 @@ class GunungApiController extends Controller
 
     protected function nonFilteredVen($ven, $page)
     {
+        $last = MagmaVen::select('erupt_id','var_log')->orderBy('no','desc')->first();
+
         $vens = Cache::remember('v1/home/vens:'.$ven->erupt_id.':'.$page, 120, function() {
             return MagmaVen::with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea,ga_elev_gapi','user:vg_nip,vg_nama')
                     ->orderBy('erupt_tgl','desc')
@@ -141,14 +143,14 @@ class GunungApiController extends Controller
 
         $date = strtotime($last->var_log);
 
-        $vars = Cache::remember('v1/home/vars:'.$last->no.':'.$page.':'.$date, 120, function () {
+        $vars = Cache::remember('v1/home/vars:'.$page.':'.$date, 120, function () {
                 return MagmaVar::with('gunungapi:ga_code,ga_zonearea')
                         ->orderBy('var_data_date','desc')
                         ->orderBy('no','desc')
                         ->simplePaginate(10);
         });
 
-        $grouped = Cache::remember('v1/home/vars:grouped:'.$last->no.':'.$page, 120, function () use ($vars) {
+        $grouped = Cache::remember('v1/home/vars:grouped:'.$page.':'.$date, 120, function () use ($vars) {
             $grouped = $vars->groupBy('data_date');
             $grouped->each(function ($vars, $key) {
                 $vars->transform(function ($var, $key) {

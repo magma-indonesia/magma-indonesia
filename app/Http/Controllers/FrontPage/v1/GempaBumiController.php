@@ -82,21 +82,21 @@ class GempaBumiController extends Controller
 
     protected function nonFilteredGempa($request)
     {
-        $last = MagmaRoq::select('no','datetime_wib')
-                    ->where('roq_tanggapan','YA')
-                    ->orderBy('datetime_wib','desc')
-                    ->firstOrFail();
+        $last = MagmaRoq::select('no','datetime_wib','roq_logtime')
+                ->where('roq_tanggapan','YA')
+                ->orderBy('datetime_wib','desc')
+                ->first();
 
         $page = $request->has('page') ? $request->page : 1;
-        $date = strtotime($last->datetime_wib);
+        $date = strtotime($last->roq_logtime);
 
-        $gempas = Cache::remember('v1/home/roqs:'.$last->no.':'.$page.':'.$date, 120, function () {
+        $gempas = Cache::remember('v1/home/roqs:'.$page.':'.$date, 120, function () {
             return MagmaRoq::where('roq_tanggapan','YA')
                     ->orderBy('datetime_wib','desc')
                     ->simplePaginate(10);
         });
 
-        $grouped = Cache::remember('v1/home/roqs:grouped:'.$last->no.':'.$page.':'.$date, 120, function () use ($gempas) {
+        $grouped = Cache::remember('v1/home/roqs:grouped:'.$page.':'.$date, 120, function () use ($gempas) {
             $grouped = $gempas->groupBy(function ($val) {
                 return $val->datetime_wib->format('Y-m-d');
             });
