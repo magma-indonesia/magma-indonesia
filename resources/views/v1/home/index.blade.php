@@ -112,20 +112,20 @@
                 <li class="dropdown hidden-xs hidden-sm hidden-md">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="icon icon-volcano-warning" style="margin-right: 5px;"></i> Gunung Api <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{ route('v1.gunungapi.var') }}">Laporan Aktivitas (VAR)</a></li>
-                        <li><a href="{{ route('v1.gunungapi.ven') }}">Informasi Letusan (VEN)</a></li>
+                        <li class="padding-magma-xs"><a href="{{ route('v1.gunungapi.var') }}">Laporan Aktivitas (VAR)</a></li>
+                        <li class="padding-magma-xs"><a href="{{ route('v1.gunungapi.ven') }}">Informasi Letusan (VEN)</a></li>
                     </ul>
                 </li>
                 <li class="dropdown hidden-xs hidden-sm hidden-md">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="icon icon-landslide" style="margin-right: 5px;"></i> Gerakan Tanah <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{ route('v1.gertan.sigertan') }}">Tanggapan Kejadian</a></li>
+                        <li class="padding-magma-xs"><a href="{{ route('v1.gertan.sigertan') }}">Tanggapan Kejadian</a></li>
                     </ul>
                 </li>
                 <li class="dropdown hidden-xs hidden-sm hidden-md">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="icon icon-earthquake" style="margin-right: 5px;"></i> Gempa Bumi <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{ route('v1.gempabumi.roq') }}">Tanggapan Kejadian</a></li>
+                        <li class="padding-magma-xs"><a href="{{ route('v1.gempabumi.roq') }}">Tanggapan Kejadian</a></li>
                     </ul>
                 </li>
                 <li>

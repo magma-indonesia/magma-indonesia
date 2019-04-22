@@ -230,3 +230,11 @@ body {
 .gb-blinking {
 	animation: fade 0.75s linear alternate infinite;
 }
+
+.padding-magma-xs {
+    padding: .25em;
+}
+
+.padding-magma-sm {
+    padding: .5em;
+}
