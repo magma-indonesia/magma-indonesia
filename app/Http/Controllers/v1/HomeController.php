@@ -22,6 +22,14 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $last_var = OldVar::select('no','var_log')->orderBy('no','desc')->first();
+        $last_roq = Roq::select('no','datetime_wib','roq_logtime')
+                        ->where('roq_tanggapan','YA')
+                        ->orderBy('datetime_wib','desc')
+                        ->first();
+
+        $last_gertan = Crs::select('idx','crs_log')->orderBy('idx','desc')->first();
+
         $gadds = Cache::remember('v1/home/gadd', 120, function() {
             return Gadd::select(
                 'ga_code','ga_nama_gapi','ga_kab_gapi',
@@ -34,7 +42,7 @@ class HomeController extends Controller
 
         $ga_code = $gadds->pluck('ga_code');
 
-        $vars = Cache::remember('v1/home/var', 10, function() use($ga_code) {
+        $vars = Cache::remember('v1/home/var:'.strtotime($last_var->var_log), 60, function() use($ga_code) {
             return OldVar::select(DB::raw('t.*'))
                 ->from(DB::raw('(SELECT ga_code,cu_status,var_data_date,periode,var_perwkt,var_noticenumber,var_nama_pelapor FROM magma_var ORDER BY var_noticenumber DESC) t'))
                 ->whereIn('ga_code',$ga_code)
@@ -54,7 +62,7 @@ class HomeController extends Controller
             return $gadd;
         });
 
-        $gertans = Cache::remember('v1/home/sigertan', 10, function() {
+        $gertans = Cache::remember('v1/home/sigertan:'.strtotime($last_gertan->crs_log), 60, function() {
             return Crs::select('idx','crs_ids','crs_lat','crs_lon','crs_log','crs_prv','crs_cty')
                     ->has('tanggapan')
                     ->with('tanggapan')
@@ -66,7 +74,7 @@ class HomeController extends Controller
                     ->get();
         });
 
-        $gempas = Cache::remember('v1/home/gempa',10, function() {
+        $gempas = Cache::remember('v1/home/gempa:'.strtotime($last_roq->roq_logtime), 60, function() {
             return Roq::orderBy('datetime_wib','desc')->limit(30)->get();
         });
         
