@@ -53,16 +53,16 @@ VONA
                     <div class="timeline-time"><small>{{ $vona->issued_time}} UTC</small>
                     @switch($vona->cu_avcode)
                         @case('GREEN')
-                            <a class="btn btn-sm btn-success">Green</a>
+                            <a href="#" class="btn btn-sm btn-success">Green</a>
                             @break
                         @case('YELLOW')
-                            <a class="btn btn-sm bg-yellow" style="color: white;">Yellow</a>
+                            <a href="#" class="btn btn-sm bg-yellow" style="color: white;">Yellow</a>
                             @break
                         @case('ORANGE')
-                            <a class="btn btn-sm btn-warning">Orange</a>
+                            <a href="#" class="btn btn-sm btn-warning">Orange</a>
                             @break
                         @default
-                            <a class="btn btn-sm btn-danger">Red</a>
+                            <a href="#" class="btn btn-sm btn-danger">Red</a>
                     @endswitch
                     </div>
 
