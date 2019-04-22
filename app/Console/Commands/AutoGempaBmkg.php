@@ -60,8 +60,17 @@ class AutoGempaBmkg extends Command
                 'wilayah_4' => ['uses' => 'gempa.Wilayah4'],
                 'wilayah_5' => ['uses' => 'gempa.Wilayah5'],         
             ]);
-    
+
+            $xml_terasa = XmlParser::load('http://data.bmkg.go.id/lastgempadirasakan.xml');
+            $terasa = $xml_id->parse([
+                'tanggal' => ['uses' => 'Gempa.Tanggal'],
+                'jam' => ['uses' => 'Gempa.Jam'],
+                'kedalaman'=> ['uses' => 'Gempa.Kedalaman'],
+                'mmi' => ['uses' => 'Gempa.Dirasakan'],  
+            ]);
+
             $this->gempa = collect($gempa_en+$gempa_id);
+            $this->terasa = collect($terasa);
 
             return $this;
 
@@ -151,7 +160,21 @@ class AutoGempaBmkg extends Command
         if ($roq->save())
         {
             $import = new ImportApp();
-            $import->notify(new ImportNotification('Import Gempa BMKG >> '.$gempa['area']));
+            $import->notify(new ImportNotification('Gempa BMKG >> '.$gempa['area']));
+        }
+
+        return $this;
+    }
+
+    protected function updateGempa()
+    {
+        $roq = $this->roq;
+        $roq->mmi = $this->terasa['mmi'];
+        $roq->depth = $this->terasa['kedalaman'];
+        if ($roq->save())
+        {
+            $import = new ImportApp();
+            $import->notify(new ImportNotification('Gempa Terasa BMKG >> '.$this->terasa['mmi']));
         }
 
         return $this;
@@ -194,6 +217,19 @@ class AutoGempaBmkg extends Command
         return $this;
     }
 
+    protected function setDateTimeTerasa()
+    {
+        $tanggal = $this->terasa['tanggal'];
+        $waktu = explode(' ',$this->terasa['jam']);
+
+        $datetime = Carbon::createFromFormat('d/m/Y H:i:s',$tanggal.$waktu[0]);
+
+        $this->datetime = $datetime;
+        $this->setIdLaporan();
+
+        return $this;
+    }
+
     protected function getDateTimeWib()
     {
         return $this->datetime_wib;
@@ -210,13 +246,19 @@ class AutoGempaBmkg extends Command
         return $this;
     }
 
+    protected function updateGempaTerasa()
+    {
+        $this->has_laporan ? $this->updateGempa() : false;
+        return $this;
+    }
+
     protected function checkLaporanExists()
     {
         $id_laporan = $this->getIdLaporan();
 
-        $roq = MagmaRoq::where('id_lap',$id_laporan)->first();
+        $this->roq = MagmaRoq::where('id_lap',$id_laporan)->first();
 
-        $this->has_laporan = $roq ? true : false;
+        $this->has_laporan = $this->roq ? true : false;
 
         return $this;
     }
@@ -232,5 +274,9 @@ class AutoGempaBmkg extends Command
         $this->setDateTime()
             ->checkLaporanExists()
             ->createGempa();
+
+        $this->setDateTimeTerasa()
+            ->checkLaporanExists()
+            ->updateGempaTerasa();
     }
 }
