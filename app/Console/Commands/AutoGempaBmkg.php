@@ -94,7 +94,7 @@ class AutoGempaBmkg extends Command
     {
         $latitude = explode(' ',$this->gempa['lintang']);
         $latitude = $latitude[1] == 'S' 
-                    ? strval($latitude[0]-0)
+                    ? strval(0-$latitude[0])
                     : $latitude[0];
 
         return $latitude;
