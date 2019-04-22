@@ -169,12 +169,16 @@ class AutoGempaBmkg extends Command
     protected function updateGempa()
     {
         $roq = $this->roq;
-        $roq->mmi = $this->terasa['mmi'];
-        $roq->depth = $this->terasa['kedalaman'];
-        if ($roq->save())
+        if ($roq->mmi == null)
         {
-            $import = new ImportApp();
-            $import->notify(new ImportNotification('Gempa Terasa BMKG >> '.$this->terasa['mmi']));
+            $roq->mmi = $this->terasa['mmi'];
+            $roq->depth = $this->terasa['kedalaman'];
+            if ($roq->save())
+            {
+                $import = new ImportApp();
+                $import->notify(new ImportNotification('Gempa Terasa BMKG >> '.$this->terasa['mmi']));
+            }
+    
         }
 
         return $this;
