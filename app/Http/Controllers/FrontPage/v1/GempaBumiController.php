@@ -132,7 +132,43 @@ class GempaBumiController extends Controller
 
     public function showGempa($id)
     {
-        return 'Coming sooonnnnnnnn';
+        $roqs = Cache::remember('v1/home/roq:show:'.$id, 60, function() use($id) {
+            return MagmaRoq::where('no',$id)->firstOrFail();
+        });
+
+        $roqs = collect([$roqs]);
+        $roqs->transform(function ($roq, $key) {
+            return (object) [
+                'laporan' => (object) [
+                    'title' => $roq->area,
+                    'pelapor' => $roq->roq_nama_pelapor ? $roq->roq_nama_pelapor : 'Belum ada.',
+                    'waktu' => $roq->datetime_wib,
+                    'kota_terdekat' => $roq->koter ? $roq->koter : 'Belum ada data.',
+                    'loc' => [$roq->lat_lima,$roq->lon_lima],
+                    'latitude' => $roq->lat_lima.'&deg;LU',
+                    'longitude' => $roq->lon_lima.'&deg;BT',
+                    'kedalaman' => $roq->depth.' Km',
+                    'magnitude' => $roq->magnitude.' SR',
+                    'gunung_terdekat' => $roq->nearest_volcano ? $roq->nearest_volcano : 'Belum ada data.',
+                    'map' => $roq->roq_maplink ? $roq->roq_maplink : '',
+                    'sumber' => $roq->roq_source ?: 'Badan Meteorologi, Klimatologi dan Geofisika (BMKG)',
+                    'intensitas' => $roq->mmi ?: null,
+                    'has_tanggapan' => $roq->roq_tanggapan == 'YA' ? true : false,
+                ],
+                'tanggapan' => (object) [
+                    'tsunami' => (empty($roq->roq_tsu) || $roq->roq_tsu=='TIDAK') ? 'Tidak berpotensi Tsunami' : 'Berpotensi terjadi Tsunami',
+                    'pendahuluan' => $roq->roq_tanggapan == 'YA' ? str_replace('Â°',' ',$roq->roq_intro) : 'Belum ada tanggapan.',
+                    'kondisi' => $roq->roq_tanggapan == 'YA' ? $roq->roq_konwil :  'Belum ada tanggapan.',
+                    'mekanisme' => $roq->roq_tanggapan == 'YA' ? $roq->roq_mekanisme :  'Belum ada tanggapan.',
+                    'efek' => $roq->roq_tanggapan == 'YA' ? $roq->roq_efek :  'Belum ada tanggapan.',
+                ],
+                'rekomendasi' => $roq->roq_tanggapan == 'YA' ? nl2br($roq->roq_rekom) :  'Belum ada rekomendasi.',
+            ];
+        });
+        
+        $roq = $roqs->first();
+
+        return view('v1.home.gempa-show', compact('roq'));
     }
 
     public function indexGempa(Request $request, $q = null)
