@@ -52,7 +52,7 @@ class MapController extends Controller
                 ],
                 'tanggapan' => [
                     'tsunami' => (empty($roq->roq_tsu) || $roq->roq_tsu=='TIDAK') ? 'Tidak berpotensi Tsunami' : 'Berpotensi terjadi Tsunami',
-                    'pendahuluan' => $roq->roq_tanggapan == 'YA' ? $roq->roq_intro : 'Belum ada tanggapan.',
+                    'pendahuluan' => $roq->roq_tanggapan == 'YA' ? str_replace('Â°',' ',$roq->roq_intro) : 'Belum ada tanggapan.',
                     'kondisi' => $roq->roq_tanggapan == 'YA' ? $roq->roq_konwil :  'Belum ada tanggapan.',
                     'mekanisme' => $roq->roq_tanggapan == 'YA' ? $roq->roq_mekanisme :  'Belum ada tanggapan.',
                     'efek' => $roq->roq_tanggapan == 'YA' ? $roq->roq_efek :  'Belum ada tanggapan.',
