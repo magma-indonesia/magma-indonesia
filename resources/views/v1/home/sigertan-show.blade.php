@@ -1,9 +1,7 @@
 @extends('layouts.slim') 
-@section('title') {{ $gertan->laporan->judul }}
-@endsection
- 
-@section('add-vendor-css')
-<link href="{{ asset('slim/lib/SpinKit/css/spinkit.css') }}" rel="stylesheet">
+
+@section('title') 
+{{ $gertan->laporan->judul }}
 @endsection
  
 @section('breadcrumb')
@@ -11,7 +9,8 @@
 <li class="breadcrumb-item active" aria-current="page">Tanggapan Kejadian</li>
 @endsection
  
-@section('page-title') Tanggapan Kejadian
+@section('page-title')
+Tanggapan Kejadian
 @endsection
  
 @section('main')
@@ -120,6 +119,4 @@
 	</div>
 	
 </div>
-
-	<hr>
 @endsection
