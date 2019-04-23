@@ -268,6 +268,7 @@ class GunungApiController extends Controller
                 return (object) [
                     'id' => $var->no,
                     'gunungapi' => $var->ga_nama_gapi,
+                    'loc' => [$var->gunungapi->ga_lat_gapi,$var->gunungapi->ga_lon_gapi],
                     'intro' => 'Gunung Api '.$var->ga_nama_gapi.' terletak di Kab\Kota '.$var->gunungapi->ga_kab_gapi.', '.$var->gunungapi->ga_prov_gapi.' dengan posisi geografis di Latitude '.$var->gunungapi->ga_lat_gapi.'&deg;LU, Longitude '.$var->gunungapi->ga_lon_gapi.'&deg;BT dan memiliki ketinggian '.$var->gunungapi->ga_elev_gapi.' mdpl',
                     'status' => $var->cu_status,
                     'code' => $var->ga_code,

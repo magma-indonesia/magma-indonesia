@@ -6,6 +6,17 @@ Laporan Aktivitas - {{ $var->gunungapi }}
 
 @section('add-vendor-css')
 <link href="{{ asset('slim/lib/SpinKit/css/spinkit.css') }}" rel="stylesheet">
+<!-- Load Leaflet CSS and JS from CDN-->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==" crossorigin=""></script>
+<!-- Load Esri Leaflet from CDN -->
+<script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
+<script src="https://unpkg.com/esri-leaflet-renderers@2.0.6/dist/esri-leaflet-renderers.js"
+integrity="sha512-mhpdD3igvv7A/84hueuHzV0NIKFHmp2IvWnY5tIdtAHkHF36yySdstEVI11JZCmSY4TCvOkgEoW+zcV/rUfo0A=="
+crossorigin=""></script>
+<!-- Load extend Home -->
+<link rel="stylesheet" href="{{ asset('css/leaflet.defaultextent.css') }}">
+<script src="{{ asset('js/leaflet.defaultextent.js') }}"></script>
 @endsection
     
 @section('breadcrumb')
@@ -49,8 +60,9 @@ Laporan Aktivitas
         </div>
 
         <div class="card-columns column-count-2 mg-t-20">
-            <div class="card pd-30">
-                <div class="media">
+            <div class="card">
+                <div id="map" class="ht-250 ht-sm-300 ht-md-400 bd-0"></div>
+                <div class="media pd-t-30 pd-r-30 pd-l-30 pd-b-0">
                     <div class="d-flex mg-r-10 wd-50">
                         <i class="fa fa-image tx-primary tx-40"></i>
                     </div>
@@ -59,7 +71,7 @@ Laporan Aktivitas
                         <p>{{ $var->visual }}</p>
                     </div>
                 </div>
-                <div class="media">
+                <div class="media pd-30">
                     <div class="d-flex mg-r-10 wd-50">
                         <i class="fa fa-sticky-note-o tx-primary tx-40"></i>
                     </div>
@@ -143,6 +155,80 @@ Laporan Aktivitas
 <script>
 
 $(document).ready(function () {
+
+    var url = '{{ url('/') }}';
+    var krb_esri = 'https://services9.arcgis.com/BvrmTdn7GU5knQXz/arcgis/rest/services/KRB_GA_ID/FeatureServer/0';
+    var query = "MAG_CODE='{{ $var->code }}'";
+    var map = L.map('map', {
+                    zoomControl: false,
+                    center: @json($var->loc),
+                    zoom: 11,
+                    attributionControl:false,
+                }).setMinZoom(10).setMaxZoom(12);
+
+    var layerEsriStreets = L.esri.basemapLayer('NationalGeographic').addTo(map);
+    var layerWorldTransportation = L.esri.basemapLayer('ImageryTransportation',{attributionControl: false}).addTo(map);
+    var ga_icon = L.Icon.extend({options: {iconSize: [32, 32]}});
+    var ga_normal = new ga_icon({iconUrl: url+'/icon/1.png'});
+    var ga_waspada = new ga_icon({iconUrl: url+'/icon/2.png'});
+    var ga_siaga = new ga_icon({iconUrl: url+'/icon/3.png'});
+    var ga_awas = new ga_icon({iconUrl: url+'/icon/4.png'});
+
+    switch ({{ $var->status }}) {
+        case 1:
+            var gaicon = ga_normal;
+            var status ='Level I (Normal)';
+            break;
+        case 2:
+            var gaicon = ga_waspada;
+            var status ='Level II (Waspada)';
+            break;
+        case 3:
+            var gaicon = ga_siaga;
+            var status ='Level III (Siaga)';
+            break;
+        default:
+            var gaicon = ga_awas;
+            var status ='Level IV (Awas)';
+            break;
+    };
+
+    var layerKrb = L.esri.featureLayer({
+            url: krb_esri,
+        }).bindPopup(function(layer) {
+            switch (layer.feature.properties.INDGA) {
+                case 1:
+                    var krb = 'Kawasan Rawan Bencana (KRB) I';
+                    break;
+            case 2:
+                    var krb = 'Kawasan Rawan Bencana (KRB) II';                        
+                    break;
+                default:
+                    var krb = 'Kawasan Rawan Bencana (KRB) III';
+                    break;
+            }
+            return L.Util.template('<h3>'+krb+'</h3><hr/><p>{REMARK}</p>', layer.feature.properties);
+        });
+
+    var mapKrb = layerKrb.setWhere(query);
+    console.log(mapKrb);
+    map.addLayer(mapKrb);
+
+    L.marker(@json($var->loc), {
+        icon: gaicon,
+        title: '{{ $var->gunungapi }}',
+    }).addTo(map)
+    .bindPopup('<h4 class="tx-center">{{ $var->gunungapi }}</h4><br/><b>'+status+'</b>',{
+        closeButton: true
+    }).openPopup();
+
+    L.control.defaultExtent({position:'topleft'}).addTo(map);
+    L.control.zoom({position:'topright'}).addTo(map);
+    L.control.attribution({position:'bottomright'})
+            .setPrefix('MAGMA Indonesia')
+            .addAttribution('<a href="http://esdm.go.id" title="Badan Geologi, ESDM" target="_blank">Badan Geologi, ESDM</a>')
+            .addTo(map);
+
     $.ajax({
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         url: '{{ URL::signedRoute('v1.json.highcharts') }}',
