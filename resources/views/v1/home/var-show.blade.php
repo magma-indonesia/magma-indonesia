@@ -223,9 +223,8 @@ $(document).ready(function () {
 
     L.control.defaultExtent({position:'topleft'}).addTo(map);
     L.control.zoom({position:'topright'}).addTo(map);
-    L.control.attribution({position:'bottomright'})
-            .setPrefix('MAGMA Indonesia')
-            .addAttribution('<a href="http://esdm.go.id" title="Badan Geologi, ESDM" target="_blank">Badan Geologi, ESDM</a>')
+    L.control.attribution({position:'bottomleft'})
+            .addAttribution('MAGMA Indonesia - <a href="http://esdm.go.id" title="Badan Geologi, ESDM" target="_blank">Badan Geologi, ESDM</a>')
             .addTo(map);
 
     $.ajax({
