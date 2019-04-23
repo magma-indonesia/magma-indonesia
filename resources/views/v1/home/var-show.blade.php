@@ -34,7 +34,7 @@ Laporan Aktivitas
     <div class="col-lg-12">
 
         <div class="card card-blog bd-0">
-            <img class="img-fluid" src="{{ $var->foto }}" alt="{{ $var->gunungapi }}, {{ $var->tanggal_deskripsi }}">
+            <div id="map" class="ht-250 ht-sm-300 ht-md-400 bd-0"></div>
             <div class="card-body pd-30 bd bd-t-0">
                 <h5 class="blog-category">
                     @switch($var->status)
@@ -61,8 +61,8 @@ Laporan Aktivitas
 
         <div class="card-columns column-count-2 mg-t-20">
             <div class="card">
-                <div id="map" class="ht-250 ht-sm-300 ht-md-400 bd-0"></div>
-                <div class="media pd-t-30 pd-r-30 pd-l-30 pd-b-0">
+                <img class="img-fluid" src="{{ $var->foto }}" alt="{{ $var->gunungapi }}, {{ $var->tanggal_deskripsi }}">
+                <div class="media pd-t-30 pd-r-30 pd-l-30 pd-b-0 bd-t-0">
                     <div class="d-flex mg-r-10 wd-50">
                         <i class="fa fa-image tx-primary tx-40"></i>
                     </div>
