@@ -24,6 +24,7 @@ class AutoGempaBmkg extends Command
     protected $datetime;
     protected $datetime_wib;
     protected $datetime_utc;
+    protected $terasa_active = false;
 
     /**
      * The console command description.
@@ -230,6 +231,7 @@ class AutoGempaBmkg extends Command
 
         $this->datetime = $datetime;
         $this->setIdLaporan();
+        $this->terasa_active = true;
 
         return $this;
     }
@@ -263,6 +265,13 @@ class AutoGempaBmkg extends Command
         $this->roq = MagmaRoq::where('id_lap',$id_laporan)->first();
 
         $this->has_laporan = $this->roq ? true : false;
+
+        if (($this->has_laporan == false) AND ($this->terasa_active == false))
+        {
+            $this->info('Validate latitude...');
+            $this->has_laporan = ($this->getLatitude() >= -11) AND ($this->getLatitude() <= 6)
+                                    ? false : true;
+        }
 
         return $this;
     }
