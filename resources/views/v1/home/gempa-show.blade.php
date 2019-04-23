@@ -30,8 +30,8 @@ Tanggapan Kejadian
 @section('main')
 <div class="row row-sm row-timeline">
     <div class="col-lg-8">
-        <div class="card bd-0 mg-b-30">
-            <div id="map" class="ht-250 ht-sm-300 ht-md-400 bd bg-gray-100"></div>
+        <div class="card mg-b-30">
+            <div id="map" class="ht-250 ht-sm-300 ht-md-400 bd-0"></div>
             
             <div class="card-body pd-30">
                 <h5 class="card-title tx-dark tx-medium mg-b-10">{{ $roq->laporan->title }}</h5>
