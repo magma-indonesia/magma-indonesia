@@ -211,7 +211,6 @@ $(document).ready(function () {
         });
 
     var mapKrb = layerKrb.setWhere(query);
-    console.log(mapKrb);
     map.addLayer(mapKrb);
 
     L.marker(@json($var->loc), {
