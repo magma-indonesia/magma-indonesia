@@ -92,6 +92,7 @@
                     <li class="visible-sm visible-xs"><a href="{{ route('v1.gunungapi.ven') }}"><span class="glyphicon glyphicon-th-list"></span> Informasi Letusan</a></li>
                     <li class="visible-sm visible-xs"><a href="{{ route('v1.vona.index') }}"><span class="glyphicon glyphicon-plane"></span> VONA</a></li>
                     <li class="visible-sm visible-xs"><a href="{{ route('v1.gertan.sigertan') }}"><span class="glyphicon glyphicon-equalizer"></span> Gerakan Tanah</a></li>
+                    <li class="visible-sm visible-xs"><a href="{{ route('v1.gempabumi.roq') }}"><span class="glyphicon glyphicon-equalizer"></span> Gempa Bumi</a></li>
                     <li class="visible-sm visible-xs"><a href="{{ route('v1.press.index') }}"><span class="glyphicon glyphicon-new-window"></span> Press Release</a></li>
                     <li><a role="button" data-target="#panelBasemaps" aria-haspopup="true"><span class="glyphicon glyphicon-th-large"></span> Basemaps</a></li>
                     <li><a role="button" id="calciteToggleNavbar" aria-haspopup="true"><span class="glyphicon glyphicon-fullscreen"></span> Full Map</a></li>

@@ -261,29 +261,32 @@ class GunungApiController extends Controller
                     ->firstOrFail();
         });
 
-        $vars = collect([$vars]);
-        $vars->transform(function ($var, $key) {
-            $this->setVisual($var);
-            return (object) [
-                'id' => $var->no,
-                'gunungapi' => $var->ga_nama_gapi,
-                'intro' => 'Gunung Api '.$var->ga_nama_gapi.' terletak di Kab\Kota '.$var->gunungapi->ga_kab_gapi.', '.$var->gunungapi->ga_prov_gapi.' dengan posisi geografis di Latitude '.$var->gunungapi->ga_lat_gapi.'&deg;LU, Longitude '.$var->gunungapi->ga_lon_gapi.'&deg;BT dan memiliki ketinggian '.$var->gunungapi->ga_elev_gapi.' mdpl',
-                'status' => $var->cu_status,
-                'code' => $var->ga_code,
-                'tanggal' => $var->data_date,
-                'tanggal_deskripsi' => $var->var_data_date->formatLocalized('%A - %d %B %Y'),
-                'pelapor' => $var->var_nama_pelapor,
-                'periode' => $var->periode.' '.$var->gunungapi->ga_zonearea,
-                'rekomendasi' => $var->var_rekom,
-                'visual' => $this->visual,
-                'foto' => $var->var_image,
-                'visual_lainnya' => $var->var_ketlain ?: 'Nihil',
-                'klimatologi' => $this->getKlimatologi($var),
-                'gempa' => $this->getDeskripsiGempa($var),
-            ];
+        $var = Cache::remember('v1/home/var:show:transform:'.$id, 120, function() use ($vars) {
+            $vars = collect([$vars]);
+            $vars->transform(function ($var, $key) {
+                $this->setVisual($var);
+                return (object) [
+                    'id' => $var->no,
+                    'gunungapi' => $var->ga_nama_gapi,
+                    'intro' => 'Gunung Api '.$var->ga_nama_gapi.' terletak di Kab\Kota '.$var->gunungapi->ga_kab_gapi.', '.$var->gunungapi->ga_prov_gapi.' dengan posisi geografis di Latitude '.$var->gunungapi->ga_lat_gapi.'&deg;LU, Longitude '.$var->gunungapi->ga_lon_gapi.'&deg;BT dan memiliki ketinggian '.$var->gunungapi->ga_elev_gapi.' mdpl',
+                    'status' => $var->cu_status,
+                    'code' => $var->ga_code,
+                    'tanggal' => $var->data_date,
+                    'tanggal_deskripsi' => $var->var_data_date->formatLocalized('%A - %d %B %Y'),
+                    'pelapor' => $var->var_nama_pelapor,
+                    'periode' => $var->periode.' '.$var->gunungapi->ga_zonearea,
+                    'rekomendasi' => $var->var_rekom,
+                    'visual' => $this->visual,
+                    'foto' => $var->var_image,
+                    'visual_lainnya' => $var->var_ketlain ?: 'Nihil',
+                    'klimatologi' => $this->getKlimatologi($var),
+                    'gempa' => $this->getDeskripsiGempa($var),
+                ];
+            });
+    
+            return $vars->first();
         });
 
-        $var = $vars->first();
         return view('v1.home.var-show', compact('var'));
     }
 
