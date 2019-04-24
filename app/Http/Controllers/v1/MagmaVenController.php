@@ -72,4 +72,18 @@ class MagmaVenController extends Controller
 
         return $data;
     }
+
+    /**
+     * visualTidakTeramati
+     *
+     * @param \App\MagmaVen $ven
+     * @return void
+     */
+    protected function visualTidakTeramati($ven)
+    {
+        $data = 'Telah terjadi erupsi G. '. $ven->gunungapi->ga_nama_gapi .', '. $ven->gunungapi->ga_prov_gapi .' pada hari '. Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->formatLocalized('%A, %d %B %Y') .', pukul '. $ven->erupt_jam.' '.$ven->gunungapi->ga_zonearea.'. Visual letusan tidak teramati. Erupsi ini terekam di seismograf dengan amplitudo maksimum '.$ven->erupt_amp.' mm dan durasi '.$ven->erupt_drs.' detik.';
+
+        return $data;
+    }
+
 }
