@@ -15,7 +15,8 @@ Route::group(['middleware' => ['web','guest']], function () {
 
 Route::name('v1.')->group(function () {
     Route::group(['prefix' => 'v1'], function () {
-        Route::get('/','v1\HomeController@index')->name('home');
+        Route::get('/','v1\HomeController@home')->name('home');
+        Route::get('/home','v1\HomeController@index')->name('home.index');
 
         Route::get('vona','FrontPage\v1\VonaController@index')->name('vona.index');
         Route::get('vona/{id}','FrontPage\v1\VonaController@show')

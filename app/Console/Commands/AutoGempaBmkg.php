@@ -266,7 +266,7 @@ class AutoGempaBmkg extends Command
 
         $this->has_laporan = $this->roq ? true : false;
 
-        if (($this->has_laporan == false) AND ($this->terasa_active == false))
+        if (!($this->has_laporan == false) AND !($this->terasa_active == false))
         {
             $this->info('Validate latitude...');
             $this->has_laporan = ($this->getLatitude() >= -11) AND ($this->getLatitude() <= 6)
