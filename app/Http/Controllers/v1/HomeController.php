@@ -20,11 +20,10 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function home()
     {
         $last_var = OldVar::select('no','var_log')->orderBy('no','desc')->first();
         $last_roq = Roq::select('no','datetime_wib','roq_logtime')
-                        ->where('roq_tanggapan','YA')
                         ->orderBy('datetime_wib','desc')
                         ->first();
 
@@ -78,6 +77,11 @@ class HomeController extends Controller
             return Roq::orderBy('datetime_wib','desc')->limit(30)->get();
         });
         
-        return view('v1.home.index',compact('gadds','gertans','gempas'));
+        return view('v1.home.home',compact('gadds','gertans','gempas'));
+    }
+
+    public function index()
+    {
+        return view('v1.home.home-index');
     }
 }
