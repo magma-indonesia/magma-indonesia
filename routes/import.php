@@ -1,7 +1,7 @@
 <?php
 
 Route::get('/','ImportController@index')->name('index');
-Route::any('pengajuan','Import\ImportPengajuan@import')->name('pengajuan');
+Route::post('pengajuan','Import\ImportPengajuan@import')->name('pengajuan');
 Route::post('crs','Import\ImportCrs@import')->name('crs');
 Route::post('sigertan','Import\ImportSigertan@import')->name('sigertan');
 Route::post('gadds','Import\ImportGadd@import')->name('gadds');
@@ -17,7 +17,7 @@ Route::post('rekomendasi','Import\ImportVarRekomendasi@import')->name('rekomenda
 Route::post('vens','Import\ImportMagmaVen@import')->name('vens');
 Route::post('vona','Import\ImportVona@import')->name('vona');
 Route::post('subscribers','Import\ImportSubscriber@import')->name('subscribers');
-Route::any('subscribers/excercise','Import\ImportExerciseSubscriber@import')->name('exercise_subscribers');
+Route::post('subscribers/excercise','Import\ImportExerciseSubscriber@import')->name('exercise_subscribers');
 Route::post('roq','Import\ImportRoq@import')->name('roq');
 Route::post('adm','Import\ImportUserAdm@import')->name('adm');
 Route::get('status','ImportController@status')->name('status');
