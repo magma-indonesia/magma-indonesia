@@ -10,8 +10,13 @@ use App\Import as ImportApp;
 use App\Notifications\ImportNotification;
 use Log;
 
+use App\Traits\v1\GunungApiTerdekat;
+
 class AutoGempaBmkg extends Command
 {
+
+    use GunungApiTerdekat;
+
     /**
      * The name and signature of the console command.
      *
@@ -145,6 +150,7 @@ class AutoGempaBmkg extends Command
                 'latlon_text' => $this->getLatitude().' LU '.$this->getLongitude().' BT',
                 'area' => $this->getArea()?: null,
                 'koter' => $this->getKoter(),
+                'nearest_volcano' => $this->getGunungApiTerdekat($this->getLatitude(),$this->getLongitude()),
                 'roq_source' => 'Badan Meteorologi, Klimatologi dan Geofisika (BMKG)'
             ];
         });

@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        'App\Console\Commands\AutoGempaBmkg'
+
     ];
 
     /**
@@ -24,7 +24,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('gempa:bmkg')->everyTenMinutes()->withoutOverlapping();;
+        $schedule->command('gempa:bmkg')
+            ->everyTenMinutes()
+            ->pingBefore('http://data.bmkg.go.id/')
+            ->withoutOverlapping();
     }
 
     /**
