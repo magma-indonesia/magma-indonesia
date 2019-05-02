@@ -39,14 +39,26 @@ class ImportGadd extends Import
                     '5' => 'Pos Pengamatan Gunung Merapi - Selo'
                 ];
 
-                foreach ($obscodes as $number => $name) {
-                    $this->setCode($item->code)
-                        ->setObscode($number)
-                        ->setName($name)
-                        ->createKantor()
-                        ->updateKantor()
-                        ->createPos();
-                }
+            $obscodes = $item->code != 'AGU'
+                ? $obscodes
+                : [ '1' => 'Pos Pengamatan Gunung Agung - Rendang',
+                    '2' => 'Pos Pengamatan Gunung Agung - Batulompeh',
+                ];
+
+            $obscodes = $item->code != 'KRA'
+                ? $obscodes
+                : [ '1' => 'Pos Pengamatan Gunung Anak Krakatau - Pasaruan',
+                    '2' => 'Pos Pengamatan Gunung Anak Krakatau - Kalianda',
+                ];
+
+            foreach ($obscodes as $number => $name) {
+                $this->setCode($item->code)
+                    ->setObscode($number)
+                    ->setName($name)
+                    ->createKantor()
+                    ->updateKantor()
+                    ->createPos();
+            }
 
         });
 
