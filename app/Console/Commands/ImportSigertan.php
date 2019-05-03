@@ -39,7 +39,7 @@ class ImportSigertan extends Command
     public function handle()
     {
         try {
-            $controller = app()->make('App\Http\Controllers\Import\ImportRoq');
+            $controller = app()->make('App\Http\Controllers\Import\ImportSigertan');
             app()->call([$controller, 'import']);
             return $this;
         }
