@@ -61,46 +61,44 @@
                 <div class="panel-body">
                     {{ $vars->links() }}
                     <div class="table-responsive">
-                        <div class="table-responsive">
-                            <table id="table-var" class="table  table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Gunung Api</th>
-                                        <th>Tanggal Laporan</th>
-                                        <th>Periode</th>
-                                        <th>Status</th>
-                                        <th>Pelapor</th>
-                                        <th style="min-width: 240px;">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($vars as $key => $var)
-                                    <tr>
-                                        <td>{{ $vars->firstItem()+$key }}</td>
-                                        <td>{{ $var->ga_nama_gapi }}</td>
-                                        <td>{{ $var->var_data_date->format('Y-m-d') }}</td>
-                                        <td>{{ $var->periode }}</td>
-                                        <td>
-                                            @if($var->cu_status == '1') 
-                                            Level I (Normal)
-                                            @elseif($var->cu_status == '2')
-                                            Level II (Waspada)
-                                            @elseif($var->cu_status == '3')
-                                            Level III (Siaga)
-                                            @else
-                                            Level IV (Awas)
-                                            @endif
-                                        </td>
-                                        <td>{{ $var->var_nama_pelapor }}</td>
-                                        <td>
-                                            <a href="{{ route('chambers.v1.gunungapi.laporan.show',['id'=> $var->no]) }}" class="btn btn-sm btn-info btn-outline" style="margin-right: 3px;">View</a>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                        <table id="table-var" class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Gunung Api</th>
+                                    <th>Tanggal Laporan</th>
+                                    <th>Periode</th>
+                                    <th>Status</th>
+                                    <th>Pelapor</th>
+                                    <th style="min-width: 240px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($vars as $key => $var)
+                                <tr>
+                                    <td>{{ $vars->firstItem()+$key }}</td>
+                                    <td>{{ $var->ga_nama_gapi }}</td>
+                                    <td>{{ $var->var_data_date->format('Y-m-d') }}</td>
+                                    <td>{{ $var->periode }}</td>
+                                    <td>
+                                        @if($var->cu_status == '1') 
+                                        Level I (Normal)
+                                        @elseif($var->cu_status == '2')
+                                        Level II (Waspada)
+                                        @elseif($var->cu_status == '3')
+                                        Level III (Siaga)
+                                        @else
+                                        Level IV (Awas)
+                                        @endif
+                                    </td>
+                                    <td>{{ $var->var_nama_pelapor }}</td>
+                                    <td>
+                                        <a href="{{ route('chambers.v1.gunungapi.laporan.show',['id'=> $var->no]) }}" class="btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">View</a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                     {{ $vars->links() }}
                 </div>

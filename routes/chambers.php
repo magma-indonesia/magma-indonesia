@@ -176,6 +176,21 @@ Route::name('v1.')->group(function () {
                 Route::post('laporan/store-var','v1\MagmaVarController@storeVar')
                     ->name('laporan.store.var');
 
+                Route::get('laporan/create-rekomendasi','v1\MagmaVarController@createRekomendasi')
+                    ->name('laporan.create.rekomendasi');
+                Route::post('laporan/store-rekomendasi','v1\MagmaVarController@storeRekomendasi')
+                    ->name('laporan.store.rekomendasi');
+
+                Route::get('laporan/create-visual','v1\MagmaVarController@createVisual')
+                    ->name('laporan.create.visual');
+                Route::post('laporan/store-visual','v1\MagmaVarController@storeVarVisual')
+                    ->name('laporan.store.visual');
+
+                Route::get('laporan/create-klimatologi','v1\MagmaVarController@createKlimatologi')
+                    ->name('laporan.create.klimatologi');
+                Route::post('laporan/store-klimatologi','v1\MagmaVarController@storeVarKlimatologi')
+                    ->name('laporan.store.klimatologi');
+
                 Route::post('laporan/exists','v1\MagmaVarController@exists')
                     ->name('laporan.exists');
 
