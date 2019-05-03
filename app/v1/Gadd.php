@@ -14,6 +14,20 @@ class Gadd extends Model
 
     protected $table = 'ga_dd';
 
+    protected $fillable = [
+        'ga_code',
+        'ga_nama_gapi',
+        'ga_tzone',
+        'ga_zonearea',
+        'ga_kab_gapi',
+        'ga_prov_gapi',
+        'ga_koter_gapi',
+        'ga_tipe_gapi',
+        'ga_elev_gapi',
+        'ga_lat_gapi',
+        'ga_lon_gapi'
+    ];
+
     public function normal()
     {
         return $this->hasOne('App\v1\MagmaVar','ga_code','ga_code')
