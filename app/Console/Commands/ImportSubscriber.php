@@ -41,11 +41,13 @@ class ImportSubscriber extends Command
         try {
             $controller = app()->make('App\Http\Controllers\Import\ImportSubscriber');
             app()->call([$controller, 'import']);
+            $this->info('['.now().'] Import VONA Subscribers berhasil');
             return $this;
         }
 
         catch (Exception $e)
         {
+            $this->error('['.now().'] Import VONA Subscribers GAGAL');
             Log::channel('import')->error('[FAILED] Gagal Import VONA Subscriber : '.now());
             Log::channel('import')->debug($e);
         }

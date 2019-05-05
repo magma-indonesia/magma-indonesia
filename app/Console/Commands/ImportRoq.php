@@ -40,11 +40,13 @@ class ImportRoq extends Command
         try {
             $controller = app()->make('App\Http\Controllers\Import\ImportRoq');
             app()->call([$controller, 'import']);
+            $this->info('['.now().'] Import MAGMA-ROQ berhasil');
             return $this;
         }
 
         catch (Exception $e)
         {
+            $this->error('['.now().'] Import MAGMA-ROQ GAGAL');
             Log::channel('import')->error('[FAILED] Gagal Import data MAGMA-ROQ: '.now());
             Log::channel('import')->debug($e);
         }

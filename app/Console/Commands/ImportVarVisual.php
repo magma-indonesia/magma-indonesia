@@ -41,11 +41,13 @@ class ImportVarVisual extends Command
         try {
             $controller = app()->make('App\Http\Controllers\Import\ImportVarVisual');
             app()->call([$controller, 'import']);
+            $this->info('['.now().'] Import VAR Visual berhasil');
             return $this;
         }
 
         catch (Exception $e)
         {
+            $this->error('['.now().'] Import VAR Visual GAGAL');
             Log::channel('import')->error('[FAILED] Gagal Import Import VarVisual : '.now());
             Log::channel('import')->debug($e);
         }

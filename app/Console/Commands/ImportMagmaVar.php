@@ -12,7 +12,7 @@ class ImportMagmaVar extends Command
      *
      * @var string
      */
-    protected $signature = 'import:vars';
+    protected $signature = 'import:var';
 
     /**
      * The console command description.
@@ -29,7 +29,6 @@ class ImportMagmaVar extends Command
     public function __construct()
     {
         parent::__construct();
-        ini_set('max_execution_time', 1200);
     }
 
     /**
@@ -42,11 +41,13 @@ class ImportMagmaVar extends Command
         try {
             $controller = app()->make('App\Http\Controllers\Import\ImportMagmaVar');
             app()->call([$controller, 'import']);
+            $this->info('['.now().'] Import MAGMA-VAR berhasil');
             return $this;
         }
 
         catch (Exception $e)
         {
+            $this->error('['.now().'] Import MAGMA-VAR GAGAL');
             Log::channel('import')->error('[FAILED] Gagal Import Import MagmaVar : '.now());
             Log::channel('import')->debug($e);
         }

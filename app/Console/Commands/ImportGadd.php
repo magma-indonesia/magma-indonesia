@@ -29,7 +29,6 @@ class ImportGadd extends Command
     public function __construct()
     {
         parent::__construct();
-        ini_set('max_execution_time', 1200);
     }
 
     /**

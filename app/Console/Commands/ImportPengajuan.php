@@ -29,7 +29,6 @@ class ImportPengajuan extends Command
     public function __construct()
     {
         parent::__construct();
-        ini_set('max_execution_time', 1200);
     }
 
     /**
@@ -42,11 +41,13 @@ class ImportPengajuan extends Command
         try {
             $controller = app()->make('App\Http\Controllers\Import\ImportPengajuan');
             app()->call([$controller, 'import']);
+            $this->info('['.now().'] Import Data Pengajuan berhasil');
             return $this;
         }
 
         catch (Exception $e)
         {
+            $this->error('['.now().'] Import Data Pengajuan GAGAL');
             Log::channel('import')->error('[FAILED] Gagal Import Pengajuan : '.now());
             Log::channel('import')->debug($e);
         }

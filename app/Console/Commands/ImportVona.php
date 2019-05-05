@@ -41,11 +41,13 @@ class ImportVona extends Command
         try {
             $controller = app()->make('App\Http\Controllers\Import\ImportVona');
             app()->call([$controller, 'import']);
+            $this->info('['.now().'] Import VONA berhasil');
             return $this;
         }
 
         catch (Exception $e)
         {
+            $this->error('['.now().'] Import VONA GAGAL');
             Log::channel('import')->error('[FAILED] Gagal Import VONA : '.now());
             Log::channel('import')->debug($e);
         }

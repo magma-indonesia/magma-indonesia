@@ -40,11 +40,13 @@ class ImportCrs extends Command
         try {
             $controller = app()->make('App\Http\Controllers\Import\ImportCrs');
             app()->call([$controller, 'import']);
+            $this->info('['.now().'] Import Data CRS berhasil');
             return $this;
         }
 
         catch (Exception $e)
         {
+            $this->error('['.now().'] Import Data CRS GAGAL');
             Log::channel('import')->error('[FAILED] Gagal Import data CRS (Laporan Masyarakat): '.now());
             Log::channel('import')->debug($e);
         }

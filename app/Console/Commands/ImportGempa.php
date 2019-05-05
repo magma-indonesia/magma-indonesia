@@ -40,11 +40,13 @@ class ImportGempa extends Command
         try {
             $controller = app()->make('App\Http\Controllers\Import\ImportGempa');
             app()->call([$controller, 'import']);
+            $this->info('['.now().'] Import VAR Kegempaan berhasil');
             return $this;
         }
 
         catch (Exception $e)
         {
+            $this->error('['.now().'] Import VAR Kegempaan GAGAL');
             Log::channel('import')->error('[FAILED] Gagal Import Import VAR Kegempaan : '.now());
             Log::channel('import')->debug($e);
         }

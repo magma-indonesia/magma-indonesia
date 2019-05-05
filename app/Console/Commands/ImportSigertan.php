@@ -41,11 +41,13 @@ class ImportSigertan extends Command
         try {
             $controller = app()->make('App\Http\Controllers\Import\ImportSigertan');
             app()->call([$controller, 'import']);
+            $this->info('['.now().'] Import MAGMA-SIGERTAN berhasil');
             return $this;
         }
 
         catch (Exception $e)
         {
+            $this->error('['.now().'] Import MAGMA-SIGERTAN GAGAL');
             Log::channel('import')->error('[FAILED] Gagal Import data Gerakan Tanah: '.now());
             Log::channel('import')->debug($e);
         }

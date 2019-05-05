@@ -29,7 +29,6 @@ class ImportRekomendasi extends Command
     public function __construct()
     {
         parent::__construct();
-        ini_set('max_execution_time', 1200);
     }
 
     /**
@@ -42,11 +41,13 @@ class ImportRekomendasi extends Command
         try {
             $controller = app()->make('App\Http\Controllers\Import\ImportVarRekomendasi');
             app()->call([$controller, 'import']);
+            $this->info('['.now().'] Import VAR Rekomendasi berhasil');
             return $this;
         }
 
         catch (Exception $e)
         {
+            $this->error('['.now().'] Import VAR Rekomendasi GAGAL');
             Log::channel('import')->error('[FAILED] Gagal Import Rekomendasi Gunung Api : '.now());
             Log::channel('import')->debug($e);
         }

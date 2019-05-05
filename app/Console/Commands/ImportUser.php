@@ -29,7 +29,6 @@ class ImportUser extends Command
     public function __construct()
     {
         parent::__construct();
-        ini_set('max_execution_time', 1200);
     }
 
     /**
@@ -42,11 +41,13 @@ class ImportUser extends Command
         try {
             $controller = app()->make('App\Http\Controllers\Import\ImportUsers');
             app()->call([$controller, 'import']);
+            $this->info('['.now().'] Import User MAGMA berhasil');
             return $this;
         }
 
         catch (Exception $e)
         {
+            $this->error('['.now().'] Import User MAGMA GAGAL');
             Log::channel('import')->error('[FAILED] Gagal Import data User : '.now());
             Log::channel('import')->debug($e);
         }

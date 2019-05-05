@@ -41,11 +41,13 @@ class ImportMagmaVen extends Command
         try {
             $controller = app()->make('App\Http\Controllers\Import\ImportMagmaVen');
             app()->call([$controller, 'import']);
+            $this->info('['.now().'] Import MAGMA-VEN berhasil');
             return $this;
         }
 
         catch (Exception $e)
         {
+            $this->error('['.now().'] Import MAGMA-VEN GAGAL');
             Log::channel('import')->error('[FAILED] Gagal Import Magma VEN : '.now());
             Log::channel('import')->debug($e);
         }

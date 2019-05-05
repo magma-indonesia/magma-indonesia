@@ -41,11 +41,13 @@ class ImportVarKlimatologi extends Command
         try {
             $controller = app()->make('App\Http\Controllers\Import\ImportVarKlimatologi');
             app()->call([$controller, 'import']);
+            $this->info('['.now().'] Import VAR Klimatologi berhasil');
             return $this;
         }
 
         catch (Exception $e)
         {
+            $this->error('['.now().'] Import VAR Klimatologi GAGAL');
             Log::channel('import')->error('[FAILED] Gagal Import Import VarKlimatologi : '.now());
             Log::channel('import')->debug($e);
         }

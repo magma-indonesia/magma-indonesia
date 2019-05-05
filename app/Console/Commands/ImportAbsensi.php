@@ -29,7 +29,6 @@ class ImportAbsensi extends Command
     public function __construct()
     {
         parent::__construct();
-        ini_set('max_execution_time', 1200);
     }
 
     /**
@@ -42,11 +41,13 @@ class ImportAbsensi extends Command
         try {
             $controller = app()->make('App\Http\Controllers\Import\ImportAbsensi');
             app()->call([$controller, 'import']);
+            $this->info('['.now().'] Import Data Absensi berhasil');
             return $this;
         }
 
         catch (Exception $e)
         {
+            $this->error('['.now().'] Import Data Absensi GAGAL');
             Log::channel('import')->error('[FAILED] Gagal Import data Absensi Pegawai : '.now());
             Log::channel('import')->debug($e);
         }

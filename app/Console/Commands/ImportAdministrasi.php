@@ -29,7 +29,6 @@ class ImportAdministrasi extends Command
     public function __construct()
     {
         parent::__construct();
-        ini_set('max_execution_time', 1200);
     }
 
     /**
@@ -42,11 +41,13 @@ class ImportAdministrasi extends Command
         try {
             $controller = app()->make('App\Http\Controllers\Import\ImportAdministratif');
             app()->call([$controller, 'import']);
+            $this->info('['.now().'] Import Data Administrasi berhasil');
             return $this;
         }
 
         catch (Exception $e)
         {
+            $this->error('['.now().'] Import Data Administrasi GAGAL');
             Log::channel('import')->error('[FAILED] Gagal Import Administrasi User : '.now());
             Log::channel('import')->debug($e);
         }
