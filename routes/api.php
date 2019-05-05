@@ -13,23 +13,23 @@ use App\Http\Resources\UserResource;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('login', 'Api\UserController@login');
-Route::get('logout', 'Api\UserController@logout');
+Route::post('login', 'Api\UserController@login')->name('login');
+Route::get('logout', 'Api\UserController@logout')->name('logout');
 
-Route::group(['prefix' => 'tesuser'], function() {
-    Route::get('mgt','TesUserMgtController@index');
-    Route::get('mgb','TesUserMgbController@index');
-});
+// Route::group(['prefix' => 'tesuser'], function() {
+//     Route::get('mgt','TesUserMgtController@index');
+//     Route::get('mgb','TesUserMgbController@index');
+// });
 
-Route::group(['middleware' => ['jwt.auth']], function () {
+Route::name('v1.')->group(function () {
     Route::group(['prefix' => 'v1'], function () {
         Route::get('import/vona','Api\ImportController@vona');       
         Route::get('user','Api\UserController@index');
         Route::get('user/{nip}','Api\UserController@show');
         Route::get('var/latest','Api\VarController@latest');
         Route::get('var/{id}','Api\VarController@show');
-        Route::get('vona','Api\v1\VonaController@index');
-        Route::get('vona/{uuid}','Api\v1\VonaController@show');
+        Route::get('vona','Api\v1\VonaController@index')->name('vona');
+        Route::get('vona/{uuid}','Api\v1\VonaController@show')->name('vona.show');
         Route::get('magma-roq','Api\OldRoqController@index');
         Route::get('magma-roq/{no}','Api\OldRoqController@show');
         Route::get('magma-ven','Api\v1\MagmaVenController@index');
@@ -37,8 +37,36 @@ Route::group(['middleware' => ['jwt.auth']], function () {
         Route::get('magma-var/{code}/{noticenumber?}','Api\v1\MagmaVarController@show');
         Route::get('magma-sigertan','Api\v1\MagmaSigertanController@index');
         Route::get('press-release','Api\v1\PressController@index');
+
+        Route::name('home.')->group(function () {
+            Route::group(['prefix' => 'home'], function () {
+
+                Route::group(['prefix' => 'gunung-api'], function () {
+                    Route::get('/','Api\v1\HomeController@gunungapi')
+                        ->name('gunung-api');
+                    Route::get('/var/{code}','Api\v1\HomeController@showVar')
+                        ->name('gunung-api.var.show');
+                });
+
+                Route::group(['prefix' => 'gerakan-tanah'], function () {
+                    Route::get('/','Api\v1\HomeController@gerakanTanah')
+                        ->name('gerakan-tanah');
+                    Route::get('/sigertan/{id}','Api\v1\HomeController@showSigertan')
+                        ->name('gerakan-tanah.sigertan.show');
+                });
+
+                Route::group(['prefix' => 'gempa-bumi'], function () {
+                    Route::get('/','Api\v1\HomeController@gempaBumi')
+                        ->name('gempa-bumi');
+                    Route::get('/roq/{id}','Api\v1\HomeController@showGempaBumi')
+                        ->name('gempa-bumi.roq.show');
+                });
+            });
+        });
+
     });
 });
+
 
 Route::fallback(function(){
     return response()->json([
