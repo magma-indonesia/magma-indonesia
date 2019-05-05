@@ -114,8 +114,8 @@ class ImportSigertan extends Import
         $situasi = empty($this->item->qls_pst) ? null : $this->item->qls_pst;
         
         $nip_ketua = $this->item->qls_ktm == '196308231993031001' ? '196308231993061001' : $this->item->qls_ktm;
-        $nip_ketua = $nip_ketua == '197307232006041002' ? '197307232006041001' : $nip_ketua;
         $nip_ketua = $nip_ketua == '196308231993061001' ? '196308231993031011' : $nip_ketua;
+        $nip_ketua = $nip_ketua == '197307232006041002' ? '197307232006041001' : $nip_ketua;
         $nip_ketua = empty($nip_ketua) ? '196508231994031001' :  $nip_ketua;
 
         try {
@@ -234,13 +234,16 @@ class ImportSigertan extends Import
 
     protected function createTim()
     {
-        if ($this->qlsExists   ) {
+        if ($this->qlsExists) {
             try {
                 $no = $this->item->atm_idx;
+                $nip_anggota = $this->item->qls_atm == '196308231993031001' ? '196308231993061001' : $this->item->qls_atm;
+                $nip_anggota = $nip_anggota == '196308231993061001' ? '196308231993031011' : $nip_anggota;
+
                 $create = SigertanAnggotaTim::firstOrCreate(
                     [
                         'noticenumber_id' => $this->item->qls_ids,
-                        'nip_id' => $this->item->qls_atm
+                        'nip_id' => $nip_anggota
                     ],
                     [
                         
