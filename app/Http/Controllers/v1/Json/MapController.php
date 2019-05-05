@@ -200,7 +200,7 @@ class MapController extends Controller
                     'has_vona' => !empty($vona) ? '1' : '0',
                 ],
                 'laporan' => [
-                    'tanggal' => 'Laporan per '.$var->var_perwkt.' jam, tanggal '.$var->var_data_date->format('Y-m-d').' pukul '.$var->periode,
+                    'tanggal' => 'Laporan per '.$var->var_perwkt.' jam, tanggal '.$var->var_data_date->format('Y-m-d').' pukul '.$var->periode.' '.$gadd->ga_zonearea,
                     'pembuat' =>  $var->var_nama_pelapor,
                 ],
                 'visual' => [
@@ -243,7 +243,7 @@ class MapController extends Controller
     protected function failed($var)
     {
         return empty($var) ?
-            response()->json(['success' => 'false', 'message' => 'Data VAR tidak ditemukan'], 500) : 
+            response()->json(['success' => '0', 'message' => 'Data VAR tidak ditemukan'], 500) : 
             $this;
     }
 
