@@ -9,8 +9,8 @@ trait VisualAsap
     protected function cuaca($data)
     {
         count($data)>1 ? 
-            $result = ' Cuaca '.strtolower($data[0]).' hingga '.strtolower(last($data)).',' : 
-            $result = ' Cuaca '.strtolower($data[0]).',';
+            $result = 'Cuaca '.strtolower($data[0]).' hingga '.strtolower(last($data)).',' : 
+            $result = 'Cuaca '.strtolower($data[0]).',';
        
        $this->visual .= $result;
        return $this;
@@ -19,7 +19,7 @@ trait VisualAsap
     protected function curah($curah)
     {
         $curah ? 
-            $result = ' Intensitas curah hujan '.$curah.' mm per hari.' :
+            $result = 'Intensitas curah hujan '.$curah.' mm per hari. ' :
             $result = '';
         
         $this->visual .= $result;
@@ -33,8 +33,8 @@ trait VisualAsap
             $result = ' angin '.strtolower($kecepatan[0]);
 
         count($arah)>1 ?
-            $result = $result.' ke arah '.str_replace_last(', ',' dan ', strtolower(implode(', ',$arah))).'.' : 
-            $result = $result.' ke arah '.strtolower($arah[0]).'.';
+            $result = $result.' ke arah '.str_replace_last(', ',' dan ', strtolower(implode(', ',$arah))).'. ' : 
+            $result = $result.' ke arah '.strtolower($arah[0]).'. ';
        $this->visual .= $result;
        return $this;
     }
@@ -42,12 +42,12 @@ trait VisualAsap
     protected function suhu($min,$max)
     {
         ($min == $max) AND ($max >0) ?
-            $result = ' Suhu udara sekitar '.$max.'&deg;C.' :
+            $result = 'Suhu udara sekitar '.$max.'&deg;C. ' :
             $result = '';
 
         ($min != $max) AND ($min >0) ?
-            $result = ' Suhu udara sekitar '.$min.'-'.$max.'&deg;C.' :
-            $result = ' Suhu udara sekitar '.$max.'&deg;C.';
+            $result = 'Suhu udara sekitar '.$min.'-'.$max.'&deg;C. ' :
+            $result = 'Suhu udara sekitar '.$max.'&deg;C. ';
 
        $this->visual .= $result;
        return $this;
@@ -56,12 +56,12 @@ trait VisualAsap
     protected function kelembaban($min,$max)
     {
         ($min == $max) AND ($max >0) ?
-            $result = ' Kelembaban '.$max.'%.' :
+            $result = 'Kelembaban '.$max.'%. ' :
             $result = '';
 
         ($min != $max) AND ($min >0) ?
-            $result = ' Kelembaban '.$min.'-'.$max.'%.' :
-            $result = ' Kelembaban '.$max.'%.';
+            $result = 'Kelembaban '.$min.'-'.$max.'%. ' :
+            $result = 'Kelembaban '.$max.'%. ';
 
        $this->visual .= $result;
        return $this;
@@ -70,12 +70,12 @@ trait VisualAsap
     protected function tekanan($min,$max)
     {
         ($min == $max) AND ($max >0) ?
-            $result = ' Tekanan udara '.$max.' mmHg.' :
+            $result = 'Tekanan udara '.$max.' mmHg. ' :
             $result = '';
 
         ($min != $max) AND ($min >0) ?
-            $result = ' Tekanan udara '.$min.'-'.$max.' mmHg.' :
-            $result = ' Tekanan udara '.$max.' mmHg.';
+            $result = 'Tekanan udara '.$min.'-'.$max.' mmHg. ' :
+            $result = 'Tekanan udara '.$max.' mmHg. ';
 
        $this->visual .= $result;
        return $this;
@@ -86,8 +86,8 @@ trait VisualAsap
         $data[0] == 'Jelas' ? $var = 'terlihat jelas' : $var = 'tertutup '.$data[0];
 
         count($data)>1 ? 
-            $result = 'Gunung api '.$var.' hingga tertutup '.last($data).'.' : 
-            $result = 'Gunung api '.$var.'.';
+            $result = 'Gunung api '.$var.' hingga tertutup '.last($data).'. ' : 
+            $result = 'Gunung api '.$var.'. ';
 
        $this->visual .= $result;
        return $this;
@@ -97,13 +97,13 @@ trait VisualAsap
     {
         switch ($data) {
             case 'Nihil':
-                $result = ' Asap kawah nihil.';
+                $result = 'Asap kawah nihil. ';
                 break;
             case 'Tidak Teramati':
-                $result = ' Asap kawah tidak teramati.';
+                $result = 'Asap kawah tidak teramati. ';
                 break;
             default:
-                $result = ' Teramati asap kawah utama berwarna '.str_replace_last(', ',' dan ', strtolower(implode(', ',$asap->wasap))).' dengan intensitas '.str_replace_last(', ',' hingga ', strtolower(implode(', ',$asap->intasap))).$this->tinggiasap($asap->tasap_min,$asap->tasap_max);
+                $result = 'Teramati asap kawah utama berwarna '.str_replace_last(', ',' dan ', strtolower(implode(', ',$asap->wasap))).' dengan intensitas '.str_replace_last(', ',' hingga ', strtolower(implode(', ',$asap->intasap))).$this->tinggiasap($asap->tasap_min,$asap->tasap_max);
                 break;
         }
 
@@ -113,7 +113,7 @@ trait VisualAsap
 
     protected function warnaAsapLetusan($wasap)
     {
-        $wasap[0] != '-' ? $result = ' kolom abu letusan berwarna '.str_replace_last(', ',' hingga ', strtolower(implode(', ',$wasap))).'.' : $result = ' kolom abu tidak teramati.';
+        $wasap[0] != '-' ? $result = ' kolom abu letusan berwarna '.str_replace_last(', ',' hingga ', strtolower(implode(', ',$wasap))).'. ' : $result = ' kolom abu tidak teramati. ';
         
         return $result;
     }
@@ -121,12 +121,12 @@ trait VisualAsap
     protected function tinggiLetusan($min,$max,$wasap)
     {
         ($min == $max) AND ($max >0) ?
-            $result = ' Teramati <b>Letusan</b> dengan tinggi '.$max.' meter dari puncak,'.$this->warnaAsapLetusan($wasap):
-            $result = ' <b>Letusan</b> dan warna asap tidak teramati.';
+            $result = 'Teramati <b>Letusan</b> dengan tinggi '.$max.' meter dari puncak,'.$this->warnaAsapLetusan($wasap):
+            $result = '<b>Letusan</b> dan warna asap tidak teramati. ';
 
         ($min != $max) AND ($min >0) ?
-            $result = ' Teramati <b>Letusan</b> dengan tinggi '.$min.'-'.$max.' meter dari puncak,'.$this->warnaAsapLetusan($wasap) :
-            $result = ' Teramati <b>Letusan</b> dengan tinggi '.$max.' meter dari puncak,'.$this->warnaAsapLetusan($wasap);
+            $result = 'Teramati <b>Letusan</b> dengan tinggi '.$min.'-'.$max.' meter dari puncak,'.$this->warnaAsapLetusan($wasap) :
+            $result = 'Teramati <b>Letusan</b> dengan tinggi '.$max.' meter dari puncak,'.$this->warnaAsapLetusan($wasap);
 
        return $result;
     }
@@ -142,12 +142,12 @@ trait VisualAsap
     protected function tinggiasap($min,$max)
     {
         ($min == $max) AND ($max >0) ?
-            $result = ' tinggi sekitar '.$max.' meter dari puncak.':
-            $result = ' tinggi asap tidak teramati.';
+            $result = ' tinggi sekitar '.$max.' meter dari puncak. ':
+            $result = ' tinggi asap tidak teramati. ';
 
         ($min != $max) AND ($min >0) ?
-            $result = ' tinggi sekitar '.$min.'-'.$max.' meter dari puncak.' :
-            $result = ' tinggi sekitar '.$max.' meter dari puncak.';
+            $result = ' tinggi sekitar '.$min.'-'.$max.' meter dari puncak. ' :
+            $result = ' tinggi sekitar '.$max.' meter dari puncak. ';
 
        return $result;
     }
