@@ -49,6 +49,15 @@ Route::name('indonesia.')->group(function () {
     });
 });
 
+Route::name('stakeholder.')->group(function () {
+    Route::group(['middleware' => ['role:Super Admin'], 'prefix' => 'stakeholder'], function () {
+        Route::get('/','StakeholderController@index')->name('index');
+        Route::get('/create','StakeholderController@create')->name('create');
+        Route::post('/store','StakeholderController@store')->name('store');
+        Route::get('/{uuid}/edit','StakeholderController@edit')->name('edit');
+    });
+});
+
 Route::group(['prefix' => 'gunungapi'], function () {
     Route::resource('datadasar','DataDasar');
     Route::resource('pos','PosPgaController');
@@ -213,6 +222,11 @@ Route::name('v1.')->group(function () {
 
         Route::name('absensi.')->group(function() {
             Route::get('absensi','v1\AbsensiController@index')->name('index');
+        });
+
+        Route::name('visitor.')->group(function() {
+            Route::get('visitor','v1\VisitorController@index')->name('index');
+            Route::get('visitor/{year}','v1\VisitorController@filter')->name('filter');
         });
     });
 });

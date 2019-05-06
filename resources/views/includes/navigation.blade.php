@@ -49,6 +49,22 @@
                     <span class="nav-label"> Fpl </span>
                 </a>
             </li> 
+            @role('Super Admin')
+            <li class="{{ active(['chambers.stakeholder.*']) }}">
+                <a href="#">
+                    <span class="nav-label">API</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li class="#">
+                        <a href="#">API Dokumentasi</a>
+                    </li>
+                    <li class="{{ active('chambers.stakeholder.*') }}">
+                        <a href="{{ route('chambers.stakeholder.index') }}">Stakeholder</a>
+                    </li>
+                </ul>
+            </li>
+            @endrole
             <li class="{{ active('chambers.import.*') }}">
                 <a href="{{ route('chambers.import.index') }}">
                     <span class="label label-magma">v.1</span>
@@ -107,6 +123,11 @@
                 <ul class="nav nav-second-level">
                     <li class="{{ active('chambers.v1.gempabumi.index') }}">
                         <a href="{{ route('chambers.v1.gempabumi.index') }}">Gempa Bumi</a>
+                    </li>
+                </ul>
+                <ul class="nav nav-second-level">
+                    <li class="{{ active('chambers.v1.visitor.index') }}">
+                        <a href="{{ route('chambers.v1.visitor.index') }}">Visitor</a>
                     </li>
                 </ul>
             </li>
