@@ -48,7 +48,8 @@
                             <a href="{{ route('chambers.v1.visitor.index') }}" type="button" class="btn btn-magma btn-outline">Semua</a>
                             <a href="{{ route('chambers.v1.visitor.filter',['year' => '2016']) }}" type="button" class="btn btn-magma btn-outline">2016</a>
                             <a href="{{ route('chambers.v1.visitor.filter',['year' => '2017']) }}" type="button" class="btn btn-magma btn-outline">2017</a>
-                            <a href="{{ route('chambers.v1.visitor.filter',['year' => '2018']) }}" type="button" class="btn btn-magma btn-outline">2019</a>
+                            <a href="{{ route('chambers.v1.visitor.filter',['year' => '2018']) }}" type="button" class="btn btn-magma btn-outline">2018</a>
+                            <a href="{{ route('chambers.v1.visitor.filter',['year' => '2019']) }}" type="button" class="btn btn-magma btn-outline">2019</a>
                         </div>
                         <hr>
                         <div class="row">
