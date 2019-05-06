@@ -111,12 +111,19 @@ class HomeController extends Controller
      */
     public function gempaBumi()
     {
-        $last_roq = Roq::select('no','datetime_wib','roq_logtime')
+        $last_roq = MagmaRoq::select('no','datetime_wib','roq_logtime')
                         ->orderBy('datetime_wib','desc')
                         ->first();
 
         $gempas = Cache::remember('v1/home/gempa:'.strtotime($last_roq->roq_logtime), 60, function() {
-            $roqs = Roq::orderBy('datetime_wib','desc')->limit(30)->get();
+            $roqs = MagmaRoq::select('no','datetime_wib','datetime_utc',
+                            'roq_image','id_lap','magnitude','magtype',
+                            'depth','dep_unit','lon_lima','lat_lima',
+                            'area','koter','mmi','nearest_volcano',
+                            'roq_tanggapan','roq_source','roq_logtime')
+                        ->orderBy('datetime_wib','desc')
+                        ->limit(30)
+                        ->get();
             $roqs = $roqs->map(function($roq, $key) {
                 $roq->url = route('api.v1.home.gempa-bumi.roq.show',['id'=> $roq->no]);
                 return $roq;
