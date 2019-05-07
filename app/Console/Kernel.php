@@ -30,9 +30,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $this->scheduleGunungApi($schedule);
-        $this->scheduleGempaBumi($schedule);
         $this->scheduleGerakanTanah($schedule);
         $this->scheduleAdministrasi($schedule);
+        $this->scheduleGempaBumi($schedule);
     }
 
     /**
@@ -106,7 +106,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('gempa:bmkg')
             ->everyTenMinutes()
             ->pingBefore('http://data.bmkg.go.id/')
-            ->withoutOverlapping();
+            ->withoutOverlapping(3);
 
         $schedule->command('import:roq')
             ->daily()
