@@ -81,6 +81,8 @@ class AutoGempaBmkg extends Command
             return $this;
 
         } catch (Exception $e) {
+            $this->gempa = null;
+            $this->terasa = null;
             Log::info('[FAILED] Gagal Download data Gempa BMKG : '.now());
         }
     }
@@ -289,13 +291,19 @@ class AutoGempaBmkg extends Command
      */
     public function handle()
     {
-        $this->info('Sedang melakukan importing gempa BMKG...');
-        $this->setDateTime()
-            ->checkLaporanExists()
-            ->createGempa();
+        if ($this->gempa !== null) {
+            $this->info('Sedang melakukan importing gempa BMKG...');
+            $this->setDateTime()
+                ->checkLaporanExists()
+                ->createGempa();
+            $this->info('Importing gempa BMKG Berhasil!');
+        }
 
-        $this->setDateTimeTerasa()
+        if ($this->terasa !== null) {
+            $this->setDateTimeTerasa()
             ->checkLaporanExists()
             ->updateGempaTerasa();
+        }
+
     }
 }
