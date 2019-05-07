@@ -52,6 +52,7 @@
             @role('Super Admin')
             <li class="{{ active(['chambers.stakeholder.*']) }}">
                 <a href="#">
+                    <i class="fa fa-exchange"></i>
                     <span class="nav-label">API</span>
                     <span class="fa arrow"></span>
                 </a>
@@ -99,23 +100,23 @@
                             <span class="fa arrow"></span>                    
                         </a>
                         <ul class="nav nav-third-level">
-                            <li class="{{ active('chambers.v1.gunungapi.data-dasar.index') }} p-xxs">
-                                <a href="{{ route('chambers.v1.gunungapi.data-dasar.index') }}">Data Dasar</a>
+                            <li class="{{ active('chambers.v1.gunungapi.data-dasar.index') }}">
+                                <a class="m-l" href="{{ route('chambers.v1.gunungapi.data-dasar.index') }}">Data Dasar</a>
                             </li>
-                            <li class="{{ active('chambers.v1.gunungapi.laporan.index') }} p-xxs">
-                                <a href="{{ route('chambers.v1.gunungapi.laporan.index') }}">Daftar Laporan</a>
+                            <li class="{{ active('chambers.v1.gunungapi.laporan.index') }}">
+                                <a class="m-l" href="{{ route('chambers.v1.gunungapi.laporan.index') }}">Daftar Laporan</a>
                             </li>
-                            <li class="{{ active('chambers.v1.gunungapi.laporan.create.var') }} p-xxs">
-                                <a href="{{ route('chambers.v1.gunungapi.laporan.create.var') }}">Buat Laporan</a>
+                            <li class="{{ active('chambers.v1.gunungapi.laporan.create.var') }}">
+                                <a class="m-l" href="{{ route('chambers.v1.gunungapi.laporan.create.var') }}">Buat Laporan</a>
                             </li>
-                            <li class="{{ active('chambers.v1.gunungapi.laporan.filter') }} p-xxs">
-                                <a href="{{ route('chambers.v1.gunungapi.laporan.filter') }}">Cari Laporan</a>
+                            <li class="{{ active('chambers.v1.gunungapi.laporan.filter') }}">
+                                <a class="m-l" href="{{ route('chambers.v1.gunungapi.laporan.filter') }}">Cari Laporan</a>
                             </li>
-                            <li class="{{ active('chambers.v1.gunungapi.ven.index') }} p-xxs">
-                                <a href="{{ route('chambers.v1.gunungapi.ven.index') }}">VEN</a>
+                            <li class="{{ active('chambers.v1.gunungapi.ven.index') }}">
+                                <a class="m-l" href="{{ route('chambers.v1.gunungapi.ven.index') }}">VEN</a>
                             </li>
-                            <li class="{{ active('chambers.v1.vona.*') }} p-xxs">
-                                <a href="{{ route('chambers.v1.vona.index') }}">VONA</a>
+                            <li class="{{ active('chambers.v1.vona.*') }}">
+                                <a class="m-l" href="{{ route('chambers.v1.vona.index') }}">VONA</a>
                             </li>
                         </ul>
                     </li>
