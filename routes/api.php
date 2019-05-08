@@ -14,6 +14,7 @@ use App\Http\Resources\UserResource;
 |
 */
 Route::post('login', 'Api\UserController@login')->name('login');
+Route::post('login/stakeholder', 'Api\StakeholderController@login')->name('login.stakeholder');
 Route::get('logout', 'Api\UserController@logout')->name('logout');
 
 // Route::group(['prefix' => 'tesuser'], function() {

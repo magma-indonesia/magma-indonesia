@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'stakeholder-web' => [
+            'driver' => 'session',
+            'provider' => 'stakeholders',
+        ],
         'api' => [
             'driver' => 'jwt',
             'provider' => 'users',
