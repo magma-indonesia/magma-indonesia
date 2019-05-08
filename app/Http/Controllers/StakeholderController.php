@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Stakeholder;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\StakeholderRequest;
 
 class StakeholderController extends Controller
 {
@@ -14,7 +17,7 @@ class StakeholderController extends Controller
      */
     public function index()
     {
-        $stakeholders = Stakeholder::all();
+        $stakeholders = Stakeholder::simplePaginate();
         return view('stakeholder.index', compact('stakeholders'));
     }
 
@@ -34,9 +37,23 @@ class StakeholderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StakeholderRequest $request)
     {
-        return $request;
+        $stakeholder = new Stakeholder;
+        $stakeholder->app_name = $request->app_name;
+        $stakeholder->uuid = Str::uuid();
+        $stakeholder->organisasi = $request->instansi;
+        $stakeholder->api_type = $request->type;
+        $stakeholder->secret_key = Hash::make(config('jwt.secret'));
+        $stakeholder->kontak_nama = $request->nama;
+        $stakeholder->kontak_phone = $request->phone;
+        $stakeholder->kontak_email = $request->email;
+        $stakeholder->status = $request->status;
+        $stakeholder->expired_at = $request->date;
+        $stakeholder->nip = auth()->user()->nip;
+        $stakeholder->save();
+
+        return $stakeholder;
     }
 
     /**
@@ -58,7 +75,7 @@ class StakeholderController extends Controller
      */
     public function edit(Stakeholder $stakeholder)
     {
-        return view('stakeholder.edit');        //
+        return view('stakeholder.edit', compact('stakeholder'));
     }
 
     /**
@@ -68,9 +85,30 @@ class StakeholderController extends Controller
      * @param  \App\Stakeholder  $stakeholder
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Stakeholder $stakeholder)
+    public function update(StakeholderRequest $request, Stakeholder $stakeholder)
     {
-        //
+        $stakeholder->app_name = $request->app_name;
+        $stakeholder->organisasi = $request->instansi;
+        $stakeholder->api_type = $request->type;
+        $stakeholder->kontak_nama = $request->nama;
+        $stakeholder->kontak_phone = $request->phone;
+        $stakeholder->kontak_email = $request->email;
+        $stakeholder->status = $request->status;
+        $stakeholder->expired_at = $request->date;
+        $stakeholder->nip = auth()->user()->nip;
+        try {
+            $stakeholder->save();
+
+            return redirect()->route('chambers.stakeholder.index')
+            ->with('flash_message',
+            $stakeholder->app_name.' berhasil dirubah.');
+        }
+        catch (Exception $e) {
+            return redirect()->route('chambers.stakeholder.index')
+            ->with('flash_message',
+            $request->app_name.' Gagal dirubah.');
+        }
+    
     }
 
     /**
@@ -81,6 +119,22 @@ class StakeholderController extends Controller
      */
     public function destroy(Stakeholder $stakeholder)
     {
-        //
+        try {
+
+            $stakeholder->delete();
+            return response()->json([
+                'success' => 1,
+                'message' => $stakeholder->app_name.' berhasil dihapus.'
+            ]);
+
+        }
+
+        catch (Exception $e) {
+            return response()->json([
+                'success' => 0,
+                'message' => $stakeholder->app_name.' gagal dihapus.'
+            ], 500);
+        }
     }
+
 }

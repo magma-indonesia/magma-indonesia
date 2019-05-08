@@ -52,8 +52,8 @@
                                         <div class="col-lg-3 text-center">
                                             <i class="pe-7s-note fa-4x text-muted"></i>
                                             <p class="m-t-md">
-                                                <strong>Buat Laporan MAGMA-VAR</strong>, form ini digunakan untuk input data laporan gunung api, meliputi laporan visual dan instrumental.
-                                                <br/><br/>Semua laporan yang dibuat akan dipublikasikan secara realtime melalui aplikasi <strong>MAGMA Indonesia</strong>
+                                                <strong>Tambahkan Stakeholder MAGMA</strong>, form ini digunakan untuk menambahkan sakeholder pengguna data MAGMA Indonesia.
+                                                <br/><br/>Hak akses dibagi menjadi beberapa bagian, pilih salah satu yang mewakili. Sertakan tanggal kapan berlakunya API bisa digunakan.
                                             </p>
                                         </div>
                                         <hr>
@@ -97,8 +97,19 @@
                                                     <input type="text" value="{{ old('email') }}" id="email" class="form-control" name="email" placeholder="Masukkan email pemohon dari instansi terkait">
                                                 </div>
                                                 <div class="form-group col-lg-6">
+                                                    <label>Hak Akses</label>
+                                                    <select id="type" class="form-control" name="type">
+                                                        <option value="private" selected>Private</option>
+                                                        <option value="public">Public</option>
+                                                        <option value="internal">Internal - Semua Bidang</option>
+                                                        <option value="internal-mga">Internal - MGA</option>
+                                                        <option value="internal-mgb">Internal - MGB</option>
+                                                        <option value="internal-mgt">Internal - MGT</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-lg-6">
                                                     <label>Aktifkan API</label>
-                                                    <select id="code" class="form-control" name="code">
+                                                    <select id="code" class="form-control" name="status">
                                                         <option value="0" selected>Tidak</option>
                                                         <option value="1">Ya</option>
                                                     </select>

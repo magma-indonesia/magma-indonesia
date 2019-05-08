@@ -40,14 +40,13 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-
-        // 'api' => [
-        //     'driver' => 'token',
-        //     'provider' => 'users',
-        // ],
         'api' => [
             'driver' => 'jwt',
             'provider' => 'users',
+        ],
+        'stakeholder' => [
+            'driver' => 'jwt',
+            'provider' => 'stakeholders',
         ],
     ],
 
@@ -72,6 +71,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+        'stakeholders' => [
+            'driver' => 'eloquent',
+            'model' => App\Stakeholder::class,
         ],
 
         // 'users' => [

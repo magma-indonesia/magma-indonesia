@@ -54,7 +54,9 @@ Route::name('stakeholder.')->group(function () {
         Route::get('/','StakeholderController@index')->name('index');
         Route::get('/create','StakeholderController@create')->name('create');
         Route::post('/store','StakeholderController@store')->name('store');
-        Route::get('/{uuid}/edit','StakeholderController@edit')->name('edit');
+        Route::get('/{stakeholder}/edit','StakeholderController@edit')->name('edit');
+        Route::put('/{stakeholder}','StakeholderController@update')->name('update');
+        Route::delete('/{stakeholder}','StakeholderController@destroy')->name('destroy');
     });
 });
 

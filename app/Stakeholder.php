@@ -28,7 +28,7 @@ class Stakeholder extends Authenticatable implements JWTSubject
         'uuid', 
         'organisasi',
         'api_type',
-        'api_token',
+        'secret_key',
         'status',
         'kontak_nama',
         'kontak_phone',
@@ -42,8 +42,7 @@ class Stakeholder extends Authenticatable implements JWTSubject
     ];
 
     protected $hidden  = [
-        'api_token',
-        'api_type'
+
     ];
 
     /**
