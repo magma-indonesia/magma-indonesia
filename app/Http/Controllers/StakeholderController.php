@@ -53,7 +53,8 @@ class StakeholderController extends Controller
         $stakeholder->nip = auth()->user()->nip;
         $stakeholder->save();
 
-        return $stakeholder;
+        return redirect()->route('chambers.stakeholder.index')
+                ->with('flash_message',$stakeholder->app_name.' berhasil dibuat.');
     }
 
     /**
