@@ -38,35 +38,6 @@
     @endrole
 @endsection
 
-@section('content-header')
-    <div class="small-header">
-        <div class="hpanel">
-            <div class="panel-body">
-                <div id="hbreadcrumb" class="pull-right">
-                    <ol class="hbreadcrumb breadcrumb">
-                        <li>
-                            <a href="{{ route('chambers.index') }}">Chamber</a>
-                        </li>
-                        <li>
-                            <span>MAGMA v1</span>
-                        </li>
-                        <li>
-                            <span>Create VAR</span>
-                        </li>
-                        <li class="active">
-                            <a href="{{ route('chambers.laporan.create.var') }}">Step 1 - Data Laporan</a>
-                        </li>
-                    </ol>
-                </div>
-                <h2 class="font-light m-b-xs">
-                   Form laporan MAGMA-VAR (Volcanic Activity Report)
-                </h2>
-                <small>Buat laporan gunung api terbaru.</small>
-            </div>
-        </div>
-    </div>
-@endsection
-
 @section('content-body')
     <div class="content animate-panel content-boxed">
         <div class="row">
