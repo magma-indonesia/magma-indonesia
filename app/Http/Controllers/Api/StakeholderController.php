@@ -82,12 +82,18 @@ class StakeholderController extends Controller
     {
         try {
 
-            $this->setExpired($stakeholder);
-            $days = $this->getExpired()->remaining+1;
+            $days = $this->setExpired($stakeholder)->getExpired()->remaining+1;
+            $claims = [
+                'days_remaining' => $this->getExpired()->remaining,
+                'expired_at' => $this->getExpired()->expired_at
+            ];
 
-            if ($token = auth('stakeholder')->setTTL($days*1440)->login($stakeholder)) {
+            $token = auth('stakeholder')->setTTL($days*1440)
+                        ->claims($claims)
+                        ->login($stakeholder);
+
+            if ($token)
                 return $this->respondWithToken($token);
-            }
 
             return response()->json(['error' => 'Unauthorized'], 401);
 
@@ -99,8 +105,9 @@ class StakeholderController extends Controller
 
     }
 
-    protected function status()
+    protected function status(Request $request)
     {
+       
         try {
             JWTAuth::parseToken()->authenticate();
         } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
@@ -118,6 +125,12 @@ class StakeholderController extends Controller
     
             return $this->ApiException(500, 'Token Invalid');
         }
+
+        // return $request;
+
+        $payload = auth('stakeholder')->payload();
+
+        return $payload->toArray();
     }
 
     /**
