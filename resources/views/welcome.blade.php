@@ -72,7 +72,7 @@
             }
 
             .title {
-                font-size: 36px;
+                font-size: 24px;
             }
 
             .links > a {
@@ -106,12 +106,13 @@
             @endif
 
             <div class="content">
-                <img alt="logo" class="p-m" src="{{ url('/').'/images/volcano.svg' }}" style="width: 120px;">
-                <div class="title m-b-md">MAGMA v2</div>            
+                <img alt="logo" class="p-m m-b-md" src="{{ url('/').'/svg/login-logo.svg' }}" style="width: 240px;">
+                <div class="title m-b-sm">MAGMA v2</div>            
                 <div id="time" class="title m-b-md">Loading . . .</div>
 
                 <div class="links">
                     <a href="{{ route('login') }}">Login</a>
+                    <a href="{{ route('v1.home') }}">Demo v1</a>
                 </div>
             </div>
         </div>

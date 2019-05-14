@@ -47,7 +47,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="text-center m-b-md">
-							<img alt="logo" class="p-m" src="{{ url('/').'/images/volcano.svg' }}" style="width: 120px;">
+							<img alt="logo" class="p-m" src="{{ url('/').'/svg/login-logo.svg' }}" style="width: 240px;">
 							<h2>Login MAGMA</h2>					
 						</div>
 						<div class="hpanel">
