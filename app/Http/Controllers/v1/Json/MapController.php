@@ -27,8 +27,11 @@ class MapController extends Controller
     public function showGempa(Request $request) 
     {
         $id = $request ? $request->id : $id;
+        $roq = MagmaRoq::select('no','roq_logtime')->where('no',$id)->firstOrFail();
 
-        $roq = Cache::remember('v1/json/show:roq:'.$id, 60, function() use($id) {
+        $time = strtotime($roq->roq_logtime);
+
+        $roq = Cache::remember('v1/json/show:roq:'.$time, 60, function() use($id) {
             return MagmaRoq::where('no',$id)->firstOrFail();
         });
 
