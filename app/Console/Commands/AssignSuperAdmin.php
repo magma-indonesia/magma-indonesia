@@ -31,11 +31,11 @@ class AssignSuperAdmin extends Command
         return $this;
     }
 
-    protected function assignRole()
+    protected function addRole()
     {
         $this->users->each(function ($nip,$key) {
             $user = User::where('nip',$nip)->first();
-            $user ? $user->syncRoles(['Super Admin']) : false;
+            $user ? $user->assignRole(['Super Admin']) : false;
         });
         return $this;
     }
@@ -65,8 +65,8 @@ class AssignSuperAdmin extends Command
     {
         $this->info('Sedang menambahkan role Super Admin...');
         Role::where('name','Super Admin')->exists() 
-            ? $this->assignRole() 
-            : $this->createRole()->assignRole();
+            ? $this->addRole() 
+            : $this->createRole()->addRole();
         $this->info('Berhasil menambahkan role Super Admin');
     }
 }

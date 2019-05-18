@@ -31,11 +31,11 @@ class AssignHumasPvmbg extends Command
         return $this;
     }
 
-    protected function assignRole()
+    protected function addRole()
     {
         $this->users->each(function ($nip,$key) {
             $user = User::where('nip',$nip)->first();
-            $user ? $user->syncRoles(['Humas PVMBG']) : false;
+            $user ? $user->assignRole(['Humas PVMBG']) : false;
         });
         return $this;
     }
@@ -65,8 +65,8 @@ class AssignHumasPvmbg extends Command
     {
         $this->info('Sedang menambahkan role Humas PVMBG...');
         Role::where('name','Humas PVMBG')->exists() 
-            ? $this->assignRole() 
-            : $this->createRole()->assignRole();
+            ? $this->addRole() 
+            : $this->createRole()->addRole();
         $this->info('Berhasil menambahkan role Humas PVMBG');
     }
 }

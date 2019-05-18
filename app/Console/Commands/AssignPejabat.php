@@ -31,11 +31,11 @@ class AssignPejabat extends Command
         return $this;
     }
 
-    protected function assignRole()
+    protected function addRole()
     {
         $this->users->each(function ($nip,$key) {
             $user = User::where('nip',$nip)->first();
-            $user ? $user->syncRoles(['Struktural']) : false;
+            $user ? $user->assignRole(['Struktural']) : false;
         });
         return $this;
     }
@@ -74,8 +74,8 @@ class AssignPejabat extends Command
     {
         $this->info('Sedang menambahkan role Struktural PVMBG...');
         Role::where('name','Struktural PVMBG')->exists() 
-            ? $this->assignRole() 
-            : $this->createRole()->assignRole();
+            ? $this->addRole() 
+            : $this->createRole()->addRole();
         $this->info('Berhasil menambahkan role Struktural PVMBG');
     }
 }
