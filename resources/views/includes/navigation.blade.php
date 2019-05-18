@@ -112,6 +112,9 @@
                             <li class="{{ active('chambers.v1.gunungapi.laporan.filter') }}">
                                 <a class="m-l" href="{{ route('chambers.v1.gunungapi.laporan.filter') }}">Cari Laporan</a>
                             </li>
+                            <li class="{{ active('chambers.v1.gunungapi.evaluasi.index') }}">
+                                <a class="m-l" href="{{ route('chambers.v1.gunungapi.evaluasi.index') }}">Evaluasi</a>
+                            </li>
                             <li class="{{ active('chambers.v1.gunungapi.ven.index') }}">
                                 <a class="m-l" href="{{ route('chambers.v1.gunungapi.ven.index') }}">VEN</a>
                             </li>

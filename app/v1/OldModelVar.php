@@ -593,7 +593,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return void
      */
-    public function getVarGugAlunAttribute(string $value)
+    public function getVarGugAlunAttribute($value)
     {
         $data = str_replace('#',',',$value);
         return $this->arah($data)->isEmpty() ? null : $this->arah($data) ;
@@ -605,7 +605,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return void
      */
-    public function getVarApgAlunAttribute(string $value)
+    public function getVarApgAlunAttribute($value)
     {
         $data = str_replace('#',',',$value);
         return $this->arah($data)->isEmpty() ? null : $this->arah($data) ;
@@ -617,7 +617,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return void
      */
-    public function getVarAplAlunAttribute(string $value)
+    public function getVarAplAlunAttribute($value)
     {
         $data = str_replace('#',',',$value);
         return $this->arah($data)->isEmpty() ? null : $this->arah($data) ;

@@ -211,6 +211,13 @@ Route::name('v1.')->group(function () {
                 Route::get('laporan/{id}','v1\MagmaVarController@show')
                     ->name('laporan.show');
 
+                Route::get('evaluasi','v1\MagmaVarEvaluasi@index')
+                    ->name('evaluasi.index');
+                Route::get('evaluasi/result','v1\MagmaVarEvaluasi@show')
+                    ->name('evaluasi.show');
+                Route::get('evaluasi/result','v1\MagmaVarEvaluasi@result')
+                    ->name('evaluasi.result');
+
                 Route::get('ven','v1\MagmaVenController@index')->name('ven.index');
                 Route::get('ven/{id}','v1\MagmaVenController@show')->name('ven.show');
             });
