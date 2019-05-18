@@ -24,7 +24,7 @@ class ImportAdministratif extends Import
     public function import()
     {
 
-        $this->importBidang()->importKantor();
+        $this->importBidang();
 
         $data = $this->data
                 ? [ 'success' => 1, 'text' => 'Administasi Kantor', 'message' => 'Data Administasi Kantor berhasil diperbarui','count' => Administrasi::count() ] 
@@ -35,22 +35,9 @@ class ImportAdministratif extends Import
         return response()->json($this->status);
     }
 
-    protected function importKantor()
-    {
-        $this->old = OldKantor::all();
-
-        $this->old->each(function ($item, $key){
-            $this->setItem($item)->updateKantorId();
-        });
-
-        if ($this->data) {
-            return $this;
-        }
-    }
-
     protected function importBidang()
     {
-        $this->old = OldUser::orderBy('id')->get();
+        $this->old = OldUser::with('kantor')->orderBy('id')->get();
         $this->old->each(function ($item, $key) {
             $this->setItem($item)
                 ->convertBidang()
@@ -72,7 +59,8 @@ class ImportAdministratif extends Import
                         'user_id' => $user->id
                     ],
                     [
-                        'bidang_id' => $this->bidang
+                        'bidang_id' => $this->bidang,
+                        'kantor_id' => optional($this->item->kantor)->obscode
                     ]
                 );
     
@@ -140,25 +128,4 @@ class ImportAdministratif extends Import
         return $this;
     }
 
-    protected function updateKantorId()
-    {
-        $nip = $this->item->vg_nip;
-        $obscode = $this->item->obscode;
-
-        if ($user = User::has('administrasi')->select('id')->where('nip',$nip)->first())
-        {
-            try {
-                $administrasi = Administrasi::where('user_id',$user->id)->first();
-                $administrasi->kantor_id = $obscode;
-                if ($administrasi->save())
-                {
-                    $this->data = true;
-                }
-            }
-
-            catch (Exception $e) {
-                $this->sendError($e);
-            }
-        }
-    }
 }
