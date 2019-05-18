@@ -318,6 +318,12 @@ trait DeskripsiGempa
         }
     }
 
+    public function clearDeskripsiGempa()
+    {
+        $this->deskripsi_gempa = array();
+        return $this;
+    }
+
     protected function getDeskripsiGempa($var)
     {
         $this->var = $var;
