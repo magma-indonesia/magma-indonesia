@@ -6,7 +6,7 @@
 
     <!-- Page title -->
     <title>@yield('title')</title>
-    <link href="{{ asset('favicon.png') }}" rel="shortcut icon">
+    <link href="{{ asset('favicon.ico') }}" rel="shortcut icon">
     <link rel="dns-prefetch" href="{{ config('app.url') }}">
     <link rel="dns-prefetch" href="https://magma.vsi.esdm.go.id/">
 

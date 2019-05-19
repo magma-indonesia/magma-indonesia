@@ -10,7 +10,7 @@
 	<title>Login</title>
 
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <link href="{{ asset('favicon.png') }}" rel="shortcut icon">
+    <link href="{{ asset('favicon.ico') }}" rel="shortcut icon">
 
 	<!-- Vendor styles -->
 	<link rel="stylesheet" href="{{ asset('vendor/bootstrap/dist/css/bootstrap.css') }}" />

@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
         <meta name="description" content="MAGMA Indonesia - Bridging the will of nature to society">
         <meta name="author" content="Kementerian ESDM">
-        <link href="{{ asset('favicon.png') }}" rel="shortcut icon">
+        <link href="{{ asset('favicon.ico') }}" rel="shortcut icon">
         <link rel="dns-prefetch" href="{{ config('app.url') }}">
         <link rel="dns-prefetch" href="https://magma.vsi.esdm.go.id/">
         <title>{{ config('app.name') }} - {{ config('app.tag_line') }}</title>
