@@ -85,7 +85,6 @@ class UserController extends Controller
     */
     protected function loginAttempt($request)
     {
-
         try {
 
             $this->request = $request;
@@ -107,7 +106,7 @@ class UserController extends Controller
                     'last_login_ip' => last($request->getClientIps())    
                 ]);
 
-                SendLoginNotification::dispatch('web',$user)
+                SendLoginNotification::dispatch('web',Auth::user())
                     ->delay(now()->addSeconds(30));
                 
                 $token = Auth::guard('api')->attempt($credentials);
