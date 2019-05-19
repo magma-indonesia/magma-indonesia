@@ -7,16 +7,24 @@
 | UserController, including View, Login, Register, Update, Delete
 |
 */
-Route::group(['middleware' => ['web','guest']], function () {
+Route::group(['middleware' => ['guest']], function () {
     Route::get('/', 'HomeController@index')->name('home');
-    Route::get('/login', 'UserController@showLoginForm')->name('login')->middleware('revalidate');
-    Route::post('/login', 'UserController@login')->name('login');
+
+    Route::get('/login', 'UserController@showLoginForm')
+        ->name('login')
+        ->middleware('revalidate');
+
+    Route::post('/login', 'UserController@login')
+        ->name('login');
 });
 
 Route::name('v1.')->group(function () {
     Route::group(['prefix' => 'v1'], function () {
-        Route::get('/','v1\HomeController@home')->name('home');
-        Route::get('/home','v1\HomeController@index')->name('home.index');
+        
+        Route::get('/','v1\HomeController@home')
+            ->name('home');
+        Route::get('/home','v1\HomeController@index')
+            ->name('home.index');
 
         Route::get('vona','FrontPage\v1\VonaController@index')->name('vona.index');
         Route::get('vona/{id}','FrontPage\v1\VonaController@show')
