@@ -3,33 +3,30 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Auth;
-use JWTAuth;
-use Exception;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 use Carbon\Carbon;
 use App\User;
 use App\UserPhoto;
 use App\UserAdministratif;
 use App\UserBidangDesc as Bidang;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
 use App\Notifications\UserLogin;
 use App\Notifications\User As UserNotification;
 use App\Jobs\SendLoginNotification;
-use Log;
 
-//Importing laravel-permission models
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
-//Enables us to output flash messaging
 use Session;
 
 class UserController extends Controller
 {
-    use AuthenticatesUsers;
+    use ThrottlesLogins;
+
+    protected $maxAttempts = 2;
 
     /**
      * Uploading photo profile user
@@ -74,6 +71,13 @@ class UserController extends Controller
         return $success ? true : false;
     }
 
+    public function username()
+    {
+        $username = filter_var($this->request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'nip';
+        return $username;
+    }
+
+
     /** 
      * Login Controller User
      * @param  \Illuminate\Http\Request  $request
@@ -81,17 +85,24 @@ class UserController extends Controller
     */
     protected function loginAttempt($request)
     {
-        $username = $request->username;
-        $username = filter_var($username, FILTER_VALIDATE_EMAIL) ? 'email' : 'nip';
-        $request->merge([$username => $request->username]);
-
-        $credentials = $request->only($username, 'password');
 
         try {
 
-            if (Auth::attempt([$username => $request->username, 'password' => $request->password, 'status' => 1])) {
-                $user = Auth::user();
-                $user->update([
+            $this->request = $request;
+            
+            $credentials = [
+                $this->username() => $request->username,
+                'password' => $request->password,
+                'status' => 1
+            ];
+
+            if ($this->hasTooManyLoginAttempts($request)) {
+                $this->fireLockoutEvent($request);
+                return $this->sendLockoutResponse($request);
+            }
+
+            if (Auth::attempt($credentials)) {
+                Auth::user()->update([
                     'last_login_at' => Carbon::now()->toDateTimeString(),
                     'last_login_ip' => last($request->getClientIps())    
                 ]);
@@ -101,13 +112,8 @@ class UserController extends Controller
                 
                 $token = Auth::guard('api')->attempt($credentials);
 
-                return redirect()->route('chambers.index')->header('Authorization','Bearer '.$token);
-            }
-
-            if ($this->hasTooManyLoginAttempts($request)) {
-                $this->fireLockoutEvent($request);
-
-                return $this->sendLockoutResponse($request);
+                return redirect()->route('chambers.index')
+                        ->header('Authorization','Bearer '.$token);
             }
 
             $this->incrementLoginAttempts($request);
@@ -119,7 +125,9 @@ class UserController extends Controller
         } 
         
         catch (JWTException $e) {
-            return response()->json(['success' => false,'error' => 'could_not_create_token'], 500);
+            throw ValidationException::withMessages([
+                $request->username => [trans('auth.failed')],
+            ]);
         }
 
     }
