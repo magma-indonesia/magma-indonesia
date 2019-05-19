@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>{{ config('app.name') }}</title>
-        <link href="{{ asset('favicon.png') }}" rel="shortcut icon">
+        <link href="{{ asset('favicon.ico') }}" rel="shortcut icon">
 
         <!-- Styles -->
         <style>
