@@ -82,7 +82,9 @@ class StakeholderController extends Controller
     {
         try {
 
-            $days = $this->setExpired($stakeholder)->getExpired()->remaining+1;
+            $days = $this->setExpired($stakeholder)
+                        ->getExpired()->remaining+1;
+
             $claims = [
                 'days_remaining' => $this->getExpired()->remaining,
                 'expired_at' => $this->getExpired()->expired_at
@@ -105,28 +107,28 @@ class StakeholderController extends Controller
 
     }
 
-    protected function status(Request $request)
+    public function status(Request $request)
     {
        
         try {
             JWTAuth::parseToken()->authenticate();
-        } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-    
-            return $this->ApiException($exception->getStatusCode(), 'Token Expired');
-    
-        } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-    
-            return $this->ApiException($exception->getStatusCode(), 'Token Invalid');
-    
-        } catch (\Tymon\JWTAuth\Exceptions\TokenBlacklistedException $e) {
-    
-            return $this->ApiException($exception->getStatusCode(), 'Token Blacklisted');    
-        } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
-    
-            return $this->ApiException(500, 'Token Invalid');
         }
 
-        // return $request;
+        catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $exception) {
+            return $this->ApiException(419, $exception->getMessage());
+        } 
+        
+        catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $exception) {
+            return $this->ApiException(419, $exception->getMessage());
+        }
+        
+        catch (\Tymon\JWTAuth\Exceptions\TokenBlacklistedException $exception) {
+            return $this->ApiException(419, $exception->getMessage());
+        }
+        
+        catch (\Tymon\JWTAuth\Exceptions\JWTException $exception) {
+            return $this->ApiException(500, 'Token Invalid');
+        }
 
         $payload = auth('stakeholder')->payload();
 
