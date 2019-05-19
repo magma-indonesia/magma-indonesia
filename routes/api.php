@@ -13,11 +13,16 @@ use App\Http\Resources\UserResource;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('login', 'Api\UserController@login')->name('login');
+Route::get('status', 'Api\UserController@status')
+    ->name('status');
+
+Route::post('login', 'Api\UserController@login')
+    ->name('login');
+Route::get('logout', 'Api\UserController@logout')
+    ->name('logout');
+
 Route::post('login/stakeholder', 'Api\StakeholderController@login')
     ->name('login.stakeholder');
-Route::get('logout', 'Api\UserController@logout')->name('logout');
-
 Route::get('stakeholder/status', 'Api\StakeholderController@status')
     ->name('stakeholder.status');
 

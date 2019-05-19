@@ -2,21 +2,19 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Auth;
-use JWTAuth;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\UserCollection;
 use App\Notifications\UserLogin;
 use App\Notifications\User As UserNotification;
+use JWTAuth;
 
 class UserController extends Controller
 {
-    use AuthenticatesUsers;
-
+    
     /**
      * Get the token array structure.
      *
@@ -29,7 +27,7 @@ class UserController extends Controller
         return response()->json([
             'token' => $token,
             'type' => 'bearer',
-            'expires_in' => Auth::guard('api')->factory()->getTTL() / 1440,
+            'expires_at' => Auth::guard('api')->factory()->getTTL() / 1440,
         ]);
     }
 
@@ -65,34 +63,42 @@ class UserController extends Controller
     protected function loginAttempt($request,$ttl)
     {
         try {
-            $username = $request->username;
-            $username = filter_var($username, FILTER_VALIDATE_EMAIL) ? 'email' : 'nip';
-            $request->request->add(['status' => 1]);
-            $request->merge([$username => $request->username]);
-    
-            $credentials = $request->only($username, 'password', 'status');
+            $this->request = $request;
+
+            $credentials = [
+                $this->username() => $request->username,
+                'password' => $request->password,
+                'status' => 1
+            ];
 
             if ($user = Auth::once($credentials)) {
-                $token = auth('api')->setTTL($ttl)->attempt($credentials);   
-                $user = auth()->user();
-                $user->notify(new UserLogin('api',$user));
+
+                $claims = [
+                    'roles' => auth()->user()->getRoleNames(),
+                ];
+
+                $token = auth('api')->setTTL($ttl)
+                            ->claims($claims)
+                            ->attempt($credentials);
+
+                auth()->user()
+                    ->notify(new UserLogin('api',auth()->user()));
+
                 return $this->respondWithToken($token);
             }
 
-            if ($this->hasTooManyLoginAttempts($request)) {
-                $this->fireLockoutEvent($request);
-
-                return $this->sendLockoutResponse($request);
-            }
-
-            $this->incrementLoginAttempts($request);
-    
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['success' => false, 'error' => 'Unauthorized'], 401);
         }
 
         catch (JWTException $e) {
             return response()->json(['success' => false, 'error' => 'Token tidak bisa dibuat'], 500);
         }
+    }
+
+    public function username()
+    {
+        $username = filter_var($this->request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'nip';
+        return $username;
     }
 
     /*
@@ -129,28 +135,79 @@ class UserController extends Controller
     {   
         try {
             $user = User::where('nip',$nip)->first();
-            return new UserResource($user); 
+            return new UserResource($user);
         }
 
-        catch (JWTException $e) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        catch (\Tymon\JWTAuth\Exceptions\JWTException $exception) {
+            return $this->ApiException(500, 'Token Invalid');
         }
-
     }
 
     /**
-     * Add token to blaclist
+     * Get token status
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function status(Request $request)
+    {
+       
+        try {
+            if (JWTAuth::parseToken()->authenticate()) {
+                $payload = auth('api')->payload();
+                return $payload->toArray();
+            }
+
+            return $this->ApiException(419, 'Token Invalid');
+        } 
+        
+        catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $exception) {
+            return $this->ApiException(419, $exception->getMessage());
+        } 
+        
+        catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $exception) {
+            return $this->ApiException(419, $exception->getMessage());
+        }
+        
+        catch (\Tymon\JWTAuth\Exceptions\TokenBlacklistedException $exception) {
+            return $this->ApiException(419, $exception->getMessage());
+        }
+        
+        catch (\Tymon\JWTAuth\Exceptions\JWTException $exception) {
+            return $this->ApiException(500, 'Token Invalid');
+        }
+
+        return $this->ApiException(419, 'Token Invalid');
+    }
+
+    /**
+     * Add token to blacklist
      *
      * @param Request $request
      * @return void
      */
     public function logout(Request $request)
     {
-        $user = JWTAuth::setToken($request->token)->invalidate();
+        $user = JWTAuth::parseToken()->invalidate();
         
         return response()->json([
             'data' => [ 'success' => true, 'message' => 'Berhasil menghapus token'],
         ]);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param int $code
+     * @param string $message
+     * @return json
+     */
+    protected function ApiException(int $code = 419, string $message)
+    {
+        return response()->json([
+            'status' => 'false',
+            'code' => $code,
+            'message' => $message], $code);
     }
 
 }
