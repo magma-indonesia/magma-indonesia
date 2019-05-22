@@ -91,12 +91,7 @@ VONA - {{ $vona->ga_code }} {{ $vona->issued }}
                             <td>(12)</td>
                             <td><b>Volcanic Cloud Height</b></td>
                             <td><b>:</b></td>
-                            <td>
-                            @if($vona->vch_height > 0)
-                                {{ $vona->vch_height_text }}
-                            @else
-                            Volcanic ash is not visible/observed.
-                            @endif</td>
+                            <td>{{ $vona->vc_height ? $vona->vc_height_text : 'Volcanic ash is not visible/observed.' }}</td>
                         </tr>
                         <tr>
                             <td>(13)</td>
