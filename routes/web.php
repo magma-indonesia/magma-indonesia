@@ -25,7 +25,9 @@ Route::name('v1.')->group(function () {
             ->name('home');
         Route::get('/home','v1\HomeController@index')
             ->name('home.index');
-
+        Route::get('in-frame','v1\HomeController@frame')
+            ->name('home.frame');
+            
         Route::get('vona','FrontPage\v1\VonaController@index')->name('vona.index');
         Route::get('vona/{id}','FrontPage\v1\VonaController@show')
             ->name('vona.show')
