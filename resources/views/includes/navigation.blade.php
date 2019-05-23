@@ -230,7 +230,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="{{ active(['chambers.datadasar.*','chambers.laporan.*','chambers.laporan.search','chambers.pos.*','chambers.letusan.*','chambers.draft.*']) }}">
+            <li class="{{ active(['chambers.datadasar.*','chambers.laporan.*','chambers.laporan.search','chambers.pos.*','chambers.letusan.*','chambers.draft.*','chambers.peralatan.*']) }}">
                 <a href="#">
                     <span class="nav-label">Gunung Api</span>
                     <span class="fa arrow"></span>
@@ -240,6 +240,9 @@
                         <a href="{{ route('chambers.datadasar.index') }}">Data Dasar</a>
                     </li>
                     @yield('nav-edit-volcano')
+                    <li class="{{ active('chambers.peralatan.index') }}">
+                        <a href="{{ route('chambers.peralatan.index') }}">Peralatan Monitoring</a>
+                    </li>
                     <li class="{{ active('chambers.laporan.index') }}">
                         <a href="{{ route('chambers.laporan.index') }}">Daftar Laporan</a>
                     </li>

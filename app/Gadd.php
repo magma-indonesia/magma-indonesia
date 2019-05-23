@@ -118,4 +118,14 @@ class Gadd extends Model
     {
         return $this->hasMany('App\VarRekomendasi','code_id','code');
     }
+
+    /**
+     * Masing-masing gunungapi banyak peralatan monitoring
+     *
+     * @return void
+     */
+    public function alat()
+    {
+        return $this->hasMany('App\Alat','code_id','code');
+    }
 }

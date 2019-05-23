@@ -64,6 +64,15 @@ Route::group(['prefix' => 'gunungapi'], function () {
     Route::resource('datadasar','DataDasar');
     Route::resource('pos','PosPgaController');
     Route::resource('letusan','MagmaVenController');
+
+    Route::name('peralatan.')->group(function () {
+        Route::group(['prefix' => 'peralatan'], function () {
+            Route::get('/','AlatController@index')->name('index');
+            Route::get('/create','AlatController@create')->name('create');
+            Route::post('/create','AlatController@store')->name('store');
+        });
+    });
+
     Route::get('laporan/search','ActivityGaController@search')->name('laporan.search');
     Route::post('laporan/verifikasiv1','ActivityGaController@verifikasiv1')->name('laporan.verifikasiv1');
     Route::post('laporan/validasi','ActivityGaController@validasi')->name('laporan.validasi');
