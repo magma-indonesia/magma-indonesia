@@ -68,7 +68,7 @@ class AutoGempaBmkg extends Command
             ]);
 
             $xml_terasa = XmlParser::load('http://data.bmkg.go.id/lastgempadirasakan.xml');
-            $terasa = $xml_id->parse([
+            $terasa = $xml_terasa->parse([
                 'tanggal' => ['uses' => 'Gempa.Tanggal'],
                 'jam' => ['uses' => 'Gempa.Jam'],
                 'kedalaman'=> ['uses' => 'Gempa.Kedalaman'],
@@ -80,7 +80,9 @@ class AutoGempaBmkg extends Command
 
             return $this;
 
-        } catch (Exception $e) {
+        } 
+        
+        catch (Exception $e) {
             $this->gempa = null;
             $this->terasa = null;
             Log::info('[FAILED] Gagal Download data Gempa BMKG : '.now());
