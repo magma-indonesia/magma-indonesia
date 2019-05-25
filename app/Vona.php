@@ -27,6 +27,10 @@ class Vona extends Model
         'sent' => 'boolean'
     ];
 
+    protected $with = [
+        'user:nip,name'
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
