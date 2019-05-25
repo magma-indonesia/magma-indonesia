@@ -27,7 +27,13 @@ class MagmaVen extends Model
         'date'
     ];
 
-    protected $with = ['user:nip,name'];
+    protected $with = [
+        'user:nip,name'
+    ];
+
+    protected $appends = [
+        'status_deskripsi'
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -62,7 +68,7 @@ class MagmaVen extends Model
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function getStatusAttribute($value)
+    public function getStatusDeskripsiAttribute($value)
     {
         switch ($value) {
             case 4:
