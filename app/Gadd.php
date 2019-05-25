@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class Gadd extends Model
 {
@@ -77,27 +78,38 @@ class Gadd extends Model
      *   Masing-masing Gunungapi hanya memiliki 
      *   1 laporan harian
      */
-    public function latestVar()
+    public function latest_vars()
     {
-        return $this->hasOne('App\MagmaVar','code_id','code')->latest();
+        return $this->hasOne('App\MagmaVar','code_id','code')
+                    ->join(DB::raw('(SELECT code_id, MAX(noticenumber) as noticenumber FROM magma_vars GROUP BY code_id) lates_vars'), function($join) {
+                        $join->on('magma_vars.noticenumber','=','lates_vars.noticenumber');
+                    });
     }
 
     /**     
      *   Masing-masing Gunungapi hanya memiliki 
      *   1 laporan VEN Terkini
      */
-    public function latestVen()
+    public function latest_vens()
     {
-        return $this->hasOne('App\MagmaVen','code_id','code')->orderBy('id','desc');
+        return $this->hasOne('App\MagmaVen','code_id','code')
+                    ->join(DB::raw('(SELECT code_id, MAX(date) as date FROM magma_vens GROUP BY code_id) latest_vens'), function($join) {
+                        $join->on('magma_vens.date','=','latest_vens.date')
+                            ->on('magma_vens.code_id','=','latest_vens.code_id');
+                    });
     }
 
     /**     
      *   Masing-masing Gunungapi hanya memiliki 
      *   1 laporan VONA Terkini
      */
-    public function latestVona()
+    public function latest_vona()
     {
-        return $this->hasOne('App\Vona','code_id','code')->latest();
+        return $this->hasOne('App\Vona','code_id','code')
+                    ->join(DB::raw('(SELECT code_id, MAX(issued) as issued FROM vonas GROUP BY code_id) latest_vona'), function($join) {
+                        $join->on('vonas.issued','=','latest_vona.issued')
+                            ->on('vonas.code_id','=','latest_vona.code_id');
+                    });
     }
 
     /**     
