@@ -27,6 +27,10 @@ class MagmaVar extends Model
         'nip_pelapor',
     ];
 
+    protected $appends = [
+        'status_deskripsi'
+    ];
+
     public function getStatusDeskripsiAttribute()
     {
         switch ($this->attributes['status']) {
