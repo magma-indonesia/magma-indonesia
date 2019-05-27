@@ -14,7 +14,7 @@ class UpateMagmaVensTable extends Migration
     public function up()
     {
         Schema::table('magma_vens', function (Blueprint $table) {
-            $table->float('amplitudo',5,2)->default(0);
+            $table->float('amplitudo',5,2)->default(0)->change();
         });
     }
 
