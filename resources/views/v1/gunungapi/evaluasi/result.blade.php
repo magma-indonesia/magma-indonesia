@@ -105,7 +105,7 @@
                             <div class="panel-body">
                                 <ul class="list-group m-t-lg">
                                 @foreach ($data['details'] as $details)
-                                    <li class="list-group-item"><b>{{ \Carbon\Carbon::parse($details['date'])->formatLocalized('%A, %d %B %Y')}}</b>, {{ lcfirst($details['visual']) }}</li>  
+                                    <li class="list-group-item"><b>{{ \Carbon\Carbon::parse($details['date'])->formatLocalized('%A, %d %B %Y')}}</b>, {{ $details['visual'] ?: 'Tidak ada data' }}</li>
                                 @endforeach
                                 </ul>
                             </div>
