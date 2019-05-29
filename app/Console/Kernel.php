@@ -43,6 +43,7 @@ class Kernel extends ConsoleKernel
      * Data VAR Visual
      * Data VAR Klimatologi
      * Data VAR Kegempaan
+     * Data VAR Harian
      * Data Informasi Letusan (VEN)
      * Data VONA
      * 
@@ -75,6 +76,11 @@ class Kernel extends ConsoleKernel
             ->appendOutputTo($filePath);
     
         $schedule->command('import:gempa')
+            ->cron('0 2,8,14,20 * * *')
+            ->pingBefore($this->getUrlMagma())
+            ->appendOutputTo($filePath);
+
+        $schedule->command('import:vardaily')
             ->cron('0 2,8,14,20 * * *')
             ->pingBefore($this->getUrlMagma())
             ->appendOutputTo($filePath);
