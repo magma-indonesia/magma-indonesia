@@ -24,7 +24,7 @@ class CreateMagmaVensTable extends Migration
             $table->char('wasap',100)->nullable();
             $table->char('intensitas',100)->nullable();            
             $table->char('arah_asap',100)->nullable();
-            $table->float('amplitudo',4,2)->default(0);
+            $table->float('amplitudo',5,2)->default(0);
             $table->float('durasi',8,2)->default(0);
             $table->string('photo')->nullable();
             $table->enum('status',['1','2','3','4']);
