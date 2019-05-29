@@ -21,9 +21,9 @@ class ImportVarHarian extends Import
 
     public function import()
     {
-        $this->old = Gadd::with('latestVar')
+        $this->old = Gadd::with('latest_vars')
             ->select('code')
-            ->whereNotIn('code',['TEO','SBG'])
+            ->whereNotIn('code',['TEO'])
             ->get();
             
         $this->old->each(function ($item, $key) {
@@ -44,7 +44,7 @@ class ImportVarHarian extends Import
         try {
             $create = VarDaily::updateOrCreate(
                 ['code_id'  => $this->item->code],
-                ['noticenumber_id' => $this->item->latestVar->noticenumber]
+                ['noticenumber_id' => $this->item->latest_vars->noticenumber]
             );
 
             $this->data = $create ? true : false;
