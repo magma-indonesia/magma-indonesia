@@ -82,6 +82,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'seismogram' => [
+            'driver' => 'local',
+            'root' => storage_path('app/seismogram'),
+            'url' => env('APP_URL').'/seismogram',
+            'visibility' => 'public',
+        ],
+
         'magma-old-ftp' => [
             'driver' => 'sftp',
             'host' => env('MAGMA_HOST', 'forge'),
