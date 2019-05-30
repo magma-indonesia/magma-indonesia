@@ -19,7 +19,11 @@ class ActivityController extends Controller
      */
     public function index()
     {     
-        $gadds = Gadd::orderBy('name')->whereNotIn('code',['TEO','SBG'])->get();
+        $gadds = Gadd::with('latest_vars')
+                ->orderBy('name')
+                ->whereNotIn('code',['TEO'])
+                ->get();
+
         return view('activities.index',compact('gadds'));
     }
 

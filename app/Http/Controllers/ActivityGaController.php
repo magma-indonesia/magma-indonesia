@@ -32,10 +32,12 @@ class ActivityGaController extends Controller
                 ->orderBy('created_at','desc')
                 ->simplePaginate(15);
 
-        $gadds = Gadd::orderBy('name')
-                ->whereNotIn('code',['TEO','SBG'])
+        $gadds = Gadd::with('latest_vars')
+                ->orderBy('name')
+                ->whereNotIn('code',['TEO'])
                 ->get();
 
+        // return dd($gadds);
         return view('gunungapi.laporan.index',compact('vars','gadds'));
     }
 

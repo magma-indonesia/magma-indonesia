@@ -40,12 +40,12 @@
                                 <tbody>
                                     @foreach ($gadds as $gadd)
                                     <tr>
-                                        <td class="{{ $gadd->latestVar->status }}">{{ $gadd->name }}</td>
+                                        <td class="{{ $gadd->latest_vars->status }}">{{ $gadd->name }}</td>
                                         <td>
-                                            <span class="pie">{{ $gadd->latestVar->var_data_date->formatLocalized('%A, %d %B %Y').', '.$gadd->latestVar->periode }}</span>
+                                            <span class="pie">{{ $gadd->latest_vars->var_data_date->formatLocalized('%A, %d %B %Y').', '.$gadd->latest_vars->periode }}</span>
                                         </td>  
                                         <td>
-                                            <a href="{{ route('chambers.laporan.show',$gadd->latestVar->noticenumber ) }}" target="_blank" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">View</a>
+                                            <a href="{{ route('chambers.laporan.show',$gadd->latest_vars->noticenumber ) }}" target="_blank" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">View</a>
                                         </td>
                                     </tr>
                                     @endforeach
