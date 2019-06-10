@@ -31,7 +31,7 @@
                     <div class="panel-body text-center h-200">
                         <i class=" pe-7s-add-user fa-4x"></i>
                         <br>
-                        <h1 class="m-xs jumlah-users">{{ $users }}</h1>
+                        <h1 class="m-xs jumlah-users">{{ $counts->users }}</h1>
 
                         <h3 class="font-extra-bold no-margins text-magma">
                             Jumlah User
@@ -58,7 +58,7 @@
                     <div class="panel-body text-center h-200">
                         <i class="pe-7s-shuffle fa-4x"></i>
                         <br>
-                        <h1 class="m-xs jumlah-bidang">{{ $bidang }}</h1>
+                        <h1 class="m-xs jumlah-bidang">{{ $counts->bidang }}</h1>
 
                         <h3 class="font-extra-bold no-margins text-magma">
                             Administrasi User
@@ -85,7 +85,7 @@
                     <div class="panel-body text-center h-200">
                         <i class="pe-7s-look fa-4x"></i>
                         <br>
-                        <h1 class="m-xs jumlah-absensi">{{ $absensi }}</h1>
+                        <h1 class="m-xs jumlah-absensi">{{ number_format($counts->absensi,0,',','.') }}</h1>
 
                         <h3 class="font-extra-bold no-margins text-magma">
                             Absensi Pegawai
@@ -112,7 +112,7 @@
                     <div class="panel-body text-center h-200">
                         <i class="pe-7s-help1 fa-4x"></i>
                         <br>
-                        <h1 class="m-xs jumlah-pengajuan">{{ $pengajuan }}</h1>
+                        <h1 class="m-xs jumlah-pengajuan">{{ $counts->pengajuan }}</h1>
 
                         <h3 class="font-extra-bold no-margins text-magma">
                             Data Pengajuan
@@ -141,7 +141,7 @@
                     <div class="panel-body text-center h-200">
                         <i class=" pe-7s-server fa-4x"></i>
                         <br>
-                        <h1 class="m-xs jumlah-gadds">{{ $gadds }}</h1>
+                        <h1 class="m-xs jumlah-gadds">{{ $counts->gadds }}</h1>
 
                         <h3 class="font-extra-bold no-margins text-magma">
                             Jumlah Gunung Api
@@ -173,26 +173,26 @@
                             <i class="pe-7s-share fa-4x"></i>
                         </div>
                         <div class="m-t-xl">
-                            <h3 class="m-b-xs jumlah-vars">{{ number_format($vars,0,',','.') }}</h3>
+                            <h3 class="m-b-xs jumlah-vars">{{ number_format($counts->vars,0,',','.') }}</h3>
                             <span class="font-bold no-margins">
                                 Jumlah data VAR
                             </span>
 
                             <div class="progress m-t-xs full progress-small">
-                                <div style="width: {{ $vars/$varsv1*100 }}%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="{{ $vars/$varsv1*100 }}" role="progressbar" class=" progress-bar progress-bar-magma">
-                                    <span class="sr-only">{{ $vars/$varsv1*100 }}% Complete</span>
+                                <div style="width: {{ $counts->vars/$counts->vars_old*100 }}%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="{{ $counts->vars/$counts->vars_old*100 }}" role="progressbar" class=" progress-bar progress-bar-magma">
+                                    <span class="sr-only">{{ $counts->vars/$counts->vars_old*100 }}% Complete</span>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-xs-6">
                                     <small class="stats-label">Jumlah VAR Magma v1</small>
-                                    <h4>{{ number_format($varsv1,0,',','.') }}</h4>
+                                    <h4>{{ number_format($counts->vars_old,0,',','.') }}</h4>
                                 </div>
 
                                 <div class="col-xs-6">
                                     <small class="stats-label">% Data</small>
-                                    <h4 class="persentase-vars">{{ round($vars/$varsv1*100, 2) }}%</h4>
+                                    <h4 class="persentase-vars">{{ round($counts->vars/$counts->vars_old*100, 2) }}%</h4>
                                 </div>
                             </div>
                         </div>
@@ -232,7 +232,7 @@
                         </div>
                         <div class="row m-t-md">
                             <div class="col-lg-6">
-                                <h3 class="no-margins font-extra-bold text-magma jumlah-visuals">{{ number_format($visuals,0,',','.') }}</h3>
+                                <h3 class="no-margins font-extra-bold text-magma jumlah-visuals">{{ number_format($counts->visuals,0,',','.') }}</h3>
                                 <div class="font-bold"><i class="fa fa-level-up text-magma"></i> Jumlah data terkini</div>
                             </div>
                         </div>
@@ -272,7 +272,7 @@
                         </div>
                         <div class="row m-t-md">
                             <div class="col-lg-6">
-                                <h3 class="no-margins font-extra-bold text-magma jumlah-klimatologis">{{ number_format($klimatologis,0,',','.') }}</h3>
+                                <h3 class="no-margins font-extra-bold text-magma jumlah-klimatologis">{{ number_format($counts->klimatologi,0,',','.') }}</h3>
                                 <div class="font-bold"><i class="fa fa-level-up text-magma"></i> Jumlah data terkini</div>
                             </div>
                         </div>
@@ -314,7 +314,7 @@
                         </div>
                         <div class="row m-t-md">
                             <div class="col-lg-6">
-                                <h3 class="no-margins font-extra-bold text-magma jumlah-gempa">{{ number_format($gempa,0,',','.') }}</h3>
+                                <h3 class="no-margins font-extra-bold text-magma jumlah-gempa">{{ number_format($counts->gempa,0,',','.') }}</h3>
                                 <div class="font-bold"><i class="fa fa-level-up text-magma"></i> Jumlah seluruh gempa</div>
                             </div>
                         </div>
@@ -344,7 +344,7 @@
                             <i class="pe-7s-ribbon fa-4x"></i>
                         </div>
                         <div class="m-t-xl">
-                            <h1 class="text-magma jumlah-rekomendasi">{{ $rekomendasi }}</h1>
+                            <h1 class="text-magma jumlah-rekomendasi">{{ $counts->rekomendasi }}</h1>
                             <span class="font-bold no-margins">
                                 Rekomendasi Gunung Api
                             </span>
@@ -381,7 +381,7 @@
                             <i class="pe-7s-monitor fa-4x"></i>
                         </div>
                         <div class="m-t-xl">
-                            <h1 class="text-magma jumlah-dailies">{{ $vardailies }}</h1>
+                            <h1 class="text-magma jumlah-dailies">{{ $counts->var_daily }}</h1>
                             <span class="font-bold no-margins">
                                 Volcanic Activity Report
                             </span>
@@ -428,7 +428,7 @@
                         </div>
                         <div class="row m-t-md">
                             <div class="col-lg-6">
-                                <h3 class="no-margins font-extra-bold text-magma jumlah-vens">{{ number_format($vens,0,',','.') }}</h3>
+                                <h3 class="no-margins font-extra-bold text-magma jumlah-vens">{{ number_format($counts->vens,0,',','.') }}</h3>
                                 <div class="font-bold"><i class="fa fa-level-up text-magma"></i> Informasi Letusan</div>
                             </div>
                         </div>
@@ -470,7 +470,7 @@
                         </div>
                         <div class="row m-t-md">
                             <div class="col-lg-6">
-                                <h3 class="no-margins font-extra-bold text-magma jumlah-vona">{{ number_format($vona,0,',','.') }}</h3>
+                                <h3 class="no-margins font-extra-bold text-magma jumlah-vona">{{ number_format($counts->vona,0,',','.') }}</h3>
                                 <div class="font-bold"><i class="fa fa-level-up text-magma"></i> Jumlah data VONA</div>
                             </div>
                         </div>
@@ -510,7 +510,7 @@
                         </div>
                         <div class="row m-t-md">
                             <div class="col-lg-6">
-                                <h3 class="no-margins font-extra-bold text-magma jumlah-subscribers">{{ number_format($subs,0,',','.') }}</h3>
+                                <h3 class="no-margins font-extra-bold text-magma jumlah-subscribers">{{ number_format($counts->subs,0,',','.') }}</h3>
                                 <div class="font-bold"><i class="fa fa-level-up text-magma"></i> Jumlah data Subscribers</div>
                             </div>
                         </div>
@@ -550,7 +550,7 @@
                         </div>
                         <div class="row m-t-md">
                             <div class="col-lg-6">
-                                <h3 class="no-margins font-extra-bold text-magma jumlah-crs">{{ number_format($crs,0,',','.') }}</h3>
+                                <h3 class="no-margins font-extra-bold text-magma jumlah-crs">{{ number_format($counts->crs,0,',','.') }}</h3>
                                 <div class="font-bold"><i class="fa fa-level-up text-magma"></i> Jumlah data CRS</div>
                             </div>
                         </div>
@@ -590,7 +590,7 @@
                         </div>
                         <div class="row m-t-md">
                             <div class="col-lg-6">
-                                <h3 class="no-margins font-extra-bold text-magma jumlah-roq">{{ number_format($roq,0,',','.') }}</h3>
+                                <h3 class="no-margins font-extra-bold text-magma jumlah-roq">{{ number_format($counts->roq,0,',','.') }}</h3>
                                 <div class="font-bold"><i class="fa fa-level-up text-magma"></i> Jumlah data ROQ</div>
                             </div>
                         </div>
@@ -632,7 +632,7 @@
                         </div>
                         <div class="row m-t-md">
                             <div class="col-lg-6">
-                                <h3 class="no-margins font-extra-bold text-magma jumlah-sigertan">{{ number_format($sigertan,0,',','.') }}</h3>
+                                <h3 class="no-margins font-extra-bold text-magma jumlah-sigertan">{{ number_format($counts->sigertan,0,',','.') }}</h3>
                                 <div class="font-bold"><i class="fa fa-level-up text-magma"></i> Jumlah data Sigertan</div>
                             </div>
                         </div>
@@ -698,7 +698,7 @@
                                 $label.html(data.message);
                                 $('.jumlah-'+$import).html(commafy($jumlah));
                                 if ($import=='vars') {
-                                    $persentase = $jumlah/{{ $varsv1 }}*100;
+                                    $persentase = $jumlah/{{ $counts->vars_old }}*100;
                                     $('.persentase-'+$import).html($persentase.toFixed(2)+'%');
                                 }
                             },1000)

@@ -35,46 +35,28 @@ class ImportController extends Controller
     public function index()
     {
 
-        $users = User::count();
-        $bidang = UserAdministratif::count();
-        $gadds = Gadd::count();
-        $varsv1 = OldVar::count();
-        $vars = MagmaVar::count();
-        $vardailies = VarDaily::count();
-        $visuals = VarVisual::count();
-        $klimatologis = VarKlimatologi::count();
         $gempa = new VarGempa();
-        $gempa = $gempa->jumlah();
-        $crs = SigertanCrs::count();
-        $vona = Vona::count();
-        $subs = VonaSubscriber::count();
-        $vens = MagmaVen::count();
-        $roq =  MagmaRoq::count();
-        $absensi = Absensi::count();
-        $sigertan = MagmaSigertan::count();
-        $rekomendasi = VarRekomendasi::count();
-        $pengajuan = Pengajuan::count();
+
+        $counts = new \stdClass();
+        $counts->users = User::count();
+        $counts->bidang = UserAdministratif::count();
+        $counts->gadds = Gadd::count();
+        $counts->vars_old = OldVar::count();
+        $counts->vars = MagmaVar::count();
+        $counts->var_daily = VarDaily::count();
+        $counts->visuals = VarVisual::count();
+        $counts->klimatologi = VarKlimatologi::count();
+        $counts->gempa = $gempa->jumlah();
+        $counts->crs = SigertanCrs::count();
+        $counts->vona = Vona::count();
+        $counts->subs = VonaSubscriber::count();
+        $counts->vens = MagmaVen::count();
+        $counts->roq =  MagmaRoq::count();
+        $counts->absensi = Absensi::count();
+        $counts->sigertan = MagmaSigertan::count();
+        $counts->rekomendasi = VarRekomendasi::count();
+        $counts->pengajuan = Pengajuan::count();
         
-        return view('import.index',compact(
-            'users',
-            'bidang',
-            'gadds',
-            'varsv1',
-            'vars',
-            'vardailies',
-            'visuals',
-            'klimatologis',
-            'gempa',
-            'crs',
-            'vona',
-            'subs',
-            'vens',
-            'roq',
-            'absensi',
-            'sigertan',
-            'rekomendasi',
-            'pengajuan'
-            )
-        );
+        return view('import.index',compact('counts'));
     }
 }
