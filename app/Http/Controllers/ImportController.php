@@ -23,6 +23,7 @@ use App\MagmaSigertan;
 use App\MagmaRoq;
 use App\Pengajuan;
 use App\v1\MagmaVar as OldVar;
+use App\TempTable;
 
 class ImportController extends Controller
 {
@@ -36,6 +37,7 @@ class ImportController extends Controller
     {
 
         $gempa = new VarGempa();
+        $temp_vars = TempTable::where('jenis','vars')->first();
 
         $counts = new \stdClass();
         $counts->users = User::count();
@@ -57,6 +59,6 @@ class ImportController extends Controller
         $counts->rekomendasi = VarRekomendasi::count();
         $counts->pengajuan = Pengajuan::count();
         
-        return view('import.index',compact('counts'));
+        return view('import.index',compact('counts','temp_vars'));
     }
 }

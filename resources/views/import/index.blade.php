@@ -198,13 +198,22 @@
                         </div>
                     </div>
                     <div class="panel-footer text-center">
-                        <form role="form" id="form-import" method="POST"
+                        <form class="form-horizontal" role="form" id="form-import" method="POST"
                         data-import="vars" action="{{ route('chambers.import.vars') }}">
                             @csrf
-                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
-                                <span class="ladda-label">Import Vars</span>
-                                <span class="ladda-spinner"></span>
-                            </button>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div class="input-group">
+                                        <input name="start" type="text" class="form-control" value="{{ $temp_vars->no ?? 0 }}">
+                                        <span class="input-group-btn">
+                                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
+                                                <span class="ladda-label">Import</span>
+                                                <span class="ladda-spinner"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -680,9 +689,9 @@
 
                 l.start();
 
-                var $url = $(this).parent().attr('action'),
-                    $data = $(this).parent().serialize(),
-                    $import = $(this).parent().attr('data-import');
+                var $url = $(this).closest('form').attr('action'),
+                    $data = $(this).closest('form').serialize(),
+                    $import = $(this).closest('form').attr('data-import');
 
                 $.ajax({
                     url: $url,
@@ -704,6 +713,7 @@
                             },1000)
                         } else {
                             l.stop();
+                            $label.html(data.message);
                             $button.removeAttr('disabled');
                         }
                     },
