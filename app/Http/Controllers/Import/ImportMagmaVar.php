@@ -16,20 +16,28 @@ class ImportMagmaVar extends Import
     use ImportHelper;
 
     protected $obscode, $noticenumber, $pj, $verifikator, $lainnya;
+    protected $start_no;
+    protected $end_no;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
         ini_set('max_execution_time', 1200);
+        $this->start_no = $request->has('start') ? $request->start : $this->startNo('vars');
+        $this->end_no = $request->has('end') ? $request->end : $this->endNo('var');
     }
 
-    public function import()
+    public function import(Request $request)
     {
+        $request->validate([
+            'start' => 'required|numeric'
+        ]);
+
         $this->old = OldVar::select(
             'no','ga_code','var_noticenumber','ga_nama_gapi',
             'cu_status','var_issued','var_data_date',
             'periode','var_perwkt','var_source','var_nip_pelapor',
             'var_nip_pemeriksa_pj','var_nip_pemeriksa','var_log','var_ketlain')
-        ->whereBetween('no',[$this->startNo('vars'),$this->endNo('var')])
+        ->whereBetween('no',[$this->start_no,$this->end_no])
         ->orderBy('no');
 
         $this->rekomendasi = VarRekomendasi::all();
@@ -47,7 +55,7 @@ class ImportMagmaVar extends Import
         });
 
         $data = $this->data
-                    ? [ 'success' => 1, 'text' => 'Data MAGMA-VAR v1', 'message' => 'Data Vars berhasil diperbarui', 'count' => MagmaVar::count() ] 
+                    ? [ 'success' => 1, 'text' => 'Data MAGMA-VAR v1', 'message' => 'Data Vars berhasil diperbarui', 'count' => MagmaVar::count(), 'others' =>  $this->start_no ] 
                     : [ 'success' => 0, 'text' => 'Data MAGMA-VAR v1', 'message' => 'Data Vars gagal diperbarui', 'count' => 0 ];
 
         $this->sendNotif($data);
