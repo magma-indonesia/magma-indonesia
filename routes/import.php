@@ -12,7 +12,7 @@ Route::post('vars','Import\ImportMagmaVar@import')->name('vars');
 Route::post('dailies','Import\ImportVarHarian@import')->name('dailies');
 Route::post('visuals','Import\ImportVarVisual@import')->name('visuals');
 Route::post('klimatologi','Import\ImportVarKlimatologi@import')->name('klimatologi');
-Route::get('gempa','Import\ImportGempa@import')->name('gempa');
+Route::post('gempa','Import\ImportGempa@import')->name('gempa');
 Route::post('rekomendasi','Import\ImportVarRekomendasi@import')->name('rekomendasi');
 Route::post('vens','Import\ImportMagmaVen@import')->name('vens');
 Route::post('vona','Import\ImportVona@import')->name('vona');
