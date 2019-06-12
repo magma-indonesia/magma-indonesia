@@ -28,10 +28,6 @@ class ImportMagmaVar extends Import
 
     public function import(Request $request)
     {
-        $request->validate([
-            'start' => 'required|numeric'
-        ]);
-
         $this->old = OldVar::select(
             'no','ga_code','var_noticenumber','ga_nama_gapi',
             'cu_status','var_issued','var_data_date',

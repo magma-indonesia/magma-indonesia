@@ -22,18 +22,17 @@ class ImportGempa extends Import
         ini_set('max_execution_time', 1200);
     }
 
-    public function import()
+    public function import(Request $request)
     {
-        // return $this->gempa;
         $this->gempa = collect($this->jenisgempa());
-        $this->gempa->each(function ($item, $key) {
+        $this->gempa->each(function ($item, $key) use ($request) {
             $this->setItem($item)
-                ->gempaSp()
-                ->gempaNormal()
-                ->gempaDominan()
-                ->gempaLuncuran()
-                ->gempaErupsi()
-                ->gempaTerasa();
+                ->gempaSp($request)
+                ->gempaNormal($request)
+                ->gempaDominan($request)
+                ->gempaLuncuran($request)
+                ->gempaErupsi($request)
+                ->gempaTerasa($request);
         });
 
         $data = [ 'success' => 1, 'text' => 'Data Kegempaan', 'message' => 'Data Kegempaan berhasil diperbarui', 'count' => VarGempa::jumlah() ];
@@ -43,7 +42,7 @@ class ImportGempa extends Import
         return response()->json($this->status);
     }
 
-    protected function gempaSp()
+    protected function gempaSp($request)
     {
         if ($this->item->jenis == 'sp') {
 
@@ -51,9 +50,11 @@ class ImportGempa extends Import
             $table = 'e_'.$this->item->kode;
             $gempa->setTable($table);
             $kode = $this->item->kode;
+
+            $start_no = $request->start ? $request->start : $this->startNo($kode);
     
             $old = Oldvar::select($this->item->select)
-                ->whereBetween('no',[$this->startNo($kode),$this->endNo('var')])
+                ->whereBetween('no',[$start_no,$this->endNo('var')])
                 ->where('var_'.$kode,'>',0)
                 ->orderBy('no', 'asc')
                 ->chunk(5000, function ($items) use ($kode,$gempa) {
@@ -101,7 +102,7 @@ class ImportGempa extends Import
         return $this;
     }
 
-    protected function gempaNormal()
+    protected function gempaNormal($request)
     {
         if ($this->item->jenis == 'normal') {
 
@@ -109,9 +110,11 @@ class ImportGempa extends Import
             $table = 'e_'.$this->item->kode;
             $gempa->setTable($table);
             $kode = $this->item->kode;
-    
+
+            $start_no = $request->start ? $request->start : $this->startNo($kode);
+
             $old = Oldvar::select($this->item->select)
-                ->whereBetween('no',[$this->startNo($kode),$this->endNo('var')])
+                ->whereBetween('no',[$start_no,$this->endNo('var')])
                 ->where('var_'.$kode,'>',0)
                 ->orderBy('no', 'asc')
                 ->chunk(5000, function ($items) use ($kode,$gempa) {
@@ -155,7 +158,7 @@ class ImportGempa extends Import
         return $this;
     }
 
-    protected function gempaDominan()
+    protected function gempaDominan($request)
     {
         if ($this->item->jenis == 'dominan') {
 
@@ -163,9 +166,11 @@ class ImportGempa extends Import
             $table = 'e_'.$this->item->kode;
             $gempa->setTable($table);
             $kode = $this->item->kode;
-    
+
+            $start_no = $request->start ? $request->start : $this->startNo($kode);
+
             $old = Oldvar::select($this->item->select)
-                ->whereBetween('no',[$this->startNo($kode),$this->endNo('var')])
+                ->whereBetween('no',[$start_no,$this->endNo('var')])
                 ->where('var_'.$kode,'>',0)
                 ->orderBy('no', 'asc')
                 ->chunk(5000, function ($items) use ($kode,$gempa) {
@@ -207,7 +212,7 @@ class ImportGempa extends Import
         return $this;
     }
 
-    protected function gempaLuncuran()
+    protected function gempaLuncuran($request)
     {
         if ($this->item->jenis == 'luncuran') {
 
@@ -215,9 +220,10 @@ class ImportGempa extends Import
             $table = 'e_'.$this->item->kode;
             $gempa->setTable($table);
             $kode = $this->item->kode;
-    
+            $start_no = $request->start ? $request->start : $this->startNo($kode);
+
             $old = Oldvar::select($this->item->select)
-                ->whereBetween('no',[$this->startNo($kode),$this->endNo('var')])
+                ->whereBetween('no',[$start_no,$this->endNo('var')])
                 ->where('var_'.$kode,'>',0)
                 ->orderBy('no', 'asc')
                 ->chunk(5000, function ($items) use ($kode,$gempa) {
@@ -267,7 +273,7 @@ class ImportGempa extends Import
         return $this;
     }
 
-    protected function gempaErupsi()
+    protected function gempaErupsi($request)
     {
         if ($this->item->jenis == 'erupsi') {
 
@@ -275,9 +281,10 @@ class ImportGempa extends Import
             $table = 'e_'.$this->item->kode;
             $gempa->setTable($table);
             $kode = $this->item->kode;
-    
+            $start_no = $request->start ? $request->start : $this->startNo($kode);
+
             $old = Oldvar::select($this->item->select)
-                ->whereBetween('no',[$this->startNo($kode),$this->endNo('var')])
+                ->whereBetween('no',[$start_no,$this->endNo('var')])
                 ->where('var_'.$kode,'>',0)
                 ->orderBy('no', 'asc')
                 ->chunk(5000, function ($items) use ($kode,$gempa) {
@@ -337,7 +344,7 @@ class ImportGempa extends Import
         return $this;
     }
 
-    protected function gempaTerasa()
+    protected function gempaTerasa($request)
     {
         if ($this->item->jenis == 'terasa') {
 
@@ -345,9 +352,10 @@ class ImportGempa extends Import
             $table = 'e_'.$this->item->kode;
             $gempa->setTable($table);
             $kode = $this->item->kode;
-    
+            $start_no = $request->start ? $request->start : $this->startNo($kode);
+
             $old = Oldvar::select($this->item->select)
-                ->whereBetween('no',[$this->startNo($kode),$this->endNo('var')])
+                ->whereBetween('no',[$start_no,$this->endNo('var')])
                 ->where('var_'.$kode,'>',0)
                 ->orderBy('no', 'asc')
                 ->chunk(5000, function ($items) use ($kode,$gempa) {

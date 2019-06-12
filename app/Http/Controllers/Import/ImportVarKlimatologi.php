@@ -14,12 +14,14 @@ class ImportVarKlimatologi extends Import
     
     protected $obscode, $noticenumber;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
         ini_set('max_execution_time', 1200);
+        $this->start_no = $request->has('start') ? $request->start : $this->startNo('klima');
+        $this->end_no = $request->has('end') ? $request->end : $this->endNo('var');
     }
 
-    public function import()
+    public function import(Request $request)
     {
         $this->old = OldVar::select(
             'no','ga_code','var_noticenumber','var_source',
@@ -28,7 +30,7 @@ class ImportVarKlimatologi extends Import
             'var_kelembabanmin','var_kelembabanmax',
             'var_tekananmin','var_tekananmax',
             'var_kecangin','var_arangin')
-        ->whereBetween('no',[$this->startNo('klima'),$this->endNo('var')])
+        ->whereBetween('no',[$this->start_no,$this->end_no])
         ->orderBy('no','asc');
         
         $this->old->chunk(5000, function ($items) {

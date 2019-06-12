@@ -247,13 +247,22 @@
                         </div>
                     </div>
                     <div class="panel-footer text-center">
-                        <form role="form" id="form-import" method="POST"
+                        <form class="form-horizontal" role="form" id="form-import" method="POST"
                         data-import="visuals" action="{{ route('chambers.import.visuals') }}">
                             @csrf
-                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
-                                <span class="ladda-label">Import Data Visual</span>
-                                <span class="ladda-spinner"></span>
-                            </button>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div class="input-group">
+                                        <input name="start" type="text" class="form-control" value="{{ $temp_visuals->no ?? 0 }}">
+                                        <span class="input-group-btn">
+                                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
+                                                <span class="ladda-label">Import</span>
+                                                <span class="ladda-spinner"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -287,13 +296,22 @@
                         </div>
                     </div>
                     <div class="panel-footer text-center">
-                        <form role="form" id="form-import" method="POST"
+                        <form class="form-horizontal" role="form" id="form-import" method="POST"
                         data-import="klimatologis" action="{{ route('chambers.import.klimatologi') }}">
                             @csrf
-                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
-                                <span class="ladda-label">Import Data Klimatologi</span>
-                                <span class="ladda-spinner"></span>
-                            </button>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div class="input-group">
+                                        <input name="start" type="text" class="form-control" value="{{ $temp_klima->no ?? 0 }}">
+                                        <span class="input-group-btn">
+                                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
+                                                <span class="ladda-label">Import</span>
+                                                <span class="ladda-spinner"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -329,13 +347,22 @@
                         </div>
                     </div>
                     <div class="panel-footer text-center">
-                        <form role="form" id="form-import" method="POST"
+                        <form class="form-horizontal" role="form" id="form-import" method="POST"
                         data-import="gempa" action="{{ route('chambers.import.gempa') }}">
                             @csrf
-                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
-                                <span class="ladda-label">Import Data Gempa Gunung Api</span>
-                                <span class="ladda-spinner"></span>
-                            </button>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div class="input-group">
+                                        <input name="start" type="text" class="form-control" value="0">
+                                        <span class="input-group-btn">
+                                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
+                                                <span class="ladda-label">Import</span>
+                                                <span class="ladda-spinner"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>

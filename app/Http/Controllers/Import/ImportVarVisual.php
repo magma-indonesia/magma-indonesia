@@ -15,19 +15,21 @@ class ImportVarVisual extends Import
 
     protected $obscode, $noticenumber, $visualasap;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
         ini_set('max_execution_time', 1200);
+        $this->start_no = $request->has('start') ? $request->start : $this->startNo('visuals');
+        $this->end_no = $request->has('end') ? $request->end : $this->endNo('var');
     }
 
-    public function import()
+    public function import(Request $request)
     {
         $this->old = OldVar::select(
             'no','ga_code','var_image','var_image_create',
             'var_issued','var_source','var_noticenumber','var_visibility',
             'var_asap','var_tasap_min','var_tasap','var_wasap',
             'var_intasap','var_tekasap','var_viskawah')
-        ->whereBetween('no',[$this->startNo('visuals'),$this->endNo('var')])
+        ->whereBetween('no',[$this->start_no,$this->end_no])
         ->orderBy('no','asc');
 
         $this->old->chunk(5000, function($items) {
