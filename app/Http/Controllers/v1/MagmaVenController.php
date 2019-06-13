@@ -21,16 +21,7 @@ class MagmaVenController extends Controller
         $page = $request->has('page') ? $request->page : 1;
         $code = $request->has('code') ? $request->code : false;
 
-        if ($code) {
-            $vens = Cache::remember('v1/vens:'.$code.':'.$last->erupt_id.'-page-'.$page, 120, function() use($code) {
-                return MagmaVen::where('ga_code', $code)->orderBy('erupt_tsp','desc')->paginate(30);
-            });
-            
-        } else {
-            $vens = Cache::remember('v1/vens-'.$last->erupt_id.'-page-'.$page, 120, function() {
-                return MagmaVen::orderBy('erupt_tsp','desc')->paginate(30);
-            });
-        }
+        $vens = $code ? $this->filteredVen($code,$last,$page) : $this->nonFilteredVen($last,$page);
 
         return view('v1.gunungapi.ven.index',compact('vens'));
     }
@@ -92,6 +83,20 @@ class MagmaVenController extends Controller
         $data = 'Telah terjadi erupsi G. '. $ven->gunungapi->ga_nama_gapi .', '. $ven->gunungapi->ga_prov_gapi .' pada hari '. Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->formatLocalized('%A, %d %B %Y') .', pukul '. $ven->erupt_jam.' '.$ven->gunungapi->ga_zonearea.'. Visual letusan tidak teramati. Erupsi ini terekam di seismograf dengan amplitudo maksimum '.$ven->erupt_amp.' mm dan durasi '.$ven->erupt_drs.' detik.';
 
         return $data;
+    }
+
+    protected function filteredVen($code,$last,$page)
+    {
+        return Cache::remember('v1/vens:'.$code.':'.$last->erupt_id.'-page-'.$page, 120, function() use($code) {
+            return MagmaVen::where('ga_code', $code)->orderBy('erupt_tsp','desc')->paginate(30);
+        });
+    }
+
+    protected function nonFilteredVen($last,$page)
+    {
+        return Cache::remember('v1/vens:'.$last->erupt_id.'-page-'.$page, 120, function() {
+            return MagmaVen::orderBy('erupt_tsp','desc')->paginate(30);
+        });
     }
 
 }
