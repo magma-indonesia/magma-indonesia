@@ -19,10 +19,18 @@ class MagmaVenController extends Controller
     {
         $last = MagmaVen::select('erupt_id')->orderBy('erupt_id','desc')->first();
         $page = $request->has('page') ? $request->page : 1;
+        $code = $request->has('code') ? $request->code : false;
 
-        $vens = Cache::remember('v1/vens-'.$last->erupt_id.'-page-'.$page, 120, function() {
-            return MagmaVen::orderBy('erupt_tsp','desc')->paginate(30);
-        });
+        if ($code) {
+            $vens = Cache::remember('v1/vens:'.$code.':'.$last->erupt_id.'-page-'.$page, 120, function() use($code) {
+                return MagmaVen::where('ga_code', $code)->orderBy('erupt_tsp','desc')->paginate(30);
+            });
+            
+        } else {
+            $vens = Cache::remember('v1/vens-'.$last->erupt_id.'-page-'.$page, 120, function() {
+                return MagmaVen::orderBy('erupt_tsp','desc')->paginate(30);
+            });
+        }
 
         return view('v1.gunungapi.ven.index',compact('vens'));
     }
