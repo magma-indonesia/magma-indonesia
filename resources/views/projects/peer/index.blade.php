@@ -42,7 +42,7 @@ crossorigin=""></script>
         var layerEsriStreets = L.esri.basemapLayer('NationalGeographic').addTo(map);
         var marker;
 
-        var windSpeed = L.leafletGeotiff('../vendor/geotiff/wind_speed.tif',{
+        var windSpeed = L.leafletGeotiff('https://stuartmatthews.github.io/leaflet-geotiff/tif/wind_speed.tif',{
             band: 0,
             displayMin: 0,
             displayMax: 30,
@@ -55,7 +55,7 @@ crossorigin=""></script>
         }).addTo(map);
 
         var windDirection = L.leafletGeotiff(
-            url='../vendor/geotiff/wind_direction.tif',
+            url='https://stuartmatthews.github.io/leaflet-geotiff/tif/wind_direction.tif',
             options={band: 0,
                 displayMin: 0,
                 displayMax: 360,
