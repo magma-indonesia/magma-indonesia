@@ -405,6 +405,7 @@
             var layerWorldTransportation = L.esri.basemapLayer('ImageryTransportation',{attributionControl: false}).addTo(map);
 
             var layerLabels = null
+            map.addLayer(L.esri.basemapLayer('ImageryLabels'));
 
             var latlongControl = L.control.coordinates({
                 position:"bottomright",
@@ -685,7 +686,7 @@
                 }
                     
                 if (basemap === 'Imagery') {
-                        layerWorldTransportation.addTo(map);            
+                        layerWorldTransportation.addTo(map); 
                     } else if (map.hasLayer(layerWorldTransportation)) {
                         map.removeLayer(layerWorldTransportation);
                     }
