@@ -93,6 +93,19 @@ Route::name('v1.')->group(function () {
     });
 });
 
+Route::name('.projects')->group(function () {
+    Route::group(['prefix' => 'projects'], function () {
+
+        Route::name('.peer')->group(function () {
+            Route::group(['prefix' => 'peer'], function () {
+                Route::get('/','Projects\PeerController@index')
+                    ->name('index');
+            });
+        });
+
+    });
+});
+
 Route::get('/logout', 'UserController@logout')->name('logout');
 Route::get('/tes', 'TesController@index');
 Route::get('/tes/image/', 'TesController@imageCrop');
