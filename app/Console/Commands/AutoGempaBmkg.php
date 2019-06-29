@@ -46,47 +46,6 @@ class AutoGempaBmkg extends Command
     public function __construct()
     {
         parent::__construct();
-        try {
-            $xml_en = XmlParser::load('http://data.bmkg.go.id/en_autogempa.xml');
-            $gempa_en = $xml_en->parse([
-                'tanggal' => ['uses' => 'gempa.Tanggal'],
-                'jam' => ['uses' => 'gempa.Jam'],
-                'koordinat' => ['uses' => 'gempa.point.coordinates'],
-                'lintang' => ['uses' => 'gempa.Lintang'],
-                'bujur' => ['uses' => 'gempa.Bujur'],       
-            ]);
-    
-            $xml_id = XmlParser::load('http://data.bmkg.go.id/autogempa.xml');
-            $gempa_id = $xml_id->parse([
-                'kedalaman' => ['uses' => 'gempa.Kedalaman'],
-                'magnitude' => ['uses' => 'gempa.Magnitude'],
-                'wilayah_1'=> ['uses' => 'gempa.Wilayah1'],
-                'wilayah_2' => ['uses' => 'gempa.Wilayah2'],
-                'wilayah_3' => ['uses' => 'gempa.Wilayah3'],
-                'wilayah_4' => ['uses' => 'gempa.Wilayah4'],
-                'wilayah_5' => ['uses' => 'gempa.Wilayah5'],         
-            ]);
-
-            $xml_terasa = XmlParser::load('http://data.bmkg.go.id/lastgempadirasakan.xml');
-            $terasa = $xml_terasa->parse([
-                'tanggal' => ['uses' => 'Gempa.Tanggal'],
-                'jam' => ['uses' => 'Gempa.Jam'],
-                'kedalaman'=> ['uses' => 'Gempa.Kedalaman'],
-                'mmi' => ['uses' => 'Gempa.Dirasakan'],  
-            ]);
-
-            $this->gempa = collect($gempa_en+$gempa_id);
-            $this->terasa = collect($terasa);
-
-            return $this;
-
-        } 
-        
-        catch (Exception $e) {
-            $this->gempa = null;
-            $this->terasa = null;
-            Log::info('[FAILED] Gagal Download data Gempa BMKG : '.now());
-        }
     }
 
     /**
@@ -286,6 +245,51 @@ class AutoGempaBmkg extends Command
         return $this;
     }
 
+    protected function getDataFromBmkg()
+    {
+        try {
+            $xml_en = XmlParser::load('http://data.bmkg.go.id/en_autogempa.xml');
+            $gempa_en = $xml_en->parse([
+                'tanggal' => ['uses' => 'gempa.Tanggal'],
+                'jam' => ['uses' => 'gempa.Jam'],
+                'koordinat' => ['uses' => 'gempa.point.coordinates'],
+                'lintang' => ['uses' => 'gempa.Lintang'],
+                'bujur' => ['uses' => 'gempa.Bujur'],       
+            ]);
+    
+            $xml_id = XmlParser::load('http://data.bmkg.go.id/autogempa.xml');
+            $gempa_id = $xml_id->parse([
+                'kedalaman' => ['uses' => 'gempa.Kedalaman'],
+                'magnitude' => ['uses' => 'gempa.Magnitude'],
+                'wilayah_1'=> ['uses' => 'gempa.Wilayah1'],
+                'wilayah_2' => ['uses' => 'gempa.Wilayah2'],
+                'wilayah_3' => ['uses' => 'gempa.Wilayah3'],
+                'wilayah_4' => ['uses' => 'gempa.Wilayah4'],
+                'wilayah_5' => ['uses' => 'gempa.Wilayah5'],         
+            ]);
+
+            $xml_terasa = XmlParser::load('http://data.bmkg.go.id/lastgempadirasakan.xml');
+            $terasa = $xml_terasa->parse([
+                'tanggal' => ['uses' => 'Gempa.Tanggal'],
+                'jam' => ['uses' => 'Gempa.Jam'],
+                'kedalaman'=> ['uses' => 'Gempa.Kedalaman'],
+                'mmi' => ['uses' => 'Gempa.Dirasakan'],  
+            ]);
+
+            $this->gempa = collect($gempa_en+$gempa_id);
+            $this->terasa = collect($terasa);
+
+            return $this;
+
+        } 
+        
+        catch (Exception $e) {
+            $this->gempa = null;
+            $this->terasa = null;
+            Log::info('[FAILED] Gagal Download data Gempa BMKG : '.now());
+        }
+    }
+
     /**
      * Execute the console command.
      *
@@ -293,6 +297,8 @@ class AutoGempaBmkg extends Command
      */
     public function handle()
     {
+        $this->getDataFromBmkg();
+
         if ($this->gempa !== null) {
             $this->info('Sedang melakukan importing gempa BMKG...');
             $this->setDateTime()
