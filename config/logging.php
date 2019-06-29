@@ -1,6 +1,7 @@
 <?php
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -52,6 +53,7 @@ return [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),
             'level' => 'debug',
+            'permission' => '0775',
             'days' => 14,
         ],
         'slack' => [
