@@ -24,7 +24,7 @@ Tanggapan Kejadian
 
 			@if ($gertan->rekomendasi)
 			<h6 class="slim-card-title mg-b-15">Rekomendasi</h6>
-			<p>{{ $gertan->rekomendasi }}</p>
+			<p>{!! $gertan->rekomendasi !!}</p>
 			@endif
 
 			@if (!$gertan->laporan->foto_sosialisasi->isEmpty() || !$gertan->laporan->foto_kejadian->isEmpty())

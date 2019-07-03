@@ -57,7 +57,7 @@ Tanggapan Kejadian
                                     @endif
                                     @if ($gertan->rekomendasi)
                                     <label class="slim-card-title">Rekomendasi:</label>
-                                    <p class="blog-text">{{ $gertan->rekomendasi }}</p>
+                                    <p class="blog-text">{!! $gertan->rekomendasi !!}</p>
                                     @endif
                                     <a href="{{ URL::signedRoute('v1.gertan.sigertan.show', ['id' => $gertan->id]) }}" class="card-link">Lihat Detail</a>
                                 </div>
