@@ -43,6 +43,6 @@ class ImportNotification extends Notification
     {
         return (new SlackMessage)
                     ->from('Super Admin',':ghost:')
-                    ->content('Import *'.$this->type.'* berhasil.');
+                    ->content('['.config('app.url').'] Import *'.$this->type.'* berhasil.');
     }
 }
