@@ -24,18 +24,29 @@ class StationSeismic extends Model
         return $this->belongsTo('App\WOVOdat\Contact','cc_id','cc_id');
     }
 
-    public function ssam()
+    public function rsam_ssam()
     {
-        return $this->hasMany('App\WOVOdat\Ssam','ss_id','ss_id');
+        return $this->hasMany('App\WOVOdat\RsamSsam','ss_id','ss_id');
     }
 
     public function rsam()
     {
         return $this->hasManyThrough(
             'App\WOVOdat\Rsam',
+            'App\WOVOdat\RsamSsam',
+            'ss_id',
+            'sd_sam_id',
+            'ss_id',
+            'ss_id');
+    }
+
+    public function ssam()
+    {
+        return $this->hasManyThrough(
             'App\WOVOdat\Ssam',
+            'App\WOVOdat\RsamSsam',
             'ss_id',
-            'ss_id',
+            'sd_sam_id',
             'ss_id',
             'ss_id');
     }

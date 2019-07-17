@@ -14,9 +14,29 @@ class Volcano extends Model
 
     public $timestamps = 'false';
 
+    public function eruptions()
+    {
+        return $this->hasMany('App\WOVOdat\Eruption','vd_id','vd_id');
+    }
+
+    public function common_network()
+    {
+        return $this->hasMany('App\WOVOdat\CommonNetwork','vd_id','vd_id');
+    }
+
     public function seismic_network()
     {
         return $this->hasOne('App\WOVOdat\SeismicNetwork','vd_id','vd_id');
+    }
+
+    public function stations()
+    {
+        return $this->hasManyThrough(
+            'App\WOVOdat\StationSeismic',
+            'App\WOVOdat\SeismicNetwork',
+            'vd_id',
+            'sn_id'
+        );
     }
 
     public function information()
