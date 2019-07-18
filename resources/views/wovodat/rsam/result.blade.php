@@ -5,6 +5,8 @@
 @endsection
 
 @section('add-vendor-css')
+    <link rel="stylesheet" type="text/css" href="https://code.highcharts.com/css/stocktools/gui.css">
+    <link rel="stylesheet" type="text/css" href="https://code.highcharts.com/css/annotations/popup.css">
     @role('Super Admin')
     <link rel="stylesheet" href="{{ asset('vendor/json-viewer/jquery.json-viewer.css') }}" />
     @endrole
@@ -58,7 +60,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="row p-md">
-                            <div id="rsam" style="min-width: 310px; height: 560px; margin: 0 auto"></div>
+                            <div id="rsam" style="min-width: 310px; min-height: 680px; margin: 0 auto"></div>
                         </div>
                     </div>
                 </div>
@@ -70,6 +72,14 @@
 
 @section('add-vendor-script')
 <script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/stock/indicators/indicators-all.js"></script>
+<script src="https://code.highcharts.com/stock/modules/drag-panes.js"></script>
+
+<script src="https://code.highcharts.com/modules/annotations-advanced.js"></script>
+<script src="https://code.highcharts.com/modules/price-indicator.js"></script>
+<script src="https://code.highcharts.com/modules/full-screen.js"></script>
+
+<script src="https://code.highcharts.com/modules/stock-tools.js"></script>
 <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
 @role('Super Admin')
@@ -112,17 +122,27 @@
                 marker: {
                     radius: 2,
                 },
+                lineWidth: 1,
                 states: {
                     hover: {
                         lineWidth: 1
                     }
                 },
             },
+            scrollbar: {
+                enabled: false,
+            },
             series: [{
                 type: 'area',
                 name: 'Count',
                 data: data,
-            }]
+            }],
+            exporting: {
+                enabled: true,
+                scale: 1,
+                sourceHeight: 800,
+                sourceWidth: 1200,
+            }
         });
     });
 </script>   
