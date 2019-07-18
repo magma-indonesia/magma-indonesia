@@ -181,15 +181,10 @@ Route::name('wovodat.')->group(function () {
         Route::get('seismic-network','WOVOdat\SeismicNetworkController@index')
             ->name('seismic-network.index');
 
-        Route::get('rsam','WOVOdat\RsamController@index')
-            ->name('rsam.index');
-
-        Route::get('rsam/create','WOVOdat\RsamController@create')
+        Route::get('rsam','WOVOdat\RsamController@create')
             ->name('rsam.create');
         Route::post('rsam','WOVOdat\RsamController@store')
             ->name('rsam.store');
-        Route::get('rsam/result','WOVOdat\RsamController@result')
-            ->name('rsam.result');
     });
 });
 

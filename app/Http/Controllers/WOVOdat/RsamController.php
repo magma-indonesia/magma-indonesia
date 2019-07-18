@@ -74,11 +74,6 @@ class RsamController extends Controller
         return view('wovodat.rsam.result', compact('rsam','volcano_name','station_name','date'));
     }
 
-    public function result()
-    {
-
-    }
-
     protected function transformRsam($station)
     {
         $rsam_ssam = $station->rsam_ssam;
