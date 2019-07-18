@@ -172,6 +172,27 @@ Route::resource('vona/subscribers','VonaSubscriberController');
 Route::resource('vona/exercise','VonaExerciseSubscriberController');
 Route::resource('vona', 'VonaController');
 
+Route::name('wovodat.')->group(function () {
+    Route::group(['prefix' => 'wovodat'], function () {
+
+        Route::get('volcano','WOVOdat\VolcanoController@index')
+            ->name('volcano.index');
+
+        Route::get('seismic-network','WOVOdat\SeismicNetworkController@index')
+            ->name('seismic-network.index');
+
+        Route::get('rsam','WOVOdat\RsamController@index')
+            ->name('rsam.index');
+
+        Route::get('rsam/create','WOVOdat\RsamController@create')
+            ->name('rsam.create');
+        Route::post('rsam','WOVOdat\RsamController@store')
+            ->name('rsam.store');
+        Route::get('rsam/result','WOVOdat\RsamController@result')
+            ->name('rsam.result');
+    });
+});
+
 Route::name('v1.')->group(function () {
     Route::group(['prefix' => 'v1'], function () {
         Route::resource('press','v1\PressReleaseController');
@@ -189,7 +210,8 @@ Route::name('v1.')->group(function () {
                     ]
                 ]);
 
-                Route::get('laporan/filter','v1\MagmaVarController@filter')->name('laporan.filter');
+                Route::get('laporan/filter','v1\MagmaVarController@filter')
+                    ->name('laporan.filter');
                 
                 Route::get('laporan/create-var','v1\MagmaVarController@createVar')
                     ->name('laporan.create.var');
@@ -227,8 +249,12 @@ Route::name('v1.')->group(function () {
                 Route::get('evaluasi/result','v1\MagmaVarEvaluasi@result')
                     ->name('evaluasi.result');
 
-                Route::get('ven','v1\MagmaVenController@index')->name('ven.index');
-                Route::get('ven/{id}','v1\MagmaVenController@show')->name('ven.show');
+                Route::get('ven','v1\MagmaVenController@index')
+                    ->name('ven.index');
+                Route::get('ven/filter','v1\MagmaVenController@filter')
+                    ->name('ven.filter');
+                Route::get('ven/{id}','v1\MagmaVenController@show')
+                    ->name('ven.show');
             });
         });
 

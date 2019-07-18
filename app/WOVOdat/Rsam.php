@@ -26,6 +26,6 @@ class Rsam extends Model
 
     public function getUnixTimeAttribute()
     {
-        return Carbon::createFromFormat('Y-m-d H:i:s' ,$this->attributes['sd_rsm_stime'])->timestamp;
+        return Carbon::parse($this->attributes['sd_rsm_stime'])->timestamp*1000;
     }
 }
