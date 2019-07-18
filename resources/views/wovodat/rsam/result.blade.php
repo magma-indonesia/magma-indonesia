@@ -58,7 +58,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="row p-md">
-                            <div id="rsam" style="min-width: 310px; height: 480px; margin: 0 auto"></div>
+                            <div id="rsam" style="min-width: 310px; height: 560px; margin: 0 auto"></div>
                         </div>
                     </div>
                 </div>
@@ -69,9 +69,9 @@
 @endsection
 
 @section('add-vendor-script')
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
 @role('Super Admin')
 <script src="{{ asset('vendor/json-viewer/jquery.json-viewer.js') }}"></script>
 @endrole
@@ -87,7 +87,10 @@
         var data = @json($rsam);
         console.log(data);
 
-        Highcharts.chart('rsam', {
+        Highcharts.stockChart('rsam', {
+            rangeSelector: {
+                selected: 4,
+            },
             chart: {
                 zoomType: 'x',
             },
