@@ -41,30 +41,30 @@ class RsamController extends Controller
         ini_set('max_execution_time', 1200);
 
         $station = Stations::with([
-                            'rsam_ssam' => function($query) use ($request) {
-                                $query->whereHas('rsam', function(Builder $query)  use ($request) {
-                                    $query->where('sd_rsm_stime','>=',$request->start)
-                                        ->where('sd_rsm_stime','<=',$request->end.' 23:59:59');
-                                })
-                                ->select('sd_sam_id','ss_id','sd_sam_stime','sd_sam_etime')
-                                ->where('ss_id',$request->station);
-                            },
-                            'rsam_ssam.rsam' => function($query) use ($request) {
-                                $query->select('sd_rsm_stime','sd_sam_id','sd_rsm_id','sd_rsm_count')
-                                    ->where('sd_rsm_stime','>=',$request->start)
-                                    ->where('sd_rsm_stime','<=',$request->end.' 23:59:59')
-                                    ->orderBy('sd_rsm_stime');
-                            },
-                            'network' => function($query) {
-                                $query->select('sn_id','vd_id');
-                            },
-                            'network.volcano' => function($query) {
-                                $query->select('vd_name','vd_id');
-                            }
-                        ])
-                        ->select('ss_id','sn_id','ss_name')
-                        ->where('ss_id',$request->station)
-                        ->first();
+                        'rsam_ssam' => function($query) use ($request) {
+                            $query->whereHas('rsam', function(Builder $query)  use ($request) {
+                                $query->where('sd_rsm_stime','>=',$request->start)
+                                    ->where('sd_rsm_stime','<=',$request->end.' 23:59:59');
+                            })
+                            ->select('sd_sam_id','ss_id','sd_sam_stime','sd_sam_etime')
+                            ->where('ss_id',$request->station);
+                        },
+                        'rsam_ssam.rsam' => function($query) use ($request) {
+                            $query->select('sd_rsm_stime','sd_sam_id','sd_rsm_id','sd_rsm_count')
+                                ->where('sd_rsm_stime','>=',$request->start)
+                                ->where('sd_rsm_stime','<=',$request->end.' 23:59:59')
+                                ->orderBy('sd_rsm_stime');
+                        },
+                        'network' => function($query) {
+                            $query->select('sn_id','vd_id');
+                        },
+                        'network.volcano' => function($query) {
+                            $query->select('vd_name','vd_id');
+                        }
+                    ])
+                    ->select('ss_id','sn_id','ss_name')
+                    ->where('ss_id',$request->station)
+                    ->first();
         
         $volcano_name = $station->network->volcano->vd_name;
         $station_name = $volcano_name.' - '.$station->ss_name;

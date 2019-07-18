@@ -185,6 +185,11 @@ Route::name('wovodat.')->group(function () {
             ->name('rsam.create');
         Route::post('rsam','WOVOdat\RsamController@store')
             ->name('rsam.store');
+
+        Route::get('event','WOVOdat\SeismicEventController@create')
+            ->name('event.create');
+        Route::post('event','WOVOdat\SeismicEventController@store')
+            ->name('event.store');
     });
 });
 

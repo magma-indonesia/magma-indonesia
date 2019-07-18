@@ -29,8 +29,8 @@ class SeismicNetwork extends Model
      *
      * @return void
      */
-    public function event()
+    public function events()
     {
-        return $this->hasMany('App\WOVOdat\IntervalSwarm','sn_id','sn_id');
+        return $this->hasMany('App\WOVOdat\SeismicEvent','sn_id','sn_id');
     }
 }
