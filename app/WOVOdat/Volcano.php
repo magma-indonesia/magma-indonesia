@@ -49,6 +49,16 @@ class Volcano extends Model
         );
     }
 
+    public function swarm()
+    {
+        return $this->hasManyThrough(
+            'App\WOVOdat\IntervalSwarm',
+            'App\WOVOdat\SeismicNetwork',
+            'vd_id',
+            'sn_id'
+        );
+    }
+
     public function information()
     {
         return $this->hasOne('App\WOVOdat\VolcanoInformation','vd_id','vd_id');

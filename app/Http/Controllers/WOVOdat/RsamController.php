@@ -4,6 +4,7 @@ namespace App\Http\Controllers\WOVOdat;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Builder;
 use Carbon\Carbon;
 use App\WOVOdat\Volcano;
@@ -12,7 +13,6 @@ use App\WOVOdat\StationSeismic as Stations;
 class RsamController extends Controller
 {
 
-    private $series = [];
     private $rsam = [];
 
     public function index()
@@ -39,8 +39,9 @@ class RsamController extends Controller
     public function store(Request $request)
     {
         ini_set('max_execution_time', 1200);
-
-        $station = Stations::with([
+        
+        $station = Cache::remember('wovodat.rsam:'.$request->station.':'.$request->start.':'.$request->end, 900, function() use ($request) {
+            return Stations::with([
                         'rsam_ssam' => function($query) use ($request) {
                             $query->whereHas('rsam', function(Builder $query)  use ($request) {
                                 $query->where('sd_rsm_stime','>=',$request->start)
@@ -65,6 +66,7 @@ class RsamController extends Controller
                     ->select('ss_id','sn_id','ss_name')
                     ->where('ss_id',$request->station)
                     ->first();
+        });
         
         $volcano_name = $station->network->volcano->vd_name;
         $station_name = $volcano_name.' - '.$station->ss_name;

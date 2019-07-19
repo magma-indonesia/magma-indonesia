@@ -50,4 +50,9 @@ class StationSeismic extends Model
             'ss_id',
             'ss_id');
     }
+
+    public function swarm()
+    {
+        return $this->hasMany('App\WOVOdat\IntervalSwarm','ss_id','ss_id');
+    }
 }

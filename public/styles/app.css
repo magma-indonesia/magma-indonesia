@@ -178,3 +178,7 @@ table tr td[class*="4"] {
   max-width: 100px;
   margin: 0px auto;
 }
+
+.fixed-navbar #header {
+	z-index: 2000;
+}

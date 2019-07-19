@@ -24,6 +24,11 @@ class SeismicNetwork extends Model
         return $this->belongsTo('App\WOVOdat\Volcano','vd_id','vd_id');
     }
 
+    public function swarm()
+    {
+        return $this->hasMany('App\WOVOdat\IntervalSwarm','sn_id','sn_id');
+    }
+
     /**
      * Interval Swarm
      *

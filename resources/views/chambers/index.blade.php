@@ -5,7 +5,7 @@
 @endsection
 
 @section('content-body')   
-    <div class="content animate-panel">
+    <div class="content animate-panel content-boxed">
         <div class="row">
             <div class="col-lg-12 text-center m-t-md">
                 <h2>
@@ -13,8 +13,7 @@
                 </h2>
 
                 <p>
-                    Pusat kontrol data
-                    <strong>MAGMA</strong> meliputi kebencanaan Gunung Api, Gerakan Tanah, Gempa Bumi dan Tsunami.
+                    <strong class="text-magma">MAGMA Indonesia </strong>(Multiplatform Application for Geohazard Mitigation and Assessment in Indonesia) adalah aplikasi multiplatform (web & mobile) dalam jaringan berisikan informasi dan rekomendasi kebencanaan geologi terintegrasi (gunungapi, gempabumi, tsunami, dan gerakan tanah) yang disajikan kepada masyarakat secara kuasi-realtime dan interaktif.
                 </p>
                 @include('includes.alert')
             </div>

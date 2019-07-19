@@ -5,6 +5,7 @@
 @endsection
 
 @section('add-vendor-css')
+    <link rel="stylesheet" href="{{ asset('vendor/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
     <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
     <link rel="stylesheet" href="{{ asset('css/leaflet.defaultextent.css') }}">
@@ -70,7 +71,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="table-repsonsive">
-                            <table class="table table-condensed table-striped">
+                            <table id="table-event" class="table table-condensed table-striped">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -87,7 +88,7 @@
                                     <tr>
                                         <td>{{ $key+1 }}</td>
                                         <td>{{ $event->sd_evn_time }}</td>
-                                        <td>{{ $event->sd_evn_dur }}</td>
+                                        <td>{{ $event->sd_evn_dur ?? '-' }}</td>
                                         <td>{{ $event->sd_evn_elat }}</td>
                                         <td>{{ $event->sd_evn_elon }}</td>
                                         <td>{{ $event->sd_evn_edep }}</td>
@@ -105,6 +106,17 @@
 @endsection
 
 @section('add-vendor-script')
+    <!-- DataTables -->
+    <script src="{{ asset('vendor/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('vendor/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <!-- DataTables buttons scripts -->
+    <script src="{{ asset('vendor/pdfmake/build/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('vendor/pdfmake/build/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('vendor/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('vendor/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('vendor/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('vendor/datatables.net-buttons-bs/js/buttons.bootstrap.min.js') }}"></script>
+
     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==" crossorigin=""></script>
     <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
     <script src="https://unpkg.com/esri-leaflet-renderers@2.0.6/dist/esri-leaflet-renderers.js"
@@ -168,6 +180,17 @@
         $('#json-renderer').jsonViewer(@json($network), {collapsed: true});
         @endrole
 
+        $('#table-event').dataTable({
+            dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+            "lengthMenu": [[15, 30, -1], [30, 60, 100, "All"]],
+            buttons: [
+                { extend: 'copy', className: 'btn-sm'},
+                { extend: 'csv', title: 'Daftar Users', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4 ]} },
+                { extend: 'pdf', title: 'Daftar Users', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4 ]} },
+                { extend: 'print', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4 ]} }
+            ]
+        });
+
         var data = @json($network),
             volc_name = data.volcano.vd_name,
             volc_lat = data.volcano.information.vd_inf_slat,
@@ -185,7 +208,7 @@
 
             var event_marker = L.marker([event_lat, event_lon], {
                 title: event_time,
-            }).bindPopup(event_time+' - (Mag: '+event_depth+')', {
+            }).bindPopup(event_time+' - (Depth: '+event_depth+')', {
                 closeButton: true,
             });
 

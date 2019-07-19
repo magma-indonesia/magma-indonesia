@@ -175,11 +175,18 @@ Route::resource('vona', 'VonaController');
 Route::name('wovodat.')->group(function () {
     Route::group(['prefix' => 'wovodat'], function () {
 
+        Route::view('/','wovodat.index');
+
         Route::get('volcano','WOVOdat\VolcanoController@index')
             ->name('volcano.index');
 
         Route::get('seismic-network','WOVOdat\SeismicNetworkController@index')
             ->name('seismic-network.index');
+
+        Route::get('interval-swarm','WOVOdat\IntervalSwarmController@index')
+            ->name('interval-swarm.index');
+        Route::post('interval-swarm','WOVOdat\IntervalSwarmController@store')
+            ->name('interval-swarm.store');
 
         Route::get('rsam','WOVOdat\RsamController@create')
             ->name('rsam.create');
