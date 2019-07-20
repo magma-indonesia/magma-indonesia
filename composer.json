@@ -20,6 +20,7 @@
         "orchestra/parser": "3.7.*",
         "predis/predis": "^1.1",
         "ramsey/uuid": "^3.7",
+        "spatie/browsershot": "^3.29",
         "spatie/laravel-backup": "^5.11",
         "spatie/laravel-permission": "^2.7",
         "symfony/psr-http-message-bridge": "^1.1",

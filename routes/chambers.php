@@ -68,8 +68,9 @@ Route::group(['prefix' => 'gunungapi'], function () {
     Route::name('peralatan.')->group(function () {
         Route::group(['prefix' => 'peralatan'], function () {
             Route::get('/','AlatController@index')->name('index');
-            Route::get('/create','AlatController@create')->name('create');
-            Route::post('/create','AlatController@store')->name('store');
+            Route::get('jenis/create','AlatController@jenis')->name('jenis.create');
+            Route::get('create','AlatController@create')->name('create');
+            Route::post('create','AlatController@store')->name('store');
         });
     });
 
@@ -171,6 +172,14 @@ Route::post('vona/send','VonaController@send')->name('vona.send');
 Route::resource('vona/subscribers','VonaSubscriberController');
 Route::resource('vona/exercise','VonaExerciseSubscriberController');
 Route::resource('vona', 'VonaController');
+
+Route::name('json.')->group(function () {
+    Route::group(['prefix' => 'json'], function () {
+        Route::post('peralatan','Json\PeralatanJson@index')
+                ->name('peralatan.index')
+                ->middleware('signed');
+    });
+});
 
 Route::name('wovodat.')->group(function () {
     Route::group(['prefix' => 'wovodat'], function () {

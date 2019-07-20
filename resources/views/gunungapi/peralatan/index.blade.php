@@ -55,10 +55,11 @@
                     <div class="panel-body">
                         <div class="text-left">
                             <a href="{{ route('chambers.peralatan.create') }}" type="button" class="btn btn-magma btn-outline">Tambah Alat</a>
+                            <a href="{{ route('chambers.peralatan.jenis.create') }}" type="button" class="btn btn-magma btn-outline">Tambah Jenis Alat</a>
                         </div>
                         <hr>
                         <div class="table-responsive">
-                            {{-- {{ $alats->links() }} --}}
+                            {{-- {{ $gadds->links() }} --}}
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
@@ -71,19 +72,30 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   @foreach ($alats as $key => $alat)
-                                   <tr>
-                                        <td>{{ $key+1 }}</td>
-                                        <td>{{ $alat->gunungapi->name }}</td>
-                                        <td>{{ $alat->nama_alat }}</td>
-                                        <td>{{ $alat->kode_alat ?? '-' }}</td>
-                                        <td>{{ $alat->jenis->jenis_alat }}</td>
-                                        <td>{{ $alat->status ? 'Aktif' : 'Tidak Aktif' }}</td>
-                                   </tr>
-                                   @endforeach 
+                                    @php
+                                        $last_no = 0;
+                                    @endphp
+                                    @foreach ($gadds as $gadd)
+                                    @php
+                                        $no = $last_no;
+                                    @endphp
+                                        @foreach ($gadd->alat as $key => $alat)
+                                        @php
+                                            $last_no = $no+$key+1;
+                                        @endphp
+                                        <tr>
+                                                <td>{{ $last_no }}</td>
+                                                <td>{{ $gadd->name }}</td>
+                                                <td>{{ $alat->nama_alat }}</td>
+                                                <td>{{ $alat->kode_alat ?? '-' }}</td>
+                                                <td>{{ $alat->jenis->jenis_alat }}</td>
+                                                <td>{{ $alat->status ? 'Aktif' : 'Tidak Aktif' }}</td>
+                                        </tr>
+                                        @endforeach
+                                    @endforeach 
                                 </tbody>
                             </table>
-                            {{-- {{ $alats->links() }} --}}
+                            {{-- {{ $gadds->links() }} --}}
                         </div>
                     </div>
                 </div>
@@ -108,9 +120,17 @@
     var url = '{{ url('/') }}';
     var bounds = new L.LatLngBounds(new L.LatLng(-10.41, 93.41), new L.LatLng(7.3069694978258, 141.65));
 
-    var ga_icon = L.Icon.extend({options: {iconSize: [32, 32]}});
+    var ga_icon = L.Icon.extend({options: {iconSize: [42, 42]}});
+    var iconSize = L.Icon.extend({options: {iconSize: [32, 42]}});
+    var iconSize58 = L.Icon.extend({options: {iconSize: [48, 58]}});
     
-    here = new ga_icon({iconUrl: url+'/icon/1.png'});
+    here = new ga_icon({iconUrl: url+'/icon/volcano.png'});
+    seismic_on = new iconSize({iconUrl: url+'/icon/seismic_1.png'});
+    seismic_off = new iconSize({iconUrl: url+'/icon/seismic_0.png'});
+    tilt_on = new iconSize58({iconUrl: url+'/icon/tilt_1.png'});
+    tilt_off = new iconSize58({iconUrl: url+'/icon/tilt_0.png'});
+    gps_on = new iconSize({iconUrl: url+'/icon/gps_1.png'});
+    gps_off = new iconSize({iconUrl: url+'/icon/gps_0.png'});
     
     function zoomResponsive() {
         var width = screen.width;
@@ -154,25 +174,48 @@
 
 <script>
 $(document).ready(function () {
-    var markersAlat = @json($alats),
+    
+    var layerGunungApi = [],
         layerAlat = [],
-        layerGunungApi = [];
+        layerSeismik = [],
+        layerDeformasi = [],
+        layerCtd = [];
 
-    $.each(markersAlat, function (index, alat) {
-        var nama_gapi = alat.gunungapi.name,
-            nama_alat = alat.nama_alat,
-            latitude = alat.latitude,
-            longitude = alat.longitude,
-            status = alat.status;
+    $.ajax({
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        url: '{{ URL::signedRoute('chambers.json.peralatan.index') }}',
+        type: 'POST',
+        success: function(data) {
+            plotMap(data);
+        },
+    });
 
-        var ga_latitude = alat.gunungapi.latitude,
-            ga_longitude = alat.gunungapi.longitude;
+    function plotMap(data)
+    {
+        var markersGa = data;
 
-        var markerId = L.marker([latitude, longitude], {
-            title: nama_alat
-        }).bindPopup(nama_gapi+' - '+nama_alat, {
-            closeButton: true,
+        $.each(markersGa, function (index, gunungapi) {
+            plotGunungApi(gunungapi);
+            $.each(gunungapi.alat, function(index, alat) {
+                plotAlat(alat, gunungapi);
+            });
         });
+
+        L.control.layers(null, {
+                    'Peralatan': L.layerGroup(layerAlat).addTo(map),
+                    'Gunung Api': L.layerGroup(layerGunungApi).addTo(map),
+                    'Seismik' : L.layerGroup(layerSeismik).addTo(map),
+                    'Deformasi' : L.layerGroup(layerDeformasi).addTo(map)
+            }, {
+                position: 'bottomleft'
+            }).addTo(map);
+    }
+
+    function plotGunungApi(gunungapi)
+    {
+        var ga_latitude = gunungapi.latitude,
+            ga_longitude = gunungapi.longitude,
+            nama_gapi = gunungapi.name;
 
         var markerGa = L.marker([ga_latitude, ga_longitude], {
             icon: here,
@@ -181,18 +224,73 @@ $(document).ready(function () {
             closeButton: true,
         });
 
-        layerAlat.push(markerId);
         layerGunungApi.push(markerGa);
+    }
+
+    function plotAlat(alat, gunungapi)
+    {
+        var nama_gapi = gunungapi.name,
+            status = alat.status == 1 ? true : false,
+            status_deskripsi = alat.status == 1 ? 'Aktif' : 'Tidak Aktif';
+
+        switch (alat.jenis_id) {
+            case 1:
+                icon_alat = alat.status == 1 ? seismic_on : seismic_off;
+                plotSeismik(alat, icon_alat, nama_gapi);
+                break;
+            case 2:
+                icon_alat = alat.status == 1 ? tilt_on : tilt_off;
+                plotDeformasi(alat, icon_alat, nama_gapi);
+                break;
+            case 3:
+                icon_alat = alat.status == 1 ? gps_on : gps_off;
+                plotDeformasi(alat, icon_alat, nama_gapi);
+                break;
+            case 4:
+                icon_alat = alat.status == 1 ? gps_on : gps_off;
+                plotDeformasi(alat, icon_alat, nama_gapi);
+                break;
+            default:
+                icon_alat = status ? seismic_on : seismic_off;
+                break;
+        }
+    }
+
+    function setMarkerId(alat,icon,nama_gapi)
+    {
+        var latitude = alat.latitude,
+            longitude = alat.longitude,
+            nama_alat = alat.nama_alat,
+            jenis_alat = alat.jenis.jenis_alat,
+            status_deskripsi = alat.status == 1 ? 'Aktif' : 'Tidak Aktif';
+
+        var markerId = L.marker([latitude, longitude], {
+            icon: icon,
+            title: nama_gapi+' '+jenis_alat+', '+nama_alat
+        }).bindPopup('['+nama_gapi+'] '+status_deskripsi+' - '+jenis_alat+', '+nama_alat, {
+            closeButton: true,
+        });
 
         if (!(L.Browser.mobile)) {
-            markerId.bindTooltip(nama_gapi+' - '+nama_alat);
+            markerId.bindTooltip('['+nama_gapi+'] '+status_deskripsi+' - '+jenis_alat+', '+nama_alat);
         };
 
-    });
+        layerAlat.push(markerId);
 
-    gunungapi = L.layerGroup(layerGunungApi).addTo(map);
-    alat = L.layerGroup(layerAlat).addTo(map);
+        return markerId;
+    }
 
+    function plotSeismik(alat,icon,nama_gapi)
+    {
+        var markerId = setMarkerId(alat,icon,nama_gapi);
+        layerSeismik.push(markerId);
+    }
+
+    function plotDeformasi(alat,icon,nama_gapi)
+    {
+        var markerId = setMarkerId(alat,icon,nama_gapi);
+        layerDeformasi.push(markerId);
+    }
 });
 </script>
 @endsection

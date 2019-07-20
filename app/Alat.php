@@ -18,10 +18,6 @@ class Alat extends Model
     // 10. Repeater
     // 11. Rain Gauge
 
-    protected $casts = [
-        'status' => 'boolean'
-    ];
-
     protected $fillable = [
         'code_id',
         'jenis_id',
