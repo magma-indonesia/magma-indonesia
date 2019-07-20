@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Alat;
+use App\Gadd;
 
 class AlatController extends Controller
 {
@@ -15,11 +16,12 @@ class AlatController extends Controller
 
     public function index()
     {
-        $alats = Alat::with('jenis:id,jenis_alat','gunungapi:code,name,latitude,longitude')
-                    ->orderBy('code_id')
+        $gadds = Gadd::has('alat')
+                    ->with('alat')
+                    ->orderBy('name')
                     ->get();
 
-        return view('gunungapi.peralatan.index', compact('alats'));
+        return view('gunungapi.peralatan.index', compact('gadds'));
     }
 
     public function create()
@@ -35,5 +37,10 @@ class AlatController extends Controller
     public function destroy($alat)
     {
         return 'destroy';
+    }
+
+    public function jenis()
+    {
+        return 'tambah jenis alat';
     }
 }
