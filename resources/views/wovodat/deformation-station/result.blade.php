@@ -31,9 +31,9 @@
                     </ol>
                 </div>
                 <h2 class="font-light m-b-xs">
-                    RSAM Graphic of 
+                    Tiltmeter {{ $volcano }} - {{ $station_name }}
                 </h2>
-                <small>Range of period .</small>
+                <small>Range of period {{ $date }}</small>
             </div>
         </div>
     </div>
@@ -56,7 +56,7 @@
                 @if (count($station))
                 <div class="hpanel">
                     <div class="panel-heading">
-                        RSAM Graphic of 
+                        Tiltmeter {{ $volcano }} - {{ $station_name.' ('.$date.')' }} 
                     </div>
                     <div class="panel-body">
                         <div id="tilt" class="row p-md">
@@ -158,6 +158,12 @@
                     margin: 0,
                     x: 30
                 },
+                credits: {
+                    enabled: false
+                },
+                legend: {
+                    enabled: false
+                },
                 xAxis: {
                     type: 'datetime',
                     crosshair: true,
@@ -174,19 +180,21 @@
                     positioner: function () {
                         return {
                             // right aligned
-                            x: this.chart.chartWidth - 180,
+                            x: this.chart.chartWidth - 240,
                             y: 10 // align to title
                         };
                     },
                     borderWidth: 0,
                     backgroundColor: 'none',
-                    pointFormat: '{point.y}',
                     headerFormat: '',
                     shadow: false,
                     style: {
-                        fontSize: '18px'
+                        fontSize: '14px'
                     },
-                    valueDecimals: dataset.decimal
+                    valueDecimals: dataset.decimal,
+                    formatter: function () {
+                        return Highcharts.dateFormat('%e %b %Y', new Date(this.x))+', '+this.y+' '+dataset.unit;
+                    },
                 },
                 series: [{
                     data: dataset.data,
@@ -194,13 +202,9 @@
                     type: dataset.type,
                     color: Highcharts.getOptions().colors[i],
                     fillOpacity: 0.3,
-                    tooltip: {
-                        valueSuffix: ' ' + dataset.unit
-                    }
                 }]
             });
         });
-
 
     });
 </script>   

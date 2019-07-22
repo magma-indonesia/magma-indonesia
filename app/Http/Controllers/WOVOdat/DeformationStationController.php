@@ -5,6 +5,7 @@ namespace App\Http\Controllers\WOVOdat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use App\WOVOdat\Volcano;
 use App\WOVOdat\DeformationStation as DS;
 
@@ -23,10 +24,11 @@ class DeformationStationController extends Controller
 
     public function store(Request $request)
     {
-        $station = DS::select('ds_id','ds_code','ds_name','cn_id')
+        $station = Cache::remember('wovodat.common-network.deformation-stations:'.$request->station.':'.$request->start.':'.$request->end, 360, function () use ($request) {
+            return DS::select('ds_id','ds_code','ds_name','cn_id')
                     ->with([
                         'common_network' => function ($query) {
-                            $query->select('cn_id','vd_id');
+                            $query->select('cn_id','vd_id','cn_name');
                         },
                         'common_network.volcano' => function ($query) {
                             $query->select('vd_id','vd_name');
@@ -40,10 +42,16 @@ class DeformationStationController extends Controller
                     ])
                     ->where('ds_id',$request->station)
                     ->first();
+        });
+        
+        $volcano = $station->common_network->volcano->vd_name;
+        $network = $station->common_network->cn_name;
+        $station_name = $station->ds_name;
+        $date = Carbon::parse($request->start)->formatLocalized('%d %B %Y').' - '.Carbon::parse($request->end)->formatLocalized('%d %B %Y');
 
         $station = $station->data ? $this->transformData($station) : [];
 
-        return view('wovodat.deformation-station.result', compact('station'));
+        return view('wovodat.deformation-station.result', compact('station','volcano','network','station_name','date'));
     }
 
     protected function transformData($station)
@@ -88,8 +96,8 @@ class DeformationStationController extends Controller
 
         $data[] = [
             'name' => 'Temperature',
-            'data' => $y,
-            'unit' => '&deg;',
+            'data' => $temp,
+            'unit' => '°C',
             'type' => 'line',
             'decimal' => 1
         ];
