@@ -93,6 +93,9 @@ table tr td[class*="4"] {
 .h-bg-magma {
   background: #007fff;
 }
+.h-bg-transparent {
+  background: transparent !important;
+}
 .text-magma {
   color: #007fff;
 }

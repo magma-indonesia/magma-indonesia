@@ -39,6 +39,66 @@ class Volcano extends Model
         );
     }
 
+    public function deformation_stations()
+    {
+        return $this->hasManyThrough(
+            'App\WOVOdat\DeformationStation',
+            'App\WOVOdat\CommonNetwork',
+            'vd_id',
+            'cn_id'
+        );
+    }
+
+    public function fields_stations()
+    {
+        return $this->hasManyThrough(
+            'App\WOVOdat\FieldsStation',
+            'App\WOVOdat\CommonNetwork',
+            'vd_id',
+            'cn_id'
+        );
+    }
+
+    public function gas_stations()
+    {
+        return $this->hasManyThrough(
+            'App\WOVOdat\GasStation',
+            'App\WOVOdat\CommonNetwork',
+            'vd_id',
+            'cn_id'
+        );
+    }
+
+    public function hydrologic_stations()
+    {
+        return $this->hasManyThrough(
+            'App\WOVOdat\HydrologicStation',
+            'App\WOVOdat\CommonNetwork',
+            'vd_id',
+            'cn_id'
+        );
+    }
+
+    public function meteo_stations()
+    {
+        return $this->hasManyThrough(
+            'App\WOVOdat\MeteoStation',
+            'App\WOVOdat\CommonNetwork',
+            'vd_id',
+            'cn_id'
+        );
+    }
+
+    public function thermal_stations()
+    {
+        return $this->hasManyThrough(
+            'App\WOVOdat\ThermalStation',
+            'App\WOVOdat\CommonNetwork',
+            'vd_id',
+            'cn_id'
+        );
+    }
+
     public function events()
     {
         return $this->hasManyThrough(

@@ -95,7 +95,6 @@
         @endrole
 
         var data = @json($rsam);
-        console.log(data);
 
         Highcharts.stockChart('rsam', {
             rangeSelector: {

@@ -192,6 +192,13 @@ Route::name('wovodat.')->group(function () {
         Route::get('seismic-network','WOVOdat\SeismicNetworkController@index')
             ->name('seismic-network.index');
 
+        Route::get('common-network','WOVOdat\CommonNetworkController@index')
+            ->name('common-network.index');
+        Route::get('common-network/deformation-station','WOVOdat\DeformationStationController@index')
+            ->name('common-network.deformation-station.index');
+        Route::post('common-network/deformation-station','WOVOdat\DeformationStationController@store')
+            ->name('common-network.deformation-station.store');
+
         Route::get('interval-swarm','WOVOdat\IntervalSwarmController@index')
             ->name('interval-swarm.index');
         Route::post('interval-swarm','WOVOdat\IntervalSwarmController@store')
