@@ -18,7 +18,9 @@ class MagmaRoqController extends Controller
     {
         $this->middleware(
             'role:Super Admin|Staff MGB',
-            ['except' => 'index','show']
+            [
+                'except' => ['index','show']
+            ]
         );
     }
 
