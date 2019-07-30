@@ -20,7 +20,7 @@
                 </div>
                 <div class="panel-body press-release" style="text-align: justify;">
                     <h3 class="font-bold">Deskripsi</h3>
-                    <p class="m-b-lg">{!! htmlspecialchars_decode($roq->roq_intro) !!}</p>
+                    <p class="m-b-lg">{!! str_replace('Â','',htmlspecialchars_decode($roq->roq_intro)) !!}</p>
                     <h3 class="font-bold">Kondisi Wilayah</h3>
                     <p class="m-b-lg">{!! htmlspecialchars_decode($roq->roq_konwil) !!}</p>
                     <h3 class="font-bold">Mekanisme</h3>
