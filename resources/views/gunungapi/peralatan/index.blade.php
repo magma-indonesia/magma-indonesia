@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('css/Leaflet.Coordinates-0.1.5.css') }}">
     @role('Super Admin')
     <link rel="stylesheet" href="{{ asset('vendor/sweetalert/lib/sweet-alert.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/json-viewer/jquery.json-viewer.css') }}" />
     @endrole
 @endsection
 
@@ -42,6 +43,17 @@
 @section('content-body')
     <div class="content animate-panel">
         <div class="row">
+
+            @role('Super Admin')
+            <div class="col-md-12">
+            @component('components.json-var')
+                @slot('title')
+                    For Developer
+                @endslot
+            @endcomponent
+            </div>
+            @endrole
+            
             <div class="col-lg-12">
                 <div class="hpanel">
                     <div class="panel-heading">
@@ -67,6 +79,8 @@
                                         <th>Gunung Api</th>
                                         <th>Nama Stasiun</th>
                                         <th>Kode Stasiun</th>
+                                        <th>Latitude</th>
+                                        <th>Longitude</th>
                                         <th>Jenis</th>
                                         <th>Status</th>
                                     </tr>
@@ -88,6 +102,8 @@
                                                 <td>{{ $gadd->name }}</td>
                                                 <td>{{ $alat->nama_alat }}</td>
                                                 <td>{{ $alat->kode_alat ?? '-' }}</td>
+                                                <td>{{ $alat->latitude ?? '-' }}</td>
+                                                <td>{{ $alat->longitude ?? '-' }}</td>
                                                 <td>{{ $alat->jenis->jenis_alat }}</td>
                                                 <td>{{ $alat->status ? 'Aktif' : 'Tidak Aktif' }}</td>
                                         </tr>
@@ -113,6 +129,9 @@
     <script src="{{ asset('js/Leaflet.Coordinates-0.1.5.min.js') }}"></script>
     <script src="{{ asset('js/leaflet.defaultextent.js') }}"></script>
     <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+    @role('Super Admin')
+    <script src="{{ asset('vendor/json-viewer/jquery.json-viewer.js') }}"></script>
+    @endrole
 @endsection
 
 @section('add-script')
@@ -174,6 +193,10 @@
 
 <script>
 $(document).ready(function () {
+
+    @role('Super Admin')
+    $('#json-renderer').jsonViewer(@json($gadds), {collapsed: true});
+    @endrole
     
     var layerGunungApi = [],
         layerAlat = [],
