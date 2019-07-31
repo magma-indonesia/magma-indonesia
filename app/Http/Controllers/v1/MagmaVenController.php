@@ -5,6 +5,8 @@ namespace App\Http\Controllers\v1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\v1\MagmaVen;
+use App\v1\MagmaVar;
+use App\v1\Gadd;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 
@@ -21,9 +23,16 @@ class MagmaVenController extends Controller
         $page = $request->has('page') ? $request->page : 1;
         $code = $request->has('code') ? $request->code : false;
 
+        $records = Cache::remember('v1/home/vens:records:'.$last->erupt_id, 60, function() {
+            return MagmaVen::with('gunungapi:ga_code,ga_nama_gapi')
+                ->select('ga_code')
+                ->distinct('ga_code')
+                ->get();
+        });
+
         $vens = $code ? $this->filteredVen($code,$last,$page) : $this->nonFilteredVen($last,$page);
 
-        return view('v1.gunungapi.ven.index',compact('vens'));
+        return view('v1.gunungapi.ven.index',compact('vens','records'));
     }
 
     /**
@@ -80,9 +89,41 @@ class MagmaVenController extends Controller
      */
     protected function visualTidakTeramati($ven)
     {
-        $data = 'Telah terjadi erupsi G. '. $ven->gunungapi->ga_nama_gapi .', '. $ven->gunungapi->ga_prov_gapi .' pada hari '. Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->formatLocalized('%A, %d %B %Y') .', pukul '. $ven->erupt_jam.' '.$ven->gunungapi->ga_zonearea.'. Visual letusan tidak teramati. Erupsi ini terekam di seismograf dengan amplitudo maksimum '.$ven->erupt_amp.' mm dan durasi '.$ven->erupt_drs.' detik.';
+        $seismik = $ven->erupt_amp ? 'Erupsi ini terekam di seismograf dengan amplitudo maksimum '.$ven->erupt_amp.' mm dan durasi '.$ven->erupt_drs.' detik.' : '';
+
+        $data = 'Telah terjadi erupsi G. '. $ven->gunungapi->ga_nama_gapi .', '. $ven->gunungapi->ga_prov_gapi .' pada hari '. Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->formatLocalized('%A, %d %B %Y') .', pukul '. $ven->erupt_jam.' '.$ven->gunungapi->ga_zonearea.'. Visual letusan tidak teramati. ';
 
         return $data;
+    }
+
+    protected function filter(Request $request)
+    {
+        $gadds = Cache::remember('v1/gadds', 120, function () {
+            return Gadd::select('no','ga_code','ga_nama_gapi')
+                ->whereNotIn('ga_code',['TEO','SBG'])
+                ->orderBy('ga_nama_gapi','asc')
+                ->get();
+        });
+
+        if (count($request->all()))
+        {
+            $code = strtolower($request->gunungapi) == 'all' ? '%' : $request->gunungapi;
+            $erupsi = MagmaVar::select('ga_code','ga_nama_gapi','var_data_date','var_lts')
+                        ->selectRaw('SUM(var_lts) as jumlah_erupsi')
+                        ->where('ga_code','like',$code)
+                        ->where('var_lts','>',0)
+                        ->whereBetween('var_data_date',[$request->start,$request->end])
+                        ->groupBy('magma_var.ga_nama_gapi')
+                        ->get();
+            $periode = $request->start.' hingga '.$request->end;
+
+            return view('v1.gunungapi.ven.result', compact('gadds','erupsi','periode'));     
+        }
+
+        return view('v1.gunungapi.ven.filter', compact('gadds'))->with('flash_message',
+        'Kriteria pencarian tidak ditemukan/belum ada');
+
+
     }
 
     protected function filteredVen($code,$last,$page)

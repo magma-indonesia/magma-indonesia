@@ -116,7 +116,7 @@
                                 <a class="m-l" href="{{ route('chambers.v1.gunungapi.evaluasi.index') }}">Evaluasi</a>
                             </li>
                             <li class="{{ active('chambers.v1.gunungapi.ven.index') }}">
-                                <a class="m-l" href="{{ route('chambers.v1.gunungapi.ven.index') }}">VEN</a>
+                                <a class="m-l" href="{{ route('chambers.v1.gunungapi.ven.index') }}">Informasi Letusan</a>
                             </li>
                             <li class="{{ active('chambers.v1.vona.*') }}">
                                 <a class="m-l" href="{{ route('chambers.v1.vona.index') }}">VONA</a>
