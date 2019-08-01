@@ -107,7 +107,7 @@
                         <span class="font-bold">Periode {{ $periode }}</span>
                     </div>
                     @foreach ($erupsi as $item)
-                    <div class="col-md-3 col-xs-12">
+                    <div class="col-md-3 col-xs-6">
                         <div class="hpanel hbgred">
                             <div class="panel-body">
                                 <div class="text-center">
