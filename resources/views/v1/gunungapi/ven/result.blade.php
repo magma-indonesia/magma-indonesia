@@ -115,6 +115,9 @@
                                     <p class="text-big font-light">
                                         {{ $item->jumlah_erupsi }}
                                     </p>
+                                    <h4>
+                                        Jumlah Letusan
+                                    </h4>
                                     <small>
                                         Letusan terakhir terjadi pada tanggal {{ $item->data_date }}
                                     </small>
