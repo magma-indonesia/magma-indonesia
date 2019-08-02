@@ -35,7 +35,7 @@ class RsamJson extends Controller
 
     protected function getStartDate()
     {
-        return '&t1='.now()->subDays(30)->format('YmdHi');
+        return '&t1='.now()->subDays(90)->format('YmdHi');
     }
 
     protected function getEndDate()
