@@ -74,6 +74,13 @@ Route::group(['prefix' => 'gunungapi'], function () {
         });
     });
 
+    Route::name('rsam.')->group(function () {
+        Route::group(['prefix' => 'rsam'], function () {
+            Route::get('/','RsamController@index')->name('index');
+            Route::post('/','RsamController@store')->name('store');
+        });
+    });
+
     Route::get('laporan/search','ActivityGaController@search')->name('laporan.search');
     Route::post('laporan/verifikasiv1','ActivityGaController@verifikasiv1')->name('laporan.verifikasiv1');
     Route::post('laporan/validasi','ActivityGaController@validasi')->name('laporan.validasi');
@@ -178,6 +185,10 @@ Route::name('json.')->group(function () {
         Route::post('peralatan','Json\PeralatanJson@index')
                 ->name('peralatan.index')
                 ->middleware('signed');
+
+        Route::post('rsam','Json\RsamJson@index')
+                ->name('rsam')
+                ->middleware('signed');
     });
 });
 
@@ -235,6 +246,8 @@ Route::name('v1.')->group(function () {
 
                 Route::get('laporan/filter','v1\MagmaVarController@filter')
                     ->name('laporan.filter');
+                Route::get('laporan/filter/gempa','v1\MagmaVarController@filterGempa')
+                    ->name('laporan.filter.gempa');
                 
                 Route::get('laporan/create-var','v1\MagmaVarController@createVar')
                     ->name('laporan.create.var');
