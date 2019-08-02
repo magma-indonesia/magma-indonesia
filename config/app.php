@@ -243,6 +243,7 @@ return [
         'Indonesia' => Laravolt\Indonesia\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'XmlParser' => Orchestra\Parser\Xml\Facade::class,
+        'StreamParser' => Rodenastyle\StreamParser\StreamParser::class,
 
     ],
 
