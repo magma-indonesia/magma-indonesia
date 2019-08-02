@@ -74,6 +74,7 @@
 
         Highcharts.chart('container', {
             chart: {
+                zoomType: 'x',
                 type: 'column',
             },
             credits: {
