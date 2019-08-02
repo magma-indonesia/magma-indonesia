@@ -81,6 +81,7 @@
                                         <th>Kode Stasiun</th>
                                         <th>Latitude</th>
                                         <th>Longitude</th>
+                                        <th>Elevasi</th>
                                         <th>Jenis</th>
                                         <th>Status</th>
                                     </tr>
@@ -104,6 +105,7 @@
                                                 <td>{{ $alat->kode_alat ?? '-' }}</td>
                                                 <td>{{ $alat->latitude ?? '-' }}</td>
                                                 <td>{{ $alat->longitude ?? '-' }}</td>
+                                                <td>{{ $alat->elevasi ?? '-' }}</td>
                                                 <td>{{ $alat->jenis->jenis_alat }}</td>
                                                 <td>{{ $alat->status ? 'Aktif' : 'Tidak Aktif' }}</td>
                                         </tr>
