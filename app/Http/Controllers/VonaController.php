@@ -115,9 +115,11 @@ class VonaController extends Controller
     public function store(Request $request)
     {
         $nip = $request->input('nip',auth()->user()->nip);
+        $type = $request->has('tipe') ? $request->tipe : 'real';
 
         $request->merge([
             'nip' => $nip,
+            'tipe' => $type
         ]);
 
         $this->validate($request, [
