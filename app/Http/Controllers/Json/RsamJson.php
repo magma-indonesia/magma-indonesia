@@ -28,7 +28,7 @@ class RsamJson extends Controller
                 $this->getCsv());
     }
 
-    protected function getChannel($channel = 'GTOH_EHZ_VG_00')
+    protected function getChannel($channel = 'RTUZ_EHZ_VG_00')
     {
         return '?code='.$channel;
     }
