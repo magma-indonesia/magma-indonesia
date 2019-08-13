@@ -134,7 +134,8 @@
             var layerEsriStreets = L.esri.basemapLayer('Imagery').addTo(map);
             var layerWorldTransportation = L.esri.basemapLayer('ImageryTransportation',{attributionControl: false}).addTo(map);
 
-            var layerLabels = null
+            var layerLabels = null;
+            map.addLayer(L.esri.basemapLayer('ImageryLabels'));
 
             var latlongControl = L.control.coordinates({
                 position:"bottomright",
