@@ -105,7 +105,7 @@
                             <div class="panel-body">
                                 <ul class="list-group m-t-lg">
                                 @foreach ($data['details'] as $details)
-                                    <li class="list-group-item"><b>{{ \Carbon\Carbon::parse($details['date'])->formatLocalized('%A, %d %B %Y')}}</b>, {{ $details['visual'] ?: 'Tidak ada data' }}</li>
+                                    <li class="list-group-item"><b>{{ \Carbon\Carbon::parse($details['date'])->formatLocalized('%A, %d %B %Y')}}</b>, {!! $details['visual'] ?: 'Tidak ada data' !!}</li>
                                 @endforeach
                                 </ul>
                             </div>
@@ -335,8 +335,8 @@
             exporting: {
                 enabled: true,
                 scale: 1,
-                sourceHeight: 360,
-                sourceWidth: 800
+                sourceHeight: 1280,
+                sourceWidth: 720
             }
         });
 
@@ -380,15 +380,14 @@
             plotOptions: {
                 column: {
                     groupPadding: 0.2,
-                    borderWidth: 1
                 }
             },
             series: [@json($gempa)],
             exporting: {
                 enabled: true,
                 scale: 1,
-                sourceHeight: 360,
-                sourceWidth: 800
+                sourceHeight: 1080,
+                sourceWidth: 1920
             }
         });
         @endforeach
