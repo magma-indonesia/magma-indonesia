@@ -437,17 +437,16 @@
                 .addAttribution('<a href="http://esdm.go.id" title="Badan Geologi, ESDM" target="_blank">Badan Geologi, ESDM</a>')
                 .addTo(map);
 
-            //Get High Accuracy Location
-            // map.locate({enableHighAccuracy:true})
-            //     .on('locationfound',function(e){
-            //         L.marker([e.latitude, e.longitude],{icon: here})
-            //         .addTo(map)
-            //         .bindPopup('Anda Berada di Sini',{
-            //             closeButton:false
-            //         })
-            //         .openPopup();
-            //         map.flyTo([e.latitude, e.longitude], 8, {duration:5});
-            // });
+            map.locate({enableHighAccuracy:true})
+                .on('locationfound',function(e){
+                    L.marker([e.latitude, e.longitude],{icon: here})
+                    .addTo(map)
+                    .bindPopup('Anda Berada di Sini',{
+                        closeButton:false
+                    })
+                    .openPopup();
+                    map.flyTo([e.latitude, e.longitude], 8, {duration:5});
+            });
             
         </script>
         
