@@ -87,7 +87,7 @@
             var ga_icon_b = L.Icon.extend({options: {iconSize: [48, 58],className:'gb-blinking'}});
             var erupt = L.Icon.extend({options: {iconSize: [48, 72]}});
             var gempa_icon = L.Icon.extend({options: {iconSize: [32, 39]}});
-            var gempa_icon_b = L.Icon.extend({options: {iconSize: [58, 58],className:'gb-blinking'}});
+            var gempa_icon_b = L.Icon.extend({options: {iconSize: [48, 58],className:'gb-blinking'}});
             var gertan_icon_b = L.Icon.extend({options: {iconSize: [48, 58],className:'gb-blinking'}});
 
             here = new ga_icon({iconUrl: url+'/icon/here.png'}),
@@ -163,16 +163,16 @@
                 .addTo(map);
 
             //Get High Accuracy Location
-            // map.locate({enableHighAccuracy:true})
-            //     .on('locationfound',function(e){
-            //         L.marker([e.latitude, e.longitude],{icon: here})
-            //         .addTo(map)
-            //         .bindPopup('Anda Berada di Sini',{
-            //             closeButton:false
-            //         })
-            //         .openPopup();
-            //         map.flyTo([e.latitude, e.longitude], 8, {duration:5});
-            // });
+            map.locate({enableHighAccuracy:true})
+                .on('locationfound',function(e){
+                    L.marker([e.latitude, e.longitude],{icon: here})
+                    .addTo(map)
+                    .bindPopup('Anda Berada di Sini',{
+                        closeButton:false
+                    })
+                    .openPopup();
+                    map.flyTo([e.latitude, e.longitude], 8, {duration:5});
+            });
             
         </script>
         
