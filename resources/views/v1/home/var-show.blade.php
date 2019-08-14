@@ -1,7 +1,7 @@
 @extends('layouts.slim') 
 
 @section('title')
-Laporan Aktivitas - {{ $var->gunungapi }}
+Laporan Aktivitas - {{ $var->gunungapi }}, {{ $var->tanggal_deskripsi }}, periode {{ $var->periode }}
 @endsection
 
 @section('add-vendor-css')
