@@ -6,12 +6,12 @@
         <meta name="theme-color" content="#007fff">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-        <meta name="description" content="MAGMA Indonesia - Bridging the will of nature to society">
-        <meta name="author" content="Kementerian ESDM">
+        <meta name="keywords" content="magma,esdm,bencana,gunungapi,pvmbg,badan geologi,vona,gempabumi,volcano" />
+
+        <title>{{ config('app.name') }} - {{ config('app.tag_line') }}</title>
         <link href="{{ asset('favicon.ico') }}" rel="shortcut icon">
         <link rel="dns-prefetch" href="{{ config('app.url') }}">
         <link rel="dns-prefetch" href="https://magma.vsi.esdm.go.id/">
-        <title>{{ config('app.name') }} - {{ config('app.tag_line') }}</title>
 
         <!-- Twitter -->
         <meta name="twitter:site" content="@id_magma">
@@ -22,6 +22,7 @@
         <meta name="twitter:image" content="{{ asset('snapshot.png') }}">
 
         <!-- Facebook -->
+        <meta property="og:type" content="website"/>
         <meta property="og:url" content="{{ config('app.url') }}">
         <meta property="og:title" content="{{ config('app.name') }}">
         <meta property="og:description" content="{{ config('app.tag_line') }}">

@@ -1,14 +1,17 @@
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#007fff">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="magma,esdm,bencana,gunungapi,pvmbg,badan geologi,vona,gempabumi,volcano" />
 
     <!-- Page title -->
     <title>@yield('title')</title>
     <link href="{{ asset('favicon.ico') }}" rel="shortcut icon">
     <link rel="dns-prefetch" href="{{ config('app.url') }}">
     <link rel="dns-prefetch" href="https://magma.vsi.esdm.go.id/">
+    <link itemprop="thumbnailUrl" href="{{ asset('snapshot.png') }}">
 
     <!-- Twitter -->
     <meta name="twitter:site" content="@id_magma">
@@ -19,6 +22,7 @@
     <meta name="twitter:image" content="{{ asset('snapshot.png') }}">
 
     <!-- Facebook -->
+    <meta property="og:type" content="website"/>
     <meta property="og:url" content="{{ config('app.url') }}">
     <meta property="og:title" content="{{ config('app.name') }}">
     <meta property="og:description" content="{{ config('app.tag_line') }}">
@@ -30,7 +34,7 @@
 
     <!-- Meta -->
     <meta name="description" content="{{ config('app.tag_line') }}">
-    <meta name="author" content="Kementerian ESDM">
+    <meta name="author" content="Kementerian Energi dan Sumber Daya Mineral">
 
     <!-- vendor css -->
     <link href="{{ asset('slim/lib/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
