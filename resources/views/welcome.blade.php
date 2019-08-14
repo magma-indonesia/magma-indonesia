@@ -3,10 +3,33 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>{{ config('app.name') }}</title>
+        <meta name="theme-color" content="#007fff">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+        <meta name="description" content="MAGMA Indonesia - Bridging the will of nature to society">
+        <meta name="author" content="Kementerian ESDM">
         <link href="{{ asset('favicon.ico') }}" rel="shortcut icon">
+        <link rel="dns-prefetch" href="{{ config('app.url') }}">
+        <link rel="dns-prefetch" href="https://magma.vsi.esdm.go.id/">
+        <title>{{ config('app.name') }} - {{ config('app.tag_line') }}</title>
+
+        <!-- Twitter -->
+        <meta name="twitter:site" content="@id_magma">
+        <meta name="twitter:creator" content="@KementerianESDM">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{{ config('app.name') }}">
+        <meta name="twitter:description" content="{{ config('app.tag_line') }}">
+        <meta name="twitter:image" content="{{ asset('snapshot.png') }}">
+
+        <!-- Facebook -->
+        <meta property="og:url" content="{{ config('app.url') }}">
+        <meta property="og:title" content="{{ config('app.name') }}">
+        <meta property="og:description" content="{{ config('app.tag_line') }}">
+        <meta property="og:image" content="{{ asset('snapshot.png') }}">
+        <meta property="og:image:secure_url" content="{{ asset('snapshot.png') }}">
+        <meta property="og:image:type" content="image/png">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
 
         <!-- Styles -->
         <style>
@@ -92,19 +115,6 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a>Halo, {{ auth()->user()->name }}</a>
-                        <a href="{{ route('home') }}">Home</a>
-                        <a href="{{ route('logout') }}">Logout</a>
-                    @else
-                        {{--  <a href="{{ route('login') }}">Login</a>  --}}
-                        {{--  <a href="{{ route('register') }}">Register</a>  --}}
-                    @endauth
-                </div>
-            @endif
-
             <div class="content">
                 <img alt="logo" class="p-m m-b-md" src="{{ url('/').'/svg/login-logo.svg' }}" style="width: 240px;">
                 <div class="title m-b-sm">MAGMA v2</div>            
@@ -112,7 +122,7 @@
 
                 <div class="links">
                     <a href="{{ route('login') }}">Login</a>
-                    <a href="{{ route('v1.home') }}">Demo v1</a>
+                    <a href="{{ route('v1.home') }}">Magma v1</a>
                 </div>
             </div>
         </div>
