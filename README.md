@@ -16,6 +16,9 @@ Pemahaman awal Laravel dalam mengembangkan MAGMA akan sangat membantu memahami b
 5. MySQL
 6. Composer
 7. Redis
+8. NodeJs
+9. NPM
+10. NPM Puppeteer Package
 
 # Demo
-Untuk demo bisa dilihat pada link berikut [MAGMA Indonesia v2](http://103.87.160.58/v1)
+Untuk demo bisa dilihat pada link berikut [MAGMA Indonesia v2](https://magma.esdm.go.id/v1)
