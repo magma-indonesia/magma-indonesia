@@ -33,7 +33,7 @@
     <meta property="og:image:height" content="630">
 
     <!-- Meta -->
-    <meta name="description" content="{{ config('app.tag_line') }}">
+    <meta name="description" content="@yield('title')">
     <meta name="author" content="Kementerian Energi dan Sumber Daya Mineral">
 
     <!-- vendor css -->
