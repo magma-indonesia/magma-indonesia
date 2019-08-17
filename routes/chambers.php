@@ -195,7 +195,8 @@ Route::name('json.')->group(function () {
 Route::name('wovodat.')->group(function () {
     Route::group(['prefix' => 'wovodat'], function () {
 
-        Route::view('/','wovodat.index');
+        Route::view('/','wovodat.index')
+            ->name('index');
 
         Route::get('volcano','WOVOdat\VolcanoController@index')
             ->name('volcano.index');
