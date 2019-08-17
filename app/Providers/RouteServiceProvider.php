@@ -41,6 +41,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapImportRoutes();
         $this->mapExportRoutes();
         $this->mapFunRoutes();
+        $this->mapDemoRoutes();
     }
 
     /**
@@ -127,5 +128,18 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware(['web','auth','revalidate'])
              ->namespace($this->namespace)
              ->group(base_path('routes/fun.php'));
+    }
+
+    /**
+     * Define the "Demo anotther apps" routes for MAGMA dashboard.
+     *
+     * @return void
+     */
+    protected function mapDemoRoutes()
+    {
+        Route::prefix('demo')
+             ->name('demo.')
+             ->namespace('App\Http\Controllers\Demo\NusaGeomatika')
+             ->group(base_path('routes/demo.php'));
     }
 }
