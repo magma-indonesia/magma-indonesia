@@ -9,11 +9,11 @@ class LoginController extends Controller
 {
     public function index()
     {
-        return 'login index';
+        return view('demo.nusa-geomatika.login.index');
     }
 
     public function login(Request $request)
     {
-        return 'login';
+        return $request;
     }
 }
