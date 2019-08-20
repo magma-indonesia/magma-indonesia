@@ -26,7 +26,7 @@
 <body>
     <div class="signin-wrapper">
         <div class="signin-box">
-            <h2 class="slim-logo"><a href="#">Demo<span>.</span></a></h2>
+            <h2 class="slim-logo"><a href="#">Karvak <span>Nusak Geomatika</span></a></h2>
             <h2 class="signin-title-primary">Selamat Datang!</h2>
             <h3 class="signin-title-secondary">Silahkan login untuk melanjutkan.</h3>
 
@@ -38,6 +38,19 @@
                 <div class="form-group mg-b-50">
                     <input name="password" type="password" class="form-control" placeholder="password Demo">
                 </div>
+
+                @if(count($errors) > 0)
+                <div class="form-group">
+                    <div class="alert alert-danger">
+                        <ul class="list-unstyled list-group">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+                @endif
+
                 <button type="submit" class="btn btn-primary btn-block btn-signin">Sign In</button>
             </form>
         </div>
