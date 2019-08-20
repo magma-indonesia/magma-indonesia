@@ -139,6 +139,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::prefix('demo')
              ->name('demo.')
+             ->middleware(['web'])
              ->namespace('App\Http\Controllers\Demo\NusaGeomatika')
              ->group(base_path('routes/demo.php'));
     }
