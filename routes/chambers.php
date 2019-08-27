@@ -77,7 +77,6 @@ Route::group(['prefix' => 'gunungapi'], function () {
     Route::name('rsam.')->group(function () {
         Route::group(['prefix' => 'rsam'], function () {
             Route::get('/','RsamController@index')->name('index');
-            Route::post('/','RsamController@store')->name('store');
         });
     });
 

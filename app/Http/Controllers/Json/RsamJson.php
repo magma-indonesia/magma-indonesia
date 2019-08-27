@@ -5,11 +5,23 @@ namespace App\Http\Controllers\Json;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Tightenco\Collect\Support\Collection;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 use StreamParser;
 
 class RsamJson extends Controller
 {
-    protected $data = array();
+    protected $data = [];
+
+    protected $useCache = true;
+
+    protected $channel;
+
+    protected $startDate;
+
+    protected $endDate;
+
+    protected $rsamPeriod;
 
     public function __construct()
     {
@@ -28,24 +40,59 @@ class RsamJson extends Controller
                 $this->getCsv());
     }
 
-    protected function getChannel($channel = 'JRMZ_EHZ_VG_00')
+    protected function setCache($cache)
     {
-        return '?code='.$channel;
+        $this->useCache = $cache;
+        return $this;
+    }
+
+    protected function getCache()
+    {
+        return $this->useCache;
+    }
+
+    protected function setChannel($channel)
+    {
+        $this->channel = '?code='.$channel;
+        return $this;
+    }
+
+    protected function getChannel()
+    {
+        return $this->channel;
+    }
+
+    protected function setStartDate($start)
+    {
+        $this->startDate = '&t1='.Carbon::createFromFormat('Y-m-d H:i:s',$start.' 00:00:00')->format('YmdHi');
+        return $this;
     }
 
     protected function getStartDate()
     {
-        return '&t1='.now()->subDays(90)->format('YmdHi');
+        return $this->startDate;
+    }
+
+    protected function setEndDate($end)
+    {
+        $this->endDate = '&t2='.Carbon::createFromFormat('Y-m-d H:i:s',$end.' 23:59:00')->format('YmdHi');
+        return $this;
     }
 
     protected function getEndDate()
     {
-        return '&t2='.now()->format('YmdHi');
+        return $this->endDate;
     }
 
-    protected function getRsamPeriod($period = 600)
+    protected function setRsamPeriod($period)
     {
-        return '&rsamp='.$period;
+        $this->rsamPeriod = '&rsamP='.$period;
+        return $this;
+    }
+
+    protected function getRsamPeriod()
+    {
+        return $this->rsamPeriod;
     }
 
     protected function getCsv()
@@ -53,9 +100,26 @@ class RsamJson extends Controller
         return '&csv=1';
     }
 
-    public function index(Request $request)
+    protected function cacheData($url, $request)
     {
-        StreamParser::csv($this->getWinstonUrl())->each(function(Collection $data){
+        $cache = Cache::remember('json:rsam:'.$request->channel.'-'.$request->start.':'.$request->end.':'.$request->periode, 120, function() use ($url) {
+            StreamParser::csv($url)->each(function(Collection $data){
+                $flatten = $data->flatten();
+                $this->data[] = [
+                    \Carbon\Carbon::parse($flatten[0])->timestamp*1000,
+                    floatval($flatten[1])
+                ];
+            });
+    
+            return $this->data;
+        });
+
+        return $cache;
+    }
+
+    protected function freshData($url)
+    {
+        StreamParser::csv($url)->each(function(Collection $data){
             $flatten = $data->flatten();
             $this->data[] = [
                 \Carbon\Carbon::parse($flatten[0])->timestamp*1000,
@@ -64,5 +128,23 @@ class RsamJson extends Controller
         });
 
         return $this->data;
+    }
+
+    protected function getData($url, $request)
+    {
+        $data = $this->getCache() ? $this->cacheData($url, $request) : $this->freshData($url);
+
+        return $data;
+    }
+
+    public function index(Request $request)
+    {
+        $winstonUrl = $this->setChannel($request->channel)
+                            ->setStartDate($request->start)
+                            ->setEndDate($request->end)
+                            ->setRsamPeriod($request->periode)
+                            ->getWinstonUrl();
+
+        return $this->getData($winstonUrl, $request);
     }
 }

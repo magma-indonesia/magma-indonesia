@@ -8,9 +8,6 @@
     <link rel="stylesheet" type="text/css" href="https://code.highcharts.com/css/stocktools/gui.css">
     <link rel="stylesheet" type="text/css" href="https://code.highcharts.com/css/annotations/popup.css">
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap-datepicker-master/dist/css/bootstrap-datepicker3.min.css') }}" />
-    @role('Super Admin')
-    <link rel="stylesheet" href="{{ asset('vendor/json-viewer/jquery.json-viewer.css') }}" />
-    @endrole
 @endsection
 
 
@@ -46,23 +43,13 @@
 
     <div class="row">
 
-        @role('Super Admin')
-        <div class="col-md-12">
-        @component('components.json-var')
-            @slot('title')
-                For Developer
-            @endslot
-        @endcomponent
-        </div>
-        @endrole
-
         <div class="col-lg-12">
             <div class="hpanel">
                 <div class="panel-heading">
                     Pilih Paramater
                 </div>
                 <div class="panel-body">
-                    <form role="form" id="form" method="POST" action="{{ route('chambers.rsam.store') }}">
+                    <form role="form" id="form" method="POST" action="{{ URL::signedRoute('chambers.json.rsam') }}">
                         @csrf
                         <div class="tab-content">
                             <div id="step1" class="p-m tab-pane active">
@@ -90,7 +77,7 @@
                                         <div class="row p-md">
                                             <div class="form-group">
                                                 <label class="control-label">Channel</label>
-                                                <select id="volcano" class="form-control m-b" name="channel">
+                                                <select id="channel" class="form-control m-b" name="channel">
                                                     <option value="ABNG_SHZ_VG_00">ABNG_SHZ_VG_00</option>
                                                     <option value="AGG_EHZ_VG_00">AGG_EHZ_VG_00</option>
                                                     <option value="AKB_EHZ_VG_00">AKB_EHZ_VG_00</option>
@@ -343,8 +330,18 @@
                                                 </div>
                                             </div>
 
+                                            <div class="form-group">
+                                                <label class="control-label">Periode RSAM</label>
+                                                <select id="periode" class="form-control m-b" name="periode">
+                                                    <option value="60">1 Menit</option>
+                                                    <option value="600">10 Menit</option>
+                                                    <option value="3600">1 Jam</option>
+                                                    <option value="21600">6 Jam</option>
+                                                </select>
+                                            </div>
+
                                             <hr>
-                                            <button class="btn btn-magma" type="submit">Apply</button>
+                                            <button id="submit" class="btn btn-magma" type="submit">Apply</button>
                                         </div>
                                     </div>
                                 </div>
@@ -355,10 +352,10 @@
             </div>
         </div>
 
-        <div class="col-lg-12 rsam">
+        <div class="col-lg-12 rsam" style="display: none;">
             <div class="hpanel">
-                <div class="panel-heading">
-                    Grafik RSAM Gunung Api, Station 
+                <div class="panel-heading rsam-heading">
+                    Grafik RSAM
                 </div>
                 <div class="panel-body">
                     <div class="row p-md">
@@ -378,21 +375,10 @@
 
 @section('add-vendor-script')
 <script src="https://code.highcharts.com/stock/highstock.js"></script>
-<script src="https://code.highcharts.com/stock/indicators/indicators-all.js"></script>
-<script src="https://code.highcharts.com/stock/modules/drag-panes.js"></script>
-
-<script src="https://code.highcharts.com/modules/annotations-advanced.js"></script>
-<script src="https://code.highcharts.com/modules/price-indicator.js"></script>
-<script src="https://code.highcharts.com/modules/full-screen.js"></script>
-
-<script src="https://code.highcharts.com/modules/stock-tools.js"></script>
 <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
 <script src="{{ asset('vendor/moment/moment.js') }}"></script>
 <script src="{{ asset('vendor/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.min.js') }}"></script>
-@role('Super Admin')
-<script src="{{ asset('vendor/json-viewer/jquery.json-viewer.js') }}"></script>
-@endrole
 @endsection
 
 @section('add-script')
@@ -420,21 +406,33 @@ $(document).ready(function () {
         todayBtn: 'linked',
         enableOnReadonly: false
     });
-   
-    $.ajax({
-        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-        url: '{{ URL::signedRoute('chambers.json.rsam') }}',
-        type: 'POST',
-        success: function(data) {
-            plotRSAM(data);
-        },
-        complete: function() {
-            $('.progress').hide();
-            $('#rsam').show();
-        },
+
+    $('#form').submit(function(e) {
+        e.preventDefault();
+
+        $('.rsam').show();
+        $('#rsam').hide();
+        $('.progress').show();
+
+        var channel = $('#channel').val();
+
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: '{{ URL::signedRoute('chambers.json.rsam') }}',
+            data: $(this).serialize(),
+            type: 'POST',
+            success: function(data) {
+                console.log(data);
+                plotRSAM(data,channel);
+            },
+            complete: function() {
+                $('.progress').hide();
+                $('#rsam').show();
+            },
+        });
     });
 
-    function plotRSAM(data)
+    function plotRSAM(data,channel)
     {
         Highcharts.stockChart('rsam', {
             rangeSelector: {
@@ -444,14 +442,14 @@ $(document).ready(function () {
                 zoomType: 'x',
             },
             title: {
-                text: 'Grafik RSAM Gunung Api Agung - GTOH_EHZ_VG_00',
+                text: 'Grafik RSAM - '+channel,
             },
             xAxis: {
                 type: 'datetime',
             },
             yAxis: {
                 title: {
-                    text: 'Count',
+                    text: 'RSAM Count',
                 }
             },
             legend: {
@@ -468,13 +466,47 @@ $(document).ready(function () {
             scrollbar: {
                 enabled: false,
             },
+            rangeSelector: {
+                buttons: [{
+                    type: 'hour',
+                    count: 1,
+                    text: '1H'
+                }, {
+                    type: 'hour',
+                    count: 12,
+                    text: '12H'
+                }, {
+                    type: 'day',
+                    count: 1,
+                    text: '1D'
+                }, {
+                    type: 'all',
+                    count: 1,
+                    text: 'All'
+                }],
+                selected: 3,
+                inputEnabled: false
+            },
             series: [{
                 marker: {
                     enabled: true,
                     radius: 3
                 },
-                name: 'Count',
+                type: 'area',
+                name: 'RSAM',
                 data: data,
+                fillColor: {
+                    linearGradient: {
+                        x1: 0,
+                        y1: 0,
+                        x2: 0,
+                        y2: 1
+                    },
+                    stops: [
+                        [0, '#1E88E5'],
+                        [1, '#ffffff']
+                    ]
+                },
             }],
             exporting: {
                 enabled: true,

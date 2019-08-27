@@ -17,9 +17,4 @@ class RsamController extends Controller
         
         return view('gunungapi.rsam.index', compact('gadds'));
     }
-
-    public function store(Request $request)
-    {
-        return $request;
-    }
 }
