@@ -8,6 +8,9 @@
 	<meta key-magma="{{ str_random(40) }}">
 	<!-- Page title -->
 	<title>Login</title>
+	<meta name="twitter:image" content="{{ asset('snapshot.png') }}">
+	<meta property="og:image" content="{{ asset('snapshot.png') }}">
+	<meta property="og:image:secure_url" content="{{ asset('snapshot.png') }}">
 
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <link href="{{ asset('favicon.ico') }}" rel="shortcut icon">
