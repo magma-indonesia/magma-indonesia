@@ -5,12 +5,14 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta key-magma="{{ str_random(40) }}">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<!-- Page title -->
 	<title>Login</title>
 	<meta name="twitter:image" content="{{ asset('snapshot.png') }}">
 	<meta property="og:image" content="{{ asset('snapshot.png') }}">
 	<meta property="og:image:secure_url" content="{{ asset('snapshot.png') }}">
+	<meta name="description" content="MAGMA Indonesia | Bridging the Will of Nature to Society">
+    <meta name="author" content="Kementerian Energi dan Sumber Daya Mineral">
 
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <link href="{{ asset('favicon.ico') }}" rel="shortcut icon">
