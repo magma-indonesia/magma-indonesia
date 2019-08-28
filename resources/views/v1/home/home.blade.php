@@ -355,8 +355,6 @@
         <script>
 
             var url = '{{ url('/') }}';
-            console.log(screen.width);
-            console.log(screen.height);
 
             // Icon Gunung Api
             var ga_icon = L.Icon.extend({options: {iconSize: [32, 32]}});
@@ -615,9 +613,6 @@
                     success: function(response) {
                         var vona='';
                         newData = response.data;
-                        if (response.success) {
-                            console.log(newData);
-                        }
 
                         switch (newData.gunungapi.status) {
                             case 1:
@@ -677,7 +672,6 @@
             }
 
             function setBasemap(basemap) {
-                console.log(basemap);
                 if (layerEsriStreets) {
                     map.removeLayer(layerEsriStreets);
                 }
