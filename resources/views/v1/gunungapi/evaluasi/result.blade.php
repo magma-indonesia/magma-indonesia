@@ -335,8 +335,8 @@
             exporting: {
                 enabled: true,
                 scale: 1,
-                sourceHeight: 1280,
-                sourceWidth: 720
+                sourceHeight: 720,
+                sourceWidth: 1280
             }
         });
 
