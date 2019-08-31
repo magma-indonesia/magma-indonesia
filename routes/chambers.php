@@ -26,6 +26,13 @@ Route::get('export/{type}','ExportController@index')->name('export');
 
 Route::name('administratif.')->group(function () {
     Route::resource('jabatan','JabatanController');
+    Route::name('mga.')->group(function () {
+        Route::group(['prefix' => 'mga'], function () {
+            Route::resource('jenis-kegiatan','JenisKegiatanController');
+            Route::resource('kegiatan','KegiatanController');
+            Route::resource('detail-kegiatan','DetailKegiatanController');
+        });
+    });
 });
 
 Route::get('absensi/search','AbsensiController@search')->name('absensi.search');
@@ -64,6 +71,7 @@ Route::group(['prefix' => 'gunungapi'], function () {
     Route::resource('datadasar','DataDasar');
     Route::resource('pos','PosPgaController');
     Route::resource('letusan','MagmaVenController');
+    Route::resource('laporan-guguran','LaporanGuguranController');
 
     Route::name('peralatan.')->group(function () {
         Route::group(['prefix' => 'peralatan'], function () {

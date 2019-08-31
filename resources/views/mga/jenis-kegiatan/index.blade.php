@@ -1,0 +1,244 @@
+@extends('layouts.default')
+
+@section('title')
+    Jenis Kegiatan Bidang MGA
+@endsection
+
+@section('add-vendor-css')
+    <link rel="stylesheet" href="{{ asset('vendor/sweetalert/lib/sweet-alert.css') }}" />
+@endsection
+
+@section('content-header')
+    <div class="small-header">
+        <div class="hpanel">
+            <div class="panel-body">
+                <div id="hbreadcrumb" class="pull-right">
+                    <ol class="hbreadcrumb breadcrumb">
+                        <li><a href="{{ route('chambers.index') }}">Chamber</a></li>
+                        <li>
+                            <span>Administratif</span>
+                        </li>
+                        <li>
+                            <span>MGA</span>
+                        </li>
+                        <li class="active">
+                            <span>Jenis Kegiatan </span>
+                        </li>
+                    </ol>
+                </div>
+                <h2 class="font-light m-b-xs">
+                    Daftar jenis kegiatan bidang MGA
+                </h2>
+                <small>Meliputi seluruh jenis kegiatan yang sedang, pernah, atau akan dilakukan (perencanaan) </small>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('content-body')
+    <div class="content animate-panel content-boxed">
+        <div class="row">
+            <div class="col-lg-12">
+
+                @if ($jenis->isEmpty())
+                <div class="alert alert-danger">
+                    <i class="fa fa-gears"></i> Data Jenis Kegiatan belum tersedia. <a href="{{ route('chambers.administratif.mga.jenis-kegiatan.create') }}"><b>Buat baru?</b></a>
+                </div>
+                @else
+
+                <div class="hpanel">
+                    <div class="panel-heading">
+                        Jenis-jenis Kegiatan MGA
+                    </div>
+
+                    <div class="panel-body float-e-margins">
+                        <div class="row">
+                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                <a href="{{ route('chambers.administratif.mga.jenis-kegiatan.create') }}" class="btn btn-magma btn-outline btn-block" type="button">Tambah Jenis Kegiatan</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table id="table-kegiatan" class="table table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Jenis Kegiatan</th>
+                                        <th>Jumlah</th>
+                                        @role('Super Admin|Kortim MGA')
+                                        <th>Action</th>
+                                        @endrole
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($jenis as $key => $item)
+                                    <tr>
+                                        <td>{{ $key+1 }}</td>
+                                        <td>{{ $item->nama }}</td>
+                                        <td>{{ $item->kegiatan_count }}</td>
+                                        @role('Super Admin|Kortim MGA')
+                                        <td>
+                                            <a href="{{ route('chambers.administratif.mga.kegiatan.create') }}" class="btn btn-sm btn-info btn-outline" type="button"><i class="fa fa-plus"></i></a>
+
+                                            <a href="{{ route('chambers.administratif.mga.jenis-kegiatan.edit', $item) }}" class="btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>
+
+                                            @role('Super Admin')
+                                            <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.administratif.mga.jenis-kegiatan.destroy', $item) }}" accept-charset="UTF-8">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button value="Delete" class="btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
+                                            </form>
+                                            @endrole
+                                        </td>
+                                        @endrole
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                @if ($kegiatans->isEmpty() AND !$jenis->isEmpty())
+                <div class="hpanel">
+                    <div class="panel-heading">
+                        Rekap Kegiatan MGA
+                    </div>
+                    <div class="panel-body float-e-margins">
+                        <div class="row">
+                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                <a href="{{ route('chambers.administratif.mga.kegiatan.create') }}" class="btn btn-magma btn-outline btn-block" type="button">Tambah Kegiatan</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @elseif (!$kegiatans->isEmpty())
+                <div class="hpanel">
+                    <div class="panel-heading">
+                        Rekap Kegiatan MGA
+                    </div>
+
+                    <div class="panel-body float-e-margins">
+                        <div class="row">
+                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                <a href="{{ route('chambers.administratif.mga.kegiatan.create') }}" class="btn btn-magma btn-outline btn-block" type="button">Tambah Kegiatan</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table id="table-kegiatan" class="table table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nama Kegiatan</th>
+                                        <th>Tahun Anggaran</th>
+                                        <th>Target Jumlah</th>
+                                        <th>Target Anggaran</th>
+                                        @role('Super Admin|Kortim MGA')
+                                        <th>Kortim</th>
+                                        <th width="20%">Action</th>
+                                        @endrole
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($kegiatans as $key => $item)
+                                    <tr>
+                                        <td>{{ $key+1 }}</td>
+                                        <td>{{ $item->jenis_kegiatan->nama }}</td>
+                                        <td>{{ $item->tahun }}</td>
+                                        <td>{{ $item->target_jumlah }}</td>
+                                        <td>{{ $item->target_anggaran ? 'Rp. '.number_format($item->target_anggaran,0,',','.') : '-'}}</td>
+                                        @role('Super Admin|Kortim MGA')
+                                        <td>{{ $item->user->name }}</td>
+                                        <td>
+                                            <a href="{{ route('chambers.administratif.mga.detail-kegiatan.create', ['id' => $item->id ]) }}" class="btn btn-sm btn-info btn-outline" type="button"><i class="fa fa-plus"></i></a>
+
+                                            <a href="{{ route('chambers.administratif.mga.kegiatan.edit', $item) }}" class="btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>
+
+                                            @role('Super Admin')
+                                            <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.administratif.mga.kegiatan.destroy', $item) }}" accept-charset="UTF-8">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button value="Delete" class="btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
+                                            </form>
+                                            @endrole
+                                        </td>
+                                        @endrole
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('add-vendor-script')
+<!-- DataTables buttons scripts -->
+<script src="{{ asset('vendor/sweetalert/lib/sweet-alert.min.js') }}"></script>
+@endsection
+
+@section('add-script')
+    <script>
+        $(document).ready(function () {
+            $('body').on('submit','#deleteForm',function (e) {
+                e.preventDefault();                
+
+                var $url = $(this).attr('action'),
+                    $data = $(this).serialize();
+
+                swal({
+                    title: "Anda yakin?",
+                    text: "Data yang telah dihapus tidak bisa dikembalikan",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, hapus!",
+                    cancelButtonText: "Gak jadi deh!",
+                    closeOnConfirm: false,
+                    closeOnCancel: true },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: $url,
+                            data: $data,
+                            type: 'POST',
+                            success: function(data){
+                                console.log(data);
+                                if (data.success){
+                                    swal("Berhasil!", data.message, "success");
+                                    setTimeout(function(){
+                                        location.reload();
+                                    },2000);
+                                }
+                            },
+                            error: function(data){
+                                var $errors = {
+                                    'status': data.status,
+                                    'exception': data.responseJSON.exception,
+                                    'file': data.responseJSON.file,
+                                    'line': data.responseJSON.line
+                                };
+                                console.log($errors);
+                                swal("Gagal!", data.responseJSON.exception, "error");
+                            }
+                        });
+                    }
+                });
+
+                return false;
+            });
+        });
+    </script>
+@endsection

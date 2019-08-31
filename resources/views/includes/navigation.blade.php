@@ -178,6 +178,11 @@
                         <a href="{{ route('chambers.administratif.jabatan.index') }}">Daftar Jabatan</a>
                     </li>
                     @yield('nav-add-jabatan')
+                    @role('Super Admin|Kortim MGA')
+                    <li class="{{ active('chambers.administratif.mga.jenis-kegiatan.index') }}">
+                        <a href="{{ route('chambers.administratif.mga.jenis-kegiatan.index') }}">Kegiatan MGA</a>
+                    </li>
+                    @endrole
                 </ul>
             </li>
             <li class="{{ active('chambers.crs.*') }}">
