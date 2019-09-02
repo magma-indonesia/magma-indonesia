@@ -36,6 +36,10 @@ class KegiatanController extends Controller
     public function create()
     {
         $jenisKegiatan = JenisKegiatan::all();
+
+        if ($jenisKegiatan->isEmpty())
+            return redirect()->route('chambers.administratif.mga.jenis-kegiatan.index');
+
         return view('mga.kegiatan.create', compact('jenisKegiatan'));
     }
 
@@ -101,6 +105,10 @@ class KegiatanController extends Controller
     public function edit(Kegiatan $kegiatan)
     {
         $jenisKegiatan = JenisKegiatan::all();
+
+        if ($jenisKegiatan->isEmpty())
+            return redirect()->route('chambers.administratif.mga.jenis-kegiatan.index');
+            
         return view('mga.kegiatan.edit', compact('kegiatan','jenisKegiatan'));
     }
 

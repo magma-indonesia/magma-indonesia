@@ -6,22 +6,7 @@
 
 @section('add-vendor-css')
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap/bootstrap-select.min.css') }}" />
-@endsection
-
-@section('add-css')
-<style>
-    /* For Firefox */
-    input[type='number'] {
-        -moz-appearance:textfield;
-    }
-
-    /* Webkit browsers like Safari and Chrome */
-    input[type=number]::-webkit-inner-spin-button,
-    input[type=number]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-</style>
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap-datepicker-master/dist/css/bootstrap-datepicker3.min.css') }}" />
 @endsection
 
 @section('content-header')
@@ -61,7 +46,7 @@
                 </div>
 
                 <div class="panel-body">
-                    <form action="{{ route('chambers.administratif.mga.detail-kegiatan.store') }}" method="post">
+                    <form action="{{ route('chambers.administratif.mga.detail-kegiatan.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="tab-content">
                             <div class="p-m tab-pane active">
@@ -90,7 +75,7 @@
 
                                             <div class="form-group col-sm-12">
                                                 <label>Nama Kegiatan</label>
-                                                <select name="jenis_kegiatan" class="form-control">
+                                                <select name="kegiatan_id" class="form-control">
                                                     <option value="{{ $kegiatan->id }}">{{ $kegiatan->tahun }} - {{ $kegiatan->jenis_kegiatan->nama }}</option>
                                                 </select>
                                             </div>
@@ -98,7 +83,7 @@
                                             <div class="form-group col-sm-12">
                                                 <label>Nama Gunung Api</label>
                                                 <select name="code" class="form-control selectpicker" data-live-search="true">
-                                                    <option value="none">- Tidak Berlokasi di Gunung Api -</option>
+                                                    <option value="">- Tidak Berlokasi di Gunung Api -</option>
                                                     @foreach ($gadds as $gadd)
                                                     <option value="{{ $gadd->code }}">{{ $gadd->name }}</option>
                                                     @endforeach
@@ -108,7 +93,16 @@
                                             <div class="form-group col-sm-12">
                                                 <label>Lokasi (ospional)</label>
                                                 <input name="lokasi_lainnya" class="form-control" placeholder="Lokasi detail" type="text">
-                                                <small class="help-block m-b text-danger">Masukkan data ini, jika lokasinya bukan di daerah gunung api</small>
+                                                <small class="help-block m-b text-danger">Isi data ini, jika lokasinya bukan di daerah gunung api</small>
+                                            </div>
+
+                                            <div class="form-group col-sm-12">
+                                                <label>Waktu Kegiatan</label>
+                                                <div class="input-group input-daterange">
+                                                    <input id="start" type="text" class="form-control" value="{{ now()->subDays(12)->format('Y-m-d') }}" name="start">
+                                                    <div class="input-group-addon"> - </div>
+                                                    <input id="end" type="text" class="form-control" value="{{ now()->format('Y-m-d') }}" name="end">
+                                                </div>
                                             </div>
 
                                             <div class="form-group col-sm-12">
@@ -118,6 +112,37 @@
                                                     <option value="{{ $user->nip }}">{{ $user->name }}</option>
                                                     @endforeach
                                                 </select>
+                                            </div>
+
+                                            <div class="form-group col-lg-12">
+                                                <label>Upload Proposal</label>
+                                                <div class="form-group">
+                                                    <label class="w-xs btn btn-outline btn-default btn-file">
+                                                        <i class="fa fa-upload"></i>
+                                                        <span class="label-proposal">Browse </span> 
+                                                        <input class="file" type="file" name="proposal" style="display: none;">
+                                                    </label>
+                                                    <button type="button" class="w-xs btn btn-danger clear-proposal"><i class="fa fa-trash"></i> Clear</button>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-lg-12">
+                                                <label>Upload Laporan Kegiatan</label>
+                                                <div class="form-group">
+                                                    <label class="w-xs btn btn-outline btn-default btn-file">
+                                                        <i class="fa fa-upload"></i>
+                                                        <span class="label-kegiatan">Browse </span> 
+                                                        <input class="file-kegiatan" type="file" name="laporan_kegiatan" style="display: none;">
+                                                    </label>
+                                                    <button type="button" class="w-xs btn btn-danger clear-kegiatan"><i class="fa fa-trash"></i> Clear</button>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-sm-12">
+                                                <div class="hr-line-dashed"></div>
+                                                <div class="m-t-xs">
+                                                    <button class="btn btn-primary" type="submit">Save</button>
+                                                </div>
                                             </div>
                                             
                                         </div>
@@ -135,4 +160,62 @@
 
 @section('add-vendor-script')
 <script src="{{ asset('vendor/bootstrap/bootstrap-select.min.js') }}"></script>
+<script src="{{ asset('vendor/moment/moment.js') }}"></script>
+<script src="{{ asset('vendor/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.min.js') }}"></script>
+@endsection
+
+@section('add-script')
+<script>
+    $(document).ready(function () {
+        $.fn.datepicker.dates['id'] = {
+            days: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
+            daysShort: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
+            daysMin: ['Mi', 'Se', 'Sl', 'Rb', 'Km', 'Jm', 'Sa'],
+            months: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+            monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+            today: 'Hari ini',
+            clear: 'Bersihkan',
+            titleFormat: 'MM yyyy',
+            weekStart: 1
+        };
+
+        $('.input-daterange').datepicker({
+            startDate: '2015-05-01',
+            endDate: '{{ now()->format('Y-m-d') }}',
+            language: 'id',
+            todayHighlight: true,
+            todayBtn: 'linked',
+            enableOnReadonly: false,
+            format: 'yyyy-mm-dd',
+        });
+
+        $('input.file').on('change', function(e) {
+            var input = $(this),
+                label = input.val()
+                            .replace(/\\/g, '/')
+                            .replace(/.*\//, '');
+
+            $('.label-proposal').html(label);
+        });
+
+        $('input.file-kegiatan').on('change', function(e) {
+            var input = $(this),
+                label = input.val()
+                            .replace(/\\/g, '/')
+                            .replace(/.*\//, '');
+
+            $('.label-kegiatan').html(label);
+        });
+
+        $('.clear-proposal').on('click', function(e) {
+            $('.file').val(null);
+            $('.label-proposal').html('Browse');
+        });
+
+        $('.clear-kegiatan').on('click', function(e) {
+            $('.file-kegiatan').val(null);
+            $('.label-kegiatan').html('Browse');
+        });
+    });
+</script>
 @endsection
