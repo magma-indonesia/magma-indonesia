@@ -8,6 +8,7 @@ use Tightenco\Collect\Support\Collection;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use StreamParser;
+use App\Jobs\SendLoginNotification;
 
 class RsamJson extends Controller
 {
@@ -144,6 +145,15 @@ class RsamJson extends Controller
                             ->setEndDate($request->end)
                             ->setRsamPeriod($request->periode)
                             ->getWinstonUrl();
+
+        SendLoginNotification::dispatch(
+                'rsam', 
+                auth()->user(), 
+                [
+                    'channel' => $request->channel,
+                    'periode' => $request->start.' hingga '.$request->end
+                ])
+            ->delay(now()->addSeconds(5));
 
         return $this->getData($winstonUrl, $request);
     }

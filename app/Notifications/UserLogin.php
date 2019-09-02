@@ -11,13 +11,24 @@ class UserLogin extends Notification
 {
     use Queueable;
 
-    protected $type,$user;
+    protected $type;
+
+    protected $user;
+    
+    protected $opsi;
 
     protected function content()
     {
-        $this->type == 'api' ? $content = '*API - '.$this->user->name.'* berhasil login' : $content = '*'.$this->user->name.'* login via Web';
-
-        return $content;
+        switch ($this->type) {
+            case 'api':
+                return '*API - '.$this->user->name.'* berhasil login';
+            case 'web':
+                return '*'.$this->user->name.'* login via Web';
+            case 'rsam':
+                return '*'.$this->user->name.'* membuat RSAM *'.$this->opsi['channel'].'* periode *'.$this->opsi['periode'].'*';
+            default:
+                break;
+        }
     }
 
     /**
@@ -25,10 +36,11 @@ class UserLogin extends Notification
      *
      * @return void
      */
-    public function __construct($type = 'web', $user)
+    public function __construct($type = 'web', $user, $opsi = [])
     {
         $this->user = $user;
         $this->type = $type;
+        $this->opsi = $opsi;
     }
 
     /**

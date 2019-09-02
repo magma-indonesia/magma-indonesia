@@ -7,6 +7,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Exception;
 
 use App\Notifications\UserLogin;
 use Log;
@@ -26,15 +27,18 @@ class SendLoginNotification implements ShouldQueue
 
     protected $type;
 
+    protected $opsi;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($type = 'web', $user)
+    public function __construct($type = 'web', $user, $opsi = [])
     {
         $this->user = $user;
         $this->type = $type;
+        $this->opsi = $opsi;
     }
 
     /**
@@ -44,10 +48,14 @@ class SendLoginNotification implements ShouldQueue
      */
     public function handle()
     {
-        $this->user->notify(new UserLogin($this->type,$this->user));
+        $this->user->notify(new UserLogin(
+            $this->type,
+            $this->user,
+            $this->opsi
+        ));
     }
 
-        /**
+    /**
      * The job failed to process.
      *
      * @param  Exception  $exception
