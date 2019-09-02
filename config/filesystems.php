@@ -89,6 +89,12 @@ return [
             'visibility' => 'public',
         ],
 
+        'tim-mga' => [
+            'driver' => 'local',
+            'root' => storage_path('app/tim-mga'),
+            'url' => env('App_URL').'/tim-mga',
+        ],
+
         'magma-old-ftp' => [
             'driver' => 'sftp',
             'host' => env('MAGMA_HOST', 'forge'),
