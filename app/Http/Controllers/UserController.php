@@ -107,7 +107,7 @@ class UserController extends Controller
                 ]);
 
                 SendLoginNotification::dispatch('web',Auth::user())
-                    ->delay(now()->addSeconds(30));
+                    ->delay(now()->addSeconds(3));
                 
                 $token = Auth::guard('api')->attempt($credentials);
 
