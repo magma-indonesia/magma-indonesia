@@ -254,6 +254,8 @@ Route::name('v1.')->group(function () {
                     ]
                 ]);
 
+                Route::resource('form-kesimpulan','v1\KesimpulanController');
+
                 Route::get('laporan/filter','v1\MagmaVarController@filter')
                     ->name('laporan.filter');
                 Route::get('laporan/filter/gempa','v1\MagmaVarController@filterGempa')
