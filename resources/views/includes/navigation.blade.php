@@ -112,6 +112,9 @@
                             <li class="{{ active('chambers.v1.gunungapi.laporan.filter') }}">
                                 <a class="m-l" href="{{ route('chambers.v1.gunungapi.laporan.filter') }}">Cari Laporan</a>
                             </li>
+                            <li class="{{ active('chambers.v1.gunungapi.form-kesimpulan.*') }}">
+                                <a class="m-l" href="{{ route('chambers.v1.gunungapi.form-kesimpulan.index') }}">Form Kesimpulan</a>
+                            </li>
                             <li class="{{ active('chambers.rsam.index') }}">
                                 <a class="m-l" href="{{ route('chambers.rsam.index') }}">RSAM</a>
                             </li>

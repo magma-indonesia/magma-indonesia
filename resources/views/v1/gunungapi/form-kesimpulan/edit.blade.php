@@ -56,6 +56,16 @@
                                         <p class="m-t-md">
                                             <strong>Masukkan parameter yang dibutuhkan</strong>, gunakan form menu ini untuk merubah data kesimpulan.
                                         </p>
+
+                                        @if ($kesimpulan->vars_count > 0)
+                                        <div class="alert alert-info m-b-md">
+                                            <i class="fa fa-gears"></i> Nama Gunung Api tidak bisa dirubah jika <b>Kesimpulan telah digunakan dalam laporan MAGMA-VAR</b></a>
+                                        </div>
+                                        @endif
+                                        
+                                        <div class="alert alert-info m-b-md">
+                                            <i class="fa fa-info"></i> Kesimpulan ini telah digunakan pada <b>{{ $kesimpulan->vars_count }}</b> Laporan MAGMA-VAR</b></a>
+                                        </div>
                                     </div>
 
                                     <div class="col-lg-8">

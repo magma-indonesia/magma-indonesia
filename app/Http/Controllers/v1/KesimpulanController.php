@@ -124,7 +124,7 @@ class KesimpulanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $kesimpulan = Kesimpulan::findOrFail($id);
+        $kesimpulan = Kesimpulan::withCount('vars')->findOrFail($id);
 
         $validated = $this->validate($request, 
             [
