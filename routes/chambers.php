@@ -30,6 +30,8 @@ Route::name('administratif.')->group(function () {
         Route::group(['prefix' => 'mga'], function () {
             Route::resource('jenis-kegiatan','JenisKegiatanController');
             Route::resource('kegiatan','KegiatanController');
+            Route::get('detail-kegiatan/download/{id}/{type}','DetailKegiatanController@download')
+                    ->name('detail-kegiatan.download');
             Route::resource('detail-kegiatan','DetailKegiatanController');
         });
     });

@@ -22,7 +22,7 @@ class Kegiatan extends Model
      *   @return \App\User 
      * 
      */
-    public function user()
+    public function kortim()
     {
         return $this->belongsTo('App\User','nip_kortim','nip');
     }
@@ -35,5 +35,10 @@ class Kegiatan extends Model
     public function detail_kegiatan()
     {
         return $this->hasMany('App\MGA\DetailKegiatan');
+    }
+
+    public function biaya_kegiatan()
+    {
+        return $this->hasManyThrough('App\MGA\BiayaKegiatan','App\MGA\DetailKegiatan');
     }
 }

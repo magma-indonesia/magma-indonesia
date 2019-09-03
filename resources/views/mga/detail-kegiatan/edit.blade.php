@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    Buat Detail Kegiatan
+    Edit Detail Kegiatan
 @endsection
 
 @section('add-vendor-css')
@@ -44,7 +44,7 @@
                     </ol>
                 </div>
                 <h2 class="font-light m-b-xs">
-                    {{ $kegiatan->tahun }} - {{ $kegiatan->jenis_kegiatan->nama}}
+                    {{ $detailKegiatan->kegiatan->tahun }} - {{ $detailKegiatan->kegiatan->jenis_kegiatan->nama}}
                 </h2>
                 <small>Meliputi seluruh kegiatan yang sedang, pernah, atau akan dilakukan (perencanaan) </small>
             </div>
@@ -62,7 +62,8 @@
                 </div>
 
                 <div class="panel-body">
-                    <form action="{{ route('chambers.administratif.mga.detail-kegiatan.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('chambers.administratif.mga.detail-kegiatan.update', $detailKegiatan) }}" method="post" enctype="multipart/form-data">
+                        @method('PUT')
                         @csrf
                         <div class="tab-content">
                             <div class="p-m tab-pane active">
@@ -92,7 +93,7 @@
                                             <div class="form-group col-sm-12">
                                                 <label>Nama Kegiatan</label>
                                                 <select name="kegiatan_id" class="form-control">
-                                                    <option value="{{ $kegiatan->id }}">{{ $kegiatan->tahun }} - {{ $kegiatan->jenis_kegiatan->nama }}</option>
+                                                    <option value="{{ $detailKegiatan->kegiatan->id }}">{{ $detailKegiatan->kegiatan->tahun }} - {{ $detailKegiatan->kegiatan->jenis_kegiatan->nama }}</option>
                                                 </select>
                                             </div>
 
@@ -101,23 +102,23 @@
                                                 <select name="code" class="form-control selectpicker" data-live-search="true">
                                                     <option value="">- Tidak Berlokasi di Gunung Api -</option>
                                                     @foreach ($gadds as $gadd)
-                                                    <option value="{{ $gadd->code }}">{{ $gadd->name }}</option>
+                                                    <option value="{{ $gadd->code }}" {{ $gadd->code == $detailKegiatan->code_id ? 'selected' : '' }}>{{ $gadd->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
 
                                             <div class="form-group col-sm-12">
                                                 <label>Lokasi (ospional)</label>
-                                                <input name="lokasi_lainnya" class="form-control" placeholder="Lokasi detail" type="text">
+                                                <input name="lokasi_lainnya" class="form-control" placeholder="Lokasi detail" type="text" value="{{ $detailKegiatan->lokasi_lainnya }}">
                                                 <small class="help-block m-b text-danger">Isi data ini, jika lokasinya bukan di daerah gunung api</small>
                                             </div>
 
                                             <div class="form-group col-sm-12">
                                                 <label>Waktu Kegiatan</label>
                                                 <div class="input-group input-daterange">
-                                                    <input id="start" type="text" class="form-control" value="{{ now()->subDays(12)->format('Y-m-d') }}" name="start">
+                                                    <input id="start" type="text" class="form-control" value="{{ $detailKegiatan->start_date }}" name="start">
                                                     <div class="input-group-addon"> - </div>
-                                                    <input id="end" type="text" class="form-control" value="{{ now()->format('Y-m-d') }}" name="end">
+                                                    <input id="end" type="text" class="form-control" value="{{ $detailKegiatan->end_date }}" name="end">
                                                 </div>
                                             </div>
 
@@ -125,7 +126,7 @@
                                                 <label>Ketua Tim</label>
                                                 <select name="ketua_tim" class="form-control selectpicker" data-live-search="true">
                                                     @foreach ($users as $user)
-                                                    <option value="{{ $user->nip }}">{{ $user->name }}</option>
+                                                    <option value="{{ $user->nip }}" {{ $detailKegiatan->nip_ketua == $user->nip ? 'selected' : '' }}>{{ $user->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -134,7 +135,7 @@
                                                 <label>Upah Tenaga Lokal</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon" style="min-width: 75px;">Rp.</span>
-                                                    <input type="number" value="{{ old('upah') ?: 0 }}" class="form-control" name="upah" required min="0">
+                                                    <input type="number" value="{{ $detailKegiatan->biaya_kegiatan->upah }}" class="form-control" name="upah" required min="0">
                                                 </div>
                                             </div>
 
@@ -142,7 +143,7 @@
                                                 <label>Biaya Bahan-bahan</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon" style="min-width: 75px;">Rp.</span>
-                                                    <input type="number" value="{{ old('bahan') ?: 0 }}" class="form-control" name="bahan" required min="0">
+                                                    <input type="number" value="{{ $detailKegiatan->biaya_kegiatan->bahan }}" class="form-control" name="bahan" required min="0">
                                                 </div>
                                             </div>
 
@@ -150,7 +151,7 @@
                                                 <label>Biaya Transportasi</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon" style="min-width: 75px;">Rp.</span>
-                                                    <input type="number" value="{{ old('transportasi') ?: 0 }}" class="form-control" name="transportasi" required min="0">
+                                                    <input type="number" value="{{ $detailKegiatan->biaya_kegiatan->carter }}" class="form-control" name="transportasi" required min="0">
                                                 </div>
                                             </div>
 
@@ -158,12 +159,32 @@
                                                 <label>Biaya Bahan Lain-lain</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon" style="min-width: 75px;">Rp.</span>
-                                                    <input type="number" value="{{ old('biaya_lainnya') ?: 0 }}" class="form-control" name="biaya_lainnya" required min="0">
+                                                    <input type="number" value="{{ $detailKegiatan->biaya_kegiatan->bahan_lainnya }}" class="form-control" name="biaya_lainnya" required min="0">
                                                 </div>
                                             </div>
 
                                             <div class="form-group col-lg-12">
                                                 <label>Upload Proposal (doc, docx)</label>
+
+                                                @if ($detailKegiatan->proposal)
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="hpanel hgreen">
+                                                            <div class="panel-body file-body">
+                                                                <i class="fa fa-file-pdf-o text-info"></i>
+                                                                <input type="numeric" name="delete_proposal" style="display: none;" value="0" min="0" max="1">
+                                                            </div>
+                                                            <div class="panel-footer">
+                                                                <a href="{{ route('chambers.administratif.mga.detail-kegiatan.download', ['id' => $detailKegiatan->id, 'type' => 'proposal']) }}">{{ $detailKegiatan->proposal }}</a>
+                                                                <div>
+                                                                <button type="button" class="w-xs m-t-sm btn btn-sm btn-danger delete-proposal"><i class="fa fa-trash"></i> Delete File</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @endif
+
                                                 <div class="form-group">
                                                     <label class="w-xs btn btn-outline btn-default btn-file">
                                                         <i class="fa fa-upload"></i>
@@ -177,6 +198,26 @@
 
                                             <div class="form-group col-lg-12">
                                                 <label>Upload Laporan Kegiatan (doc, docx)</label>
+
+                                                @if ($detailKegiatan->laporan)
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="hpanel hgreen">
+                                                            <div class="panel-body file-body">
+                                                                <i class="fa fa-file-pdf-o text-info"></i>
+                                                                <input type="numeric" name="delete_laporan" style="display: none;" value="0" min="0" max="1">
+                                                            </div>
+                                                            <div class="panel-footer">
+                                                                <a href="{{ route('chambers.administratif.mga.detail-kegiatan.download', ['id' => $detailKegiatan->id, 'type' => 'laporan']) }}">{{ $detailKegiatan->laporan }}</a>
+                                                                <div>
+                                                                <button type="button" class="w-xs m-t-sm btn btn-sm btn-danger delete-proposal"><i class="fa fa-trash"></i> Delete File</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @endif
+
                                                 <div class="form-group">
                                                     <label class="w-xs btn btn-outline btn-default btn-file">
                                                         <i class="fa fa-upload"></i>

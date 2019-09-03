@@ -111,7 +111,7 @@
                                                     <label>Target Anggaran</label>
                                                     <div class="input-group">
                                                         <span class="input-group-addon" style="min-width: 75px;">Rp.</span>
-                                                        <input type="number" value="0" class="form-control" name="target_anggaran" value="0" required min="0">
+                                                        <input type="number" value="0" class="form-control" name="target_anggaran" required min="0">
                                                     </div>
                                                 </div>
 

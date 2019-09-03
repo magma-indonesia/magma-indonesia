@@ -46,4 +46,14 @@ class DetailKegiatan extends Model
     {
         return $this->belongsTo('App\MGA\Kegiatan');
     }
+
+    public function biaya_kegiatan()
+    {
+        return $this->hasOne('App\MGA\BiayaKegiatan');
+    }
+
+    public function gunungapi()
+    {
+        return $this->belongsTo('App\Gadd','code_id','code');
+    }
 }

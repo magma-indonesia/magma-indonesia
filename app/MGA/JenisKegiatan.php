@@ -14,4 +14,9 @@ class JenisKegiatan extends Model
     {
         return $this->hasMany('App\MGA\Kegiatan');
     }
+
+    public function detail_kegiatan()
+    {
+        return $this->hasManyThrough('App\MGA\DetailKegiatan','App\MGA\Kegiatan');
+    }
 }

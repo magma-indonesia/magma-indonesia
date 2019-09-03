@@ -26,8 +26,11 @@ class JenisKegiatanController extends Controller
      */
     public function index()
     {
-        $jenis = JenisKegiatan::withCount('kegiatan')->get();
-        $kegiatans = Kegiatan::with('jenis_kegiatan','user')->get();
+        $jenis = JenisKegiatan::withCount('detail_kegiatan')->get();
+        $kegiatans = Kegiatan::with('jenis_kegiatan','biaya_kegiatan','kortim')
+                        ->withCount('detail_kegiatan')
+                        ->orderBy('tahun','desc')
+                        ->get();
         return view('mga.jenis-kegiatan.index', compact('jenis','kegiatans'));
     }
 

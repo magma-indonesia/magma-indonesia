@@ -23,7 +23,7 @@ class KegiatanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         return redirect()->route('chambers.administratif.mga.jenis-kegiatan.index');
     }
@@ -93,7 +93,10 @@ class KegiatanController extends Controller
      */
     public function show(Kegiatan $kegiatan)
     {
-        return redirect()->route('chambers.administratif.mga.jenis-kegiatan.index');
+        $kegiatan = $kegiatan::with('jenis_kegiatan','detail_kegiatan.biaya_kegiatan')
+                                ->findOrFail($kegiatan->id);
+
+        return view('mga.kegiatan.show', compact('kegiatan'));
     }
 
     /**

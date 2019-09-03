@@ -77,7 +77,7 @@
                                     <tr>
                                         <td>{{ $key+1 }}</td>
                                         <td>{{ $item->nama }}</td>
-                                        <td>{{ $item->kegiatan_count }}</td>
+                                        <td>{{ $item->detail_kegiatan_count }}</td>
                                         @role('Super Admin|Kortim MGA')
                                         <td>
                                             <a href="{{ route('chambers.administratif.mga.kegiatan.create') }}" class="btn btn-sm btn-info btn-outline" type="button"><i class="fa fa-plus"></i></a>
@@ -118,7 +118,7 @@
                 @elseif (!$kegiatans->isEmpty())
                 <div class="hpanel">
                     <div class="panel-heading">
-                        Rekap Kegiatan MGA
+                        Rekap Kegiatan MGA - per Tahun Anggaran
                     </div>
 
                     <div class="panel-body float-e-margins">
@@ -138,6 +138,7 @@
                                         <th>Nama Kegiatan</th>
                                         <th>Tahun Anggaran</th>
                                         <th>Target Jumlah</th>
+                                        <th>Jumlah Realisasi</th>
                                         <th>Target Anggaran</th>
                                         @role('Super Admin|Kortim MGA')
                                         <th>Kortim</th>
@@ -152,9 +153,11 @@
                                         <td>{{ $item->jenis_kegiatan->nama }}</td>
                                         <td>{{ $item->tahun }}</td>
                                         <td>{{ $item->target_jumlah }}</td>
+                                        <td>
+                                            {{ $item->detail_kegiatan_count }} ({{ number_format((float)$item->detail_kegiatan_count/$item->target_jumlah*100, 2, '.', '') }}%) <a href="{{ route('chambers.administratif.mga.kegiatan.show', $item) }}" class="btn btn-primary btn-xs">Detail</a></td>
                                         <td>{{ $item->target_anggaran ? 'Rp. '.number_format($item->target_anggaran,0,',','.') : '-'}}</td>
                                         @role('Super Admin|Kortim MGA')
-                                        <td>{{ $item->user->name }}</td>
+                                        <td>{{ $item->kortim->name }}</td>
                                         <td>
                                             <a href="{{ route('chambers.administratif.mga.detail-kegiatan.create', ['id' => $item->id ]) }}" class="btn btn-sm btn-info btn-outline" type="button"><i class="fa fa-plus"></i></a>
 
