@@ -108,7 +108,7 @@ class KesimpulanController extends Controller
     {
         $kesimpulan = Kesimpulan::withCount('vars')->findOrFail($id);
 
-        if (auth()->user()->nip != $kesimpulan->nip)
+        if (auth()->user()->nip != $kesimpulan->nip AND !auth()->user()->hasRole('Super Admin'))
             return redirect()->route('chambers.v1.gunungapi.form-kesimpulan.index');
 
         $gadds = Gadd::select('ga_code','ga_nama_gapi')->orderBy('ga_nama_gapi')->get();

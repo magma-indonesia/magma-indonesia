@@ -51,6 +51,9 @@
                     </div>
 
                     <div class="panel-body">
+                        <div class="alert alert-info">
+                            <i class="fa fa-bolt"></i> Kesimpulan per gunung api bisa dibuat lebih dari satu. Menyesuaikan dengan kondisi dan hasil evaluasi terakhir. </a>
+                        </div>
                         <div class="table-responsive">
                             <table id="table-kesimpulan" class="table table-condensed table-striped">
                                 <thead>
@@ -80,7 +83,7 @@
                                         <td>{{ $kesimpulan->user->vg_nama }}</td>
                                         <td>{{ $kesimpulan->vars_count }}</td>
                                         <td>
-                                            @if (auth()->user()->nip == $kesimpulan->user->vg_nip)
+                                            @if (auth()->user()->nip == $kesimpulan->user->vg_nip || auth()->user()->hasRole('Super Admin'))
                                             <a href="{{ route('chambers.v1.gunungapi.form-kesimpulan.edit', $kesimpulan) }}" class="btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>
                                             @else
                                             -
