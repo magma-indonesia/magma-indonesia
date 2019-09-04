@@ -54,7 +54,7 @@
                         <div class="alert alert-info">
                             <i class="fa fa-bolt"></i> Kesimpulan per gunung api bisa dibuat lebih dari satu. Menyesuaikan dengan kondisi dan hasil evaluasi terakhir. </a>
                         </div>
-                        <div class="table-responsive">
+                        <div class="table-responsive m-t">
                             <table id="table-kesimpulan" class="table table-condensed table-striped">
                                 <thead>
                                     <tr>
