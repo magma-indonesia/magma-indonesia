@@ -79,6 +79,15 @@
                                                 </div>
 
                                                 <div class="form-group col-sm-12">
+                                                    <label>Bidang</label>
+                                                    <select name="bidang" class="form-control">
+                                                        @foreach ($bidangs as $bidang)
+                                                        <option value="{{ $bidang->code }}">{{ $bidang->nama }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="form-group col-sm-12">
                                                     <div class="hr-line-dashed"></div>
                                                     <div class="m-t-xs">
                                                         <button class="btn btn-primary" type="submit">Save</button>

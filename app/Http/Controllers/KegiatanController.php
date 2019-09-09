@@ -35,7 +35,7 @@ class KegiatanController extends Controller
      */
     public function create()
     {
-        $jenisKegiatan = JenisKegiatan::all();
+        $jenisKegiatan = JenisKegiatan::with('bidang')->get();
 
         if ($jenisKegiatan->isEmpty())
             return redirect()->route('chambers.administratif.mga.jenis-kegiatan.index');
@@ -93,7 +93,7 @@ class KegiatanController extends Controller
      */
     public function show(Kegiatan $kegiatan)
     {
-        $kegiatan = $kegiatan::with('jenis_kegiatan','detail_kegiatan.biaya_kegiatan')
+        $kegiatan = $kegiatan::with('jenis_kegiatan.bidang','detail_kegiatan.biaya_kegiatan')
                                 ->findOrFail($kegiatan->id);
 
         return view('mga.kegiatan.show', compact('kegiatan'));
@@ -107,7 +107,7 @@ class KegiatanController extends Controller
      */
     public function edit(Kegiatan $kegiatan)
     {
-        $jenisKegiatan = JenisKegiatan::all();
+        $jenisKegiatan = JenisKegiatan::with('bidang')->get();
 
         if ($jenisKegiatan->isEmpty())
             return redirect()->route('chambers.administratif.mga.jenis-kegiatan.index');

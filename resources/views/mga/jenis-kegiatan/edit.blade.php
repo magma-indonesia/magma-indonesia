@@ -74,6 +74,15 @@
                                                 </div>
 
                                                 <div class="form-group col-sm-12">
+                                                    <label>Bidang</label>
+                                                    <select name="bidang" class="form-control">
+                                                        @foreach ($bidangs as $bidang)
+                                                        <option value="{{ $bidang->code }}" {{ $bidang->code == $jenisKegiatan->code ?  'selected' : ''}}>{{ $bidang->nama }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group col-sm-12">
                                                     <div class="m-t-xs">
                                                         <button class="btn btn-primary" type="submit">Save</button>
                                                     </div>

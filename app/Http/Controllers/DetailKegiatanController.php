@@ -4,13 +4,11 @@ namespace App\Http\Controllers;
 
 use App\MGA\DetailKegiatan;
 use App\MGA\Kegiatan;
-use App\MGA\BiayaKegiatan;
 use App\Gadd;
 use App\User;
 use Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Illuminate\Support\Carbon;
 
 class DetailKegiatanController extends Controller
 {
@@ -41,25 +39,37 @@ class DetailKegiatanController extends Controller
      */
     public function create(Request $request)
     {
-        $kegiatan = Kegiatan::findOrFail($request->id);
+        $kegiatan = Kegiatan::with('jenis_kegiatan.bidang')->findOrFail($request->id);
         $gadds = Gadd::select('code','name')->orderBy('name')->get();
         $users = User::select('name','nip')->orderBy('name')->get();
         return view('mga.detail-kegiatan.create', compact('kegiatan','gadds','users'));
     }
 
+    protected function deleteProposal($proposal)
+    {        
+        $delete = Storage::disk('tim-mga')->delete('proposal/'.$proposal);
+    }
+
     protected function uploadProposal($request)
     {
+
         $kegiatan = Kegiatan::findOrFail($request->kegiatan_id)->jenis_kegiatan->nama;
         $extension = $request->proposal->getClientOriginalExtension();
         $lokasi = $request->code ?: $request->lokasi_lainnya;
 
         $filename = Str::slug($request->start.' proposal '.$kegiatan.' '.$lokasi, '-');
+        $filename = $filename.'.'.$extension;
         
         $store = Storage::disk('tim-mga')->putFileAs(
-            'proposal', $request->proposal, $filename.'.'.$extension
+            'proposal', $request->proposal, $filename
         );
 
-        return $filename.'.'.$extension;
+        return $filename;
+    }
+
+    protected function deleteLaporan($laporan)
+    {       
+        return Storage::disk('tim-mga')->delete('laporan/'.$laporan);
     }
 
     protected function uploadLaporan($request)
@@ -69,12 +79,13 @@ class DetailKegiatanController extends Controller
         $lokasi = $request->code ?: $request->lokasi_lainnya;
 
         $filename = Str::slug(''.$request->start.' laporan '.$kegiatan.' '.$lokasi, '-');
+        $filename = $filename.'.'.$extension;
         
         $store = Storage::disk('tim-mga')->putFileAs(
-            'laporan', $request->laporan_kegiatan, $filename.'.'.$extension
+            'laporan', $request->laporan_kegiatan, $filename
         );
 
-        return $filename.'.'.$extension;
+        return $filename;
     }
 
     /**
@@ -165,7 +176,7 @@ class DetailKegiatanController extends Controller
             ]
          );
 
-         return redirect()->route('chambers.administratif.mga.jenis-kegiatan.index');
+         return redirect()->route('chambers.administratif.mga.kegiatan.show', $request->kegiatan_id);
     }
 
     /**
@@ -187,7 +198,7 @@ class DetailKegiatanController extends Controller
      */
     public function edit(DetailKegiatan $detailKegiatan)
     {
-        $detailKegiatan = DetailKegiatan::with('kegiatan.jenis_kegiatan','biaya_kegiatan')->findOrFail($detailKegiatan->id);
+        $detailKegiatan = DetailKegiatan::with('kegiatan.jenis_kegiatan.bidang','biaya_kegiatan')->findOrFail($detailKegiatan->id);
         $gadds = Gadd::select('code','name')->orderBy('name')->get();
         $users = User::select('name','nip')->orderBy('name')->get();
 
@@ -222,6 +233,8 @@ class DetailKegiatanController extends Controller
             'bahan' => 'required|numeric|min:1',
             'transportasi' => 'required|numeric|min:1',
             'biaya_lainnya' => 'required|numeric|min:1',
+            'delete_proposal' => 'sometimes|required|boolean',
+            'delete_laporan' => 'sometimes|required|boolean',
         ],[
             'kegiatan_id.required' => 'Nama Kegiatan belum dipilih',
             'kegiatan_id.exists' => 'Nama Kegiatan tidak ada dalam daftar',
@@ -248,7 +261,17 @@ class DetailKegiatanController extends Controller
             'biaya_lainnya.required' => 'Biaya Bahan Lainnya harus diisi',
             'biaya_lainnya.numeric' => 'Biaya Bahan Lainnya harus dalam format numeric',
             'biaya_lainnya.min' => 'Biaya Bahan Lainnya tidak boleh 0',
+            'delete_laporan.boolean' => 'Delete Laporan tidak berhasil',
+            'delete_proposal.boolean' => 'Delete Proposal tidak berhasil',
         ]);
+
+        $delete_proposal = $request->delete_proposal ? 
+            $this->deleteProposal($detailKegiatan->proposal) :
+            null;
+
+        $delete_laporan = $request->delete_laporan ? 
+            $this->deleteLaporan($detailKegiatan->laporan) :
+            null;
 
         $proposal = $request->hasFile('proposal') ? 
             $this->uploadProposal($request) : 
@@ -291,13 +314,42 @@ class DetailKegiatanController extends Controller
      */
     public function destroy(DetailKegiatan $detailKegiatan)
     {
-        //
+        $delete_proposal = $detailKegiatan->proposal ? 
+            $this->deleteProposal($detailKegiatan->proposal) :
+            null;
+
+        $delete_laporan = $detailKegiatan->laporan ? 
+            $this->deleteLaporan($detailKegiatan->laporan) :
+            null;
+
+        if ($detailKegiatan->delete()) {
+            $data = [
+                'success' => 1,
+                'message' => 'Data berhasil dihapus.'
+            ];
+
+            return response()->json($data);
+        }
+
+        $data = [
+            'success' => 0,
+            'message' => 'Gagal dihapus.'
+        ];
+
+        return response()->json($data);
     }
 
     public function download($id, $type)
     {
-        $detailKegiatan = DetailKegiatan::whereId($id)->whereNotNull('proposal')->firstOrFail();
+        if ($type === 'proposal') {
+            $detailKegiatan = DetailKegiatan::whereId($id)->whereNotNull('proposal')->firstOrFail();
+            return Storage::disk('tim-mga')->download('proposal/'.$detailKegiatan->proposal);
+        }
 
-        return Storage::disk('tim-mga')->download('proposal/'.$detailKegiatan->proposal);
+        else {
+            $detailKegiatan = DetailKegiatan::whereId($id)->whereNotNull('laporan')->firstOrFail();
+            return Storage::disk('tim-mga')->download('laporan/'.$detailKegiatan->laporan);
+        }
+
     }
 }

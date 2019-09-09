@@ -111,7 +111,7 @@ class UserController extends Controller
                 
                 $token = Auth::guard('api')->attempt($credentials);
 
-                return redirect()->route('chambers.index')
+                return redirect()->intended('/')
                         ->header('Authorization','Bearer '.$token);
             }
 

@@ -7,12 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class JenisKegiatan extends Model
 {
     protected $fillable = [
-        'nama'
+        'nama','code'
     ];
 
     public function kegiatan()
     {
         return $this->hasMany('App\MGA\Kegiatan');
+    }
+
+    public function bidang()
+    {
+        return $this->belongsTo('App\UserBidangDesc','code','code');
     }
 
     public function detail_kegiatan()

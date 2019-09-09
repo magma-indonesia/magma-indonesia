@@ -92,8 +92,8 @@
 
                                             <div class="form-group col-sm-12">
                                                 <label>Nama Kegiatan</label>
-                                                <select name="kegiatan_id" class="form-control">
-                                                    <option value="{{ $detailKegiatan->kegiatan->id }}">{{ $detailKegiatan->kegiatan->tahun }} - {{ $detailKegiatan->kegiatan->jenis_kegiatan->nama }}</option>
+                                                <select name="kegiatan_id" class="form-control">    
+                                                    <option value="{{ $detailKegiatan->kegiatan->id }}">{{ '('.$detailKegiatan->kegiatan->jenis_kegiatan->bidang->code.' '.$detailKegiatan->kegiatan->tahun.') ' }} - {{ $detailKegiatan->kegiatan->jenis_kegiatan->nama }}</option>
                                                 </select>
                                             </div>
 
@@ -164,15 +164,15 @@
                                             </div>
 
                                             <div class="form-group col-lg-12">
-                                                <label>Upload Proposal (doc, docx)</label>
+                                                <label>Rubah/Hapus Upload Proposal (doc, docx)</label>
 
                                                 @if ($detailKegiatan->proposal)
-                                                <div class="row">
+                                                <input id="delete_proposal" type="numeric" name="delete_proposal" style="display: none;" value="0" min="0" max="1">
+                                                <div class="row file-proposal">
                                                     <div class="col-lg-6">
                                                         <div class="hpanel hgreen">
                                                             <div class="panel-body file-body">
                                                                 <i class="fa fa-file-pdf-o text-info"></i>
-                                                                <input type="numeric" name="delete_proposal" style="display: none;" value="0" min="0" max="1">
                                                             </div>
                                                             <div class="panel-footer">
                                                                 <a href="{{ route('chambers.administratif.mga.detail-kegiatan.download', ['id' => $detailKegiatan->id, 'type' => 'proposal']) }}">{{ $detailKegiatan->proposal }}</a>
@@ -197,20 +197,20 @@
                                             </div>
 
                                             <div class="form-group col-lg-12">
-                                                <label>Upload Laporan Kegiatan (doc, docx)</label>
+                                                <label>Rubah/Hapus Laporan Kegiatan (doc, docx)</label>
 
                                                 @if ($detailKegiatan->laporan)
-                                                <div class="row">
+                                                <input id="delete_laporan" type="numeric" name="delete_laporan" style="display: none;" value="0" min="0" max="1">
+                                                <div class="row file-laporan">
                                                     <div class="col-lg-6">
                                                         <div class="hpanel hgreen">
                                                             <div class="panel-body file-body">
                                                                 <i class="fa fa-file-pdf-o text-info"></i>
-                                                                <input type="numeric" name="delete_laporan" style="display: none;" value="0" min="0" max="1">
                                                             </div>
                                                             <div class="panel-footer">
                                                                 <a href="{{ route('chambers.administratif.mga.detail-kegiatan.download', ['id' => $detailKegiatan->id, 'type' => 'laporan']) }}">{{ $detailKegiatan->laporan }}</a>
                                                                 <div>
-                                                                <button type="button" class="w-xs m-t-sm btn btn-sm btn-danger delete-proposal"><i class="fa fa-trash"></i> Delete File</button>
+                                                                <button type="button" class="w-xs m-t-sm btn btn-sm btn-danger delete-laporan"><i class="fa fa-trash"></i> Delete File</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -306,6 +306,16 @@
         $('.clear-kegiatan').on('click', function(e) {
             $('.file-kegiatan').val(null);
             $('.label-kegiatan').html('Browse');
+        });
+
+        $('.delete-proposal').on('click', function(e) {
+            $('#delete_proposal').val(1);
+            $('.file-proposal').fadeOut().remove();
+        });
+
+        $('.delete-laporan').on('click', function(e) {
+            $('#delete_laporan').val(1);
+            $('.file-laporan').fadeOut().remove();
         });
     });
 </script>

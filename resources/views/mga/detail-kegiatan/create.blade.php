@@ -92,7 +92,7 @@
                                             <div class="form-group col-sm-12">
                                                 <label>Nama Kegiatan</label>
                                                 <select name="kegiatan_id" class="form-control">
-                                                    <option value="{{ $kegiatan->id }}">{{ $kegiatan->tahun }} - {{ $kegiatan->jenis_kegiatan->nama }}</option>
+                                                    <option value="{{ $kegiatan->id }}">{{ '('.$kegiatan->jenis_kegiatan->bidang->code.' '.$kegiatan->tahun.') ' }} - {{ $kegiatan->jenis_kegiatan->nama }}</option>
                                                 </select>
                                             </div>
 

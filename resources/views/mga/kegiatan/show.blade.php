@@ -13,7 +13,7 @@
         <div class="hpanel">
             <div class="panel-body">   
                 <h2 class="font-light m-b-xs p-lg">
-                    {{ $kegiatan->tahun.' - '.$kegiatan->jenis_kegiatan->nama }} <small class="font-light"> - Jumlah kegiatan {{ $kegiatan->detail_kegiatan->count()  }}</small>
+                    {{ '('.$kegiatan->jenis_kegiatan->bidang->code.') '.$kegiatan->tahun.' - '.$kegiatan->jenis_kegiatan->nama }} <small class="font-light"> - Jumlah kegiatan {{ $kegiatan->detail_kegiatan->count()  }}</small>
                 </h2>
             </div>
         </div>
@@ -24,9 +24,24 @@
     <div class="content animate-panel">
         <div class="row">
             <div class="col-lg-12">
-                <div class="hpanel">
+
+                @if ($kegiatan->detail_kegiatan->isEmpty())
+                <div class="alert alert-danger">
+                    <i class="fa fa-gears"></i> Kegiatan {{ $kegiatan->jenis_kegiatan->nama }} belum ada. <a href="{{ route('chambers.administratif.mga.detail-kegiatan.create', ['id' => $kegiatan->id ]) }}"><b>Buat baru?</b></a>
+                </div>
+                @else
+
+               <div class="hpanel">
                     <div class="panel-heading">
                         Detail Kegiatan
+                    </div>
+
+                    <div class="panel-body float-e-margins">
+                        <div class="row">
+                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                <a href="{{ route('chambers.administratif.mga.detail-kegiatan.create', ['id' => $kegiatan->id ]) }}" class="btn btn-magma btn-outline btn-block" type="button">Tambah Kegiatan</a>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="panel-body">
@@ -65,8 +80,21 @@
                                         <td>{{ number_format($detail->biaya_kegiatan->bahan_lainnya,0,',','.') }}</td>
                                         <td>{{ number_format($detail->biaya_kegiatan->bahan_lainnya+$detail->biaya_kegiatan->upah+$detail->biaya_kegiatan->bahan+$detail->biaya_kegiatan->carter,0,',','.') }}</td>
                                         <td>{{ $detail->ketua->name }}</td>
-                                        <td><i class="{{ $detail->proposal ? 'fa fa-check text-success' : 'fa fa fa-close text-danger' }}"></i>{{$detail->proposal}}</td>
-                                        <td><i class="{{ $detail->laporan ? 'fa fa-check text-success' : 'fa fa fa-close text-danger' }}"></i>{{$detail->laporan}}</td>
+                                        <td>
+                                            @if ($detail->proposal)
+                                            <a href="{{ route('chambers.administratif.mga.detail-kegiatan.download', ['id' => $detail->id, 'type' => 'proposal']) }}" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">Download</a>                                                
+                                            @else
+                                            <i class="fa fa fa-close text-danger"></i>
+                                            @endif
+                                        
+                                        </td>
+                                        <td>
+                                            @if ($detail->laporan)
+                                            <a href="{{ route('chambers.administratif.mga.detail-kegiatan.download', ['id' => $detail->id, 'type' => 'laporan']) }}" class="btn btn-sm btn-success btn-outline" style="margin-right: 3px;">Download</a>                                                
+                                            @else
+                                            <i class="fa fa fa-close text-danger">
+                                            @endif                                        
+                                        </td>
                                         @role('Super Admin|Kortim MGA')
                                         <td>
                                             <a href="{{ route('chambers.administratif.mga.detail-kegiatan.edit', $detail) }}" class="btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>
@@ -86,7 +114,8 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </div>                
+                @endif
             </div>
         </div>
     </div>

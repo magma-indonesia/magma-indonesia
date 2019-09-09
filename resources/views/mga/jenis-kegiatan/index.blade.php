@@ -65,10 +65,11 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>Bidang</th>
                                         <th>Jenis Kegiatan</th>
                                         <th>Jumlah</th>
                                         @role('Super Admin|Kortim MGA')
-                                        <th>Action</th>
+                                        <th width="20%">Action</th>
                                         @endrole
                                     </tr>
                                 </thead>
@@ -76,6 +77,7 @@
                                     @foreach ($jenis as $key => $item)
                                     <tr>
                                         <td>{{ $key+1 }}</td>
+                                        <td>{{ $item->bidang->nama }}</td>
                                         <td>{{ $item->nama }}</td>
                                         <td>{{ $item->detail_kegiatan_count }}</td>
                                         @role('Super Admin|Kortim MGA')
@@ -135,6 +137,7 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>Bidang</th>
                                         <th>Nama Kegiatan</th>
                                         <th>Tahun Anggaran</th>
                                         <th>Target Jumlah</th>
@@ -150,6 +153,7 @@
                                     @foreach ($kegiatans as $key => $item)
                                     <tr>
                                         <td>{{ $key+1 }}</td>
+                                        <td>{{ $item->jenis_kegiatan->bidang->code }}</td>
                                         <td>{{ $item->jenis_kegiatan->nama }}</td>
                                         <td>{{ $item->tahun }}</td>
                                         <td>{{ $item->target_jumlah }}</td>

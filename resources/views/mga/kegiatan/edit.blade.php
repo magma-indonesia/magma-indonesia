@@ -94,7 +94,7 @@
                                                     <label>Jenis Kegiatan</label>
                                                     <select name="jenis_kegiatan" class="form-control">
                                                         @foreach ($jenisKegiatan as $item)
-                                                        <option value="{{ $item->id }}" {{ $item->id == $kegiatan->jenis_kegiatan_id ? 'selected' : '' }}>{{ $item->nama }}</option>
+                                                        <option value="{{ $item->id }}" {{ $item->id == $kegiatan->jenis_kegiatan_id ? 'selected' : '' }}>{{ '('.$item->bidang->code.') - '.$item->nama }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\MGA\JenisKegiatan;
 use App\MGA\Kegiatan;
+use App\UserBidangDesc as Bidang;
 use Illuminate\Http\Request;
 
 class JenisKegiatanController extends Controller
@@ -26,12 +27,12 @@ class JenisKegiatanController extends Controller
      */
     public function index()
     {
-        $jenis = JenisKegiatan::withCount('detail_kegiatan')->get();
-        $kegiatans = Kegiatan::with('jenis_kegiatan','biaya_kegiatan','kortim')
+        $jenis = JenisKegiatan::with('bidang')->withCount('detail_kegiatan')->get();
+        $kegiatans = Kegiatan::with('jenis_kegiatan.bidang','biaya_kegiatan','kortim')
                         ->withCount('detail_kegiatan')
                         ->orderBy('tahun','desc')
                         ->get();
-        return view('mga.jenis-kegiatan.index', compact('jenis','kegiatans'));
+        return view('mga.jenis-kegiatan.index', compact('jenis','kegiatans','bidang'));
     }
 
     /**
@@ -41,7 +42,8 @@ class JenisKegiatanController extends Controller
      */
     public function create()
     {
-        return view('mga.jenis-kegiatan.create');        
+        $bidangs = Bidang::whereNotIn('code',['pvg'])->get();
+        return view('mga.jenis-kegiatan.create', compact('bidangs'));        
     }
 
     /**
@@ -58,6 +60,7 @@ class JenisKegiatanController extends Controller
             'name.1' => 'nullable|unique:jenis_kegiatans,nama',
             'name.2' => 'nullable|unique:jenis_kegiatans,nama',
             'name.3' => 'nullable|unique:jenis_kegiatans,nama',
+            'bidang' => 'required|exists:user_bidang_descs,code',
         ]);
 
         foreach ($request->name as $name) {
@@ -68,7 +71,7 @@ class JenisKegiatanController extends Controller
                         'nama' => ucwords($name),
                     ],
                     [
-                        'nama' => ucwords($name),
+                        'code' => $request->bidang,
                     ]);
             }
    
@@ -97,7 +100,8 @@ class JenisKegiatanController extends Controller
      */
     public function edit(JenisKegiatan $jenisKegiatan)
     {
-        return view('mga.jenis-kegiatan.edit', compact('jenisKegiatan'));
+        $bidangs = Bidang::whereNotIn('code',['pvg'])->get();
+        return view('mga.jenis-kegiatan.edit', compact('jenisKegiatan','bidangs'));
     }
 
     /**
@@ -111,9 +115,11 @@ class JenisKegiatanController extends Controller
     {
         $validated =  $this->validate($request, [
             'name' => 'required|string|unique:jenis_kegiatans,nama,NULL,id,created_at,NULL',
+            'bidang' => 'required|exists:user_bidang_descs,code',
         ]);
 
         $jenisKegiatan->nama = ucwords($request->name);
+        $jenisKegiatan->code = $request->bidang;
         $jenisKegiatan->save();
 
         return redirect()->route('chambers.administratif.mga.jenis-kegiatan.index');

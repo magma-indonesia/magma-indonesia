@@ -15,4 +15,9 @@ class UserBidangDesc extends Model
         'code',
         'nama'
     ];
+
+    public function jenis_kegiatan()
+    {
+        return $this->hasMany('App\MGA\JenisKegiatan','code','code');
+    }
 }
