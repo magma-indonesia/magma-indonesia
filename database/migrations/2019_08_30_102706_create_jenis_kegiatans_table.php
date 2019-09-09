@@ -16,6 +16,10 @@ class CreateJenisKegiatansTable extends Migration
         Schema::create('jenis_kegiatans', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nama');
+            $table->char('code',3)->index();
+            $table->foreign('code')
+                ->references('code')
+                ->on('user_bidang_descs');
             $table->timestamps();
         });
     }

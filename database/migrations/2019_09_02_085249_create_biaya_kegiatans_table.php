@@ -20,7 +20,8 @@ class CreateBiayaKegiatansTable extends Migration
                 ->index();
             $table->foreign('detail_kegiatan_id')
                 ->references('id')
-                ->on('detail_kegiatans');
+                ->on('detail_kegiatans')
+                ->onDelete('cascade');
             $table->integer('upah')->default(0);
             $table->integer('bahan')->default(0);
             $table->integer('carter')->default(0);
