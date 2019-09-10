@@ -15,6 +15,10 @@ class Kegiatan extends Model
         'nip_kortim'
     ];
 
+    protected $appends = [
+        'total_biaya',
+    ];
+
     /**     
      *   Masing-masing Var hanya dimiliki
      *   oleh 1 User
@@ -40,5 +44,10 @@ class Kegiatan extends Model
     public function biaya_kegiatan()
     {
         return $this->hasManyThrough('App\MGA\BiayaKegiatan','App\MGA\DetailKegiatan');
+    }
+
+    public function getTotalBiayaAttribute()
+    {
+        return $this->detail_kegiatan()->get()->sum('biaya_kegiatan_total');
     }
 }

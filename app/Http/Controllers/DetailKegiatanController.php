@@ -112,7 +112,7 @@ class DetailKegiatanController extends Controller
             'upah' => 'required|numeric|min:1',
             'bahan' => 'required|numeric|min:1',
             'transportasi' => 'required|numeric|min:1',
-            'biaya_lainnya' => 'required|numeric|min:1',
+            'biaya_lainnya' => 'required|numeric|min:0',
         ],[
             'kegiatan_id.required' => 'Nama Kegiatan belum dipilih',
             'kegiatan_id.exists' => 'Nama Kegiatan tidak ada dalam daftar',
@@ -138,7 +138,6 @@ class DetailKegiatanController extends Controller
             'transportasi.min' => 'Biaya Transportasi tidak boleh 0',
             'biaya_lainnya.required' => 'Biaya Bahan Lainnya harus diisi',
             'biaya_lainnya.numeric' => 'Biaya Bahan Lainnya harus dalam format numeric',
-            'biaya_lainnya.min' => 'Biaya Bahan Lainnya tidak boleh 0',
         ]);
 
         $proposal = $request->hasFile('proposal') ? 
@@ -185,9 +184,14 @@ class DetailKegiatanController extends Controller
      * @param  \App\MGA\DetailKegiatan  $detailKegiatan
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(DetailKegiatan $detailKegiatan)
     {
-        return redirect()->route('chambers.administratif.mga.jenis-kegiatan.index');
+        $detailKegiatan = DetailKegiatan::with(
+                                'anggota_tim.user:name,nip','kegiatan.jenis_kegiatan',
+                                'ketua','biaya_kegiatan','gunungapi')
+                            ->findOrFail($detailKegiatan->id);
+                            
+        return view('mga.detail-kegiatan.show', compact('detailKegiatan'));
     }
 
     /**
@@ -232,7 +236,7 @@ class DetailKegiatanController extends Controller
             'upah' => 'required|numeric|min:1',
             'bahan' => 'required|numeric|min:1',
             'transportasi' => 'required|numeric|min:1',
-            'biaya_lainnya' => 'required|numeric|min:1',
+            'biaya_lainnya' => 'required|numeric',
             'delete_proposal' => 'sometimes|required|boolean',
             'delete_laporan' => 'sometimes|required|boolean',
         ],[
@@ -260,7 +264,6 @@ class DetailKegiatanController extends Controller
             'transportasi.min' => 'Biaya Transportasi tidak boleh 0',
             'biaya_lainnya.required' => 'Biaya Bahan Lainnya harus diisi',
             'biaya_lainnya.numeric' => 'Biaya Bahan Lainnya harus dalam format numeric',
-            'biaya_lainnya.min' => 'Biaya Bahan Lainnya tidak boleh 0',
             'delete_laporan.boolean' => 'Delete Laporan tidak berhasil',
             'delete_proposal.boolean' => 'Delete Proposal tidak berhasil',
         ]);

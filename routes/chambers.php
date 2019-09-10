@@ -33,6 +33,7 @@ Route::name('administratif.')->group(function () {
             Route::get('detail-kegiatan/download/{id}/{type}','DetailKegiatanController@download')
                     ->name('detail-kegiatan.download');
             Route::resource('detail-kegiatan','DetailKegiatanController');
+            Route::resource('anggota-kegiatan','AnggotaKegiatanController');
         });
     });
 });

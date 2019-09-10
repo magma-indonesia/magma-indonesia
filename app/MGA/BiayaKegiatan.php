@@ -15,8 +15,20 @@ class BiayaKegiatan extends Model
         'nip_kortim'
     ];
 
+    protected $appends = [
+        'total_biaya'
+    ];
+
     public function detail_kegiatan()
     {
         return $this->belongsTo('App\MGA\DetailKegiatan');
+    }
+
+    public function getTotalBiayaAttribute()
+    {
+        return $this->attributes['upah']+
+                $this->attributes['bahan']+
+                $this->attributes['carter']+
+                $this->attributes['bahan_lainnya'];
     }
 }

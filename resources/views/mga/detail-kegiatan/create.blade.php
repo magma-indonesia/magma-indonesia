@@ -147,7 +147,7 @@
                                             </div>
 
                                             <div class="form-group col-sm-12">
-                                                <label>Biaya Transportasi</label>
+                                                <label>Sewa Kendaraan</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon" style="min-width: 75px;">Rp.</span>
                                                     <input type="number" value="{{ old('transportasi') ?: 0 }}" class="form-control" name="transportasi" required min="0">
@@ -231,7 +231,6 @@
 
         $('.input-daterange').datepicker({
             startDate: '2015-05-01',
-            endDate: '{{ now()->format('Y-m-d') }}',
             language: 'id',
             todayHighlight: true,
             todayBtn: 'linked',

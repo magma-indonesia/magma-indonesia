@@ -18,11 +18,11 @@
             </div>
 
             {{--  Search Bar  --}}
-            <form role="search" class="navbar-form-custom" method="post" action="#">
+            {{-- <form role="search" class="navbar-form-custom" method="post" action="#">
                 <div class="form-group">
                     <input type="text" placeholder="Cari di Magma" class="form-control" name="search">
                 </div>
-            </form>
+            </form> --}}
 
             {{--  Mobile menu  --}}
             <div class="mobile-menu">

@@ -93,8 +93,9 @@ class KegiatanController extends Controller
      */
     public function show(Kegiatan $kegiatan)
     {
-        $kegiatan = $kegiatan::with('jenis_kegiatan.bidang','detail_kegiatan.biaya_kegiatan')
-                                ->findOrFail($kegiatan->id);
+        $kegiatan = $kegiatan::with('jenis_kegiatan.bidang','detail_kegiatan.biaya_kegiatan','detail_kegiatan.anggota_tim')
+                            ->withCount('detail_kegiatan')
+                            ->findOrFail($kegiatan->id);
 
         return view('mga.kegiatan.show', compact('kegiatan'));
     }

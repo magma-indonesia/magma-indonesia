@@ -9,7 +9,7 @@
 @endsection
 
 @section('content-header')
-    <div class="content animate-panel normalheader">
+    <div class="content content-boxed animate-panel normalheader">
         <div class="hpanel">
             <div class="panel-body">   
                 <h2 class="font-light m-b-xs p-lg">
@@ -21,7 +21,98 @@
 @endsection
 
 @section('content-body')
-    <div class="content animate-panel">
+    <div class="content content-boxed animate-panel">
+        <div class="row">
+
+            {{-- Panel Jumlah Kegiatan --}}
+            <div class="col-lg-6">
+                <div class="hpanel stats">
+                    <div class="panel-body h-200">
+                        <div class="stats-title pull-left">
+                            <h4>Jumlah Kegiatan</h4>
+                        </div>
+                        <div class="stats-icon pull-right">
+                            <i class="pe-7s-share fa-4x"></i>
+                        </div>
+                        <div class="m-t-xl">
+                            <h3 class="m-b-xs">{{ $kegiatan->target_jumlah }}</h3>
+                            <span class="font-bold no-margins">Target Jumlah</span>
+                            <div class="progress m-t-xs full progress-small">
+                                <div style="width: {{ number_format((float)$kegiatan->detail_kegiatan_count/$kegiatan->target_jumlah*100, 2, '.', '') }}%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="{{ number_format((float)$kegiatan->detail_kegiatan_count/$kegiatan->target_jumlah*100, 2, '.', '') }}" role="progressbar" class=" progress-bar progress-bar-success">
+                                    <span class="sr-only">{{ number_format((float)$kegiatan->detail_kegiatan_count/$kegiatan->target_jumlah*100, 2, '.', '') }}% Realisasi</span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <small class="stats-label">Jumlah Realisasi</small>
+                                    <h4>{{ $kegiatan->detail_kegiatan_count }}</h4>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <small class="stats-label">% Realisasi</small>
+                                    <h4>{{ number_format((float)$kegiatan->detail_kegiatan_count/$kegiatan->target_jumlah*100, 2, '.', '') }}%</h4>
+                                </div>
+
+                                <div class="col-xs-12">
+                                    <small class="stats-label">Sisa Kegiatan</small>
+                                    <h4>{{ number_format($kegiatan->target_jumlah-$kegiatan->detail_kegiatan_count,0,',','.') }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        Target dan Jumlah Realisasi Kegiatan
+                    </div>
+                </div>
+            </div>
+
+            {{-- Panel Anggaran Kegiatan --}}
+            <div class="col-lg-6">
+                <div class="hpanel stats">
+                    <div class="panel-body h-200">
+                        <div class="stats-title pull-left">
+                            <h4>Anggaran</h4>
+                        </div>
+                        <div class="stats-icon pull-right">
+                            <i class="pe-7s-share fa-4x"></i>
+                        </div>
+                        <div class="m-t-xl">
+                            <h3 class="m-b-xs">{{ number_format($kegiatan->target_anggaran,0,',','.') }}</h3>
+                            <span class="font-bold no-margins">Target Anggaran</span>
+
+                            <div class="progress m-t-xs full progress-small">
+                                <div style="width: {{ number_format((float)$kegiatan->total_biaya/$kegiatan->target_anggaran*100, 2, '.', '') }}%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="{{ number_format((float)$kegiatan->total_biaya/$kegiatan->target_anggaran*100, 2, '.', '') }}" role="progressbar" class=" progress-bar progress-bar-success">
+                                    <span class="sr-only">{{ number_format((float)$kegiatan->total_biaya/$kegiatan->target_anggaran*100, 2, '.', '') }}% Realisasi Anggaran</span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <small class="stats-label">Realisasi Anggaran</small>
+                                    <h4>{{ number_format($kegiatan->total_biaya,0,',','.') }}</h4>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <small class="stats-label">% Realisasi</small>
+                                    <h4>{{ number_format((float)$kegiatan->total_biaya/$kegiatan->target_anggaran*100, 2, '.', '') }}%</h4>
+                                </div>
+
+                                <div class="col-xs-12">
+                                    <small class="stats-label">Sisa Anggaran Kegiatan</small>
+                                    <h4>{{ number_format($kegiatan->target_anggaran-$kegiatan->total_biaya,0,',','.') }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        Target dan Realisasi Anggaran
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
         <div class="row">
             <div class="col-lg-12">
 
@@ -31,7 +122,7 @@
                 </div>
                 @else
 
-               <div class="hpanel">
+                <div class="hpanel">
                     <div class="panel-heading">
                         Detail Kegiatan
                     </div>
@@ -53,15 +144,13 @@
                                         <th>Lokasi</th>
                                         <th>Waktu Berangkat</th>
                                         <th>Waktu Pulang</th>
-                                        <th>Biaya Upah</th>
-                                        <th>Biaya Bahan</th>
-                                        <th>Biaya Carter</th>
-                                        <th>Biaya Bahan Lainnya</th>
+                                        <th>Jumlah Hari</th>
                                         <th>Total</th>
                                         <th>Ketua Tim</th>
                                         <th>Proposal</th>
                                         <th>Laporan</th>
                                         @role('Super Admin|Kortim MGA')
+                                        <th>Tim</th>
                                         <th width="20%">Action</th>
                                         @endrole
                                     </tr>
@@ -74,11 +163,8 @@
                                         <td>{{ $detail->code_id ? $detail->gunungapi->name : $detail->lokasi_lainnya }}</td>
                                         <td>{{ $detail->start_date }}</td>
                                         <td>{{ $detail->end_date }}</td>
-                                        <td>{{ number_format($detail->biaya_kegiatan->upah,0,',','.') }}</td>
-                                        <td>{{ number_format($detail->biaya_kegiatan->bahan,0,',','.') }}</td>
-                                        <td>{{ number_format($detail->biaya_kegiatan->carter,0,',','.') }}</td>
-                                        <td>{{ number_format($detail->biaya_kegiatan->bahan_lainnya,0,',','.') }}</td>
-                                        <td>{{ number_format($detail->biaya_kegiatan->bahan_lainnya+$detail->biaya_kegiatan->upah+$detail->biaya_kegiatan->bahan+$detail->biaya_kegiatan->carter,0,',','.') }}</td>
+                                        <td>{{ $detail->jumlah_hari }}</td>
+                                        <td>{{ number_format($detail->biaya_kegiatan_total,0,',','.') }}</td>
                                         <td>{{ $detail->ketua->name }}</td>
                                         <td>
                                             @if ($detail->proposal)
@@ -97,9 +183,14 @@
                                         </td>
                                         @role('Super Admin|Kortim MGA')
                                         <td>
+                                            <a href="{{ route('chambers.administratif.mga.anggota-kegiatan.create', ['id' => $detail->id]) }}" class="btn btn-sm btn-info btn-outline" style="margin-right: 3px;">Add Tim</a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('chambers.administratif.mga.detail-kegiatan.show', $detail) }}" class="btn btn-sm btn-info btn-outline" style="margin-right: 3px;">Detail</a>
+
                                             <a href="{{ route('chambers.administratif.mga.detail-kegiatan.edit', $detail) }}" class="btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>
 
-                                            @role('Super Admin')
+                                            @role('Super Admin')                                
                                             <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.administratif.mga.detail-kegiatan.destroy', $detail) }}" accept-charset="UTF-8">
                                                 @method('DELETE')
                                                 @csrf
@@ -114,7 +205,8 @@
                             </table>
                         </div>
                     </div>
-                </div>                
+                </div>        
+
                 @endif
             </div>
         </div>

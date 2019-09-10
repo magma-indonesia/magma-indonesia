@@ -20,7 +20,8 @@ class CreateAnggotaKegiatansTable extends Migration
                 ->index();
             $table->foreign('detail_kegiatan_id')
                 ->references('id')
-                ->on('detail_kegiatans');
+                ->on('detail_kegiatans')
+                ->onDelete('cascade');
             $table->char('nip_anggota',18)->index();
             $table->foreign('nip_anggota')->references('nip')->on('users');
             $table->date('start_date');
@@ -32,6 +33,7 @@ class CreateAnggotaKegiatansTable extends Migration
             $table->integer('uang_transport')->default(0);
             $table->char('nip_kortim',18)->index();
             $table->foreign('nip_kortim')->references('nip')->on('users'); 
+            $table->unique(['detail_kegiatan_id','nip_anggota']);
             $table->timestamps();
         });
     }
