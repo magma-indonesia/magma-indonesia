@@ -152,13 +152,13 @@ class DetailKegiatanController extends Controller
             [
                 'kegiatan_id' => $request->kegiatan_id,
                 'code_id' => $request->code,
+                'nip_ketua' => $request->ketua_tim,
             ],[
                 'lokasi_lainnya' => $request->lokasi_lainnya,
                 'start_date' => $request->start,
                 'end_date' => $request->end,
                 'laporan' => $laporan,
                 'proposal' => $proposal,
-                'nip_ketua' => $request->ketua_tim,
                 'nip_kortim' => auth()->user()->nip
             ]
         );
