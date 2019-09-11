@@ -117,7 +117,7 @@
                                                 <div class="input-group input-daterange">
                                                     <input id="start" type="text" class="form-control" value="{{ now()->subDays(12)->format('Y-m-d') }}" name="start">
                                                     <div class="input-group-addon"> - </div>
-                                                    <input id="end" type="text" class="form-control" value="{{ now()->format('Y-m-d') }}" name="end">
+                                                    <input id="end" type="text" class="form-control" value="{{ now()->addDays(30)->format('Y-m-d') }}" name="end">
                                                 </div>
                                             </div>
 
