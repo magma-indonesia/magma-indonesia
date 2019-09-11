@@ -56,7 +56,7 @@
 
                                 <div class="col-xs-12">
                                     <small class="stats-label">Sisa Kegiatan</small>
-                                    <h4>{{ number_format($kegiatan->target_jumlah-$kegiatan->detail_kegiatan_count,0,',','.') }}</h4>
+                                    <h4>{{ ($kegiatan->target_jumlah-$kegiatan->detail_kegiatan_count) <0 ? 0 : $kegiatan->target_jumlah-$kegiatan->detail_kegiatan_count}}</h4>
                                 </div>
                             </div>
                         </div>
