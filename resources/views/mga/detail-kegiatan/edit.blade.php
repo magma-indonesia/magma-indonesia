@@ -272,7 +272,6 @@
 
         $('.input-daterange').datepicker({
             startDate: '2015-05-01',
-            endDate: '{{ now()->format('Y-m-d') }}',
             language: 'id',
             todayHighlight: true,
             todayBtn: 'linked',
