@@ -3,30 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-use Carbon\Carbon;
 use App\User;
-use App\UserPhoto;
 use App\UserAdministratif;
-use App\UserBidangDesc as Bidang;
-use App\Notifications\UserLogin;
-use App\Notifications\User As UserNotification;
-use App\Jobs\SendLoginNotification;
-
+use App\Notifications\User as UserNotification;
+use App\UserBidang as Bidang;
 use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
-
-use Session;
 
 class UserController extends Controller
 {
-    use ThrottlesLogins;
 
-    protected $maxAttempts = 2;
+    /**
+     * Adding middleware for protecttion
+     * 
+     * @return boolean
+     */
+    public function __construct()
+    {
+        $this->middleware('owner')->only(['edit','update']);
+        $this->middleware('role:Super Admin')->only(['create','store','destroy']);
+    }
 
     /**
      * Uploading photo profile user
@@ -71,91 +68,6 @@ class UserController extends Controller
         return $success ? true : false;
     }
 
-    public function username()
-    {
-        $username = filter_var($this->request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'nip';
-        return $username;
-    }
-
-
-    /** 
-     * Login Controller User
-     * @param  \Illuminate\Http\Request  $request
-     * @return View
-    */
-    protected function loginAttempt($request)
-    {
-        try {
-
-            $this->request = $request;
-            
-            $credentials = [
-                $this->username() => $request->username,
-                'password' => $request->password,
-                'status' => 1
-            ];
-
-            if ($this->hasTooManyLoginAttempts($request)) {
-                $this->fireLockoutEvent($request);
-                return $this->sendLockoutResponse($request);
-            }
-
-            if (Auth::attempt($credentials)) {
-                Auth::user()->update([
-                    'last_login_at' => Carbon::now()->toDateTimeString(),
-                    'last_login_ip' => last($request->getClientIps())    
-                ]);
-
-                SendLoginNotification::dispatch('web',Auth::user())
-                    ->delay(now()->addSeconds(3));
-                
-                $token = Auth::guard('api')->attempt($credentials);
-
-                return redirect()->intended('/')
-                        ->header('Authorization','Bearer '.$token);
-            }
-
-            $this->incrementLoginAttempts($request);
-
-            throw ValidationException::withMessages([
-                $request->username => [trans('auth.failed')],
-            ]);
-
-        } 
-        
-        catch (JWTException $e) {
-            throw ValidationException::withMessages([
-                $request->username => [trans('auth.failed')],
-            ]);
-        }
-
-    }
-
-    public function showLoginForm()
-    {
-        return view('users.login');
-    }
-
-    public function login(Request $request)
-    {
-
-        $this->validate($request, [
-            'username' => 'required|string',
-            'password' => 'required|string',
-        ]);
-
-        return $this->loginAttempt($request);
-
-    }
-
-    public function logout(Request $request)
-    {
-        $logout = Auth::logout();
-        $request->session()->flush();
-
-        return redirect()->route('home');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -189,17 +101,34 @@ class UserController extends Controller
 
         $this->validate($request, [
             'name' => 'required|string|max:255',
-            'nip' => 'required|digits:18|unique:users,nip,NULL,id,deleted_at,NULL',
+            'nip' => 'required|digits:18|unique:users,nip',
             'bidang' => 'required|in:2,3,4,5,6',
-            'phone' => 'nullable|digits_between:10,12|unique:users,phone,NULL,id,deleted_at,NULL',
-            'email' => 'required|string|email|max:255|unique:users,email,NULL,id,deleted_at,NULL',
+            'phone' => 'required|digits_between:10,12|unique:users,phone',
+            'email' => 'required|email|max:255|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
             'status' => 'required|boolean'
-        ]);
-
-        $input = $request->except(['bidang','imagebase64']);
+        ],[
+            'name.required' => 'Nama tidak boleh kosong',
+            'nip.required' => 'NIP tidak boleh kosong',
+            'bidang.required' => 'Bidang harus dipilih',
+            'phone.required' => 'No HP harus diisi',
+            'email.required' => 'Email tidak boleh kosong',
+            'password' => 'Password tidak boleh kosong',
+            'status.required' => 'Status harus dipilih',
+            'name.string' => 'Nama harus berformat huruf',
+            'nip.digits' => 'NIP maksimal memiliki 18 karakter numerik',
+            'nip.unique' => 'NIP telah digunakan oleh orang lain',
+            'bidang.in' => 'Bidang yang dipilih tidak terdafatr',
+            'phone.digits' => 'No HP tidak boleh lebih dari 12 angka',
+            'phone.unique' => 'No HP telah digunakan oleh orang lain',
+            'email.email' => 'Alamat email tidak valid',
+            'email.unique' => 'Alamat email telah digunakan oleh orang lain',
+            'password.min' => 'Password Minimal 6 karakter',
+            'password.confirmed' => 'Password Konfirmasi tidak sama',
+            'status.boolean' => 'Tipe status tidak valid',
+        ]); 
      
-        $user = User::create($input);
+        $user = User::create($request->except(['bidang','imagebase64']));
 
         $bidang = UserAdministratif::create([
             'user_id' => $user->id,
@@ -211,10 +140,12 @@ class UserController extends Controller
         if ($user AND $uploadPhoto)
         {
             $user->notify(new UserNotification('create',$user));
-            return redirect()->route('chambers.users.index')->with('flash_message',$request->name.' berhasil ditambahkan.');
+            return redirect()->route('chambers.users.index')
+                    ->with('flash_message',$request->name.' berhasil ditambahkan.');
         }
 
-        return redirect()->route('chambers.users.index')->with('flash_message','User gagal ditambahkan.');    
+        return redirect()->route('chambers.users.index')
+                ->with('flash_message','User gagal ditambahkan.');    
     }
 
     /**
@@ -223,11 +154,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
-        $user = User::findOrFail($id); 
-        return $user->name;
+        return redirect()->route('chambers.users.index');
     }
 
     /**
@@ -238,7 +167,6 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
         $user = User::findOrFail($id); 
         $roles = Role::get();
         $bidangs = Bidang::whereIn('code',['mga','mgb','mgt','bpt','btu'])->get();
@@ -255,7 +183,6 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $user = User::findOrFail($id);
         
         $this->validate($request, [
@@ -264,7 +191,27 @@ class UserController extends Controller
             'bidang' => 'required|in:2,3,4,5,6',
             'phone' => 'nullable|digits_between:11,12',
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
+            'password' => 'required|string|min:6|confirmed',
             'status' => 'required|boolean'
+        ],[
+            'name.required' => 'Nama tidak boleh kosong',
+            'nip.required' => 'NIP tidak boleh kosong',
+            'bidang.required' => 'Bidang harus dipilih',
+            'phone.required' => 'No HP harus diisi',
+            'email.required' => 'Email tidak boleh kosong',
+            'password' => 'Password tidak boleh kosong',
+            'status.required' => 'Status harus dipilih',
+            'name.string' => 'Nama harus berformat huruf',
+            'nip.digits' => 'NIP maksimal memiliki 18 karakter numerik',
+            'nip.unique' => 'NIP telah digunakan oleh orang lain',
+            'bidang.in' => 'Bidang yang dipilih tidak terdafatr',
+            'phone.digits' => 'No HP tidak boleh lebih dari 12 angka',
+            'phone.unique' => 'No HP telah digunakan oleh orang lain',
+            'email.email' => 'Alamat email tidak valid',
+            'email.unique' => 'Alamat email telah digunakan oleh orang lain',
+            'password.min' => 'Password Minimal 6 karakter',
+            'password.confirmed' => 'Password Konfirmasi tidak sama',
+            'status.boolean' => 'Tipe status tidak valid',
         ]);
 
         $bidang = $user->bidang()->update([
@@ -274,14 +221,17 @@ class UserController extends Controller
 
         $input = $request->except(['imagebase64']);
         $name  = $request->name;        
-        $roles = $request['roles'];
         $user->fill($input)->save();
             
         $uploadPhoto = !empty($request->filetype) ? 
                             $this->uploadPhoto($user,$request->imagebase64,$request->filetype) : 
                             true;
 
-        isset($roles) ? $user->roles()->sync($roles) : $user->roles()->detach();
+        if ($request->has('roles'))
+        {
+            $roles = $request->roles;
+            isset($roles) ? $user->roles()->sync($roles) : $user->roles()->detach();
+        }
 
         $user->notify(new UserNotification('update',$user));        
 

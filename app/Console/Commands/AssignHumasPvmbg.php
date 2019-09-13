@@ -35,7 +35,7 @@ class AssignHumasPvmbg extends Command
     {
         $this->users->each(function ($nip,$key) {
             $user = User::where('nip',$nip)->first();
-            $user ? $user->assignRole(['Humas PVMBG']) : false;
+            $user ? $user->assignRole('Humas PVMBG') : false;
         });
         return $this;
     }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\MGA\JenisKegiatan;
 use App\MGA\Kegiatan;
-use App\UserBidangDesc as Bidang;
+use App\UserBidang as Bidang;
 use Illuminate\Http\Request;
 
 class JenisKegiatanController extends Controller
@@ -60,7 +60,7 @@ class JenisKegiatanController extends Controller
             'name.1' => 'nullable|unique:jenis_kegiatans,nama',
             'name.2' => 'nullable|unique:jenis_kegiatans,nama',
             'name.3' => 'nullable|unique:jenis_kegiatans,nama',
-            'bidang' => 'required|exists:user_bidang_descs,code',
+            'bidang' => 'required|exists:user_bidangs,code',
         ]);
 
         foreach ($request->name as $name) {
@@ -115,7 +115,7 @@ class JenisKegiatanController extends Controller
     {
         $validated =  $this->validate($request, [
             'name' => 'required|string|unique:jenis_kegiatans,nama,NULL,id,created_at,NULL',
-            'bidang' => 'required|exists:user_bidang_descs,code',
+            'bidang' => 'required|exists:user_bidangs,code',
         ]);
 
         $jenisKegiatan->nama = ucwords($request->name);

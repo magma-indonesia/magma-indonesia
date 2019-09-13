@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Absensi;
 use App\User;
-use App\v1\Absensi as OldAbsensi;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use App\Http\Requests\SearchAbsensiRequest;
 

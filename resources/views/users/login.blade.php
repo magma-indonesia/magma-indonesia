@@ -57,7 +57,7 @@
 						</div>
 						<div class="hpanel">
 							<div class="panel-body" style="background: transparent;border: 0;">
-								<form method="POST" action="{{ route('login') }}" id="loginForm">
+								<form method="POST" action="{{ route('login.post') }}" id="loginForm">
 									@csrf
 									<div class="form-group">
 										<label class="control-label" for="username">NIP/Email</label>

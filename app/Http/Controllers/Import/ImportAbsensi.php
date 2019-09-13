@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers\Import;
 
-use Illuminate\Http\Request;
 use App\Traits\ImportHelper;
-use App\User;
 use App\Absensi;
-use App\v1\User as OldUser;
 use App\v1\Absensi as OldAbsensi;
 
 class ImportAbsensi extends Import

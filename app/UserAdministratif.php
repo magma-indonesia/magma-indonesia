@@ -20,8 +20,7 @@ class UserAdministratif extends Model
         'kelamin',
         'status_nikah',
         'jabatan_id',
-        'pangkat',
-        'golongan',
+        'fungsional_id',
         'pendidikan_terakhir',
         'jurusan_terakhir',
         'kantor_id'
@@ -38,12 +37,22 @@ class UserAdministratif extends Model
 
     public function bidang()
     {
-        return $this->belongsTo('App\UserBidangDesc','bidang_id','id');
+        return $this->belongsTo('App\UserBidang','bidang_id','id');
     }
 
     public function jabatan()
     {
         return $this->belongsTo('App\Jabatan');
+    }
+
+    public function fungsional()
+    {
+        return $this->belongsTo('App\Fungsional');
+    }
+
+    public function golongan()
+    {
+        return $this->belongsTo('App\Golongan');
     }
 
     public function kantor()

@@ -41,9 +41,9 @@
 @endsection
 
 @section('content-body')
-    <div class="content animate-panel"> 
+    <div class="content content-boxed animate-panel"> 
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-offset-1 col-lg-10">
                 <div class="hpanel">
                     <div class="panel-heading">
                         Tambah Jabatan Baru
@@ -95,8 +95,11 @@
                     </div>
                 </div>
             </div>
-            @if(count($jabatans) > 0)
-            <div class="col-lg-8">
+        </div>
+
+        @if(count($jabatans) > 0)
+        <div class="row">
+            <div class="col-lg-offset-1 col-lg-10">
                 <div class="hpanel">
                     <div class="panel-heading">
                         Jabatan yang terdaftar
@@ -121,8 +124,8 @@
                     </div>
                 </div>
             </div>
-            @endif
         </div>
+        @endif
     </div>
 @endsection
 
@@ -148,7 +151,7 @@
                 "lengthMenu": [[10, 20, 30, -1], [10, 20, 30, "All"]],
         });
 
-        t.on( 'order.dt search.dt', function () {
+        t.on('order.dt search.dt', function () {
             t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
                 cell.innerHTML = i+1;
             } );

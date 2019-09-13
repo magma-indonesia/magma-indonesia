@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Auth;
-
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-
-use Session;
 
 class RoleController extends Controller
 {
 
-    public function __construct() {
-        // $this->middleware(['auth', 'isAdmin']);
+    /**
+     * Adding middleware for protecttion
+     * 
+     * @return boolean
+     */
+    public function __construct()
+    {
+        $this->middleware('role:Super Admin');
     }
 
     /**
@@ -24,9 +26,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
-        $roles = Role::all();
-        return view('roles.index', compact('roles'));
+        $roles = Role::with('permissions')->get();
+        $permissions = Permission::all();
+        return view('roles.index', compact('roles','permissions'));
     }
 
     /**
@@ -37,7 +39,6 @@ class RoleController extends Controller
     public function create()
     {
         $permissions = Permission::all();
-        
         return view('roles.create', compact('permissions'));
     }
 
@@ -79,9 +80,9 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        return $id;
+        return redirect()->route('chambers.roles.index');
     }
 
     /**

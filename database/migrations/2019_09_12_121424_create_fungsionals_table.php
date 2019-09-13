@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserBidangDescsTable extends Migration
+class CreateFungsionalsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateUserBidangDescsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_bidang_descs', function (Blueprint $table) {
+        Schema::create('fungsionals', function (Blueprint $table) {
             $table->increments('id');
-            $table->char('code',3)->unique()->index();            
             $table->string('nama');
             $table->timestamps();
         });
@@ -28,6 +27,6 @@ class CreateUserBidangDescsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_bidang_descs');
+        Schema::dropIfExists('fungsionals');
     }
 }

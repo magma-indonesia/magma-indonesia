@@ -35,7 +35,7 @@ class AssignSuperAdmin extends Command
     {
         $this->users->each(function ($nip,$key) {
             $user = User::where('nip',$nip)->first();
-            $user ? $user->assignRole(['Super Admin']) : false;
+            $user ? $user->assignRole('Super Admin') : false;
         });
         return $this;
     }

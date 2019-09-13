@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="{{ asset('vendor/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('vendor/sweetalert/lib/sweet-alert.css') }}" />
     <link rel="stylesheet" href="{{ asset('vendor/ladda/dist/ladda-themeless.min.css') }}" />
-     
 @endsection
 
 @section('content-header')
@@ -38,7 +37,7 @@
 @endsection
 
 @section('content-body')
-    <div class="content animate-panel">
+    <div class="content content-boxed animate-panel">
         <div class="row">
             <div class="col-lg-12">
                 @if($jabatans->isEmpty())
@@ -49,11 +48,13 @@
                     </a>
                 </div>
                 @else
+
 				@if(Session::has('flash_message'))
 				<div class="alert alert-success">
 					<i class="fa fa-bolt"></i> {!! session('flash_message') !!}
 				</div>
-				@endif
+                @endif
+                
                 <div class="hpanel">
                     <div class="panel-heading">
                         Daftar Jabatan yang terdaftar
@@ -62,9 +63,6 @@
                         <div class="row text-center">
                             <div class="col-md-4 col-lg-2 col-sm-6 col-xs-12">
                                 <a href="{{ route('chambers.administratif.jabatan.create') }}" class="btn btn-outline btn-block btn-magma" type="button">Buat Jabatan Baru</a>
-                            </div>
-                            <div class="col-md-4 col-lg-2 col-sm-6 col-xs-12">
-                                <a href="{{ route('chambers.users.administrasi.index') }}" class="btn btn-block btn-outline btn-warning" type="button">Tambahkan Jabatan ke User</a>
                             </div>
                         </div>
                     </div>
@@ -87,7 +85,7 @@
                                             @method('DELETE')
                                             @csrf
                                             <button type="button" value="{{ $jabatan->id }}" class="btn btn-sm btn-magma btn-outline edit" data-toggle="modal" data-target="#edit">Edit</button>
-                                            <button value="Delete" class="btn btn-sm btn-danger delete" type="submit" title="Delete {{ $jabatan->nama }}"><i class="fa fa-trash-o"></i> <span class="bold">Delete</span></button>
+                                            <button value="Delete" class="btn btn-sm btn-danger btn-outline delete" type="submit" title="Delete {{ $jabatan->nama }}"><span class="bold">Delete</span></button>
                                         </form>
                                     </td>
                                 </tr>
@@ -172,7 +170,7 @@
         });
 
         $('.edit').click(function(e){
-            console.log($(this).val());
+
             $('.alert-danger').empty().hide();
             var $tablejabatan = $('#table-jabatan').DataTable(),
                 $jabatan = $tablejabatan.row($(this).parents('tr')).data()[1];
@@ -185,7 +183,7 @@
 
         });
 
-        t.on( 'order.dt search.dt', function () {
+        t.on('order.dt search.dt', function () {
             t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
                 cell.innerHTML = i+1;
             } );
@@ -196,7 +194,7 @@
             e.preventDefault();
             $('.close-modal').toggle();
 
-            var l = Ladda.create(this),            
+            var l = Ladda.create(this),
                 $error = $('.alert-danger');
 
             l.start();
@@ -204,14 +202,11 @@
             var $url = $('form#form-edit').attr('action')+$id,
                 $data = $('form#form-edit').serialize();
 
-            console.log($url);
-
             $.ajax({
                 url: $url,
                 data: $data,
                 type: 'POST',
                 success: function(data){
-                    console.log(data);
                     if (data.success){
                         $($error).hide();
                         var $temp = $row.data();
@@ -232,11 +227,9 @@
                     }
                 },
                 error: function(data) {
-                    // console.log(data.responseJSON);
                     $error.show();
                     l.stop();
                     var $data = data.responseJSON;
-                    console.log($data.errors.name);
                     $.each($data.errors.name, function(key, value) {
                         $('.alert-danger').append('<p><i class="fa fa-bolt"></i> '+value+'</p>');
                     });

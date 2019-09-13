@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         'revalidate' => \App\Http\Middleware\RevalidateBackHistory::class,
         'set.locale' => \App\Http\Middleware\SetDefaultLocaleForUrls::class,
         'json' => \App\Http\Middleware\EnforceJson::class,
+        'owner' => \App\Http\Middleware\SelfCheck::class,
     ];
 }

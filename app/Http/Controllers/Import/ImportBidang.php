@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Import;
 
-use Illuminate\Http\Request;
 use App\UserAdministratif;
 use App\User;
 use App\v1\User as OldUser;

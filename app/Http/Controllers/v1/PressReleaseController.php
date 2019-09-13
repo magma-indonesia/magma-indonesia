@@ -18,10 +18,8 @@ class PressReleaseController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(
-            'role:Super Admin|Humas PVMBG|Struktural',
-            ['except' => 'index','show']
-        );
+        $this->middleware('role:Super Admin|Humas PVMBG|Struktural')
+                ->except(['index','show']);
     }
 
     /**

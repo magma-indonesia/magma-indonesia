@@ -35,7 +35,7 @@ class AssignPejabat extends Command
     {
         $this->users->each(function ($nip,$key) {
             $user = User::where('nip',$nip)->first();
-            $user ? $user->assignRole(['Struktural']) : false;
+            $user ? $user->assignRole('Struktural') : false;
         });
         return $this;
     }

@@ -8,12 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.1/croppie.min.css" />
 @endsection
 
-@section('nav-edit-user')
-    <li class="{{ active('chambers.users.*') }}">
-        <a href="{{ route('chambers.users.edit',$user->id) }}">Edit User</a>
-    </li>
-@endsection
-
 @section('content-header')
 <div class="small-header">
 	<div class="hpanel">
@@ -24,7 +18,7 @@
 						<a href="{{ route('chambers.index') }}">Chamber</a>
 					</li>
 					<li>
-						<span>Users</span>
+						<span>Pegawai</span>
 					</li>
 					<li class="active">
 						<span>Edit </span>
@@ -32,7 +26,7 @@
 				</ol>
 			</div>
 			<h2 class="font-light m-b-xs">
-				Edit User
+				Edit Pegawai
 			</h2>
 			<small>Menu ini untuk digunakan untuk merubah informasi pengguna MAGMA Indonesia</small>
 		</div>
@@ -51,11 +45,13 @@
                         </div>
                         Edit Data Dasar Pengguna
                     </div>
+
                     @if(Session::has('flash_message'))
                     <div class="alert alert-danger">
                         <i class="fa fa-bolt"></i> {!! session('flash_message') !!}
                     </div>
                     @endif
+
                     <div class="panel-body">
                         <p>
                             Masukkan semua data-data yang dibutuhkan untuk merubah pengguna ke dalam MAGMA.
@@ -110,6 +106,20 @@
                                 @endif
                             </div>
                             <div class="form-group">
+                                <label>Password</label> 
+                                <input id="password" name="password" type="password" placeholder="Masukkan Password" class="form-control" required>
+                                @if( $errors->has('password'))
+                                <label id="password-error" class="error" for="password">{{ ucfirst($errors->first('password')) }}</label>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label>Konfirmasi Password</label> 
+                                <input name="password_confirmation" type="password" placeholder="Konfirmasi Password" class="form-control" required>
+                                @if( $errors->has('password_confirmation'))
+                                <label id="password_confirmation-error" class="error" for="password_confirmation">{{ ucfirst($errors->first('password_confirmation')) }}</label>
+                                @endif
+                            </div>
+                            <div class="form-group">
                                 <label>Upload Photo</label>
                                 <div class="upload-message">Upload Foto Profil Anda</div>
                                 <div class="upload-photo" style="display:none"></div>
@@ -132,6 +142,7 @@
                                     <input name="status" class="i-checks" type="radio" value="0" id="status" {{ $user->status ? '' : 'checked' }}> Tidak Aktif </label> 
                                 </div>
                             </div>
+                            @role('Super Admin')
                             @if(!$roles->isEmpty())
                             <div class="form-group">
                                 <label>Roles</label>
@@ -151,6 +162,7 @@
                                 </div>
                             </div>
                             @endif
+                            @endrole
                             <div class="hr-line-dashed"></div>
                             <div>
                                 <button class="btn btn-sm btn-primary m-t-n-xs" type="submit"><strong>Submit</strong></button>
@@ -253,7 +265,16 @@
                     digits: true,
                     minlength: 10,
                     maxlength: 12
-                }
+                },
+                password: {
+                    required: true,
+                    minlength: 4
+                },
+                password_confirmation: {
+                    required: true,
+                    equalTo: '#password'
+                },
+
             },
             messages: {
                 name: {
@@ -275,6 +296,14 @@
                     digits: 'Format nomor telpon belum benar',
                     minlength: 'Panjang karakter minimal No HP adalah 10 karakter',
                     maxlength: 'Panjang karakter maksimal No HP adalah 12 karakter'
+                },
+                password: {
+                    required: 'Password belum diisi',
+                    minlength: 'Minimal 4 karakter'
+                },
+                password_confirmation: {
+                    required: 'Konfirmasi Password tidak boleh kosong',
+                    equalTo: 'Password tidak sama'
                 }
             },
             submitHandler: function(form) {

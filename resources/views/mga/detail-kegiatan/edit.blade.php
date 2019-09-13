@@ -232,7 +232,7 @@
                                             <div class="form-group col-sm-12">
                                                 <div class="hr-line-dashed"></div>
                                                 <div class="m-t-xs">
-                                                    <button class="btn btn-primary" type="submit">Save</button>
+                                                    <button name="administrasi" class="btn btn-primary" type="submit">Save</button>
                                                 </div>
                                             </div>
                                             

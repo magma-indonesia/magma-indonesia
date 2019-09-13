@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    Tambah Jenis Kegiatan MGA
+    Tambah Kegiatan Utama MGA
 @endsection
 
 @section('content-header')
@@ -23,9 +23,9 @@
                     </ol>
                 </div>
                 <h2 class="font-light m-b-xs">
-                    Tambahkan jenis kegiatan bidang MGA
+                    Tambahkan kegiatan utama bidang MGA
                 </h2>
-                <small>Meliputi seluruh jenis kegiatan yang sedang, pernah, atau akan dilakukan (perencanaan) </small>
+                <small>Meliputi seluruh kegiatan utama yang sedang, pernah, atau akan dilakukan (perencanaan) </small>
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@
             <div class="col-lg-12">
                 <div class="hpanel">
                     <div class="panel-heading">
-                        Form Tambah Jenis Kegiatan Baru
+                        Form Tambah Kegiatan Utama Baru
                     </div>
 
                     <div class="panel-body">
@@ -49,7 +49,7 @@
                                         <div class="col-lg-4 text-center">
                                             <i class="pe-7s-note fa-4x text-muted"></i>
                                             <p class="m-t-md">
-                                                <strong>Masukkan parameter yang dibutuhkan</strong>, gunakan form menu ini untuk menambahkan data jenis kegiatan baru.
+                                                <strong>Masukkan parameter yang dibutuhkan</strong>, gunakan form menu ini untuk menambahkan data kegiatan utama baru.
                                             </p>
                                         </div>
 
@@ -60,14 +60,14 @@
                                                 <div class="row m-b-md">
                                                     <div class="col-lg-12">
                                                         <div class="alert alert-danger">
-                                                            <p>Jenis Kegiatan telah digunakan</p>
+                                                            <p>Kegiatan Utama telah digunakan</p>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 @endif
 
                                                 <div class="form-group col-sm-12">
-                                                    <label>Nama Jenis Kegiatan</label>
+                                                    <label>Nama Kegiatan Utama</label>
                                                     <input class="form-control" name="name[]" placeholder="Nama Kegiatan" required>
                                                     <small class="help-block m-b text-danger">*required</small>
                                                     <input class="form-control" name="name[]" placeholder="Nama Kegiatan">

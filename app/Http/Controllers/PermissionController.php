@@ -3,13 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Auth;
-use Validator;
-
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-
-use Session;
 
 class PermissionController extends Controller
 {
@@ -80,7 +75,7 @@ class PermissionController extends Controller
 
         return redirect()->route('chambers.permissions.index')
             ->with('flash_message',
-             'Permission '. implode($request->name,', ').' telah ditambahkan!');
+             'Permission '. $request->name.' telah ditambahkan!');
     }
 
     /**

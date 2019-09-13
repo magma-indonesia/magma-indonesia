@@ -106,8 +106,8 @@
                                             <small>{{ $anggota_tim->user->nip }}</small>
                                         </td>
                                         <td>
-                                            {{ $anggota_tim->start_date }} hingga {{ $anggota_tim->end_date }}<br>
-                                            <small>{{ $anggota_tim->jumlah_hari }} hari</small>
+                                            {{ $detailKegiatan->tanggal_mulai }} - {{ $detailKegiatan->tanggal_akhir }}<br>
+                                            <small><b>{{ $anggota_tim->jumlah_hari }} hari</b></small>
                                         </td>
                                         <td>Rp. <span class="text-right">{{ number_format($anggota_tim->uang_harian_total,0,',','.') }}</span></td>
                                         <td>Rp. <span class="text-right">{{ number_format($anggota_tim->uang_penginapan_total,0,',','.') }}</span></td>
@@ -127,9 +127,9 @@
                                     </tr>
                                     @endforeach
                                     <tr>
-                                        <td colspan="4"></td>
                                         <td><b>Total</b></td>
-                                        <td><b>Rp. {{ number_format($detailKegiatan->biaya_tim_total,0,',','.') }}</b></td>
+                                        <td colspan="3"><hr></td>
+                                        <td colspan="2" class="text-right"><b>Rp. {{ number_format($detailKegiatan->biaya_tim_total,0,',','.') }}</b></td>
                                     </tr>
                                 </tbody>
                             </table>

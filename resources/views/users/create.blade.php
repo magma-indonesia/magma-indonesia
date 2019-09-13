@@ -1,7 +1,7 @@
 @extends('layouts.default') 
 
 @section('title') 
-    MAGMA | Create User 
+    MAGMA | Tambah Pegawai
 @endsection
 
 @section('add-vendor-css')
@@ -18,7 +18,7 @@
                             <a href="{{ route('chambers.index') }}">Chamber</a>
                         </li>
                         <li>
-                            <span>Users</span>
+                            <span>Pegawai</span>
                         </li>
                         <li class="active">
                             <span>Create </span>
@@ -26,7 +26,7 @@
                     </ol>
                 </div>
                 <h2 class="font-light m-b-xs">
-                    Create Users
+                    Tambah Pegawai
                 </h2>
                 <small>Menu ini untuk digunakan untuk menambahkan pengguna MAGMA Indonesia</small>
             </div>

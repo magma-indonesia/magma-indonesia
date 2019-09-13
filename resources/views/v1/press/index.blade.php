@@ -35,14 +35,16 @@ v1 - Press Release
 @endsection
 
 @section('content-body')
-    <div class="content animate-panel">
+    <div class="content content-boxed animate-panel">
         <div class="row">
             <div class="col-lg-12">
+
 				@if(Session::has('flash_message'))
 				<div class="alert alert-success">
 					<i class="fa fa-bolt"></i> {!! session('flash_message') !!}
 				</div>
                 @endif
+
                 @role('Super Admin|Humas PVMBG')
                 <div class="hpanel">
                     <div class="panel-heading">
@@ -57,6 +59,7 @@ v1 - Press Release
                     </div>
                 </div>
                 @endrole
+
                 <div class="hpanel">
                     <div class="panel-heading">
                         Daftar Press Release
@@ -70,7 +73,7 @@ v1 - Press Release
                                         <th>#</th>
                                         <th>Judul</th>
                                         <th>Waktu</th>
-                                        <th style="min-width: 180px;">Action</th>
+                                        <th style="min-width: 20%;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>

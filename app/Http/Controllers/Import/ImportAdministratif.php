@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Import;
 
-use Illuminate\Http\Request;
 use App\Traits\ImportHelper;
 use App\UserAdministratif as Administrasi;
 use App\User;
 use App\v1\User as OldUser;
-use App\v1\Kantor as OldKantor;
 
 class ImportAdministratif extends Import
 {

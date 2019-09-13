@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserBidang extends Model
+class Golongan extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,12 +12,12 @@ class UserBidang extends Model
      * @var array
      */
     protected $fillable = [
-        'code',
-        'nama'
+        'pangkat',
+        'golongan',
+        'ruang',
     ];
 
-    public function jenis_kegiatan()
-    {
-        return $this->hasMany('App\MGA\JenisKegiatan','code','code');
-    }
+    protected $guarded  = [
+        'id'
+    ];
 }

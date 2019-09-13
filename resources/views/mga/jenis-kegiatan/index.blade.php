@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    Jenis Kegiatan Bidang MGA
+    Kegiatan Utama Bidang MGA
 @endsection
 
 @section('add-vendor-css')
@@ -22,14 +22,14 @@
                             <span>MGA</span>
                         </li>
                         <li class="active">
-                            <span>Jenis Kegiatan </span>
+                            <span>Kegiatan Utama </span>
                         </li>
                     </ol>
                 </div>
                 <h2 class="font-light m-b-xs">
-                    Daftar jenis kegiatan bidang MGA
+                    Daftar kegiatan utama bidang MGA
                 </h2>
-                <small>Meliputi seluruh jenis kegiatan yang sedang, pernah, atau akan dilakukan (perencanaan) </small>
+                <small>Meliputi seluruh kegiatan utama yang sedang, pernah, atau akan dilakukan (perencanaan) </small>
             </div>
         </div>
     </div>
@@ -42,7 +42,7 @@
 
                 @if ($jenis->isEmpty())
                 <div class="alert alert-danger">
-                    <i class="fa fa-gears"></i> Data Jenis Kegiatan belum tersedia. <a href="{{ route('chambers.administratif.mga.jenis-kegiatan.create') }}"><b>Buat baru?</b></a>
+                    <i class="fa fa-gears"></i> Data Kegiatan Utama belum tersedia. <a href="{{ route('chambers.administratif.mga.jenis-kegiatan.create') }}"><b>Buat baru?</b></a>
                 </div>
                 @else
 
@@ -54,7 +54,7 @@
                     <div class="panel-body float-e-margins">
                         <div class="row">
                             <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
-                                <a href="{{ route('chambers.administratif.mga.jenis-kegiatan.create') }}" class="btn btn-magma btn-outline btn-block" type="button">Tambah Jenis Kegiatan</a>
+                                <a href="{{ route('chambers.administratif.mga.jenis-kegiatan.create') }}" class="btn btn-magma btn-outline btn-block" type="button">Tambah Kegiatan Utama</a>
                             </div>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Bidang</th>
-                                        <th>Jenis Kegiatan</th>
+                                        <th>Kegiatan Utama</th>
                                         <th>Jumlah</th>
                                         @role('Super Admin|Kortim MGA')
                                         <th width="20%">Action</th>

@@ -11,14 +11,19 @@
 
                 <div class="dropdown">
                     <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-                        <small class="text-muted">App
+                        <small class="text-muted">Menu Profil
                             <b class="caret"></b>
                         </small>
                     </a>
                     <ul class="dropdown-menu animated flipInX m-t-xs">
                         <li>
-                            <a href="contacts.html">Profile</a>
+                            <a href="{{ route('chambers.users.edit', ['id' => auth()->user()->id ]) }}">Edit Profil</a>
                         </li>
+                        @if (auth()->user()->administrasi)
+                        <li>
+                            <a href="{{ route('chambers.administratif.administrasi.edit', auth()->user()->administrasi->id ) }}">Edit Administrasi</a>
+                        </li>
+                        @endif
                         <li class="divider"></li>
                         <li>
                             <a href="{{ route('logout') }}">Logout</a>
@@ -43,12 +48,12 @@
                     <span class="nav-label">Magma Chamber</span>
                 </a>
             </li>
-            <li class="{{ active('chambers.fun.fpl') }}">
+            {{-- <li class="{{ active('chambers.fun.fpl') }}">
                 <a href="{{ route('chambers.fun.fpl.index') }}">
                     <i class="fa fa-soccer-ball-o"></i>
                     <span class="nav-label"> Fpl </span>
                 </a>
-            </li> 
+            </li>  --}}
             @role('Super Admin')
             <li class="{{ active(['chambers.stakeholder.*']) }}">
                 <a href="#">
@@ -141,36 +146,23 @@
                     </li>
                 </ul>
             </li>
-            <li class="{{ active('chambers.roles.*') }}">
-                <a href="#">
-                    <span class="nav-label">Roles</span>
-                    <span class="fa arrow"></span>
+            <li class="{{ active(['chambers.users.*']) }}">
+                <a href="{{ route('chambers.users.index') }}">
+                    <span class="nav-label"> Pegawai</span>
                 </a>
-                <ul class="nav nav-second-level">
-                    <li class="{{ active('chambers.roles.index') }}">
-                        <a href="{{ route('chambers.roles.index') }}">Roles User</a>
-                    </li>
-                    <li class="{{ active('chambers.roles.create') }}">
-                        <a href="{{ route('chambers.roles.create') }}">Tambah Role</a>
-                    </li>
-                    @yield('nav-edit-roles')
-                </ul>
+            </li>
+            @role('Super Admin')
+            <li class="{{ active('chambers.roles.*') }}">
+                <a href="{{ route('chambers.roles.index') }}">
+                    <span class="nav-label"> Roles</span>
+                </a>
             </li>
             <li class="{{ active('chambers.permissions.*') }}">
-                <a href="#">
-                    <span class="nav-label">Permissions</span>
-                    <span class="fa arrow"></span>
+                <a href="{{ route('chambers.permissions.index') }}">
+                    <span class="nav-label"> Permissions</span>
                 </a>
-                <ul class="nav nav-second-level">
-                    <li class="{{ active('chambers.permissions.index') }}">
-                        <a href="{{ route('chambers.permissions.index') }}">Permissions</a>
-                    </li>
-                    <li class="{{ active('chambers.permissions.create') }}">
-                        <a href="{{ route('chambers.permissions.create') }}">Tambah Permission</a>
-                    </li>
-                    @yield('nav-edit-permissions')
-                </ul>
             </li>
+            @endrole
             <li class="{{ active('chambers.administratif.*') }}">
                 <a href="#">
                     <span class="nav-label">Administrasi</span>
@@ -209,24 +201,6 @@
                     </li>
                     <li class="{{ active('chambers.absensi.search') }}">
                         <a href="{{ route('chambers.absensi.search') }}">Cari Absensi</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="{{ active(['chambers.users.*']) }}">
-                <a href="#">
-                    <span class="nav-label">Users</span>
-                    <span class="fa arrow"></span>
-                </a>
-                <ul class="nav nav-second-level">
-                    <li class="{{ active('chambers.users.index') }}">
-                        <a href="{{ route('chambers.users.index') }}">Daftar Users</a>
-                    </li>
-                    <li class="{{ active('chambers.users.create') }}">
-                        <a href="{{ route('chambers.users.create') }}">Tambah User</a>
-                    </li>
-                    @yield('nav-edit-user')
-                    <li class="{{ active('chambers.users.administrasi') }}">
-                        <a href="{{ route('chambers.users.administrasi.index') }}">Administrasi</a>
                     </li>
                 </ul>
             </li>

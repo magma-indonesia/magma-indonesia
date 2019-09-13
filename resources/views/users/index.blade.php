@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    MAGMA | List Users
+    MAGMA | Data Pegawai
 @endsection
 
 @section('add-vendor-css')
@@ -16,16 +16,13 @@
                 <div id="hbreadcrumb" class="pull-right">
                     <ol class="hbreadcrumb breadcrumb">
                         <li><a href="{{ route('chambers.index') }}">Chamber</a></li>
-                        <li>
-                            <span>Users</span>
-                        </li>
                         <li class="active">
-                            <span>List </span>
+                            <span>Pegawai </span>
                         </li>
                     </ol>
                 </div>
                 <h2 class="font-light m-b-xs">
-                    List Users
+                    Data Pegawai PVMBG
                 </h2>
                 <small>Daftar pengguna MAGMA Indonesia -  Pusat Vulkanologi dan Mitigasi Bencana Geologi</small>
             </div>
@@ -39,50 +36,66 @@
             <div class="col-lg-12">
                 <div class="hpanel">
                     <div class="panel-heading">
-                        Tabel Users
+                        Tabel Pegawai
                     </div>
+
                     @if(Session::has('flash_message'))
                     <div class="alert alert-success">
                         <i class="fa fa-bolt"></i> {!! session('flash_message') !!}
                     </div>
                     @endif
-                    <div class="panel-body table-responsive">
-                        <table id="table-users" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Nama</th>
-                                    <th>NIP</th>
-                                    <th>Bidang</th>
-                                    <th>Roles</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Status</th>
-                                    <th style="min-width: 180px;">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($users as $user)
-                                <tr>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{!! strlen($user->nip)<18 ? $user->nip.'<b>KTP</b>' : $user->nip !!}</td>
-                                    <td>{{ $user->administrasi->bidang->nama }}</td>
-                                    <td>{{ $user->roles()->pluck('name')->implode(', ') }}</td>                                        
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->phone }}</td>
-                                    <td>{{ $user->status ? 'Aktif':'Tidak Aktif' }}
-                                    </td>
-                                    <td>
-                                        <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.users.destroy',['id'=>$user->id]) }}" accept-charset="UTF-8">
-                                            @method('DELETE')
-                                            @csrf
-                                            <a href="{{ route('chambers.users.edit',['id'=>$user->id]) }}" class="btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">Edit</a>                                            
-                                            <button value="Delete" class="btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+
+                    <div class="panel-body float-e-margins">
+                        @role('Super Admin')
+                        <a href="{{ route('chambers.users.create') }}" type="button" class="btn btn-magma btn-outline">Tambah Data Pegawai</a>
+                        @endrole
+                        <a href="{{ route('chambers.administratif.administrasi.index') }}" type="button" class="btn btn-magma btn-outline">Data Administrasi</a>
+                    </div>
+
+                    <div class="panel-body">
+
+                        <div class="table-responsive">
+                            <table id="table-users" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Nama</th>
+                                        <th>NIP</th>
+                                        <th>Bidang</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Status</th>
+                                        @role('Super Admin')
+                                        <th>Roles</th>
+                                        <th style="min-width: 20%;">Action</th>
+                                        @endrole
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($users as $user)
+                                    <tr>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{!! strlen($user->nip)<18 ? $user->nip.'<b>KTP</b>' : $user->nip !!}</td>
+                                        <td>{{ $user->administrasi->bidang->nama ?? '-' }}</td>                
+                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->phone }}</td>
+                                        <td>{{ $user->status ? 'Aktif':'Tidak Aktif' }}</td>
+                                        @role('Super Admin')
+                                        <td>{{ $user->roles()->pluck('name')->implode(', ') }}</td>    
+                                        <td>                                         
+                                            <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.users.destroy',['id'=>$user->id]) }}" accept-charset="UTF-8">
+                                                @method('DELETE')
+                                                @csrf
+                                                <a href="{{ route('chambers.users.edit',['id'=>$user->id]) }}" class="btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>                                            
+                                                <button value="Delete" class="btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
+                                            </form>
+                                        </td>
+                                        @endrole
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -114,12 +127,12 @@
             // Initialize table
             $('#table-users').dataTable({
                 dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
-                "lengthMenu": [[30, 60, 100, -1], [30, 60, 100, "All"]],
+                "lengthMenu": [[15, 30, 100, -1], [30, 60, 100, "All"]],
                 buttons: [
                     { extend: 'copy', className: 'btn-sm'},
-                    { extend: 'csv', title: 'Daftar Users', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6 ]} },
-                    { extend: 'pdf', title: 'Daftar Users', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6 ]} },
-                    { extend: 'print', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6 ]} }
+                    { extend: 'csv', title: 'Daftar Users', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5 ]} },
+                    { extend: 'pdf', title: 'Daftar Users', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5 ]} },
+                    { extend: 'print', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5 ]} }
                 ]
 
             });

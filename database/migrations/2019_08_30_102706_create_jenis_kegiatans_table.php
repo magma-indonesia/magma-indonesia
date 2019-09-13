@@ -19,7 +19,7 @@ class CreateJenisKegiatansTable extends Migration
             $table->char('code',3)->index();
             $table->foreign('code')
                 ->references('code')
-                ->on('user_bidang_descs');
+                ->on('user_bidangs');
             $table->timestamps();
         });
     }

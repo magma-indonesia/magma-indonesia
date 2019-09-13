@@ -26,6 +26,9 @@ Route::get('export/{type}','ExportController@index')->name('export');
 
 Route::name('administratif.')->group(function () {
     Route::resource('jabatan','JabatanController');
+
+    Route::resource('administrasi','UserAdministratifController');
+
     Route::name('mga.')->group(function () {
         Route::group(['prefix' => 'mga'], function () {
             Route::resource('jenis-kegiatan','JenisKegiatanController');
@@ -40,10 +43,6 @@ Route::name('administratif.')->group(function () {
 
 Route::get('absensi/search','AbsensiController@search')->name('absensi.search');
 Route::resource('absensi','AbsensiController');
-
-Route::name('users.administrasi.')->group(function() {
-    Route::get('users/administrasi','UserAdministratifController@index')->name('index');
-});
 
 Route::resource('users', 'UserController');
 
@@ -177,10 +176,7 @@ Route::resource('permissions', 'PermissionController', ['except' => [
     'show','edit'
 ]]);
 
-Route::resource('roles', 'RoleController', ['except' => [
-    'show'
-]]);
-
+Route::resource('roles', 'RoleController');
 Route::resource('press','PressController');
 
 Route::get('vona/draft','VonaController@draft')->name('vona.draft');

@@ -32,7 +32,6 @@ class ResetPassword extends Command
     public function __construct()
     {
         parent::__construct();
-        $this->users = User::all();
     }
 
     /**
@@ -42,6 +41,8 @@ class ResetPassword extends Command
      */
     public function handle()
     {
+        $this->users = User::all();
+
         $this->info('Resetting Password....');
 
         foreach ($this->users as $user) {

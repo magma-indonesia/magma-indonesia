@@ -8,15 +8,20 @@
 |
 */
 Route::group(['middleware' => ['guest']], function () {
-    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/', 'HomeController@index')
+        ->name('home');
 
-    Route::get('/login', 'UserController@showLoginForm')
+    Route::get('login','LoginController@index')
         ->name('login')
-        ->middleware('revalidate');
+        ->middleware('guest');
 
-    Route::post('/login', 'UserController@login')
-        ->name('login');
+    Route::post('login','LoginController@login')
+        ->name('login.post')
+        ->middleware('guest');
 });
+
+Route::get('logout','LoginController@logout')
+        ->name('logout');
 
 Route::name('v1.')->group(function () {
     Route::group(['prefix' => 'v1'], function () {
@@ -106,11 +111,10 @@ Route::name('.projects')->group(function () {
     });
 });
 
-Route::get('/logout', 'UserController@logout')->name('logout');
-Route::get('/tes', 'TesController@index');
-Route::get('/tes/image/', 'TesController@imageCrop');
-Route::get('/tes/image/{id?}', 'TesController@getFile')->name('tesimage');
-Route::post('/tes/image', 'TesController@imageCropPost');
+Route::get('tes', 'TesController@index');
+Route::get('tes/image/', 'TesController@imageCrop');
+Route::get('tes/image/{id?}', 'TesController@getFile')->name('tesimage');
+Route::post('tes/image', 'TesController@imageCropPost');
 
 /*
 |--------------------------------------------------------------------------

@@ -11,7 +11,7 @@ class UserBidangSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('user_bidang_descs')->insert([
+        DB::table('user_bidangs')->insert([
 
             ['code' => 'PVG','nama' => 'Pusat Vulkanologi dan Mitigasi Bencana Geologi'],
             ['code' => 'MGA','nama' => 'Mitigasi Gunung Api'],

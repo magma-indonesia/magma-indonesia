@@ -17,7 +17,7 @@ class JenisKegiatan extends Model
 
     public function bidang()
     {
-        return $this->belongsTo('App\UserBidangDesc','code','code');
+        return $this->belongsTo('App\UserBidang','code','code');
     }
 
     public function detail_kegiatan()
