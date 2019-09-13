@@ -18,4 +18,9 @@ class GasStation extends Model
     {
         return $this->belongsTo('App\WOVOdat\CommonNetwork','cn_id','cn_id');
     }
+
+    public function gas_instrument()
+    {
+        return $this->hasOne('App\WOVOdat\GasInstrument','gs_id','gs_id');
+    }
 }

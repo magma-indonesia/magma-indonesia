@@ -221,6 +221,9 @@ Route::name('wovodat.')->group(function () {
         Route::post('common-network/deformation-station/tilt','WOVOdat\DeformationTiltController@store')
             ->name('common-network.deformation-station.tilt.store');
 
+        Route::get('common-network/gas-station','WOVOdat\GasStationController@index')
+            ->name('common-network.gas-station.index');
+
         Route::get('interval-swarm','WOVOdat\IntervalSwarmController@index')
             ->name('interval-swarm.index');
         Route::post('interval-swarm','WOVOdat\IntervalSwarmController@store')
