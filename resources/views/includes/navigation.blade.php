@@ -204,17 +204,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="{{ active(['chambers.activities.*','chambers.gunungapi.*']) }}">
-                <a href="#">
-                    <span class="nav-label">Aktivitas</span>
-                    <span class="fa arrow"></span>
-                </a>
-                <ul class="nav nav-second-level">
-                    <li class="{{ active('chambers.activities.index') }}">
-                        <a href="{{ route('chambers.activities.index') }}">Semua Kebencanaan</a>
-                    </li>
-                </ul>
-            </li>
+
             <li class="{{ active(['chambers.datadasar.*','chambers.laporan.*','chambers.laporan.search','chambers.pos.*','chambers.letusan.*','chambers.draft.*','chambers.peralatan.*','chambers.rsam.*']) }}">
                 <a href="#">
                     <span class="nav-label">Gunung Api</span>
@@ -318,6 +308,13 @@
                     </li>
                     @endrole
                 </ul>
+            </li>
+
+            <li class="{{ active('chambers.wovodat.*') }}">
+                <a href="{{ route('chambers.wovodat.index') }}">
+                    <i class="fa fa-th-large"></i>
+                    <span class="nav-label">Wovodat</span>
+                </a>
             </li>
         </ul>
     </div>

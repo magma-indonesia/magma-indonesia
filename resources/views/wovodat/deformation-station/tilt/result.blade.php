@@ -58,6 +58,8 @@
                     <div class="panel-heading">
                         Tiltmeter {{ $volcano }} - {{ $station_name.' ('.$date.')' }} 
                     </div>
+
+                    @if (count($station[0]['data']))
                     <div class="panel-body">
                         <div id="tilt" class="row p-md">
                             <div id="tilt-0" style="min-width: 310px; min-height: 320px; margin: 0 auto"></div>
@@ -65,6 +67,13 @@
                             <div id="tilt-2" style="min-width: 310px; min-height: 320px; margin: 0 auto"></div>
                         </div>
                     </div>
+                    @else
+                    <div class="panel-body">
+                        <div class="alert alert-info">
+                            <i class="fa fa-gears"></i> Tidak ada data dalam periode tersebut
+                        </div>
+                    </div>
+                    @endif
                 </div>
                 @endif
             </div>
@@ -180,7 +189,7 @@
                     positioner: function () {
                         return {
                             // right aligned
-                            x: this.chart.chartWidth - 240,
+                            x: this.chart.chartWidth - 280,
                             y: 10 // align to title
                         };
                     },
@@ -193,7 +202,7 @@
                     },
                     valueDecimals: dataset.decimal,
                     formatter: function () {
-                        return Highcharts.dateFormat('%e %b %Y', new Date(this.x))+', '+this.y+' '+dataset.unit;
+                        return Highcharts.dateFormat('%e %b %Y %H:%M:%S', new Date(this.x))+', '+this.y+' '+dataset.unit;
                     },
                 },
                 series: [{

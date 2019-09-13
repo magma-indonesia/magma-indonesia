@@ -5,7 +5,7 @@ namespace App\WOVOdat;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
-class DeformationData extends Model
+class DeformationTilt extends Model
 {
     protected $connection = 'wovo';
 

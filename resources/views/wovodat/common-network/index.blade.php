@@ -17,6 +17,7 @@
                 </p>
             </div>
         </div>
+
         <div class="row">
             <div class="col-lg-4">
                 <div class="hpanel">
@@ -32,6 +33,7 @@
                             <small>
                                 Number of registered deformation stations.
                             </small>
+                            <h4><a href="{{ route('chambers.wovodat.common-network.deformation-station.tilt.index') }}" class="btn btn-outline btn-danger" target="_blank">Tilt Data</a></h4>
                         </div>
                     </div>
                 </div>
@@ -74,7 +76,9 @@
                     </div>
                 </div>
             </div>
+        </div>
 
+        <div class="row">
             <div class="col-lg-4">
                 <div class="hpanel">
                     <div class="panel-body">
@@ -132,6 +136,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-lg-12">
 
@@ -151,7 +156,9 @@
                                 </div>
                                 {{ $volcano->vd_name }}
                             </div>
+
                             @foreach ($volcano->common_network as $common)
+                            
                             @if (count($common->deformation_stations))
                             <div class="panel-body">
                                 <div class="table-responsive">

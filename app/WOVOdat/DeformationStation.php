@@ -19,8 +19,13 @@ class DeformationStation extends Model
         return $this->belongsTo('App\WOVOdat\CommonNetwork','cn_id','cn_id');
     }
 
-    public function data()
+    public function deformation_instrument()
     {
-        return $this->hasMany('App\WOVOdat\DeformationData','ds_id','ds_id');
+        return $this->hasOne('App\WOVOdat\DeformationInstrument','ds_id','ds_id');
+    }
+
+    public function tilt()
+    {
+        return $this->hasMany('App\WOVOdat\DeformationTilt','ds_id','ds_id');
     }
 }

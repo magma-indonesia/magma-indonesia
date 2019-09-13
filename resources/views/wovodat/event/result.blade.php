@@ -152,15 +152,15 @@
                 attributionControl:false,
             }).setMinZoom(5);
 
-    var layerEsriStreets = L.esri.basemapLayer('Imagery').addTo(map);
+    var layerEsriStreets = L.esri.basemapLayer('NationalGeographic').addTo(map);
     var layerWorldTransportation = L.esri.basemapLayer('ImageryTransportation',{attributionControl: false}).addTo(map);
 
     var latlongControl = L.control.coordinates({
-        position:"bottomright",
+        position:'bottomright',
         decimals:5,
-        decimalSeperator:".",
-        labelTemplateLat:"Lat: {y}",
-        labelTemplateLng:"Lon: {x}",
+        decimalSeperator:'.',
+        labelTemplateLat:'Lat: {y}',
+        labelTemplateLng:'Lon: {x}',
         enableUserInput:false,
         useDMS:false,
         useLatLngOrder: true,
@@ -208,7 +208,7 @@
 
             var event_marker = L.marker([event_lat, event_lon], {
                 title: event_time,
-            }).bindPopup(event_time+' - (Depth: '+event_depth+')', {
+            }).bindPopup(event_time+' - (Depth: '+event_depth+' km, '+event_mag+' SR)', {
                 closeButton: true,
             });
 

@@ -1,24 +1,28 @@
 <?php
-/*
-| Magma Indonesia - Chambers
-|--------------------------------------------------------------------------
-| Chambers Routes
-|--------------------------------------------------------------------------
-| Import, CRS, Administrasi, Users, Aktivitas, Gunung Api, 
-| Permissions, Roles, Press Release, VONA
-|
-*/
+
 Route::get('/','ChamberController@index')->name('index');
 
-/*
-| Magma Indonesia - Chambers/CRS
-|--------------------------------------------------------------------------
-| Chambers Routes
-|--------------------------------------------------------------------------
-| Import, CRS, Administrasi, Users, Aktivitas, Gunung Api, 
-| Permissions, Roles, Press Release, VONA
-|
-*/
+Route::get('routes', function() {
+    $routeCollection = Route::getRoutes();
+
+    echo "<table style='width:100%'>";
+        echo "<tr>";
+            echo "<td width='10%'><h4>HTTP Method</h4></td>";
+            echo "<td width='10%'><h4>Route</h4></td>";
+            echo "<td width='10%'><h4>Name</h4></td>";
+            echo "<td width='70%'><h4>Corresponding Action</h4></td>";
+        echo "</tr>";
+        foreach ($routeCollection as $value) {
+            echo "<tr>";
+                echo "<td>" . implode('|', $value->methods()) . "</td>";
+                echo "<td>" . $value->uri() . "</td>";
+                echo "<td>" . $value->getName() . "</td>";
+                echo "<td>" . ltrim($value->getActionName()) . "</td>";
+            echo "</tr>";
+        }
+    echo "</table>";
+});
+
 Route::resource('crs','CrsController');
 Route::resource('pengajuan','PengajuanController');
 Route::post('crs/lokasi','CrsController@getCities')->name('crs.getcities');
@@ -45,10 +49,6 @@ Route::get('absensi/search','AbsensiController@search')->name('absensi.search');
 Route::resource('absensi','AbsensiController');
 
 Route::resource('users', 'UserController');
-
-Route::group(['prefix' => 'activities'], function(){
-    Route::get('/', 'ActivityController@index')->name('activities.index');
-});
 
 Route::name('indonesia.')->group(function () {
     Route::group(['prefix' => 'indonesia'], function () {
@@ -212,10 +212,14 @@ Route::name('wovodat.')->group(function () {
 
         Route::get('common-network','WOVOdat\CommonNetworkController@index')
             ->name('common-network.index');
+
         Route::get('common-network/deformation-station','WOVOdat\DeformationStationController@index')
             ->name('common-network.deformation-station.index');
-        Route::post('common-network/deformation-station','WOVOdat\DeformationStationController@store')
-            ->name('common-network.deformation-station.store');
+
+        Route::get('common-network/deformation-station/tilt','WOVOdat\DeformationTiltController@index')
+            ->name('common-network.deformation-station.tilt.index');
+        Route::post('common-network/deformation-station/tilt','WOVOdat\DeformationTiltController@store')
+            ->name('common-network.deformation-station.tilt.store');
 
         Route::get('interval-swarm','WOVOdat\IntervalSwarmController@index')
             ->name('interval-swarm.index');

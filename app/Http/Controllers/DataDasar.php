@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Gadd;
-use App\History;
 
 class DataDasar extends Controller
 {
