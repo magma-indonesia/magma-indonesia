@@ -80,9 +80,9 @@ class Handler extends ExceptionHandler
                 
             }
 
-            return $exception instanceof ModelNotFoundException ? 
-                $this->ApiException(404, 'Data tidak ditemukan.') :
-                $this->ApiException(400, 'Bad request.');
+            // return $exception instanceof ModelNotFoundException ? 
+            //     $this->ApiException(404, 'Data tidak ditemukan.') :
+            //     $this->ApiException(400, 'Bad request.');
 
         }
 
