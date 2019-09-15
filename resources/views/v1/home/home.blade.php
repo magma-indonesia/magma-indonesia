@@ -147,7 +147,7 @@
                     <a class="hidden-xs hidden-sm hidden-md" href="{{ route('v1.press.index') }}">Press Release</a>
                 </li>
                 <li>
-                    <a role="button" data-target="#setLocation" data-toggle="modal" data-dismiss="modal" aria-haspopup="true"><span class="glyphicon glyphicon-info-sign"></span> Cek Lokasi</a>
+                    <a class="hidden-xs hidden-sm hidden-md" role="button" data-target="#setLocation" data-toggle="modal" data-dismiss="modal" aria-haspopup="true"><span class="glyphicon glyphicon-info-sign"></span> Cek Lokasi</a>
                 </li>
             </ul>
 
