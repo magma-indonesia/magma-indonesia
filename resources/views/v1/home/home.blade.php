@@ -64,6 +64,10 @@
         <link rel="stylesheet" href="{{ asset('css/leaflet.defaultextent.css') }}">
         <script src="{{ asset('js/leaflet.defaultextent.js') }}"></script>
 
+        <!-- Load User Marker -->
+        <link rel="stylesheet" href="{{ asset('css/leaflet.usermarker.css') }}">
+        <script src="{{ asset('js/leaflet.usermarker.js') }}"></script>
+
         <!-- Load CSS Magma-->
         <link rel="stylesheet" href="{{ asset('css/icon-magma.css') }}">
         <link rel="stylesheet" href="{{ asset('css/map.css') }}">
@@ -357,6 +361,7 @@
             var url = '{{ url('/') }}';
 
             // Icon Gunung Api
+            var user_icon = L.Icon.extend({options: {iconSize: [42, 42]}});
             var ga_icon = L.Icon.extend({options: {iconSize: [32, 32]}});
             var ga_icon_b = L.Icon.extend({options: {iconSize: [48, 58],className:'gb-blinking'}});
             var erupt = L.Icon.extend({options: {iconSize: [48, 72]}});
@@ -364,7 +369,7 @@
             var gempa_icon_b = L.Icon.extend({options: {iconSize: [48, 58],className:'gb-blinking'}});
             var gertan_icon_b = L.Icon.extend({options: {iconSize: [48, 58],className:'gb-blinking'}});
 
-            here = new ga_icon({iconUrl: url+'/icon/here.png'}),
+            here = new user_icon({iconUrl: url+'/icon/here.png'}),
             ga_normal = new ga_icon({iconUrl: url+'/icon/1.png'}),
             ga_waspada = new ga_icon({iconUrl: url+'/icon/2.png'}),
             ga_siaga = new ga_icon({iconUrl: url+'/icon/3.png'}),
@@ -435,11 +440,11 @@
                 .setPrefix('MAGMA Indonesia')
                 .addAttribution('<a href="http://esdm.go.id" title="Badan Geologi, ESDM" target="_blank">Badan Geologi, ESDM</a>')
                 .addTo(map);
-
+                
             map.locate({enableHighAccuracy:true})
                 .on('locationfound',function(e){
-                    L.marker([e.latitude, e.longitude],{icon: here})
-                    .addTo(map)
+                    var user_marker = L.userMarker([e.latitude, e.longitude], {pulsing:true, accuracy:200, smallIcon:false});
+                    user_marker.addTo(map)
                     .bindPopup('Anda Berada di Sini',{
                         closeButton:false
                     })

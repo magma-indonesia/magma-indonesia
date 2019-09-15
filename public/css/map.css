@@ -238,3 +238,39 @@ body {
 .padding-magma-sm {
     padding: .5em;
 }
+
+.leaflet-usermarker,
+.leaflet-usermarker-small {
+    width: 42px !important;
+    height: 42px !important;
+    background: url(../icon/here.png);
+    background-size: 100%;
+}
+
+.leaflet-usermarker i.pulse,
+.leaflet-usermarker-small i.pulse {
+    display: block;
+
+    -moz-animation: leaflet-usermarker-pulsate 1.5s ease-in-out infinite;
+    -webkit-animation: leaflet-usermarker-pulsate 1.5s ease-in-out infinite;
+    animation: leaflet-usermarker-pulsate 1.5s ease-in-out infinite;
+    border:1pt solid #fff;
+    /* make a circle */
+    -moz-border-radius:71px;
+    -webkit-border-radius:71px;
+    border-radius:71px;
+    /* multiply the shadows, inside and outside the circle */
+    -moz-box-shadow:inset 0 0 5px #06f, inset 0 0 5px #06f, inset 0 0 5px #06f, 0 0 5px #06f, 0 0 5px #06f, 0 0 5px #06f;
+    -webkit-box-shadow:inset 0 0 5px #06f, inset 0 0 5px #06f, inset 0 0 5px #06f, 0 0 5px #06f, 0 0 5px #06f, 0 0 5px #06f;
+    box-shadow:inset 0 0 5px #06f, inset 0 0 5px #06f, inset 0 0 5px #06f, 0 0 5px #06f, 0 0 5px #06f, 0 0 5px #06f;
+    /* set the ring's new dimension and re-center it */
+    height:80px!important;
+    margin:-20px 0 0 -20px;
+    width:80px!important;
+}
+
+.leaflet-usermarker-small i.pulse {
+    height: 42px !important;
+    width: 42px !important;
+    margin: -7px 0 0 -7px;
+}
