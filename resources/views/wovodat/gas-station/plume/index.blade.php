@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    WOVOdat | Tilt Data
+    WOVOdat | Gas Plume
 @endsection
 
 @section('add-vendor-css')
@@ -19,12 +19,12 @@
                             <span>WOVOdat</span>
                         </li>
                         <li class="active">
-                            <span>Deformation</span>
+                            <span>Gas</span>
                         </li>
                     </ol>
                 </div>
                 <h2 class="font-light m-b-xs">
-                    Generate Deformation Graphic and Data from specific station
+                    This table stores gas data collected from a plume including the location of the vent, the height of the plume, and the gas emission rates.
                 </h2>
                 <small>Base on WOVOdat database</small>
             </div>
@@ -41,7 +41,7 @@
                         Choose Paramaters
                     </div>
                     <div class="panel-body">
-                        <form role="form" id="form" method="POST" action="{{ route('chambers.wovodat.common-network.deformation-station.tilt.store') }}">
+                        <form role="form" id="form" method="POST" action="{{ route('chambers.wovodat.common-network.gas-station.plume.store') }}">
                             @csrf
                             <div class="tab-content">
                                 <div id="step1" class="p-m tab-pane active">
@@ -49,7 +49,7 @@
                                         <div class="col-lg-4 text-center">
                                             <i class="pe-7s-note fa-4x text-muted"></i>
                                             <p class="m-t-md">
-                                                <strong>Masukkan parameter yang dibutuhkan</strong>, gunakan form menu ini untuk membuat grafik data deformasi.
+                                                <strong>Masukkan parameter yang dibutuhkan</strong>, gunakan form menu ini untuk membuat grafik data plume.
                                             </p>
                                         </div>
 
@@ -68,11 +68,11 @@
 
                                             <div class="row p-md">
                                                 <div class="form-group">
-                                                    <label class="control-label">Stasiun Deformasi</label>
-                                                    <select id="volcano" class="form-control m-b" name="station">
+                                                    <label class="control-label">Gas Station</label>
+                                                    <select id="station" class="form-control m-b" name="station">
                                                         @foreach ($volcanoes as $volcano)
-                                                            @foreach ($volcano->deformation_stations as $station)
-                                                            <option value="{{ $station->ds_id }}" {{ old('station') == $station->ds_id ? 'selected' : '' }}>{{ $volcano->vd_name.' - '.$station->ds_name.' ('.$station->ds_code.')' }}</option> 
+                                                            @foreach ($volcano->gas_stations as $station)
+                                                            <option value="{{ $station->gs_id }}" {{ old('station') == $station->gs_id ? 'selected' : '' }}>{{ $volcano->vd_name.' - '.$station->gs_name.' ('.$station->gs_code.')' }}</option> 
                                                             @endforeach 
                                                         @endforeach
                                                     </select>
@@ -99,12 +99,34 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-lg-12 plume" style="display: none;">
+                <div class="hpanel">
+                    <div class="panel-heading plume-heading">
+                        Gas Plume
+                    </div>
+                    <div class="panel-body">
+                        <div class="row p-md">
+                            <div class="progress m-t-xs full progress-striped active">
+                                <div style="width: 100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" role="progressbar" class=" progress-bar progress-bar-success">Loading....
+                                </div>
+                            </div>
+                            <div id="plume" style="min-width: 310px; min-height: 680px; margin: 0 auto; display: none;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
 @section('add-vendor-script')
-    <script src="{{ asset('vendor/moment/moment.js') }}"></script>
-    <script src="{{ asset('vendor/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.min.js') }}"></script>
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
+<script src="{{ asset('vendor/moment/moment.js') }}"></script>
+<script src="{{ asset('vendor/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.min.js') }}"></script>
 @endsection
 
 @section('add-script')
@@ -131,6 +153,82 @@
             todayBtn: 'linked',
             enableOnReadonly: false
         });
+
+        $('#form').submit(function(e) {
+            e.preventDefault();
+
+            $('.plume').show();
+            $('#plume').hide();
+            $('.progress').show();
+
+            var station = $('#station').html();
+
+            $.ajax({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                url: '{{ URL::signedRoute('chambers.json.wovodat.plume') }}',
+                data: $(this).serialize(),
+                type: 'POST',
+                success: function(data) {
+                    console.log(data);
+                    plotPlume(data,station);
+                    $('.progress').hide();
+                    $('#plume').show();
+                },
+            });
+        });
+
+        function plotPlume(data,station)
+        {
+            Highcharts.stockChart('plume', {
+                rangeSelector: {
+                    selected: 4,
+                },
+                chart: {
+                    zoomType: 'x',
+                },
+                title: {
+                    text: 'Gas Plume of '+station,
+                },
+                xAxis: {
+                    type: 'datetime',
+                },
+                yAxis: {
+                    title: {
+                        text: 'ton/day',
+                    }
+                },
+                legend: {
+                    enabled: false,
+                },
+                plotOptions: {
+                    marker: {
+                        radius: 2,
+                    },
+                    scatter: {
+                        turboThreshold: 0,
+                    }
+                },
+                scrollbar: {
+                    enabled: false,
+                },
+                tooltip: {
+                    formatter: function () {
+                        return Highcharts.dateFormat('%e %b %Y %H:%M:%S', new Date(this.x))+', '+this.y+' ton/day';
+                    },
+                },
+                series: [{
+                    type: 'scatter',
+                    name: 'Gas Plume',
+                    data: data,
+                }],
+                exporting: {
+                    enabled: true,
+                    scale: 1,
+                    sourceHeight: 800,
+                    sourceWidth: 1200,
+                }
+            });
+        }
     });
 </script>
 @endsection

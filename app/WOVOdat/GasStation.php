@@ -23,4 +23,9 @@ class GasStation extends Model
     {
         return $this->hasOne('App\WOVOdat\GasInstrument','gs_id','gs_id');
     }
+
+    public function plume()
+    {
+        return $this->hasMany('App\WOVOdat\GasPlume','gs_id','gs_id');
+    }
 }

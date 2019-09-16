@@ -193,6 +193,31 @@
 
                 </div>
             </div>
+
+            {{-- Gas --}}
+            <div class="col-md-4">
+                <div class="hpanel">
+                    <div class="panel-body">
+                        <div class="stats-title pull-left">
+                            <h4>Gas Station</h4>
+                        </div>
+
+                        <div class="stats-icon pull-right">
+                            <i class="pe-7s-map-marker fa-4x"></i>
+                        </div>
+
+                        <div class="m-t-xl">
+                            <h1>
+                                <a href="{{ route('chambers.wovodat.common-network.gas-station.index') }}" class="btn btn-outline btn-danger" target="_blank">View Stations</a>
+                            </h1>
+                            <small>
+                                This table stores information such as a location, type of gas body monitored, and a description of the stations where gas data are collected.
+                            </small>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
 
         <div class="row">

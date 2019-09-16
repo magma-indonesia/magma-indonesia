@@ -195,6 +195,10 @@ Route::name('json.')->group(function () {
         Route::post('rsam','Json\RsamJson@index')
                 ->name('rsam')
                 ->middleware('signed');
+
+        Route::post('wovodat\plume','Json\WOVOdat\GasPlumeJson@index')
+                ->name('wovodat.plume')
+                ->middleware('signed');
     });
 });
 
@@ -223,6 +227,11 @@ Route::name('wovodat.')->group(function () {
 
         Route::get('common-network/gas-station','WOVOdat\GasStationController@index')
             ->name('common-network.gas-station.index');
+
+        Route::get('common-network/gas-station/plume','WOVOdat\GasPlumeController@index')
+            ->name('common-network.gas-station.plume.index');
+        Route::post('common-network/gas-station/plume','WOVOdat\GasPlumeController@store')
+            ->name('common-network.gas-station.plume.store');
 
         Route::get('interval-swarm','WOVOdat\IntervalSwarmController@index')
             ->name('interval-swarm.index');

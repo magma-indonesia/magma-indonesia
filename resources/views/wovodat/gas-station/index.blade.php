@@ -50,7 +50,7 @@
                     <div class="panel-body float-e-margins">
                         <div class="row">
                             <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
-                                <a href="{{ route('chambers.wovodat.common-network.deformation-station.tilt.index') }}" class="btn btn-outline btn-danger btn-block" type="button">Plume Data</a>
+                                <a href="{{ route('chambers.wovodat.common-network.gas-station.plume.index') }}" class="btn btn-outline btn-danger btn-block" type="button">Plume Data</a>
                             </div>
                             <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
                                 <a href="{{ route('chambers.wovodat.common-network.deformation-station.tilt.index') }}" class="btn btn-outline btn-danger btn-block" type="button">Directly Sampled Gas</a>
@@ -60,7 +60,7 @@
 
                     <div class="panel-body">
                         <div class="table-responsive">
-                            <table id="table-deformations" class="table table-condensed table-striped">
+                            <table id="table-gas" class="table table-condensed table-striped">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -68,8 +68,6 @@
                                         <th>Station (Code/Name)</th>
                                         <th>Instrument</th>
                                         <th>Gas Type</th>
-                                        <th>Latitude</th>
-                                        <th>Longitude</th>
                                         <th>Elevation</th>
                                         <th>Description</th>
                                     </tr>
@@ -86,8 +84,6 @@
                                             <td>{{ $station->gs_code.'/'.$station->gs_name }}</td>
                                             <td>{{ $station->gs_inst ? ucfirst($station->gs_inst): '-' }}</td>
                                             <td>{{ $station->gs_type ? ucfirst($station->gs_type) : '-' }}</td>
-                                            <td>{{ number_format($station->gs_lat,3,',','.') }}</td>
-                                            <td>{{ number_format($station->gs_lon,3,',','.') }}</td>
                                             <td>{{ $station->gs_elev ?: '-' }}</td>
                                             <td>{{ $station->gs_desc ? ucfirst($station->gs_desc) : '-' }}</td>
                                         </tr>
@@ -193,14 +189,14 @@
 
     $(document).ready(function () {
 
-        $('#table-deformations').dataTable({
+        $('#table-gas').dataTable({
             dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
             "lengthMenu": [[30, 50, -1], [30, 50, "All"]],
             buttons: [
                 { extend: 'copy', className: 'btn-sm'},
-                { extend: 'csv', title: 'Gas Station Table', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]} },
-                { extend: 'pdf', title: 'Gas Station Table', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]} },
-                { extend: 'print', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]} }
+                { extend: 'csv', title: 'Gas Station Table', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]} },
+                { extend: 'pdf', title: 'Gas Station Table', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]} },
+                { extend: 'print', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]} }
             ]
         });
 
