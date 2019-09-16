@@ -410,6 +410,8 @@
                                             <hr>
                                             <div class="form-group">
                                                 <button id="submit" type="submit" class="btn btn-info" data-loading-text="<i class='glyphicon glyphicon-repeat normal-right-spinner'></i> Plotting Lokasi...">Cek Lokasi</button>
+
+                                                <button type="button" class="btn btn-info" data-target="#checkLocation" data-dismiss="modal" aria-haspopup="true">Close Form</button>
                                             </div>
                                         </form>
                                     </div>
