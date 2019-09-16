@@ -7,14 +7,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use App\v1\Gadd;
 use App\v1\MagmaVar as OldVar;
-use App\v1\PosPga;
 use App\v1\GertanCrs as Crs;
 use App\v1\MagmaRoq as Roq;
-use App\v1\MagmaSigertan;
+use App\PublicCheckLocation as Check;
 use DB;
+
+use App\Traits\v1\GunungApiTerdekat;
 
 class HomeController extends Controller
 {
+
+    use GunungApiTerdekat;
+
     /**
      * Display a listing of the resource.
      *
@@ -143,5 +147,47 @@ class HomeController extends Controller
         });
         
         return view('v1.home.home-frame',compact('gadds','gertans','gempas'));
+    }
+
+    public function check(Request $request)
+    {
+        $validator = $this->validate($request, [
+            'name' => 'required|min:4',
+            'latitude' => 'required|numeric|between:-21.41,14.3069',
+            'longitude' => 'required|numeric|between:73.65,153.41'
+        ],[
+            'name.required' => 'Form Nama Lokasi belum diisi',
+            'latitude.required' => 'Latitude belum diisi',
+            'longitude.required' => 'Longitude belum diisi',
+            'name.min' => 'Minimal 4 karakter',
+            'latitude.numeric' => 'Latitude harus berformat angka',
+            'longitude.numeric' => 'Longitude harus berformat angka',
+            'longitude.between' => 'Nilai Longitude antara 73.65 - 153.41 BT',
+            'latitude.between' => 'Nilai Latitude antara -21.41 - 14.3069 LU',
+        ]);
+
+        $check = Check::updateOrCreate(
+            [
+                'latitude' => $request->latitude,
+                'longitude' => $request->longitude,
+            ],
+            [
+                'name' => $request->name,
+                'ip_address' => $request->ip()
+            ]);
+        
+        $volcano = $this->getGunungApiTerdekat($request->latitude,$request->longitude);
+
+        if ($check) 
+            return response()->json([
+                'success' => 1,
+                'message' => $check,
+                'volcano' => $volcano ?: null
+            ]);
+        
+        return response()->json([
+            'success' => 0,
+            'message' => $validator->errors()->all()
+        ]);
     }
 }

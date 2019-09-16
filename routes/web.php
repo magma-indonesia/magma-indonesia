@@ -33,6 +33,9 @@ Route::name('v1.')->group(function () {
         Route::get('in-frame','v1\HomeController@frame')
             ->name('home.frame')
             ->middleware('cors');
+        Route::post('home/check-location','v1\HomeController@check')
+            ->name('home.check-location')
+            ->middleware('signed');
             
         Route::get('vona','FrontPage\v1\VonaController@index')->name('vona.index');
         Route::get('vona/{id}','FrontPage\v1\VonaController@show')

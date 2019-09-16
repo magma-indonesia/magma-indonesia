@@ -64,6 +64,10 @@
         <link rel="stylesheet" href="{{ asset('css/leaflet.defaultextent.css') }}">
         <script src="{{ asset('js/leaflet.defaultextent.js') }}"></script>
 
+        <!-- Load User Marker -->
+        <link rel="stylesheet" href="{{ asset('css/leaflet.usermarker.css') }}">
+        <script src="{{ asset('js/leaflet.usermarker.js') }}"></script>
+
         <!-- Load CSS Magma-->
         <link rel="stylesheet" href="{{ asset('css/icon-magma.css') }}">
         <link rel="stylesheet" href="{{ asset('css/map.css') }}">
@@ -87,6 +91,7 @@
                 <ul class="dropdown-menu calcite-bg-custom" style="background-color: rgb(0, 127, 255, 0.8);">
                     <li><a role="button" data-target="#modalSplash" data-toggle="modal" aria-haspopup="true"><span class="glyphicon glyphicon-info-sign"></span> Tentang MAGMA</a></li>
                     <li><a role="button" data-target="#modalSources" data-toggle="modal" data-dismiss="modal" aria-haspopup="true"><span class="glyphicon glyphicon-info-sign"></span> Sumber Data</a></li>
+                    <li><a role="button" data-target="#setLocation" data-toggle="modal" data-dismiss="modal" aria-haspopup="true"><span class="glyphicon glyphicon-info-sign"></span> Cek Lokasi</a></li>
                     <li class="divider"></li>
                     <li><a role="button" data-target="#panelVolcanoes" aria-haspopup="true"><span class="glyphicon glyphicon-search"></span> Cari Gunung Api</a></li>
                     <li><a role="button" data-target="#panelInfo" aria-haspopup="true"><span class="glyphicon glyphicon-tasks"></span> Status Gunung Api</a></li>
@@ -140,6 +145,9 @@
                 </li>
                 <li>
                     <a class="hidden-xs hidden-sm hidden-md" href="{{ route('v1.press.index') }}">Press Release</a>
+                </li>
+                <li>
+                    <a class="hidden-xs hidden-sm hidden-md" role="button" data-target="#setLocation" data-toggle="modal" data-dismiss="modal" aria-haspopup="true"><span class="glyphicon glyphicon-info-sign"></span> Cek Lokasi</a>
                 </li>
             </ul>
 
@@ -279,7 +287,7 @@
                                         <br>
                                         <div class="form-inline">
                                             <div class="form-group">
-                                                <button type="button" class="btn btn-info" data-dismiss="modal">Sumber Data</button>
+                                                <button type="button" class="btn btn-info" data-target="#modalSources" data-toggle="modal" data-dismiss="modal" aria-haspopup="true">Sumber Data</button>
                                             </div>
                                             <div class="form-group">
                                                 <button type="button" class="btn btn-info" data-dismiss="modal">Penghargaan</button>
@@ -349,6 +357,70 @@
             </div>
         </div>
 
+        <div class="modal fade" id="setLocation" tabindex="-1" role="dialog" aria-labelledby="splashLocation">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="splash-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="text-center">
+                                            <h3>Masukkan Koordinat Anda</h3>
+                                        <hr>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 text-center">
+                                        <div class="alert alert-info" role="alert">
+                                            <div><span class="glyphicon glyphicon-warning-sign" aria-hidden="true" style="font-size: 50px;"></span></div>
+                                            <p>
+                                                <b>Format Koordinat Latitude dan Longitude</b> yang digunakan adalah dalam bentuk <b>Decimal Degree (DD)</b>. Untuk konversi dari <b>degrees, minutes, seconds (DMS)</b> bisa menggunakan URL berikut <b><a href="https://www.latlong.net/degrees-minutes-seconds-to-decimal-degrees" target="_blank">https://www.latlong.net/</a></b>
+                                            </p>
+                                        </div>
+
+                                        <div class="alert alert-info" role="alert"><b>Koordinat dari Google Map</b> sudah tersedia dalam bentuk <b>Decimal Degree</b> sehingga tidak perlu dilakukan konversi.</div>
+                                        <hr>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <form id="checkLocation" action="{{ URL::signedRoute('v1.home.check-location') }}" method="post">
+                                            @csrf
+                                            <div class="form-group">
+                                                <label for="latitude">Nama Lokasi</label>
+                                                <input type="text" name="name" class="form-control" id="name" placeholder="Minimal 4 Karakter" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="latitude">Latitude (LU)</label>
+                                                <div class="input-group">
+                                                    <input type="number" name="latitude" class="form-control" value="-4.26" id="latitude" placeholder="Masukkan koordinat Latitude Anda dalam LU" required min="-21.41" max="14.3069694978258" step="0.000000001">
+                                                    <div class="input-group-addon">&deg; LU</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="latitude">Longitude (BT)</label>
+                                                <div class="input-group">
+                                                    <input type="number" name="longitude" class="form-control" value="115.66" id="longitude" placeholder="Masukkan koordinat Longitude Anda" required min="73.65" max="153.41" step="0.000000001">
+                                                    <div class="input-group-addon">&deg; BT</div>
+                                                </div>
+                                            </div>
+                                            <div class="validation-errors"></div>
+                                            <hr>
+                                            <div class="form-group">
+                                                <button id="submit" type="submit" class="btn btn-info" data-loading-text="<i class='glyphicon glyphicon-repeat normal-right-spinner'></i> Plotting Lokasi...">Cek Lokasi</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- ======= -->
         <!-- Leaflet --> 
         <!-- ======= -->
@@ -357,14 +429,15 @@
             var url = '{{ url('/') }}';
 
             // Icon Gunung Api
+            var user_icon = L.Icon.extend({options: {iconSize: [42, 42]}});
             var ga_icon = L.Icon.extend({options: {iconSize: [32, 32]}});
             var ga_icon_b = L.Icon.extend({options: {iconSize: [48, 58],className:'gb-blinking'}});
             var erupt = L.Icon.extend({options: {iconSize: [48, 72]}});
             var gempa_icon = L.Icon.extend({options: {iconSize: [32, 39]}});
-            var gempa_icon_b = L.Icon.extend({options: {iconSize: [48, 58],className:'gb-blinking'}});
+            var gempa_icon_b = L.Icon.extend({options: {iconSize: [48, 48],className:'gb-blinking'}});
             var gertan_icon_b = L.Icon.extend({options: {iconSize: [48, 58],className:'gb-blinking'}});
 
-            here = new ga_icon({iconUrl: url+'/icon/here.png'}),
+            here = new user_icon({iconUrl: url+'/icon/here.png'}),
             ga_normal = new ga_icon({iconUrl: url+'/icon/1.png'}),
             ga_waspada = new ga_icon({iconUrl: url+'/icon/2.png'}),
             ga_siaga = new ga_icon({iconUrl: url+'/icon/3.png'}),
@@ -435,17 +508,6 @@
                 .setPrefix('MAGMA Indonesia')
                 .addAttribution('<a href="http://esdm.go.id" title="Badan Geologi, ESDM" target="_blank">Badan Geologi, ESDM</a>')
                 .addTo(map);
-
-            map.locate({enableHighAccuracy:true})
-                .on('locationfound',function(e){
-                    L.marker([e.latitude, e.longitude],{icon: here})
-                    .addTo(map)
-                    .bindPopup('Anda Berada di Sini',{
-                        closeButton:false
-                    })
-                    .openPopup();
-                    map.flyTo([e.latitude, e.longitude], 8, {duration:5});
-            });
             
         </script>
         
@@ -900,7 +962,6 @@
                         popup.setContent(setPopUpContent);
                         popup.update();
                         markers_gempa[markerGempa].openPopup();
-                        // map.flyTo(newData.gunungapi.koordinat, 12);
 
                         $('.panel-default').slimScroll({
                             height: maxHeight,
@@ -929,6 +990,67 @@
             }, {
                 position: 'bottomleft'
             }).addTo(map);
+
+            // ==========
+            // Check Location
+            // ==========
+
+            function pinLocation(latitude, longitude, name, volcano = null)
+            {
+                var content = volcano !== null ? '<span class="glyphicon glyphicon-map-marker"></span> Lokasi : '+name+' <br><span><i class="icon icon-volcano-warning"></i></span> Gunung Api terdekat: '+volcano : '<span class="glyphicon glyphicon-map-marker"></span> Lokasi : '+name;
+
+                var user_marker = L.userMarker([latitude, longitude]);
+                user_marker.addTo(map).bindPopup(content,{
+                    closeButton:false
+                }).openPopup();
+
+                map.flyTo([latitude, longitude], 8);
+            };
+
+            function saveLocation(data, latitude, longitude, name, loadingButton)
+            {
+                $.ajax({
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    url: '{{ URL::signedRoute('v1.home.check-location') }}',
+                    type: 'POST',
+                    data: data,
+                    beforeSend: function(){
+                        loadingButton.button('loading');
+                    },
+                    success: function(response) {
+                        loadingButton.button('reset');                        
+                        if (response.success) {
+                            pinLocation(latitude,longitude,name,response.volcano);
+                        }
+                    },
+                    error: function (xhr) {
+                        loadingButton.button('reset');                        
+                        $('.validation-errors').html('');
+                        $.each(xhr.responseJSON.errors, function(key,value) {
+                            $('.validation-errors').append('<div class="alert alert-danger">'+value+'</div');
+                        }); 
+                    },
+                });
+            };
+
+            $('#checkLocation').on('submit',function (e) {
+                e.preventDefault();
+                var $button = $('#submit');
+                var data = $(this).serialize(),
+                    latitude = $('#latitude').val(),
+                    longitude = $('#longitude').val(),
+                    name = $('#name').val();
+                saveLocation(data, latitude, longitude, name, $button);
+            });
+
+            // Get User Location
+            map.locate({enableHighAccuracy:true})
+                .on('locationfound',function(e){
+                    var user_marker = L.userMarker([e.latitude, e.longitude], {pulsing:true, accuracy:200, smallIcon:false});
+                    user_marker.addTo(map).bindPopup('Anda Berada di Sini',{
+                        closeButton:false
+                    }).openPopup();
+                });
         });
         </script>
     </body>
