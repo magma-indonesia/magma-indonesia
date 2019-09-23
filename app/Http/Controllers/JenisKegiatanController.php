@@ -32,7 +32,7 @@ class JenisKegiatanController extends Controller
                         ->withCount('detail_kegiatan')
                         ->orderBy('tahun','desc')
                         ->get();
-        return view('mga.jenis-kegiatan.index', compact('jenis','kegiatans','bidang'));
+        return view('mga.jenis-kegiatan.index', compact('jenis','kegiatans'));
     }
 
     /**
