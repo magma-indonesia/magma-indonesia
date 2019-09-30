@@ -17,10 +17,11 @@ use Carbon\Carbon;
 
 use App\Traits\VisualAsap;
 use App\Traits\v1\DeskripsiGempa;
+use App\Traits\JenisGempaVar;
 
 class MagmaVarController extends Controller
 {
-    use VisualAsap,DeskripsiGempa;
+    use JenisGempaVar,VisualAsap,DeskripsiGempa;
 
     /**
      * Properti untuk request (bukan session)
@@ -55,7 +56,7 @@ class MagmaVarController extends Controller
         $path = 'img/ga/'.$ga_code.'/'.$filename;
 
         $this->request->foto || $this->request->hasfoto == 0 ?
-                    Storage::disk('magma-old-ftp')->delete($path) :
+                    Storage::disk('temp')->delete('var/'.$filename) :
                     false;
         
         return $this;
@@ -84,12 +85,12 @@ class MagmaVarController extends Controller
                             session('old_var_visual')['foto'];
 
             $upload = $this->request->hasfoto == '1' ?
-                        $this->request->foto->storeAs($path, $filename, 'magma-old-ftp') :
+                        $this->request->foto->storeAs('var',$filename ,'temp') :
                         null;
 
             
             $this->var_image = $upload ? 
-                        'https://magma.vsi.esdm.go.id/'.$upload :
+                        'https://magma.vsi.esdm.go.id/'.$path.'/'.$filename :
                         'https://magma.vsi.esdm.go.id/img/ga/IBU/IBU_20190503060512.png';
 
             return $filename;
@@ -145,9 +146,29 @@ class MagmaVarController extends Controller
 
         if (count($request->all()))
         {
+            switch ($request->tipe) {
+                case 'all':
+                    $periode = '%';
+                    break;
+                case '0':
+                    $periode = '00:00-24:00';
+                    break;
+                case '1':
+                    $periode = '00:00-06:00';
+                    break;
+                case '2':
+                    $periode = '06:00-12:00';
+                    break;
+                case '3':
+                    $periode = '12:00-18:00';
+                    break;
+                default:
+                    $periode = '18:00-24:00';
+                    break;
+            }
+
             $nip = $request->nip == 'all' ? '%' : $request->input('nip','%');
             $code = $request->gunungapi == 'all' ? '%' : strtoupper($request->input('gunungapi','%'));
-            $periode = $request->tipe == 'all' ? '%' : $request->input('tipe','%').' Jam';
             $bulan = $request->input('bulan', Carbon::parse('first day of January')->format('Y-m-d'));        
             $start = $request->input('start', Carbon::parse('first day of January')->format('Y-m-d'));
             $end = $request->input('end', Carbon::now()->format('Y-m-d'));
@@ -165,10 +186,10 @@ class MagmaVarController extends Controller
                     break;
             }
 
-            $vars = OldVar::select('no','ga_nama_gapi','var_data_date','var_perwkt','periode','var_nama_pelapor')
+            $vars = OldVar::select('no','ga_nama_gapi','var_data_date','periode','var_perwkt','periode','var_nama_pelapor')
                         ->where('ga_code', 'like', $code)
                         ->whereBetween('var_data_date', [$start, $end])
-                        ->where('var_perwkt','like',$periode)
+                        ->where('periode','like',$periode)
                         ->where('var_nip_pelapor','like',$nip)
                         ->orderBy('var_data_date','asc')
                         ->orderBy('var_data_date','desc');
@@ -182,6 +203,65 @@ class MagmaVarController extends Controller
         }
 
         return view('v1.gunungapi.laporan.filter',compact('gadds','users'))->with('flash_message',
+        'Kriteria pencarian tidak ditemukan/belum ada');
+    }
+
+    protected function getResultFilterGempa($request)
+    {
+        $code = $request->gunungapi == 'all' ? '%' : strtoupper($request->input('gunungapi','%'));
+        $gempas = $request->gempa;
+
+        $query = OldVar::select('ga_code','ga_nama_gapi','var_data_date')
+                    ->where('ga_code','like',$code)
+                    ->whereBetween('var_data_date',[$request->start,$request->end]);
+
+        foreach ($gempas as $gempa)
+        {
+            $var_gempa = 'var_'.$gempa;
+            $raw = 'SUM('.$var_gempa.') as jumlah_'.$var_gempa;
+            $query = $query->selectRaw($var_gempa);
+            $query = $query->selectRaw($raw);
+        }
+
+        return $query->groupBy('magma_var.ga_nama_gapi')->get();
+    }
+
+    protected function transfromFiltered($result)
+    {
+
+    }
+
+    /**
+     * Display a filtering listing of the resource based on earthquake.
+     *
+     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function filterGempa(Request $request)
+    {
+        $gadds = Cache::remember('v1/gadds', 120, function () {
+            return Gadd::select('no','ga_code','ga_nama_gapi')
+                ->whereNotIn('ga_code',['TEO','SBG'])
+                ->orderBy('ga_nama_gapi','asc')
+                ->get();
+        });
+
+        $jenis_gempa = collect($this->jenisgempa())->chunk(10);
+
+        if (count($request->all()))
+        {
+            $validated = $request->validate([
+                'gunungapi' => 'required',
+                'gempa' => 'required|array'
+            ]);
+
+            $result = $this->getResultFilterGempa($request);
+            $transformed = $this->transfromFiltered($result);
+
+            return $result;
+        }
+
+        return view('v1.gunungapi.laporan.filter-gempa',compact('gadds','jenis_gempa'))->with('flash_message',
         'Kriteria pencarian tidak ditemukan/belum ada');
     }
 
