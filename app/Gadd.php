@@ -112,15 +112,6 @@ class Gadd extends Model
                     });
     }
 
-    /**     
-     *   Masing-masing Gunungapi hanya memiliki 
-     *   1 sejarah gunungapi
-     */
-    public function history()
-    {
-        return $this->hasOne('App\History','code_id','code');
-    }
-
     /**
      * Masing-masing gunungapi memiliki rekomendasi
      *

@@ -38,9 +38,9 @@ class DataDasar extends Controller
     public function store(Request $request)
     {
         //
-        $gadd = new Gadd();
-        $gadd->history->body = $request->body;
-        $gadd->save();
+        // $gadd = new Gadd();
+        // $gadd->history->body = $request->body;
+        // $gadd->save();
     }
 
     /**
@@ -79,11 +79,6 @@ class DataDasar extends Controller
     public function update(Request $request, $id)
     {
         $gadd = Gadd::findOrFail($id);
-
-        $success = $gadd->history()->updateOrCreate([
-                        'code_id' => $gadd->code],[
-                        'body' => $request->body
-                    ]);
 
         return redirect()->route('chambers.datadasar.index');
     }
