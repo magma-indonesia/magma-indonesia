@@ -19,4 +19,19 @@ class Kantor extends Model
         'ga_code',
         'obscode'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\v1\User','vg_nip','vg_nip');
+    }
+
+    public function absensi()
+    {
+        return $this->hasMany('App\v1\Absensi','vg_nip','vg_nip');
+    }
+
+    public function penempatan()
+    {
+        return $this->belongsTo('App\v1\PosPga','obscode','obscode');
+    }
 }

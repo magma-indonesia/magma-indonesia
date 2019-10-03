@@ -325,9 +325,7 @@ Route::name('v1.')->group(function () {
             Route::delete('vona/{no}','v1\VonaController@destroy')->name('destroy');
         });
 
-        Route::name('absensi.')->group(function() {
-            Route::get('absensi','v1\AbsensiController@index')->name('index');
-        });
+        Route::resource('absensi','v1\AbsensiController');
 
         Route::name('visitor.')->group(function() {
             Route::get('visitor','v1\VisitorController@index')->name('index');
