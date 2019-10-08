@@ -124,7 +124,7 @@ return [
 
     'cookie' => env(
         'SESSION_COOKIE',
-        '__Secure-'+str_slug(env('APP_NAME', 'laravel'), '_')
+        '__Secure-'.str_slug(env('APP_NAME', 'laravel'), '_')
     ),
 
     /*
