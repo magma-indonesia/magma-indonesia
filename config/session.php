@@ -124,7 +124,7 @@ return [
 
     'cookie' => env(
         'SESSION_COOKIE',
-        str_slug(env('APP_NAME', 'laravel'), '_').'_session'
+        '__Secure-'+str_slug(env('APP_NAME', 'laravel'), '_')
     ),
 
     /*
@@ -151,7 +151,7 @@ return [
     |
     */
 
-    'domain' => env('SESSION_DOMAIN', null),
+    'domain' => env('SESSION_DOMAIN', 'magma.esdm.go.id'),
 
     /*
     |--------------------------------------------------------------------------
