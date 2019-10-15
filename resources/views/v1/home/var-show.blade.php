@@ -56,6 +56,9 @@ Laporan Aktivitas
                 <p class="card-subtitle tx-normal mg-b-15">Dibuat oleh,  {{ $var->pelapor }}</p>
                 <br>
                 <p class="col-lg-6 pd-0">{!! $var->intro !!}</p>
+                <div class="btn-wrapper">
+                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="Laporan Aktivitas Gunung Api {{ $var->gunungapi }}, {{ $var->tanggal_deskripsi }}, periode pengamatan {{ $var->periode }}. " data-url="{{ route('v1.gunungapi.var.show', $var->id) }}" data-via="id_magma" data-lang="id" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
             </div>
         </div>
 
