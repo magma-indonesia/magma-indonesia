@@ -1,7 +1,11 @@
 @extends('layouts.slim')
 
 @section('title')
-Letusan Gunung Api {{ $ven->gunungapi->ga_nama_gapi }}
+Letusan Gunung Api {{ $ven->gunungapi->ga_nama_gapi }}, {{ \Carbon\Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->formatLocalized('%A, %d %B %Y') }}
+@endsection
+
+@section('description')
+Terjadi erupsi G. {{ $ven->gunungapi->ga_nama_gapi }} pada hari {{ \Carbon\Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->formatLocalized('%A, %d %B %Y') }}, pukul {{ $ven->erupt_jam.' '.$ven->gunungapi->ga_zonearea }}.
 @endsection
 
 @section('add-vendor-css')

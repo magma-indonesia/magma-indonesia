@@ -18,14 +18,14 @@
     <meta name="twitter:creator" content="@KementerianESDM">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ config('app.name') }}">
-    <meta name="twitter:description" content="{{ config('app.tag_line') }}">
+    <meta name="twitter:description" content="@yield('description', config('app.tag_line'))">
     <meta name="twitter:image" content="{{ asset('snapshot.png') }}">
 
     <!-- Facebook -->
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="{{ config('app.url') }}">
     <meta property="og:title" content="{{ config('app.name') }} | {{ config('app.tag_line') }}">
-    <meta property="og:description" content="@yield('title')">
+    <meta property="og:description" content="@yield('description', config('app.tag_line'))">
     <meta property="og:image" content="{{ asset('snapshot.png') }}">
     <meta property="og:image:secure_url" content="{{ asset('snapshot.png') }}">
     <meta property="og:image:type" content="image/png">
