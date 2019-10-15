@@ -57,7 +57,7 @@ Laporan Aktivitas
                 <br>
                 <p class="col-lg-6 pd-0">{!! $var->intro !!}</p>
                 <div class="btn-wrapper">
-                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="Laporan Aktivitas Gunung Api {{ $var->gunungapi }}, {{ $var->tanggal_deskripsi }}, periode pengamatan {{ $var->periode }}. " data-url="{{ route('v1.gunungapi.var.show', $var->id) }}" data-via="id_magma" data-lang="id" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <a id="tweet" href="" role="button" class="btn btn-primary" data-text="Laporan Aktivitas Gunung Api {{ $var->gunungapi }}, {{ $var->tanggal_deskripsi }}, periode pengamatan {{ $var->periode }}. " data-url="{{ route('v1.gunungapi.var.show', $var->id) }}"><i class="fa fa-twitter mg-r-5"></i>Tweet</a>
                 </div>
             </div>
         </div>
@@ -158,6 +158,28 @@ Laporan Aktivitas
 <script>
 
 $(document).ready(function () {
+
+    $('#tweet').on('click', function(e) {
+        e.preventDefault();
+
+        var pageUrl = window.location.href;
+        var text = $(this).data('text');
+        var tweetAbleUrl = makeTweetAbleUrl(text, pageUrl)
+
+        $(this).attr('href',tweetAbleUrl);
+        console.log(tweetAbleUrl);
+
+        window.open(
+            e.target.getAttribute('href'),
+            'twitterwindow', 
+            'height=450, width=550, toolbar=0, location=0, menubar=0, directories=0, scrollbars=0'
+        );
+    });
+
+    function makeTweetAbleUrl(text, pageUrl)
+    {
+        return 'https://twitter.com/intent/tweet?url=' + pageUrl + '&text=' + encodeURIComponent(text)+ '&via=id_magma';
+    }
 
     var url = '{{ url('/') }}';
     var krb_esri = 'https://services7.arcgis.com/Y24oyWJVNs6VLjiH/arcgis/rest/services/KRB_GA_ID/FeatureServer/0';

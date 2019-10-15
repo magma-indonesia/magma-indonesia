@@ -87,6 +87,8 @@ Informasi Letusan
 $(document).ready(function () {
 
     $('#tweet').on('click', function(e) {
+        e.preventDefault();
+
         var pageUrl = window.location.href;
         var text = $(this).data('text');
         var tweetAbleUrl = makeTweetAbleUrl(text, pageUrl)
@@ -103,7 +105,7 @@ $(document).ready(function () {
 
     function makeTweetAbleUrl(text, pageUrl)
     {
-        return 'https://twitter.com/intent/tweet?url=' + pageUrl + '&text=' + encodeURIComponent(text)+ '&via=id_magma&lang=id';
+        return 'https://twitter.com/intent/tweet?url=' + pageUrl + '&text=' + encodeURIComponent(text)+ '&via=id_magma';
     }
 
     var url = '{{ url('/') }}';
