@@ -70,7 +70,7 @@ Informasi Letusan
                                 {!! nl2br($ven->erupt_rek) !!}
                             </p>
                             <div class="btn-wrapper mg-t-30">
-                                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="@if($ven->erupt_vis)Terjadi erupsi G. {{ $ven->gunungapi->ga_nama_gapi }} pada hari {{ \Carbon\Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->formatLocalized('%A, %d %B %Y') }}, pukul {{ $ven->erupt_jam.' '.$ven->gunungapi->ga_zonearea }}dengan tinggi kolom abu teramati &plusmn; {{ $ven->erupt_tka }} m di atas puncak.@else Terjadi erupsi G. {{ $ven->gunungapi->ga_nama_gapi }} pada hari {{ \Carbon\Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->formatLocalized('%A, %d %B %Y') }}, pukul {{ $ven->erupt_jam.' '.$ven->gunungapi->ga_zonearea }}.@endif @if($ven->erupt_amp)Erupsi terekam di seismograf dengan amplitudo maksimum {{ $ven->erupt_amp }} mm dan durasi {{ $ven->erupt_drs }} detik.@endif" data-url="{{ route('v1.gunungapi.ven.show', $ven) }}" data-via="id_magma" data-lang="id" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                                <a id="tweet" href="" role="button" class="btn btn-primary" data-text="@if($ven->erupt_vis)Terjadi erupsi G. {{ $ven->gunungapi->ga_nama_gapi }} pada hari {{ \Carbon\Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->formatLocalized('%A, %d %B %Y') }}, pukul {{ $ven->erupt_jam.' '.$ven->gunungapi->ga_zonearea }} tinggi kolom abu teramati &plusmn; {{ $ven->erupt_tka }} m di atas puncak.@else Terjadi erupsi G. {{ $ven->gunungapi->ga_nama_gapi }} pada hari {{ \Carbon\Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->formatLocalized('%A, %d %B %Y') }}, pukul {{ $ven->erupt_jam.' '.$ven->gunungapi->ga_zonearea }}.@endif @if($ven->erupt_amp)Erupsi terekam di seismograf dengan amplitudo maksimum {{ $ven->erupt_amp }} mm dan durasi {{ $ven->erupt_drs }} detik.@endif"><i class="fa fa-twitter mg-r-5"></i>Tweet</a>
                             </div>
                         </div><!-- col-8 -->
                     </div><!-- row -->
@@ -84,7 +84,28 @@ Informasi Letusan
 
 @section('add-script')
 <script>
-    $(document).ready(function () {
+$(document).ready(function () {
+
+    $('#tweet').on('click', function(e) {
+        var pageUrl = window.location.href;
+        var text = $(this).data('text');
+        var tweetAbleUrl = makeTweetAbleUrl(text, pageUrl)
+
+        $(this).attr('href',tweetAbleUrl);
+        console.log(tweetAbleUrl);
+
+        window.open(
+            e.target.getAttribute('href'),
+            'twitterwindow', 
+            'height=450, width=550, toolbar=0, location=0, menubar=0, directories=0, scrollbars=0'
+        );
+    });
+
+    function makeTweetAbleUrl(text, pageUrl)
+    {
+        return 'https://twitter.com/intent/tweet?url=' + pageUrl + '&text=' + encodeURIComponent(text)+ '&via=id_magma&lang=id';
+    }
+
     var url = '{{ url('/') }}';
     var krb_esri = 'https://services7.arcgis.com/Y24oyWJVNs6VLjiH/arcgis/rest/services/KRB_GA_ID/FeatureServer/0';
     var query = "MAG_CODE='{{ $ven->ga_code }}'";

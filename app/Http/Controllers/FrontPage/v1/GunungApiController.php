@@ -236,7 +236,7 @@ class GunungApiController extends Controller
 
     public function showVen(Request $request, $id = null)
     {
-        $ven = MagmaVen::with('gunungapi:ga_code,ga_nama_gapi,ga_lat_gapi,ga_lon_gapi')
+        $ven = MagmaVen::with('gunungapi:ga_code,ga_zonearea,ga_nama_gapi,ga_lat_gapi,ga_lon_gapi')
                         ->findOrFail($id);
         return view('v1.home.letusan-show', compact('ven'));
     }
