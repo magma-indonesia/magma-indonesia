@@ -58,6 +58,9 @@ Laporan Aktivitas
                 <p class="col-lg-6 pd-0">{!! $var->intro !!}</p>
                 <div class="btn-wrapper">
                     <a id="tweet" href="" role="button" class="btn btn-primary" data-text="Laporan Aktivitas Gunung Api {{ $var->gunungapi }}, {{ $var->tanggal_deskripsi }}, periode pengamatan {{ $var->periode }}. " data-url="{{ route('v1.gunungapi.var.show', $var->id) }}"><i class="fa fa-twitter mg-r-5"></i>Tweet</a>
+
+                    <a href="whatsapp://send?text={{ url()->current()
+                    }}" class="btn btn-success"><i class="fa fa-whatsapp mg-r-5"></i>Whatsapp</a>
                 </div>
             </div>
         </div>

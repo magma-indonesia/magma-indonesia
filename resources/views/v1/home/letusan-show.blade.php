@@ -71,6 +71,9 @@ Informasi Letusan
                             </p>
                             <div class="btn-wrapper mg-t-30">
                                 <a id="tweet" href="" role="button" class="btn btn-primary" data-text="@if($ven->erupt_vis)Terjadi erupsi G. {{ $ven->gunungapi->ga_nama_gapi }} pada hari {{ \Carbon\Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->formatLocalized('%A, %d %B %Y') }}, pukul {{ $ven->erupt_jam.' '.$ven->gunungapi->ga_zonearea }} tinggi kolom abu teramati &plusmn; {{ $ven->erupt_tka }} m di atas puncak.@else Terjadi erupsi G. {{ $ven->gunungapi->ga_nama_gapi }} pada hari {{ \Carbon\Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->formatLocalized('%A, %d %B %Y') }}, pukul {{ $ven->erupt_jam.' '.$ven->gunungapi->ga_zonearea }}.@endif @if($ven->erupt_amp)Erupsi terekam di seismograf dengan amplitudo maksimum {{ $ven->erupt_amp }} mm dan durasi {{ $ven->erupt_drs }} detik.@endif"><i class="fa fa-twitter mg-r-5"></i>Tweet</a>
+
+                                <a href="whatsapp://send?text={{ url()->current()
+                                }}" class="btn btn-success"><i class="fa fa-whatsapp mg-r-5"></i>Whatsapp</a>
                             </div>
                         </div><!-- col-8 -->
                     </div><!-- row -->
