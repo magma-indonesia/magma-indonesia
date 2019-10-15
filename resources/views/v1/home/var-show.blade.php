@@ -162,8 +162,6 @@ Laporan Aktivitas
 
 $(document).ready(function () {
 
-    $('#whatsapp').attr('href', window.location.href);
-
     $('#tweet').on('click', function(e) {
         e.preventDefault();
 
