@@ -59,7 +59,7 @@ Laporan Aktivitas
                 <div class="btn-wrapper">
                     <a id="tweet" href="" role="button" class="btn btn-primary" data-text="Laporan Aktivitas Gunung Api {{ $var->gunungapi }}, {{ $var->tanggal_deskripsi }}, periode pengamatan {{ $var->periode }}. " data-url="{{ route('v1.gunungapi.var.show', $var->id) }}"><i class="fa fa-twitter mg-r-5"></i>Tweet</a>
 
-                    <a href="whatsapp://send?text={{ url()->current()
+                    <a id="whatsapp" href="whatsapp://send?text={{ url()->full()
                     }}" class="btn btn-success"><i class="fa fa-whatsapp mg-r-5"></i>Whatsapp</a>
                 </div>
             </div>
@@ -161,6 +161,8 @@ Laporan Aktivitas
 <script>
 
 $(document).ready(function () {
+
+    $('#whatsapp').attr('href', window.location.href);
 
     $('#tweet').on('click', function(e) {
         e.preventDefault();
