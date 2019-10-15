@@ -70,6 +70,12 @@ Informasi Letusan
                             <a href="#"><img src="{{ $ven->erupt_pht }}" class="img-fluid" alt=""></a>
                             </div>
                         </div>
+
+                        <div class="row mg-b-15">
+                            <div class="col-12">
+                                <a href="{{ route('v1.gunungapi.ven.show', $ven) }}" class="btn btn-sm btn-outline-primary">Details</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 @endforeach
@@ -84,16 +90,17 @@ Informasi Letusan
     <div class="col-lg-4 mg-t-20 mg-lg-t-0">
         <div class="card card-connection">
             <label class="slim-card-title">Jumlah Letusan Tahun {{ now()->format('Y') }}</label>
-        @foreach ($counts as $ven)
-            <div class="row row-xs">
-                <div class="col-4 tx-primary">{{ $ven->total }}</div>
-                <div class="col-8">Jumlah letusan <b class="tx-orange">Gunung {{ $ven->gunungapi->ga_nama_gapi }}</b> yang pernah tercatat.</div>
-            </div>
-            @if (!$loop->last)
-            <hr>
-            @endif
+            @foreach ($counts as $ven)
+            
+                <div class="row row-xs">
+                    <div class="col-4 tx-primary">{{ $ven->total }}</div>
+                    <div class="col-8">Jumlah letusan <b class="tx-orange">Gunung {{ $ven->gunungapi->ga_nama_gapi }}</b> yang pernah tercatat.</div>
+                </div>
+                @if (!$loop->last)
+                <hr>
+                @endif
 
-        @endforeach
+            @endforeach
         </div>
 
         <div class="card pd-20 mg-t-20">

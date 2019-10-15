@@ -64,6 +64,9 @@ class GunungApiController extends Controller
                     ->paginate(15);
         });
 
+        if ($vens->isEmpty())
+            abort(404, 'Data Letusan tidak ditemukan');
+
         return $vens;
     }
 
@@ -229,6 +232,13 @@ class GunungApiController extends Controller
         });
 
         return view('v1.home.letusan',compact('vens','grouped','counts','records'));
+    }
+
+    public function showVen(Request $request, $id = null)
+    {
+        $ven = MagmaVen::with('gunungapi:ga_code,ga_nama_gapi,ga_lat_gapi,ga_lon_gapi')
+                        ->findOrFail($id);
+        return view('v1.home.letusan-show', compact('ven'));
     }
 
     public function indexVar(Request $request, $q = null)

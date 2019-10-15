@@ -49,6 +49,8 @@ Route::name('v1.')->group(function () {
 
         Route::get('gunung-api/informasi-letusan/{code?}','FrontPage\v1\GunungApiController@indexVen')
             ->name('gunungapi.ven');
+        Route::get('gunung-api/informasi-letusan/{id}/show','FrontPage\v1\GunungApiController@showVen')
+            ->name('gunungapi.ven.show');
         Route::get('gunung-api/laporan','FrontPage\v1\GunungApiController@indexVar')
             ->name('gunungapi.var');
         Route::get('gunung-api/laporan/{id?}','FrontPage\v1\GunungApiController@showVar')
