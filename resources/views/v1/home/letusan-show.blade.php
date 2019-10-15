@@ -43,7 +43,7 @@ Informasi Letusan
                         @if ($ven->erupt_pht)
                         <div class="col-md-5 col-lg-6 col-xl-5">
                             <figure>
-                                <img src="{{ $ven->erupt_pht }}" class="img-fluid" alt="Letusan {{ $ven->gunungapi->ga_nama_gapi }}">
+                                <img src="{{ $ven->erupt_pht }}" class="img-fit-cover" alt="Letusan {{ $ven->gunungapi->ga_nama_gapi }}">
                             </figure>
                         </div>
                         @endif
@@ -65,7 +65,7 @@ Informasi Letusan
                             <p class="blog-text">
                                 {!! nl2br($ven->erupt_rek) !!}
                             </p>
-                            <div class="btn-wrapper">
+                            <div class="btn-wrapper mg-t-30">
                                 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="@if($ven->erupt_vis)Terjadi erupsi G. {{ $ven->gunungapi->ga_nama_gapi }} pada hari {{ \Carbon\Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->formatLocalized('%A, %d %B %Y') }}, pukul {{ $ven->erupt_jam.' '.$ven->gunungapi->ga_zonearea }}dengan tinggi kolom abu teramati &plusmn; {{ $ven->erupt_tka }} m di atas puncak.@else Terjadi erupsi G. {{ $ven->gunungapi->ga_nama_gapi }} pada hari {{ \Carbon\Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->formatLocalized('%A, %d %B %Y') }}, pukul {{ $ven->erupt_jam.' '.$ven->gunungapi->ga_zonearea }}.@endif @if($ven->erupt_amp)Erupsi terekam di seismograf dengan amplitudo maksimum {{ $ven->erupt_amp }} mm dan durasi {{ $ven->erupt_drs }} detik.@endif" data-url="{{ route('v1.gunungapi.ven.show', $ven) }}" data-via="id_magma" data-lang="id" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                             </div>
                         </div><!-- col-8 -->
