@@ -4,6 +4,10 @@
 Laporan Aktivitas - {{ $var->gunungapi }}, {{ $var->tanggal_deskripsi }}, periode {{ $var->periode }}
 @endsection
 
+@section('description')
+Laporan Aktivitas Gunung Api {{ $var->gunungapi }}, {{ $var->tanggal_deskripsi }}, periode pengamatan {{ $var->periode }}. " data-url="{{ route('v1.gunungapi.var.show', $var->id) }}
+@endsection
+
 @section('add-vendor-css')
 <link href="{{ asset('slim/lib/SpinKit/css/spinkit.css') }}" rel="stylesheet">
 <!-- Load Leaflet CSS and JS from CDN-->
