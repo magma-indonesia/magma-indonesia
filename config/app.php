@@ -16,6 +16,7 @@ return [
 
     'name' => env('APP_NAME', 'MAGMA Indonesia'),
     'tag_line' => env('APP_TAG_LINE', 'Bridging The Will of Nature to Society'),
+    'cctv_host' => env('CCTV_HOST', '172.24.44.3'),
 
     /*
     |--------------------------------------------------------------------------

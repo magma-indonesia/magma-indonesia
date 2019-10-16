@@ -205,7 +205,7 @@
                 </ul>
             </li>
 
-            <li class="{{ active(['chambers.datadasar.*','chambers.laporan.*','chambers.laporan.search','chambers.pos.*','chambers.letusan.*','chambers.draft.*','chambers.peralatan.*','chambers.rsam.*']) }}">
+            <li class="{{ active(['chambers.datadasar.*','chambers.cctv.*','chambers.laporan.*','chambers.laporan.search','chambers.pos.*','chambers.letusan.*','chambers.draft.*','chambers.peralatan.*','chambers.rsam.*']) }}">
                 <a href="#">
                     <span class="nav-label">Gunung Api</span>
                     <span class="fa arrow"></span>
@@ -215,6 +215,9 @@
                         <a href="{{ route('chambers.datadasar.index') }}">Data Dasar</a>
                     </li>
                     @yield('nav-edit-volcano')
+                    <li class="{{ active('chambers.cctv.index') }}">
+                        <a href="{{ route('chambers.cctv.index') }}">CCTV</a>
+                    </li>
                     <li class="{{ active('chambers.peralatan.index') }}">
                         <a href="{{ route('chambers.peralatan.index') }}">Peralatan Monitoring</a>
                     </li>
@@ -237,7 +240,7 @@
                         <a href="{{ route('chambers.letusan.index') }}">Laporan Letusan</a>
                     </li>
                     <li class="{{ active('chambers.pos.index') }}">
-                        <a href="{{ route('chambers.pos.index') }}">Pos Pengamatan Gunung Api</a>
+                        <a href="{{ route('chambers.pos.index') }}">Pos Pengamatan</a>
                     </li>
                     @yield('nav-edit-pos')                 
                     @yield('nav-edit-datadasar')

@@ -74,6 +74,7 @@ Route::group(['prefix' => 'gunungapi'], function () {
     Route::resource('pos','PosPgaController');
     Route::resource('letusan','MagmaVenController');
     Route::resource('laporan-guguran','LaporanGuguranController');
+    Route::resource('cctv','KameraGunungApiController');
 
     Route::name('peralatan.')->group(function () {
         Route::group(['prefix' => 'peralatan'], function () {

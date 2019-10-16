@@ -126,6 +126,7 @@
                     <ul class="dropdown-menu">
                         <li class="padding-magma-xs"><a href="{{ route('v1.gunungapi.var') }}">Laporan Aktivitas (VAR)</a></li>
                         <li class="padding-magma-xs"><a href="{{ route('v1.gunungapi.ven') }}">Informasi Letusan (VEN)</a></li>
+                        <li class="padding-magma-xs"><a href="#">Kamera (CCTV)</a></li>
                     </ul>
                 </li>
                 <li class="dropdown hidden-xs hidden-sm hidden-md">
