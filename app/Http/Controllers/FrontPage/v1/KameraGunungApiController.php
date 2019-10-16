@@ -77,6 +77,8 @@ class KameraGunungApiController extends Controller
                 $cctv->setAttribute('image', null);
             }
 
+            $cctv->increment('hit');
+            
             return view('v1.home.cctv-show',compact('cctv'));
 
         }
