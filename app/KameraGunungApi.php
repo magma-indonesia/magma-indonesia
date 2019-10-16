@@ -26,8 +26,17 @@ class KameraGunungApi extends Model
         'publish' => 'boolean'
     ];
 
+    protected $appends = [
+        'full_url',
+    ];
+
     public function gunungapi()
     {
         return $this->belongsTo('App\Gadd','code','code');
+    }
+
+    public function getFullUrlAttribute()
+    {
+        return 'http://'.config('app.cctv_host').$this->attributes['url'];
     }
 }

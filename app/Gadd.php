@@ -131,4 +131,14 @@ class Gadd extends Model
     {
         return $this->hasMany('App\Alat','code_id','code');
     }
+
+    /**
+     * Masing-masing gunungapi banyak CCTV
+     *
+     * @return void
+     */
+    public function cctv()
+    {
+        return $this->hasMany('App\KameraGunungApi','code','code');
+    }
 }

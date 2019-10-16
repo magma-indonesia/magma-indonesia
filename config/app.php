@@ -188,6 +188,7 @@ return [
         Laravolt\Indonesia\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Orchestra\Parser\XmlServiceProvider::class,
+        Karlmonson\Ping\PingServiceProvider::class,
         // CyrildeWit\EloquentViewable\EloquentViewableServiceProvider::class,
     ],
 
@@ -245,7 +246,7 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'XmlParser' => Orchestra\Parser\Xml\Facade::class,
         'StreamParser' => Rodenastyle\StreamParser\StreamParser::class,
-
+        'Ping' => Karlmonson\Ping\Facades\Ping::class,
     ],
 
 ];
