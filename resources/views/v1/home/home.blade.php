@@ -97,7 +97,7 @@
                     <li><a role="button" data-target="#panelInfo" aria-haspopup="true"><span class="glyphicon glyphicon-tasks"></span> Status Gunung Api</a></li>
                     <li class="hidden-lg"><a href="{{ route('v1.gunungapi.var') }}"><span class="glyphicon glyphicon-stats"></span> Laporan Gunung Api</a></li>
                     <li class="hidden-lg"><a href="{{ route('v1.gunungapi.ven') }}"><span class="glyphicon glyphicon-th-list"></span> Informasi Letusan</a></li>
-                    <li class="hidden-lg"><a href="{{ route('v1.gunungapi.cctv') }}"><span class="glyphicon glyphicon glyphicon-eye-open"></span> Kamera (CCTV)</a></li>
+                    <li class="hidden-lg"><a href="{{ route('v1.gunungapi.cctv') }}"><span class="glyphicon glyphicon-th-list"></span> Kamera (CCTV)</a></li>
                     <li class="hidden-lg"><a href="{{ route('v1.vona.index') }}"><span class="glyphicon glyphicon-plane"></span> VONA</a></li>
                     <li class="divider hidden-lg"></li>
                     <li class="hidden-lg"><a href="{{ route('v1.gertan.sigertan') }}"><span class="glyphicon glyphicon-equalizer"></span> Gerakan Tanah</a></li>
@@ -128,7 +128,6 @@
                         <li class="padding-magma-xs"><a href="{{ route('v1.gunungapi.var') }}">Laporan Aktivitas (VAR)</a></li>
                         <li class="padding-magma-xs"><a href="{{ route('v1.gunungapi.ven') }}">Informasi Letusan (VEN)</a></li>
                         <li class="padding-magma-xs"><a href="{{ route('v1.gunungapi.cctv') }}">Kamera (CCTV)</a></li>
-                        <li class="padding-magma-xs"><a href="#">Live Seismogram</a></li>
                     </ul>
                 </li>
                 <li class="dropdown hidden-xs hidden-sm hidden-md">

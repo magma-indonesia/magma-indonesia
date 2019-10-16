@@ -132,9 +132,6 @@
                             <li class="{{ active('chambers.v1.vona.*') }}">
                                 <a class="m-l" href="{{ route('chambers.v1.vona.index') }}">VONA</a>
                             </li>
-                            <li class="{{ active('chambers.cctv.index') }}">
-                                <a class="m-l" href="{{ route('chambers.cctv.index') }}">CCTV</a>
-                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -220,9 +217,6 @@
                     @yield('nav-edit-volcano')
                     <li class="{{ active('chambers.cctv.index') }}">
                         <a href="{{ route('chambers.cctv.index') }}">CCTV</a>
-                    </li>
-                    <li class="{{ active('chambers.seismometer.index') }}">
-                        <a href="{{ route('chambers.seismometer.index') }}">Seismometer</a>
                     </li>
                     <li class="{{ active('chambers.peralatan.index') }}">
                         <a href="{{ route('chambers.peralatan.index') }}">Peralatan Monitoring</a>
