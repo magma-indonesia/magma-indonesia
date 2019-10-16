@@ -17,6 +17,8 @@ return [
     'name' => env('APP_NAME', 'MAGMA Indonesia'),
     'tag_line' => env('APP_TAG_LINE', 'Bridging The Will of Nature to Society'),
     'cctv_host' => env('CCTV_HOST', '172.24.44.3'),
+    'winston_host' => env('WINSTON_HOST', 'http://172.16.2.253'),
+    'winston_port' => env('WINSTON_PORT', 16030),
 
     /*
     |--------------------------------------------------------------------------
