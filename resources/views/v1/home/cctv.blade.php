@@ -13,6 +13,9 @@ CCTV Gunung Api
 .card-blog-overlay .card-footer {
     padding: 0.75rem 1.25rem;
 }
+.img-fit-cover {
+	height: 150px;
+}
 </style>
 @endsection
  
