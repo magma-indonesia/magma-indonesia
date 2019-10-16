@@ -64,9 +64,10 @@ class KameraGunungApiController extends Controller
         if ($health == 200)
         {
             $cctv = KameraGunungApi::with('gunungapi:code,name')
+                        ->where('publish',1)
                         ->where('uuid',$request->uuid)
                         ->firstOrFail();
-                        
+
             try {
                 $image = Image::make($cctv->full_url)->stream('data-url');
                 $cctv->setAttribute('image', $image);
