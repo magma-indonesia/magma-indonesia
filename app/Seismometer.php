@@ -43,7 +43,7 @@ class Seismometer extends Model
 
     public function getFullUrlAttribute()
     {
-        return config('app.winston_host').':'.config('app.winston_port').'/heli?code='.$this->attributes['scnl'].'&w=1200&h=720&lb=1';
+        return config('app.winston_url').':'.config('app.winston_port').'/heli?code='.$this->attributes['scnl'].'&w=1200&h=720&lb=1';
     }
 
 }
