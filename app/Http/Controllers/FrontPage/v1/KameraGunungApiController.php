@@ -42,7 +42,8 @@ class KameraGunungApiController extends Controller
                     
             $cctvs->each(function ($item, $key) {
                 try {
-                    $image = Image::make($item->full_url)->stream('data-url');
+                    $image = Image::make($item->full_url)
+                                ->widen(150)->stream('data-url');
                     $item['image'] = $image;
                 }
 

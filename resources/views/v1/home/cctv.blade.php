@@ -55,15 +55,10 @@ Kamera Gunung Api
             <div class="card card-blog-overlay">
                 <img class="img-fit-cover" src="{{ $cctv->image }}" alt="">
                 <div class="card-footer">
-                    <small class="mg-r-10"><a href="" class="view" data-uuid="{{ $cctv->uuid }}" style="cursor: pointer;">View</a></small>
+                    <small class="mg-r-10"><a href="" class="view" data-uuid="{{ $cctv->uuid }}" data-url="{{ URL::temporarySignedRoute('v1.gunungapi.cctv.show', now()->addMinutes(rand(7,13))) }}" style="cursor: pointer;">View</a></small>
                     <small class="text-right">{{ $cctv->gunungapi->name }} - {{ $cctv->lokasi }}</small>
                 </div>
             </div>
-
-            <form id="form-{{ $cctv->uuid }}" method="POST" action="{{ URL::temporarySignedRoute('v1.gunungapi.cctv.show', now()->addMinutes(rand(7,13))) }}" style="display: none;">
-                @csrf
-                <input name="uuid" value="{{ $cctv->uuid }}">
-            </form>
             @endif
 
             @endforeach
@@ -71,6 +66,11 @@ Kamera Gunung Api
         </div>  
     </div>
 </div>
+
+<form class="form-uuid" method="POST" action="#" style="display: none;">
+    @csrf
+    <input class="uuid" name="uuid" value="">
+</form>
 @endsection
 
 @section('add-script')
@@ -80,8 +80,10 @@ $(document).ready(function() {
     $('.view').on('click', function(e) {
         e.preventDefault();
         var uuid = $(this).data('uuid');
-        console.log(uuid);
-        $('#form-'+uuid).submit();
+        var url = $(this).data('url');
+        $('.form-uuid').attr('action',url);
+        $('.uuid').val(uuid);
+        $('form').submit();
     });
 
 });
