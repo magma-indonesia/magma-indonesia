@@ -179,7 +179,7 @@ class CreateRoqRequest extends FormRequest
         return [
             'datetime_wib' => 'required|date_format:Y-m-d H:i:s|before:tomorrow',
             'lat_lima' => 'required|numeric|between:-11,6',
-            'lon_lima' => 'required|numeric|between:94,141',
+            'lon_lima' => 'required|numeric|between:94,142',
             'magnitude' => 'required|numeric|between:1,10',
             'depth' => 'required|numeric|between:1,500',
             'area' => 'required',
