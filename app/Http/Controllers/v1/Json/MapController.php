@@ -24,7 +24,7 @@ class MapController extends Controller
 {
     use VisualAsap,DeskripsiGempa;
 
-    public function showGempa(Request $request) 
+    public function showGempa(Request $request, $id) 
     {
         $id = $request ? $request->id : $id;
         $roq = MagmaRoq::select('no','roq_logtime')->where('no',$id)->firstOrFail();
@@ -67,7 +67,7 @@ class MapController extends Controller
         return $data;
     }
 
-    public function showSigertan(Request $request)
+    public function showSigertan(Request $request, $id)
     {
         $crs_id = $request ? $request->id : $id;
 
