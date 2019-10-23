@@ -5,7 +5,7 @@ namespace App\Http\Controllers\v1;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use Carbon\Carbon;
 use App\v1\Gadd;
 use App\v1\MagmaVar;
@@ -57,20 +57,7 @@ class MagmaVarEvaluasi extends Controller
                 ->where('ga_code',$request->code)
                 ->firstOrFail();
 
-        $this->setCodes($request->gempa)
-            ->formatDate($request)
-            ->setCategories()
-            ->setDefault()
-            ->setVars($request->code)
-            ->setVarsMerged()
-            ->setDataSeries()
-            ->setVarsSplice()
-            ->setVisualSummary()
-            ->setVarSummary()
-            ->setWidgetJumlahGempa()
-            ->setCache($request);
-        
-        $data = $this->getResponseData($request);
+        $data = $this->checkCache($request);
 
         return view('v1.gunungapi.evaluasi.result', compact('gadd','data'));
     }
@@ -94,16 +81,17 @@ class MagmaVarEvaluasi extends Controller
             'highcharts' => [
                 'var' => [
                     'categories' => $this->getCategories(),
-                    'series' => $this->getCache(),
+                    'series' => $this->getDataSeries(),
                 ],
                 'arah_angin' => [
-                    'series' => $this->transformSeries('pie','var_arangin')
+                    'series' => $this->transformSeries('pie','var_arangin')[0]
                 ],
                 'warna_asap' => [
-                    'series' => $this->transformSeries('pie','var_wasap')
+                    'series' => $this->transformSeries('pie','var_wasap')[0]
                 ],
                 'tinggi_asap' => [
-                    'categories' => $this->getCategories()->slice($this->count)->values(),
+                    // 'categories' => $this->getCategories()->slice($this->count)->values(),
+                    'categories' => $this->getCategories(),
                     'series' => $this->transformSeries('column','var_tasap','Tinggi Asap')
                 ]
             ],
@@ -140,22 +128,44 @@ class MagmaVarEvaluasi extends Controller
         return $this->raw_summary;
     }
 
-    protected function setCache($request)
+    protected function checkCache($request)
     {
-        $cache = 'chambers/v1/gunungapi/evaluasi:result:'.$request->code.':'.$this->start_str.':'.$this->end_str.':'.implode(':',$request->gempa);
+        $this->setCodes($request->gempa)
+        ->formatDate($request)
+        ->setCategories()
+        ->setDefault()
+        ->setVars($request->code)
+        ->setVarsMerged()
+        ->setDataSeries()
+        ->setVarsSplice()
+        ->setVisualSummary()
+        ->setVarSummary()
+        ->setWidgetJumlahGempa();
 
-        $cached = $request->cache ? true : false;
+return $this->getResponseData($request);
 
-        $this->cache_series = $this->cache ? Cache::remember($cache, 120, function () {
-            return $this->getDataSeries();
-        }) : $this->getDataSeries();
 
-        return $this;
-    }
+        $this->start = Carbon::parse($request->start);
+        $this->start_str = strtotime($this->getStart()->format('Y-m-d'));
+        $this->end = Carbon::parse($request->end);
+        $this->end_str = strtotime($this->getEnd()->format('Y-m-d'));
+        $this->cache = 'chambers/v1/gunungapi/evaluasi:result:'.$request->code.':'.$this->start_str.':'.$this->end_str.':'.implode(':',$request->gempa);
 
-    protected function getCache()
-    {
-        return $this->cache_series;
+        return Cache::remember($this->cache, 120, function () use($request) {
+            $this->setCodes($request->gempa)
+                    ->formatDate($request)
+                    ->setCategories()
+                    ->setDefault()
+                    ->setVars($request->code)
+                    ->setVarsMerged()
+                    ->setDataSeries()
+                    ->setVarsSplice()
+                    ->setVisualSummary()
+                    ->setVarSummary()
+                    ->setWidgetJumlahGempa();
+        
+            return $this->getResponseData($request);
+        });
     }
 
     protected function setWidgetJumlahGempa()
@@ -391,8 +401,15 @@ class MagmaVarEvaluasi extends Controller
 
     protected function setVisualSummary()
     {
-        $vars = $this->getVarsSplice();
-        $last = $vars->last()->toArray();
+        try {
+            $vars = $this->getVarsSplice();
+            $last = $vars->last()->toArray();
+        } catch (\Exception $th) {
+            $validator = Validator::make([], []); // Empty data and rules fields
+            $validator->errors()->add('fieldName', 'This is the error message');
+            throw new ValidationException($validator);
+        }
+
 
         $new = new MagmaVar();
 
@@ -448,7 +465,9 @@ class MagmaVarEvaluasi extends Controller
     protected function transformSeries($chart, $key, $name = 'Name')
     {
 
-        $var = $this->getVarsSplice();
+        $var = $this->getVarsMerged();
+
+
 
         if ($chart == 'pie') {
 

@@ -98,7 +98,8 @@
                         <li class="active"><a data-toggle="tab" href="#tab-1">Detail Visual</a></li>
                         <li><a data-toggle="tab" href="#tab-2">Detail Kegempaan</a></li>
                         <li><a data-toggle="tab" href="#tab-3">Tabel Kegempaan</a></li>
-                        <li><a data-toggle="tab" href="#tab-4">Grafik Kegempaan</a></li>
+                        <li><a data-toggle="tab" href="#tab-4">Grafik Visual</a></li>
+                        <li><a data-toggle="tab" href="#tab-5">Grafik Kegempaan</a></li>
                     </ul>
                     <div class="tab-content">
                         <div id="tab-1" class="tab-pane active">
@@ -168,6 +169,34 @@
 
                         <div id="tab-4" class="tab-pane">
                             <div class="panel-body">
+                                @if (!empty($data['highcharts']['arah_angin']['series']))
+                                <div class="row p-md">
+                                    <div id="arah-angin" style="min-width: 310px; height: 480px; margin: 0 auto"></div>
+                                </div>
+                                @endif
+
+                                @if (!empty($data['highcharts']['warna_asap']['series']))
+                                <hr>
+                                <div class="row p-md">
+                                    <div id="warna-asap" style="min-width: 310px; height: 480px; margin: 0 auto"></div>
+                                </div>
+                                @endif
+
+                                @if (!empty($data['highcharts']['tinggi_asap']['series']))
+                                <hr>
+                                <div class="row p-md">
+                                    <div id="visual-0" style="min-width: 310px; height: 480px; margin: 0 auto"></div>
+                                </div>
+                                @else
+                                <div class="row p-md">
+                                    <div class="alert alert-warning"><p>Tidak ada data tinggi asap</p></div>                                    <div id="visual-0" style="min-width: 310px; height: 480px; margin: 0 auto"></div>
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div id="tab-5" class="tab-pane">
+                            <div class="panel-body">
                                 <div class="text-left">
                                     <button id="export-png" href="#" type="button" class="btn btn-magma btn-outline">Simpan Semua Grafik</button>
                                     <button id="export-pdf" href="#" type="button" class="btn btn-magma btn-outline">Simpan Semua Dalam PDF</button>
@@ -180,12 +209,6 @@
                                     <div id="gempa-{{ $key }}" style="min-width: 310px; height: 480px; margin: 0 auto"></div>
                                     @endforeach
                                 </div>
-                                @if (!empty($data['highcharts']['tinggi_asap']['series']))
-                                <hr>
-                                <div class="row p-md">
-                                    <div id="visual-0" style="min-width: 310px; height: 480px; margin: 0 auto"></div>
-                                </div>
-                                @endif
 
                             </div>
                         </div>
@@ -391,6 +414,70 @@
             }
         });
         @endforeach
+
+        @if (!empty($data['highcharts']['arah_angin']['series']))
+        var arah_angin = Highcharts.chart('arah-angin', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            }, 
+            title: {
+                text: 'Dominasi Arah Angin'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    }
+                }
+            },
+            series: [{
+                name: 'Dominasi Arah Angin',
+                colorByPoint: true,
+                data: data.highcharts.arah_angin.series
+            }]
+        });
+        @endif
+
+        @if (!empty($data['highcharts']['warna_asap']['series']))
+        var arah_angin = Highcharts.chart('warna-asap', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            }, 
+            title: {
+                text: 'Dominasi Warna Asap'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.y} kali ({point.percentage:.1f}) %'
+                    }
+                }
+            },
+            series: [{
+                name: 'Dominasi Warna Asap',
+                colorByPoint: true,
+                data: data.highcharts.warna_asap.series
+            }]
+        });
+        @endif
 
         @if (!empty($data['highcharts']['tinggi_asap']['series']))
         var asap = Highcharts.chart('visual-0', {
