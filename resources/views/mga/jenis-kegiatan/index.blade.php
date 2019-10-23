@@ -40,6 +40,7 @@
         <div class="row">
             <div class="col-lg-12">
 
+                {{-- Kegiatan Utama --}}
                 @if ($jenis->isEmpty())
                 <div class="alert alert-danger">
                     <i class="fa fa-gears"></i> Data Kegiatan Utama belum tersedia. <a href="{{ route('chambers.administratif.mga.jenis-kegiatan.create') }}"><b>Buat baru?</b></a>
@@ -55,6 +56,9 @@
                         <div class="row">
                             <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
                                 <a href="{{ route('chambers.administratif.mga.jenis-kegiatan.create') }}" class="btn btn-magma btn-outline btn-block" type="button">Tambah Kegiatan Utama</a>
+                            </div>
+                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                <a href="{{ route('chambers.administratif.mga.statistik-kegiatan.index') }}" class="btn btn-magma btn-outline btn-block" type="button">Data Statistik</a>
                             </div>
                         </div>
                     </div>
@@ -104,6 +108,7 @@
                 </div>
                 @endif
 
+                {{-- Rekap Kegiatan --}}
                 @if ($kegiatans->isEmpty() AND !$jenis->isEmpty())
                 <div class="hpanel">
                     <div class="panel-heading">
@@ -184,7 +189,6 @@
                     </div>
                 </div>
                 @endif
-
 
             </div>
         </div>

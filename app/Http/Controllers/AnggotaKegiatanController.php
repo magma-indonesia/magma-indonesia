@@ -142,8 +142,13 @@ class AnggotaKegiatanController extends Controller
      * @param  \App\MGA\AnggotaKegiatan  $anggotaKegiatan
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($nip = null)
     {
+        $user = User::whereNip($nip)
+                    ->with('anggota_kegiatan.detail_kegiatan.kegiatan.jenis_kegiatan:id,nama')
+                    ->firstOrFail();
+
+        return $user;
         return redirect()->route('chambers.administratif.mga.jenis-kegiatan.index');
     }
 

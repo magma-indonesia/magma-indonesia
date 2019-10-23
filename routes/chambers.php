@@ -41,6 +41,8 @@ Route::name('administratif.')->group(function () {
                     ->name('detail-kegiatan.download');
             Route::resource('detail-kegiatan','DetailKegiatanController');
             Route::resource('anggota-kegiatan','AnggotaKegiatanController');
+            Route::get('statistik-kegiatan/{year?}','StatistikKegiatanController@index')
+                    ->name('statistik-kegiatan.index');
         });
     });
 });

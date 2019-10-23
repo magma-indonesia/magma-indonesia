@@ -171,4 +171,38 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasOne('App\Absensi','nip_id','nip');
     }
+
+    /**
+     * Setiap user bisa terdaftar lebih dari 1 kegiatan
+     *
+     * @return void
+     */
+    public function anggota_kegiatan()
+    {
+        return $this->hasMany('App\MGA\AnggotaKegiatan','nip_anggota','nip');
+    }
+
+    /**
+     * Jumlah Dinas Kegiatan
+     *
+     * @return void
+     */
+    public function getJumlahDinasAttribute()
+    {
+        return $this->anggota_kegiatan()->get()->sum('jumlah_hari');
+    }
+
+    /**
+     * Jumlah Uang Lapangan yang diterima
+     *
+     * @return void
+     */
+    public function getJumlahRealisasiAttribute()
+    {
+        $anggota = $this->anggota_kegiatan()->get();
+        $uang_harian = $anggota->sum('uang_harian_total');
+        $uang_penginapan_tigapuluh = $anggota->sum('penginapan_tigapuluh_total');
+
+        return $uang_harian+$uang_penginapan_tigapuluh;
+    }
 }

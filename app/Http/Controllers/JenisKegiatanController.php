@@ -4,11 +4,37 @@ namespace App\Http\Controllers;
 
 use App\MGA\JenisKegiatan;
 use App\MGA\Kegiatan;
+use App\User;
 use App\UserBidang as Bidang;
 use Illuminate\Http\Request;
 
 class JenisKegiatanController extends Controller
 {
+
+    protected function transformDataHarian($users)
+    {
+        $collection = $users->map(function ($user, $key) {
+            return [
+                $user->name, $user->jumlah_dinas
+            ];
+        });
+        
+        return $collection->sortByDesc(function ($user, $key) {
+            return $user[1];
+        })->values()->all();
+    }
+
+    protected function transformDataRealisasi($users)
+    {
+        return $users->transform(function ($user, $key) {
+            return [
+                $user->name, $user->jumlah_realisasi
+            ];
+        })->sortByDesc(function ($user, $key) {
+            return $user[1];
+        })->values()->all();
+    }
+
     /**
      * Adding middleware for protecttion
      * 
@@ -27,12 +53,21 @@ class JenisKegiatanController extends Controller
      */
     public function index()
     {
+        $users = User::whereHas('anggota_kegiatan', function ($query) {
+                        $query->where('start_date','like','%'.now()->format('Y').'%');
+                    })
+                    ->get();
+                    
         $jenis = JenisKegiatan::with('bidang')->withCount('detail_kegiatan')->get();
         $kegiatans = Kegiatan::with('jenis_kegiatan.bidang','biaya_kegiatan','kortim')
                         ->withCount('detail_kegiatan')
                         ->orderBy('tahun','desc')
                         ->get();
-        return view('mga.jenis-kegiatan.index', compact('jenis','kegiatans'));
+
+        $grafik_harian = $this->transformDataHarian($users);
+        $grafik_realisasi = $this->transformDataRealisasi($users);
+        
+        return view('mga.jenis-kegiatan.index', compact('jenis','kegiatans','grafik_harian','grafik_realisasi'));
     }
 
     /**
