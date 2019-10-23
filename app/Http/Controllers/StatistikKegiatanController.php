@@ -39,8 +39,7 @@ class StatistikKegiatanController extends Controller
                         $query->where('start_date','like','%'.$year ?: now()->format('Y').'%');
                     })
                     ->withCount('anggota_kegiatan')
-                    ->get()
-                    ->sortByDesc('anggota_kegiatan_count')->values();
+                    ->get();
 
         if ($users->isEmpty())
             return redirect()->route('chambers.administratif.mga.jenis-kegiatan.index');

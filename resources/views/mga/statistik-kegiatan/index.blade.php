@@ -97,7 +97,7 @@ table tr td[class*="1"] {
                                             <td>Rp.</td>
                                             <td>{{ $user->jumlah_realisasi }}</td>
                                             <td>
-                                                <a href="{{ route('chambers.administratif.mga.anggota-kegiatan.show', $user->nip) }}" class="btn btn-sm btn-info btn-outline" type="button">Detail</a>
+                                                <a href="{{ route('chambers.administratif.mga.anggota-kegiatan.show', $user->nip) }}" class="btn btn-sm btn-magma btn-outline" type="button">Detail</a>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -152,9 +152,6 @@ table tr td[class*="1"] {
             var $realisasi = @json($grafik_realisasi);
 
             var table = $('#table-harian').dataTable({
-                language: {
-                    thousands: '.'
-                },
                 dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
                 "lengthMenu": [[30, 50, 100, -1], [30, 50, 100, "All"]],
                 buttons: [
@@ -195,6 +192,7 @@ table tr td[class*="1"] {
                         sortable: false,
                     },
                 ],
+                order: [[ 5, 'desc' ]],
             });
 
             Highcharts.setOptions({
