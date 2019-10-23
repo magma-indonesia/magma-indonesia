@@ -49,6 +49,10 @@ table tr td[class*="1"] {
     <div class="row">
         <div class="col-lg-12">
             <div class="hpanel">
+                <div class="panel-heading">
+                    Menu
+                </div>
+
                 <div class="panel-body float-e-margins">
                     <div class="row">
                         <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
