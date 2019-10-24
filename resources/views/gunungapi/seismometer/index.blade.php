@@ -34,6 +34,51 @@
 
 @section('content-body')
 <div class="content animate-panel content-boxed">
+
+    @if ($lives->isNotEmpty())
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="hpanel">
+                <div class="panel-heading">
+                    Daftar Live Seismogram - {{ $lives->count() }} Channels
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-condensed table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Gunung Api</th>
+                                    <th>SCNL</th>
+                                    <th>Aktif</th>
+                                    <th>Hit</th>
+                                    <th>Updated At</th>
+                                    <th width="20%">Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                            @foreach ($lives as $live)
+                            <tr>
+                                <td>{{ $live->gunungapi->name }}</td>
+                                <td>{{ $live->scnl }}</td>
+                                <td>{{ $live->is_active ? 'Ya' : 'Tidak' }}</td>
+                                <td>{{ $live->hit }}</td>
+                                <td>{{ $live->live_seismogram->updated_at }}</td>
+                                <td>
+                                    <a href="{{ route('chambers.seismometer.edit', $live) }}" class="btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>
+                                </td>
+                            </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+
     <div class="row">
         <div class="col-lg-12">
             <div class="hpanel">
@@ -69,7 +114,7 @@
                                             <th>Network</th>
                                             <th>Location</th>
                                             <th>Aktif</th>
-                                            <th>Published</th>
+                                            <th>Live Seismogram</th>
                                             <th>Hit</th>
                                             <th width="20%">Action</th>
                                         </tr>

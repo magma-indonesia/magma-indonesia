@@ -129,7 +129,7 @@
                                             </div>
 
                                             <div class="form-group col-sm-12">
-                                                <label>Publikasi Publik</label>
+                                                <label>Tayangkan Seismogram?</label>
                                                 <div>
                                                     <label class="checkbox-inline"> 
                                                     <input name="published" class="i-checks" type="radio" value="1" id="published" {{ $seismometer->published ? 'checked' : '' }}> Aktif </label> 

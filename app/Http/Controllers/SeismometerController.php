@@ -22,7 +22,11 @@ class SeismometerController extends Controller
                     ->orderBy('name')
                     ->get();
 
-        return view('gunungapi.seismometer.index', compact('gadds'));
+        $lives = Seismometer::with('live_seismogram','gunungapi:code,name')
+                    ->wherePublished(1)
+                    ->get();
+
+        return view('gunungapi.seismometer.index', compact('gadds','lives'));
     }
 
     /**

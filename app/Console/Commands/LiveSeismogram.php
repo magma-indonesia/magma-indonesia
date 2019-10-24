@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Seismometer;
+use App\LiveSeismogram as LiveSeismogramModel;
 use Illuminate\Console\Command;
 use Image;
 use Storage;
@@ -33,6 +34,25 @@ class LiveSeismogram extends Command
         parent::__construct();
     }
 
+    protected function updateLiveSeismogram($seismometer, $filename)
+    {
+        if ($live = LiveSeismogramModel::whereSeismometerId($seismometer->id)->first())
+        {
+            Storage::disk('seismogram')->delete($live->filename);
+        }
+
+        LiveSeismogramModel::updateOrCreate(
+            [
+                'seismometer_id' => $seismometer->id
+            ],[
+                'code' => $seismometer->code,
+                'filename' => $filename,
+            ]
+        );
+
+        return $this;
+    }
+
     /**
      * Execute the console command.
      *
@@ -44,19 +64,27 @@ class LiveSeismogram extends Command
 
         $watermark = Image::make(asset('watermark-seismogram.png'));
 
-        $seismograms = Seismometer::where('published',1)->get();
-        $seismograms->each(function ($item, $value) use($watermark) {
-            try {
-                $image = Image::make($item->full_url);
-                $image->insert($watermark, 'bottom-right', 80, 2);
-                Storage::disk('seismogram')->put(uniqid(10).'.png', $image->stream());
-            } 
+        $seismometers = Seismometer::wherePublished(1)->get();
+        if ($seismometers->isNotEmpty())
+        {
+            $seismometers->each(function ($seismometer) use($watermark) {
 
-            catch (\Exception $e)
-            {
-                $image = null;
-            }
-        });
+                try {
+                    $image = Image::make($seismometer->full_url)
+                                ->insert($watermark, 'bottom-right', 80, 2);
+                    $filename = sha1(uniqid()).'.png';
+                    if (Storage::disk('seismogram')->put($filename, $image->stream()))
+                    {
+                        $this->updateLiveSeismogram($seismometer, $filename);
+                    }
+                }
+    
+                catch (\Exception $e)
+                {
+                    $image = null;
+                }
+            });
+        }
 
         $this->info('Seismogram berhasil diupdate');
     }
