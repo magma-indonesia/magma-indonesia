@@ -16,4 +16,9 @@ class LiveSeismogram extends Model
     {
         return $this->belongsTo('App\Gadd','code','code');
     }
+
+    public function seismometer()
+    {
+        return $this->belongsTo('App\Seismometer');
+    }
 }

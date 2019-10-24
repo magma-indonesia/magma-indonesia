@@ -59,11 +59,19 @@ Route::name('v1.')->group(function () {
         Route::get('gunung-api/laporan/search/{q?}','FrontPage\v1\GunungApiController@indexVar')
             ->name('gunungapi.var.search')
             ->middleware('throttle:15,1');
+            
         Route::get('gunung-api/cctv/{code?}','FrontPage\v1\KameraGunungApiController@index')
             ->name('gunungapi.cctv')
             ->middleware('revalidate');
         Route::post('gunung-api/cctv','FrontPage\v1\KameraGunungApiController@show')
             ->name('gunungapi.cctv.show')
+            ->middleware('signed');
+
+        Route::get('gunung-api/live-seismogram','FrontPage\v1\LiveSeismogramController@index')
+            ->name('gunungapi.live-seismogram')
+            ->middleware('revalidate');
+        Route::post('gunung-api/live-seismogram','FrontPage\v1\LiveSeismogramController@show')
+            ->name('gunungapi.live-seismogram.show')
             ->middleware('signed');
 
         Route::get('gerakan-tanah/tanggapan','FrontPage\v1\GerakanTanahController@indexGertan')

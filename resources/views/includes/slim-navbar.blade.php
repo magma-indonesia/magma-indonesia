@@ -18,6 +18,7 @@
                         <li><a href="{{ route('v1.gunungapi.var') }}">Laporan Aktivitas</a></li>
                         <li><a href="{{ route('v1.gunungapi.ven') }}">Informasi Letusan</a></li>
                         <li><a href="{{ route('v1.gunungapi.cctv') }}">Kamera (CCTV)</a></li>
+                        <li><a href="{{ route('v1.gunungapi.live-seismogram') }}">Live Seismogram</a></li>
                     </ul>
                     <label class="label-section mg-t-15">VONA <i class="icon ion-plane"></i></label>
                     <ul>

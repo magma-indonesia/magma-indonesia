@@ -151,4 +151,14 @@ class Gadd extends Model
     {
         return $this->hasMany('App\Seismometer','code','code');
     }
+
+    /**
+     * Masing-masing gunungapi banyak CCTV
+     *
+     * @return void
+     */
+    public function live_seismograms()
+    {
+        return $this->hasMany('App\LiveSeismogram','code','code');
+    }
 }

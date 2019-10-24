@@ -14,7 +14,7 @@ CCTV Gunung Api
     padding: 0.75rem 1.25rem;
 }
 .img-fit-cover {
-	height: 150px;
+	height: 300px;
 }
 </style>
 @endsection

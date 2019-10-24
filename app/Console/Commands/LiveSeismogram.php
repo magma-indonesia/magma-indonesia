@@ -39,6 +39,7 @@ class LiveSeismogram extends Command
         if ($live = LiveSeismogramModel::whereSeismometerId($seismometer->id)->first())
         {
             Storage::disk('seismogram')->delete($live->filename);
+            Storage::disk('seismogram')->delete('thumb_'.$live->filename);
         }
 
         LiveSeismogramModel::updateOrCreate(
@@ -73,8 +74,10 @@ class LiveSeismogram extends Command
                     $image = Image::make($seismometer->full_url)
                                 ->insert($watermark, 'bottom-right', 80, 2);
                     $filename = sha1(uniqid()).'.png';
+
                     if (Storage::disk('seismogram')->put($filename, $image->stream()))
                     {
+                        Storage::disk('seismogram')->put('thumb_'.$filename, $image->widen(300)->stream());
                         $this->updateLiveSeismogram($seismometer, $filename);
                     }
                 }

@@ -17,7 +17,7 @@ CCTV Gunung Api {{ $cctv->gunungapi->name }}
 @section('main')
 <div class="row row-sm">
     <div class="col-lg-12">
-        <img class="img-fluid" src="{{ $cctv->image }}">
+        <img style="height: auto;width: 100%;" src="{{ $cctv->image }}">
     </div>
 </div>
 @endsection
