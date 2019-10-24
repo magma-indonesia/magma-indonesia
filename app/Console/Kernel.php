@@ -21,6 +21,11 @@ class Kernel extends ConsoleKernel
         return config('app.magma_old_url');
     }
 
+    protected function getUrlWinston()
+    {
+        return config('app.winston_host');
+    }
+
     /**
      * Define the application's command schedule.
      *
@@ -29,6 +34,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $this->scheduleLiveSeismogram($schedule);
         $this->scheduleGunungApi($schedule);
         $this->scheduleGerakanTanah($schedule);
         $this->scheduleAdministrasi($schedule);
@@ -166,6 +172,22 @@ class Kernel extends ConsoleKernel
         $schedule->command('import:pengajuan')
             ->daily()
             ->pingBefore($this->getUrlMagma())
+            ->appendOutputTo($filePath);
+    }
+
+    /**
+     * Scheduler untuk Update data Live Seismogram per 10 menit:
+     * 
+     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @return void
+     */
+    protected function scheduleLiveSeismogram(Schedule $schedule)
+    {
+        $filePath = storage_path('logs/scheduler-live-seismogram'.now()->format('Y-m-d').'.log');
+
+        $schedule->command('update:live_seismogram')
+            ->cron('*/10 * * * *')
+            ->pingBefore($this->getUrlWinston())
             ->appendOutputTo($filePath);
     }
 
