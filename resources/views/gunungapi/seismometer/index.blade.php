@@ -64,7 +64,7 @@
                                 <td>{{ $live->scnl }}</td>
                                 <td>{{ $live->is_active ? 'Ya' : 'Tidak' }}</td>
                                 <td>{{ $live->hit }}</td>
-                                <td>{{ $live->live_seismogram->updated_at }}</td>
+                                <td>{{ $live->live_seismogram->updated_at ?? 'Belum ada data' }}</td>
                                 <td>
                                     <a href="{{ route('chambers.seismometer.edit', $live) }}" class="btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>
                                 </td>
