@@ -59,6 +59,7 @@
                                         <th>User</th>
                                         <th>Gunung Api</th>
                                         <th>Periode</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -67,6 +68,7 @@
                                         <td>{{ $stat->user->name }}</td>
                                         <td>{{ $stat->gunungapi->name }}</td>
                                         <td>{{ $stat->start->format('Y-m-d') }} - {{ $stat->end->format('Y-m-d') }} - {{ $stat->jumlah_hari }} hari</td>
+                                        <td><a href="{{ $stat->url }}" class="btn btn-sm btn-magma btn-outline" target="_blank">View</a></td>
                                     </tr>
                                     @endforeach
                                 </tbody>
