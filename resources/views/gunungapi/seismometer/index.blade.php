@@ -109,10 +109,7 @@
                                 <table class="table table-condensed table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Station</th>
-                                            <th>Channel</th>
-                                            <th>Network</th>
-                                            <th>Location</th>
+                                            <th>SCNL</th>
                                             <th>Aktif</th>
                                             <th>Live Seismogram</th>
                                             <th>Hit</th>
@@ -122,10 +119,7 @@
                                     <tbody>
                                     @foreach ($gadd->seismometers as $seismometer)
                                     <tr>
-                                        <td>{{ $seismometer->station }}</td>
-                                        <td>{{ $seismometer->channel }}</td>
-                                        <td>{{ $seismometer->network }}</td>
-                                        <td>{{ $seismometer->location }}</td>
+                                        <td>{{ $seismometer->scnl }}</td>
                                         <td>{{ $seismometer->is_active ? 'Ya' : 'Tidak' }}</td>
                                         <td>{{ $seismometer->published ? 'Ya' : 'Tidak' }}</td>
                                         <td>{{ $seismometer->hit }}</td>

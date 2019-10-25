@@ -67,6 +67,8 @@ class LiveSeismogramController extends Controller
                 $live->setAttribute('image', null);
             }
 
+            $live->seismometer->increment('hit');
+
             return view('v1.home.live-seismogram-show', compact('live'));
         }
 
