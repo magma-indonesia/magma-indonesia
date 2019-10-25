@@ -37,9 +37,9 @@
 @endsection
 
 @section('content-body')
-    <div class="content animate-panel">
+    <div class="content animate-panel content-boxed">
         <div class="row">
-            <div class="col-md-12 col-lg-3">
+            <div class="col-md-12 col-lg-12">
                 <div class="hpanel">
                     <div class="panel-heading">
                         Filter Laporan
@@ -124,7 +124,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 col-lg-9">
+            <div class="col-md-12 col-lg-12">
                 <div class="hpanel">
                     <div class="panel-heading">
                         Hasil Pencarian
