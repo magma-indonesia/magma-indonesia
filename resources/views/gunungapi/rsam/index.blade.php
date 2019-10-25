@@ -19,18 +19,15 @@
                         <li>
                             <span>Gunung Api</span>
                         </li>
-                        <li>
-                            <span>RSAM</span>
-                        </li>
                         <li class="active">
-                            <span>Result </span>
+                            <span>RSAM </span>
                         </li>
                     </ol>
                 </div>
                 <h2 class="font-light m-b-xs">
                     Grafik RSAM Gunung Api
                 </h2>
-                <small>Periode Tanggal, data per 10 menit.</small>
+                <small>Menggunakan data Winston Server.</small>
             </div>
         </div>
     </div>
@@ -40,6 +37,14 @@
 <div class="content animate-panel content-boxed">
 
     <div class="row">
+
+        @if ($health != 200)
+        <div class="col-lg-12">
+            <div class="alert alert-danger text-center">
+                <h4><i class="fa fa-gears"></i> Mohon maaf Winston Wave Server sedang mengalami gangguan. Silahkan coba beberapa saat lagi.</h4>
+            </div>
+        </div>
+        @else
 
         <div class="col-lg-12">
             <div class="hpanel">
@@ -367,6 +372,7 @@
             </div>
         </div>
 
+        @endif
     </div>
 </div>
 @endsection
