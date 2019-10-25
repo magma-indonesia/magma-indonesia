@@ -9,6 +9,7 @@ use Illuminate\Validation\ValidationException;
 use Carbon\Carbon;
 use App\v1\Gadd;
 use App\v1\MagmaVar;
+use App\StatistikEvaluasi;
 use App\Http\Requests\v1\EvaluasiRequest;
 use App\Jobs\SendLoginNotification;
 use App\Traits\v1\HighCharts;
@@ -41,9 +42,13 @@ class MagmaVarEvaluasi extends Controller
                     ->get();
         });
 
+        $stats = StatistikEvaluasi::with('user:nip,name')
+                    ->orderByDesc('created_at')
+                    ->get();
+
         $gempas = collect($this->codes);
 
-        return view('v1.gunungapi.evaluasi.index', compact('gadds','gempas'));
+        return view('v1.gunungapi.evaluasi.index', compact('gadds','gempas','stats'));
     }
 
     /**
@@ -59,7 +64,16 @@ class MagmaVarEvaluasi extends Controller
 
         $data = $this->checkCache($request);
 
-        // return (dd($data));
+        $stats = StatistikEvaluasi::firstOrCreate(
+            [
+                'code' => $gadd->ga_code,
+                'start' => $this->start->format('Y-m-d'),
+                'end' => $this->end->format('Y-m-d'),
+                'nip' => auth()->user()->nip
+            ],[]
+        );
+
+        $stats->increment('hit');
 
         SendLoginNotification::dispatch(
             'evaluasi', 
