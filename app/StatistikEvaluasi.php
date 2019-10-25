@@ -11,7 +11,8 @@ class StatistikEvaluasi extends Model
         'code',
         'start',
         'end',
-        'nip'
+        'nip',
+        'url',
     ];
 
     protected $dates = [
