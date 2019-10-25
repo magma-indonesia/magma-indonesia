@@ -40,7 +40,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return object
      */
-    protected function arah(string $value) : object
+    protected function arah($value) : object
     {
         $s_arah = [
             'Utara','Timur Laut','Timur',
@@ -61,7 +61,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return object
      */
-    protected function rejectNull(string $value)
+    protected function rejectNull($value)
     {
         $value = explode('#',$value);
         $collection = collect($value)->reject(function ($value, $key) {
@@ -133,7 +133,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return string
      */
-    protected function getVarNamaPelaporAttribute(string $value) : string
+    protected function getVarNamaPelaporAttribute($value) : string
     {
         return explode('#',$value)[0];
     }
@@ -144,7 +144,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return integer
      */
-    protected function getStatus(string $value) : int
+    protected function getStatus($value) : int
     {
         switch ($value) {
             case 'Level IV (Awas)':
@@ -158,7 +158,7 @@ class OldModelVar extends Model
         }
     }
 
-    protected function warnaAsap(string $value)
+    protected function warnaAsap($value)
     {
         $s_wasap = ['Putih','Kelabu','Cokelat','Hitam'];
 
@@ -175,7 +175,7 @@ class OldModelVar extends Model
         return $this->intersectVar($s_wasap,$wasap);
     }
 
-    protected function skala(string $value)
+    protected function skala($value)
     {
         $s_skala = ['I','II','III','IV','V','VI','VII'];
 
@@ -195,7 +195,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return string
      */
-    public function getVarImageAttribute(string $value) : string
+    public function getVarImageAttribute($value = '') : string
     {
         return $this->rejectNull($value)
             ->collection->last();
@@ -207,7 +207,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return string
      */
-    public function getVarImageCreateAttribute(string $value) : string
+    public function getVarImageCreateAttribute($value = '') : string
     {
         return $this->rejectNull($value)
             ->collection->last();
@@ -219,7 +219,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return string
      */
-    public function getVarIssuedAttribute(string $value) : string
+    public function getVarIssuedAttribute($value = '') : string
     {
         $var_issued = str_replace('/','-',$value);
         return date('Y-m-d H:i:s', strtotime($var_issued));
@@ -231,7 +231,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return integer
      */
-    public function getCuStatusAttribute(string $value) :int
+    public function getCuStatusAttribute($value = '0') :int
     {
         return $this->getStatus($value);
     }
@@ -242,7 +242,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return integer
      */
-    public function getPreStatusAttribute(string $value) : int
+    public function getPreStatusAttribute($value = '0') : int
     {
         return $this->getStatus($value);
     }
@@ -253,7 +253,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return integer
      */
-    public function getVarPerwktAttribute(string $value)
+    public function getVarPerwktAttribute($value = '0')
     {
         switch ($value) {
             case '24 Jam':
@@ -272,7 +272,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return integer
      */
-    public function getVarCurahHujanAttribute(string $value) : float
+    public function getVarCurahHujanAttribute($value = '0') : float
     {
         return $this->rejectNull($value)
             ->toInt()->getZero()->getMax();
@@ -285,7 +285,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return integer
      */
-    public function getVarSuhuminAttribute(string $value)
+    public function getVarSuhuminAttribute($value = '0')
     {
         $value = $this->rejectNull($value)->toInt()->getZero()->getMin();
         $value = $value>99 ? $value/10 : $value;
@@ -301,7 +301,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return integer
      */
-    public function getVarSuhumaxAttribute(string $value) : float
+    public function getVarSuhumaxAttribute($value = '0') : float
     {
         $value = $this->rejectNull($value)->toInt()->getZero()->getMax();
         $value = $value>99 ? $value/10 : $value;
@@ -317,7 +317,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return integer
      */
-    public function getVarKelembabanminAttribute(string $value) : float
+    public function getVarKelembabanminAttribute($value = '0') : float
     {
         return $this->rejectNull($value)
             ->toInt()->getZero()->getMin();
@@ -330,7 +330,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return integer
      */
-    public function getVarKelembabanmaxAttribute(string $value) : float
+    public function getVarKelembabanmaxAttribute($value = '0') : float
     {
         return $this->rejectNull($value)
             ->toInt()->getZero()->getMax();
@@ -343,7 +343,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return integer
      */
-    public function getVarTekananminAttribute(string $value)
+    public function getVarTekananminAttribute($value = '0')
     {
         $value = $this->rejectNull($value)->toInt()->getZero()->getMin();
         $value = $value>999 ? $value/10 : $value;
@@ -359,7 +359,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return integer
      */
-    public function getVarTekananmaxAttribute(string $value)
+    public function getVarTekananmaxAttribute($value = '0')
     {
         $value = $this->rejectNull($value)->toInt()->getZero()->getMax();
         $value = $value>999 ? $value/10 : $value;
@@ -374,7 +374,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return object
      */
-    public function getVarVisibilityAttribute(string $value) : object
+    public function getVarVisibilityAttribute($value = '0') : object
     {
         $value = str_replace('Kabut-I','Kabut 0-I',$value);
         $value = str_replace('Kabut-II','Kabut 0-II',$value);
@@ -395,7 +395,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return object
      */
-    public function getVarCuacaAttribute(string $value) : object
+    public function getVarCuacaAttribute($value = '0') : object
     {
         $s_cuaca = ['Cerah','Berawan','Mendung','Hujan','Badai'];
         $cuaca = str_replace(', ',',',$value);
@@ -412,7 +412,7 @@ class OldModelVar extends Model
      * @param $string $value
      * @return object
      */
-    public function getVarKecanginAttribute(string $value) : object
+    public function getVarKecanginAttribute($value = '0') : object
     {
         $s_kec = ['Tenang','Lemah','Sedang','Kencang'];
         $data = str_replace(', ',',',$value);
@@ -428,7 +428,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return object
      */
-    public function getVarAranginAttribute(string $value) : object
+    public function getVarAranginAttribute($value = '0') : object
     {
         $data = str_replace('#',',',$value);
         return $this->arah($data);
@@ -440,7 +440,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return string
      */
-    public function getVarAsapAttribute(string $value) : string
+    public function getVarAsapAttribute($value = '0') : string
     {
         $asap = $value;
         $tmin = $this->attribute['var_tasap_min'];
@@ -478,7 +478,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return float
      */
-    public function getVarTasapMinAttribute(string $value) : float
+    public function getVarTasapMinAttribute($value = '0') : float
     {
         return $this->rejectNull($value)
             ->toInt()->getZero()->getMax();
@@ -490,7 +490,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return float
      */
-    public function getVarTasapAttribute(string $value) : float
+    public function getVarTasapAttribute($value = '0') : float
     {
         return $this->rejectNull($value)
             ->toInt()->getZero()->getMax();
@@ -502,7 +502,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return string
      */
-    public function getVarViskawahAttribute(string $value) : string
+    public function getVarViskawahAttribute($value = '0') : string
     {
         if (strlen($value) > 5)
         {
@@ -527,7 +527,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return void
      */
-    public function getVarWasapAttribute(string $value)
+    public function getVarWasapAttribute($value = '-')
     {
         return $this->warnaAsap($value);
     }
@@ -538,7 +538,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return void
      */
-    public function getVarIntasapAttribute(string $value)
+    public function getVarIntasapAttribute($value = '-')
     {
         $s_intasap = ['Tipis','Sedang','Tebal'];
 
@@ -568,7 +568,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return void
      */
-    public function getVarTekasapAttribute(string $value)
+    public function getVarTekasapAttribute($value = '-')
     {
         $s_tekasap = ['Lemah','Sedang','Kuat'];
 
@@ -593,7 +593,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return void
      */
-    public function getVarGugAlunAttribute($value)
+    public function getVarGugAlunAttribute($value = '')
     {
         $data = str_replace('#',',',$value);
         return $this->arah($data)->isEmpty() ? null : $this->arah($data) ;
@@ -605,7 +605,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return void
      */
-    public function getVarApgAlunAttribute($value)
+    public function getVarApgAlunAttribute($value = '')
     {
         $data = str_replace('#',',',$value);
         return $this->arah($data)->isEmpty() ? null : $this->arah($data) ;
@@ -617,7 +617,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return void
      */
-    public function getVarAplAlunAttribute($value)
+    public function getVarAplAlunAttribute($value = '')
     {
         $data = str_replace('#',',',$value);
         return $this->arah($data)->isEmpty() ? null : $this->arah($data) ;
@@ -629,7 +629,7 @@ class OldModelVar extends Model
      * @param string $value
      * @return void
      */
-    public function getVarLtsWasapAttribute(string $value)
+    public function getVarLtsWasapAttribute($value = '-')
     {
         return $this->warnaAsap($value);
     }
@@ -640,7 +640,7 @@ class OldModelVar extends Model
      * @param [type] $value
      * @return void
      */
-    public function getVarTrsSkalaminAttribute($value)
+    public function getVarTrsSkalaminAttribute($value = '')
     {
         $skala = $value.','.$this->attributes['var_trs_skalamax'];
         return $this->skala($skala);
@@ -652,7 +652,7 @@ class OldModelVar extends Model
      * @param [type] $value
      * @return void
      */
-    public function getVarVtaAminAttribute($value)
+    public function getVarVtaAminAttribute($value = 0)
     {
         $value = $value > 999 ? $value/10 : $value;
         $value = $value > 120 ? 15 : $value;
@@ -666,7 +666,7 @@ class OldModelVar extends Model
      * @param [type] $value
      * @return void
      */
-    public function getVarVtaAmaxAttribute($value)
+    public function getVarVtaAmaxAttribute($value = 0)
     {
         $value = $value > 999 ? $value/10 : $value;
         $value = $value > 120 ? 120 : $value;
@@ -674,21 +674,21 @@ class OldModelVar extends Model
         return $value;
     }
 
-    public function getVarVtaSpminAttribute($value)
+    public function getVarVtaSpminAttribute($value = 0)
     {
         $value = $value > 50 ? 1.5 : $value;
 
         return $value;
     }
 
-    public function getVarVtaSpmaxAttribute($value)
+    public function getVarVtaSpmaxAttribute($value = 0)
     {
         $value = $value > 50 ? 3 : $value;
 
         return $value;
     }
 
-    public function getVarTejAminAttribute($value)
+    public function getVarTejAminAttribute($value = 0)
     {
         $value = $value > 999 ? $value/100 : $value;
         $value = $value > 99 ? $value/10 : $value;
@@ -696,7 +696,7 @@ class OldModelVar extends Model
         return $value;
     }
 
-    public function getVarTejAmaxAttribute($value)
+    public function getVarTejAmaxAttribute($value = 0)
     {
         $value = $value > 999 ? $value/100 : $value;
         $value = $value > 99 ? $value/10 : $value;
@@ -704,21 +704,21 @@ class OldModelVar extends Model
         return $value;
     }
 
-    public function getVarTelAmaxAttribute($value)
+    public function getVarTelAmaxAttribute($value = 0)
     {
         $value = $value > 999 ? $this->attributes['var_tel_amin'] : $value;
 
         return $value;
     }
 
-    public function getVarTelSpmaxAttribute($value)
+    public function getVarTelSpmaxAttribute($value = 0)
     {
         $value = $value > 50 ? 3 : $value;
 
         return $value;
     }
 
-    public function getVarTejSpmaxAttribute($value)
+    public function getVarTejSpmaxAttribute($value = 0)
     {
         $value = $value > 50 ? 3 : $value;
         $value = $value < $this->attributes['var_tej_spmin'] ? $this->attributes['var_tej_spmin'] : $value;
@@ -726,7 +726,7 @@ class OldModelVar extends Model
         return $value;
     }
     
-    public function getVarVtaDmaxAttribute($value)
+    public function getVarVtaDmaxAttribute($value = 0)
     {
         $value = $value > 999 ? $value/100 : $value;
         $value = $value > 99 ? $value/10 : $value;

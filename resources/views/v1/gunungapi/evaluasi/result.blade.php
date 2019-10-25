@@ -92,21 +92,22 @@
             </div>
 
             <div class="col-lg-8">
-                @if ($data['summary']['gempa'])
                 <div class="hpanel">
                     <ul class="nav nav-tabs">
                         <li class="active"><a data-toggle="tab" href="#tab-1">Detail Visual</a></li>
                         <li><a data-toggle="tab" href="#tab-2">Detail Kegempaan</a></li>
+                        <li><a data-toggle="tab" href="#tab-4">Grafik Visual</a></li>            
+                        @if ($data['summary']['gempa'])
                         <li><a data-toggle="tab" href="#tab-3">Tabel Kegempaan</a></li>
-                        <li><a data-toggle="tab" href="#tab-4">Grafik Visual</a></li>
                         <li><a data-toggle="tab" href="#tab-5">Grafik Kegempaan</a></li>
+                        @endif
                     </ul>
                     <div class="tab-content">
                         <div id="tab-1" class="tab-pane active">
                             <div class="panel-body">
                                 <ul class="list-group m-t-lg">
                                 @foreach ($data['details'] as $details)
-                                    <li class="list-group-item"><b>{{ \Carbon\Carbon::parse($details['date'])->formatLocalized('%A, %d %B %Y')}}</b>, {!! $details['visual'] ?: 'Tidak ada data' !!}</li>
+                                    <li class="list-group-item"><b>{{ \Carbon\Carbon::parse($details['date'])->formatLocalized('%A, %d %B %Y')}}</b>, {!! $details['visual'] ?: 'Belum ada laporan masuk' !!}</li>
                                 @endforeach
                                 </ul>
                             </div>
@@ -116,8 +117,10 @@
                             <div class="panel-body">
                                 <ul class="list-group m-t-lg">
                                 @foreach ($data['details'] as $details)
-                                    @if (!empty($details['gempa']))
-                                    <li class="list-group-item"><b>{{ \Carbon\Carbon::parse($details['date'])->formatLocalized('%A, %d %B %Y')}}</b>, terekam {{ implode('',$details['gempa']) }}</li>  
+                                    @if ($details['gempa'] != null AND is_array($details['gempa']))
+                                    <li class="list-group-item"><b>{{ \Carbon\Carbon::parse($details['date'])->formatLocalized('%A, %d %B %Y')}}</b>, terekam {{ implode('',$details['gempa']) }}</li>
+                                    @elseif($details['gempa'] === null)
+                                    <li class="list-group-item"><b>{{ \Carbon\Carbon::parse($details['date'])->formatLocalized('%A, %d %B %Y')}}</b>, Belum ada laporan masuk.</li>  
                                     @else
                                     <li class="list-group-item"><b>{{ \Carbon\Carbon::parse($details['date'])->formatLocalized('%A, %d %B %Y')}}</b>, kegempaan nihil.</li>  
                                     @endif
@@ -188,13 +191,12 @@
                                     <div id="visual-0" style="min-width: 310px; height: 480px; margin: 0 auto"></div>
                                 </div>
                                 @else
-                                <div class="row p-md">
-                                    <div class="alert alert-warning"><p>Tidak ada data tinggi asap</p></div>                                    <div id="visual-0" style="min-width: 310px; height: 480px; margin: 0 auto"></div>
-                                </div>
+                                    <div class="alert alert-warning"><p>Tidak ada data tinggi asap</p></div>
                                 @endif
                             </div>
                         </div>
 
+                        @if ($data['summary']['gempa'])                        
                         <div id="tab-5" class="tab-pane">
                             <div class="panel-body">
                                 <div class="text-left">
@@ -212,9 +214,9 @@
 
                             </div>
                         </div>
+                        @endif
                     </div>
                 </div>
-                @endif
             </div>
         </div>
     </div>
@@ -309,6 +311,8 @@
             });
         };
 
+        @if (!empty($data['summary']['gempa']))
+        
         var gempa = Highcharts.chart('gempa', {
             chart: {
                 zoomType: 'x',
@@ -414,6 +418,8 @@
             }
         });
         @endforeach
+
+        @endif
 
         @if (!empty($data['highcharts']['arah_angin']['series']))
         var arah_angin = Highcharts.chart('arah-angin', {

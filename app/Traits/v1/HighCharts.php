@@ -35,6 +35,9 @@ trait HighCharts
         'var_gtb' => 0,
         'var_hrm' => 0,
         'var_dpt' => 0,
+        'var_trs_skalamax' => '',
+        'var_tel_amin' => 0,
+        'var_tej_spmin' => 0,
     ];
 
     protected function setDefault()
@@ -42,14 +45,14 @@ trait HighCharts
         $model = new OldVar();
         $model->fill($this->default);
 
-        $this->model = $model;
+        $this->default_model = $model;
 
         return $this;
     }
 
     protected function getDefault()
     {
-        return $this->default;
+        return $this->default_model;
     }
 
     protected function setCodes($kode_gempa)

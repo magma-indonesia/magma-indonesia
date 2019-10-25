@@ -59,6 +59,8 @@ class MagmaVarEvaluasi extends Controller
 
         $data = $this->checkCache($request);
 
+        // return (dd($data));
+
         SendLoginNotification::dispatch(
             'evaluasi', 
             auth()->user(), 
@@ -142,7 +144,7 @@ class MagmaVarEvaluasi extends Controller
         $this->formatDate($request);
         $this->cache = 'chambers/v1/gunungapi/evaluasi:result:'.$request->code.':'.$this->start_str.':'.$this->end_str.':'.implode(':',$request->gempa);
 
-        return Cache::remember($this->cache, 120, function () use($request) {
+        // return Cache::remember($this->cache, 120, function () use($request) {
             $this->setCodes($request->gempa)
                     ->setCategories()
                     ->setDefault()
@@ -155,7 +157,7 @@ class MagmaVarEvaluasi extends Controller
                     ->setWidgetJumlahGempa();
         
             return $this->getResponseData($request);
-        });
+        // });
     }
 
     protected function setWidgetJumlahGempa()
@@ -222,7 +224,6 @@ class MagmaVarEvaluasi extends Controller
     protected function setVarsSplice()
     {
         $vars = $this->getVarsMerged();
-
         $this->count = $vars->count()-$this->days_count;
         $this->splice_vars = $vars->slice($this->count);
         return $this;
@@ -239,14 +240,14 @@ class MagmaVarEvaluasi extends Controller
 
         foreach ($vars as $var) {
 
-            if (!is_array($var)) {
+            if ($var->var_nip_pelapor) {
                 $asap = (object) [
                     'wasap' => isset($var->var_wasap) ? $var->var_wasap->toArray() : [],
                     'intasap' => isset($var->var_wasap) ? $var->var_intasap->toArray() : [], 
                     'tasap_min' => $var->var_tasap_min ?? 0,
                     'tasap_max' => $var->var_tasap ?? 0,
                 ];
-    
+
                 $this->details[] = [
                     'date' => $var->var_data_date->format('Y-m-d'),
                     'gempa' => $this->clearDeskripsiGempa()->getDeskripsiGempa($var),
@@ -265,8 +266,8 @@ class MagmaVarEvaluasi extends Controller
             else {
                 $this->details[] = [
                     'date' => $var['var_data_date'],
-                    'gempa' => [],
-                    'visual' => []
+                    'gempa' => null,
+                    'visual' => null
                 ];
             }
 
@@ -391,19 +392,18 @@ class MagmaVarEvaluasi extends Controller
 
     protected function setVisualSummary()
     {
-        try {
-            $vars = $this->getVarsSplice();
-            $last = $vars->last()->toArray();
-        } catch (\Exception $th) {
-            $validator = Validator::make([], []); // Empty data and rules fields
-            $validator->errors()->add('fieldName', 'This is the error message');
-            throw new ValidationException($validator);
-        }
+        // try {
+        //     $vars = $this->getVarsSplice();
+        //     $last = $vars->last()->toArray();
+        // } catch (\Exception $th) {
+        //     $validator = Validator::make([], []); // Empty data and rules fields
+        //     $validator->errors()->add('fieldName', 'This is the error message');
+        //     throw new ValidationException($validator);
+        // }
 
+        $vars = $this->getVarsSplice();
 
         $new = new MagmaVar();
-
-        $var = $new->fill($last);
         $var = $new->fill([
             'var_visibility' => $this->implodeVar('var_visibility'),
             'var_cuaca' => $this->implodeVar('var_cuaca'),
@@ -432,8 +432,6 @@ class MagmaVarEvaluasi extends Controller
             'tasap_max' => $var->var_tasap,
         ];
 
-        $this->visual_summary = $var;
-
         $this->visual_summary = $this->clearVisual()
                     ->visibility($var->var_visibility->toArray())
                     ->asap($var->var_asap, $asap)
@@ -456,8 +454,6 @@ class MagmaVarEvaluasi extends Controller
     {
 
         $var = $this->getVarsMerged();
-
-
 
         if ($chart == 'pie') {
 
