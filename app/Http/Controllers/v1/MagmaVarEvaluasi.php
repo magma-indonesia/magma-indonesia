@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use App\v1\Gadd;
 use App\v1\MagmaVar;
 use App\Http\Requests\v1\EvaluasiRequest;
-
+use App\Jobs\SendLoginNotification;
 use App\Traits\v1\HighCharts;
 use App\Traits\v1\DeskripsiGempa;
 use App\Traits\WarnaGempa;
@@ -58,6 +58,15 @@ class MagmaVarEvaluasi extends Controller
                 ->firstOrFail();
 
         $data = $this->checkCache($request);
+
+        SendLoginNotification::dispatch(
+            'evaluasi', 
+            auth()->user(), 
+            [
+                'gunungapi' => $gadd->ga_nama_gapi,
+                'periode' => $request->start.' hingga '.$request->end
+            ])
+        ->delay(now()->addSeconds(5));
 
         return view('v1.gunungapi.evaluasi.result', compact('gadd','data'));
     }
@@ -130,21 +139,6 @@ class MagmaVarEvaluasi extends Controller
 
     protected function checkCache($request)
     {
-        $this->setCodes($request->gempa)
-        ->formatDate($request)
-        ->setCategories()
-        ->setDefault()
-        ->setVars($request->code)
-        ->setVarsMerged()
-        ->setDataSeries()
-        ->setVarsSplice()
-        ->setVisualSummary()
-        ->setVarSummary()
-        ->setWidgetJumlahGempa();
-
-return $this->getResponseData($request);
-
-
         $this->start = Carbon::parse($request->start);
         $this->start_str = strtotime($this->getStart()->format('Y-m-d'));
         $this->end = Carbon::parse($request->end);
