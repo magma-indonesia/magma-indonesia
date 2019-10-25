@@ -42,8 +42,9 @@ class MagmaVarEvaluasi extends Controller
                     ->get();
         });
 
-        $stats = StatistikEvaluasi::with('user:nip,name')
+        $stats = StatistikEvaluasi::with('user:nip,name','gunungapi:code,name')
                     ->orderByDesc('created_at')
+                    ->limit(10)
                     ->get();
 
         $gempas = collect($this->codes);
@@ -67,10 +68,12 @@ class MagmaVarEvaluasi extends Controller
         $stats = StatistikEvaluasi::firstOrCreate(
             [
                 'code' => $gadd->ga_code,
-                'start' => $this->start->format('Y-m-d'),
+                'start' => $request->start,
                 'end' => $this->end->format('Y-m-d'),
                 'nip' => auth()->user()->nip
-            ],[]
+            ],[
+                'url' => $request->fullUrl(),
+            ]
         );
 
         $stats->increment('hit');

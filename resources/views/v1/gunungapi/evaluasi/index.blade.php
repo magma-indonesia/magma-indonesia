@@ -42,6 +42,43 @@
 
 @section('content-body')
     <div class="content animate-panel content-boxed">
+
+        @if ($stats->isNotEmpty())
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="hpanel">
+                    <div class="panel-heading">
+                        Evaluasi Terakhir
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Gunung Api</th>
+                                        <th>Periode</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($stats as $stat)
+                                    <tr>
+                                        <td>{{ $stat->user->name }}</td>
+                                        <td>{{ $stat->gunungapi->name }}</td>
+                                        <td>{{ $stat->start->format('Y-m-d') }} - {{ $stat->end->format('Y-m-d') }} - {{ $stat->jumlah_hari }} hari</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="hpanel">
