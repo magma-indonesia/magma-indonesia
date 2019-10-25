@@ -2,26 +2,7 @@
 
 Route::get('/','ChamberController@index')->name('index');
 
-Route::get('routes', function() {
-    $routeCollection = Route::getRoutes();
-
-    echo "<table style='width:100%'>";
-        echo "<tr>";
-            echo "<td width='10%'><h4>HTTP Method</h4></td>";
-            echo "<td width='10%'><h4>Route</h4></td>";
-            echo "<td width='10%'><h4>Name</h4></td>";
-            echo "<td width='70%'><h4>Corresponding Action</h4></td>";
-        echo "</tr>";
-        foreach ($routeCollection as $value) {
-            echo "<tr>";
-                echo "<td>" . implode('|', $value->methods()) . "</td>";
-                echo "<td>" . $value->uri() . "</td>";
-                echo "<td>" . $value->getName() . "</td>";
-                echo "<td>" . ltrim($value->getActionName()) . "</td>";
-            echo "</tr>";
-        }
-    echo "</table>";
-});
+Route::get('routes', 'RoutesController@index');
 
 Route::resource('crs','CrsController');
 Route::resource('pengajuan','PengajuanController');
