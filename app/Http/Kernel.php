@@ -42,6 +42,13 @@ class Kernel extends HttpKernel
             'bindings',
             'json'
         ],
+
+        'chamber' => [
+            'web',
+            'check.password',
+            'auth',
+            'revalidate'
+        ],
     ];
 
     /**
@@ -69,5 +76,6 @@ class Kernel extends HttpKernel
         'set.locale' => \App\Http\Middleware\SetDefaultLocaleForUrls::class,
         'json' => \App\Http\Middleware\EnforceJson::class,
         'owner' => \App\Http\Middleware\SelfCheck::class,
+        'check.password' => \App\Http\Middleware\CheckPassword::class,
     ];
 }

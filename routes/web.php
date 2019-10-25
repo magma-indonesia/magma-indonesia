@@ -143,6 +143,12 @@ Route::post('tes/image', 'TesController@imageCropPost');
 |
 */
 Route::group(['middleware' => ['web','auth']], function () {
+
+    Route::get('change-password', 'ChangePasswordController@index')
+            ->name('change-password.index');
+    Route::put('change-password', 'ChangePasswordController@update')
+            ->name('change-password.update');
+
     Route::group(['prefix' => 'images'], function () {
         Route::group(['prefix' => 'user'], function () {
             Route::get('photo/{id?}/{high?}','UserPhotoController@photo')->name('user.photo');

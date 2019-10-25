@@ -83,7 +83,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::prefix('chambers')
              ->name('chambers.')
-             ->middleware(['web','auth','revalidate'])
+             ->middleware('chamber')
              ->namespace($this->namespace)
              ->group(base_path('routes/chambers.php'));
     }
