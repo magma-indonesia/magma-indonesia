@@ -77,10 +77,11 @@
                                 <select id="tipe" class="form-control m-b" name="tipe">
                                     <option value="all" {{ old('tipe') == 'all' || empty(old('tipe')) ? 'selected' : '' }}>- Pilih Semua-</option>                
                                     <option value="0" {{ old('tipe') == 0 ? 'selected' : '' }}>24 Jam</option>
+                                    <option value="5" {{ old('tipe') == 5 ? 'selected' : '' }}>6 Jam</option>
                                     <option value="1" {{ old('tipe') == 1 ? 'selected' : '' }}>00:00-06:00</option>
                                     <option value="2" {{ old('tipe') == 2 ? 'selected' : '' }}>06:00-12:00</option>
                                     <option value="3" {{ old('tipe') == 3 ? 'selected' : '' }}>12:00-18:00</option>         
-                                    <option value="4" {{ old('tipe') == 3 ? 'selected' : '' }}>18:00-24:00</option>                  
+                                    <option value="4" {{ old('tipe') == 4 ? 'selected' : '' }}>18:00-24:00</option>               
                                 </select>
                                 @if( $errors->has('tipe'))
                                 <label class="error" for="tipe">{{ ucfirst($errors->first('tipe')) }}</label>

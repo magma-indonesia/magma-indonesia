@@ -189,10 +189,17 @@ class MagmaVarController extends Controller
             $vars = OldVar::select('no','ga_nama_gapi','var_data_date','periode','var_perwkt','periode','var_nama_pelapor')
                         ->where('ga_code', 'like', $code)
                         ->whereBetween('var_data_date', [$start, $end])
-                        ->where('periode','like',$periode)
                         ->where('var_nip_pelapor','like',$nip)
                         ->orderBy('var_data_date','asc')
                         ->orderBy('var_data_date','desc');
+            
+
+            if ($request->tipe == '5')
+            {
+                $vars->where('var_perwkt','6 Jam');
+            } else {
+                $vars->where('periode','like',$periode);
+            }
             
             $count = $vars->count();
     
