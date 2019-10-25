@@ -6,7 +6,6 @@
 
 @section('add-vendor-css')
     <link rel="stylesheet" href="{{ asset('vendor/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('vendor/sweetalert/lib/sweet-alert.css') }}" />
 @endsection
 
 @section('add-css')
@@ -133,7 +132,6 @@ table tr td[class*="1"] {
 
 @section('add-vendor-script')
 <!-- DataTables buttons scripts -->
-<script src="{{ asset('vendor/sweetalert/lib/sweet-alert.min.js') }}"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
