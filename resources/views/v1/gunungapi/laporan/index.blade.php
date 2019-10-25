@@ -32,7 +32,7 @@
 @endsection
 
 @section('content-body')
-<div class="content animate-panel">
+<div class="content animate-panel content-boxed">
     <div class="row">
         <div class="col-lg-12">
             @if(Session::has('flash_message'))
@@ -73,7 +73,7 @@
                                     <th>Periode</th>
                                     <th>Status</th>
                                     <th>Pelapor</th>
-                                    <th style="min-width: 240px;">Action</th>
+                                    <th style="min-width: 20%;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
