@@ -64,7 +64,7 @@ class MagmaVarEvaluasi extends Controller
             auth()->user(), 
             [
                 'gunungapi' => $gadd->ga_nama_gapi,
-                'periode' => $request->start.' hingga '.$request->end
+                'periode' => $this->start->format('Y-m-d').' hingga '.$this->end->format('Y-m-d')
             ])
         ->delay(now()->addSeconds(5));
 
@@ -96,7 +96,7 @@ class MagmaVarEvaluasi extends Controller
                     'series' => $this->transformSeries('pie','var_arangin')[0]
                 ],
                 'warna_asap' => [
-                    'series' => $this->transformSeries('pie','var_wasap')[0]
+                    'series' => $this->transformSeries('pie','var_wasap')[0] ?? []
                 ],
                 'tinggi_asap' => [
                     // 'categories' => $this->getCategories()->slice($this->count)->values(),
@@ -139,15 +139,11 @@ class MagmaVarEvaluasi extends Controller
 
     protected function checkCache($request)
     {
-        $this->start = Carbon::parse($request->start);
-        $this->start_str = strtotime($this->getStart()->format('Y-m-d'));
-        $this->end = Carbon::parse($request->end);
-        $this->end_str = strtotime($this->getEnd()->format('Y-m-d'));
+        $this->formatDate($request);
         $this->cache = 'chambers/v1/gunungapi/evaluasi:result:'.$request->code.':'.$this->start_str.':'.$this->end_str.':'.implode(':',$request->gempa);
 
         return Cache::remember($this->cache, 120, function () use($request) {
             $this->setCodes($request->gempa)
-                    ->formatDate($request)
                     ->setCategories()
                     ->setDefault()
                     ->setVars($request->code)

@@ -27,7 +27,7 @@ class UserLogin extends Notification
             case 'rsam':
                 return '*'.$this->user->name.'* membuat RSAM *'.$this->opsi['channel'].'* periode *'.$this->opsi['periode'].'*';
             case 'evaluasi':
-                return '*'.$this->user->name.'* membuat Evaluasi *'.$this->opsi['gunungapi'].'* periode *'.$this->opsi['periode'].'*';
+                return '*'.$this->user->name.'* membuat *Evaluasi '.$this->opsi['gunungapi'].'* periode *'.$this->opsi['periode'].'*';
             default:
                 break;
         }
