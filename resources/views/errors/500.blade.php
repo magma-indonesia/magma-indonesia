@@ -8,4 +8,4 @@
     </div>
 @endsection
 
-@section('message', $exception->getMessage())
+@section('message', __('Server Error'))
