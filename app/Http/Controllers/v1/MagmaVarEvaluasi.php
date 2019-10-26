@@ -65,27 +65,30 @@ class MagmaVarEvaluasi extends Controller
 
         $data = $this->checkCache($request);
 
-        $stats = StatistikEvaluasi::firstOrCreate(
-            [
-                'code' => $gadd->ga_code,
-                'start' => $request->start,
-                'end' => $this->end->format('Y-m-d'),
-                'nip' => auth()->user()->nip
-            ],[
-                'url' => $request->fullUrl(),
-            ]
-        );
-
-        $stats->increment('hit');
-
-        SendLoginNotification::dispatch(
-            'evaluasi', 
-            auth()->user(), 
-            [
-                'gunungapi' => $gadd->ga_nama_gapi,
-                'periode' => $this->start->format('Y-m-d').' hingga '.$this->end->format('Y-m-d')
-            ])
-        ->delay(now()->addSeconds(5));
+        if (!$request->view)
+        {
+            $stats = StatistikEvaluasi::firstOrCreate(
+                [
+                    'code' => $gadd->ga_code,
+                    'start' => $request->start,
+                    'end' => $this->end->format('Y-m-d'),
+                    'nip' => auth()->user()->nip
+                ],[
+                    'url' => $request->fullUrlWithQuery(['view' => 1]),
+                ]
+            );
+    
+            $stats->increment('hit');
+    
+            SendLoginNotification::dispatch(
+                'evaluasi', 
+                auth()->user(), 
+                [
+                    'gunungapi' => $gadd->ga_nama_gapi,
+                    'periode' => $request->start.' hingga '.$this->end->format('Y-m-d')
+                ])
+            ->delay(now()->addSeconds(5));
+        }
 
         return view('v1.gunungapi.evaluasi.result', compact('gadd','data'));
     }
