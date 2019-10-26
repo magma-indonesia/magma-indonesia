@@ -294,6 +294,8 @@ Route::name('v1.')->group(function () {
                     ->name('evaluasi.show');
                 Route::get('evaluasi/result','v1\MagmaVarEvaluasi@result')
                     ->name('evaluasi.result');
+                Route::delete('evaluasi/result/{id}','v1\MagmaVarEvaluasi@destroy')
+                    ->name('evaluasi.destroy');
 
                 Route::get('ven','v1\MagmaVenController@index')
                     ->name('ven.index');

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\v1;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Controller;
-use Illuminate\Validation\ValidationException;
 use Carbon\Carbon;
 use App\v1\Gadd;
 use App\v1\MagmaVar;
@@ -91,6 +90,26 @@ class MagmaVarEvaluasi extends Controller
         }
 
         return view('v1.gunungapi.evaluasi.result', compact('gadd','data'));
+    }
+
+    public function destroy($id)
+    {
+        $stats = StatistikEvaluasi::findOrfail($id);
+        if ($stats->delete()) {
+            $data = [
+                'success' => 1,
+                'message' => 'Data berhasil dihapus.'
+            ];
+
+            return response()->json($data);
+        }
+
+        $data = [
+            'success' => 0,
+            'message' => 'Gagal dihapus.'
+        ];
+
+        return response()->json($data);
     }
 
     /**
