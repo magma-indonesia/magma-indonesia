@@ -40,10 +40,12 @@ trait HighCharts
         'var_tej_spmin' => 0,
     ];
 
-    protected function setDefault()
+    protected function setDefault($var_data_date)
     {
+        $default = $this->default;
+        $default['var_data_date'] = $var_data_date;
         $model = new OldVar();
-        $model->fill($this->default);
+        $model->fill($default);
 
         $this->default_model = $model;
 
@@ -146,9 +148,8 @@ trait HighCharts
         });
 
         $this->vars_merged = $categories->flip()->map(function ($item, $key) {
-            $default = $this->getDefault();
-            $default['var_data_date'] = $key;
-            return $default;
+            $model = $this->setDefault($key)->getDefault();
+            return $model;
         })->merge($keyed);
 
         return $this;
