@@ -7,6 +7,7 @@
 @section('add-vendor-css')
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap-datepicker-master/dist/css/bootstrap-datepicker3.min.css') }}" />
     @role('Super Admin')
+    <link rel="stylesheet" href="{{ asset('vendor/sweetalert/lib/sweet-alert.css') }}" />
     <link rel="stylesheet" href="{{ asset('vendor/json-viewer/jquery.json-viewer.css') }}" />
     @endrole
 @endsection
@@ -59,7 +60,7 @@
                                         <th>User</th>
                                         <th>Gunung Api</th>
                                         <th>Periode</th>
-                                        <th>Action</th>
+                                        <th width="20%">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -68,7 +69,16 @@
                                         <td>{{ $stat->user->name }}</td>
                                         <td>{{ $stat->gunungapi->name }}</td>
                                         <td>{{ $stat->start->format('Y-m-d') }} - {{ $stat->end->format('Y-m-d') }} - {{ $stat->jumlah_hari }} hari</td>
-                                        <td><a href="{{ $stat->url }}" class="btn btn-sm btn-magma btn-outline" target="_blank">View</a></td>
+                                        <td>
+                                            <a href="{{ $stat->url }}" class="btn btn-sm btn-magma btn-outline" target="_blank">View</a>
+                                            @role('Super Admin')
+                                            <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.v1.gunungapi.evaluasi.destroy', $stat) }}" accept-charset="UTF-8">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button value="Delete" class="btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
+                                            </form>
+                                            @endrole
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -192,6 +202,7 @@
     <script src="{{ asset('vendor/moment/moment.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('vendor/sweetalert/lib/sweet-alert.min.js') }}"></script>
 @endsection
 
 @section('add-script')
@@ -286,6 +297,54 @@
                         $('#bulan').prop('disabled',true);                     
                         break;
                 } 
+            });
+
+            $('body').on('submit','#deleteForm',function (e) {
+                e.preventDefault();                
+
+                var $url = $(this).attr('action'),
+                    $data = $(this).serialize();
+
+                swal({
+                    title: "Anda yakin?",
+                    text: "Data yang telah dihapus tidak bisa dikembalikan",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, hapus!",
+                    cancelButtonText: "Gak jadi deh!",
+                    closeOnConfirm: false,
+                    closeOnCancel: true },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: $url,
+                            data: $data,
+                            type: 'POST',
+                            success: function(data){
+                                console.log(data);
+                                if (data.success){
+                                    swal("Berhasil!", data.message, "success");
+                                    setTimeout(function(){
+                                        location.reload();
+                                    },2000);
+                                }
+                            },
+                            error: function(data){
+                                var $errors = {
+                                    'status': data.status,
+                                    'exception': data.responseJSON.exception,
+                                    'file': data.responseJSON.file,
+                                    'line': data.responseJSON.line
+                                };
+                                console.log($errors);
+                                swal("Gagal!", data.responseJSON.exception, "error");
+                            }
+                        });
+                    }
+                });
+
+                return false;
             });
         });
     </script>
