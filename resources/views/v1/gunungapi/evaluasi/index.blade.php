@@ -5,7 +5,10 @@
 @endsection
 
 @section('add-vendor-css')
+    @if ($stats->isNotEmpty())
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap-datepicker-master/dist/css/bootstrap-datepicker3.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" />
+    @endif
     @role('Super Admin')
     <link rel="stylesheet" href="{{ asset('vendor/sweetalert/lib/sweet-alert.css') }}" />
     <link rel="stylesheet" href="{{ asset('vendor/json-viewer/jquery.json-viewer.css') }}" />
@@ -54,7 +57,7 @@
 
                     <div class="panel-body">
                         <div class="table-responsive">
-                            <table class="table table-condensed table-striped">
+                            <table id="table-statistik" class="table table-condensed table-striped">
                                 <thead>
                                     <tr>
                                         <th>User</th>
@@ -199,6 +202,10 @@
 
 @section('add-vendor-script')
     <!-- DataTables -->
+    @if ($stats->isNotEmpty())
+    <script src="{{ asset('vendor/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('vendor/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    @endif
     <script src="{{ asset('vendor/moment/moment.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
@@ -208,6 +215,20 @@
 @section('add-script')
     <script>
         $(document).ready(function () {
+
+            @if ($stats->isNotEmpty())
+            $('#table-statistik').dataTable({
+                dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                buttons: [
+                    { extend: 'copy', className: 'btn-sm'},
+                    { extend: 'csv', title: 'Daftar Users', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, ]} },
+                    { extend: 'pdf', title: 'Daftar Users', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, ]} },
+                    { extend: 'print', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, ]} }
+                ]
+
+            });
+            @endif
 
             var $checkAll = $('input.all'),
                 $checkboxes = $('input.gempa');

@@ -43,7 +43,7 @@ class MagmaVarEvaluasi extends Controller
 
         $stats = StatistikEvaluasi::with('user:nip,name','gunungapi:code,name')
                     ->orderByDesc('created_at')
-                    ->limit(10)
+                    ->limit(50)
                     ->get();
 
         $gempas = collect($this->codes);
@@ -430,15 +430,6 @@ class MagmaVarEvaluasi extends Controller
 
     protected function setVisualSummary()
     {
-        // try {
-        //     $vars = $this->getVarsSplice();
-        //     $last = $vars->last()->toArray();
-        // } catch (\Exception $th) {
-        //     $validator = Validator::make([], []); // Empty data and rules fields
-        //     $validator->errors()->add('fieldName', 'This is the error message');
-        //     throw new ValidationException($validator);
-        // }
-
         $vars = $this->getVarsSplice();
 
         $new = new MagmaVar();
