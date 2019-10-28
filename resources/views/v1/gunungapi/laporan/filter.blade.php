@@ -158,7 +158,7 @@
                                 <tbody>
                                     @foreach ($vars as $var)
                                     <tr>
-                                        <td>Laporan Gunungapi {{ $var->ga_nama_gapi }}
+                                        <td>Laporan Gunung Api {{ $var->ga_nama_gapi }}
                                             <br/>
                                             <small>
                                                 <i class="fa fa-clock-o"></i> Tanggal : {{ $var->var_data_date->formatLocalized('%d %B %Y') }}</small>
