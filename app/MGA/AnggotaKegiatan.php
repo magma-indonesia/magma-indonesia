@@ -9,6 +9,7 @@ use phpDocumentor\Reflection\Types\Integer;
 class AnggotaKegiatan extends Model
 {
     protected $fillable = [
+        'kegiatan_id',
         'detail_kegiatan_id',
         'nip_anggota',
         'start_date',
@@ -41,6 +42,11 @@ class AnggotaKegiatan extends Model
     {
         $jumlah_hari = $this->jumlah_hari();
         return (int) $jumlah_hari-$this->attributes['jumlah_hari_menginap']-1;
+    }
+
+    public function kegiatan()
+    {
+        return $this->belongsTo('App\MGA\Kegiatan');
     }
 
     public function detail_kegiatan()

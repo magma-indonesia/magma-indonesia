@@ -157,7 +157,7 @@
                                 </thead>
 
                                 <tbody>
-                                    @foreach ($kegiatan->detail_kegiatan as $key => $detail)
+                                    @foreach ($detail_kegiatans as $key => $detail)
                                     <tr>
                                         <td>{{ $key+1}}</td>
                                         <td>{{ $detail->code_id ? $detail->gunungapi->name : $detail->lokasi_lainnya }}</td>

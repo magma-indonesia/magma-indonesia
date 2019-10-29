@@ -63,8 +63,10 @@
 
                 <div class="panel-body">
 
-                    <form action="{{ route('chambers.administratif.mga.anggota-kegiatan.store',['step' => '3', 'id' => $detailKegiatan->id]) }}" method="post">
+                    <form action="{{ route('chambers.administratif.mga.anggota-kegiatan.store',['step' => '3']) }}" method="post">
                         @csrf
+                        <input style="display: none;" name="kegiatan_id" value="{{ $detailKegiatan->kegiatan->id }}">
+                        <input style="display: none;" name="detail_kegiatan_id" value="{{ $detailKegiatan->id }}">
                         <div class="text-center m-b-md" id="wizardControl">
                             <a class="btn btn-default hidden-xs m-b" href="#" disabled>Step 1 <span class="hidden-xs">- Pilih Anggota</span></a>
                             <a class="btn btn-primary m-b" href="#">Step 2 <span class="hidden-xs">- Periode</span></a>
@@ -96,13 +98,11 @@
                                             </div>
                                             @endif
 
-                                            @if (!$detailKegiatan->anggota_tim->contains('nip_anggota',$detailKegiatan->ketua->nip))
                                             <div class="form-group col-sm-12" style="display:none;">
-                                                <select id="anggota_tim" name="anggota_tim[{{$detailKegiatan->ketua->nip}}]" class="form-control selectpicker" data-live-search="true">
+                                                <select id="anggota_tim" name="anggota_tim[{{$detailKegiatan->ketua->nip}}]">
                                                     <option value="{{ $detailKegiatan->ketua->nip }}" selected>{{ $detailKegiatan->ketua->name }}</option>
                                                 </select>
                                             </div>
-
 
                                             <div class="hpanel">
                                                 <div class="panel-heading">
@@ -154,11 +154,11 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            @endif
 
                                             @foreach ($users as $user)
+                                            @if ($user->nip != $detailKegiatan->ketua->nip)
                                             <div class="form-group col-sm-12" style="display:none;">
-                                                <select id="anggota_tim" name="anggota_tim[{{$user->nip}}]" class="form-control selectpicker" data-live-search="true">
+                                                <select id="anggota_tim" name="anggota_tim[{{$user->nip}}]">
                                                     <option value="{{ $user->nip }}" selected>{{ $user->name }}</option>
                                                 </select>
                                             </div>
@@ -213,6 +213,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            @endif
                                             @endforeach
 
                                             <div class="hr-line-dashed"></div>

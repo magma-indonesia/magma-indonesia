@@ -72,6 +72,8 @@ class AnggotaKegiatanController extends Controller
         {
             $validated = $this->validate($request,[
                 'step' => 'sometimes|in:3',
+                'detail_kegiatan_id' => 'exists:detail_kegiatans,id',
+                'kegiatan_id' => 'exists:kegiatans,id',
                 'anggota_tim' => 'required|array',
                 'start' => 'required|array',
                 'end' => 'required|array',
@@ -114,11 +116,12 @@ class AnggotaKegiatanController extends Controller
             ]);
 
             foreach ($request->anggota_tim as $nip_key=> $nip_value) {
-                $anggotaKegiatan = AnggotaKegiatan::updateOrCreate(
+                $anggotaKegiatan = AnggotaKegiatan::firstOrCreate(
                     [
-                        'detail_kegiatan_id' => $request->id,
+                        'detail_kegiatan_id' => $request->detail_kegiatan_id,
                         'nip_anggota' => $request->anggota_tim[$nip_key],
                     ],[
+                        'kegiatan_id' => $request->kegiatan_id,
                         'start_date' => $request->start[$nip_key],
                         'end_date' => $request->end[$nip_key],
                         'uang_harian' => $request->uang_harian[$nip_key],
@@ -131,7 +134,7 @@ class AnggotaKegiatanController extends Controller
                 );
             }
 
-            return redirect()->route('chambers.administratif.mga.detail-kegiatan.show', $request->id);
+            return redirect()->route('chambers.administratif.mga.detail-kegiatan.show', $request->detail_kegiatan_id);
         }
 
     }
@@ -142,13 +145,12 @@ class AnggotaKegiatanController extends Controller
      * @param  \App\MGA\AnggotaKegiatan  $anggotaKegiatan
      * @return \Illuminate\Http\Response
      */
-    public function show($nip = null)
+    public function show($nip)
     {
-        $user = User::whereNip($nip)
-                    ->with('anggota_kegiatan.detail_kegiatan.kegiatan.jenis_kegiatan:id,nama')
-                    ->firstOrFail();
+        $anggota = AnggotaKegiatan::whereNipAnggota($nip)->firstOrFail();
+        $anggota->load('user:nip,name','kegiatan.jenis_kegiatan');
 
-        return $user;
+        return $anggota;
         return redirect()->route('chambers.administratif.mga.jenis-kegiatan.index');
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\MGA\Kegiatan;
 use App\MGA\JenisKegiatan;
 use Illuminate\Http\Request;
+use DB;
 
 class KegiatanController extends Controller
 {
@@ -97,7 +98,11 @@ class KegiatanController extends Controller
                             ->withCount('detail_kegiatan')
                             ->findOrFail($kegiatan->id);
 
-        return view('mga.kegiatan.show', compact('kegiatan'));
+        $detail_kegiatans = $kegiatan->detail_kegiatan->sortBy(function ($detail) {
+            return $detail['start_date'];
+        })->values()->all();
+
+        return view('mga.kegiatan.show', compact('kegiatan','detail_kegiatans'));
     }
 
     /**
