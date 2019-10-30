@@ -48,7 +48,7 @@
                         <div class="m-b-md">
                             Masukkan parameter pencarian
                         </div>
-                        <form role="form" id="form" method="GET" action="{{ route('chambers.v1.gunungapi.laporan.filter') }}">
+                        <form target="_blank" role="form" id="form" method="GET" action="{{ route('chambers.v1.gunungapi.laporan.filter') }}">
                             <div class="form-group">
                                 <label class="control-label">Nama Pelapor</label>
                                 <select id="nip" class="form-control m-b" name="nip">
