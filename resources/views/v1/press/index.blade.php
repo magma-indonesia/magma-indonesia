@@ -84,8 +84,8 @@ v1 - Press Release
                                         <td>{{ $press->log }}</td>
                                         <td>
                                             <a href="{{ route('chambers.v1.press.show',['id'=>$press->id]) }}" class="m-t-xs m-b-xs btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">View</a>
-                                            <a href="{{ route('chambers.v1.press.edit',['id'=>$press->id]) }}" class="m-t-xs m-b-xs btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>
                                             @role('Super Admin|Humas PVMBG')
+                                            <a href="{{ route('chambers.v1.press.edit',['id'=>$press->id]) }}" class="m-t-xs m-b-xs btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>
                                             <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.v1.press.destroy',['id'=>$press->id]) }}" accept-charset="UTF-8">
                                                 @method('DELETE')
                                                 @csrf
