@@ -101,7 +101,7 @@
                         Masukkan parameter
                     </div>
                     <div class="panel-body">
-                        <form role="form" id="form" method="GET" action="{{ route('chambers.v1.gunungapi.evaluasi.result') }}">
+                        <form target="_blank" role="form" id="form" method="GET" action="{{ route('chambers.v1.gunungapi.evaluasi.result') }}">
                             <div class="tab-content">
                                 <div id="step1" class="p-m tab-pane active">
                                     <div class="row">
