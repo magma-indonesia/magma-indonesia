@@ -10,8 +10,8 @@ use App\v1\MagmaVar as OldVar;
 use App\v1\Vona;
 use App\v1\GertanCrs as Crs;
 use App\v1\MagmaRoq;
-use App\v1\MagmaSigertan;
 use DB;
+use Illuminate\Support\Facades\URL;
 
 use App\Traits\VisualAsap;
 use App\Traits\v1\DeskripsiGempa;
@@ -73,6 +73,34 @@ class HomeController extends Controller
         return $gadds;
     }
 
+    public function gunungapiStatus()
+    {
+        $gadds = $this->gunungapi();
+
+        return [
+            [
+                'url' => route('v1.gunungapi.var'),
+                'tingkat_aktivitas' => [[
+                    'level' => 4,
+                    'status' => 'Awas',
+                    'jumlah' => $gadds->where('ga_status',4)->count()
+                ],[
+                    'level' => 3,
+                    'status' => 'Siaga',
+                    'jumlah' => $gadds->where('ga_status',3)->count()
+                ],[
+                    'level' => 2,
+                    'status' => 'Waspada',
+                    'jumlah' => $gadds->where('ga_status',2)->count()
+                ],[
+                    'level' => 1,
+                    'status' => 'Normal',
+                    'jumlah' => $gadds->where('ga_status',1)->count()
+                ]]
+            ],
+        ];
+    }
+
     /**
      * Display the Api/Home/Gerakan Tanah
      *
@@ -104,6 +132,25 @@ class HomeController extends Controller
         return $gertans;
     }
 
+    public function gerakanTanahLatest()
+    {
+        $gertan = Crs::has('tanggapan')
+                ->where('crs_sta','TERBIT')
+                ->whereBetween('crs_lat',[-12, 2])
+                ->whereBetween('crs_lon',[89, 149])
+                ->orderBy('crs_log','desc')
+                ->first();
+
+        $judul = 'Laporan Tanggapan Gerakan Tanah di '.$gertan->crs_vil.', '.$gertan->crs_rgn.', '.$gertan->crs_cty.', '.$gertan->crs_prv;
+
+        return [
+            'lokasi' => $judul,
+            'date' => $gertan->crs_dtm->format('Y-m-d H:i:s'),
+            'zone' => $gertan->crs_zon,
+            'url' => URL::signedRoute('v1.gertan.sigertan.show', ['id' => $gertan->crs_ids]),
+        ];
+    }
+
     /**
      * Display the Api/Home/Gempa Bumi
      *
@@ -132,6 +179,18 @@ class HomeController extends Controller
         });
         
         return $gempas;
+    }
+
+    public function gempaBumiLatest()
+    {
+        $roq = MagmaRoq::orderBy('datetime_wib','desc')->first();
+
+        return [
+            'lokasi' => $roq->area.'. Kedalaman '.$roq->depth.' Km dengan magnitude '.$roq->magnitude.' SR',
+            'date' => $roq->datetime_wib->format('Y-m-d H:i:s'),
+            'zone' => 'WIB',
+            'url' => URL::signedRoute('v1.gempabumi.roq.show', ['id' => $roq->no]),
+        ];
     }
 
     /**
@@ -245,7 +304,7 @@ class HomeController extends Controller
      * @param str $crs_id
      * @return \Illuminate\Http\Response
      */
-    public function showSigertan(Request $request)
+    public function showSigertan(Request $request, $id)
     {
         $crs_id = $request ? $request->id : $id;
 
@@ -305,7 +364,7 @@ class HomeController extends Controller
      * @param str $id
      * @return \Illuminate\Http\Response
      */
-    public function showGempaBumi(Request $request)
+    public function showGempaBumi(Request $request, $id)
     {
         $id = $request ? $request->id : $id;
 

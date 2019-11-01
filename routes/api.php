@@ -55,6 +55,8 @@ Route::name('v1.')->group(function () {
                     Route::group(['prefix' => 'gunung-api'], function () {
                         Route::get('/','Api\v1\HomeController@gunungapi')
                             ->name('gunung-api');
+                        Route::get('/status','Api\v1\HomeController@gunungapiStatus')
+                            ->name('gunung-api.status');
                         Route::get('/var/{code}','Api\v1\HomeController@showVar')
                             ->name('gunung-api.var.show');
                     });
@@ -62,6 +64,8 @@ Route::name('v1.')->group(function () {
                     Route::group(['prefix' => 'gerakan-tanah'], function () {
                         Route::get('/','Api\v1\HomeController@gerakanTanah')
                             ->name('gerakan-tanah');
+                        Route::get('/latest','Api\v1\HomeController@gerakanTanahLatest')
+                            ->name('gerakan-tanah.latest');
                         Route::get('/sigertan/{id}','Api\v1\HomeController@showSigertan')
                             ->name('gerakan-tanah.sigertan.show');
                     });
@@ -69,6 +73,8 @@ Route::name('v1.')->group(function () {
                     Route::group(['prefix' => 'gempa-bumi'], function () {
                         Route::get('/','Api\v1\HomeController@gempaBumi')
                             ->name('gempa-bumi');
+                        Route::get('/latest','Api\v1\HomeController@gempaBumiLatest')
+                            ->name('gempa-bumi.latest');
                         Route::get('/roq/{id}','Api\v1\HomeController@showGempaBumi')
                             ->name('gempa-bumi.roq.show');
                     });
