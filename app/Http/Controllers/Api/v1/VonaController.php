@@ -8,6 +8,7 @@ use App\v1\Vona;
 use App\Http\Resources\v1\VonaResource;
 use App\Http\Resources\v1\VonaCollection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\URL;
 
 class VonaController extends Controller
 {
@@ -29,6 +30,19 @@ class VonaController extends Controller
         });
 
         return new VonaCollection($vonas);
+    }
+
+    public function latest()
+    {
+        $vona = Vona::where('sent',1)->orderBy('no','desc')->first();
+
+        return [
+            'gunungapi' => $vona->ga_nama_gapi,
+            'datetime_utc' => $vona->issued_time,
+            'aviation_code' => $vona->cu_avcode,
+            'url' => URL::signedRoute('v1.vona.show',['id' => $vona->no]),
+        ];
+        return $vona;
     }
 
     /**

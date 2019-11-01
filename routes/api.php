@@ -39,8 +39,12 @@ Route::name('v1.')->group(function () {
             Route::get('user/{nip}','Api\UserController@show');
             Route::get('var/latest','Api\VarController@latest');
             Route::get('var/{id}','Api\VarController@show');
-            Route::get('vona','Api\v1\VonaController@index')->name('vona');
-            Route::get('vona/{uuid}','Api\v1\VonaController@show')->name('vona.show');
+            Route::get('vona','Api\v1\VonaController@index')
+                    ->name('vona');
+            Route::get('vona/latest','Api\v1\VonaController@latest')
+                    ->name('vona.latest');
+            Route::get('vona/{uuid}','Api\v1\VonaController@show')
+                    ->name('vona.show');
             Route::get('magma-roq','Api\OldRoqController@index');
             Route::get('magma-roq/{no}','Api\OldRoqController@show');
             Route::get('magma-ven','Api\v1\MagmaVenController@index');
@@ -55,6 +59,10 @@ Route::name('v1.')->group(function () {
                     Route::group(['prefix' => 'gunung-api'], function () {
                         Route::get('/','Api\v1\HomeController@gunungapi')
                             ->name('gunung-api');
+                        Route::get('/informasi-letusan','Api\v1\MagmaVenController@index')
+                            ->name('gunung-api.letusan');
+                        Route::get('/informasi-letusan/latest','Api\v1\MagmaVenController@latest')
+                            ->name('gunung-api.letusan.latest');
                         Route::get('/status','Api\v1\HomeController@gunungapiStatus')
                             ->name('gunung-api.status');
                         Route::get('/var/{code}','Api\v1\HomeController@showVar')
