@@ -5,9 +5,10 @@
 @endsection
 
 @section('add-vendor-css')
-    @role('Super Admin')
-    <link rel="stylesheet" href="{{ asset('vendor/json-viewer/jquery.json-viewer.css') }}" />
-    @endrole
+<link rel="stylesheet" href="{{ asset('vendor/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" />
+@role('Super Admin')
+<link rel="stylesheet" href="{{ asset('vendor/json-viewer/jquery.json-viewer.css') }}" />
+@endrole
 @endsection
 
 @section('content-header')
@@ -96,10 +97,13 @@
                     <ul class="nav nav-tabs">
                         <li class="active"><a data-toggle="tab" href="#tab-1">Detail Visual</a></li>
                         <li><a data-toggle="tab" href="#tab-2">Detail Kegempaan</a></li>
-                        <li><a data-toggle="tab" href="#tab-4">Grafik Visual</a></li>            
+                        <li><a data-toggle="tab" href="#tab-4">Grafik Visual</a></li>
+                        @if (!empty($data['highcharts']['curah_hujan']['series']))
+                        <li><a data-toggle="tab" href="#tab-6">Tabel Klimatologi</a></li>     
+                        @endif     
                         @if ($data['summary']['gempa'])
-                        <li><a data-toggle="tab" href="#tab-3">Tabel Kegempaan</a></li>
                         <li><a data-toggle="tab" href="#tab-5">Grafik Kegempaan</a></li>
+                        <li><a data-toggle="tab" href="#tab-3">Tabel Kegempaan</a></li>
                         @endif
                     </ul>
                     <div class="tab-content">
@@ -130,6 +134,7 @@
                             </div>
                         </div>
 
+                        @if ($data['summary']['gempa']) 
                         <div id="tab-3" class="tab-pane">
                             <div class="panel-body">
                                 <div class="table-responsive">
@@ -169,6 +174,7 @@
                                 Keterangan : A = Amplitudo, D = Durasi (Lama Gempa). Min = Nilai Minimum. Max = Nilai Maksimum. Amplitudo dalam Milimeter (mm), Durasi dalam satuan Detik 
                             </div>
                         </div>
+                        @endif
 
                         <div id="tab-4" class="tab-pane">
                             <div class="panel-body">
@@ -215,6 +221,34 @@
                             </div>
                         </div>
                         @endif
+
+                        @if (!empty($data['highcharts']['curah_hujan']['series']))
+                        <div id="tab-6" class="tab-pane">
+                            <div class="panel-body">
+                                <h4>Curah Hujan</h4>
+                                <div class="table-responsive">
+                                    <table id="table-curah-hujan" class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Tanggal</th>
+                                                <th>Curah Hujan (mm)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($data['highcharts']['curah_hujan']['series'][0]['data'] as $key => $serie)
+                                            <tr>
+                                                <td>{{ $key+1 }}</td>
+                                                <td>{{ $data['highcharts']['curah_hujan']['categories'][$key] }}</td>
+                                                <td>{{ $serie }}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -223,6 +257,12 @@
 @endsection
 
 @section('add-vendor-script')
+<script src="{{ asset('vendor/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables.net-buttons-bs/js/buttons.bootstrap.min.js') }}"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
@@ -235,6 +275,20 @@
 @section('add-script')
 <script>
     $(document).ready(function () {
+
+        @if (!empty($data['highcharts']['curah_hujan']['series']))
+        $('#table-curah-hujan').dataTable({
+            dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            buttons: [
+                { extend: 'copy', className: 'btn-sm'},
+                { extend: 'csv', title: 'Daftar Users', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, ]} },
+                { extend: 'pdf', title: 'Daftar Users', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, ]} },
+                { extend: 'print', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, ]} }
+            ]
+
+        });
+        @endif
 
         var clipboard = new ClipboardJS('.copy');
 
