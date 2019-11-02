@@ -79,7 +79,7 @@ VONA - {{ $vona->ga_code }} {{ $vona->issued }}
                             <td>(10)</td>
                             <td><b>Summit Elevation</b></td>
                             <td><b>:</b></td>
-                            <td>{{ round($vona->summit_elevation*3.3) }} FT ({{ $vona->summit_elevation }} M)</td>
+                            <td>{{ round($vona->summit_elevation) }} FT ({{ round($vona->summit_elevation/3.2) }} M)</td>
                         </tr>
                         <tr>
                             <td>(11)</td>
