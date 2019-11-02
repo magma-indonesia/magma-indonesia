@@ -236,11 +236,11 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($data['highcharts']['curah_hujan']['series'][0]['data'] as $key => $serie)
+                                            @foreach ($data['highcharts']['curah_hujan']['categories'] as $key => $category)
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
-                                                <td>{{ $data['highcharts']['curah_hujan']['categories'][$key] }}</td>
-                                                <td>{{ $serie }}</td>
+                                                <td>{{ $category }}</td>
+                                                <td>{{ $data['highcharts']['curah_hujan']['series'][0]['data'][$key] }}</td>
                                             </tr>
                                             @endforeach
                                         </tbody>
