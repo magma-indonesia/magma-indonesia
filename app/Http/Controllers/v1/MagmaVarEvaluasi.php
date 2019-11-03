@@ -134,16 +134,20 @@ class MagmaVarEvaluasi extends Controller
                     'series' => $this->getDataSeries(),
                 ],
                 'arah_angin' => [
-                    'series' => $this->transformSeries('pie','var_arangin')[0]
+                    'series' => $this->transformSeries('pie','var_arangin')[0] ?? []
                 ],
                 'warna_asap' => [
                     'series' => $this->transformSeries('pie','var_wasap')[0] ?? []
                 ],
                 'tinggi_asap' => [
-                    // 'categories' => $this->getCategories()->slice($this->count)->values(),
                     'categories' => $this->getCategories(),
                     'series' => $this->transformSeries('column','var_tasap','Tinggi Asap')
-                ]
+                ],
+                'curah_hujan' => [
+                    'categories' => $this->getCategories(),
+                    'series' => $this->transformSeries('column','var_curah_hujan','Curah Hujan')
+                ],
+
             ],
             'details' => $this->getDetails(),
             'widget' => $this->getWidgetJumlahGempa(),
