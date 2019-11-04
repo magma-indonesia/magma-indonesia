@@ -82,6 +82,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'krb-gunungapi' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/krb_gunungapi'),
+            'url' => env('APP_URL').'/krb-gunungapi',
+            'visibility' => 'public',
+        ],
+
         'seismogram' => [
             'driver' => 'local',
             'root' => storage_path('app/seismogram'),

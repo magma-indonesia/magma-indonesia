@@ -59,6 +59,9 @@ Route::group(['prefix' => 'gunungapi'], function () {
     Route::resource('laporan-guguran','LaporanGuguranController');
     Route::resource('cctv','KameraGunungApiController');
     Route::resource('seismometer','SeismometerController');
+    Route::resource('krb-gunungapi','PetaKrbGunungApiController');
+    Route::get('daftar-rekomendasi','VarRekomendasiController@index')
+            ->name('rekomendasi.index');
 
     Route::name('peralatan.')->group(function () {
         Route::group(['prefix' => 'peralatan'], function () {

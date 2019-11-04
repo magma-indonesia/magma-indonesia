@@ -16,6 +16,24 @@ class VarRekomendasi extends Model
         'id'
     ];
 
+    protected $appends = [
+        'status_text'
+    ];
+
+    public function getStatusTextAttribute()
+    {
+        switch ($this->status) {
+            case '1':
+                return 'Level I (Normal)';
+            case '2':
+                return 'Level II (Waspada)';
+            case '3':
+                return 'Level III (Siaga)';
+            default:
+                return 'Level IV (Awas)';
+        }
+    }
+
     /**     
      *   Masing-masing Var hanya dimiliki
      *   oleh 1 Gunungapi

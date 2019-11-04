@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\VarRekomendasi;
+use App\Gadd;
 use Illuminate\Http\Request;
 
 class VarRekomendasiController extends Controller
@@ -14,7 +15,11 @@ class VarRekomendasiController extends Controller
      */
     public function index()
     {
-        //
+        $gadds = Gadd::select('code','name')
+                    ->with('rekomendasi')
+                    ->orderBy('name')
+                    ->get();
+        return view('gunungapi.rekomendasi.index', compact('gadds'));
     }
 
     /**

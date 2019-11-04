@@ -117,10 +117,13 @@
                             <li class="{{ active('chambers.v1.gunungapi.laporan.filter') }}">
                                 <a class="m-l" href="{{ route('chambers.v1.gunungapi.laporan.filter') }}">Cari Laporan</a>
                             </li>
+                            <li>
+                                <a class="m-l" href="{{ route('chambers.rekomendasi.index') }}">Daftar Rekomendasi</a>
+                            </li>
                             <li class="{{ active('chambers.v1.gunungapi.form-kesimpulan.*') }}">
                                 <a class="m-l" href="{{ route('chambers.v1.gunungapi.form-kesimpulan.index') }}">Form Kesimpulan</a>
                             </li>
-                            <li class="{{ active('chambers.rsam.index') }}">
+                            <li>
                                 <a class="m-l" href="{{ route('chambers.rsam.index') }}">RSAM</a>
                             </li>
                             <li class="{{ active('chambers.v1.gunungapi.evaluasi.index') }}">
@@ -128,6 +131,9 @@
                             </li>
                             <li class="{{ active('chambers.v1.gunungapi.ven.index') }}">
                                 <a class="m-l" href="{{ route('chambers.v1.gunungapi.ven.index') }}">Informasi Letusan</a>
+                            </li>
+                            <li class="{{ active('chambers.krb.index') }}">
+                                <a class="m-l" href="{{ route('chambers.krb-gunungapi.index') }}">Peta KRB</a>
                             </li>
                             <li class="{{ active('chambers.v1.vona.*') }}">
                                 <a class="m-l" href="{{ route('chambers.v1.vona.index') }}">VONA</a>
@@ -208,7 +214,7 @@
                 </ul>
             </li>
 
-            <li class="{{ active(['chambers.datadasar.*','chambers.cctv.*','chambers.laporan.*','chambers.laporan.search','chambers.pos.*','chambers.letusan.*','chambers.draft.*','chambers.peralatan.*','chambers.rsam.*']) }}">
+            <li class="{{ active(['chambers.datadasar.*','chambers.cctv.*','chambers.laporan.*','chambers.laporan.search','chambers.pos.*','chambers.letusan.*','chambers.draft.*','chambers.peralatan.*','chambers.rsam.*','chambers.krb-gunungapi.*','chambers.rekomendasi.*']) }}">
                 <a href="#">
                     <span class="nav-label">Gunung Api</span>
                     <span class="fa arrow"></span>
@@ -244,6 +250,12 @@
                     </li>
                     <li class="{{ active('chambers.letusan.index') }}">
                         <a href="{{ route('chambers.letusan.index') }}">Laporan Letusan</a>
+                    </li>
+                    <li class="{{ active('chambers.rekomendasi.index') }}">
+                        <a href="{{ route('chambers.rekomendasi.index') }}">Daftar Rekomendasi</a>
+                    </li>
+                    <li class="{{ active('chambers.krb.index') }}">
+                        <a href="{{ route('chambers.krb-gunungapi.index') }}">Peta KRB</a>
                     </li>
                     <li class="{{ active('chambers.pos.index') }}">
                         <a href="{{ route('chambers.pos.index') }}">Pos Pengamatan</a>
