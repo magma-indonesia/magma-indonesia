@@ -39,6 +39,8 @@ class PetaKrbGunungApiController extends Controller
      */
     public function store(Request $request)
     {
+        ini_set('max_execution_time', 1200);
+
         $this->validate($request, [
             'code' => 'required|exists:ga_dd,code',
             'krb' => 'required|max:80000|mimes:jpeg,jpg',
