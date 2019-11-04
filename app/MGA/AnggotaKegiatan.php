@@ -28,7 +28,8 @@ class AnggotaKegiatan extends Model
         'jumlah_hari',
         'penginapan_tigapuluh_total',
         'penginapan_penuh_total',
-        'total_biaya'
+        'total_biaya',
+        'uang_yang_diterima'
     ];
 
     protected function jumlah_hari() : int
@@ -88,6 +89,12 @@ class AnggotaKegiatan extends Model
                 $this->getUangHarianTotalAttribute()+
                 $this->getPenginapanTigapuluhTotalAttribute()+
                 $this->getPenginapanPenuhTotalAttribute();
+    }
+
+    public function getUangYangDiterimaAttribute()
+    {
+        return $this->getUangHarianTotalAttribute()+
+                $this->getPenginapanTigapuluhTotalAttribute();
     }
 
     public function user()

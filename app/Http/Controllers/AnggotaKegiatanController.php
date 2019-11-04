@@ -147,11 +147,14 @@ class AnggotaKegiatanController extends Controller
      */
     public function show($nip)
     {
-        $anggota = AnggotaKegiatan::whereNipAnggota($nip)->firstOrFail();
-        $anggota->load('user:nip,name','kegiatan.jenis_kegiatan');
+        $anggotas = AnggotaKegiatan::has('kegiatan')->whereNipAnggota($nip)->get();
 
-        return $anggota;
-        return redirect()->route('chambers.administratif.mga.jenis-kegiatan.index');
+        if ($anggotas->isEmpty())
+            abort(404);
+
+        $anggotas->load('user:nip,name','kegiatan.jenis_kegiatan','detail_kegiatan.gunungapi');
+
+        return view('mga.anggota-kegiatan.show', compact('anggotas'));
     }
 
     /**
