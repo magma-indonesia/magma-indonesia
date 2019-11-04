@@ -54,14 +54,15 @@
                                     <td>{{ $anggota->detail_kegiatan->start_date }} - {{ $anggota->detail_kegiatan->end_date }} ({{ $anggota->detail_kegiatan->jumlah_hari }} hari)</td>
                                     <td>Rp. {{ number_format($anggota->uang_yang_diterima,0,',','.') }}</td>
                                     <td>
-                                        <a href="{{ route('chambers.administratif.mga.detail-kegiatan.show', $anggota->detail_kegiatan) }}" class="btn btn-sm btn-info btn-outline" style="margin-right: 3px;">Detail</a>
+                                        <a href="{{ route('chambers.administratif.mga.detail-kegiatan.show', $anggota->detail_kegiatan) }}" class="btn btn-sm btn-info btn-outline" style="margin-right: 3px;">Detail Kegiatan</a>
                                     </td>
                                 </tr> 
                                 @endforeach
                                 <tr>
-                                    <td colspan="3"><hr></td>
+                                    <td colspan="2"><hr></td>
                                     <td><b>Total</b></td>
-                                    <td><b>Rp. {{ number_format($anggotas->sum('uang_yang_diterima'),0,',','.') }}</b></td>
+                                    <td><b>Rp. {{ number_format($anggotas->sum('detail_kegiatan.jumlah_hari'),0,',','.') }} Hari</b></td>
+                                    <td colspan="2"><b>Rp. {{ number_format($anggotas->sum('uang_yang_diterima'),0,',','.') }}</b></td>
                                 </tr>
                             </tbody>
                         </table>
