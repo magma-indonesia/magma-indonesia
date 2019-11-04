@@ -103,7 +103,7 @@ class RsamJson extends Controller
 
     protected function cacheData($url, $request)
     {
-        $cache = Cache::remember('json:rsam:'.$request->channel.'-'.$request->start.':'.$request->end.':'.$request->periode, 120, function() use ($url) {
+        $cache = Cache::remember('json:rsam:'.$request->channel.'-'.$request->start.':'.$request->end.':'.$request->periode, 120, function() use ($url, $request) {
             StreamParser::csv($url)->each(function(Collection $data){
                 $flatten = $data->flatten();
                 $this->data[] = [
@@ -111,14 +111,16 @@ class RsamJson extends Controller
                     floatval($flatten[1])
                 ];
             });
-    
+            
+            $this->sendNotification($request);
+
             return $this->data;
         });
 
         return $cache;
     }
 
-    protected function freshData($url)
+    protected function freshData($url, $request)
     {
         StreamParser::csv($url)->each(function(Collection $data){
             $flatten = $data->flatten();
@@ -128,14 +130,30 @@ class RsamJson extends Controller
             ];
         });
 
+        $this->sendNotification($request);
+
         return $this->data;
     }
 
     protected function getData($url, $request)
     {
-        $data = $this->getCache() ? $this->cacheData($url, $request) : $this->freshData($url);
+        $data = $this->getCache() ? $this->cacheData($url, $request) : $this->freshData($url, $request);
 
         return $data;
+    }
+
+    protected function sendNotification($request)
+    {
+        SendLoginNotification::dispatch(
+            'rsam', 
+            auth()->user(), 
+            [
+                'channel' => $request->channel,
+                'periode' => $request->start.' hingga '.$request->end
+            ])
+        ->delay(now()->addSeconds(5));
+
+        return $this;
     }
 
     public function index(Request $request)
@@ -145,15 +163,6 @@ class RsamJson extends Controller
                             ->setEndDate($request->end)
                             ->setRsamPeriod($request->periode)
                             ->getWinstonUrl();
-
-        SendLoginNotification::dispatch(
-                'rsam', 
-                auth()->user(), 
-                [
-                    'channel' => $request->channel,
-                    'periode' => $request->start.' hingga '.$request->end
-                ])
-            ->delay(now()->addSeconds(5));
 
         return $this->getData($winstonUrl, $request);
     }
