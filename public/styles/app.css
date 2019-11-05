@@ -32,19 +32,19 @@ hr {
 }
 
 table tr td[class*="1"] {
-	border-left: 5px solid #4CAF50;
+	border-left: 1px solid #4CAF50;
 }
 
 table tr td[class*="2"] {
-	border-left: 5px solid #FFC107;
+	border-left: 1px solid #FFC107;
 }
 
 table tr td[class*="3"] {
-	border-left: 5px solid #FF9800;
+	border-left: 1px solid #FF9800;
 }
 
 table tr td[class*="4"] {
-	border-left: 5px solid #F44336;
+	border-left: 1px solid #F44336;
 }
 
 .text-baru {
