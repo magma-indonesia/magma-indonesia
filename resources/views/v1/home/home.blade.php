@@ -636,7 +636,7 @@
             $(document).on('click', '#load_krb', function() {
                 var $button = $(this);
                 var layerKrb = L.esri.featureLayer({
-                        url: 'https://services7.arcgis.com/Y24oyWJVNs6VLjiH/arcgis/rest/services/KRB_GA_ID/FeatureServer/0',
+                        url: 'https://services6.arcgis.com/Bm0YSHxAHYboP2pO/arcgis/rest/services/KRB_GA_ID3/FeatureServer',
                     }).bindPopup(function(layer) {
                         switch (layer.feature.properties.INDGA) {
                             case 1:
