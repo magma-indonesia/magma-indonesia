@@ -55,6 +55,9 @@ Route::name('v1.')->group(function () {
     
             Route::name('home.')->group(function () {
                 Route::group(['prefix' => 'home'], function () {
+
+                    Route::get('esdm','Api\v1\EsdmController@index')
+                            ->name('esdm');
     
                     Route::group(['prefix' => 'gunung-api'], function () {
                         Route::get('/','Api\v1\HomeController@gunungapi')

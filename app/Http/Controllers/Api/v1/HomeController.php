@@ -78,26 +78,30 @@ class HomeController extends Controller
         $gadds = $this->gunungapi();
 
         return [
-            [
-                'url' => route('v1.gunungapi.var'),
-                'tingkat_aktivitas' => [[
+            'url' => route('v1.gunungapi.var'),
+            'latest' => [
+                [
                     'level' => 4,
                     'status' => 'Awas',
-                    'jumlah' => $gadds->where('ga_status',4)->count()
+                    'jumlah' => $gadds->where('ga_status',4)->count(),
+                    'daftar_gunungapi' => $gadds->where('ga_status',4)->pluck('ga_nama_gapi')
                 ],[
                     'level' => 3,
                     'status' => 'Siaga',
-                    'jumlah' => $gadds->where('ga_status',3)->count()
+                    'jumlah' => $gadds->where('ga_status',3)->count(),
+                    'daftar_gunungapi' => $gadds->where('ga_status',3)->pluck('ga_nama_gapi')
                 ],[
                     'level' => 2,
                     'status' => 'Waspada',
-                    'jumlah' => $gadds->where('ga_status',2)->count()
+                    'jumlah' => $gadds->where('ga_status',2)->count(),
+                    'daftar_gunungapi' => $gadds->where('ga_status',2)->pluck('ga_nama_gapi')
                 ],[
                     'level' => 1,
                     'status' => 'Normal',
-                    'jumlah' => $gadds->where('ga_status',1)->count()
-                ]]
-            ],
+                    'jumlah' => $gadds->where('ga_status',1)->count(),
+                    'daftar_gunungapi' => $gadds->where('ga_status',1)->pluck('ga_nama_gapi')
+                ]
+            ]
         ];
     }
 
@@ -141,7 +145,7 @@ class HomeController extends Controller
                 ->orderBy('crs_log','desc')
                 ->first();
 
-        $judul = 'Laporan Tanggapan Gerakan Tanah di '.$gertan->crs_vil.', '.$gertan->crs_rgn.', '.$gertan->crs_cty.', '.$gertan->crs_prv;
+        $judul = $gertan->crs_rgn.', '.$gertan->crs_cty.', '.$gertan->crs_prv;
 
         return [
             'lokasi' => $judul,
@@ -186,7 +190,7 @@ class HomeController extends Controller
         $roq = MagmaRoq::orderBy('datetime_wib','desc')->first();
 
         return [
-            'lokasi' => $roq->area.'. Kedalaman '.$roq->depth.' Km dengan magnitude '.$roq->magnitude.' SR',
+            'lokasi' => $roq->magnitude.' SR, '.$roq->depth.' Km '.$roq->area,
             'date' => $roq->datetime_wib->format('Y-m-d H:i:s'),
             'zone' => 'WIB',
             'url' => URL::signedRoute('v1.gempabumi.roq.show', ['id' => $roq->no]),
