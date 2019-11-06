@@ -282,8 +282,8 @@
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
             buttons: [
                 { extend: 'copy', className: 'btn-sm'},
-                { extend: 'csv', title: 'Daftar Users', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, ]} },
-                { extend: 'pdf', title: 'Daftar Users', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, ]} },
+                { extend: 'csv', title: 'Tabel Curah Hujan', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, ]} },
+                { extend: 'pdf', title: 'Tabel Curah Hujan', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, ]} },
                 { extend: 'print', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, ]} }
             ]
 
