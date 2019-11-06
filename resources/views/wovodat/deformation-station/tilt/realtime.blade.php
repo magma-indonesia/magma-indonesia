@@ -62,9 +62,9 @@
                     @if (count($station[0]['data']))
                     <div class="panel-body">
                         <div id="tilt" class="row p-md">
-                            <div id="tilt-0" style="min-width: 310px; min-height: 320px; margin: 0 auto"></div>
-                            <div id="tilt-1" style="min-width: 310px; min-height: 320px; margin: 0 auto"></div>
-                            <div id="tilt-2" style="min-width: 310px; min-height: 320px; margin: 0 auto"></div>
+                            <div id="tilt-0" style="min-width: 310px; height: 200px; margin: 0 auto"></div>
+                            <div id="tilt-1" style="min-width: 310px; height: 200px; margin: 0 auto"></div>
+                            <div id="tilt-2" style="min-width: 310px; height: 200px; margin: 0 auto"></div>
                         </div>
                     </div>
                     @else
@@ -109,7 +109,6 @@
         addSecondToCurrentDateTime(seconds = 1)
         {
             this.current_datetime = this.current_datetime.setSeconds(this.current_datetime.getSeconds()+seconds);
-            console.log(this.current_datetime);
             return this;
         }
 
@@ -151,7 +150,6 @@
                 success: function(dataset) {
                     console.log(dataset);
                     $.each(tiltmeter, function(index, value) {
-                        console.log(index);
                         tiltmeter[index].series[0].addPoint(dataset[index].data[0], true, true);
                     });
                     start_date.addSecondToCurrentDateTime(3600)
