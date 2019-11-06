@@ -54,6 +54,52 @@ class DeformationTiltController extends Controller
         return view('wovodat.deformation-station.tilt.result', compact('station','volcano','network','station_name','date'));
     }
 
+    protected function realtimeData($deformationStation)
+    {
+        $station = DS::select('ds_id','ds_code','ds_name','cn_id')
+                        ->with([
+                            'common_network' => function ($query) {
+                                $query->select('cn_id','vd_id','cn_name');
+                            },
+                            'common_network.volcano' => function ($query) {
+                                $query->select('vd_id','vd_name');
+                            },
+                            'tilt' => function($query) use ($deformationStation) {
+                                $query->select('ds_id','dd_tlt_time','dd_tlt1 AS x_axis','dd_tlt2 as y_axis','dd_tlt_temp as temp')
+                                    ->where('ds_id',$deformationStation)
+                                    ->where('dd_tlt_time','>=','2013-11-06 13:00:00')
+                                    ->where('dd_tlt_time','<=','2013-11-06 23:59:59')
+                                    ->orderBy('dd_tlt_time');
+                            },
+                        ])
+                        ->where('ds_id',$deformationStation)
+                        ->first();
+
+        $volcano = $station->common_network->volcano->vd_name;
+        $network = $station->common_network->cn_name;
+        $station_name = $station->ds_name;
+
+        $station = $station->tilt ? $this->transformData($station) : [];
+
+        return [
+            'station' => $station,
+            'volcano' => $volcano,
+            'network' => $network,
+            'station_name' => $station_name,
+        ];
+    }
+
+    public function realtime(Request $request, $deformationStation = 21)
+    {
+        $data = $this->realtimeData($deformationStation);
+        $station = $data['station'];
+        $volcano = $data['volcano'];
+        $network = $data['network'];
+        $station_name = $data['station_name'];
+        
+        return view('wovodat.deformation-station.tilt.realtime', compact('station','volcano','network','station_name'));
+    }
+
     protected function transformData($station)
     {
 

@@ -184,6 +184,7 @@
                             <h1>
                                 <a href="{{ route('chambers.wovodat.common-network.deformation-station.index') }}" class="btn btn-outline btn-danger" target="_blank">View Stations</a>
                                 <a href="{{ route('chambers.wovodat.common-network.deformation-station.tilt.index') }}" class="btn btn-outline btn-danger" target="_blank">Tilt</a>
+                                <a href="{{ route('chambers.wovodat.common-network.deformation-station.tilt.realtime') }}" class="btn btn-outline btn-danger" target="_blank">Realtime</a>
                             </h1>
                             <small>
                                     This table stores information such as a location, name, and description for stations where deformation or geodetic data are collected.

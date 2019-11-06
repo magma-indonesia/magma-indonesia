@@ -184,8 +184,12 @@ Route::name('json.')->group(function () {
                 ->name('rsam')
                 ->middleware('signed');
 
-        Route::post('wovodat\plume','Json\WOVOdat\GasPlumeJson@index')
+        Route::post('wovodat/plume','Json\WOVOdat\GasPlumeJson@index')
                 ->name('wovodat.plume')
+                ->middleware('signed');
+
+        Route::post('wovodat/tilt/{deformation_station?}','Json\WOVOdat\RealtimeTiltJson@json')
+                ->name('wovodat.tilt.realtime')
                 ->middleware('signed');
     });
 });
@@ -212,6 +216,8 @@ Route::name('wovodat.')->group(function () {
             ->name('common-network.deformation-station.tilt.index');
         Route::post('common-network/deformation-station/tilt','WOVOdat\DeformationTiltController@store')
             ->name('common-network.deformation-station.tilt.store');
+        Route::get('common-network/deformation-station/tilt/realtime/{deformation_station?}','WOVOdat\DeformationTiltController@realtime')
+            ->name('common-network.deformation-station.tilt.realtime');
 
         Route::get('common-network/gas-station','WOVOdat\GasStationController@index')
             ->name('common-network.gas-station.index');
