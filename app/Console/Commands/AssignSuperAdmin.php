@@ -48,12 +48,6 @@ class AssignSuperAdmin extends Command
     public function __construct()
     {
         parent::__construct();
-        $this->role = new Role();
-        $this->users = collect([
-            '198803152015031005',
-            '198102182006041001',
-            '198706202009011002'
-        ]);
     }
 
     /**
@@ -64,6 +58,14 @@ class AssignSuperAdmin extends Command
     public function handle()
     {
         $this->info('Sedang menambahkan role Super Admin...');
+
+        $this->role = new Role();
+        $this->users = collect([
+            '198803152015031005',
+            '198102182006041001',
+            '198706202009011002'
+        ]);
+
         Role::where('name','Super Admin')->exists() 
             ? $this->addRole() 
             : $this->createRole()->addRole();

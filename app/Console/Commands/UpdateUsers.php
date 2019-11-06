@@ -14,14 +14,6 @@ class UpdateUsers extends Command
           "nip" => "195609231986031001"
         ],
         [
-          "name" => "Isya Nurrahmat Dana, Dr. Ir.",
-          "nip" => "195311141984031001"
-        ],
-        [
-          "name" => "Enar Kusdinar  Abdurachman, Dr., Ir., DEA.",
-          "nip" => "195402071986031001"
-        ],
-        [
           "name" => "Kasbani, Ir., M.Sc.",
           "nip" => "196110301991031001"
         ],
@@ -458,14 +450,6 @@ class UpdateUsers extends Command
           "nip" => "196202271990031001"
         ],
         [
-          "name" => "Agustinus Tae",
-          "nip" => "196107181989031001"
-        ],
-        [
-          "name" => "Bertolomeus Hirpaji Roma",
-          "nip" => "196108241991031002"
-        ],
-        [
           "name" => "Gabriel  Rago",
           "nip" => "196603231992031002"
         ],
@@ -784,10 +768,6 @@ class UpdateUsers extends Command
         [
           "name" => "Refly Paulus Aror, S.IP.",
           "nip" => "198310272009021001"
-        ],
-        [
-          "name" => "Bambang Walayanto, S.T.",
-          "nip" => "196110242007011001"
         ],
         [
           "name" => "Asikin Saputra, S.E.",
@@ -1713,7 +1693,7 @@ class UpdateUsers extends Command
         $this->info('Updating Data Users....');
 
         foreach ($this->users as $user) {
-            User::updateOrCreate([
+            User::firstOrCreate([
                 'nip' => $user['nip'],
             ],[
                 'name' => $user['name'],
