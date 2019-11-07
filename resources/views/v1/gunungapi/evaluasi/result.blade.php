@@ -98,9 +98,7 @@
                         <li class="active"><a data-toggle="tab" href="#tab-1">Detail Visual</a></li>
                         <li><a data-toggle="tab" href="#tab-2">Detail Kegempaan</a></li>
                         <li><a data-toggle="tab" href="#tab-4">Grafik Visual</a></li>
-                        @if (!empty($data['highcharts']['curah_hujan']['series']))
                         <li><a data-toggle="tab" href="#tab-6">Tabel Klimatologi</a></li>     
-                        @endif     
                         @if ($data['summary']['gempa'])
                         <li><a data-toggle="tab" href="#tab-5">Grafik Kegempaan</a></li>
                         <li><a data-toggle="tab" href="#tab-3">Tabel Kegempaan</a></li>
@@ -222,10 +220,37 @@
                         </div>
                         @endif
 
-                        @if (!empty($data['highcharts']['curah_hujan']['series']))
                         <div id="tab-6" class="tab-pane">
+
                             <div class="panel-body">
-                                <h4>Curah Hujan</h4>
+                                <h4 class="text-center m-b-md">Suhu Udara</h4>
+                                <div class="table-responsive">
+                                    <table id="table-temperature" class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Tanggal</th>
+                                                <th>Minimum</th>
+                                                <th>Maximum</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($data['highcharts']['curah_hujan']['categories'] as $key => $category)
+                                            <tr>
+                                                <td>{{ $key+1 }}</td>
+                                                <td>{{ $category }}</td>
+                                                <td>{{ $data['highcharts']['temperature']['series_min'][0]['data'][$key] }}</td>
+                                                <td>{{ $data['highcharts']['temperature']['series_max'][0]['data'][$key] }}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            @if (!empty($data['highcharts']['curah_hujan']['series']))
+                            <div class="panel-body">
+                                <h4 class="text-center m-b-md">Curah Hujan</h4>
                                 <div class="table-responsive">
                                     <table id="table-curah-hujan" class="table table-striped">
                                         <thead>
@@ -247,8 +272,36 @@
                                     </table>
                                 </div>
                             </div>
+                            @endif
+
+                            @if (!empty($data['highcharts']['kelembaban']['series_min']))
+                            <div class="panel-body">
+                                <h4 class="text-center m-b-md">Kelembaban</h4>
+                                <div class="table-responsive">
+                                    <table id="table-kelembaban" class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Tanggal</th>
+                                                <th>Minimum</th>
+                                                <th>Maximum</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($data['highcharts']['kelembaban']['categories'] as $key => $category)
+                                            <tr>
+                                                <td>{{ $key+1 }}</td>
+                                                <td>{{ $category }}</td>
+                                                <td>{{ $data['highcharts']['kelembaban']['series_min'][0]['data'][$key] }}</td>
+                                                <td>{{ $data['highcharts']['kelembaban']['series_max'][0]['data'][$key] }}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            @endif
                         </div>
-                        @endif
                     </div>
                 </div>
             </div>
@@ -276,6 +329,18 @@
 <script>
     $(document).ready(function () {
 
+        $('#table-temperature').dataTable({
+            dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            buttons: [
+                { extend: 'copy', className: 'btn-sm'},
+                { extend: 'csv', title: 'Tabel Temperature', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, ]} },
+                { extend: 'pdf', title: 'Tabel Temperature', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, ]} },
+                { extend: 'print', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, ]} }
+            ]
+
+        });
+
         @if (!empty($data['highcharts']['curah_hujan']['series']))
         $('#table-curah-hujan').dataTable({
             dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
@@ -286,7 +351,19 @@
                 { extend: 'pdf', title: 'Tabel Curah Hujan', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, ]} },
                 { extend: 'print', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, ]} }
             ]
+        });
+        @endif
 
+        @if (!empty($data['highcharts']['kelembaban']['series_min']))
+        $('#table-kelembaban').dataTable({
+            dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            buttons: [
+                { extend: 'copy', className: 'btn-sm'},
+                { extend: 'csv', title: 'Tabel Kelembaban', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, ]} },
+                { extend: 'pdf', title: 'Tabel Kelembaban', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, ]} },
+                { extend: 'print', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, ]} }
+            ]
         });
         @endif
 

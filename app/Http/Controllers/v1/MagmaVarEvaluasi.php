@@ -147,7 +147,16 @@ class MagmaVarEvaluasi extends Controller
                     'categories' => $this->getCategories(),
                     'series' => $this->transformSeries('column','var_curah_hujan','Curah Hujan')
                 ],
-
+                'temperature' => [
+                    'categories' => $this->getCategories(),
+                    'series_min' => $this->transformSeries('column','var_suhumin','Suhu Minimum'),
+                    'series_max' => $this->transformSeries('column','var_suhumax','Suhu Maximum')
+                ],
+                'kelembaban' => [
+                    'categories' => $this->getCategories(),
+                    'series_min' => $this->transformSeries('column','var_kelembabanmin','Kelembaban Minimum'),
+                    'series_max' => $this->transformSeries('column','var_kelembabanmin','Kelembaban Maximum')
+                ],
             ],
             'details' => $this->getDetails(),
             'widget' => $this->getWidgetJumlahGempa(),
