@@ -17,9 +17,7 @@ class GaddController extends Controller
      */
     public function index(Request $request)
     {
-        $gadds = Cache::remember('v1/gadds', 360, function () {
-            return Gadd::orderBy('ga_nama_gapi')->get();
-        });
+        $gadds = Gadd::orderBy('ga_nama_gapi')->get();
 
         return view('v1.gunungapi.gadd.index',compact('gadds'));
     }
