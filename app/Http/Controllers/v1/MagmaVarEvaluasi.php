@@ -194,7 +194,7 @@ class MagmaVarEvaluasi extends Controller
     protected function checkCache($request)
     {
         $this->formatDate($request);
-        $this->cache = 'chambers/v1/gunungapi/evaluasi:result:'.$request->code.':'.$this->start_str.':'.$this->end_str.':'.implode(':',$request->gempa);
+        $this->cache = 'chambers/v1/gunungapi/evaluasi:result:'.$request->jenis.':'.$request->code.':'.$this->start_str.':'.$this->end_str.':'.implode(':',$request->gempa);
 
         return Cache::remember($this->cache, 30, function () use($request) {
             $this->setCodes($request->gempa)
