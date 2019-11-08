@@ -93,7 +93,7 @@
 
                                             <div class="form-group col-sm-12">
                                                 <label>Kesimpulan 1</label>
-                                                <textarea name="kesimpulan[]]" class="form-control" rows="3" placeholder="Kesimpulan Pertama wajib diisi"></textarea>
+                                                <textarea name="kesimpulan[]" class="form-control" rows="3" placeholder="Kesimpulan Pertama wajib diisi"></textarea>
                                             </div>
 
                                             <div class="form-group col-sm-12">
