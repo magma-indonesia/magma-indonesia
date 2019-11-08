@@ -28,11 +28,10 @@
 
     @if ($pendahuluans == 0)
     <div class="row">
-            <div class="col-lg-12">
-                <div class="hpanel">   
-                    <div class="alert alert-danger">
-                        <i class="fa fa-gears"></i> Data Pendahuluan Bencana Geologi belum ada. <a href="{{ route('chambers.bencana-geologi-pendahuluan.create') }}"><b>Mau buat baru?</b></a>
-                    </div>
+        <div class="col-lg-12">
+            <div class="hpanel">   
+                <div class="alert alert-danger">
+                    <i class="fa fa-gears"></i> Data Pendahuluan Bencana Geologi belum ada. <a href="{{ route('chambers.bencana-geologi-pendahuluan.create') }}"><b>Mau buat baru?</b></a>
                 </div>
             </div>
         </div>
