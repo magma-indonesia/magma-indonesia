@@ -65,7 +65,7 @@ class BencanaGeologiPendahuluanController extends Controller
     public function edit(BencanaGeologiPendahuluan $bencanaGeologiPendahuluan)
     {
         $gadds = Gadd::orderBy('name')->select('code','name')->get();
-        $pendahuluan = $bencanaGeologiPendahuluan::with('gunungapi')->first();
+        $pendahuluan = BencanaGeologiPendahuluan::whereId($bencanaGeologiPendahuluan->id)->with('gunungapi')->first();
         return view('bencana-geologi.pendahuluan.edit', compact('gadds','pendahuluan'));
     }
 

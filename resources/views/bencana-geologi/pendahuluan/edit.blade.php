@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    Buat Pendahuluan Baru
+    Edit Pendahuluan
 @endsection
 
 @section('add-vendor-css')
@@ -73,9 +73,7 @@
                                             <div class="form-group col-sm-12">
                                                 <label>Nama Gunung Api</label>
                                                 <select name="code" class="form-control selectpicker" data-live-search="true">
-                                                    @foreach ($gadds as $gadd)
-                                                    <option value="{{ $gadd->code }}" {{ $pendahuluan->gunungapi->code ==  $gadd->code ? 'selected' : ''}}>{{ $gadd->name }}</option>
-                                                    @endforeach
+                                                    <option value="{{ $pendahuluan->gunungapi->code }}">{{ $pendahuluan->gunungapi->name }}</option>
                                                 </select>
                                             </div>
 
