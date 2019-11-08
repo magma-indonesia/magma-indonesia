@@ -38,7 +38,7 @@
     </div>
     @endif
 
-    @if ($resumes->isEmpty() AND $pendahuluans != 0)
+    @if ($resumes->isEmpty() AND $pendahuluans > 0)
     <div class="row">
         <div class="col-lg-12">
             <div class="hpanel">   
