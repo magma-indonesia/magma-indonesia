@@ -3,6 +3,7 @@
 namespace App\v1;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Gadd extends Model
 {
@@ -77,6 +78,15 @@ class Gadd extends Model
         return $this->hasMany('App\v1\Vona','ga_code','ga_code')
                 ->orderBy('issued_time','desc')
                 ->limit(1);
+    }
+
+    public function latest_vona()
+    {
+        return $this->hasOne('App\v1\Vona','ga_code','ga_code')
+                    ->join(DB::raw('(SELECT ga_code, MAX(issued) as issued FROM ga_vona GROUP BY ga_code) latest_vona'), function($join) {
+                        $join->on('ga_vona.issued','=','latest_vona.issued')
+                            ->on('ga_vona.ga_code','=','latest_vona.ga_code');
+                    });
     }
 
     public function history()

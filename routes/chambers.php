@@ -63,6 +63,10 @@ Route::group(['prefix' => 'gunungapi'], function () {
     Route::get('daftar-rekomendasi','VarRekomendasiController@index')
             ->name('rekomendasi.index');
 
+    Route::resource('bencana-geologi','BencanaGeologiController');
+    Route::resource('bencana-geologi-pendahuluan','BencanaGeologiPendahuluanController');
+    Route::resource('resume-harian','ResumeHarianController');
+
     Route::name('peralatan.')->group(function () {
         Route::group(['prefix' => 'peralatan'], function () {
             Route::get('/','AlatController@index')->name('index');

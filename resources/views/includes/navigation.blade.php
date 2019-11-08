@@ -108,6 +108,9 @@
                             <li class="{{ active('chambers.v1.gunungapi.data-dasar.index') }}">
                                 <a class="m-l" href="{{ route('chambers.v1.gunungapi.data-dasar.index') }}">Data Dasar</a>
                             </li>
+                            <li class="{{ active('chambers.resume-harian.index') }}">
+                                <a class="m-l" href="{{ route('chambers.resume-harian.index') }}">Resume Harian</a>
+                            </li>
                             <li class="{{ active('chambers.v1.gunungapi.laporan.index') }}">
                                 <a class="m-l" href="{{ route('chambers.v1.gunungapi.laporan.index') }}">Daftar Laporan</a>
                             </li>
@@ -214,7 +217,7 @@
                 </ul>
             </li>
 
-            <li class="{{ active(['chambers.datadasar.*','chambers.cctv.*','chambers.laporan.*','chambers.laporan.search','chambers.pos.*','chambers.letusan.*','chambers.draft.*','chambers.peralatan.*','chambers.rsam.*','chambers.krb-gunungapi.*','chambers.rekomendasi.*']) }}">
+            <li class="{{ active(['chambers.datadasar.*','chambers.cctv.*','chambers.laporan.*','chambers.laporan.search','chambers.pos.*','chambers.letusan.*','chambers.draft.*','chambers.peralatan.*','chambers.rsam.*','chambers.krb-gunungapi.*','chambers.rekomendasi.*', 'chambers.resume-harian.*']) }}">
                 <a href="#">
                     <span class="nav-label">Gunung Api</span>
                     <span class="fa arrow"></span>
@@ -224,6 +227,9 @@
                         <a href="{{ route('chambers.datadasar.index') }}">Data Dasar</a>
                     </li>
                     @yield('nav-edit-volcano')
+                    <li class="{{ active('chambers.resume-harian.index') }}">
+                        <a href="{{ route('chambers.resume-harian.index') }}">Resume Harian</a>
+                    </li>
                     <li class="{{ active('chambers.cctv.index') }}">
                         <a href="{{ route('chambers.cctv.index') }}">CCTV</a>
                     </li>

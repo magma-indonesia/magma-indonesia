@@ -49,6 +49,10 @@ class Vona extends Model
         'sender'
     ];
 
+    protected $appends = [
+        'date_time',
+    ];
+
     protected $guard = ['no'];
 
     public function getIssuedTimeAttribute()
@@ -72,6 +76,11 @@ class Vona extends Model
     public function getSummitElevationAttribute($value)
     {
         return intval($value);
+    }
+
+    public function getDateTimeAttribute()
+    {
+        return Carbon::parse($this->getIssuedTimeAttribute())->formatLocalized('%d %B %Y');
     }
 
 }
