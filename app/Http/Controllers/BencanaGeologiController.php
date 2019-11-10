@@ -16,10 +16,7 @@ class BencanaGeologiController extends Controller
      */
     public function index()
     {
-        $gadds = Gadd::orderBy('name')->select('code','name')->get();
-        $bencanas = BencanaGeologi::orderBy('urutan')->with('pendahuluan')->get();
-        $pendahuluans = Pendahuluan::all();
-        return view('bencana-geologi.index', compact('gadds','bencanas','pendahuluans'));
+        return redirect()->route('chambers.resume-harian.index');
     }
 
     /**
@@ -65,7 +62,7 @@ class BencanaGeologiController extends Controller
         $bencana->active = $request->active;
         $bencana->save();
         
-        return redirect()->route('chambers.bencana-geologi.index');
+        return redirect()->route('chambers.resume-harian.index');
     }
 
     /**
@@ -76,7 +73,7 @@ class BencanaGeologiController extends Controller
      */
     public function show(BencanaGeologi $bencanaGeologi)
     {
-
+        return redirect()->route('chambers.resume-harian.index');
     }
 
     /**
@@ -108,7 +105,7 @@ class BencanaGeologiController extends Controller
         $bencanaGeologi->active = $request->active;
         $bencanaGeologi->save();
 
-        return redirect()->route('chambers.bencana-geologi.index');
+        return redirect()->route('chambers.resume-harian.index');
     }
 
     /**

@@ -161,4 +161,9 @@ class Gadd extends Model
     {
         return $this->hasMany('App\LiveSeismogram','code','code');
     }
+
+    public function bencana_geologi()
+    {
+        return $this->hasOne('App\BencanaGeologi','code','code');
+    }
 }

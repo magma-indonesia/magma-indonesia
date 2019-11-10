@@ -102,6 +102,75 @@
         </div>
     </div>
 
+    @elseif ($resumes->isNotEmpty())
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="hpanel">
+                <div class="panel-heading">
+                    Daftar Resume Harian Gunung Api
+                </div>
+
+                @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                <div class="alert alert-danger">
+                    {{ $error }}
+                </div>
+                @endforeach
+                @endif
+
+                @if(Session::has('flash_resume'))
+                <div class="alert alert-success">
+                    <i class="fa fa-bolt"></i> {!! session('flash_resume') !!}
+                </div>
+                @endif
+
+                <div class="panel-body float-e-margins">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                            <a href="{{ route('chambers.resume-harian.create') }}" class="btn btn-magma btn-outline btn-block" type="button">Buat Resume Hari ini</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    {{ $resumes->links() }}
+                    <div class="table-responsive m-t">
+                        <table id="table-kesimpulan" class="table table-condensed table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th width="20%">Tanggal</th>
+                                    <th>Resume</th>
+                                    <th width="20%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($resumes as $key => $resume)
+                                <tr>
+                                    <td>{{ $key+1 }}</td>
+                                    <td>{{ $resume->tanggal->formatLocalized('%A, %d %B %Y') }}</td>
+                                    <td>{{ $resume->truncated }}</td>
+                                    <td>
+                                        <a href="{{ route('chambers.resume-harian.show', $resume) }}" class="btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">View</a>
+
+                                        <a href="{{ route('chambers.resume-harian.edit', $resume->tanggal) }}" class="btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="alert alert-danger">
+                    <i class="fa fa-gears"></i> Untuk menghapus data yang digunakan, silahkan kontak Admin</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-lg-12">
             <div class="hpanel">
@@ -253,80 +322,7 @@
                         </table>
                     </div>
                 </div>
-
-                <div class="alert alert-danger">
-                    <i class="fa fa-gears"></i> Untuk menghapus data yang digunakan, silahkan kontak Admin</a>
-                </div>
                 @endif
-            </div>
-        </div>
-    </div>
-
-    @elseif ($resumes->isNotEmpty())
-
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="hpanel">
-                <div class="panel-heading">
-                    Daftar Resume Harian Gunung Api
-                </div>
-
-                @if ($errors->any())
-                @foreach ($errors->all() as $error)
-                <div class="alert alert-danger">
-                    {{ $error }}
-                </div>
-                @endforeach
-                @endif
-
-                @if(Session::has('flash_message'))
-                <div class="alert alert-success">
-                    <i class="fa fa-bolt"></i> {!! session('flash_message') !!}
-                </div>
-                @endif
-
-                <div class="panel-body float-e-margins">
-                    <div class="row">
-                        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
-                            <a href="{{ route('chambers.resume-harian.create') }}" class="btn btn-magma btn-outline btn-block" type="button">Buat Resume Hari ini</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="panel-body">
-                    {{ $resumes->links() }}
-                    <div class="table-responsive m-t">
-                        <table id="table-kesimpulan" class="table table-condensed table-striped">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th width="20%">Tanggal</th>
-                                    <th>Resume</th>
-                                    <th width="20%">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($resumes as $key => $resume)
-                                <tr>
-                                    <td>{{ $key+1 }}</td>
-                                    <td>{{ $resume->tanggal->formatLocalized('%A, %d %B %Y') }}</td>
-                                    <td>{{ $resume->truncated }}</td>
-                                    <td>
-                                        <a href="{{ route('chambers.resume-harian.show', $resume) }}" class="btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">View</a>
-
-                                        <a href="{{ route('chambers.resume-harian.edit', $resume->tanggal) }}" class="btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="alert alert-danger">
-                    <i class="fa fa-gears"></i> Untuk menghapus data yang digunakan, silahkan kontak Admin</a>
-                </div>
-
             </div>
         </div>
     </div>

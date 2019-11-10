@@ -63,7 +63,7 @@ class ResumeHarianController extends Controller
                         'var_perwkt'
                     )
                     ->where('var_lts','>',0)
-                    ->whereGaCode('KRA')
+                    ->whereGaCode($var->ga_code)
                     ->whereVarPerwkt('24 Jam')
                     ->orderByDesc('var_data_date')
                     ->first();
@@ -74,7 +74,7 @@ class ResumeHarianController extends Controller
 
             $tinggiErupsi = $var->var_lts_tmax == 0 ? ' dengan tinggi kolom erupsi tidak teramati.' : $tinggiErupsi;
     
-            $warnaErupsi = $var->var_lts_wasap->isNotEmpty() ? ' Warna kolom abu teramati '.str_replace_last(', ',' hingga ',implode(', ',$var->var_lts_wasap->toArray())).'.' : '';
+            $warnaErupsi = $var->var_lts_wasap ? ' Warna kolom abu teramati '.str_replace_last(', ',' hingga ',implode(', ',$var->var_lts_wasap->toArray())).'.' : '';
 
             $letusan = ' Letusan terakhir terjadi pada tanggal '.$var->var_data_date->formatLocalized('%d %B %Y').$tinggiErupsi.$warnaErupsi;
 
@@ -375,7 +375,7 @@ class ResumeHarianController extends Controller
     {
         $resumes = ResumeHarian::orderByDesc('tanggal')->paginate(10);
         $pendahuluans = Pendahuluan::has('gunungapi')->with('gunungapi')->get();
-        $gadds = Gadd::orderBy('name')->select('code','name')->get();
+        $gadds = Gadd::doesntHave('bencana_geologi')->orderBy('name')->select('code','name')->get();
         $bencanas = BencanaGeologi::orderBy('urutan')->with('pendahuluan')->get();
         return view('gunungapi.resume-harian.index', compact('resumes','pendahuluans','gadds','bencanas'));
     }
@@ -435,7 +435,7 @@ class ResumeHarianController extends Controller
             'truncated' => (strlen($resume) > 20) ? substr($resume, 0, 200) . '...' : $resume,
         ]);
 
-        return redirect()->route('chambers.resume-harian.index')->with('flash_message','Berhasil dibuat!');
+        return redirect()->route('chambers.resume-harian.index')->with('flash_resume','Resume Harian '.$this->date_localized.' berhasil dibuat!');
     }
 
     /**
@@ -468,7 +468,7 @@ class ResumeHarianController extends Controller
      */
     public function edit(ResumeHarian $resumeHarian)
     {
-        //
+        return redirect()->route('chambers.resume-harian.index');
     }
 
     /**
@@ -480,7 +480,7 @@ class ResumeHarianController extends Controller
      */
     public function update(Request $request, ResumeHarian $resumeHarian)
     {
-        //
+        return redirect()->route('chambers.resume-harian.index');
     }
 
     /**
@@ -491,6 +491,6 @@ class ResumeHarianController extends Controller
      */
     public function destroy(ResumeHarian $resumeHarian)
     {
-        //
+        return redirect()->route('chambers.resume-harian.index');
     }
 }
