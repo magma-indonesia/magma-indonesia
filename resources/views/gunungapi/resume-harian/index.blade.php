@@ -188,7 +188,7 @@
                             <tbody>
                                 @foreach ($resumes as $key => $resume)
                                 <tr>
-                                    <td>{{ $key+1 }}</td>
+                                    <td>{{ $resumes->firstItem()+$key }}</td>
                                     <td>{{ $resume->tanggal->formatLocalized('%A, %d %B %Y') }}</td>
                                     <td>{{ $resume->truncated }}</td>
                                     <td>
