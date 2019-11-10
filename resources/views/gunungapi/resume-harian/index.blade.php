@@ -172,7 +172,9 @@
                 </div>
 
                 <div class="panel-body">
-                    {{ $resumes->links() }}
+                    <div class="text-center">
+                        {{ $resumes->links() }}
+                    </div>
                     <div class="table-responsive m-t">
                         <table id="table-kesimpulan" class="table table-condensed table-striped">
                             <thead>
