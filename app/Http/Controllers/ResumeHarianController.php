@@ -6,6 +6,7 @@ use App\ResumeHarian;
 use App\BencanaGeologi;
 use App\BencanaGeologiPendahuluan as Pendahuluan;
 use App\v1\MagmaVar;
+use App\Gadd;
 use Illuminate\Http\Request;
 use App\Traits\v1\DeskripsiGempa;
 use App\Traits\VisualAsap;
@@ -327,8 +328,10 @@ class ResumeHarianController extends Controller
     public function index()
     {
         $resumes = ResumeHarian::orderByDesc('tanggal')->paginate(10);
-        $pendahuluans = Pendahuluan::count();
-        return view('gunungapi.resume-harian.index', compact('resumes','pendahuluans'));
+        $pendahuluans = Pendahuluan::has('gunungapi')->with('gunungapi')->get();
+        $gadds = Gadd::orderBy('name')->select('code','name')->get();
+        $bencanas = BencanaGeologi::orderBy('urutan')->with('pendahuluan')->get();
+        return view('gunungapi.resume-harian.index', compact('resumes','pendahuluans','gadds','bencanas'));
     }
 
     /**
