@@ -148,7 +148,7 @@ class ResumeHarianController extends Controller
                 'visual' => $this->getVisualDeskripsi($bencana->magma_var),
                 'gempa' => $this->setJumlahGempa($bencana->magma_var)->toText()->isNotEmpty() ? $this->setJumlahGempa($bencana->magma_var)->toText() : collect(['Belum ada laporan 24 Jam yang masuk.']),
                 'sometimes' => $bencana->gunungapi->code == 'AGU' ? $this->getNewVar($bencana->gunungapi->code) : collect([]),
-                'letusan' => $this->getInformasiLetusan($bencana->magma_var),
+                'letusan' => $bencana->magma_var ? $this->getInformasiLetusan($bencana->magma_var) : collect([]),
                 'rekomendasi' => $bencana->magma_var->var_rekom ?? 'Belum ada laporan 24 Jam yang masuk.',
             ];
         });
