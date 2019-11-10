@@ -47,22 +47,62 @@ class ResumeHarianController extends Controller
         return '*Belum ada laporan 24 Jam yang masuk.*';
     }
 
+    protected function getInformasiLetusan($var)
+    {
+        $var = MagmaVar::select(
+                        'var_lts',
+                        'var_lts_amin',
+                        'var_lts_amax',
+                        'var_lts_dmin',
+                        'var_lts_dmax',
+                        'var_lts_tmin',
+                        'var_lts_tmax',
+                        'var_lts_wasap',
+                        'ga_code',
+                        'var_data_date',
+                        'var_perwkt'
+                    )
+                    ->where('var_lts','>',0)
+                    ->whereGaCode('KRA')
+                    ->whereVarPerwkt('24 Jam')
+                    ->orderByDesc('var_data_date')
+                    ->first();
+
+        if ($var->count()) {
+
+            $tinggiErupsi = $var->var_lts_tmax > 0 ? ' menghasilkan tinggi kolom erupsi '.$var->var_lts_tmax.' m.' : 0;
+
+            $tinggiErupsi = $var->var_lts_tmax == 0 ? ' dengan tinggi kolom erupsi tidak teramati.' : $tinggiErupsi;
+    
+            $warnaErupsi = $var->var_lts_wasap->isNotEmpty() ? ' Warna kolom abu teramati '.str_replace_last(', ',' hingga ',implode(', ',$var->var_lts_wasap->toArray())).'.' : '';
+
+            $letusan = ' Letusan terakhir terjadi pada tanggal '.$var->var_data_date->formatLocalized('%d %B %Y').$tinggiErupsi.$warnaErupsi;
+
+            return collect([$letusan]);
+        };
+
+        return collect([]);
+    }
+
     protected function setJumlahGempa($var)
     {
         $this->widget = collect();
 
-        if ($var) { 
-            $gempas = collect($this->codes);
-            $gempas->each(function ($gempa, $key) use ($var) {
+        if ($var) {
+            collect($this->codes)->each(function ($gempa, $key) use ($var) {
                 if ($count = $var->{'var_'.$key}) {
                     $this->widget->push(collect([
                         'name' => $gempa,
+                        'key' => $key,
                         'count' => $count,
                         'amplitudo' => $var->{'var_'.$key.'_amin'} == $var->{'var_'.$key.'_amax'} ? $var->{'var_'.$key.'_amin'} : $var->{'var_'.$key.'_amin'}.'-'.$var->{'var_'.$key.'_amax'},
                         'adom' => $var->{'var_'.$key.'_adom'},
                     ]));
                 }
             });
+
+            if ($this->widget->isEmpty())
+                $this->widget = collect(['count' => 0]);
         }
 
         return $this;
@@ -71,13 +111,17 @@ class ResumeHarianController extends Controller
     protected function toText()
     {
         if ($this->widget->isNotEmpty()) {
+
+            if ($this->widget->sum('count') == 0)
+                return collect(['- Kegempaan nihil']);
+
             $texts = $this->widget->map(function ($item, $key) {
                 if ($item['name'] == 'Tremor Menerus') {
                     return '- Tremor Menerus, amplitudo '.$item['amplitudo'].' mm (dominan '.$item['adom'].' mm)';
                 }
                 return '- '.$item['count'].' kali gempa '.$item['name'];
             });
-    
+
             return $texts;
         }
 
@@ -103,6 +147,7 @@ class ResumeHarianController extends Controller
                 'visual' => $this->getVisualDeskripsi($bencana->magma_var),
                 'gempa' => $this->setJumlahGempa($bencana->magma_var)->toText()->isNotEmpty() ? $this->setJumlahGempa($bencana->magma_var)->toText() : collect(['Belum ada laporan 24 Jam yang masuk.']),
                 'sometimes' => $bencana->gunungapi->code == 'AGU' ? $this->getNewVar($bencana->gunungapi->code) : collect([]),
+                'letusan' => $this->getInformasiLetusan($bencana->magma_var),
                 'rekomendasi' => $bencana->magma_var->var_rekom ?? 'Belum ada laporan 24 Jam yang masuk.',
             ];
         });
@@ -117,11 +162,12 @@ class ResumeHarianController extends Controller
             $gunungapi = $content['gunungapi'];
             $pendahuluan = $content['pendahuluan'];
             $visual = $content['visual'];
+            $letusan = $content['letusan']->isNotEmpty() ? $content['letusan']->first() : '';
             $gempa = $content['gempa']->isNotEmpty() ? implode("\n", $content['gempa']->toArray()) : '*Belum ada laporan 24 Jam yang masuk.*';
             $sometimes = $content['sometimes']->isNotEmpty() ? "\n\nMelalui rekaman seismograf pada ".$this->date_localized." (Pukul. 00:00-06:00 WITA) tercatat:\n".implode("\n", $content['sometimes']->toArray()) : '';
             $rekomendasi = $content['rekomendasi'] ?? '*Belum ada laporan 24 Jam yang masuk.*';
 
-            $temp = '*'.$gunungapi."*\n\n".$pendahuluan."\n\n".$visual."\n\nMelalui rekaman seismograf pada ".$this->date_localized_before." tercatat:\n".$gempa.$sometimes."\n\nRekomendasi:\n".$rekomendasi."\n\nVONA:\n*DIISI MANUAL*";
+            $temp = '*'.$gunungapi."*\n\n".$pendahuluan.$letusan."\n\n".$visual."\n\nMelalui rekaman seismograf pada ".$this->date_localized_before." tercatat:\n".$gempa.$sometimes."\n\nRekomendasi:\n".$rekomendasi."\n\nVONA:\n*DIISI MANUAL*";
 
             return $temp;
         });
