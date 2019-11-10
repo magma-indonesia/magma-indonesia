@@ -69,7 +69,7 @@ class ResumeHarianController extends Controller
                     ->orderByDesc('var_data_date')
                     ->first();
 
-        if ($var->count()) {
+        if ($var) {
 
             $tinggiErupsi = $var->var_lts_tmax > 0 ? ' menghasilkan tinggi kolom erupsi '.$var->var_lts_tmax.' m.' : 0;
 
