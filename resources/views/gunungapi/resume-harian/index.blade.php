@@ -8,6 +8,7 @@
 @role('Super Admin')
 <link rel="stylesheet" href="{{ asset('vendor/sweetalert/lib/sweet-alert.css') }}" />
 @endrole
+<link rel="stylesheet" href="{{ asset('vendor/bootstrap-datepicker-master/dist/css/bootstrap-datepicker3.min.css') }}" />
 @endsection
 
 @section('content-header')
@@ -126,11 +127,48 @@
                 @endif
 
                 <div class="panel-body float-e-margins">
-                    <div class="row">
-                        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
-                            <a href="{{ route('chambers.resume-harian.create') }}" class="btn btn-magma btn-outline btn-block" type="button">Buat Resume Hari ini</a>
+                    <form action="{{ route('chambers.resume-harian.create') }}" method="get">
+                        <div class="tab-content">
+                            <div class="p-m tab-pane active">
+                                <div class="row">
+                                    <div class="col-lg-4 text-center">
+                                        <i class="pe-7s-note fa-4x text-muted"></i>
+                                        <p class="m-t-md">
+                                            <strong>Buat Resume Laporan Harian</strong>, gunakan form ini untuk merangkum laporan gunung api.
+                                        </p>
+                                    </div>
+
+                                    <div class="col-lg-8">
+                                        <div class="row p-md">
+
+                                            @if ($errors->any())
+                                            <div class="form-group col-sm-12">
+                                                <div class="alert alert-danger">
+                                                @foreach ($errors->all() as $error)
+                                                    <p>{{ $error }}</p>
+                                                @endforeach
+                                                </div>
+                                            </div>
+                                            @endif
+
+                                            <div class="form-group col-sm-12">
+                                                <label>Tanggal Resume</label>
+                                                <input name="date" id="date" class="form-control" type="text" value="{{ now()->format('Y-m-d') }}">
+                                            </div>
+
+                                            <div class="form-group col-sm-12">
+                                                <div class="m-t-xs">
+                                                    <button class="btn btn-primary" type="submit">Generate Rangkuman</button>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    
+                    </form>
                 </div>
 
                 <div class="panel-body">
@@ -153,6 +191,7 @@
                                     <td>{{ $resume->truncated }}</td>
                                     <td>
                                         <a href="{{ route('chambers.resume-harian.show', $resume) }}" class="btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">View</a>
+                                        <a href="{{ route('chambers.resume-harian.create', ['date' => $resume->tanggal->format('Y-m-d')]) }}" class="btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Generate</a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -377,4 +416,40 @@
 
     @endif
 </div>
+@endsection
+
+@section('add-vendor-script')
+    <script src="{{ asset('vendor/moment/moment.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.min.js') }}"></script>
+@endsection
+
+@section('add-script')
+<script>
+$(document).ready(function() {
+    $.fn.datepicker.dates['id'] = {
+        days: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
+        daysShort: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
+        daysMin: ['Mi', 'Se', 'Sl', 'Rb', 'Km', 'Jm', 'Sa'],
+        months: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+        monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+        today: 'Hari ini',
+        clear: 'Bersihkan',
+        format: 'yyyy-mm-dd',
+        titleFormat: 'MM yyyy',
+        weekStart: 1
+    };
+
+    $('#date').datepicker({
+        startDate: '2015-05-01',
+        endDate: '{{ now()->format('Y-m-d') }}',
+        language: 'id',
+        todayHighlight: true,
+        todayBtn: 'linked',
+        enableOnReadonly: true,
+        minViewMode: 0,
+        maxViewMode: 2,
+        readOnly: true,
+    });
+});
+</script>
 @endsection
