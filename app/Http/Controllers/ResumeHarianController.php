@@ -65,6 +65,7 @@ class ResumeHarianController extends Controller
                     )
                     ->where('var_lts','>',0)
                     ->whereGaCode($var->ga_code)
+                    ->where('var_data_date','<=',$this->date)
                     ->whereVarPerwkt('24 Jam')
                     ->orderByDesc('var_data_date')
                     ->first();
