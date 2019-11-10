@@ -50,37 +50,39 @@ class ResumeHarianController extends Controller
 
     protected function getInformasiLetusan($var)
     {
-        $var = MagmaVar::select(
-                        'var_lts',
-                        'var_lts_amin',
-                        'var_lts_amax',
-                        'var_lts_dmin',
-                        'var_lts_dmax',
-                        'var_lts_tmin',
-                        'var_lts_tmax',
-                        'var_lts_wasap',
-                        'ga_code',
-                        'var_data_date',
-                        'var_perwkt'
-                    )
-                    ->where('var_lts','>',0)
-                    ->whereGaCode($var->ga_code)
-                    ->whereVarPerwkt('24 Jam')
-                    ->orderByDesc('var_data_date')
-                    ->first();
+        if ($var) {
+            $var = MagmaVar::select(
+                'var_lts',
+                'var_lts_amin',
+                'var_lts_amax',
+                'var_lts_dmin',
+                'var_lts_dmax',
+                'var_lts_tmin',
+                'var_lts_tmax',
+                'var_lts_wasap',
+                'ga_code',
+                'var_data_date',
+                'var_perwkt'
+            )
+            ->where('var_lts','>',0)
+            ->whereGaCode($var->ga_code)
+            ->whereVarPerwkt('24 Jam')
+            ->orderByDesc('var_data_date')
+            ->first();
 
-        if ($var->count()) {
+            if ($var->count()) {
 
-            $tinggiErupsi = $var->var_lts_tmax > 0 ? ' menghasilkan tinggi kolom erupsi '.$var->var_lts_tmax.' m.' : 0;
+                $tinggiErupsi = $var->var_lts_tmax > 0 ? ' menghasilkan tinggi kolom erupsi '.$var->var_lts_tmax.' m.' : 0;
 
-            $tinggiErupsi = $var->var_lts_tmax == 0 ? ' dengan tinggi kolom erupsi tidak teramati.' : $tinggiErupsi;
-    
-            $warnaErupsi = $var->var_lts_wasap ? ' Warna kolom abu teramati '.str_replace_last(', ',' hingga ',implode(', ',$var->var_lts_wasap->toArray())).'.' : '';
+                $tinggiErupsi = $var->var_lts_tmax == 0 ? ' dengan tinggi kolom erupsi tidak teramati.' : $tinggiErupsi;
 
-            $letusan = ' Letusan terakhir terjadi pada tanggal '.$var->var_data_date->formatLocalized('%d %B %Y').$tinggiErupsi.$warnaErupsi;
+                $warnaErupsi = $var->var_lts_wasap ? ' Warna kolom abu teramati '.str_replace_last(', ',' hingga ',implode(', ',$var->var_lts_wasap->toArray())).'.' : '';
 
-            return collect([$letusan]);
-        };
+                $letusan = ' Letusan terakhir terjadi pada tanggal '.$var->var_data_date->formatLocalized('%d %B %Y').$tinggiErupsi.$warnaErupsi;
+
+                return collect([$letusan]);
+            };
+        }
 
         return collect([]);
     }
