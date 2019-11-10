@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\ResumeHarian;
 use App\BencanaGeologi;
 use App\BencanaGeologiPendahuluan as Pendahuluan;
+use App\StatistikResumeHarian;
 use App\v1\MagmaVar;
 use App\Gadd;
 use Illuminate\Http\Request;
@@ -366,6 +367,20 @@ class ResumeHarianController extends Controller
         return $summary;
     }
 
+    protected function saveStatistic($date = null)
+    {
+        $stats = StatistikResumeHarian::firstOrCreate([
+            'date' => $date ?: now()->format('Y-m-d'),
+            'nip' => auth()->user()->nip
+        ],[
+            'hit' => 0
+        ]);
+
+        $stats->increment('hit');
+
+        return $this;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -377,6 +392,9 @@ class ResumeHarianController extends Controller
         $pendahuluans = Pendahuluan::has('gunungapi')->with('gunungapi')->get();
         $gadds = Gadd::doesntHave('bencana_geologi')->orderBy('name')->select('code','name')->get();
         $bencanas = BencanaGeologi::orderBy('urutan')->with('pendahuluan')->get();
+
+        $this->saveStatistic();
+
         return view('gunungapi.resume-harian.index', compact('resumes','pendahuluans','gadds','bencanas'));
     }
 
@@ -435,6 +453,8 @@ class ResumeHarianController extends Controller
             'truncated' => (strlen($resume) > 20) ? substr($resume, 0, 200) . '...' : $resume,
         ]);
 
+        $this->saveStatistic($this->date);
+
         return redirect()->route('chambers.resume-harian.index')->with('flash_resume','Resume Harian '.$this->date_localized.' berhasil dibuat!');
     }
 
@@ -466,7 +486,7 @@ class ResumeHarianController extends Controller
      * @param  \App\ResumeHarian  $resumeHarian
      * @return \Illuminate\Http\Response
      */
-    public function edit(ResumeHarian $resumeHarian)
+    public function edit()
     {
         return redirect()->route('chambers.resume-harian.index');
     }
@@ -478,7 +498,7 @@ class ResumeHarianController extends Controller
      * @param  \App\ResumeHarian  $resumeHarian
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ResumeHarian $resumeHarian)
+    public function update()
     {
         return redirect()->route('chambers.resume-harian.index');
     }
@@ -489,7 +509,7 @@ class ResumeHarianController extends Controller
      * @param  \App\ResumeHarian  $resumeHarian
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ResumeHarian $resumeHarian)
+    public function destroy()
     {
         return redirect()->route('chambers.resume-harian.index');
     }

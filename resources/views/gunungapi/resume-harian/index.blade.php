@@ -153,8 +153,6 @@
                                     <td>{{ $resume->truncated }}</td>
                                     <td>
                                         <a href="{{ route('chambers.resume-harian.show', $resume) }}" class="btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">View</a>
-
-                                        <a href="{{ route('chambers.resume-harian.edit', $resume->tanggal) }}" class="btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>
                                     </td>
                                 </tr>
                                 @endforeach

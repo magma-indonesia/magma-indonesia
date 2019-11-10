@@ -12,6 +12,7 @@ class StatistikEvaluasi extends Model
         'start',
         'end',
         'nip',
+        'hit',
         'url',
     ];
 
