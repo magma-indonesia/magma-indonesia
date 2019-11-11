@@ -422,7 +422,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="hpanel">
-                <div clas="panel-heading">
+                <div class="panel-heading">
                     Penggunaan Terakhir
                 </div>
                 <div class="panel-body">
