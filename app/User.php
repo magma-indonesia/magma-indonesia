@@ -163,6 +163,16 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
+     * Setiap user login lebih dari 1 kali
+     *
+     * @return void
+     */
+    public function statistik_logins()
+    {
+        return $this->hasMany('App\StatistikLogin','nip','nip');
+    }
+
+    /**
      * Setiap user bisa memiliki lebih dari 1 absensi
      *
      * @return void

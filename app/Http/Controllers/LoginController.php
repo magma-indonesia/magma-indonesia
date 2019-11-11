@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\StatistikLogin;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Carbon;
@@ -57,6 +58,13 @@ class LoginController extends Controller
                 'last_login_at' => Carbon::now()->toDateTimeString(),
                 'last_login_ip' => last($request->getClientIps())  
             ]);
+
+            StatistikLogin::updateOrCreate([
+                'ip_address' => last($request->getClientIps()),
+                'nip' => $user->nip,
+                'date' => now()->format('Y-m-d'),
+            ],[
+            ])->increment('hit');
 
             SendLoginNotification::dispatch('web',$user)
                 ->delay(now()->addSeconds(3));
