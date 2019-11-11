@@ -515,8 +515,23 @@ class ResumeHarianController extends Controller
      * @param  \App\ResumeHarian  $resumeHarian
      * @return \Illuminate\Http\Response
      */
-    public function destroy()
+    public function destroy($id)
     {
-        return redirect()->route('chambers.resume-harian.index');
+        $stat = StatistikResumeHarian::findOrfail($id);
+        if ($stat->delete()) {
+            $data = [
+                'success' => 1,
+                'message' => 'Data berhasil dihapus.'
+            ];
+
+            return response()->json($data);
+        }
+
+        $data = [
+            'success' => 0,
+            'message' => 'Gagal dihapus.'
+        ];
+
+        return response()->json($data);
     }
 }
