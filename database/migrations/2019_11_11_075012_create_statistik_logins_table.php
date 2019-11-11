@@ -19,7 +19,7 @@ class CreateStatistikLoginsTable extends Migration
             $table->char('nip',18)->index();
             $table->foreign('nip')->references('nip')->on('users');
             $table->bigInteger('hit')->default(0);
-            $table->ipAddress('ip_address')->unique();
+            $table->ipAddress('ip_address');
             $table->timestamps();
         });
     }

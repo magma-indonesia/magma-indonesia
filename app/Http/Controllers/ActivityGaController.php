@@ -84,7 +84,7 @@ class ActivityGaController extends Controller
         $var->addView();        
         $var = new VarResource($var);
         
-        return view('gunungapi.laporan.show', compact('var','visual','gempa','pj'));
+        return view('gunungapi.laporan.show', compact('var','visual','gempa'));
     }
 
     /**
@@ -164,11 +164,11 @@ class ActivityGaController extends Controller
     
             $vars = $vars->paginate(31);
 
-            return view('gunungapi.laporan.search',compact('input','vars','gadds','users'))->with('flash_result',
+            return view('gunungapi.laporan.search',compact(,'vars','gadds','users'))->with('flash_result',
             $count.' laporan berhasil ditemukan');
         }
 
-        return view('gunungapi.laporan.search',compact('input','gadds','users'))->with('flash_message',
+        return view('gunungapi.laporan.search',compact('gadds','users'))->with('flash_message',
         'Kriteria pencarian tidak ditemukan/belum ada');
 
     }
