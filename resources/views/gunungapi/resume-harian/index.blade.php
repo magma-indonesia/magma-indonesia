@@ -417,6 +417,42 @@
     </div>
 
     @endif
+
+    @if ($stats->isNotEmpty())
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="hpanel">
+                <div clas="panel-heading">
+                    Penggunaan Terakhir
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive m-t">
+                        <table id="table-visitor" class="table table-condensed table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th width="20%">Nama</th>
+                                    <th>Tanggal</th>
+                                    <th>Hit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($stats as $key => $stat)
+                                <tr>
+                                    <td>{{ $key+1 }}</td>
+                                    <td>{{ $stat->user->name }}</td>
+                                    <td>{{ $stat->updated_at->formatLocalized('%A, %d %B %Y') }}</td>
+                                    <td>{{ $stat->hit }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 </div>
 @endsection
 

@@ -14,6 +14,7 @@ class StatistikResumeHarian extends Model
 
     protected $dates = [
         'date',
+        'updated_at'
     ];
 
     public function user()

@@ -396,7 +396,12 @@ class ResumeHarianController extends Controller
 
         $this->saveStatistic();
 
-        return view('gunungapi.resume-harian.index', compact('resumes','pendahuluans','gadds','bencanas'));
+        $stats = StatistikResumeHarian::with('user:nip,name')
+                    ->orderByDesc('updated_at')
+                    ->limit(10)
+                    ->get();
+
+        return view('gunungapi.resume-harian.index', compact('resumes','pendahuluans','gadds','bencanas','stats'));
     }
 
     /**
