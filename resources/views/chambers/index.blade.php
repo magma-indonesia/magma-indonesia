@@ -40,12 +40,26 @@
                                 </div>
                                 <div>
                                     <h1 class="font-extra-bold m-t-xl m-b-xs">
-                                            {{ number_format($vars,0,',','.') }}
+                                            {{ number_format($vars_count,0,',','.') }}
                                     </h1>
                                     <small>Data Gunung Api</small>
                                 </div>
                                 <div class="small m-t-xl">
                                     <i class="fa fa-clock-o"></i> Data dari Mei 2015
+                                </div>
+                            </div>
+                            <div class="col-md-3 text-center">
+                                <div class="small">
+                                    <i class="fa fa-clock-o"></i> Jumlah Data Letusan
+                                </div>
+                                <div>
+                                    <h1 class="font-extra-bold m-t-xl m-b-xs text-danger">
+                                        {{ number_format($lts_sum,0,',','.') }}
+                                    </h1>
+                                    <small>Gempa Letusan</small>
+                                </div>
+                                <div class="small m-t-xl">
+                                    <i class="fa fa-clock-o"></i> Hingga {{ $latest_lts->updated_at->formatLocalized('%d %B %Y') }}
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -56,24 +70,10 @@
                                     <div class="flot-chart-content" id="flot-line-chart"></div>
                                 </div>
                             </div>
-                            <div class="col-md-3 text-center">
-                                <div class="small">
-                                    <i class="fa fa-clock-o"></i> Active duration
-                                </div>
-                                <div>
-                                    <h1 class="font-extra-bold m-t-xl m-b-xs">
-                                        10 Months
-                                    </h1>
-                                    <small>And four weeks</small>
-                                </div>
-                                <div class="small m-t-xl">
-                                    <i class="fa fa-clock-o"></i> Last active in 12.10.2015
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="panel-footer">
-                        Last update: 21.05.2015
+                        Last update: {{ $latest->updated_at->formatLocalized('%d %B %Y Pukul %T WIB') }}
                     </div>
                 </div>
             </div>

@@ -96,6 +96,12 @@ return [
             'visibility' => 'public',
         ],
 
+        'var_visual' => [
+            'driver' => 'local',
+            'root' => storage_path('app/var_visual'),
+            'visibility' => 'public',
+        ],
+
         'tim-mga' => [
             'driver' => 'local',
             'root' => storage_path('app/tim-mga'),

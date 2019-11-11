@@ -24,7 +24,6 @@ class VarVisual extends Model
     ];
 
     protected $hidden  = [
-        'id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -58,7 +57,7 @@ class VarVisual extends Model
      */
     public function var()
     {
-        return $this->belongsTo('App\MagmaVars','noticenumber_id','noticenumber');
+        return $this->belongsTo('App\MagmaVar','noticenumber_id','noticenumber');
     }
 
     /**     
