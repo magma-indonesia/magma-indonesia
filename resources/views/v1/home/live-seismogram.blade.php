@@ -1,7 +1,7 @@
 @extends('layouts.slim') 
 
 @section('title')
-CCTV Gunung Api
+Live Seismogram Gunung Api
 @endsection
 
 @section('add-css')
