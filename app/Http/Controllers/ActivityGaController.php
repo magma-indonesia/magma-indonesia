@@ -164,7 +164,7 @@ class ActivityGaController extends Controller
     
             $vars = $vars->paginate(31);
 
-            return view('gunungapi.laporan.search',compact(,'vars','gadds','users'))->with('flash_result',
+            return view('gunungapi.laporan.search',compact('vars','gadds','users'))->with('flash_result',
             $count.' laporan berhasil ditemukan');
         }
 
