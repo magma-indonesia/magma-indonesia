@@ -40,6 +40,7 @@ class ImportController extends Controller
         $temp_vars = TempTable::where('jenis','vars')->first();
         $temp_visuals = TempTable::where('jenis','visuals')->first();
         $temp_klima = TempTable::where('jenis','klima')->first();
+        $temp_foto_visual = TempTable::where('jenis','foto_vis')->first();
 
         $counts = new \stdClass();
         $counts->users = User::count();
@@ -61,6 +62,6 @@ class ImportController extends Controller
         $counts->rekomendasi = VarRekomendasi::count();
         $counts->pengajuan = Pengajuan::count();
         
-        return view('import.index',compact('counts','temp_vars','temp_visuals','temp_klima'));
+        return view('import.index',compact('counts','temp_vars','temp_visuals','temp_klima','temp_foto_visual'));
     }
 }

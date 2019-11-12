@@ -486,6 +486,46 @@
             <div class="col-lg-3">
                 <div class="hpanel stats">
                     <div class="panel-heading">
+                            Foto Visual
+                    </div>
+                    <div class="panel-body list">
+                        <div class="stats-title pull-left">
+                            <h4>Data Foto Visual</h4>
+                        </div>
+                        <div class="stats-icon pull-right">
+                            <i class="pe-7s-cloud-download fa-4x"></i>
+                        </div>
+                        <div class="m-t-xl">
+                            <span class="font-bold no-margins">
+                                Download Foto Visual
+                            </span>
+                            <br/>
+                            <small>
+                                Panel ini digunakan untuk mendownload data foto visual V1
+                            </small>
+                        </div>
+                        <div class="row m-t-md">
+                            <div class="col-lg-6">
+                                <h3 class="no-margins font-extra-bold text-magma jumlah-foto-visuals">{{ number_format($temp_foto_visual->no,0,',','.') }}</h3>
+                                <div class="font-bold"><i class="fa fa-level-up text-magma"></i> ID Terakhir</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer text-center">
+                        <form role="form" id="form-import" method="POST"
+                        data-import="foto-visuals" action="{{ route('chambers.import.foto-visuals') }}">
+                            @csrf
+                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
+                                <span class="ladda-label">Download</span>
+                                <span class="ladda-spinner"></span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="hpanel stats">
+                    <div class="panel-heading">
                         Data VONA
                     </div>
                     <div class="panel-body list">
@@ -603,6 +643,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-lg-3">
                 <div class="hpanel stats">
                     <div class="panel-heading">
@@ -643,8 +685,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col-lg-3">
                 <div class="hpanel stats">
                     <div class="panel-heading">
