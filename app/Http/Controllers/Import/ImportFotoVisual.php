@@ -31,8 +31,8 @@ class ImportFotoVisual extends Import
 
         $this->var_visuals->chunk(500, function($visuals) {
             foreach ($visuals as $key => $visual) {
-                $this->tempTable('foto_vis',$visual->id);
-                // $this->downloadFotoVisual($visual);
+                $this->downloadFotoVisual($visual)
+                    ->tempTable('foto_vis',$visual->id);
             }
         });
         
@@ -58,9 +58,7 @@ class ImportFotoVisual extends Import
                     Storage::disk('var_visual')->put($visual->var->code_id.'/thumbs/'.$filename, $image->widen(150)->stream());
 
                     $visual->filename_3 = $filename;
-                    if ($visual->save()) {
-                        $this->data = $this->tempTable('foto_vis',$visual->id);
-                    }
+                    $visual->save();
             
                     return $this;
                 }
