@@ -96,6 +96,20 @@ Route::name('v1.')->group(function () {
     });
 });
 
+Route::name('wovodat.')->group(function () {
+    Route::group(['middleware' => ['jwt.auth']], function() {
+        Route::group(['prefix' => 'wovodat'], function () {
+
+            Route::any('tilt/realtime/{deformation_station?}','Api\WOVOdat\DeformationTiltController@realtime')
+                ->name('tilt.realtime');            
+
+            Route::post('tilt/realtime/{deformation_station}/data','Json\WOVOdat\RealtimeTiltJson@json')
+                ->name('tilt.realtime.data');
+
+        });
+    });
+});
+
 Route::fallback(function(){
     return response()->json([
         'status' => 'false',
