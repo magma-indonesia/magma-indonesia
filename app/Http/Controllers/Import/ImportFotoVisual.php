@@ -20,7 +20,7 @@ class ImportFotoVisual extends Import
 
     public function import(Request $request)
     {
-        $this->start_no = $request->has('start') ? $request->start : $this->startNo('foto_vis');
+        $this->start_no = $request->has('start') ? $request->start : $this->startNo('visual');
         $this->end_no = $request->has('end') ? $request->end : VarVisual::orderByDesc('id')->first()->id;
 
         $this->old = VarVisual::with('var:noticenumber,code_id,status')
@@ -31,7 +31,7 @@ class ImportFotoVisual extends Import
         $this->old->chunk(500, function($visuals) {
             foreach ($visuals as $key => $visual) {
                 $this->downloadFotoVisual($visual)
-                    ->tempTable('foto_vis',$visual->id);
+                    ->tempTable('visual',$visual->id);
             }
         });
         
