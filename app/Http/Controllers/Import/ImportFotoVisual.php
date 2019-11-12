@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Import;
 
+use App\TempTable;
 use App\VarVisual;
 use Illuminate\Http\Request;
 use App\Traits\ImportHelper;
@@ -22,6 +23,8 @@ class ImportFotoVisual extends Import
     {
         $this->start_no = $request->has('start') ? $request->start : $this->startNo('foto_vis');
         $this->end_no = $request->has('end') ? $request->end : VarVisual::orderByDesc('id')->first()->id;
+
+        TempTable::updateOrCreate(['jenis' => 'foto_vis'],['no' => $this->start_no]);
 
         $this->var_visuals = VarVisual::with('var:noticenumber,code_id,status')
             ->select('id','noticenumber_id','filename_3','file_old')
