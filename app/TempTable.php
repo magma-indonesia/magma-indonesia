@@ -14,6 +14,5 @@ class TempTable extends Model
     protected $fillable = [
         'jenis',
         'no',
-        'others'
     ];
 }

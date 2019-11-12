@@ -26,7 +26,7 @@ class ImportFotoVisual extends Import
 
         $this->var_visuals = VarVisual::with('var:noticenumber,code_id,status')
             ->select('id','noticenumber_id','filename_3','file_old')
-            ->whereBetween('id',[1, 1])
+            ->whereBetween('id',[$this->start_no, $this->end_no])
             ->orderBy('id');
 
         $this->var_visuals->chunk(500, function($visuals) {
