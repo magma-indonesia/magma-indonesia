@@ -28,4 +28,9 @@ class DeformationStation extends Model
     {
         return $this->hasMany('App\WOVOdat\DeformationTilt','ds_id','ds_id');
     }
+
+    public function tilt_realtime()
+    {
+        return $this->hasMany('App\WOVOdat\DeformationTiltRealtime','ds_id','ds_id');
+    }
 }

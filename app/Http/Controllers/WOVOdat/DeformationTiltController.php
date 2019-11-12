@@ -64,11 +64,11 @@ class DeformationTiltController extends Controller
                             'common_network.volcano' => function ($query) {
                                 $query->select('vd_id','vd_name');
                             },
-                            'tilt' => function($query) use ($deformationStation) {
+                            'tilt_realtime' => function($query) use ($deformationStation) {
                                 $query->select('ds_id','dd_tlt_time','dd_tlt1 AS x_axis','dd_tlt2 as y_axis','dd_tlt_temp as temp')
                                     ->where('ds_id',$deformationStation)
-                                    ->where('dd_tlt_time','>=','2013-11-06 13:00:00')
-                                    ->where('dd_tlt_time','<=','2013-11-06 23:59:59')
+                                    ->where('dd_tlt_time','>=', now()->subSeconds(60)->format('Y-m-d H:i:s'))
+                                    ->where('dd_tlt_time','<=', now()->format('Y-m-d H:i:s'))
                                     ->orderBy('dd_tlt_time');
                             },
                         ])
@@ -79,7 +79,7 @@ class DeformationTiltController extends Controller
         $network = $station->common_network->cn_name;
         $station_name = $station->ds_name;
 
-        $station = $station->tilt ? $this->transformData($station) : [];
+        $station = $station->tilt_realtime ? $this->transformRealtimeData($station) : [];
 
         return [
             'station' => $station,
@@ -98,6 +98,57 @@ class DeformationTiltController extends Controller
         $station_name = $data['station_name'];
         
         return view('wovodat.deformation-station.tilt.realtime', compact('station','volcano','network','station_name'));
+    }
+
+    protected function transformRealtimeData($station)
+    {
+
+        $x = $station->tilt_realtime->map(function ($item,$key) {
+            return [
+                $item->unix_time,
+                $item->x_axis
+            ];
+        });
+
+        $data[] = [
+            'name' => 'Sumbu X',
+            'data' => $x,
+            'unit' => 'mm',
+            'type' => 'line',
+            'decimal' => 1
+        ];
+
+        $y = $station->tilt_realtime->map(function ($item,$key) {
+            return [
+                $item->unix_time,
+                $item->y_axis
+            ];
+        });
+
+        $data[] = [
+            'name' => 'Sumbu Y',
+            'data' => $y,
+            'unit' => 'mm',
+            'type' => 'line',
+            'decimal' => 1
+        ];
+
+        $temp = $station->tilt_realtime->map(function ($item,$key) {
+            return [
+                $item->unix_time,
+                $item->temp
+            ];
+        });
+
+        $data[] = [
+            'name' => 'Temperature',
+            'data' => $temp,
+            'unit' => '°C',
+            'type' => 'line',
+            'decimal' => 1
+        ];
+
+        return $data;
     }
 
     protected function transformData($station)

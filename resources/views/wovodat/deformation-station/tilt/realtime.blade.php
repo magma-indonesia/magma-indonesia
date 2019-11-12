@@ -94,7 +94,7 @@
 <script>
     class StartDate {
         constructor() {
-            this.current_datetime = new Date(2013,11,7,0,0,0);
+            this.current_datetime = new Date();
         }
 
         addZero(value) {
@@ -120,7 +120,7 @@
         get val() {
             let current_datetime = new Date(this.current_datetime);
             let year = current_datetime.getFullYear();
-            let month = this.addZero(current_datetime.getMonth());
+            let month = this.addZero(current_datetime.getMonth()+1);
             let date = this.addZero(current_datetime.getDate());
             let hours = this.addZero(current_datetime.getHours());
             let minutes = this.addZero(current_datetime.getMinutes());
@@ -142,6 +142,7 @@
 
         function requestData(seconds = 1)
         {
+            console.log(start_date.val);
             $.ajax({
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 url: '{{ URL::signedRoute('chambers.json.wovodat.tilt.realtime', ['deformation_station' => '21']) }}',
@@ -152,7 +153,7 @@
                     $.each(tiltmeter, function(index, value) {
                         tiltmeter[index].series[0].addPoint(dataset[index].data[0], true, true);
                     });
-                    start_date.addSecondToCurrentDateTime(3600)
+                    start_date.addSecondToCurrentDateTime()
                             .setNewDateTime();
                     setTimeout(function() {
                         requestData(seconds)
@@ -219,7 +220,7 @@
 
         Highcharts.setOptions({
             chart: {
-                marginLeft: 40,
+                marginLeft: 80,
                 spacingTop: 20,
                 spacingBottom: 20,
                 events: {
@@ -247,7 +248,7 @@
             tooltip: {
                 positioner: function () {
                     return {
-                        x: this.chart.chartWidth - 280,
+                        x: this.chart.chartWidth - 320,
                         y: 10
                     };
                 },

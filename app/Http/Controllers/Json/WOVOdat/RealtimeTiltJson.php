@@ -20,7 +20,7 @@ class RealtimeTiltJson extends Controller
     protected function realtimeData($request, $deformationStation)
     {
         $start = Carbon::parse($request->start);
-        $end = Carbon::parse($request->start)->addHour()->format('Y-m-d H:i:s');
+        $end = Carbon::parse($request->start)->addSeconds(2)->format('Y-m-d H:i:s');
     
         $station = DS::select('ds_id','ds_code','ds_name','cn_id')
                         ->with([
@@ -30,25 +30,24 @@ class RealtimeTiltJson extends Controller
                             'common_network.volcano' => function ($query) {
                                 $query->select('vd_id','vd_name');
                             },
-                            'tilt' => function($query) use ($deformationStation, $start, $end) {
+                            'tilt_realtime' => function($query) use ($deformationStation, $start, $end) {
                                 $query->select('ds_id','dd_tlt_time','dd_tlt1 AS x_axis','dd_tlt2 as y_axis','dd_tlt_temp as temp')
                                     ->where('ds_id',$deformationStation)
-                                    ->where('dd_tlt_time','>=',$start)
-                                    ->where('dd_tlt_time','<=',$end)
+                                    ->where('dd_tlt_time',$start)
                                     ->orderBy('dd_tlt_time');
                             },
                         ])
                         ->where('ds_id',$deformationStation)
                         ->first();
 
-        $station = $station->tilt ? $this->transformData($station) : [];
+        $station = $station->tilt_realtime ? $this->transformData($station) : [];
         return $station;
     }
 
     protected function transformData($station)
     {
 
-        $x = $station->tilt->map(function ($item,$key) {
+        $x = $station->tilt_realtime->map(function ($item,$key) {
             return [
                 $item->unix_time,
                 $item->x_axis
@@ -63,7 +62,7 @@ class RealtimeTiltJson extends Controller
             'decimal' => 1
         ];
 
-        $y = $station->tilt->map(function ($item,$key) {
+        $y = $station->tilt_realtime->map(function ($item,$key) {
             return [
                 $item->unix_time,
                 $item->y_axis
@@ -78,7 +77,7 @@ class RealtimeTiltJson extends Controller
             'decimal' => 1
         ];
 
-        $temp = $station->tilt->map(function ($item,$key) {
+        $temp = $station->tilt_realtime->map(function ($item,$key) {
             return [
                 $item->unix_time,
                 $item->temp
