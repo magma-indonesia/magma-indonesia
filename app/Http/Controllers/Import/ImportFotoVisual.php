@@ -24,11 +24,10 @@ class ImportFotoVisual extends Import
         $this->start_no = $request->has('start') ? $request->start : $this->startNo('foto_vis');
         $this->end_no = $request->has('end') ? $request->end : VarVisual::orderByDesc('id')->first()->id;
 
-        return $this->var_visuals = VarVisual::with('var:noticenumber,code_id,status')
+        $this->var_visuals = VarVisual::with('var:noticenumber,code_id,status')
             ->select('id','noticenumber_id','filename_3','file_old')
             ->whereBetween('id',[$this->start_no, $this->end_no])
-            ->orderBy('id')
-            ->paginate(5);
+            ->orderBy('id');
 
         $this->var_visuals->chunk(500, function($visuals) {
             foreach ($visuals as $key => $visual) {
@@ -56,7 +55,13 @@ class ImportFotoVisual extends Import
                 if (Storage::disk('var_visual')->put($visual->var->code_id.'/'.$filename, $image->stream()))
                 {
                     Storage::disk('var_visual')->put($visual->var->code_id.'/thumbs/'.$filename, $image->widen(150)->stream());
-                    $this->updateVarVisual($visual, $filename);
+
+                    $visual->filename_3 = $filename;
+                    if ($visual->save()) {
+                        $this->data = $this->tempTable('foto_vis',$visual->id);
+                    }
+            
+                    return $this;
                 }
             }
 
@@ -68,16 +73,6 @@ class ImportFotoVisual extends Import
             $visual->save();
             return $this;
         }
-    }
-
-    protected function updateVarVisual($visual, $filename)
-    {
-        $visual->filename_3 = $filename;
-        if ($visual->save()) {
-            $this->data = $this->tempTable('foto_vis',$visual->id);
-        }
-
-        return $this;
     }
 
 }
