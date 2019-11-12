@@ -142,14 +142,12 @@
 
         function requestData(seconds = 1)
         {
-            console.log(start_date.val);
             $.ajax({
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 url: '{{ URL::signedRoute('chambers.json.wovodat.tilt.realtime', ['deformation_station' => '21']) }}',
                 data: {start: start_date.val},
                 type: 'POST',
                 success: function(dataset) {
-                    console.log(dataset);
                     $.each(tiltmeter, function(index, value) {
                         tiltmeter[index].series[0].addPoint(dataset[index].data[0], true, true);
                     });
