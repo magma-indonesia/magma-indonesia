@@ -58,7 +58,7 @@ class ImportVarVisual extends Import
         $this->noticenumber = $this->obscode.$this->item->var_noticenumber;
 
         try {
-            $create = VarVisual::firstOrCreate(
+            $create = VarVisual::updateOrCreate(
                 [   
                     'noticenumber_id'   => $this->noticenumber
                 ],
