@@ -17,12 +17,13 @@ class ImportVarKlimatologi extends Import
     public function __construct(Request $request)
     {
         ini_set('max_execution_time', 1200);
-        $this->start_no = $request->has('start') ? $request->start : $this->startNo('klima');
-        $this->end_no = $request->has('end') ? $request->end : $this->endNo('var');
     }
 
     public function import(Request $request)
     {
+        $this->start_no = $request->has('start') ? $request->start : $this->startNo('klima');
+        $this->end_no = $request->has('end') ? $request->end : $this->endNo('var');
+
         $this->old = OldVar::select(
             'no','ga_code','var_noticenumber','var_source',
             'var_cuaca','var_curah_hujan',

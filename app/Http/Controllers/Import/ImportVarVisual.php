@@ -18,12 +18,13 @@ class ImportVarVisual extends Import
     public function __construct(Request $request)
     {
         ini_set('max_execution_time', 1200);
-        $this->start_no = $request->has('start') ? $request->start : $this->startNo('visuals');
-        $this->end_no = $request->has('end') ? $request->end : $this->endNo('var');
     }
 
     public function import(Request $request)
     {
+        $this->start_no = $request->has('start') ? $request->start : $this->startNo('visuals');
+        $this->end_no = $request->has('end') ? $request->end : $this->endNo('var');
+
         $this->old = OldVar::select(
             'no','ga_code','var_image','var_image_create',
             'var_issued','var_source','var_noticenumber','var_visibility',
