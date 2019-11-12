@@ -11,7 +11,7 @@ Route::post('administrasi','Import\ImportAdministratif@import')->name('administr
 Route::post('vars','Import\ImportMagmaVar@import')->name('vars');
 Route::post('dailies','Import\ImportVarHarian@import')->name('dailies');
 Route::post('visuals','Import\ImportVarVisual@import')->name('visuals');
-Route::post('foto-visuals','Import\ImportFotoVisual@import')->name('foto-visuals');
+Route::any('foto-visuals','Import\ImportFotoVisual@import')->name('foto-visuals');
 Route::post('klimatologi','Import\ImportVarKlimatologi@import')->name('klimatologi');
 Route::post('gempa','Import\ImportGempa@import')->name('gempa');
 Route::post('rekomendasi','Import\ImportVarRekomendasi@import')->name('rekomendasi');

@@ -24,16 +24,15 @@ class ImportFotoVisual extends Import
         $this->start_no = $request->has('start') ? $request->start : $this->startNo('foto_vis');
         $this->end_no = $request->has('end') ? $request->end : VarVisual::orderByDesc('id')->first()->id;
 
-        TempTable::updateOrCreate(['jenis' => 'foto_vis'],['no' => $this->start_no]);
-
-        $this->var_visuals = VarVisual::with('var:noticenumber,code_id,status')
+        return $this->var_visuals = VarVisual::with('var:noticenumber,code_id,status')
             ->select('id','noticenumber_id','filename_3','file_old')
             ->whereBetween('id',[$this->start_no, $this->end_no])
-            ->orderBy('id');
+            ->orderBy('id')
+            ->paginate(5);
 
-        $this->var_visuals->chunk(500, function($items) {
-            foreach ($items as $key => $item) {
-                $this->downloadFotoVisual($item);
+        $this->var_visuals->chunk(500, function($visuals) {
+            foreach ($visuals as $key => $visual) {
+                $this->downloadFotoVisual($visual);
             }
         });
         
