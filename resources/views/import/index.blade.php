@@ -518,7 +518,7 @@
                             <div class="form-group">
                                 <div class="col-sm-12">
                                     <div class="input-group">
-                                        <input name="start" type="text" class="form-control" value="{{ number_format($temp_foto_visual->no,0,',','.') }}">
+                                        <input name="start" type="text" class="form-control" value="{{ $temp_foto_visual->no }}">
                                         <span class="input-group-btn">
                                             <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
                                                 <span class="ladda-label">Download</span>
