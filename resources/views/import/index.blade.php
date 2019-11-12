@@ -9,7 +9,7 @@
 @endsection
 
 @section('content-body')   
-    <div class="content animate-panel">
+    <div class="content content-boxed">
         <div class="row">
             <div class="col-lg-12 text-center m-t-md">
                 <h2>
@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <div class="hpanel">
                     <div class="panel-heading">
                         Data Users
@@ -50,7 +50,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <div class="hpanel">
                     <div class="panel-heading">
                         Data Administrasi
@@ -77,7 +77,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <div class="hpanel">
                     <div class="panel-heading">
                         Data Absensi Pegawai
@@ -104,7 +104,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
                 <div class="hpanel">
                     <div class="panel-heading">
                         Data Pengajuan
@@ -131,9 +133,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <div class="hpanel">
                     <div class="panel-heading">
                         Data Dasar Gunung Api
@@ -160,7 +160,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <div class="hpanel stats">
                     <div class="panel-heading">
                         Data Var
@@ -218,7 +218,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
                 <div class="hpanel stats">
                     <div class="panel-heading">
                         Data Var Visual
@@ -267,7 +269,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <div class="hpanel stats">
                     <div class="panel-heading">
                         Data Var
@@ -316,9 +318,7 @@
                     </div>
                 </div>
             </div> 
-        </div>
-        <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <div class="hpanel stats">
                     <div class="panel-heading">
                         Data Gempa Gunung Api
@@ -367,7 +367,9 @@
                     </div>
                 </div>
             </div>    
-            <div class="col-lg-3">
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
                 <div class="hpanel stats">
                         <div class="panel-heading">
                             Data Rekomendasi Gunung Api
@@ -404,7 +406,7 @@
                     </div>
                 </div>
             </div> 
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <div class="hpanel stats">
                         <div class="panel-heading">
                             Data VAR Harian
@@ -441,7 +443,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <div class="hpanel stats">
                     <div class="panel-heading">
                             Volcanic Eruption Notice (VEN)
@@ -483,7 +485,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <div class="hpanel stats">
                     <div class="panel-heading">
                             Foto Visual
@@ -532,7 +534,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <div class="hpanel stats">
                     <div class="panel-heading">
                         Data VONA
@@ -572,7 +574,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <div class="hpanel stats">
                     <div class="panel-heading">
                         Data VONA Subscribers
@@ -612,7 +614,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
                 <div class="hpanel stats">
                     <div class="panel-heading">
                         Data CRS
@@ -652,9 +656,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <div class="hpanel stats">
                     <div class="panel-heading">
                         Gempa Bumi - Magma ROQ
@@ -694,7 +696,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <div class="hpanel stats">
                     <div class="panel-heading">
                         Gerakan Tanah - Magma Sigertan (QLS)
@@ -732,6 +734,45 @@
                             </button>
                         </form>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="hpanel ">
+                    <div class="panel-heading">
+                        <div class="panel-tools">
+                            <a class="showhide">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                        Temporary Table
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="table-responsive m-t">
+                            <table id="table-kesimpulan" class="table table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Jenis</th>
+                                        <th>No</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($temps as $key => $temp)
+                                    <tr>
+                                        <td>{{ $key+1 }}</td>
+                                        <td>{{ $temp->jenis }}</td>
+                                        <td>{{ $temp->no }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

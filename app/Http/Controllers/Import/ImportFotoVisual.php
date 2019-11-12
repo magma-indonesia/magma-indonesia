@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Import;
 
 use App\VarVisual;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Traits\ImportHelper;
 use Exception;
 use Image;
@@ -14,15 +13,16 @@ class ImportFotoVisual extends Import
 {
     use ImportHelper;
 
-    public function __construct(Request $request)
+    public function __construct()
     {
         ini_set('max_execution_time', 1200);
-        $this->start_no = $request->has('start') ? $request->start : $this->startNo('foto_vis');
-        $this->end_no = $request->has('end') ? $request->end : VarVisual::orderByDesc('id')->first()->id;
     }
 
     public function import(Request $request)
     {
+        $this->start_no = $request->has('start') ? $request->start : $this->startNo('foto_vis');
+        $this->end_no = $request->has('end') ? $request->end : VarVisual::orderByDesc('id')->first()->id;
+
         $this->var_visuals = VarVisual::with('var:noticenumber,code_id,status')
             ->select('id','noticenumber_id','filename_3','file_old')
             ->whereBetween('id',[$this->start_no, $this->end_no])
@@ -55,7 +55,7 @@ class ImportFotoVisual extends Import
                 {
                     Storage::disk('var_visual')->put($visual->var->code_id.'/thumbs/'.$filename, $image->widen(150)->stream());
                     $this->updateVarVisual($visual, $filename);
-                }   
+                }
             }
 
             return $this;

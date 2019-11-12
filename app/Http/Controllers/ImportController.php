@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\User;
-use App\UserBidang;
 use App\UserAdministratif;
 use App\Absensi;
 use App\Gadd;
@@ -37,6 +36,7 @@ class ImportController extends Controller
     {
 
         $gempa = new VarGempa();
+        $temps = TempTable::all();
         $temp_vars = TempTable::where('jenis','vars')->first();
         $temp_visuals = TempTable::where('jenis','visuals')->first();
         $temp_klima = TempTable::where('jenis','klima')->first();
@@ -62,6 +62,6 @@ class ImportController extends Controller
         $counts->rekomendasi = VarRekomendasi::count();
         $counts->pengajuan = Pengajuan::count();
         
-        return view('import.index',compact('counts','temp_vars','temp_visuals','temp_klima','temp_foto_visual'));
+        return view('import.index',compact('temps','counts','temp_vars','temp_visuals','temp_klima','temp_foto_visual'));
     }
 }
