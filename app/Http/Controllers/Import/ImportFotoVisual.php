@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Import;
 
-use App\TempTable;
 use App\VarVisual;
 use Illuminate\Http\Request;
-use App\Traits\ImportHelper;
 use Exception;
 use Image;
 use Illuminate\Support\Facades\Storage;
+use App\Traits\ImportHelper;
 
 class ImportFotoVisual extends Import
 {
@@ -24,12 +23,12 @@ class ImportFotoVisual extends Import
         $this->start_no = $request->has('start') ? $request->start : $this->startNo('foto_vis');
         $this->end_no = $request->has('end') ? $request->end : VarVisual::orderByDesc('id')->first()->id;
 
-        $this->var_visuals = VarVisual::with('var:noticenumber,code_id,status')
+        $this->old = VarVisual::with('var:noticenumber,code_id,status')
             ->select('id','noticenumber_id','filename_3','file_old')
             ->whereBetween('id',[$this->start_no, $this->end_no])
             ->orderBy('id');
 
-        $this->var_visuals->chunk(500, function($visuals) {
+        $this->old->chunk(500, function($visuals) {
             foreach ($visuals as $key => $visual) {
                 $this->downloadFotoVisual($visual)
                     ->tempTable('foto_vis',$visual->id);
@@ -57,8 +56,11 @@ class ImportFotoVisual extends Import
                 {
                     Storage::disk('var_visual')->put($visual->var->code_id.'/thumbs/'.$filename, $image->widen(150)->stream());
 
-                    $visual->filename_3 = $filename;
-                    $visual->save();
+                    VarVisual::update([
+                        'noticenumber_id' => $visual->noticenumber,
+                    ],[
+                        'filename_3' => $filename
+                    ]);
             
                     return $this;
                 }
