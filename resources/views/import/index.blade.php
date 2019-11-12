@@ -512,13 +512,22 @@
                         </div>
                     </div>
                     <div class="panel-footer text-center">
-                        <form role="form" id="form-import" method="POST"
+                        <form class="form-horizontal" role="form" id="form-import" method="POST"
                         data-import="foto-visuals" action="{{ route('chambers.import.foto-visuals') }}">
                             @csrf
-                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
-                                <span class="ladda-label">Download</span>
-                                <span class="ladda-spinner"></span>
-                            </button>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div class="input-group">
+                                        <input name="start" type="text" class="form-control" value="{{ number_format($temp_foto_visual->no,0,',','.') }}">
+                                        <span class="input-group-btn">
+                                            <button type="submit" id="form-submit" class="ladda-button btn btn-magma btn-sm " data-style="expand-right">
+                                                <span class="ladda-label">Download</span>
+                                                <span class="ladda-spinner"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
