@@ -31,7 +31,8 @@ class ImportFotoVisual extends Import
 
         $this->var_visuals->chunk(500, function($visuals) {
             foreach ($visuals as $key => $visual) {
-                $this->downloadFotoVisual($visual);
+                $this->tempTable('foto_vis',$visual->id);
+                // $this->downloadFotoVisual($visual);
             }
         });
         
