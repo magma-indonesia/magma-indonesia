@@ -13,11 +13,6 @@ class DeformationTiltController extends Controller
         return $this->realtimeData($deformationStation); 
     }
 
-    public function json()
-    {
-
-    }
-
     protected function realtimeData($deformationStation)
     {
         $station = DS::select('ds_id','ds_code','ds_name','cn_id')
