@@ -83,7 +83,7 @@ class ImportMagmaVar extends Import
         $this->lainnya = $this->item->var_ketlain;
 
         try {
-            $create = MagmaVar::firstOrCreate(
+            $create = MagmaVar::updateOrCreate(
                 [
                     'noticenumber'          => $this->noticenumber
                 ],
