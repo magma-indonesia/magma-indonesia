@@ -97,7 +97,7 @@ Route::name('v1.')->group(function () {
 });
 
 Route::name('wovodat.')->group(function () {
-    Route::group(['middleware' => ['cors','jwt.auth']], function() {
+    Route::group(['middleware' => ['jwt.auth']], function() {
         Route::group(['prefix' => 'wovodat'], function () {
 
             Route::post('tilt/realtime/{deformation_station?}','Api\WOVOdat\DeformationTiltController@realtime')
