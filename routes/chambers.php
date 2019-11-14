@@ -267,6 +267,11 @@ Route::name('v1.')->group(function () {
 
                 Route::resource('form-kesimpulan','v1\KesimpulanController');
 
+                Route::get('laporan/compile/var','v1\CompileVarController@compile')
+                    ->name('laporan.compile');
+                Route::get('laporan/compile','v1\CompileVarController@index')
+                    ->name('laporan.compile.index');
+
                 Route::get('laporan/filter','v1\MagmaVarController@filter')
                     ->name('laporan.filter');
                 Route::get('laporan/filter/gempa','v1\MagmaVarController@filterGempa')

@@ -34,11 +34,31 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        
         $this->scheduleLiveSeismogram($schedule);
+        $this->scheduleCompileMagmaVar($schedule);
         $this->scheduleGunungApi($schedule);
         $this->scheduleGerakanTanah($schedule);
         $this->scheduleAdministrasi($schedule);
         $this->scheduleGempaBumi($schedule);
+    }
+
+
+    /**
+     * Scheduler untuk mengkompilasi laporan MAGMA-VAR 24 jam:
+     * 
+     * Data VAR
+     * 
+     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @return void
+     */
+    protected function scheduleCompileMagmaVar(Schedule $schedule)
+    {
+        $filePath = storage_path('logs/scheduler-compile-var-'.now()->format('Y-m-d').'.log');
+
+        $schedule->command('compile:var')
+            ->cron('0 4 * * *')
+            ->pingBefore($this->getUrlMagma());
     }
 
     /**

@@ -210,6 +210,11 @@ class MagmaVar extends OldModelVar
     {
         return $this->belongsTo('App\v1\Gadd','ga_code','ga_code');
     }
+
+    public function compile()
+    {
+        return $this->hasOne('App\v1\CompileVar','ga_code','ga_code');
+    }
     
     // protected $dates = ['var_data_date'];
 }
