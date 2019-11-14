@@ -1,16 +1,16 @@
 @extends('layouts.slim') 
 
 @section('title')
-Tanggapan Kejadian Gempa Bumi
+Tanggapan Gempa Bumi
 @endsection
  
 @section('breadcrumb')
 <li class="breadcrumb-item"><a>Gempa Bumi dan Tsunami</a></li>
-<li class="breadcrumb-item active" aria-current="page">Tanggapan Kejadian</li>
+<li class="breadcrumb-item active" aria-current="page">Tanggapan</li>
 @endsection
 
 @section('page-title')
-Tanggapan Kejadian
+Tanggapan
 @endsection
 
 @section('main')
@@ -82,7 +82,7 @@ Tanggapan Kejadian
     <div class="col-lg-4">
         <div class="card card-connection">
             <label class="slim-card-title">Filter Data Laporan</label>
-            <p>Cari data laporan dan tanggapan kejadian gempa bumi dan tsunami</p>
+            <p>Cari data laporan dan tanggapan gempa bumi dan tsunami</p>
             <form class="form-layout" role="form" method="GET" action="{{ route('v1.gempabumi.roq.search',['q' => 'q'])}}">
                 <div class="row">
                     <div class="col-lg-12">

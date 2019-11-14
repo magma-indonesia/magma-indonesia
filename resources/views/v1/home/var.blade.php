@@ -14,7 +14,7 @@ Laporan Aktivitas Gunung Api
 @endsection
 
 @section('page-title')
-Laporan Aktivitas
+Laporan Aktivitas Gunung Api (Volcanic Activity Report)
 @endsection
 
 @section('main')

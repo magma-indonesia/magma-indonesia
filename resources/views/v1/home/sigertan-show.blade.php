@@ -6,11 +6,11 @@
  
 @section('breadcrumb')
 <li class="breadcrumb-item"><a href="#">Gerakan Tanah</a></li>
-<li class="breadcrumb-item active" aria-current="page">Tanggapan Kejadian</li>
+<li class="breadcrumb-item active" aria-current="page">Laporan Singkat</li>
 @endsection
  
 @section('page-title')
-Tanggapan Kejadian
+Laporan Singkat Gerakan Tanah
 @endsection
  
 @section('main')

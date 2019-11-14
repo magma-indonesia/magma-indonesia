@@ -8,8 +8,11 @@
 |
 */
 Route::group(['middleware' => ['guest']], function () {
-    Route::get('/', 'HomeController@index')
+    Route::get('/','v1\HomeController@home')
         ->name('home');
+
+    Route::get('/welcome', 'HomeController@index')
+        ->name('welcome');
 
     Route::get('login','LoginController@index')
         ->name('login')

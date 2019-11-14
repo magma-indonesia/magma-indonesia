@@ -1,7 +1,7 @@
 @extends('layouts.slim') 
 
 @section('title') 
-Laporan Tanggapan Kejadian Gempa Bumi {{ $roq->laporan->title }}, {{ $roq->laporan->pelapor }}
+Laporan Tanggapan Gempa Bumi {{ $roq->laporan->title }}, {{ $roq->laporan->pelapor }}
 @endsection
 
 @section('add-vendor-css')

@@ -4,11 +4,5 @@
             <span><a href="https://www.esdm.go.id/" target="_blank"><img src="{{ asset('images/logo/esdm.gif') }}" style="height:32px;"></a></span>
             <h2 class="slim-logo mg-l-10"><span><a href="{{ route('home') }}">MAGMA Indonesia.</a></span></h2>
         </div>
-        <div class="slim-header-right">
-            <div class="search-box">
-                <input type="text" class="form-control" placeholder="Search">
-                <button class="btn btn-primary"><i class="fa fa-search"></i></button>
-            </div>
-        </div>
     </div>
 </div>

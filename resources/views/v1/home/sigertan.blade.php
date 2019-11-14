@@ -1,16 +1,16 @@
 @extends('layouts.slim') 
 
 @section('title')
-Tanggapan Kejadian Gerakan Tanah
+Laporan Singkat Gerakan Tanah
 @endsection
  
 @section('breadcrumb')
 <li class="breadcrumb-item"><a>Gerakan Tanah</a></li>
-<li class="breadcrumb-item active" aria-current="page">Tanggapan Kejadian</li>
+<li class="breadcrumb-item active" aria-current="page">Laporan Singkat</li>
 @endsection
 
 @section('page-title')
-Tanggapan Kejadian
+Laporan Singkat Gerakan Tanah
 @endsection
 
 @section('main')
@@ -81,7 +81,7 @@ Tanggapan Kejadian
     <div class="col-lg-4">
         <div class="card card-connection">
             <label class="slim-card-title">Filter Data Laporan</label>
-            <p>Cari data laporan dan tanggapan kejadian gerakan tanah</p>
+            <p>Cari data laporan dan laporan singkat gerakan tanah</p>
             <form class="form-layout" role="form" method="GET" action="{{ route('v1.gertan.sigertan.search',['q' => 'q'])}}">
                 <div class="row">
                     <div class="col-lg-12">
