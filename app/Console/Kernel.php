@@ -57,8 +57,9 @@ class Kernel extends ConsoleKernel
         $filePath = storage_path('logs/scheduler-compile-var-'.now()->format('Y-m-d').'.log');
 
         $schedule->command('compile:var')
-            ->cron('0 4 * * *')
-            ->pingBefore($this->getUrlMagma());
+            ->cron('* */4 * * *')
+            ->pingBefore($this->getUrlMagma())
+            ->appendOutputTo($filePath);
     }
 
     /**
