@@ -107,6 +107,8 @@ class CompileVarController extends Controller
         // Tanggal yang belum ada laporan 24 jamnya
         $filtered = $this->dates->whereNotIn('date',$vars->pluck('data_date'))->flatten();
 
+        $filtered = $filtered->isNotEmpty() ? $filtered : collect([ now()->subDay()->format('Y-m-d')]);
+
         // Ambil laporan 6 jam dari SELURUH tanngal yang belum ada laporan 24 jam nya
         $this->vars_6jam = MagmaVar::whereGaCode($code)
                 ->whereVarPerwkt('6 Jam')
@@ -129,12 +131,13 @@ class CompileVarController extends Controller
                 if ($this->vars->isNotEmpty()) {
     
                     $this->noticenumber = Carbon::createFromFormat('Y-m-d', $date['date'])->format('Ymd').'2400';
-    
-                    $this->vars->last()->replicate()
-                        ->fill($this->mergedVisual())
-                        ->fill($this->mergedGempa())
-                        ->save();
-    
+
+                    $last = $this->vars->last()->replicate();
+                    $last->updateOrCreate([
+                            'var_noticenumber' => $this->noticenumber,
+                        ], array_merge($this->mergedVisual(),$this->mergedGempa())
+                    );
+                    
                 };
     
                 $this->start_date = $date['date'];
@@ -149,7 +152,6 @@ class CompileVarController extends Controller
     protected function mergedVisual()
     {
         return [
-            'var_noticenumber' => $this->noticenumber,
             'periode' => '00:00-24:00',
             'var_perwkt' => '24 Jam',
             'var_visibility' => implode(',', $this->mergedVisibility()->toArray()),
