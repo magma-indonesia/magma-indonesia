@@ -11,6 +11,7 @@ use DB;
 use App\v1\Gadd;
 use App\v1\MagmaVen;
 use App\v1\MagmaVar;
+use App\v1\StatistikMagmaVen;
 use App\v1\MagmaVarOptimize;
 
 use App\Traits\VisualAsap;
@@ -238,6 +239,15 @@ class GunungApiController extends Controller
     {
         $ven = MagmaVen::with('gunungapi:ga_code,ga_zonearea,ga_nama_gapi,ga_lat_gapi,ga_lon_gapi')
                         ->findOrFail($id);
+
+        $stats = StatistikMagmaVen::updateOrCreate([
+            'erupt_id' => $id
+        ],[
+            'ga_code' => $ven->gunungapi->ga_code,
+        ]);
+
+        $stats->increment('hit');
+        
         return view('v1.home.letusan-show', compact('ven'));
     }
 
