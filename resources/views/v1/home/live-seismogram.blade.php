@@ -34,13 +34,13 @@ Live Seismogram
         <div class="card-columns column-count-3">
 
             @foreach ($gadds as $gadd)
-            @foreach ($gadd->live_seismograms as $live)
+            @foreach ($gadd->seismometers as $seismometer)
 
             <div class="card card-blog-overlay">
-                <img class="img-fit-cover" src="{{ $live->image }}" alt="">
+                <img class="img-fit-cover" src="{{ $seismometer->live_seismogram->image }}" alt="">
                 <div class="card-footer">
-                    <small class="mg-r-10"><a href="" class="view" data-uuid="{{ $live->id }}" data-url="{{ URL::temporarySignedRoute('v1.gunungapi.live-seismogram.show', now()->addMinutes(rand(10,13))) }}" style="cursor: pointer;">View</a></small>
-                    <small class="text-right">{{ $gadd->name }} - {{ $live->seismometer->scnl }}</small>
+                    <small class="mg-r-10"><a href="" class="view" data-uuid="{{ $seismometer->live_seismogram->id }}" data-url="{{ URL::temporarySignedRoute('v1.gunungapi.live-seismogram.show', now()->addMinutes(rand(10,13))) }}" style="cursor: pointer;">View</a></small>
+                    <small class="text-right">{{ $gadd->name }} - {{ $seismometer->scnl }}</small>
                 </div>
             </div>
 
