@@ -21,7 +21,9 @@ class LiveSeismogramController extends Controller
             $gadds = Gadd::whereHas('live_seismograms')
                         ->select('code','name')
                         ->orderBy('name')
-                        ->with('live_seismograms.seismometer:id,scnl')
+                        ->with(['live_seismograms.seismometer' => function($query) {
+                            $query->select('id','scnl','published')->wherePublished(1);
+                        }])
                         ->get();
 
             $gadds->each(function($gadd) {
