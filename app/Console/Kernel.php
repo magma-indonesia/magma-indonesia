@@ -57,7 +57,7 @@ class Kernel extends ConsoleKernel
         $filePath = storage_path('logs/scheduler-compile-var-'.now()->format('Y-m-d').'.log');
 
         $schedule->command('compile:var')
-            ->cron('* */4 * * *')
+            ->cron('15,30 0,1,2,3,4,5 * * *')
             ->pingBefore($this->getUrlMagma())
             ->appendOutputTo($filePath);
     }
@@ -220,6 +220,7 @@ class Kernel extends ConsoleKernel
     protected function commands()
     {
         $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__.'/Commands/v1');
 
         require base_path('routes/console.php');
     }
