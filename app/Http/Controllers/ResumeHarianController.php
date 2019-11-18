@@ -144,7 +144,7 @@ class ResumeHarianController extends Controller
     {
         $vona = $bencana->vona;
         $gunungapi = $bencana->gunungapi;
-        $abu_vulkanik = $vona->vc_height ? 'Abu vulkanik teramati dengan ketinggian '.round(intval($vona->vc_height)/3.2).'  m di atas permukaan laut atau sekitar '.round(intval($vona->vc_height)/3.2)-round(intval($vona->summit_elevation)).' m di atas puncak.' : 'Erupsi tidak teramati.' ;
+        $abu_vulkanik = $vona->vc_height ? 'Abu vulkanik teramati dengan ketinggian '.round(intval($vona->vc_height)/3.2).'  m di atas permukaan laut atau sekitar '.intval(round(intval($vona->vc_height)/3.2))-intval(round(intval($vona->summit_elevation))).' m di atas puncak.' : 'Erupsi tidak teramati.' ;
 
         return 'VONA terakhir terkirim kode warna '.$vona->cu_avcode.', terbit pada tanggal '.Carbon::createFromFormat('Y-m-d H:i:s', $vona->issued_time)->addHours($gunungapi->tzone)->formatLocalized('%d %B %Y, pukul %H:%M:%S').' '.$gunungapi->zonearea.'. '.$abu_vulkanik;
     }
