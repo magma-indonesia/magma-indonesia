@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-USE App\Http\Controllers\Api\v1\HomeController;
+use App\Http\Controllers\Api\v1\HomeController;
 
 class EsdmController extends HomeController
 {

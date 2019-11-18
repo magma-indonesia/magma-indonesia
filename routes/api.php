@@ -56,6 +56,11 @@ Route::name('v1.')->group(function () {
             Route::name('home.')->group(function () {
                 Route::group(['prefix' => 'home'], function () {
 
+                    Route::get('resume-harian','Api\v1\ResumeHarianController@index')
+                            ->name('resume-harian.index');
+                    Route::get('resume-harian/latest','Api\v1\ResumeHarianController@latest')
+                            ->name('resume-harian.latest');
+
                     Route::get('esdm','Api\v1\EsdmController@index')
                             ->name('esdm');
     
