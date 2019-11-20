@@ -18,16 +18,21 @@ class LiveSeismogramController extends Controller
 
         if ($health == 200)
         {
-            $gadds = Gadd::whereHas('live_seismograms.seismometer', function($query) {
+
+            $gadds = Gadd::whereHas('seismometers', function($query) {
                             $query->wherePublished(1);
                         })
                         ->select('code','name')
                         ->orderBy('name')
-                        ->with('live_seismograms.seismometer:id,scnl')
+                        ->with(['seismometers' => function($query) {
+                            $query->with('live_seismogram')->wherePublished(1);
+                        }])
                         ->get();
 
             $gadds->each(function($gadd) {
-                $gadd->live_seismograms->each(function ($live) {
+                $gadd->seismometers->each(function ($seismometer) {
+
+                    $live = $seismometer->live_seismogram;
 
                     try {
                         $path = Storage::disk('seismogram')->get('thumb_'.$live->filename);

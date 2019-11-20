@@ -140,6 +140,17 @@ class ResumeHarianController extends Controller
         return $this->setJumlahGempa($var)->toText();
     }
 
+    protected function getLatestVona($bencana)
+    {
+        $vona = $bencana->vona;
+        $gunungapi = $bencana->gunungapi;
+        $di_atas_puncak = round($vona->vc_height/3.2)-round($vona->summit_elevation/3.2);
+
+        $abu_vulkanik = $vona->vc_height ? 'Abu vulkanik teramati dengan ketinggian '.round($vona->vc_height/3.2).'  m di atas permukaan laut atau sekitar '.$di_atas_puncak.' m di atas puncak.' : 'Erupsi tidak teramati.' ;
+
+        return 'VONA terakhir terkirim kode warna '.$vona->cu_avcode.', terbit pada tanggal '.Carbon::createFromFormat('Y-m-d H:i:s', $vona->issued_time)->addHours($gunungapi->tzone)->formatLocalized('%d %B %Y, pukul %H:%M:%S').' '.$gunungapi->zonearea.'. '.$abu_vulkanik;
+    }
+
     protected function generateContents()
     {
         $this->bencanas->each(function ($bencana, $key) {
@@ -151,6 +162,7 @@ class ResumeHarianController extends Controller
                 'sometimes' => $bencana->gunungapi->code == 'AGU' ? $this->getNewVar($bencana->gunungapi->code) : collect([]),
                 'letusan' => $bencana->magma_var ? $this->getInformasiLetusan($bencana->magma_var) : collect([]),
                 'rekomendasi' => $bencana->magma_var->var_rekom ?? 'Belum ada laporan 24 Jam yang masuk.',
+                'vona' => $bencana->vona ?  $this->getLatestVona($bencana) : 'Belum ada VONA yang terkirim.'
             ];
         });
 
@@ -169,7 +181,7 @@ class ResumeHarianController extends Controller
             $sometimes = $content['sometimes']->isNotEmpty() ? "\n\nMelalui rekaman seismograf pada ".$this->date_localized." (Pukul. 00:00-06:00 WITA) tercatat:\n".implode("\n", $content['sometimes']->toArray()) : '';
             $rekomendasi = $content['rekomendasi'] ?? '*Belum ada laporan 24 Jam yang masuk.*';
 
-            $temp = '*'.$gunungapi."*\n\n".$pendahuluan.$letusan."\n\n".$visual."\n\nMelalui rekaman seismograf pada ".$this->date_localized_before." tercatat:\n".$gempa.$sometimes."\n\nRekomendasi:\n".$rekomendasi."\n\nVONA:\n*DIISI MANUAL*";
+            $temp = '*'.$gunungapi."*\n\n".$pendahuluan.$letusan."\n\n".$visual."\n\nMelalui rekaman seismograf pada ".$this->date_localized_before." tercatat:\n".$gempa.$sometimes."\n\nRekomendasi:\n".$rekomendasi."\n\nVONA:\n".$content['vona'];
 
             return $temp;
         });
@@ -192,7 +204,7 @@ class ResumeHarianController extends Controller
                                     $query->whereVarDataDate($this->date_before)
                                         ->whereVarPerwkt('24 Jam');
                                 },
-                                'vona'
+                                'vona:ga_code,volcanic_act_summ,vc_height,vc_height_text,summit_elevation,issued,issued_time,cu_avcode,notice_number'
                             ])
                             ->get();
 
@@ -445,11 +457,12 @@ class ResumeHarianController extends Controller
                                     $query->whereVarDataDate($this->date_before)
                                         ->whereVarPerwkt('24 Jam');
                                 },
-                                'vona'
+                                'vona:ga_code,volcanic_act_summ,vc_height,vc_height_text,summit_elevation,issued,issued_time,cu_avcode,notice_number'
                             ])
                             ->get();
 
         $contents = $this->checkVar()->generateContents()->getContents();
+
         $resume = str_replace('&deg;C','°C',implode("\n\n", $contents->toArray()));
 
         ResumeHarian::updateOrCreate([
