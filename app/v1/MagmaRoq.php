@@ -54,4 +54,9 @@ class MagmaRoq extends Model
         'roq_nip_pemeriksa',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo('App\v1\User','roq_nip_pelapor','vg_nip');
+    }
+
 }

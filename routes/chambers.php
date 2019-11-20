@@ -252,7 +252,13 @@ Route::name('v1.')->group(function () {
     Route::group(['prefix' => 'v1'], function () {
         Route::resource('press','v1\PressReleaseController');
         Route::resource('users','v1\UserController');
+
+        Route::get('gempabumi/filter','v1\MagmaRoqController@filter')
+            ->name('gempabumi.filter');
+        Route::post('gempabumi/filter','v1\MagmaRoqController@filter')
+            ->name('gempabumi.filter');
         Route::resource('gempabumi','v1\MagmaRoqController');
+
         Route::resource('subscribers','v1\VonaSubscriberController');
 
         Route::name('gunungapi.')->group(function () {

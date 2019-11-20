@@ -148,8 +148,19 @@
                     </li>
                 </ul>
                 <ul class="nav nav-second-level">
-                    <li class="{{ active('chambers.v1.gempabumi.index') }}">
-                        <a href="{{ route('chambers.v1.gempabumi.index') }}">Gempa Bumi</a>
+                    <li class="{{ active('chambers.v1.gempabumi.*') }}">
+                        <a href="#">
+                            <span class="nav-label"> Gempa Bumi</span>
+                            <span class="fa arrow"></span>                    
+                        </a>
+                        <ul class="nav nav-third-level">
+                            <li class="{{ active('chambers.v1.gempabumi.index') }}">
+                                <a class="m-l" href="{{ route('chambers.v1.gempabumi.index') }}">Daftar Kejadian</a>
+                            </li>
+                            <li class="{{ active('chambers.v1.gempabumi.filter') }}">
+                                <a class="m-l" href="{{ route('chambers.v1.gempabumi.filter') }}">Filter & Download Laporan</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
                 <ul class="nav nav-second-level">

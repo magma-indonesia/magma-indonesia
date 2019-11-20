@@ -29,4 +29,9 @@ class User extends Model
         return $this->hasMany('App\v1\Absensi','vg_nip','vg_nip');
     }
 
+    public function roqs()
+    {
+        return $this->hasMany('App\v1\MagmaRoq','roq_nip_pelapor','vg_nip');
+    }
+
 }

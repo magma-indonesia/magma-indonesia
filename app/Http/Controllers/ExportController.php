@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-use App\Export\VarExport;
-use App\Export\CrsExport;
+use App\Exports\VarExport;
+use App\Exports\CrsExport;
 
 class ExportController extends Controller
 {

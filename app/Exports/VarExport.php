@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Export;
+namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\Exportable;
@@ -8,9 +8,9 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 Use Carbon\Carbon;
 
-use App\Vona;
+use App\MagmaVar;
 
-class VonaExport implements FromView
+class VarExport implements FromView
 {
     use Exportable;
 
@@ -87,15 +87,17 @@ class VonaExport implements FromView
         return array();
     }
 
+    /**
+     * View result in blade
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function view(): View
     {      
-        $vonas = $this->applyFilter($this->request);
+        $vars = $this->applyFilter($this->request);
   
-        $vonas = $vonas->get();
+        $vars = $vars->get();
         
-        return view('export.vona',compact(
-                    'vonas'
-                    )
-                );
+        return view('export.var',compact('vars'));
     }
 }

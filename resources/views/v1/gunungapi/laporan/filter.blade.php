@@ -45,9 +45,6 @@
                         Filter Laporan
                     </div>
                     <div class="panel-body">
-                        <div class="m-b-md">
-                            Masukkan parameter pencarian
-                        </div>
                         <form target="_blank" role="form" id="form" method="GET" action="{{ route('chambers.v1.gunungapi.laporan.filter') }}">
                             <div class="form-group">
                                 <label class="control-label">Nama Pelapor</label>

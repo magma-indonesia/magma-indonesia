@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Export;
+namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\Exportable;

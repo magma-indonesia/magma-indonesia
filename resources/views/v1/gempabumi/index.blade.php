@@ -33,7 +33,7 @@
 @endsection
 
 @section('content-body')
-    <div class="content animate-panel">
+    <div class="content">
         <div class="row">
             <div class="col-lg-12">
                 @if(Session::has('flash_message'))
@@ -48,8 +48,11 @@
                     </div>
                     <div class="panel-body float-e-margins">
                         <div class="row">
-                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
-                                <a href="{{ route('chambers.v1.gempabumi.create') }}" class="btn btn-outline btn-block btn-magma" type="button">Tambah Kejadian</a>
+                            <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
+                                <a href="{{ route('chambers.v1.gempabumi.create') }}" class="btn btn-outline btn-block btn-magma" type="button">Buat Kejadian</a>
+                            </div>
+                            <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
+                                <a href="{{ route('chambers.v1.gempabumi.filter') }}" class="btn btn-outline btn-block btn-magma" type="button">Filter Laporan</a>
                             </div>
                         </div>
                     </div>

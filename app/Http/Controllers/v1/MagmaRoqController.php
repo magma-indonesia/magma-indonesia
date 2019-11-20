@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\v1\MagmaRoq;
+use App\Exports\v1\RoqsExport;
 use App\Http\Requests\v1\CreateRoqRequest;
 
 class MagmaRoqController extends Controller
@@ -204,5 +205,62 @@ class MagmaRoqController extends Controller
         ];
 
         return response()->json($data);
+    }
+
+    /**
+     * Apply Filter laporan
+     *
+     * @param [type] $request
+     * @return void
+     */
+    protected function applyFilter($request)
+    {
+        $roqs = MagmaRoq::whereBetween('datetime_wib',[$request->start, $request->end])
+                    ->where('magnitude','>=',$request->magnitudo)
+                    ->where('roq_tanggapan','like',$request->tanggapan ? 'YA' : '%')
+                    ->where('roq_nip_pelapor','like',$request->nip != 'all' ? $request->nip : '%')
+                    ->orderBy('datetime_wib');
+
+        $roqs = $request->form == 'download' ? 
+                    $roqs->get() :
+                    $roqs->select('no','datetime_wib','magnitude','roq_tanggapan','roq_nip_pelapor','roq_nama_pelapor','latlon_text','area','depth')->get(); 
+
+        return $roqs;
+    }
+
+    /**
+     * Filter Laporan
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function filter(Request $request)
+    {
+        $roqs = MagmaRoq::has('user')
+                    ->with('user:vg_nip,vg_nama')
+                    ->select('roq_nip_pelapor')
+                    ->groupBy('roq_nip_pelapor')
+                    ->get();
+
+        $filtereds = count($request->all()) ? $this->applyFilter($request) : collect([]);
+
+        if ($request->isMethod('post') AND $filtereds->isEmpty()) 
+            return back()->with('flash_filter','Hasil pencarian tidak ditemukan');
+
+        if ($request->form == 'download')
+            return $this->export($request,$filtereds);
+
+        return view('v1.gempabumi.filter', compact('roqs','filtereds','request'));
+    }
+
+    /**
+     * Export Data tanggapan gempa bumi
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function export(Request $request, $filtereds)
+    {
+        return new RoqsExport($request, $filtereds);
     }
 }
