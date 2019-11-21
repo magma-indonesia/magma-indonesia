@@ -74,9 +74,9 @@ class ImportGempa extends Import
                         $dmin = $value->{'var_'.$kode.'_dmin'};
                         $dmax = $value->{'var_'.$kode.'_dmax'};
 
-                        $createGempa = VarGempa::firstOrCreate(['noticenumber_id' => $this->noticenumber]);
+                        $createGempa = VarGempa::updateOrCreate(['noticenumber_id' => $this->noticenumber]);
 
-                        $create = $gempa->firstOrCreate(
+                        $create = $gempa->updateOrCreate(
                             [
                                 'var_gempa_id' => $createGempa->id
                             ],
@@ -132,9 +132,9 @@ class ImportGempa extends Import
                         $dmin = $value->{'var_'.$kode.'_dmin'};
                         $dmax = $value->{'var_'.$kode.'_dmax'};
 
-                        $createGempa = VarGempa::firstOrCreate(['noticenumber_id' => $this->noticenumber]);
+                        $createGempa = VarGempa::updateOrCreate(['noticenumber_id' => $this->noticenumber]);
 
-                        $create = $gempa->firstOrCreate(
+                        $create = $gempa->updateOrCreate(
                             [
                                 'var_gempa_id' => $createGempa->id
                             ],
@@ -187,9 +187,9 @@ class ImportGempa extends Import
                         $amax = $value->{'var_'.$kode.'_amax'};
                         $adom = $value->{'var_'.$kode.'_adom'};
 
-                        $createGempa = VarGempa::firstOrCreate(['noticenumber_id' => $this->noticenumber]);
+                        $createGempa = VarGempa::updateOrCreate(['noticenumber_id' => $this->noticenumber]);
 
-                        $create = $gempa->firstOrCreate(
+                        $create = $gempa->updateOrCreate(
                             [
                                 'var_gempa_id' => $createGempa->id
                             ],
@@ -244,9 +244,9 @@ class ImportGempa extends Import
                         $rmax = $value->{'var_'.$kode.'_rmax'};
                         $arah = $value->{'var_'.$kode.'_alun'};
 
-                        $createGempa = VarGempa::firstOrCreate(['noticenumber_id' => $this->noticenumber]);
+                        $createGempa = VarGempa::updateOrCreate(['noticenumber_id' => $this->noticenumber]);
 
-                        $create = $gempa->firstOrCreate(
+                        $create = $gempa->updateOrCreate(
                             [
                                 'var_gempa_id' => $createGempa->id
                             ],
@@ -305,9 +305,9 @@ class ImportGempa extends Import
                         $tmax = $value->{'var_'.$kode.'_tmax'};
                         $wasap = $value->{'var_'.$kode.'_wasap'};
 
-                        $createGempa = VarGempa::firstOrCreate(['noticenumber_id' => $this->noticenumber]);
+                        $createGempa = VarGempa::updateOrCreate(['noticenumber_id' => $this->noticenumber]);
 
-                        $create = $gempa->firstOrCreate(
+                        $create = $gempa->updateOrCreate(
                             [
                                 'var_gempa_id' => $createGempa->id
                             ],
@@ -323,7 +323,7 @@ class ImportGempa extends Import
 
                         $visual_id  = VarVisual::select('id')->where('noticenumber_id',$this->noticenumber)->first()->id;
 
-                        $createLetusan = VarLetusan::firstOrCreate(
+                        $createLetusan = VarLetusan::updateOrCreate(
                             [   
                                 'var_visual_id'     => $visual_id
                             ],
@@ -376,9 +376,9 @@ class ImportGempa extends Import
                         $dmax = $value->{'var_'.$kode.'_dmax'};
                         $skala = $value->{'var_'.$kode.'_skalamin'};
 
-                        $createGempa = VarGempa::firstOrCreate(['noticenumber_id' => $this->noticenumber]);
+                        $createGempa = VarGempa::updateOrCreate(['noticenumber_id' => $this->noticenumber]);
 
-                        $create = $gempa->firstOrCreate(
+                        $create = $gempa->updateOrCreate(
                             [
                                 'var_gempa_id' => $createGempa->id
                             ],

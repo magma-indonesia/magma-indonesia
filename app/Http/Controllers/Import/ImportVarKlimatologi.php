@@ -58,7 +58,7 @@ class ImportVarKlimatologi extends Import
         $this->noticenumber = $this->obscode.$this->item->var_noticenumber;
 
         try {
-            $create = VarKlimatologi::firstOrCreate(
+            $create = VarKlimatologi::updateOrCreate(
                 [
                     'noticenumber_id'   => $this->noticenumber
                 ],
