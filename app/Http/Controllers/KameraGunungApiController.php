@@ -111,7 +111,7 @@ class KameraGunungApiController extends Controller
             ]
         );
 
-        return redirect()->route('chambers.cctv.index');
+        return redirect()->route('chambers.cctv.index')->with('flash_message','CCTV berhasil dirubah');
 
     }
 
