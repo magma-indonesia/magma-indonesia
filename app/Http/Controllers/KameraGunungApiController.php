@@ -27,7 +27,7 @@ class KameraGunungApiController extends Controller
      */
     public function index()
     {
-        $cctvs = KameraGunungApi::with('gunungapi')->get();
+        $cctvs = KameraGunungApi::orderBy('code')->with('gunungapi')->get();
         return view('gunungapi.cctv.index',compact('cctvs'));
     }
 
@@ -60,7 +60,7 @@ class KameraGunungApiController extends Controller
             'publish' => $request->published,
         ]);
 
-        return redirect()->route('chambers.cctv.index');
+        return redirect()->route('chambers.cctv.index')->with('flash_message','CCTV berhasil ditambahkan');
     }
 
     /**

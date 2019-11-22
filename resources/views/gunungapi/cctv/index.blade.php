@@ -43,6 +43,12 @@
             </div>
             @else
 
+            @if(Session::has('flash_message'))
+            <div class="alert alert-success">
+                <i class="fa fa-bolt"></i> {!! session('flash_message') !!}
+            </div>
+            @endif
+
             <div class="hpanel">
                 <div class="panel-heading">
                     Daftar CCTV Gunung Api
