@@ -6,7 +6,6 @@ use App\VarVisual;
 use Illuminate\Http\Request;
 use Exception;
 use Image;
-use Ping;
 use Illuminate\Support\Facades\Storage;
 use App\Traits\ImportHelper;
 
@@ -53,21 +52,11 @@ class ImportFotoVisual extends Import
     protected function downloadFotoVisual($visual)
     {
 
-        $health = Ping::check($visual->file_old);
+        try {
+            $image = Image::make($visual->file_old);
 
-        if ($health == 200) {
-
-            try {
-                $image = Image::make($visual->file_old);
-                if ($image->width() > 1200) {
-                    $image = $image->widen(1200);
-                }
-            } 
-
-            catch (Exception $e) {
-                $visual->file_old = null;
-                $visual->save();
-                return $this;
+            if ($image->width() > 800) {
+                $image = $image->widen(800);
             }
 
             $filename = $visual->noticenumber_id.'_'.uniqid().'.png';
@@ -75,20 +64,22 @@ class ImportFotoVisual extends Import
             if (Storage::disk('var_visual')->put($visual->var->code_id.'/'.$filename, $image->stream()))
             {
                 Storage::disk('var_visual')->put($visual->var->code_id.'/thumbs/'.$filename, $image->widen(150)->stream());
-
+    
                 $visual->filename_0 = $filename;
                 $visual->filename_3 = null;
                 $visual->save();
-
+    
                 $image->destroy();
         
                 return $this;
             }
-        }
+        } 
 
-        $visual->file_old = null;
-        $visual->save();
-        return $this;
+        catch (Exception $e) {
+            $visual->file_old = null;
+            $visual->save();
+            return $this;
+        }
 
     }
 
