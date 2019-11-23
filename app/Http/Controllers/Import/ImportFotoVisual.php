@@ -25,7 +25,7 @@ class ImportFotoVisual extends Import
         $this->end_no = $request->has('end') ? $request->end : VarVisual::orderByDesc('id')->first()->id;
 
         $this->old = VarVisual::with('var:noticenumber,code_id,status')
-            ->select('id','noticenumber_id','filename_3','file_old')
+            ->select('id','noticenumber_id','filename_0','filename_3','file_old')
             ->whereBetween('id',[$this->start_no, $this->end_no])
             ->orderBy('id');
 
@@ -48,7 +48,7 @@ class ImportFotoVisual extends Import
 
     protected function downloadFotoVisual($visual)
     {
-        if (($visual->file_old != null) AND ($visual->filename_3 == null)) {
+        if ($visual->file_old) {
 
             $health = Ping::check($visual->file_old);
 
@@ -64,13 +64,14 @@ class ImportFotoVisual extends Import
                     return $this;
                 }
     
-                $filename = sha1(uniqid()).'.png';
+                $filename = $visual->noticenumber_id.'_'.uniqid().'.png';
     
                 if (Storage::disk('var_visual')->put($visual->var->code_id.'/'.$filename, $image->stream()))
                 {
                     Storage::disk('var_visual')->put($visual->var->code_id.'/thumbs/'.$filename, $image->widen(150)->stream());
     
-                    $visual->filename_3 = $filename;
+                    $visual->filename_0 = $filename;
+                    $visual->filename_3 = null;
                     $visual->save();
     
                     $image->destroy();
