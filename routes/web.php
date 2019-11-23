@@ -40,7 +40,8 @@ Route::name('v1.')->group(function () {
             ->name('home.check-location')
             ->middleware('signed');
             
-        Route::get('vona','FrontPage\v1\VonaController@index')->name('vona.index');
+        Route::get('vona','FrontPage\v1\VonaController@index')
+            ->name('vona.index');
         Route::get('vona/{id}','FrontPage\v1\VonaController@show')
             ->name('vona.show')
             ->middleware('signed');

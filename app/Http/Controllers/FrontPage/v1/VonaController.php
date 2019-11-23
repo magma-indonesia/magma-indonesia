@@ -4,6 +4,7 @@ namespace App\Http\Controllers\FrontPage\v1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\v1\Gadd;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 use App\v1\Vona;
@@ -29,9 +30,22 @@ class VonaController extends Controller
         return $this->grouped;
     }
 
-    protected function filteredVona()
+    protected function filteredVona($request)
     {
+        $this->vonas = Vona::where('ga_code',$request->code)
+                    ->where('sent',1)
+                    ->where('type','REAL')
+                    ->orderBy('log','desc')
+                    ->paginate(15);
 
+        if ($this->vonas->isEmpty())
+            abort(404);
+
+        $this->grouped = $this->vonas->groupBy(function ($vona) {
+            return Carbon::parse($vona->issued_time)->format('Y-m-d');
+        });
+
+        return $this;
     }
 
     protected function nonFilteredVona($request)
@@ -48,6 +62,7 @@ class VonaController extends Controller
 
         $vonas = Cache::remember('v1/home/vona:'.$vona->no.':'.$page.':'.$time, 30, function() {
                     return Vona::where('sent',1)
+                        ->where('type','REAL')
                         ->orderBy('log','desc')
                         ->paginate(15);
         });
@@ -68,14 +83,21 @@ class VonaController extends Controller
     {
         \Carbon\Carbon::setLocale('en');
 
-        $vonas = $request->has('volcano') || $request->has('code') ?
-                    $this->filteredVona() :
-                    $this->nonFilteredVona($request);
+        $request->has('code') ?
+                $this->filteredVona($request) :
+                $this->nonFilteredVona($request);
 
         $vonas = $this->getVonas();
         $grouped = $this->getGrouped();
+        $gadds = Gadd::select('ga_code','ga_nama_gapi')
+                        ->whereHas('vona', function($query) {
+                            $query->where('sent',1)->where('type','REAL');
+                        })
+                        ->orderBy('ga_nama_gapi')
+                        ->withCount('vona')
+                        ->get();
 
-        return view('v1.home.vona', compact('vonas','grouped'));
+        return view('v1.home.vona', compact('vonas','grouped','gadds'));
     }
 
     public function show($id)

@@ -23,6 +23,19 @@ VONA
                 <a href="https://volcanoes.usgs.gov/vhp/notifications.html" class="card-link">USGS</a>
             </div>
         </div>
+
+        <div class="card pd-30 mg-b-20">
+            <label class="slim-card-title">Volcanoes</label>
+            <div class="row row-xs">
+                <div class="col-xs-12">
+                    <a href="{{ route('v1.vona.index') }}" type="button" class="btn btn-sm btn-primary mg-b-10">All Volcanoes</a>
+                    @foreach ($gadds as $gadd)
+                    <a href="{{ route('v1.vona.index',['code' => $gadd->ga_code]) }}" type="button" class="btn btn-sm btn-primary mg-b-10">{{ $gadd->ga_nama_gapi }} ({{ $gadd->vona_count }})</a>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
         @if (!$grouped->isEmpty())
         <div class="card pd-30">
             <div class="mg-b-30">
