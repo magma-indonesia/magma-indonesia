@@ -53,7 +53,8 @@ class ImportFotoVisual extends Import
     {
 
         try {
-            $image = Image::make($visual->file_old);
+            $url = str_replace('https://magma.vsi.esdm.go.id','http://172.24.24.4',$visual->file_old);
+            $image = Image::make($url);
 
             if ($image->width() > 800) {
                 $image = $image->widen(800);
