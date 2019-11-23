@@ -21,12 +21,14 @@ class ImportFotoVisual extends Import
 
     public function import(Request $request)
     {
-        $this->start_no = $request->has('start') ? $request->start : $this->startNo('foto_vis');
-        $this->end_no = $request->has('end') ? $request->end : VarVisual::orderByDesc('id')->first()->id;
+        $start = $request->has('start') ? $request->start : $this->startNo('foto_vis');
+        $end = $request->has('end') ? $request->end : VarVisual::orderByDesc('id')->first()->id;
+
+        $this->tempTable('foto_vis',$start);
 
         $this->old = VarVisual::with('var:noticenumber,code_id,status')
             ->select('id','noticenumber_id','filename_0','filename_3','file_old')
-            ->whereBetween('id',[$this->start_no, $this->end_no])
+            ->whereBetween('id',[$start, $end])
             ->orderBy('id');
 
         $this->old->chunk(500, function($visuals) {
