@@ -61,6 +61,8 @@ class ImportFotoVisual extends Import
                     ],[
                         'filename_3' => $filename
                     ]);
+
+                    $image->destroy();
             
                     return $this;
                 }
