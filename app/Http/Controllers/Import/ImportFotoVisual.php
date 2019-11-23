@@ -31,8 +31,10 @@ class ImportFotoVisual extends Import
 
         $this->old->chunk(500, function($visuals) {
             foreach ($visuals as $key => $visual) {
-                $this->downloadFotoVisual($visual)
-                    ->tempTable('foto_vis',$visual->id);
+                if ($visual->file_old) {
+                    $this->downloadFotoVisual($visual);
+                }
+                $this->tempTable('foto_vis',$visual->id);
             }
         });
         
@@ -48,44 +50,44 @@ class ImportFotoVisual extends Import
 
     protected function downloadFotoVisual($visual)
     {
-        if ($visual->file_old) {
 
-            $health = Ping::check($visual->file_old);
+        $health = Ping::check($visual->file_old);
 
-            if ($health == 200) {
+        if ($health == 200) {
 
-                try {
-                    $image = Image::make($visual->file_old);    
-                } 
-    
-                catch (Exception $e) {
-                    $visual->file_old = null;
-                    $visual->save();
-                    return $this;
+            try {
+                $image = Image::make($visual->file_old);
+                if ($image->width() > 1200) {
+                    $image = $image->widen(1200);
                 }
-    
-                $filename = $visual->noticenumber_id.'_'.uniqid().'.png';
-    
-                if (Storage::disk('var_visual')->put($visual->var->code_id.'/'.$filename, $image->stream()))
-                {
-                    Storage::disk('var_visual')->put($visual->var->code_id.'/thumbs/'.$filename, $image->widen(150)->stream());
-    
-                    $visual->filename_0 = $filename;
-                    $visual->filename_3 = null;
-                    $visual->save();
-    
-                    $image->destroy();
-            
-                    return $this;
-                }
+            } 
+
+            catch (Exception $e) {
+                $visual->file_old = null;
+                $visual->save();
+                return $this;
             }
 
-            $visual->file_old = null;
-            $visual->save();
-            return $this;
+            $filename = $visual->noticenumber_id.'_'.uniqid().'.png';
+
+            if (Storage::disk('var_visual')->put($visual->var->code_id.'/'.$filename, $image->stream()))
+            {
+                Storage::disk('var_visual')->put($visual->var->code_id.'/thumbs/'.$filename, $image->widen(150)->stream());
+
+                $visual->filename_0 = $filename;
+                $visual->filename_3 = null;
+                $visual->save();
+
+                $image->destroy();
+        
+                return $this;
+            }
         }
 
+        $visual->file_old = null;
+        $visual->save();
         return $this;
+
     }
 
 }
