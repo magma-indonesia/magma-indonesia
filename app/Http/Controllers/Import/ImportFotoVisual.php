@@ -78,6 +78,7 @@ class ImportFotoVisual extends Import
 
         catch (Exception $e) {
             $visual->file_old = null;
+            $visual->filename_3 = null;
             $visual->save();
             return $this;
         }
