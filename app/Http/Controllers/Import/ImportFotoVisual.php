@@ -48,7 +48,7 @@ class ImportFotoVisual extends Import
 
     protected function downloadFotoVisual($visual)
     {
-        if ($visual->file_old) {
+        if (($visual->file_old != null) AND ($visual->filename_3 == null)) {
 
             $health = Ping::check($visual->file_old);
 
@@ -70,11 +70,8 @@ class ImportFotoVisual extends Import
                 {
                     Storage::disk('var_visual')->put($visual->var->code_id.'/thumbs/'.$filename, $image->widen(150)->stream());
     
-                    VarVisual::update([
-                        'noticenumber_id' => $visual->noticenumber,
-                    ],[
-                        'filename_3' => $filename
-                    ]);
+                    $visual->filename_3 = $filename;
+                    $visual->save();
     
                     $image->destroy();
             
