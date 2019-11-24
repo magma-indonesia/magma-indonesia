@@ -23,7 +23,7 @@ class ImportFotoVisual extends Import
         $start = $request->has('start') ? $request->start : $this->startNo('foto_vis');
         $end = $request->has('end') ? $request->end : VarVisual::orderByDesc('id')->first()->id;
 
-        $this->tempTable('foto_vis',$start);
+        $this->data = $this->tempTable('foto_vis',$start);
 
         $this->old = VarVisual::with('var:noticenumber,code_id,status')
             ->select('id','noticenumber_id','filename_0','filename_3','file_old')
@@ -35,7 +35,7 @@ class ImportFotoVisual extends Import
                 if ($visual->file_old) {
                     $this->downloadFotoVisual($visual);
                 }
-                $this->tempTable('foto_vis',$visual->id);
+                $this->data = $this->tempTable('foto_vis',$visual->id);
             }
         });
         
