@@ -98,7 +98,9 @@
                         <li class="active"><a data-toggle="tab" href="#tab-1">Detail Visual</a></li>
                         <li><a data-toggle="tab" href="#tab-2">Detail Kegempaan</a></li>
                         <li><a data-toggle="tab" href="#tab-4">Grafik Visual</a></li>
+                        @if (!empty($data['highcharts']['temperature']['series_min']))
                         <li><a data-toggle="tab" href="#tab-6">Tabel Klimatologi</a></li>     
+                        @endif
                         @if ($data['summary']['gempa'])
                         <li><a data-toggle="tab" href="#tab-5">Grafik Kegempaan</a></li>
                         <li><a data-toggle="tab" href="#tab-3">Tabel Kegempaan</a></li>
@@ -220,6 +222,7 @@
                         </div>
                         @endif
 
+                        @if (!empty($data['highcharts']['temperature']['series_min']))
                         <div id="tab-6" class="tab-pane">
 
                             <div class="panel-body">
@@ -302,6 +305,7 @@
                             </div>
                             @endif
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -329,6 +333,7 @@
 <script>
     $(document).ready(function () {
 
+        @if (!empty($data['highcharts']['temperature']['series_min']))
         $('#table-temperature').dataTable({
             dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
@@ -340,6 +345,7 @@
             ]
 
         });
+        @endif
 
         @if (!empty($data['highcharts']['curah_hujan']['series']))
         $('#table-curah-hujan').dataTable({
