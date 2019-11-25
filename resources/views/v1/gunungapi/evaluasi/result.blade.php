@@ -345,7 +345,6 @@
             ]
 
         });
-        @endif
 
         @if (!empty($data['highcharts']['curah_hujan']['series']))
         $('#table-curah-hujan').dataTable({
@@ -372,6 +371,9 @@
             ]
         });
         @endif
+
+        @endif
+
 
         var clipboard = new ClipboardJS('.copy');
 
