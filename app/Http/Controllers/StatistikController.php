@@ -90,8 +90,8 @@ class StatistikController extends Controller
         $year = $year ?: now()->format('Y');
 
         for ($i=0; $i <12 ; $i++) { 
-            $month = $i+1 <= 10 ? '0'.$i : $i;
-            $data[$i] = [
+            $month = $i+1 <= 10 ? '0'.($i+1) : $i+1;
+            $data[$year.'-'.$month] = [
                 'gempa_bumi' => $this->dataGempa($year,$month),
                 'gerakan_tanah' => $this->dataGerakanTanah($year,$month),
                 'gunung_api' => $this->dataGunungApi($year,$month),
