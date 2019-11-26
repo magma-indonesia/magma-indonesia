@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use App\WOVOdat\Volcano;
 use App\WOVOdat\DeformationStation as DS;
+use Illuminate\Support\Facades\URL;
 
 class DeformationTiltController extends Controller
 {
@@ -92,12 +93,13 @@ class DeformationTiltController extends Controller
     public function realtime(Request $request, $deformationStation = 21)
     {
         $data = $this->realtimeData($deformationStation);
+        $url = URL::signedRoute('chambers.json.wovodat.tilt.realtime', ['deformation_station' => $deformationStation ]);
         $station = $data['station'];
         $volcano = $data['volcano'];
         $network = $data['network'];
         $station_name = $data['station_name'];
         
-        return view('wovodat.deformation-station.tilt.realtime', compact('station','volcano','network','station_name'));
+        return view('wovodat.deformation-station.tilt.realtime', compact('station','url','volcano','network','station_name'));
     }
 
     protected function transformRealtimeData($station)

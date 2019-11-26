@@ -144,7 +144,7 @@
         {
             $.ajax({
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                url: '{{ URL::signedRoute('chambers.json.wovodat.tilt.realtime', ['deformation_station' => '21']) }}',
+                url: '{{ $url }}',
                 data: {start: start_date.val},
                 type: 'POST',
                 success: function(dataset) {
