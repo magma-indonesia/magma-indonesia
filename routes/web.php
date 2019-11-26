@@ -135,6 +135,9 @@ Route::name('.projects')->group(function () {
     });
 });
 
+Route::get('statistik/{year?}','StatistikController@index')
+    ->name('statistik.index');
+
 Route::get('tes', 'TesController@index');
 Route::get('tes/image/', 'TesController@imageCrop');
 Route::get('tes/image/{id?}', 'TesController@getFile')->name('tesimage');

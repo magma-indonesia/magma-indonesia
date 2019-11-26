@@ -281,14 +281,14 @@
                     @yield('nav-edit-datadasar')
                 </ul>
             </li>
-            <li class="{{ active(['chambers.gerakantanah.*']) }}">
+            <li class="{{ active(['chambers.gerakan-tanah.*']) }}">
                 <a href="#">
                     <span class="nav-label">Gerakan Tanah</span>
                     <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
-                    <li class="{{ active('chambers.gerakantanah.laporan.index') }}">
-                        <a href="{{ route('chambers.gerakantanah.laporan.index') }}">Daftar Laporan</a>
+                    <li class="{{ active('chambers.gerakan-tanah.laporan.index') }}">
+                        <a href="{{ route('chambers.gerakan-tanah.laporan.index') }}">Daftar Laporan</a>
                     </li>
                 </ul>
             </li>

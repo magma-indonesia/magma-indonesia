@@ -23,9 +23,6 @@ class EqLts extends Model
     ];
 
     protected $hidden   = [
-        'id',
-        'var_gempa_id',
-        'noticenumber_id',
         'created_at',
         'updated_at',
     ];

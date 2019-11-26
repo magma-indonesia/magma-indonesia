@@ -1,6 +1,8 @@
 <?php
 
 Route::get('/','ChamberController@index')->name('index');
+Route::get('statistik/{year?}','StatistikController@index')
+    ->name('statistik.index');
 
 Route::get('routes', 'RoutesController@index');
 
@@ -150,8 +152,8 @@ Route::group(['prefix' => 'gunungapi'], function () {
     ]]);
 });
 
-Route::name('gerakantanah.')->group(function() {
-    Route::group(['prefix' => 'gerakantanah'], function () {
+Route::name('gerakan-tanah.')->group(function() {
+    Route::group(['prefix' => 'gerakan-tanah'], function () {
         Route::resource('laporan','ActivityMgtController');
     });
 });
@@ -258,6 +260,8 @@ Route::name('v1.')->group(function () {
         Route::post('gempabumi/filter','v1\MagmaRoqController@filter')
             ->name('gempabumi.filter');
         Route::resource('gempabumi','v1\MagmaRoqController');
+
+        Route::resource('gerakan-tanah','v1\MagmaSigertanController');
 
         Route::resource('subscribers','v1\VonaSubscriberController');
 
