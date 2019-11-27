@@ -22,10 +22,10 @@ class CreateMagmaRoqsTable extends Migration
             $table->float('depth');
             $table->float('latitude',10,6)->nullable();
             $table->float('longitude',10,6)->nullable();
-            $table->char('area',50);
-            $table->char('kota_terdekat',100)->nullable();
+            $table->string('area');
+            $table->string('kota_terdekat')->nullable();
             $table->string('mmi')->nullable();
-            $table->char('nearest_volcano',100);            
+            $table->char('nearest_volcano',100)->nullable();           
             $table->timestamps();
         });
     }
