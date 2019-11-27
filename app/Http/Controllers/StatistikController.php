@@ -26,19 +26,32 @@ class StatistikController extends Controller
 
     protected function dataGerakanTanah($year,$month)
     {
-        $gertans = \App\SigertanKerusakan::where('noticenumber_id','like','%'.$year.$month.'%')->get();
+        $dampak = \App\SigertanKerusakan::where('noticenumber_id','like','%'.$year.$month.'%')->get();
+
+        $gertans = \App\SigertanCrs::where('type','GERAKAN TANAH')
+                    ->where('waktu_kejadian','like',$year.'-'.$month.'%')
+                    ->count();
+
+        $tanggapan = \App\SigertanCrs::whereHas('tanggapan')
+                    ->where('type','GERAKAN TANAH')
+                    ->where('waktu_kejadian','like',$year.'-'.$month.'%')
+                    ->count();
 
         return [
-            'meninggal' => $gertans->sum('meninggal'),
-            'luka_luka' => $gertans->sum('luka'),
-            'rumah_rusak' => $gertans->sum('rumah_rusak'),
-            'rumah_hancur' => $gertans->sum('rumah_hancur'),
-            'rumah_terancam' => $gertans->sum('rumah_terancam'),
-            'bangunan_rusak' => $gertans->sum('bangunan_rusak'),
-            'bangunan_hancur' => $gertans->sum('bangunan_hancur'),
-            'bangunan_terancam' => $gertans->sum('bangunan_terancam'),
-            'lahan_rusak' => $gertans->sum('lahan_rusak'),
-            'jalan_rusak' => $gertans->sum('jalan_rusak'),
+            'total_laporan' => $gertans,
+            'total_tanggapan' => $tanggapan,
+            'dampak' => [
+                'meninggal' => $dampak->sum('meninggal'),
+                'luka_luka' => $dampak->sum('luka'),
+                'rumah_rusak' => $dampak->sum('rumah_rusak'),
+                'rumah_hancur' => $dampak->sum('rumah_hancur'),
+                'rumah_terancam' => $dampak->sum('rumah_terancam'),
+                'bangunan_rusak' => $dampak->sum('bangunan_rusak'),
+                'bangunan_hancur' => $dampak->sum('bangunan_hancur'),
+                'bangunan_terancam' => $dampak->sum('bangunan_terancam'),
+                'lahan_rusak' => $dampak->sum('lahan_rusak'),
+                'jalan_rusak' => $dampak->sum('jalan_rusak'),
+            ]
         ];
     }
 
@@ -89,8 +102,8 @@ class StatistikController extends Controller
 
         $year = $year ?: now()->format('Y');
 
-        for ($i=0; $i <12 ; $i++) { 
-            $month = $i+1 <= 10 ? '0'.($i+1) : $i+1;
+        for ($i=1; $i <=12 ; $i++) { 
+            $month = $i < 10 ? '0'.$i : $i;
             $data[$year.'-'.$month] = [
                 'gempa_bumi' => $this->dataGempa($year,$month),
                 'gerakan_tanah' => $this->dataGerakanTanah($year,$month),

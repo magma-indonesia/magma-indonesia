@@ -134,4 +134,14 @@ class SigertanCrs extends Model
         return $this->hasOne('App\SigertanCrsValidasi','crs_id','id');
     }
 
+    /**
+     * Semua laporan Qls memiliki satu tanggapan Sigertan
+     *
+     * @return void
+     */
+    public function tanggapan()
+    {
+        return $this->hasOne('App\MagmaSigertan','crs_id','crs_id');
+    }
+
 }
