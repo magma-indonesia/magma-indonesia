@@ -78,5 +78,6 @@ class Kernel extends HttpKernel
         'json' => \App\Http\Middleware\EnforceJson::class,
         'owner' => \App\Http\Middleware\SelfCheck::class,
         'check.password' => \App\Http\Middleware\CheckPassword::class,
+        'statistik.home' => \App\Http\Middleware\StatistikHomeMiddleware::class,
     ];
 }

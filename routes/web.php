@@ -27,7 +27,7 @@ Route::get('logout','LoginController@logout')
         ->name('logout');
 
 Route::name('v1.')->group(function () {
-    Route::group(['prefix' => 'v1'], function () {
+    Route::group(['prefix' => 'v1', 'middleware' => ['statistik.home']], function () {
         
         Route::get('/','v1\HomeController@home')
             ->name('home');
