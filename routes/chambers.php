@@ -148,7 +148,7 @@ Route::group(['prefix' => 'gunungapi'], function () {
      */
     Route::resource('laporan/draft','MagmaVarDraftController');
     Route::resource('laporan','ActivityGaController', ['except' => [
-        'create','store','edit','update','destroy'
+        'create','store','edit','update'
     ]]);
 });
 

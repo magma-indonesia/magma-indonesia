@@ -230,4 +230,29 @@ class ActivityGaController extends Controller
 
         return response()->json($data);
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($noticenumber)
+    {
+        $var = MagmaVar::where('noticenumber',$noticenumber)->firstOrFail();
+        if ($var->delete()) {
+            $data = [
+                'success' => 1,
+                'message' => 'Data berhasil dihapus.'
+            ];
+
+            return response()->json($data);
+        }
+
+        $data = [
+            'success' => 0,
+            'message' => 'Gagal dihapus.'
+        ];
+
+        return response()->json($data);
+    }
 }

@@ -7,6 +7,9 @@
 @section('add-vendor-css')
     <link rel="stylesheet" href="{{ asset('vendor/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap-datepicker-master/dist/css/bootstrap-datepicker3.min.css') }}" />
+    @role('Super Admin')
+    <link rel="stylesheet" href="{{ asset('vendor/sweetalert/lib/sweet-alert.css') }}" />
+    @endrole
 @endsection
 
 @section('content-header')
@@ -160,9 +163,15 @@
                                         </td>
                                         <td>{{ $var->user->name }}</td>
                                         <td>
-                                            <a href="">
-                                                <a href="{{ route('chambers.laporan.show',$var->noticenumber ) }}" target="_blank" class="btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">View</a>
-                                            </a>
+                                            <a href="{{ route('chambers.laporan.show',$var->noticenumber ) }}" target="_blank" class="btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">View</a>
+
+                                            @role('Super Admin')
+                                            <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.laporan.destroy', $var->noticenumber) }}" accept-charset="UTF-8">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button value="Delete" class="btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
+                                            </form>
+                                            @endrole
                                         </td>
                                     </tr>
                                     @endforeach
@@ -185,12 +194,65 @@
     <script src="{{ asset('vendor/moment/moment.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
+    @role('Super Admin')
+    <script src="{{ asset('vendor/sweetalert/lib/sweet-alert.min.js') }}"></script>
+    @endrole
 @endsection
 
 @section('add-script')
     <script>
 
         $(document).ready(function () {
+
+            @role('Super Admin')
+            $('body').on('submit','#deleteForm',function (e) {
+                e.preventDefault();                
+
+                var $url = $(this).attr('action'),
+                    $data = $(this).serialize();
+
+                swal({
+                    title: "Anda yakin?",
+                    text: "Data yang telah dihapus tidak bisa dikembalikan",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, hapus!",
+                    cancelButtonText: "Gak jadi deh!",
+                    closeOnConfirm: false,
+                    closeOnCancel: true },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: $url,
+                            data: $data,
+                            type: 'POST',
+                            success: function(data){
+                                console.log(data);
+                                if (data.success){
+                                    swal("Berhasil!", data.message, "success");
+                                    setTimeout(function(){
+                                        location.reload();
+                                    },2000);
+                                }
+                            },
+                            error: function(data){
+                                var $errors = {
+                                    'status': data.status,
+                                    'exception': data.responseJSON.exception,
+                                    'file': data.responseJSON.file,
+                                    'line': data.responseJSON.line
+                                };
+                                console.log($errors);
+                                swal("Gagal!", data.responseJSON.exception, "error");
+                            }
+                        });
+                    }
+                });
+
+                return false;
+            });
+            @endrole
 
             $('#nip').on('change', function(e){
                 var $nip = $('#nip').val();
