@@ -54,7 +54,9 @@
                             <div class="form-group">
                                 <label class="control-label">Sumber Data</label>
                                 <select class="form-control m-b" name="source">
-                                    <option value="var" selected>Gempa Letusan VAR</option>
+                                    <option value="all" selected>- Pilih Semua -</option>
+                                    <option value="lts">Gempa Letusan</option>
+                                    <option value="apg">Gempa Guguran dan Awan Panas Guguran</option>
                                 </select>
                             </div>
 

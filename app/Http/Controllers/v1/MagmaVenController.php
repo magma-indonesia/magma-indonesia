@@ -108,22 +108,92 @@ class MagmaVenController extends Controller
         if (count($request->all()))
         {
             $code = strtolower($request->gunungapi) == 'all' ? '%' : $request->gunungapi;
-            $erupsi = MagmaVar::select('ga_code','ga_nama_gapi','var_data_date','var_lts')
-                        ->selectRaw('SUM(var_lts) as jumlah_erupsi')
-                        ->where('ga_code','like',$code)
-                        ->where('var_lts','>',0)
-                        ->whereBetween('var_data_date',[$request->start,$request->end])
-                        ->groupBy('magma_var.ga_nama_gapi')
-                        ->get();
             $periode = $request->start.' hingga '.$request->end;
+            $jenis = $request->source;
+            $erupsi = collect([]);
+            $gempas = collect([]);
 
-            return view('v1.gunungapi.ven.result', compact('gadds','erupsi','periode'));     
+            if ($request->source == 'all')
+            {
+                $gempas = collect(
+                [
+                    [
+                        'jenis' => 'letusan',
+                        'nama' => 'Letusan'
+                    ],
+                    [
+                        'jenis' => 'awan_panas_letusan',
+                        'nama' => 'Awan Panas Letusan'
+                    ],[
+                        'jenis' => 'awan_panas_guguran',
+                        'nama' => 'Awan Panas Guguran'
+                    ],[
+                        'jenis' => 'guguran', 
+                        'nama' => 'Guguran'
+                    ]
+                ]);
+
+                $erupsi = MagmaVar::select('ga_code','ga_nama_gapi','var_data_date','var_lts','var_apg','var_apl','var_gug')
+                            ->selectRaw('SUM(var_lts) as jumlah_letusan')
+                            ->selectRaw('SUM(var_apg) as jumlah_awan_panas_guguran')
+                            ->selectRaw('SUM(var_apl) as jumlah_awan_panas_letusan')
+                            ->selectRaw('SUM(var_gug) as jumlah_guguran')
+                            ->whereBetween('var_data_date',[$request->start,$request->end])
+                            ->where('ga_code','like',$code)
+                            ->groupBy('magma_var.ga_nama_gapi')
+                            ->get();
+
+                $erupsi = $erupsi->reject(function ($value, $key) {
+                    return (($value['jumlah_letusan'] == 0) AND ($value['jumlah_awan_panas_guguran'] == 0) AND ($value['jumlah_awan_panas_letusan'] == 0) AND ($value['jumlah_guguran'] == 0));
+                });
+            }
+
+            if ($request->source == 'lts')
+            {
+                $gempas = collect(['jenis' => 'erupsi','nama' => 'Letusan']);
+                $erupsi = MagmaVar::select('ga_code','ga_nama_gapi','var_data_date','var_lts')
+                            ->selectRaw('SUM(var_lts) as jumlah_letusan')
+                            ->where('ga_code','like',$code)
+                            ->where('var_lts','>',0)
+                            ->whereBetween('var_data_date',[$request->start,$request->end])
+                            ->groupBy('magma_var.ga_nama_gapi')
+                            ->get();
+            }
+
+            if ($request->source == 'apg')
+            {
+                $gempas = collect(
+                [
+                    [
+                        'jenis' => 'awan_panas_letusan',
+                        'nama' => 'Awan Panas Letusan'
+                    ],[
+                        'jenis' => 'awan_panas_guguran',
+                        'nama' => 'Awan Panas Guguran'
+                    ],[
+                        'jenis' => 'guguran', 
+                        'nama' => 'Guguran'
+                    ]
+                ]);
+                $erupsi = MagmaVar::select('ga_code','ga_nama_gapi','var_data_date','var_apg','var_apl','var_gug')
+                            ->selectRaw('SUM(var_apg) as jumlah_awan_panas_guguran')
+                            ->selectRaw('SUM(var_apl) as jumlah_awan_panas_letusan')
+                            ->selectRaw('SUM(var_gug) as jumlah_guguran')
+                            ->whereBetween('var_data_date',[$request->start,$request->end])
+                            ->where('ga_code','like',$code)
+                            ->groupBy('magma_var.ga_nama_gapi')
+                            ->get();
+
+                $erupsi = $erupsi->reject(function ($value, $key) {
+                    return (($value['jumlah_awan_panas_guguran'] == 0) AND ($value['jumlah_awan_panas_letusan'] == 0) AND ($value['jumlah_guguran'] == 0));
+                });
+            }
+
+            return view('v1.gunungapi.ven.result', compact('gadds','erupsi','periode','jenis','gempas'));     
         }
 
         return view('v1.gunungapi.ven.filter', compact('gadds'))->with('flash_message',
         'Kriteria pencarian tidak ditemukan/belum ada');
-
-
     }
 
     protected function filteredVen($code,$last,$page)

@@ -68,7 +68,9 @@
                             <div class="form-group">
                                 <label class="control-label">Sumber Data</label>
                                 <select class="form-control m-b" name="source">
-                                    <option value="var" selected>Gempa Letusan VAR</option>
+                                    <option value="all" selected>- Pilih Semua -</option>
+                                    <option value="lts">Gempa Letusan</option>
+                                    <option value="apg">Gempa Guguran dan Awan Panas Guguran</option>
                                 </select>
                             </div>
 
@@ -101,6 +103,8 @@
             </div>
 
             @if (count($erupsi))
+
+            @if ($jenis == 'lts')
             <div class="col-md-12 col-lg-9">
                 <div class="row">
                     <div class="panel-heading">
@@ -113,14 +117,11 @@
                                 <div class="text-center">
                                     <h3>{{ $item->ga_nama_gapi }}</h3>
                                     <p class="text-big font-light">
-                                        {{ $item->jumlah_erupsi }}
+                                        {{ $item->jumlah_letusan }}
                                     </p>
                                     <h4>
                                         Jumlah Letusan
                                     </h4>
-                                    <small>
-                                        Letusan terakhir terjadi pada tanggal {{ $item->data_date }}
-                                    </small>
                                 </div>
                             </div>
                         </div>
@@ -128,6 +129,47 @@
                     @endforeach
                 </div>
             </div>
+
+            @else
+            <div class="col-md-12 col-lg-9">
+                <h3>Periode {{ $periode }}</h3>
+                @foreach ($gempas as $gempa)
+
+                @if ($erupsi->sum('jumlah_'.$gempa['jenis']))
+                <div class="row">
+                    <div class="panel-heading">
+                        <span class="font-bold"><h3>{{ $gempa['nama'] }}</h3></span>
+                    </div>
+
+                    @foreach ($erupsi as $item)
+
+                    @if ($item->{'jumlah_'.$gempa['jenis']})
+                    <div class="col-md-3 col-xs-6">
+                        <div class="hpanel hbgred">
+                            <div class="panel-body">
+                                <div class="text-center">
+                                    <h3>{{ $item->ga_nama_gapi }}</h3>
+                                    <p class="text-big font-light">
+                                        {{ $item->{'jumlah_'.$gempa['jenis']} }}
+                                    </p>
+                                    <h4>
+                                        Jumlah {{ $gempa['nama'] }}
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                        
+                    @endif
+
+                    @endforeach
+                </div>
+                <hr>
+                @endif
+                
+                @endforeach
+            </div>    
+            @endif
+
             @endif
         </div>
     </div>
