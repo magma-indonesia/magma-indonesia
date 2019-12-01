@@ -130,11 +130,12 @@ class CompileVarController extends Controller
     
                 if ($this->vars->isNotEmpty()) {
     
-                    $this->noticenumber = Carbon::createFromFormat('Y-m-d', $date['date'])->format('Ymd').'2400';
+                    $noticenumber = Carbon::createFromFormat('Y-m-d', $date['date'])->format('Ymd').'2400';
 
                     $last = $this->vars->last()->replicate();
                     $last->updateOrCreate([
-                            'var_noticenumber' => $this->noticenumber,
+                            'ga_code' => $last->ga_code,
+                            'var_noticenumber' => $noticenumber,
                         ], array_merge($this->mergedVisual(),$this->mergedGempa())
                     );
                     
