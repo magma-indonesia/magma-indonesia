@@ -191,6 +191,12 @@ class ResumeHarianController extends Controller
 
     protected function checkVar()
     {
+        $empty_vars = MagmaVar::where('var_nip_pelapor','')->get();
+
+        $empty_vars->each(function ($var) {
+            $var->delete();
+        });
+
         $this->bencanas->each(function ($bencana, $key) {
             if ($bencana->magma_var == null)
                 $this->compileVar($bencana->gunungapi->code, $this->date); 

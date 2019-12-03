@@ -46,6 +46,12 @@ class CompileVarController extends Controller
     {
         $compiles = CompileVar::whereIsActive(1)->get();
 
+        $empty_vars = MagmaVar::where('var_nip_pelapor','')->get();
+
+        $empty_vars->each(function ($var) {
+            $var->delete();
+        });
+
         $vars = MagmaVar::select('ga_code','var_data_date','var_perwkt')
                     ->whereVarPerwkt('6 Jam')
                     ->with('compile')
