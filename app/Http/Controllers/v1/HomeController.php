@@ -10,7 +10,7 @@ use App\v1\MagmaVar as OldVar;
 use App\v1\GertanCrs as Crs;
 use App\v1\MagmaRoq as Roq;
 use App\PublicCheckLocation as Check;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 use App\Traits\v1\GunungApiTerdekat;
 

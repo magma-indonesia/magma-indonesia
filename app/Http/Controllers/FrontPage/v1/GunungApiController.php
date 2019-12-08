@@ -4,15 +4,13 @@ namespace App\Http\Controllers\FrontPage\v1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Cache;
-use Validator;
-use DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use App\v1\Gadd;
 use App\v1\MagmaVen;
 use App\v1\MagmaVar;
 use App\v1\StatistikMagmaVen;
-use App\v1\MagmaVarOptimize;
 
 use App\Traits\VisualAsap;
 use App\Traits\v1\DeskripsiGempa;

@@ -32,6 +32,7 @@ trait DeskripsiGempa
         'apg' => 'Awan Panas Guguran',
         'gug' => 'Guguran',
         'hbs' => 'Hembusan',
+        'hrm' => 'Harmonik',
         'tre' => 'Tremor Non-Harmonik',
         'tor' => 'Tornillo',
         'lof' => 'Low Frequency',
@@ -44,7 +45,6 @@ trait DeskripsiGempa
         'tej' => 'Tektonik Jauh',
         'dev' => 'Double Event',
         'gtb' => 'Getaran Banjir',
-        'hrm' => 'Harmonik',
         'dpt' => 'Deep Tremor',
         'mtr' => 'Tremor Menerus'
     ];
@@ -197,6 +197,14 @@ trait DeskripsiGempa
         return $this;
     }
 
+    protected function addKataGempa()
+    {
+        if (!in_array($this->code_gempa,['hrm','tre']) )
+            return ' gempa';
+
+        return;
+    }
+
     protected function getGempaSp()
     {
         return $this->jumlah.' kali gempa '.$this->nama_gempa.' dengan amplitudo '.$this->minMax($this->amplitudo).' mm, S-P '.$this->spMinMax().' dan lama gempa '.$this->minMax($this->durasi).' detik. ';
@@ -204,7 +212,7 @@ trait DeskripsiGempa
 
     protected function getGempaNormal()
     {
-        return $this->jumlah.' kali gempa '.$this->nama_gempa.' dengan amplitudo '.$this->minMax($this->amplitudo).' mm, dan lama gempa '.$this->minMax($this->durasi).' detik. ';
+        return $this->jumlah.' kali'.$this->addKataGempa().' '.$this->nama_gempa.' dengan amplitudo '.$this->minMax($this->amplitudo).' mm, dan lama gempa '.$this->minMax($this->durasi).' detik. ';
     }
 
     protected function getGempaDominan()

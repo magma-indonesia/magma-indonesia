@@ -14,6 +14,7 @@ trait DeskripsiVar
         'gug' => 'Guguran',
         'apg' => 'Awan Panas Guguran',
         'hbs' => 'Hembusan',
+        'hrm' => 'Harmonik',
         'tre' => 'Tremor Non-Harmonik',
         'tor' => 'Tornillo',
         'lof' => 'Low Frequency',
@@ -26,7 +27,6 @@ trait DeskripsiVar
         'tej' => 'Tektonik Jauh',
         'dev' => 'Double Event',
         'gtb' => 'Getaran Banjir',
-        'hrm' => 'Harmonik',
         'dpt' => 'Deep Tremor',
         'mtr' => 'Tremor Menerus'
     ];

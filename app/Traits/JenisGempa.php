@@ -15,9 +15,9 @@ trait JenisGempa
     private function jenisgempa()
     {
 
-        $namas      = ["Letusan/Erupsi","Awan Panas Letusan","Guguran","Awan Panas Guguran","Hembusan","Tremor Non-Harmonik","Tornillo","Low Frequency","Hybrid/Fase Banyak","Vulkanik Dangkal","Vulkanik Dalam","Very Long Period","Tektonik Lokal","Terasa","Tektonik Jauh","Double Event","Getaran Banjir","Harmonik","Deep Tremor","Tremor Menerus"];
+        $namas      = ["Letusan/Erupsi","Awan Panas Letusan","Guguran","Awan Panas Guguran","Hembusan","Harmonik","Tremor Non-Harmonik","Tornillo","Low Frequency","Hybrid/Fase Banyak","Vulkanik Dangkal","Vulkanik Dalam","Very Long Period","Tektonik Lokal","Terasa","Tektonik Jauh","Double Event","Getaran Banjir","Deep Tremor","Tremor Menerus"];
         
-        $kode       = ["lts","apl","gug","apg","hbs","tre","tor","lof","hyb","vtb","vta","vlp","tel","trs","tej","dev","gtb","hrm","dpt","mtr"];
+        $kode       = ["lts","apl","gug","apg","hbs","hrm","tre","tor","lof","hyb","vtb","vta","vlp","tel","trs","tej","dev","gtb","dpt","mtr"];
 
         $sp         = ['tej','tel','dev','vta','hyb'];
 		$normal     = ['vlp','dpt','vtb','lof','tor','hrm','tre','hbs','gtb'];
