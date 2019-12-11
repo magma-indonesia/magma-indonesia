@@ -102,7 +102,7 @@
                 <div class="hpanel">
                     <div class="panel-body">
                         <div class="stats-title pull-left">
-                            <h4>Interval Swarm</h4>
+                            <h4>Swarm</h4>
                         </div>
 
                         <div class="stats-icon pull-right">
