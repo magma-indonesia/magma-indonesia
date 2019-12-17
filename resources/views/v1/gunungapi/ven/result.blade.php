@@ -71,6 +71,7 @@
                                     <option value="all" selected>- Pilih Semua -</option>
                                     <option value="lts">Gempa Letusan</option>
                                     <option value="apg">Gempa Guguran dan Awan Panas Guguran</option>
+                                    <option value="hbs">Gempa Hembusan</option>
                                 </select>
                             </div>
 
