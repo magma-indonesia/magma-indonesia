@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Gadd;
 use App\Seismometer;
+use App\LiveSeismogram;
 use Illuminate\Http\Request;
 use Image;
 use Storage;
@@ -42,8 +43,6 @@ class SeismometerController extends Controller
             }
 
         });
-
-        // return $lives;
 
         return view('gunungapi.seismometer.index', compact('gadds','lives'));
     }
@@ -144,6 +143,16 @@ class SeismometerController extends Controller
                 'published' => $request->published,
             ]
         );
+
+        if ($request->is_active)
+        {
+            LiveSeismogram::updateOrCreate(            [
+                'seismometer_id' => $seismometer->id
+            ],[
+                'code' => $request->code,
+                'filename' => null,
+            ]);
+        }
 
         return redirect()->route('chambers.seismometer.index');
     }
