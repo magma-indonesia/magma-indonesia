@@ -36,6 +36,7 @@ Live Seismogram
             @foreach ($gadds as $gadd)
             @foreach ($gadd->seismometers as $seismometer)
 
+            @if ($seismometer->live_seismogram->image)
             <div class="card card-blog-overlay">
                 <img class="img-fit-cover" src="{{ $seismometer->live_seismogram->image }}" alt="">
                 <div class="card-footer">
@@ -43,6 +44,7 @@ Live Seismogram
                     <small class="text-right">{{ $gadd->name }} - {{ $seismometer->scnl }}</small>
                 </div>
             </div>
+            @endif
 
             @endforeach
             @endforeach
