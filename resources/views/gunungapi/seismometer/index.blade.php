@@ -60,7 +60,17 @@
                             <tbody>
                             @foreach ($lives as $live)
                             <tr>
-                                <td>{{ $live->gunungapi->name }}</td>
+                                <td>
+                                    {{ $live->gunungapi->name }}
+                                    <br>
+                                    @if ($live->is_active)
+                                        @if ($live->live_seismogram->filename)
+                                        <img class="img-fit-cover" src="{{ $live->live_seismogram->image }}" alt="">
+                                        @else
+                                        <span class="label label-danger">Data tidak ada di Winston</span>
+                                        @endif
+                                    @endif
+                                </td>
                                 <td>{{ $live->scnl }}</td>
                                 <td>{{ $live->is_active ? 'Ya' : 'Tidak' }}</td>
                                 <td>{{ $live->hit }}</td>

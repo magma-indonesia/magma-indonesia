@@ -34,12 +34,14 @@ class LiveSeismogram extends Command
         parent::__construct();
     }
 
-    protected function updateLiveSeismogram($seismometer, $filename)
+    protected function updateLiveSeismogram($seismometer, $filename = null)
     {
-        if ($live = LiveSeismogramModel::whereSeismometerId($seismometer->id)->first())
-        {
-            Storage::disk('seismogram')->delete($live->filename);
-            Storage::disk('seismogram')->delete('thumb_'.$live->filename);
+        if ($filename) {
+            if ($live = LiveSeismogramModel::whereSeismometerId($seismometer->id)->first())
+            {
+                Storage::disk('seismogram')->delete($live->filename);
+                Storage::disk('seismogram')->delete('thumb_'.$live->filename);
+            }
         }
 
         LiveSeismogramModel::updateOrCreate(
@@ -84,7 +86,7 @@ class LiveSeismogram extends Command
     
                 catch (\Exception $e)
                 {
-                    $image = null;
+                    $this->updateLiveSeismogram($seismometer);
                 }
             });
         }

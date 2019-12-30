@@ -34,15 +34,21 @@ class LiveSeismogramController extends Controller
 
                     $live = $seismometer->live_seismogram;
 
-                    try {
-                        $path = Storage::disk('seismogram')->get('thumb_'.$live->filename);
-                        $image = Image::make($path)->stream('data-url');
-                        $live['image'] = $image;
-                    }
-    
-                    catch(\Exception $e) {
+                    if ($live->filename) {
+                        try {
+                            $path = Storage::disk('seismogram')->get('thumb_'.$live->filename);
+                            $image = Image::make($path)->stream('data-url');
+                            $live['image'] = $image;
+                        }
+        
+                        catch(\Exception $e) {
+                            $live['image'] = null;
+                        }
+                        
+                    } else {
                         $live['image'] = null;
                     }
+
                 });
             });
             

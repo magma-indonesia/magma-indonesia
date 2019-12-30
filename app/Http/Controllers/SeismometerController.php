@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Gadd;
 use App\Seismometer;
 use Illuminate\Http\Request;
+use Image;
+use Storage;
 
 class SeismometerController extends Controller
 {
@@ -25,6 +27,23 @@ class SeismometerController extends Controller
         $lives = Seismometer::with('live_seismogram','gunungapi:code,name')
                     ->wherePublished(1)
                     ->get();
+
+        $lives->each(function ($live) {
+
+            $live_seismogram = $live->live_seismogram;
+
+            if ($live_seismogram->filename) {
+                $path = Storage::disk('seismogram')->get('thumb_'.$live_seismogram->filename);
+                $image = Image::make($path)->stream('data-url');
+    
+                $live_seismogram['image'] = $image;
+            } else {
+                $live_seismogram['image'] = null;
+            }
+
+        });
+
+        // return $lives;
 
         return view('gunungapi.seismometer.index', compact('gadds','lives'));
     }
