@@ -107,6 +107,10 @@
                         <h4 class="font-bold">Keterangan Visual Lainnya</h4>
                         <p>{{ $var->var_viskawah }}</p>
                         @endif
+                        @if(!empty($var->var_viskawah))
+                        <h4 class="font-bold">Keterangan Lainnya</h4>
+                        <p>{!! nl2br($var->var_ketlain) !!}</p>
+                        @endif
                     </div>
                     <div class="border-top m-t-md">
                         <div class="row m-t-md">
