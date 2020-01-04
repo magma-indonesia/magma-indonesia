@@ -144,6 +144,7 @@ class MagmaVenController extends Controller
                             ->selectRaw('SUM(var_hbs) as jumlah_hembusan')
                             ->whereBetween('var_data_date',[$request->start,$request->end])
                             ->where('ga_code','like',$code)
+                            ->where('var_perwkt','24 Jam')
                             ->groupBy('magma_var.ga_nama_gapi')
                             ->get();
 
@@ -158,6 +159,7 @@ class MagmaVenController extends Controller
                 $erupsi = MagmaVar::select('ga_code','ga_nama_gapi','var_data_date','var_lts')
                             ->selectRaw('SUM(var_lts) as jumlah_letusan')
                             ->where('ga_code','like',$code)
+                            ->where('var_perwkt','24 Jam')
                             ->where('var_lts','>',0)
                             ->whereBetween('var_data_date',[$request->start,$request->end])
                             ->groupBy('magma_var.ga_nama_gapi')
@@ -185,6 +187,7 @@ class MagmaVenController extends Controller
                             ->selectRaw('SUM(var_gug) as jumlah_guguran')
                             ->whereBetween('var_data_date',[$request->start,$request->end])
                             ->where('ga_code','like',$code)
+                            ->where('var_perwkt','24 Jam')
                             ->groupBy('magma_var.ga_nama_gapi')
                             ->get();
 
@@ -199,6 +202,7 @@ class MagmaVenController extends Controller
                 $erupsi = MagmaVar::select('ga_code','ga_nama_gapi','var_data_date','var_hbs')
                             ->selectRaw('SUM(var_hbs) as jumlah_hembusan')
                             ->where('ga_code','like',$code)
+                            ->where('var_perwkt','24 Jam')
                             ->where('var_hbs','>',0)
                             ->whereBetween('var_data_date',[$request->start,$request->end])
                             ->groupBy('magma_var.ga_nama_gapi')
