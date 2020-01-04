@@ -27,7 +27,7 @@ class KameraGunungApiController extends Controller
      */
     public function index()
     {
-        $cctvs = KameraGunungApi::orderBy('code')->with('gunungapi')->get();
+        $cctvs = KameraGunungApi::orderBy('hit','desc')->with('gunungapi')->get();
         return view('gunungapi.cctv.index',compact('cctvs'));
     }
 
