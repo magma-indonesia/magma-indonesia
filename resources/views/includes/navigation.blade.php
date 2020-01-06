@@ -70,13 +70,13 @@
                     </li>
                 </ul>
             </li>
-            @endrole
             <li class="{{ active('chambers.import.*') }}">
                 <a href="{{ route('chambers.import.index') }}">
                     <span class="label label-magma">v.1</span>
                     <span class="nav-label"> Import</span>
                 </a>
             </li>
+            @endrole
             <li class="{{ active('chambers.v1.*') }}">
                 <a href="#">
                     <span class="label label-magma">v.1</span>

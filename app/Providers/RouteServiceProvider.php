@@ -97,7 +97,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::prefix('chambers/import')
              ->name('chambers.import.')
-             ->middleware(['web','auth','revalidate'])
+             ->middleware(['web','auth','revalidate','role:Super Admin'])
              ->namespace($this->namespace)
              ->group(base_path('routes/import.php'));
     }
