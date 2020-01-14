@@ -33,6 +33,10 @@ Route::name('administratif.')->group(function () {
 Route::get('absensi/search','AbsensiController@search')->name('absensi.search');
 Route::resource('absensi','AbsensiController');
 
+Route::get('users/reset','UserController@reset')
+    ->name('users.reset');
+Route::put('users/reset','UserController@resetPassword')
+    ->name('users.reset');
 Route::resource('users', 'UserController');
 
 Route::name('indonesia.')->group(function () {

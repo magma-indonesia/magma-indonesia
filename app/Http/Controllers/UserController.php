@@ -22,7 +22,7 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('owner')->only(['edit','update']);
-        $this->middleware('role:Super Admin')->only(['create','store','destroy']);
+        $this->middleware('role:Super Admin')->only(['create','store','destroy','reset','resetPassword']);
     }
 
     /**
@@ -260,5 +260,29 @@ class UserController extends Controller
         ];
 
         return response()->json($data);
+    }
+
+    public function reset()
+    {
+        $users = User::orderBy('name')->get();
+        return view('users.reset', compact('users'));
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $this->validate($request, [
+            'nip' => 'required|exists:users,nip',
+            'password' => 'required|confirmed|min:6|not_in:esdm1234'
+        ],[
+            'password.required' => 'Password tidak boleh kosong',
+            'password.confirmed' => 'Konfirmasi Password tidak sama',
+            'password.min' => 'Panjang Password minimal 6 karakter',
+        ]);
+
+        $user = User::whereNip($request->nip)->first();
+        $user->password = $request->password;
+        $user->save();
+
+        return redirect()->route('chambers.users.index')->with('flash_message','Password berhasil direset');
     }
 }

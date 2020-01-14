@@ -46,10 +46,11 @@
                     @endif
 
                     <div class="panel-body float-e-margins">
+                        <a href="{{ route('chambers.administratif.administrasi.index') }}" type="button" class="btn btn-magma btn-outline">Data Administrasi</a>
                         @role('Super Admin')
                         <a href="{{ route('chambers.users.create') }}" type="button" class="btn btn-magma btn-outline">Tambah Data Pegawai</a>
+                        <a href="{{ route('chambers.users.reset') }}" type="button" class="btn btn-danger btn-outline">Reset Password</a>
                         @endrole
-                        <a href="{{ route('chambers.administratif.administrasi.index') }}" type="button" class="btn btn-magma btn-outline">Data Administrasi</a>
                     </div>
 
                     <div class="panel-body">
