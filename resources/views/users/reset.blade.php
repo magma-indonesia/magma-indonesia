@@ -50,7 +50,7 @@
                             <label class="col-sm-3 control-label">Password Baru</label>
                             <div class="col-sm-9">
                                 <input type="password" class="form-control" name="password">
-                                <span class="help-block m-b-none">Minimal 6 karakter.</span>
+                                <span class="help-block m-b-none">Minimal 6 karakter. Gunakan <b>esdm1234</b> untuk membuat User mengganti passwordnya saat login</span>
                             </div>
                         </div>
                         <div class="form-group">
