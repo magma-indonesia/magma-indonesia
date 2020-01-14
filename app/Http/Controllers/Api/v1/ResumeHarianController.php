@@ -76,4 +76,20 @@ class ResumeHarianController extends Resume
 
     }
 
+    public function show($date)
+    {
+        $request = new Request([
+            'date' => $date
+        ]);
+
+        $this->validate($request, [
+            'date' => 'date_format:Y-m-d'
+        ],[
+            'date.date_format' => 'Format tanggal harus Y-m-d'
+        ]);
+
+        $resume = ResumeHarian::whereTanggal($date)->firstOrFail();
+        return $resume;
+    }
+
 }
