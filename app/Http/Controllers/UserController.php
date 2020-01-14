@@ -272,7 +272,7 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'nip' => 'required|exists:users,nip',
-            'password' => 'required|confirmed|min:6|not_in:esdm1234'
+            'password' => 'required|confirmed|min:6'
         ],[
             'password.required' => 'Password tidak boleh kosong',
             'password.confirmed' => 'Konfirmasi Password tidak sama',
