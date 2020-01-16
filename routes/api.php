@@ -58,10 +58,10 @@ Route::name('v1.')->group(function () {
 
                     Route::get('resume-harian','Api\v1\ResumeHarianController@index')
                             ->name('resume-harian.index');
-                    Route::get('resume-harian/{date}','Api\v1\ResumeHarianController@show')
-                            ->name('resume-harian.show');
                     Route::get('resume-harian/latest','Api\v1\ResumeHarianController@latest')
                             ->name('resume-harian.latest');
+                    Route::get('resume-harian/{date}','Api\v1\ResumeHarianController@show')
+                            ->name('resume-harian.show');
 
                     Route::get('esdm','Api\v1\EsdmController@index')
                             ->name('esdm');
