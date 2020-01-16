@@ -29,6 +29,11 @@ class ImportMagmaVar extends Import
         $this->start_no = $request->has('start') ? $request->start : $this->startNo('vars');
         $this->end_no = $request->has('end') ? $request->end : $this->endNo('var');
 
+        $empty_vars = MagmaVar::where('var_nip_pelapor','')->get();
+        $empty_vars->each(function ($var) {
+            $var->delete();
+        });
+
         $this->old = OldVar::select(
             'no','ga_code','var_noticenumber','ga_nama_gapi',
             'cu_status','var_issued','var_data_date',
