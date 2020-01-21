@@ -477,9 +477,19 @@
             },
             xAxis: {
                 categories: data.highcharts.var.categories,
+                labels: {
+                    style: {
+                        fontSize: "14px",
+                    }
+                }
             },
             yAxis: {
                 min: 0,
+                labels: {
+                    style: {
+                        fontSize: "14px",
+                    }
+                },
                 title: {
                     text: 'Jumlah Gempa'
                 },
@@ -530,9 +540,19 @@
             },
             xAxis: {
                 categories: data.highcharts.var.categories,
+                labels: {
+                    style: {
+                        fontSize: "14px",
+                    }
+                }
             },
             yAxis: {
                 min: 0,
+                labels: {
+                    style: {
+                        fontSize: "14px",
+                    }
+                },
                 title: {
                     text: 'Jumlah Gempa'
                 },
@@ -645,9 +665,19 @@
             },
             xAxis: {
                 categories: data.highcharts.tinggi_asap.categories,
+                labels: {
+                    style: {
+                        fontSize: "14px",
+                    }
+                }
             },
             yAxis: {
                 min: 0,
+                labels: {
+                    style: {
+                        fontSize: "14px",
+                    }
+                },
                 title: {
                     text: 'Tinggi Asap (meter dari puncak)'
                 },
