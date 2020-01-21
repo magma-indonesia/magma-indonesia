@@ -83,7 +83,7 @@ trait HighCharts
         $dates = new \DatePeriod(
             $this->getStart(),
             new \DateInterval('P1D'),
-            $this->getEnd()
+            $this->getEnd()->addDay()
         );
 
         foreach ($dates as $date)
