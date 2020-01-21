@@ -567,7 +567,7 @@ class MagmaVarEvaluasi extends Controller
         return [
             'start' => $start->formatLocalized('%d %B %Y'),
             'end' => $end->formatLocalized('%d %B %Y'),
-            'count' => $start->diffInDays($end)+1
+            'count' => $start->diffInDays($end)
         ];
     }
 
