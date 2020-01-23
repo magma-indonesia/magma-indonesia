@@ -479,6 +479,7 @@
                 categories: data.highcharts.var.categories,
                 labels: {
                     style: {
+                        color: "#333333",   
                         fontSize: "14px",
                     }
                 }
@@ -487,6 +488,7 @@
                 min: 0,
                 labels: {
                     style: {
+                        color: "#333333",   
                         fontSize: "14px",
                     }
                 },
@@ -543,6 +545,7 @@
                 labels: {
                     style: {
                         fontSize: "14px",
+                        color: "#333333",   
                     }
                 }
             },
@@ -550,6 +553,7 @@
                 min: 0,
                 labels: {
                     style: {
+                        color: "#333333",   
                         fontSize: "14px",
                     }
                 },
@@ -667,6 +671,7 @@
                 categories: data.highcharts.tinggi_asap.categories,
                 labels: {
                     style: {
+                        color: "#333333",   
                         fontSize: "14px",
                     }
                 }
@@ -675,6 +680,7 @@
                 min: 0,
                 labels: {
                     style: {
+                        color: "#333333",   
                         fontSize: "14px",
                     }
                 },
