@@ -511,7 +511,7 @@
             L.control.scale().addTo(map);
             L.control.defaultExtent().addTo(map);
             L.control.zoom({position:'bottomright',}).addTo(map);
-            L.control.ruler({position:'bottomright', linestyle: {color: 'white'}}).addTo(map);
+            // L.control.ruler({position:'bottomright', linestyle: {color: 'white'}}).addTo(map);
             L.control.attribution({position:'bottomright'})
                 .setPrefix('MAGMA Indonesia')
                 .addAttribution('<a href="http://esdm.go.id" title="Badan Geologi, ESDM" target="_blank">Badan Geologi, ESDM</a>')
