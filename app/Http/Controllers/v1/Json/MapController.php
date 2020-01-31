@@ -71,7 +71,7 @@ class MapController extends Controller
     {
         $crs_id = $request->id;
 
-        $gertan = Cache::remember('v1/json/show:sigertan:'.$crs_id, 60, function() use($crs_id) {
+        $gertan = Cache::remember('v1/json/show:sigertan:'.$crs_id, 30, function() use($crs_id) {
             return Crs::with('tanggapan')->where('crs_ids',$crs_id)->firstOrFail();
         });
 
@@ -96,7 +96,7 @@ class MapController extends Controller
             'success' => '1',
             'data' => [
                 'laporan' => [
-                    'peta' => empty($gertan->tanggapan->qls_pst) ? 'https://magma.vsi.esdm.go.id/img/empty_sgt.png' : $gertan->tanggapan->qls_pst,
+                    'peta' => empty($gertan->tanggapan->qls_geo) ? 'https://magma.vsi.esdm.go.id/img/empty_sgt.png' : str_replace($gertan->tanggapan->qls_geo,'http','https'),
                     'pelapor' => $gertan->crs_usr,
                     'judul' => 'Laporan Tanggapan Gerakan Tanah di '.$gertan->crs_vil.', '.$gertan->crs_rgn.', '.$gertan->crs_cty.', '.$gertan->crs_prv,
                     'updated_at' => 'Diperbarui pada tanggal '.$gertan->crs_log->formatLocalized('%d %B %Y').' pukul '.$gertan->crs_log->format('H:i:s').' WIB',

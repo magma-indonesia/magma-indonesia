@@ -59,6 +59,7 @@
 
         <!-- Load Leaflet Ruler-->
         <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/gokertanrisever/leaflet-ruler/master/src/leaflet-ruler.css">
+        <script src="https://cdn.rawgit.com/gokertanrisever/leaflet-ruler/master/src/leaflet-ruler.js"></script>
 
         <!-- Load extend Home -->
         <link rel="stylesheet" href="{{ asset('css/leaflet.defaultextent.css') }}">
@@ -522,7 +523,6 @@
         <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('vendor/slimScroll/jquery.slimscroll.min.js') }}"></script>
         <script src="{{ asset('js/calcitemaps-v0.3.js') }}"></script>
-        <script src="https://cdn.rawgit.com/gokertanrisever/leaflet-ruler/master/src/leaflet-ruler.js"></script>
 
         <!-- ====== -->
         <!-- jQuery --> 
@@ -638,7 +638,7 @@
             $(document).on('click', '#load_krb', function() {
                 var $button = $(this);
                 var layerKrb = L.esri.featureLayer({
-                        url: 'https://services7.arcgis.com/g7FCBALNv7UNIenl/arcgis/rest/services/KRB_GA_ID2/FeatureServer/0',
+                        url: 'https://services9.arcgis.com/oe6PkJC25vKVgJRl/arcgis/rest/services/Kawasan_Rawan_Bencana_Gunungapi_PVMBG_MAGMA/FeatureServer/0',
                     }).bindPopup(function(layer) {
                         switch (layer.feature.properties.INDGA) {
                             case 1:
