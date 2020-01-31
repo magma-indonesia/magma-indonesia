@@ -216,7 +216,7 @@ class MapController extends Controller
                 ],
                 'gempa' => [
                     'deskripsi' => empty($gempa) ? ['Kegempaan nihil.'] : $gempa,
-                    'grafik' => env('MAGMA_URL').'img/eqhist/'.$gadd->ga_code.'.png',
+                    'grafik' => config('app.magma_old_url').'img/eqhist/'.$gadd->ga_code.'.png',
                 ],
                 'rekomendasi' => nl2br($var->var_rekom),
                 'vona' => $vona,

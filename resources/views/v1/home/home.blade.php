@@ -58,7 +58,7 @@
         <script src="{{ asset('js/Leaflet.Coordinates-0.1.5.min.js') }}"></script>
 
         <!-- Load Leaflet Ruler-->
-        <link rel="stylesheet" href="{{ asset('css/leaflet-ruler-m.css') }}">
+        <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/gokertanrisever/leaflet-ruler/master/src/leaflet-ruler.css">
 
         <!-- Load extend Home -->
         <link rel="stylesheet" href="{{ asset('css/leaflet.defaultextent.css') }}">
@@ -510,6 +510,7 @@
             L.control.scale().addTo(map);
             L.control.defaultExtent().addTo(map);
             L.control.zoom({position:'bottomright',}).addTo(map);
+            L.control.ruler({position:'bottomright', linestyle: {color: 'white'}}).addTo(map);
             L.control.attribution({position:'bottomright'})
                 .setPrefix('MAGMA Indonesia')
                 .addAttribution('<a href="http://esdm.go.id" title="Badan Geologi, ESDM" target="_blank">Badan Geologi, ESDM</a>')
@@ -521,6 +522,7 @@
         <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('vendor/slimScroll/jquery.slimscroll.min.js') }}"></script>
         <script src="{{ asset('js/calcitemaps-v0.3.js') }}"></script>
+        <script src="https://cdn.rawgit.com/gokertanrisever/leaflet-ruler/master/src/leaflet-ruler.js"></script>
 
         <!-- ====== -->
         <!-- jQuery --> 
@@ -642,7 +644,7 @@
                             case 1:
                                 var krb = 'Kawasan Rawan Bencana (KRB) I';
                                 break;
-                        case 2:
+                            case 2:
                                 var krb = 'Kawasan Rawan Bencana (KRB) II';                        
                                 break;
                             default:
