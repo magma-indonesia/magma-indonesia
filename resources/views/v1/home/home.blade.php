@@ -58,8 +58,8 @@
         <script src="{{ asset('js/Leaflet.Coordinates-0.1.5.min.js') }}"></script>
 
         <!-- Load Leaflet Ruler-->
-        <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/gokertanrisever/leaflet-ruler/master/src/leaflet-ruler.css">
-        <script src="https://cdn.rawgit.com/gokertanrisever/leaflet-ruler/master/src/leaflet-ruler.js"></script>
+        {{-- <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/gokertanrisever/leaflet-ruler/master/src/leaflet-ruler.css">
+        <script src="https://cdn.rawgit.com/gokertanrisever/leaflet-ruler/master/src/leaflet-ruler.js"></script> --}}
 
         <!-- Load extend Home -->
         <link rel="stylesheet" href="{{ asset('css/leaflet.defaultextent.css') }}">
