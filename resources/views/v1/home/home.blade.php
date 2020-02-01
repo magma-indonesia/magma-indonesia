@@ -44,8 +44,9 @@
         <link rel="stylesheet" href="{{ asset('fonts/calcite/calcite-ui.css') }}">
 
         <!-- Load Leaflet CSS and JS from CDN-->
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
-        <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==" crossorigin=""></script>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
 
         <!-- Load Esri Leaflet from CDN -->
         <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
@@ -58,8 +59,7 @@
         <script src="{{ asset('js/Leaflet.Coordinates-0.1.5.min.js') }}"></script>
 
         <!-- Load Leaflet Ruler-->
-        {{-- <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/gokertanrisever/leaflet-ruler/master/src/leaflet-ruler.css">
-        <script src="https://cdn.rawgit.com/gokertanrisever/leaflet-ruler/master/src/leaflet-ruler.js"></script> --}}
+        <link rel="stylesheet" href="{{ asset('css/leaflet-ruler-m.css') }}">
 
         <!-- Load extend Home -->
         <link rel="stylesheet" href="{{ asset('css/leaflet.defaultextent.css') }}">
@@ -464,6 +464,7 @@
 
             // Batas Map Indonesia
             var bounds = new L.LatLngBounds(new L.LatLng(-21.41, 153.41), new L.LatLng(14.3069694978258, 73.65));
+            console.log(bounds);
 
             //Zoom changer
             function zoomResponsive() {
@@ -511,7 +512,6 @@
             L.control.scale().addTo(map);
             L.control.defaultExtent().addTo(map);
             L.control.zoom({position:'bottomright',}).addTo(map);
-            // L.control.ruler({position:'bottomright', linestyle: {color: 'white'}}).addTo(map);
             L.control.attribution({position:'bottomright'})
                 .setPrefix('MAGMA Indonesia')
                 .addAttribution('<a href="http://esdm.go.id" title="Badan Geologi, ESDM" target="_blank">Badan Geologi, ESDM</a>')
@@ -535,7 +535,7 @@
             // ==========
 
             var markersGunungApi = @json($gadds),
-                maxHeight = 0.7 * ($(window).height()),
+                maxHeight = 0.8 * ($(window).height()),
                 GunungapiNormal = [],
                 GunungapiWaspada = [],
                 GunungapiSiaga = [],
@@ -622,18 +622,18 @@
             });
 
             //add megathrust layer
-            var mapMegaThrust = L.esri.featureLayer({
-                url: 'https://services7.arcgis.com/g7FCBALNv7UNIenl/arcgis/rest/services/megathrust/FeatureServer/0',
-            });
+            // var mapMegaThrust = L.esri.featureLayer({
+            //     url: 'https://services7.arcgis.com/g7FCBALNv7UNIenl/arcgis/rest/services/megathrust/FeatureServer/0',
+            // });
             
-            addMegaThrust.push(mapMegaThrust);
-            L.layerGroup(addMegaThrust).addTo(map);
+            // addMegaThrust.push(mapMegaThrust);
+            // L.layerGroup(addMegaThrust).addTo(map);
 
             layerNormal = L.layerGroup(GunungapiNormal).addTo(map);
             layerWaspada = L.layerGroup(GunungapiWaspada).addTo(map);
             layerSiaga = L.layerGroup(GunungapiSiaga).addTo(map);
             layerAwas = L.layerGroup(GunungapiAwas).addTo(map);
-            layerMegaThrust = L.layerGroup(addMegaThrust).addTo(map);
+            // layerMegaThrust = L.layerGroup(addMegaThrust).addTo(map);
 
             $(document).on('click', '#load_krb', function() {
                 var $button = $(this);
@@ -988,7 +988,7 @@
             };
 
             L.control.layers(null, {
-                    'Tektonik Lempeng' : layerMegaThrust,
+                    // 'Tektonik Lempeng' : layerMegaThrust,
                     'Gerakan Tanah': layerGertan,
                     'Gempa Bumi': layerGempa,
                     'Gunung Api - Level I (Normal)': layerNormal,
