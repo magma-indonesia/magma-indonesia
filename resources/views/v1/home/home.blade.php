@@ -463,8 +463,8 @@
             icon_gempa_t_b = new gempa_icon_b({iconUrl: url+'/icon/gb-t.png'});
 
             // Batas Map Indonesia
-            var bounds = new L.LatLngBounds(new L.LatLng(-21.41, 153.41), new L.LatLng(14.3069694978258, 73.65));
-            console.log(bounds);
+            var boundary = new L.LatLngBounds(new L.LatLng(-21.41, 153.41), new L.LatLng(14.3069694978258, 73.65));
+            console.log(boundary);
 
             //Zoom changer
             function zoomResponsive() {
@@ -481,8 +481,7 @@
                         center: [-4.26, 115.66],
                         zoom: zoomResponsive(),
                         attributionControl:false,
-                    }).setMinZoom(5);
-                    // .setMaxBounds(bounds);
+                    }).setMinZoom(5).setMaxBounds(boundary);
 
             // Add Layers
             var layerNg = L.esri.basemapLayer('NationalGeographic');
