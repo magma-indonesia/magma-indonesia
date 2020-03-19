@@ -620,24 +620,24 @@
                 setBasemap($(this).val());
             });
 
-            //add megathrust layer
-            // var mapMegaThrust = L.esri.featureLayer({
-            //     url: 'https://services7.arcgis.com/g7FCBALNv7UNIenl/arcgis/rest/services/megathrust/FeatureServer/0',
-            // });
+            // add megathrust layer
+            var mapMegaThrust = L.esri.featureLayer({
+                url: 'https://services5.arcgis.com/PVHDEj0uwgUfQbbd/arcgis/rest/services/megathrust/FeatureServer/0',
+            });
             
-            // addMegaThrust.push(mapMegaThrust);
-            // L.layerGroup(addMegaThrust).addTo(map);
+            addMegaThrust.push(mapMegaThrust);
+            L.layerGroup(addMegaThrust).addTo(map);
 
             layerNormal = L.layerGroup(GunungapiNormal).addTo(map);
             layerWaspada = L.layerGroup(GunungapiWaspada).addTo(map);
             layerSiaga = L.layerGroup(GunungapiSiaga).addTo(map);
             layerAwas = L.layerGroup(GunungapiAwas).addTo(map);
-            // layerMegaThrust = L.layerGroup(addMegaThrust).addTo(map);
+            layerMegaThrust = L.layerGroup(addMegaThrust).addTo(map);
 
             $(document).on('click', '#load_krb', function() {
                 var $button = $(this);
                 var layerKrb = L.esri.featureLayer({
-                        url: 'https://services9.arcgis.com/oe6PkJC25vKVgJRl/arcgis/rest/services/Kawasan_Rawan_Bencana_Gunungapi_PVMBG_MAGMA/FeatureServer/0',
+                        url: 'https://services5.arcgis.com/PVHDEj0uwgUfQbbd/arcgis/rest/services/KRB_GA_ID_310120/FeatureServer/0',
                     }).bindPopup(function(layer) {
                         switch (layer.feature.properties.INDGA) {
                             case 1:
@@ -987,7 +987,7 @@
             };
 
             L.control.layers(null, {
-                    // 'Tektonik Lempeng' : layerMegaThrust,
+                    'Tektonik Lempeng' : layerMegaThrust,
                     'Gerakan Tanah': layerGertan,
                     'Gempa Bumi': layerGempa,
                     'Gunung Api - Level I (Normal)': layerNormal,

@@ -189,7 +189,7 @@ $(document).ready(function () {
     }
 
     var url = '{{ url('/') }}';
-    var krb_esri = 'https://services7.arcgis.com/Y24oyWJVNs6VLjiH/arcgis/rest/services/KRB_GA_ID/FeatureServer/0';
+    var krb_esri = 'https://services5.arcgis.com/PVHDEj0uwgUfQbbd/arcgis/rest/services/KRB_GA_ID_310120/FeatureServer/0';
     var query = "MAG_CODE='{{ $var->code }}'";
     var map = L.map('map', {
                     zoomControl: false,
