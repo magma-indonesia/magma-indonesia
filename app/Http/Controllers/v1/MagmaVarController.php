@@ -132,7 +132,7 @@ class MagmaVarController extends Controller
     {
         $gadds = Cache::remember('v1/gadds', 120, function () {
             return Gadd::select('no','ga_code','ga_nama_gapi')
-                ->whereNotIn('ga_code',['TEO','SBG'])
+                ->whereNotIn('ga_code',['TEO'])
                 ->orderBy('ga_nama_gapi','asc')
                 ->get();
         });
