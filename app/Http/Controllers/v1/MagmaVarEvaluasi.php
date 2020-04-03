@@ -254,6 +254,11 @@ class MagmaVarEvaluasi extends Controller
             $this->end = $request->jenis == '0' 
                             ? Carbon::parse($request->start)->addDays(14)
                             : Carbon::parse($request->start)->endOfMonth();
+
+            $this->splice_count = $request->jenis == '0' 
+                            ? 1
+                            : 0;
+
             $this->end_str = strtotime($this->getEnd()->format('Y-m-d'));
 
             $this->days_count = $request->jenis == '0' 
@@ -268,6 +273,7 @@ class MagmaVarEvaluasi extends Controller
         $this->end = Carbon::parse($request->end);
         $this->end_str = strtotime($this->getEnd()->format('Y-m-d'));
         $this->days_count = (int) $this->start->diffInDays($this->end);
+        $this->splice_count = 1;
 
         return $this;
     }
@@ -276,7 +282,7 @@ class MagmaVarEvaluasi extends Controller
     {
         $vars = $this->getVarsMerged();
         $this->count = $vars->count()-$this->days_count;
-        $this->splice_vars = $vars->slice($this->count-1);
+        $this->splice_vars = $vars->slice($this->count-$this->splice_count);
         return $this;
     }
 
