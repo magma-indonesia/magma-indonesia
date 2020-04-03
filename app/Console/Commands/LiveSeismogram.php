@@ -65,7 +65,7 @@ class LiveSeismogram extends Command
     {
         $this->info('Updating Live Seismogram....');
 
-        $watermark = Image::make(asset('watermark-seismogram.png'));
+        $watermark = Image::make('public/watermark-seismogram.png');
 
         $seismometers = Seismometer::wherePublished(1)->get();
         if ($seismometers->isNotEmpty())
