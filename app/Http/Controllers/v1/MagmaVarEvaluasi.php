@@ -276,7 +276,7 @@ class MagmaVarEvaluasi extends Controller
     {
         $vars = $this->getVarsMerged();
         $this->count = $vars->count()-$this->days_count;
-        $this->splice_vars = $vars->slice($this->count);
+        $this->splice_vars = $vars->slice($this->count-1);
         return $this;
     }
 
