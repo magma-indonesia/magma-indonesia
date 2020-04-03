@@ -63,7 +63,7 @@ class LiveSeismogram extends Command
      */
     public function handle()
     {
-        $this->info('Updating Live Seismogram....');
+        $this->info('['.now()->format('Y-m-d H:i:s').']'.'Updating Live Seismogram....');
 
         $watermark = Image::make('public/watermark-seismogram.png');
 
