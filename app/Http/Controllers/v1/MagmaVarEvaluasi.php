@@ -273,7 +273,7 @@ class MagmaVarEvaluasi extends Controller
         $this->end = Carbon::parse($request->end);
         $this->end_str = strtotime($this->getEnd()->format('Y-m-d'));
         $this->days_count = (int) $this->start->diffInDays($this->end);
-        $this->splice_count = 1;
+        $this->splice_count = $this->days_count;
 
         return $this;
     }
