@@ -196,7 +196,7 @@ class MagmaVarEvaluasi extends Controller
         $this->formatDate($request);
         $this->cache = 'chambers/v1/gunungapi/evaluasi:result:'.$request->jenis.':'.$request->code.':'.$this->start_str.':'.$this->end_str.':'.implode(':',$request->gempa);
 
-        return Cache::remember($this->cache, 30, function () use($request) {
+
             $this->setCodes($request->gempa)
                     ->setCategories()
                     ->setVars($request->code)
@@ -208,7 +208,7 @@ class MagmaVarEvaluasi extends Controller
                     ->setWidgetJumlahGempa();
     
             return $this->getResponseData($request);
-        });
+
     }
 
     protected function setWidgetJumlahGempa()
@@ -245,26 +245,27 @@ class MagmaVarEvaluasi extends Controller
 
         $prev_year = Carbon::createFromFormat('Y-m-d', $request->start)->subYear()->format('Y');
 
-        if ($request->jenis != '2') {
+        if ($request->jenis == '0') {
             $start = $month < 7 ? $prev_year.'-07-01' : $year.'-01-01';
-
             $this->start = Carbon::parse($start);
             $this->start_str = strtotime($this->getStart()->format('Y-m-d'));
-
-            $this->end = $request->jenis == '0' 
-                            ? Carbon::parse($request->start)->addDays(13)
-                            : Carbon::parse($request->start)->endOfMonth();
-
-            $this->splice_count = $request->jenis == '0' 
-                            ? 1
-                            : 0;
-
+            $this->end = Carbon::parse($request->start)->addDays(13);
             $this->end_str = strtotime($this->getEnd()->format('Y-m-d'));
+            $this->days_count = 14;
+            $this->splice_count = 0-$this->days_count;
 
-            $this->days_count = $request->jenis == '0' 
-                                    ? 13 
-                                    : (int) Carbon::parse($request->start)->daysInMonth;
- 
+            return $this;
+        }
+
+        if ($request->jenis != '2') {
+            $start = $month < 7 ? $prev_year.'-07-01' : $year.'-01-01';
+            $this->start = Carbon::parse($start);
+            $this->start_str = strtotime($this->getStart()->format('Y-m-d'));
+            $this->end = Carbon::parse($request->start)->endOfMonth();
+            $this->end_str = strtotime($this->getEnd()->format('Y-m-d'));
+            $this->days_count = (int) Carbon::parse($request->start)->daysInMonth;
+            $this->splice_count = 0-$this->days_count;
+
             return $this;
         }
 
@@ -273,7 +274,7 @@ class MagmaVarEvaluasi extends Controller
         $this->end = Carbon::parse($request->end);
         $this->end_str = strtotime($this->getEnd()->format('Y-m-d'));
         $this->days_count = (int) $this->start->diffInDays($this->end);
-        $this->splice_count = $this->days_count;
+        $this->splice_count = 0;
 
         return $this;
     }
@@ -281,8 +282,7 @@ class MagmaVarEvaluasi extends Controller
     protected function setVarsSplice()
     {
         $vars = $this->getVarsMerged();
-        $this->count = $vars->count()-$this->days_count;
-        $this->splice_vars = $vars->slice($this->count-$this->splice_count);
+        $this->splice_vars = $vars->slice($this->splice_count);
         return $this;
     }
 
