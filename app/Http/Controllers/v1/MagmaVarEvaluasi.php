@@ -257,7 +257,7 @@ class MagmaVarEvaluasi extends Controller
             return $this;
         }
 
-        if ($request->jenis != '2') {
+        if ($request->jenis == '1') {
             $start = $month < 7 ? $prev_year.'-07-01' : $year.'-01-01';
             $this->start = Carbon::parse($start);
             $this->start_str = strtotime($this->getStart()->format('Y-m-d'));
