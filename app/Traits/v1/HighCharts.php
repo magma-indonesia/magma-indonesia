@@ -123,7 +123,7 @@ trait HighCharts
 
     protected function setVars($code)
     {
-        $this->vars = Cache::remember('chambers/v1/gunungapi/evaluasi:show:vars:'.$code.':'.$this->start_str.':'.$this->end_str, 120, function() use($code) {
+        $this->vars = Cache::remember('chambers/v1/gunungapi/evaluasi:show:vars:'.$code.':'.$this->start_str.':'.$this->end_str, 30, function() use($code) {
             return OldVar::where('ga_code',$code)
                 ->where('var_perwkt','24 Jam')
                 ->whereBetween('var_data_date',[$this->getStart()->format('Y-m-d'),$this->getEnd()->format('Y-m-d')])

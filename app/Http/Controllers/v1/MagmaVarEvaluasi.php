@@ -196,7 +196,7 @@ class MagmaVarEvaluasi extends Controller
         $this->formatDate($request);
         $this->cache = 'chambers/v1/gunungapi/evaluasi:result:'.$request->jenis.':'.$request->code.':'.$this->start_str.':'.$this->end_str.':'.implode(':',$request->gempa);
 
-
+        return Cache::remember($this->cache, 30, function () use($request) {
             $this->setCodes($request->gempa)
                     ->setCategories()
                     ->setVars($request->code)
@@ -208,7 +208,7 @@ class MagmaVarEvaluasi extends Controller
                     ->setWidgetJumlahGempa();
     
             return $this->getResponseData($request);
-
+        });
     }
 
     protected function setWidgetJumlahGempa()
