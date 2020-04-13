@@ -316,7 +316,9 @@ class MagmaVarEvaluasi extends Controller
                                 ->suhu($var->var_suhumin,$var->var_suhumax)
                                 ->kelembaban($var->var_kelembabanmin,$var->var_kelembabanmax)
                                 ->tekanan($var->var_tekananmin,$var->var_tekananmax)
-                                ->getVisual()
+                                ->getVisual(),
+                    'visual_lainnya' => $var->var_viskawah ?? null,
+                    'keterangan_lainnya' => $var->var_ketlain ?? 'Nihil',
                 ];
             }
 

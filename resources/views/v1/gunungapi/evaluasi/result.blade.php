@@ -105,6 +105,7 @@
                         <li><a data-toggle="tab" href="#tab-5">Grafik Kegempaan</a></li>
                         <li><a data-toggle="tab" href="#tab-3">Tabel Kegempaan</a></li>
                         @endif
+                        <li><a data-toggle="tab" href="#tab-7">Keterangan Lainnya</a></li>
                     </ul>
                     <div class="tab-content">
                         <div id="tab-1" class="tab-pane active">
@@ -306,6 +307,58 @@
                             @endif
                         </div>
                         @endif
+
+                        <div id="tab-7" class="tab-pane">
+
+                            <div class="panel-body">
+                                <h4 class="text-center m-b-md">Visual Lainnya</h4>
+                                <div class="table-responsive">
+                                    <table id="table-visual-lainnya" class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Tanggal</th>
+                                                <th>Visual Lainnya</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($data['details'] as $key => $detail)
+                                            <tr>
+                                                <td>{{ $key+1 }}</td>
+                                                <td>{{ $detail['date'] }}</td>
+                                                <td>{{ $detail['visual_lainnya'] }}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <h4 class="text-center m-b-md">Informasi Lainnya</h4>
+                                <div class="table-responsive">
+                                    <table id="table-keterangan-lainnya" class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Tanggal</th>
+                                                <th>Keterangan Lainnya</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($data['details'] as $key => $detail)
+                                            <tr>
+                                                <td>{{ $key+1 }}</td>
+                                                <td>{{ $detail['date'] }}</td>
+                                                <td>{{ $detail['keterangan_lainnya'] }}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -332,6 +385,30 @@
 @section('add-script')
 <script>
     $(document).ready(function () {
+
+        $('#table-visual-lainnya').dataTable({
+            dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            buttons: [
+                { extend: 'copy', className: 'btn-sm'},
+                { extend: 'csv', title: 'Visual Lainnya', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, ]} },
+                { extend: 'pdf', title: 'Visual Lainnya', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, ]} },
+                { extend: 'print', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, ]} }
+            ]
+
+        });
+
+        $('#table-keterangan-lainnya').dataTable({
+            dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            buttons: [
+                { extend: 'copy', className: 'btn-sm'},
+                { extend: 'csv', title: 'Keterangan Lainnya', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, ]} },
+                { extend: 'pdf', title: 'Keterangan Lainnya', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, ]} },
+                { extend: 'print', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, ]} }
+            ]
+
+        });        
 
         @if (!empty($data['highcharts']['temperature']['series_min']))
         $('#table-temperature').dataTable({
