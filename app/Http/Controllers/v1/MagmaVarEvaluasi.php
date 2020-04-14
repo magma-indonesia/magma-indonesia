@@ -317,7 +317,7 @@ class MagmaVarEvaluasi extends Controller
                                 ->kelembaban($var->var_kelembabanmin,$var->var_kelembabanmax)
                                 ->tekanan($var->var_tekananmin,$var->var_tekananmax)
                                 ->getVisual(),
-                    'visual_lainnya' => $var->var_viskawah ?? null,
+                    'visual_lainnya' => $var->var_viskawah ?? 'Nihil',
                     'keterangan_lainnya' => $var->var_ketlain ?? 'Nihil',
                 ];
             }
@@ -326,7 +326,9 @@ class MagmaVarEvaluasi extends Controller
                 $this->details[] = [
                     'date' => $var['var_data_date'],
                     'gempa' => null,
-                    'visual' => null
+                    'visual' => null,
+                    'visual_lainnya' => 'Nihil',
+                    'keterangan_lainnya' => 'Nihil',
                 ];
             }
 
