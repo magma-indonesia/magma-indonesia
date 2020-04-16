@@ -34,7 +34,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        
         $this->scheduleLiveSeismogram($schedule);
         $this->scheduleCompileMagmaVar($schedule);
         $this->scheduleGunungApi($schedule);

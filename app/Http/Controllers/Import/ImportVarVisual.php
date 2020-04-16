@@ -8,6 +8,7 @@ use App\VarVisual;
 use App\VarAsap;
 use App\v1\MagmaVar as OldVar;
 use App\Traits\ImportHelper;
+use Exception;
 
 class ImportVarVisual extends Import
 {
