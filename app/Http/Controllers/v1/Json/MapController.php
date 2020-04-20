@@ -96,7 +96,7 @@ class MapController extends Controller
             'success' => '1',
             'data' => [
                 'laporan' => [
-                    'peta' => empty($gertan->tanggapan->qls_geo) ? 'https://magma.vsi.esdm.go.id/img/empty_sgt.png' : str_replace('http','https',$gertan->tanggapan->qls_geo),
+                    'peta' => blank($gertan->tanggapan->qls_lok) ? 'https://magma.vsi.esdm.go.id/img/empty_sgt.png' : str_replace('http:','https:',$gertan->tanggapan->qls_lok),
                     'pelapor' => $gertan->crs_usr,
                     'judul' => 'Laporan Tanggapan Gerakan Tanah di '.$gertan->crs_vil.', '.$gertan->crs_rgn.', '.$gertan->crs_cty.', '.$gertan->crs_prv,
                     'updated_at' => 'Diperbarui pada tanggal '.$gertan->crs_log->formatLocalized('%d %B %Y').' pukul '.$gertan->crs_log->format('H:i:s').' WIB',
