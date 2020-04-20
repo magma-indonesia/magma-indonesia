@@ -435,8 +435,17 @@
 
         <!-- ======= -->
         <!-- Leaflet --> 
-        <!-- ======= -->
+        
+        <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
+        <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('vendor/slimScroll/jquery.slimscroll.min.js') }}"></script>
+        <script src="{{ asset('js/calcitemaps-v0.3.js') }}"></script>
+
+        <!-- ====== -->
+        <!-- jQuery --> 
+        <!-- ====== -->
         <script>
+        $(document).ready(function () {
 
             var url = '{{ url('/') }}';
 
@@ -521,19 +530,6 @@
                 .addAttribution('<a href="http://esdm.go.id" title="Badan Geologi, ESDM" target="_blank">Badan Geologi, ESDM</a>')
                 .addTo(map);
             
-        </script>
-        
-        <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
-        <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('vendor/slimScroll/jquery.slimscroll.min.js') }}"></script>
-        <script src="{{ asset('js/calcitemaps-v0.3.js') }}"></script>
-
-        <!-- ====== -->
-        <!-- jQuery --> 
-        <!-- ====== -->
-        <script>
-        $(document).ready(function () {
-
             // ==========
             // Gunung Api
             // ==========
