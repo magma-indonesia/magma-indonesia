@@ -6,12 +6,17 @@
         <meta name="theme-color" content="#007fff">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-        <meta name="description" content="MAGMA Indonesia - Bridging the will of nature to society">
-        <meta name="author" content="Kementerian ESDM">
-        <link href="{{ asset('favicon.ico') }}" rel="shortcut icon">
+        <meta name="keywords" content="magma,esdm,bencana,gunungapi,pvmbg,badan geologi,vona,gempabumi,volcano" />
+
+        <title>{{ config('app.name') }} - {{ config('app.tag_line') }}</title>
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+        <link rel="icon" type="image/png" href="{{ asset('favicon-16x16.0.png') }}" sizes="16x16">
+        <link rel="icon" type="image/png" href="{{ asset('favicon-32x32.0.png') }}" sizes="32x32">
+        <link rel="icon" type="image/png" href="{{ asset('favicon-96x96.0.png') }}" sizes="96x96">
+        <link rel="icon" type="image/png" href="{{ asset('favicon-192x192.0.png') }}" sizes="192x192">
+        <link rel="apple-touch-icon" href="{{ asset('favicon-180x180.0.png') }}" sizes="180x180">
         <link rel="dns-prefetch" href="{{ config('app.url') }}">
         <link rel="dns-prefetch" href="https://magma.vsi.esdm.go.id/">
-        <title>{{ config('app.name') }} - {{ config('app.tag_line') }}</title>
 
         <!-- Twitter -->
         <meta name="twitter:site" content="@id_magma">
@@ -22,6 +27,7 @@
         <meta name="twitter:image" content="{{ asset('snapshot.png') }}">
 
         <!-- Facebook -->
+        <meta property="og:type" content="website"/>
         <meta property="og:url" content="{{ config('app.url') }}">
         <meta property="og:title" content="{{ config('app.name') }}">
         <meta property="og:description" content="{{ config('app.tag_line') }}">
@@ -43,11 +49,14 @@
         <link rel="stylesheet" href="{{ asset('fonts/calcite/calcite-ui.css') }}">
 
         <!-- Load Leaflet CSS and JS from CDN-->
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
-        <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==" crossorigin=""></script>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
 
         <!-- Load Esri Leaflet from CDN -->
-        <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
+        <script src="https://unpkg.com/esri-leaflet@2.3.3/dist/esri-leaflet.js"
+        integrity="sha512-cMQ5e58BDuu1pr9BQ/eGRn6HaR6Olh0ofcHFWe5XesdCITVuSBiBZZbhCijBe5ya238f/zMMRYIMIIg1jxv4sQ=="
+        crossorigin=""></script>
         <script src="https://unpkg.com/esri-leaflet-renderers@2.0.6/dist/esri-leaflet-renderers.js"
         integrity="sha512-mhpdD3igvv7A/84hueuHzV0NIKFHmp2IvWnY5tIdtAHkHF36yySdstEVI11JZCmSY4TCvOkgEoW+zcV/rUfo0A=="
         crossorigin=""></script>
@@ -63,6 +72,10 @@
         <link rel="stylesheet" href="{{ asset('css/leaflet.defaultextent.css') }}">
         <script src="{{ asset('js/leaflet.defaultextent.js') }}"></script>
 
+        <!-- Load User Marker -->
+        <link rel="stylesheet" href="{{ asset('css/leaflet.usermarker.css') }}">
+        <script src="{{ asset('js/leaflet.usermarker.js') }}"></script>
+
         <!-- Load CSS Magma-->
         <link rel="stylesheet" href="{{ asset('css/icon-magma.css') }}">
         <link rel="stylesheet" href="{{ asset('css/map.css') }}">
@@ -77,20 +90,30 @@
 
         <!-- ======= -->
         <!-- Leaflet --> 
-        <!-- ======= -->
+        
+        <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
+        <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('vendor/slimScroll/jquery.slimscroll.min.js') }}"></script>
+        <script src="{{ asset('js/calcitemaps-v0.3.js') }}"></script>
+
+        <!-- ====== -->
+        <!-- jQuery --> 
+        <!-- ====== -->
         <script>
+        $(document).ready(function () {
 
             var url = '{{ url('/') }}';
 
             // Icon Gunung Api
+            var user_icon = L.Icon.extend({options: {iconSize: [42, 42]}});
             var ga_icon = L.Icon.extend({options: {iconSize: [32, 32]}});
             var ga_icon_b = L.Icon.extend({options: {iconSize: [48, 58],className:'gb-blinking'}});
             var erupt = L.Icon.extend({options: {iconSize: [48, 72]}});
             var gempa_icon = L.Icon.extend({options: {iconSize: [32, 39]}});
-            var gempa_icon_b = L.Icon.extend({options: {iconSize: [48, 58],className:'gb-blinking'}});
+            var gempa_icon_b = L.Icon.extend({options: {iconSize: [48, 48],className:'gb-blinking'}});
             var gertan_icon_b = L.Icon.extend({options: {iconSize: [48, 58],className:'gb-blinking'}});
 
-            here = new ga_icon({iconUrl: url+'/icon/here.png'}),
+            here = new user_icon({iconUrl: url+'/icon/here.png'}),
             ga_normal = new ga_icon({iconUrl: url+'/icon/1.png'}),
             ga_waspada = new ga_icon({iconUrl: url+'/icon/2.png'}),
             ga_siaga = new ga_icon({iconUrl: url+'/icon/3.png'}),
@@ -109,7 +132,8 @@
             icon_gempa_t_b = new gempa_icon_b({iconUrl: url+'/icon/gb-t.png'});
 
             // Batas Map Indonesia
-            var bounds = new L.LatLngBounds(new L.LatLng(-21.41, 153.41), new L.LatLng(14.3069694978258, 73.65));
+            var boundary = new L.LatLngBounds(new L.LatLng(-21.41, 153.41), new L.LatLng(14.3069694978258, 73.65));
+            console.log(boundary);
 
             //Zoom changer
             function zoomResponsive() {
@@ -126,8 +150,7 @@
                         center: [-4.26, 115.66],
                         zoom: zoomResponsive(),
                         attributionControl:false,
-                    }).setMinZoom(5);
-                    // .setMaxBounds(bounds);
+                    }).setMinZoom(5).setMaxBounds(boundary);
 
             // Add Layers
             var layerNg = L.esri.basemapLayer('NationalGeographic');
@@ -161,38 +184,13 @@
                 .setPrefix('MAGMA Indonesia')
                 .addAttribution('<a href="http://esdm.go.id" title="Badan Geologi, ESDM" target="_blank">Badan Geologi, ESDM</a>')
                 .addTo(map);
-
-            //Get High Accuracy Location
-            map.locate({enableHighAccuracy:true})
-                .on('locationfound',function(e){
-                    L.marker([e.latitude, e.longitude],{icon: here})
-                    .addTo(map)
-                    .bindPopup('Anda Berada di Sini',{
-                        closeButton:false
-                    })
-                    .openPopup();
-                    map.flyTo([e.latitude, e.longitude], 8, {duration:5});
-            });
             
-        </script>
-        
-        <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
-        <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('vendor/slimScroll/jquery.slimscroll.min.js') }}"></script>
-        <script src="{{ asset('js/calcitemaps-v0.3.js') }}"></script>
-
-        <!-- ====== -->
-        <!-- jQuery --> 
-        <!-- ====== -->
-        <script>
-        $(document).ready(function () {
-
             // ==========
             // Gunung Api
             // ==========
 
             var markersGunungApi = @json($gadds),
-                maxHeight = 0.7 * ($(window).height()),
+                maxHeight = 0.8 * ($(window).height()),
                 GunungapiNormal = [],
                 GunungapiWaspada = [],
                 GunungapiSiaga = [],
@@ -278,9 +276,9 @@
                 setBasemap($(this).val());
             });
 
-            //add megathrust layer
+            // add megathrust layer
             var mapMegaThrust = L.esri.featureLayer({
-                url: 'https://services7.arcgis.com/g7FCBALNv7UNIenl/arcgis/rest/services/megathrust/FeatureServer/0',
+                url: 'https://services5.arcgis.com/PVHDEj0uwgUfQbbd/arcgis/rest/services/megathrust/FeatureServer/0',
             });
             
             addMegaThrust.push(mapMegaThrust);
@@ -295,13 +293,13 @@
             $(document).on('click', '#load_krb', function() {
                 var $button = $(this);
                 var layerKrb = L.esri.featureLayer({
-                        url: 'https://services7.arcgis.com/g7FCBALNv7UNIenl/arcgis/rest/services/KRB_GA_ID2/FeatureServer/0',
+                        url: 'https://services5.arcgis.com/PVHDEj0uwgUfQbbd/arcgis/rest/services/KRB_GA_ID_310120/FeatureServer/0',
                     }).bindPopup(function(layer) {
                         switch (layer.feature.properties.INDGA) {
                             case 1:
                                 var krb = 'Kawasan Rawan Bencana (KRB) I';
                                 break;
-                        case 2:
+                            case 2:
                                 var krb = 'Kawasan Rawan Bencana (KRB) II';                        
                                 break;
                             default:
@@ -319,9 +317,7 @@
                     });
 
                 addKrb.push(mapKrb);
-                console.log(addKrb);
                 L.layerGroup(addKrb).addTo(map);
-                // map.addLayer(mapKrb);
                 
             });
 
@@ -342,9 +338,6 @@
                     success: function(response) {
                         var vona='';
                         newData = response.data;
-                        if (response.success) {
-                            console.log(newData);
-                        }
 
                         switch (newData.gunungapi.status) {
                             case 1:
@@ -404,7 +397,6 @@
             }
 
             function setBasemap(basemap) {
-                console.log(basemap);
                 if (layerEsriStreets) {
                     map.removeLayer(layerEsriStreets);
                 }
@@ -427,9 +419,9 @@
                 }
                     
                 if (basemap === 'Imagery') {
-                        worldTransportation.addTo(map);            
-                    } else if (map.hasLayer(worldTransportation)) {
-                        map.removeLayer(worldTransportation);
+                        layerWorldTransportation.addTo(map); 
+                    } else if (map.hasLayer(layerWorldTransportation)) {
+                        map.removeLayer(layerWorldTransportation);
                     }
             }
 
@@ -633,7 +625,6 @@
                         popup.setContent(setPopUpContent);
                         popup.update();
                         markers_gempa[markerGempa].openPopup();
-                        // map.flyTo(newData.gunungapi.koordinat, 12);
 
                         $('.panel-default').slimScroll({
                             height: maxHeight,
@@ -662,6 +653,67 @@
             }, {
                 position: 'bottomleft'
             }).addTo(map);
+
+            // ==========
+            // Check Location
+            // ==========
+
+            function pinLocation(latitude, longitude, name, volcano = null)
+            {
+                var content = volcano !== null ? '<span class="glyphicon glyphicon-map-marker"></span> Lokasi : '+name+' <br><span><i class="icon icon-volcano-warning"></i></span> Gunung Api terdekat: '+volcano : '<span class="glyphicon glyphicon-map-marker"></span> Lokasi : '+name;
+
+                var user_marker = L.userMarker([latitude, longitude]);
+                user_marker.addTo(map).bindPopup(content,{
+                    closeButton:false
+                }).openPopup();
+
+                map.flyTo([latitude, longitude], 8);
+            };
+
+            function saveLocation(data, latitude, longitude, name, loadingButton)
+            {
+                $.ajax({
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    url: '{{ URL::signedRoute('v1.home.check-location') }}',
+                    type: 'POST',
+                    data: data,
+                    beforeSend: function(){
+                        loadingButton.button('loading');
+                    },
+                    success: function(response) {
+                        loadingButton.button('reset');                        
+                        if (response.success) {
+                            pinLocation(latitude,longitude,name,response.volcano);
+                        }
+                    },
+                    error: function (xhr) {
+                        loadingButton.button('reset');                        
+                        $('.validation-errors').html('');
+                        $.each(xhr.responseJSON.errors, function(key,value) {
+                            $('.validation-errors').append('<div class="alert alert-danger">'+value+'</div');
+                        }); 
+                    },
+                });
+            };
+
+            $('#checkLocation').on('submit',function (e) {
+                e.preventDefault();
+                var $button = $('#submit');
+                var data = $(this).serialize(),
+                    latitude = $('#latitude').val(),
+                    longitude = $('#longitude').val(),
+                    name = $('#name').val();
+                saveLocation(data, latitude, longitude, name, $button);
+            });
+
+            // Get User Location
+            map.locate({enableHighAccuracy:true})
+                .on('locationfound',function(e){
+                    var user_marker = L.userMarker([e.latitude, e.longitude], {pulsing:true, accuracy:200, smallIcon:false});
+                    user_marker.addTo(map).bindPopup('Anda Berada di Sini',{
+                        closeButton:false
+                    }).openPopup();
+                });
         });
         </script>
     </body>
