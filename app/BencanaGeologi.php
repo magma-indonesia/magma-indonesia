@@ -30,6 +30,8 @@ class BencanaGeologi extends Model
 
     public function vona()
     {
-        return $this->hasOne('App\v1\Vona','ga_code','code')->orderByDesc('issued');
+        return $this->hasOne('App\v1\Vona','ga_code','code')
+        ->where('sent',1)
+        ->orderByDesc('issued');
     }
 }
