@@ -137,7 +137,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('gempa:bmkg')
             ->everyTenMinutes()
-            ->pingBefore('http://data.bmkg.go.id/')
+            ->pingBefore('https://data.bmkg.go.id/')
             ->withoutOverlapping(3);
 
         $schedule->command('import:roq')
