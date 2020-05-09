@@ -248,7 +248,7 @@ class AutoGempaBmkg extends Command
     protected function getDataFromBmkg()
     {
         try {
-            $xml_en = XmlParser::load('http://data.bmkg.go.id/en_autogempa.xml');
+            $xml_en = XmlParser::load('https://data.bmkg.go.id/en_autogempa.xml');
             $gempa_en = $xml_en->parse([
                 'tanggal' => ['uses' => 'gempa.Tanggal'],
                 'jam' => ['uses' => 'gempa.Jam'],
