@@ -257,7 +257,7 @@ class AutoGempaBmkg extends Command
                 'bujur' => ['uses' => 'gempa.Bujur'],       
             ]);
     
-            $xml_id = XmlParser::load('http://data.bmkg.go.id/autogempa.xml');
+            $xml_id = XmlParser::load('https://data.bmkg.go.id/autogempa.xml');
             $gempa_id = $xml_id->parse([
                 'kedalaman' => ['uses' => 'gempa.Kedalaman'],
                 'magnitude' => ['uses' => 'gempa.Magnitude'],
@@ -268,7 +268,7 @@ class AutoGempaBmkg extends Command
                 'wilayah_5' => ['uses' => 'gempa.Wilayah5'],         
             ]);
 
-            $xml_terasa = XmlParser::load('http://data.bmkg.go.id/lastgempadirasakan.xml');
+            $xml_terasa = XmlParser::load('https://data.bmkg.go.id/lastgempadirasakan.xml');
             $terasa = $xml_terasa->parse([
                 'tanggal' => ['uses' => 'Gempa.Tanggal'],
                 'jam' => ['uses' => 'Gempa.Jam'],
