@@ -82,8 +82,9 @@ class Kernel extends ConsoleKernel
 
         // Crontab reference https://crontab.guru/
         $schedule->command('import:rekomendasi')
-            ->cron('0 */12 * * *')
-            ->pingBefore($this->getUrlMagma());
+            ->cron('0 1,7,13,19 * * *')
+            ->pingBefore($this->getUrlMagma())
+            ->withoutOverlapping();
 
         $schedule->command('import:var')
             ->cron('0 2,8,14,20 * * *')
