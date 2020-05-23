@@ -185,10 +185,10 @@ class Kernel extends ConsoleKernel
     {
         $filePath = storage_path('logs/scheduler-import-administrasi-'.now()->format('Y-m-d').'.log');
 
-        $schedule->command('import:absensi')
-            ->daily()
-            ->pingBefore($this->getUrlMagma())
-            ->appendOutputTo($filePath);
+        // $schedule->command('import:absensi')
+        //     ->daily()
+        //     ->pingBefore($this->getUrlMagma())
+        //     ->appendOutputTo($filePath);
 
         $schedule->command('import:pengajuan')
             ->daily()
