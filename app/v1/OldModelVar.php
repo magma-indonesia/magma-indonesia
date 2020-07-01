@@ -720,7 +720,6 @@ class OldModelVar extends Model
 
     public function getVarTejSpmaxAttribute($value = 0)
     {
-        $value = $value > 50 ? 3 : $value;
         $value = $value < $this->attributes['var_tej_spmin'] ? $this->attributes['var_tej_spmin'] : $value;
 
         return $value;
