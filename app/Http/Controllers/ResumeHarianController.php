@@ -155,7 +155,7 @@ class ResumeHarianController extends Controller
     {
         $this->bencanas->each(function ($bencana, $key) {
             $this->resultText[] = [
-                'gunungapi' => 'Gunungapi '.$bencana->gunungapi->name.' ('.$bencana->gunungapi->province.')',
+                'gunungapi' => 'Gunung api '.$bencana->gunungapi->name.' ('.$bencana->gunungapi->province.')',
                 'pendahuluan' => $bencana->pendahuluan->pendahuluan,
                 'visual' => $this->getVisualDeskripsi($bencana->magma_var),
                 'gempa' => $this->setJumlahGempa($bencana->magma_var)->toText()->isNotEmpty() ? $this->setJumlahGempa($bencana->magma_var)->toText() : collect(['Belum ada laporan 24 Jam yang masuk.']),
