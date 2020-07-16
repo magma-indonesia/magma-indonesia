@@ -6,8 +6,8 @@ use App\Gadd;
 use App\Seismometer;
 use App\LiveSeismogram;
 use Illuminate\Http\Request;
-use Image;
-use Storage;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class SeismometerController extends Controller
 {

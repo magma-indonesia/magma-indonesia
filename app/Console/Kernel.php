@@ -34,7 +34,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        
         $this->scheduleLiveSeismogram($schedule);
         $this->scheduleCompileMagmaVar($schedule);
         $this->scheduleGunungApi($schedule);
@@ -83,8 +82,9 @@ class Kernel extends ConsoleKernel
 
         // Crontab reference https://crontab.guru/
         $schedule->command('import:rekomendasi')
-            ->cron('0 */12 * * *')
-            ->pingBefore($this->getUrlMagma());
+            ->cron('0 1,7,13,19 * * *')
+            ->pingBefore($this->getUrlMagma())
+            ->withoutOverlapping();
 
         $schedule->command('import:var')
             ->cron('0 2,8,14,20 * * *')
@@ -138,7 +138,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('gempa:bmkg')
             ->everyTenMinutes()
-            ->pingBefore('http://data.bmkg.go.id/')
+            ->pingBefore('https://data.bmkg.go.id/')
             ->withoutOverlapping(3);
 
         $schedule->command('import:roq')
@@ -185,10 +185,10 @@ class Kernel extends ConsoleKernel
     {
         $filePath = storage_path('logs/scheduler-import-administrasi-'.now()->format('Y-m-d').'.log');
 
-        $schedule->command('import:absensi')
-            ->daily()
-            ->pingBefore($this->getUrlMagma())
-            ->appendOutputTo($filePath);
+        // $schedule->command('import:absensi')
+        //     ->daily()
+        //     ->pingBefore($this->getUrlMagma())
+        //     ->appendOutputTo($filePath);
 
         $schedule->command('import:pengajuan')
             ->daily()

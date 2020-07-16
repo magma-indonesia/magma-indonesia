@@ -54,7 +54,9 @@
         integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
 
         <!-- Load Esri Leaflet from CDN -->
-        <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
+        <script src="https://unpkg.com/esri-leaflet@2.3.3/dist/esri-leaflet.js"
+        integrity="sha512-cMQ5e58BDuu1pr9BQ/eGRn6HaR6Olh0ofcHFWe5XesdCITVuSBiBZZbhCijBe5ya238f/zMMRYIMIIg1jxv4sQ=="
+        crossorigin=""></script>
         <script src="https://unpkg.com/esri-leaflet-renderers@2.0.6/dist/esri-leaflet-renderers.js"
         integrity="sha512-mhpdD3igvv7A/84hueuHzV0NIKFHmp2IvWnY5tIdtAHkHF36yySdstEVI11JZCmSY4TCvOkgEoW+zcV/rUfo0A=="
         crossorigin=""></script>
@@ -435,8 +437,17 @@
 
         <!-- ======= -->
         <!-- Leaflet --> 
-        <!-- ======= -->
+        
+        <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
+        <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('vendor/slimScroll/jquery.slimscroll.min.js') }}"></script>
+        <script src="{{ asset('js/calcitemaps-v0.3.js') }}"></script>
+
+        <!-- ====== -->
+        <!-- jQuery --> 
+        <!-- ====== -->
         <script>
+        $(document).ready(function () {
 
             var url = '{{ url('/') }}';
 
@@ -521,19 +532,6 @@
                 .addAttribution('<a href="http://esdm.go.id" title="Badan Geologi, ESDM" target="_blank">Badan Geologi, ESDM</a>')
                 .addTo(map);
             
-        </script>
-        
-        <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
-        <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('vendor/slimScroll/jquery.slimscroll.min.js') }}"></script>
-        <script src="{{ asset('js/calcitemaps-v0.3.js') }}"></script>
-
-        <!-- ====== -->
-        <!-- jQuery --> 
-        <!-- ====== -->
-        <script>
-        $(document).ready(function () {
-
             // ==========
             // Gunung Api
             // ==========

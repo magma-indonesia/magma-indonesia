@@ -181,7 +181,7 @@ class CreateRoqRequest extends FormRequest
             'lat_lima' => 'required|numeric|between:-12,6',
             'lon_lima' => 'required|numeric|between:93,142',
             'magnitude' => 'required|numeric|between:1,10',
-            'depth' => 'required|numeric|between:1,500',
+            'depth' => 'required|numeric|between:1,700',
             'area' => 'required',
             'koter' => 'required',
             'mmi' => 'present|nullable',

@@ -46,8 +46,8 @@ class Import extends Controller
     protected function sendNotif($data)
     {
         try {
-            $import = new ImportApp();
-            $import->notify(new ImportNotification($data['text']));
+            // $import = new ImportApp();
+            // $import->notify(new ImportNotification($data['text']));
 
             $this->status['success'] = $data['success'];
             $this->status['message'] = $data['message'];

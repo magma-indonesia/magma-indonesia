@@ -46,7 +46,7 @@ class CompileVarController extends Controller
     {
         $compiles = CompileVar::whereIsActive(1)->get();
 
-        $empty_vars = MagmaVar::where('var_nip_pelapor','')->get();
+        $empty_vars = MagmaVar::where('var_nama_pelapor','=','')->get();
 
         $empty_vars->each(function ($var) {
             $var->delete();

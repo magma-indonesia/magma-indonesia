@@ -3,7 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Log;
+use Illuminate\Support\Facades\Log;
+use Exception;
 
 class ImportMagmaVar extends Command
 {
