@@ -4,9 +4,7 @@ namespace App\Http\Controllers\v1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Carbon;
-use App\v1\Gadd;
 use App\v1\CompileVar;
 use App\v1\MagmaVar;
 use App\Traits\v1\DeskripsiGempa;
@@ -81,7 +79,7 @@ class CompileVarController extends Controller
             });
         }
 
-        return CompileVar::all();
+        return CompileVar::whereIsActive(1)->get();
     }
 
     protected function setDateRange($start, $end)
@@ -138,13 +136,12 @@ class CompileVarController extends Controller
     
                     $noticenumber = Carbon::createFromFormat('Y-m-d', $date['date'])->format('Ymd').'2400';
 
-                    $last = $this->vars->last()->replicate();
-                    $last->updateOrCreate([
-                            'ga_code' => $last->ga_code,
-                            'var_noticenumber' => $noticenumber,
-                        ], array_merge($this->mergedVisual(),$this->mergedGempa())
-                    );
-                    
+                    $last = $this->vars->last()->getAttributes();
+                    $merged = array_merge($last, ['var_noticenumber' => $noticenumber],$this->mergedVisual(),$this->mergedGempa());
+                    MagmaVar::updateOrCreate([
+                        'ga_code' => $last['ga_code'],
+                        'var_noticenumber' => $noticenumber,
+                    ],$merged);
                 };
     
                 $this->start_date = $date['date'];
@@ -184,55 +181,55 @@ class CompileVarController extends Controller
 
     protected function mergedVisibility()
     {
-        return $this->vars->pluck('var_visibility')
+        return $this->vars->pluck('var_visibility')->filter()
                     ->flatten()->unique()->values();
     }
 
     protected function mergedCuaca()
     {
-        return $this->vars->pluck('var_cuaca')
+        return $this->vars->pluck('var_cuaca')->filter()
                     ->flatten()->unique()->values();
     }
 
     protected function mergedKecepatanAngin()
     {
-        return $this->vars->pluck('var_kecangin')
+        return $this->vars->pluck('var_kecangin')->filter()
                     ->flatten()->unique()->values();
     }
 
     protected function mergedArahAngin()
     {
-        return $this->vars->pluck('var_arangin')
+        return $this->vars->pluck('var_arangin')->filter()
                     ->flatten()->unique()->values();
     }
 
     protected function mergedAsap()
     {
-        return $this->vars->pluck('var_asap')
+        return $this->vars->pluck('var_asap')->filter()
                     ->flatten()->unique()->values();
     }
 
     protected function mergedWarnaAsap()
     {
-        return $this->vars->pluck('var_wasap')
+        return $this->vars->pluck('var_wasap')->filter()
                     ->flatten()->unique()->values();
     }
 
     protected function mergedIntensitasAsap()
     {
-        return $this->vars->pluck('var_intasap')
+        return $this->vars->pluck('var_intasap')->filter()
                     ->flatten()->unique()->values();
     }
 
     protected function mergedTekananAsap()
     {
-        return $this->vars->pluck('var_tekasap')
+        return $this->vars->pluck('var_tekasap')->filter()
                     ->flatten()->unique()->values();
     }
 
     protected function mergedVisualKawah()
     {
-        return $this->vars->pluck('var_viskawah')
+        return $this->vars->pluck('var_viskawah')->filter()
                     ->flatten()->unique()->values();
     }
 

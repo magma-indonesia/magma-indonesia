@@ -191,7 +191,6 @@ class MagmaVar extends OldModelVar
     ];
 
     protected $casts = [
-        'var_issued' => 'datetime:Y-m-d H:i:s',
         'var_log' => 'datetime:Y-m-d H:i:s',
         'var_data_date' => 'date:Y-m-d'
     ];
