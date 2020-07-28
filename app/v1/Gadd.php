@@ -63,8 +63,9 @@ class Gadd extends Model
 
     public function var()
     {
-        return $this->hasOne('App\v1\MagmaVarOptimize','ga_code','ga_code')
-                    ->orderBy('var_log','desc');
+        return $this->hasOne('App\v1\MagmaVar','ga_code','ga_code')
+                    ->orderBy('var_data_date','desc')
+                    ->orderBy('periode','desc');
     }
 
     public function vona()

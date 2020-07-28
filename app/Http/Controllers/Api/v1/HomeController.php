@@ -10,7 +10,7 @@ use App\v1\MagmaVar as OldVar;
 use App\v1\Vona;
 use App\v1\GertanCrs as Crs;
 use App\v1\MagmaRoq;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 
 use App\Traits\VisualAsap;
@@ -203,9 +203,8 @@ class HomeController extends Controller
      * @param str $code
      * @return \Illuminate\Http\Response
      */
-    public function showVar($code)
+    public function showVar($ga_code)
     {
-        $ga_code = $code;
         $var = OldVar::select('var_log')->where('ga_code',$ga_code)
                             ->orderBy('var_noticenumber','desc')
                             ->firstOrFail();
@@ -271,30 +270,33 @@ class HomeController extends Controller
         $data = [
             'success' => '1',
             'data' => [
-                'gunungapi' => [
+                'gunung_api' => [
                     'nama' => $gadd->ga_nama_gapi,
                     'deskripsi' => 'Terletak di Kab\Kota '.$gadd->ga_kab_gapi.', '.$gadd->ga_prov_gapi.' dengan posisi geografis di Latitude '.$gadd->ga_lat_gapi.'&deg;LU, Longitude '.$gadd->ga_lon_gapi.'&deg;BT dan memiliki ketinggian '.$gadd->ga_elev_gapi.' mdpl',
                     'status' => $var->cu_status,
-                    'koordinat' => [$gadd->ga_lat_gapi,$gadd->ga_lon_gapi],
-                    'has_vona' => !empty($vona) ? '1' : '0',
+                    'koordinat' => [
+                        'latitude' => $gadd->ga_lat_gapi,
+                        'longitude' => $gadd->ga_lon_gapi
+                    ],
+                    'has_vona' => !empty($vona) ? true : false,
                 ],
-                'laporan' => [
+                'laporan_terakhir' => [
                     'tanggal' => 'Laporan per '.$var->var_perwkt.' jam, tanggal '.$var->var_data_date->format('Y-m-d').' pukul '.$var->periode.' '.$gadd->ga_zonearea,
-                    'pembuat' =>  $var->var_nama_pelapor,
+                    'dibuat_oleh' =>  $var->var_nama_pelapor,
+                    'visual' => [
+                        'deskripsi' => $visual,
+                        'lainnya' => $var->var_ketlain ? title_case($var->var_ketlain) : 'Nihil',
+                        'foto' => $var->var_image,
+                    ],
+                    'klimatologi' => [
+                        'deskripsi' => $klimatologi,
+                    ],
+                    'gempa' => [
+                        'deskripsi' => empty($gempa) ? ['Kegempaan nihil.'] : $gempa,
+                        'grafik' => env('MAGMA_URL').'img/eqhist/'.$gadd->ga_code.'.png',
+                    ],
+                    'rekomendasi' => nl2br($var->var_rekom),
                 ],
-                'visual' => [
-                    'deskripsi' => $visual,
-                    'lainnya' => $var->var_ketlain ? title_case($var->var_ketlain) : 'Nihil',
-                    'foto' => $var->var_image,
-                ],
-                'klimatologi' => [
-                    'deskripsi' => $klimatologi,
-                ],
-                'gempa' => [
-                    'deskripsi' => empty($gempa) ? ['Kegempaan nihil.'] : $gempa,
-                    'grafik' => env('MAGMA_URL').'img/eqhist/'.$gadd->ga_code.'.png',
-                ],
-                'rekomendasi' => nl2br($var->var_rekom),
                 'vona' => $vona,
             ]
         ];

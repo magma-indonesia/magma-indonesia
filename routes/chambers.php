@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/','ChamberController@index')->name('index');
 Route::get('statistik/{year?}','StatistikController@index')
     ->name('statistik.index');
