@@ -3793,3 +3793,37 @@ ul.h-list li:hover a {
   margin: 50px auto;
   border: 1px solid #aaa;
 }
+
+.tx-14 {
+	font-size: 14px;
+	line-height: 1.6;
+}
+
+.tx-16 {
+	font-size: 16px;
+	line-height: 1.8;
+}
+
+.tx-18 {
+	font-size: 18px;
+	line-height: 1.8;
+}
+
+.breadcrumb {
+	background-color: white;
+}
+
+.no-top-padding {
+    padding-top: 0px !important;
+}
+
+a {
+	cursor: pointer;
+	color: #e74c3c;
+}
+
+a:hover, a:focus {
+	color: #e74c3c;
+	text-decoration: none;
+	font-weight: 600;
+}

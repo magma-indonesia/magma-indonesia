@@ -4,7 +4,6 @@ namespace App\Http\Controllers\FrontPage\v1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Str;
 use App\v1\PressRelease as Press;
 
 class PressController extends Controller

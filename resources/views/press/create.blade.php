@@ -110,7 +110,7 @@
                 ['height', ['height']],
                 ['table', ['table']],
                 ['insert', ['hr']],
-                ['view', ['fullscreen', 'codeview']],
+                ['view', ['codeview']],
                 ['help', ['help']]
             ]
         });

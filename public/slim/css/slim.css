@@ -12508,7 +12508,7 @@ textarea.parsley-success:focus {
     width: 100%;
     font-size: 13px;
     font-weight: 400;
-    z-index: 1000;
+    z-index: 1001;
     display: none; }
     @media (min-width: 992px) {
       .slim-navbar .sub-item {

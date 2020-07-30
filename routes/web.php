@@ -7,6 +7,9 @@
 | UserController, including View, Login, Register, Update, Delete
 |
 */
+
+use Illuminate\Support\Facades\Route;
+
 Route::group(['middleware' => ['guest']], function () {
     Route::get('/','v1\HomeController@home')
         ->name('home');
@@ -97,6 +100,11 @@ Route::name('v1.')->group(function () {
             ->name('gempabumi.roq.search')
             ->middleware('throttle:15,1');
 
+        Route::get('edukasi','FrontPage\v1\EdukasiController@index')
+            ->name('edukasi.index');
+        Route::get('edukasi/{slug}','FrontPage\v1\EdukasiController@show')
+            ->name('edukasi.show');
+
         Route::name('json.')->group(function () {
             Route::group(['prefix' => 'json'], function () {
                 Route::post('var','v1\Json\MapController@showVar')
@@ -133,6 +141,10 @@ Route::name('.projects')->group(function () {
         });
 
     });
+});
+
+Route::name('.edukasi')->group(function() {
+    
 });
 
 Route::get('statistik/{year?}','StatistikController@index')

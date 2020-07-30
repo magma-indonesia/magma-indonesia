@@ -7,7 +7,7 @@
                     <span class="d-none d-xl-block">Peta </span>
                 </a>
             </li>
-            <li class="nav-item nav-item-15 with-sub {{ active(['v1.gunungapi.ven','v1.gunungapi.var']) }}">
+            <li class="nav-item nav-item-15 with-sub {{ active(['v1.gunungapi.ven','v1.gunungapi.var','v1.vona.index','v1.vona.show']) }}">
                 <a class="nav-link" href="#">
                     <i class="icon icon-volcano-warning"></i>
                     <span class="d-none d-xl-block">Gunung Api </span>
@@ -23,7 +23,6 @@
                     <label class="label-section mg-t-15">VONA <i class="icon ion-plane"></i></label>
                     <ul>
                         <li><a href="{{ route('v1.vona.index') }}">Issued</a></li>
-                        <li><a href="#">Subscription</a></li>
                     </ul>
                 </div>
             </li>
@@ -38,7 +37,7 @@
                     </ul>
                 </div>
             </li>
-            <li class="nav-item nav-item-30 with-sub {{ active('v1.gempabumi.roq') }}">
+            <li class="nav-item nav-item-25 with-sub {{ active('v1.gempabumi.roq') }}">
                 <a class="nav-link" href="#">
                     <i class="icon icon-earthquake"></i>
                     <span class="d-none d-xl-block">Gempa Bumi dan Tsunami</span>
@@ -49,15 +48,15 @@
                     </ul>
                 </div>
             </li>
-            <li class="nav-item nav-item-10 with-sub {{ active('v1.vona.index') }}">
+            <li class="nav-item nav-item-15 with-sub {{ active('v1.edukasi.index') }}">
                 <a class="nav-link" href="#">
-                    <i class="icon ion-plane"></i>
-                    <span class="d-none d-xl-block">VONA </span>
+                    <i class="icon ion-ios-paper-outline"></i>
+                    <span class="d-none d-xl-block">Edukasi </span>
                 </a>
                 <div class="sub-item">
                     <ul>
-                        <li><a href="{{ route('v1.vona.index') }}">Issued</a></li>
-                        <li><a href="#">Subscription</a></li>
+                        <li><a href="{{ route('v1.edukasi.show', ['slug' => 'magma-indonesia']) }}">Tentang MAGMA</a></li>
+                        <li><a href="{{ route('v1.edukasi.index') }}">Informasi Publik</a></li>
                     </ul>
                 </div>
             </li>
