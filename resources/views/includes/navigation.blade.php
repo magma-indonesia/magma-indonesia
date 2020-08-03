@@ -321,6 +321,17 @@
                     @yield('nav-edit-press')
                 </ul>
             </li>
+            <li class="{{ active(['chambers.edukasi.*']) }}">
+                <a href="#">
+                    <span class="nav-label">Edukasi</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li class="{{ active('chambers.edukasi.*') }}">
+                        <a href="{{ route('chambers.edukasi.index') }}">Informasi Publik</a>
+                    </li>
+                </ul>
+            </li>
             <li class="{{ active(['chambers.vona.*','chambers.exercise.*']) }}">
                 <a href="#">
                     <span class="nav-label">VONA</span>

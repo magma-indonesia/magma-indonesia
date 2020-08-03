@@ -164,11 +164,24 @@ class EdukasiController extends Controller
             });
         }
 
+        if ($request->has('files')) {
+            foreach ($request->file('files') as $file) {
+                $edukasi->edukasi_files()->create([
+                    'filename' => $this->createThumbnail(
+                        $file->store('public/edukasi')
+                    )
+                ]);
+            }
+        }
+
+
         $edukasi->save();
 
         $edukasi->refresh();
 
-        return $edukasi->load('edukasi_files');
+        return redirect()->route('chambers.edukasi.index')
+                ->with('message', 'Informasi berhasil dirubah');
+
     }
 
     /**

@@ -69,8 +69,9 @@
                                     <th>#</th>
                                     <th>Gunung Api</th>
                                     <th>File KRB</th>
+                                    <th>Size</th>
                                     <th>Published</th>
-                                    <th width="20%">Action</th>
+                                    <th width="30%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -79,15 +80,17 @@
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $krb->gunungapi->name }}</td>
                                     <td>{{ $krb->filename }}</td>
+                                    <td>{{ $krb->size_mb }}</td>
                                     <td>{{ $krb->published ? 'Ya' : 'Tidak' }}</td>
                                     <td>
-                                        <a href="{{ route('chambers.krb-gunungapi.show', $krb) }}" class="btn btn-sm btn-info btn-outline" type="button">Download</a>
-
+                                        <a href="{{ $krb->url }}" class="btn btn-sm btn-info btn-outline m-b-sm" type="button" download="Original">Original</a>
+                                        <a href="{{ $krb->large_url }}" class="btn btn-sm btn-info btn-outline m-b-sm" type="button" download="Large">Large</a>
+                                        <a href="{{ $krb->medium_url }}" class="btn btn-sm btn-info btn-outline m-b-sm" type="button" download="Medium">Medium</a>
                                         @role('Super Admin')
                                         <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.krb-gunungapi.destroy', $krb) }}" accept-charset="UTF-8">
                                             @method('DELETE')
                                             @csrf
-                                            <button value="Delete" class="btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
+                                            <button value="Delete" class="btn btn-sm btn-danger btn-outline delete m-b-sm" type="submit">Delete</button>
                                         </form>
                                         @endrole
                                     </td>
