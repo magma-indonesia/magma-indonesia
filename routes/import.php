@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/','ImportController@index')->name('index');
 Route::post('pengajuan','Import\ImportPengajuan@import')->name('pengajuan');
 Route::post('crs','Import\ImportCrs@import')->name('crs');

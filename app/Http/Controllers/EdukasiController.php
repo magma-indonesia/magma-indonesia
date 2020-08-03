@@ -33,7 +33,7 @@ class EdukasiController extends Controller
      */
     public function index()
     {
-        return view('edukasi.index', ['edukasis' => Edukasi::all()]);
+        return view('edukasi.index', ['edukasis' => Edukasi::withCount('edukasi_files')->get()]);
     }
 
     /**
@@ -72,7 +72,7 @@ class EdukasiController extends Controller
 
         $edukasi->refresh();
         
-        if ($request->files) {
+        if ($request->has('files')) {
             foreach ($request->file('files') as $file) {
                 $edukasi->edukasi_files()->create([
                     'filename' => $this->createThumbnail(
@@ -93,12 +93,12 @@ class EdukasiController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Edukasi  $edukasi
+     * @param  String $slug
      * @return \Illuminate\Http\Response
      */
-    public function show(Edukasi $edukasi)
+    public function show($slug)
     {
-        return $edukasi->load('edukasi_files');
+        return view('edukasi.show', ['edukasi' => Edukasi::with('edukasi_files')->whereSlug($slug)->firstOrFail()]);
     }
 
     /**
@@ -109,7 +109,7 @@ class EdukasiController extends Controller
      */
     public function edit(Edukasi $edukasi)
     {
-        return $edukasi;
+        return $edukasi->load('edukasi_files');
     }
 
     /**

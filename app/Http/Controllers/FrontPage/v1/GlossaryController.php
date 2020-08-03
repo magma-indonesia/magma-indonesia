@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\FrontPage\v1;
 
-use App\Edukasi;
+use App\Glossary;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class EdukasiController extends Controller
+class GlossaryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class EdukasiController extends Controller
      */
     public function index()
     {
-        return view('v1.home.edukasi-index', ['edukasis' => Edukasi::withCount('edukasi_files')->whereIsPublished(1)->simplePaginate(12)]);
+        //
     }
 
     /**
@@ -24,8 +24,8 @@ class EdukasiController extends Controller
      * @param  String $slug
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, String $slug)
+    public function show(String $slug)
     {
-        return view('v1.home.edukasi-show',['edukasi' => Edukasi::with('edukasi_files')->whereIsPublished(1)->whereSlug($slug)->firstOrFail()]);
+        //
     }
 }

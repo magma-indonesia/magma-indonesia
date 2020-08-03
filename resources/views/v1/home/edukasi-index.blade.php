@@ -1,4 +1,4 @@
-@extends('layouts.slim') 
+@extends('layouts.slim')
 
 @section('title')
 Informasi Publik
@@ -22,23 +22,18 @@ Informasi Publik
     </div>
 
     <div class="row">
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 mg-t-20">
-            <div class="card bd-0">
-                <img class="img-fluid" src="http://via.placeholder.com/1000x667" alt="Image">
-                <div class="card-body bd bd-t-0">
-                    <p class="card-text">@json($edukasis)</p>
-                </div>
-            </div><!-- card -->
+        @foreach ($edukasis as $edukasi)
+        <div class="col-lg-6 col-12 mg-t-20">
+            <div class="media media-demo">
+                <img src="{{ optional($edukasi->edukasi_files)->first()->thumbnail ?? 'https://via.placeholder.com/1000x667' }}" class="d-flex mg-r-40 wd-150" alt="Image">
+                <div class="media-body mg-t-20 mg-sm-t-0">
+                    <h5 class="tx-inverse mg-b-20">{{ $edukasi->judul }}</h5>
+                    <p>{{ \Illuminate\Support\Str::limit(strip_tags($edukasi->deskripsi), 100) }}</p>
+                    <a href="{{ route('v1.edukasi.show', $edukasi->slug) }}" class="card-link">Detail</a>
+                </div><!-- media-body -->
+            </div><!-- media -->
         </div><!-- col-4 -->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 mg-t-20">
-            <div class="card bd-0">
-                <img class="img-fluid" src="http://via.placeholder.com/1000x667" alt="Image">
-                <div class="card-body bd bd-t-0">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-                </div>
-            </div><!-- card -->
-        </div><!-- col-4 -->
+        @endforeach
     </div><!-- row -->
-</div><!-- section-wrapper -->  
+</div><!-- section-wrapper -->
 @endsection

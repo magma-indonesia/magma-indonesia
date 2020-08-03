@@ -268,7 +268,7 @@ Route::name('v1.')->group(function () {
             ->name('gempabumi.filter');
         Route::resource('gempabumi','v1\MagmaRoqController');
 
-        Route::resource('gerakan-tanah','v1\MagmaSigertanController');
+        // Route::resource('gerakan-tanah','v1\MagmaSigertanController');
 
         Route::resource('subscribers','v1\VonaSubscriberController');
 

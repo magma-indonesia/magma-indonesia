@@ -102,6 +102,10 @@ Route::name('v1.')->group(function () {
 
         Route::get('edukasi','FrontPage\v1\EdukasiController@index')
             ->name('edukasi.index');
+        Route::get('edukasi/glossary', 'FrontPage\v1\GlossaryController@index')
+            ->name('edukasi.glossary.index');
+        Route::get('edukasi/glossary/{slug}', 'FrontPage\v1\GlossaryController@show')
+            ->name('edukasi.glossary.show');
         Route::get('edukasi/{slug}','FrontPage\v1\EdukasiController@show')
             ->name('edukasi.show');
 
