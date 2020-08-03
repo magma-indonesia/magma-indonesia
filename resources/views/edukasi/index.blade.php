@@ -68,9 +68,7 @@ Edukasi
                             Menu ini digunakan untuk melihat edukasi informasi apa yang pernah dibuat. 
                         </p>
                         <h1>
-                            @role('Super Admin')
                             <a href="{{ route('chambers.edukasi.create') }}" class="btn btn-outline btn-danger"><i class="fa fa-plus"></i> Create</a>
-                            @endrole
                         </h1>
                     </div>
                 </div>
@@ -88,7 +86,7 @@ Edukasi
                             <tr>
                                 <th>Judul</th>
                                 <th data-breakpoints="xs sm md" data-title="Deskripsi">Deskripsi</th>
-                                <th data-sortable="false" data-breakpoints="xs sm md" data-title="Resource(s)">Resource(s)</th>
+                                <th data-sortable="false" data-breakpoints="xs sm md" data-title="Jumlah File(s)">Jumlah File(s)</th>
                                 <th data-title="Published">Published</th>
                                 <th data-sortable="false" data-breakpoints="xs sm md" data-title="Action" width="40%">Action</th>
                             </tr>
@@ -97,11 +95,11 @@ Edukasi
                             @foreach ($edukasis as $edukasi)
                             <tr>
                                 <td>{{ $edukasi->judul }}</td>
-                                <td>{{ \Illuminate\Support\Str::limit(strip_tags($edukasi->deskripsi), 200) }}</td>
-                                <td>Resources</td>
+                                <td>{{ \Illuminate\Support\Str::limit(strip_tags($edukasi->deskripsi), 100) }}</td>
+                                <td>{{ $edukasi->edukasi_files_count }}</td>
                                 <td>{{ $edukasi->is_published ? 'Ya' : 'Tidak' }}</td>
                                 <td>
-                                    <a href="{{ route('chambers.edukasi.show', $edukasi) }}" class="btn btn-sm btn-info btn-outline m-b-xs" type="button" title="View">View</a>
+                                    <a href="{{ route('chambers.edukasi.show', $edukasi->slug) }}" class="btn btn-sm btn-info btn-outline m-b-xs" type="button" title="View">View</a>
                                     <a href="{{ route('chambers.edukasi.edit', $edukasi) }}" class="btn btn-sm btn-warning btn-outline m-b-xs" type="button" title="Edit">Edit</a>
                                     <a class="btn btn-sm btn-success btn-outline m-b-xs m-l form-submit" data-id="{{ $edukasi->id }}" type="button" title="Aktivasi" data-value="1">Publish</a>
                                     <a class="btn btn-sm btn-danger btn-outline m-b-xs m-r form-submit" data-id="{{ $edukasi->id }}" type="button" title="Deaktivasi" data-value="0">Unpublish</a>
