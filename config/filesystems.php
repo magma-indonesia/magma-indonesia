@@ -84,7 +84,7 @@ return [
 
         'krb-gunungapi' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/krb_gunungapi'),
+            'root' => storage_path('app/public/krb-gunungapi'),
             'url' => env('APP_URL').'/krb-gunungapi',
             'visibility' => 'public',
         ],

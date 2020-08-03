@@ -6,6 +6,7 @@ use App\Gadd;
 use Illuminate\Http\Request;
 use App\PetaKrbGunungApi as KRB;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class PetaKrbGunungApiController extends Controller
 {
@@ -31,6 +32,33 @@ class PetaKrbGunungApiController extends Controller
         return view('gunungapi.krb.create', compact('gadds'));
     }
 
+    protected function createFile(String $path)
+    {
+        $filename = last(explode('/',$path));
+
+        $large = Image::make(storage_path('app/'.$path))->resize(2560, 2560, function ($constraint) {
+            $constraint->aspectRatio();
+        })->encode('jpg');
+        Storage::disk('public')->put('krb-gunungapi/large/'.$filename, $large);
+
+        $medium = Image::make(storage_path('app/public/krb-gunungapi/large/'.$filename))->resize(1280, 1280, function ($constraint) {
+            $constraint->aspectRatio();
+        })->encode('jpg');
+        $medium = Storage::disk('public')->put('krb-gunungapi/medium/'.$filename, $medium);
+
+        $thumbnail = Image::make(storage_path('app/public/krb-gunungapi/medium/'.$filename))->resize(150, 150, function ($constraint) {
+            $constraint->aspectRatio();
+        })->encode('jpg');
+        Storage::disk('public')->put('krb-gunungapi/thumbnails/'.$filename, $thumbnail);
+
+        return [
+            'filename' => $filename,
+            'size' => Storage::disk('krb-gunungapi')->size($filename),
+            'large_size' => Storage::disk('krb-gunungapi')->size('large/'.$filename),
+            'medium_size' => Storage::disk('krb-gunungapi')->size('medium/'.$filename),
+        ];
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -43,7 +71,8 @@ class PetaKrbGunungApiController extends Controller
 
         $this->validate($request, [
             'code' => 'required|exists:ga_dd,code',
-            'krb' => 'required|max:80000|mimes:jpeg,jpg',
+            'tahun' => 'nullable|integer',
+            'krb' => 'required|image|max:80000',
         ],[
             'code.required' => 'Gunung Api belum dipilih',
             'code.exists' => 'Gunung Api tidak ditemukan',
@@ -52,11 +81,17 @@ class PetaKrbGunungApiController extends Controller
             'krb.mimes' => 'File KRB harus berformat JPG',
         ]);
 
+        $meta = $this->createFile(
+            $request->file('krb')->store('public/krb-gunungapi')
+        );
+ 
         KRB::create([
             'code' => $request->code,
-            'filename' => $request->file('krb')->store(
-                '/', 'krb-gunungapi'
-            ),
+            'tahun' => $request->tahun,
+            'filename' => $meta['filename'],
+            'size' => $meta['size'],
+            'large_size' => $meta['large_size'],
+            'medium_size' => $meta['medium_size'],
             'nip' => auth()->user()->nip,
             'keterangan' => $request->keterangan,
             'published' => $request->published,

@@ -86,6 +86,13 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">Tahun Terbit</label>
+                            <div class="col-sm-9">
+                                <input type="number" value="{{ now()->format('Y') }}" class="form-control" name="tahun">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">Keterangan</label>
                             <div class="col-sm-9">
                                 <textarea placeholder="Kosongi jika tidak ada keterangan yg perlu ditambahakn" name="keterangan" class="form-control p-m" rows="4"></textarea>
@@ -93,7 +100,7 @@
                             </div>
                         </div>
 
-                    <div class="form-group col-sm-12">
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">Tayangkan KRB?</label>
                             <div>
                                 <label class="checkbox-inline"> 
@@ -103,7 +110,6 @@
                             </div>
                         </div>
 
-                        <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <div class="col-sm-8 col-sm-offset-3">
                                 <button class="btn btn-primary" type="submit">Upload</button>
