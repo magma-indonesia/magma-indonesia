@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\api\v1;
+namespace App\Http\Controllers\Api\v1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\v1\MagmaSigertan;
 use App\v1\GertanCrs;
-use App\Http\Resources\v1\MagmaSigertanResource;
 use App\Http\Resources\v1\MagmaSigertanCollection;
 
 class MagmaSigertanController extends Controller

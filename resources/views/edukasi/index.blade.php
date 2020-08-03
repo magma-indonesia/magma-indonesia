@@ -149,13 +149,13 @@ $(document).ready(function() {
             text = 'Data yang telah dihapus tidak bisa dikembalikan',
             confirm_button = 'Yes, hapus!';
 
-        if ($value == 'unpublish') {
+        if ($value == '0') {
             title = 'Unpublish Informasi?';
             text = 'Informasi yang ditarik tidak akan tampil di MAGMA';
             confirm_button = 'Yes, Unpublish!';
         }
 
-        if ($value == 'publish') {
+        if ($value == '1') {
             title = 'Publish Informasi?';
             text = 'Informasi yang di-publish akan tampil di MAGMA';
             confirm_button = 'Yes, Publish!';
@@ -224,7 +224,6 @@ $(document).ready(function() {
 
         return false;
     });
-
 
 });
 </script>

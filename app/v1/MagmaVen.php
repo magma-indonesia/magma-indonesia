@@ -12,6 +12,10 @@ class MagmaVen extends Model
 
     protected $primaryKey = 'erupt_id';
 
+    protected $casts = [
+        'erupt_tsp' => 'datetime:Y-m-d H:i:s'
+    ];
+
     public $timestamps = false;
 
     protected $fillable = [

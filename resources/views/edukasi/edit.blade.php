@@ -91,6 +91,42 @@ Edit {{ $edukasi->judul }}
                                         </div>
                                     </div>
 
+                                    @if ($edukasi->edukasi_files->isNotEmpty())
+                                    <div class="row">
+                                        <div class="form-group col-lg-12">
+                                            <label>File exist yang sedang digunakan</label>
+                                            <div><p>Pilih file yang akan dihapus</p></div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="hpanel">
+                                                        <div class="panel-body list">
+                                                            <div class="table-responsive project-list">
+                                                                <table class="table table-striped">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Hapus?</th>
+                                                                            <th>Preview</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach ($edukasi->edukasi_files as $file)
+                                                                        <tr>
+                                                                            <td><input type="checkbox" name="delete_files[]" class="i-checks" value="{{ $file->id }}"></td>
+                                                                            <td><img class="img-responsive" src="{{ $file->thumbnail }}" alt="{{ $edukasi->judul.'_'.$file->id }}">
+                                                                            </td>
+                                                                        </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
+
                                     <div class="row">
                                         <div class="form-group col-lg-12">
                                             <label>Upload Files Pendukung (optional)</label>
@@ -117,9 +153,9 @@ Edit {{ $edukasi->judul }}
                                             <div><p>Segera publikasikan informasi</p></div>
                                             <div>
                                                 <label class="checkbox-inline"> 
-                                                <input name="is_published" class="i-checks" type="radio" value="1" id="status"> Ya </label> 
+                                                <input name="is_published" class="i-checks" type="radio" value="1" id="status" {{ $edukasi->is_published ? 'checked' : '' }}> Ya </label> 
                                                 <label class="checkbox-inline">
-                                                <input name="is_published" class="i-checks" type="radio" value="0" id="status" checked> Tidak </label> 
+                                                <input name="is_published" class="i-checks" type="radio" value="0" id="status" {{ $edukasi->is_published ? '' : 'checked' }}> Tidak </label> 
                                             </div>
                                         </div>
                                     </div>
@@ -167,7 +203,7 @@ $(document).ready(function() {
     })
 
     $('.summernote').summernote({
-            height: '300px',
+            height: '600px',
             toolbar: [
                 ['style', ['style']],
                 ['font', ['bold', 'italic', 'underline', 'clear']],
@@ -181,10 +217,6 @@ $(document).ready(function() {
                 ['help', ['help']]
             ]
         });
-
-    $('.i-checks').iCheck({
-        radioClass: 'iradio_square-green'
-    });
 });
 </script>
 @endsection

@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\api\v1;
+namespace App\Http\Controllers\Api\v1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\v1\PressRelease;
-use App\Http\Resources\v1\PressResource;
 use App\Http\Resources\v1\PressCollection;
 
 class PressController extends Controller

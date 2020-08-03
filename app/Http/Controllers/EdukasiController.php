@@ -121,7 +121,54 @@ class EdukasiController extends Controller
      */
     public function update(Request $request, Edukasi $edukasi)
     {
-        //
+        if ($request->ajax())
+        {
+            $this->validate($request, [
+                'is_published' => 'required|boolean',
+            ]);
+
+            $edukasi->is_published = $request->is_published;
+            $edukasi->save();
+
+            return response()->json([
+                'status' => 200,
+                'success' => 1,
+                'message' => $edukasi->judul.' berhasil di-publish',
+            ]);
+        }
+
+        $this->validate($request, [
+            'judul' => 'required|max:200|unique:edukasis,id,'.$edukasi->id,
+            'deskripsi' => 'required|min:144',
+            'is_published' => 'required|boolean',
+            'files' => 'sometimes|required|array',
+            'files.*' => 'sometimes|required|image|max:3000',
+            'delete_files' => 'sometimes|required|array',
+            'delete_files.*' => 'sometimes|required|exists:edukasi_files,id',
+        ]);
+
+        $edukasi->load('edukasi_files');
+
+        $edukasi->nip = auth()->user()->nip;
+        $edukasi->judul = $request->judul;
+        $edukasi->slug = $request->judul;
+        $edukasi->deskripsi = $request->deskripsi;
+        $edukasi->is_published = $request->is_published;
+
+        if ($request->has('delete_files'))
+        {
+            $edukasi->edukasi_files->whereIn('id',$request->delete_files)->each(function ($file) {
+                Storage::disk('public')->delete('edukasi/thumbnails/'.$file->filename);
+                Storage::disk('public')->delete('edukasi/'.$file->filename);
+                $file->delete();
+            });
+        }
+
+        $edukasi->save();
+
+        $edukasi->refresh();
+
+        return $edukasi->load('edukasi_files');
     }
 
     /**
