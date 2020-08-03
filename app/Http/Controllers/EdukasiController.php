@@ -109,7 +109,7 @@ class EdukasiController extends Controller
      */
     public function edit(Edukasi $edukasi)
     {
-        return $edukasi->load('edukasi_files');
+        return view('edukasi.edit', ['edukasi' => $edukasi->load('edukasi_files')]);
     }
 
     /**
