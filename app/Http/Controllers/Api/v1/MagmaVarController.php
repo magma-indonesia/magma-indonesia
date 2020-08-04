@@ -8,7 +8,6 @@ use App\v1\MagmaVar as OldVar;
 use App\v1\MagmaVarOptimize;
 use App\v1\Gadd;
 use App\Http\Resources\v1\MagmaVarResource;
-use App\Http\Resources\v1\MagmaVarCollection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
