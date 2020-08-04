@@ -117,6 +117,7 @@ class UserController extends Controller
         $this->validate($request, [
             'username' => 'required|string',
             'password' => 'required|string',
+            'ttl' => 'sometimes|required|integer'
         ]);
 
         $ttl = $request->has('ttl') ? $request->ttl*1440 : 1440 ;
