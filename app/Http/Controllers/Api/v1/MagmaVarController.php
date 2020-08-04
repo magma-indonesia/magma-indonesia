@@ -49,7 +49,7 @@ class MagmaVarController extends Controller
     protected function indexResponse(Collection $vars)
     {
         $vars->transform(function($var) {
-            $gempa = $this->getDeskripsiGempa($var);
+            $gempa = $this->clearDeskripsiGempa()->getDeskripsiGempa($var);
 
             return [
                 'gunung_api' => [
