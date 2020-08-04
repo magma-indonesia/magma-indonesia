@@ -24,7 +24,7 @@ Informasi Publik
     <div class="row">
         @foreach ($edukasis as $edukasi)
         <div class="col-lg-6 col-12 mg-t-20">
-            <div class="media media-demo">
+            <div class="media pd-20 bd">
                 <img src="{{ optional($edukasi->edukasi_files)->first()->thumbnail ?? 'https://via.placeholder.com/1000x667' }}" class="d-flex mg-r-40 wd-150" alt="Image">
                 <div class="media-body mg-t-20 mg-sm-t-0">
                     <h5 class="tx-inverse mg-b-20">{{ $edukasi->judul }}</h5>
