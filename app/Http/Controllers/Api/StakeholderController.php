@@ -4,11 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use App\Stakeholder;
-use App\Notifications\UserLogin;
-use Carbon\Carbon;
-use JWTAuth;
+use Tymon\JWTAuth\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class StakeholderController extends Controller
 {
