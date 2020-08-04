@@ -4,6 +4,10 @@
 {{ $edukasi->judul }}
 @endsection
 
+@section('add-vendor-css')
+<link rel="stylesheet" href="{{ asset('vendor/lightbox2/css/lightbox.min.css') }}" />
+@endsection
+
 @section('breadcrumb')
 <li class="breadcrumb-item"><a>Edukasi</a></li>
 <li class="breadcrumb-item active" aria-current="page">Informasi Publik</li>
@@ -19,11 +23,21 @@
         <div class="card pd-20">
             <div class="card-body">
                 <h5 class="card-title tx-dark tx-medium mg-b-10">{{ $edukasi->judul }}</h5>
-                <p class="card-subtitle tx-normal mg-b-15">Diperbarui pada 
+                <p class="card-subtitle tx-normal mg-b-15">Diperbarui pada
                     {{ $edukasi->updated_at ? $edukasi->updated_at->formatLocalized('%A, %d %B %Y %H:%M:%S'). ' WIB' :  $edukasi->created_at->formatLocalized('%A, %d %B %Y %H:%M:%S'). ' WIB'}}
                 </p>
                 @if (count($edukasi->edukasi_files))
-                <img class="img-fluid" src="{{ $edukasi->edukasi_files->first()->url }}" alt="Image">
+                <div class="bd pd-10 mg-b-10">
+                    <div class="row">
+                        @foreach ($edukasi->edukasi_files as $index => $file)
+                        <div class="col-4 col-lg-2 col-md-3 mg-b-10">
+                            <a href="{{ $file->url }}" data-lightbox="file-set"data-title="{{ $edukasi->judul.'_'.($index+1) }}">
+                                <img class="img-fluid" src="{{ $file->thumbnail }}" alt="" />
+                            </a>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
                 @endif
                 <div class="mg-t-30 card-text">
                     {!! htmlspecialchars_decode($edukasi->deskripsi) !!}
@@ -41,7 +55,8 @@
                         <div class="card bd-0">
                             <img class="img-fluid" src="{{ $file->thumbnail }}" alt="Image">
                             <div class="card-body bd bd-t-0">
-                                <a href="{{ $file->url }}" target="_blank" download="{{ $edukasi->judul.'_'.($index+1) }}">File {{ $index+1 }}</a>
+                                <a href="{{ $file->url }}" target="_blank"
+                                    download="{{ $edukasi->judul.'_'.($index+1) }}">File {{ $index+1 }}</a>
                             </div>
                         </div><!-- card -->
                     </div>
@@ -84,4 +99,8 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('add-vendor-script')
+<script src="{{ asset('vendor/lightbox2/js/lightbox.min.js') }}"></script>
 @endsection
