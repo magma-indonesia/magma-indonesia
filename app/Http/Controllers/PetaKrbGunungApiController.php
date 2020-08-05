@@ -132,7 +132,22 @@ class PetaKrbGunungApiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($request->ajax())
+        {
+            $krb = KRB::findOrFail($id);
+            $this->validate($request, [
+                'published' => 'required|boolean',
+            ]);
+
+            $krb->published = $request->published;
+            $krb->save();
+
+            return response()->json([
+                'status' => 200,
+                'success' => 1,
+                'message' => 'Peta KRB berhasil di-update',
+            ]);
+        }
     }
 
     /**

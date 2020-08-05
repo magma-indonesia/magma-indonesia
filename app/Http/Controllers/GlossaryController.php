@@ -14,7 +14,7 @@ class GlossaryController extends Controller
      */
     public function index()
     {
-        //
+        return redirect()->route('chambers.edukasi.index');
     }
 
     /**
@@ -24,9 +24,9 @@ class GlossaryController extends Controller
      */
     public function create()
     {
-        //
+        return view('glossary.create');
     }
-
+    
     /**
      * Store a newly created resource in storage.
      *

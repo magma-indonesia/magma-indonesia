@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-Create Edukasi
+Create Flossary
 @endsection
 
 @section('add-vendor-css')
@@ -17,7 +17,7 @@ Create Edukasi
                 <i class="pe-7s-ribbon fa-2x text-danger"></i>
             </h1>
             <h1 class="m-b-md">
-                <strong>Create Informasi Publik</strong>
+                <strong>Create Glossary</strong>
             </h1>
 
             <div id="hbreadcrumb">
@@ -25,6 +25,7 @@ Create Edukasi
                     <li><a href="{{ route('chambers.index') }}">MAGMA</a></li>
                     <li><a href="{{ route('chambers.index') }}">Chamber</a></li>
                     <li><a href="{{ route('chambers.edukasi.index') }}">Edukasi</a></li>
+                    <li><a href="{{ route('chambers.glossary.index') }}">Glossary</a></li>
                     <li class="active">
                         <span>Create</span>
                     </li>
@@ -32,7 +33,7 @@ Create Edukasi
             </div>
 
             <p class="m-b-lg tx-16">
-                Gunakan menu ini untuk membuat informasi publik baru terkait mitigasi bencana geologi.
+                Gunakan menu ini untuk menjelaskan suatu istilah yang biasa digunakan dalam mitigasi bencana geologi.
             </p>
             <div class="alert alert-danger">
                 <i class="fa fa-gears"></i> Halaman ini masih dalam tahap pengembangan. Error, bug, maupun penurunan performa bisa terjadi sewaktu-waktu
@@ -48,7 +49,7 @@ Create Edukasi
         <div class="col-lg-12">
             <div class="hpanel hred">
                 <div class="panel-body">
-                    <form action="{{ route('chambers.edukasi.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('chambers.glossary.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="p-m tab-pane active">
 
@@ -56,10 +57,10 @@ Create Edukasi
                                 <div class="col-lg-4 text-center m-b-lg">
                                     <i class="pe-7s-ribbon fa-5x text-muted"></i>
                                     <p class="m-t-md">
-                                        <strong>Informasi Publik</strong>
+                                        <strong>Glossary</strong>
                                     </p>
                                     <p>
-                                        Gunakan judul yang jelas, tuliskan deskripsi informasi publik dengan menggunakan bahasa Indonesia yang baku dan sesuai dengan EYD.
+                                        Gunakan judul yang jelas, tuliskan deskripsi dengan menggunakan bahasa Indonesia yang baku dan sesuai dengan EYD.
                                     </p>
                                 </div>
                                 <div class="col-lg-8">
@@ -78,8 +79,8 @@ Create Edukasi
 
                                     <div class="row">
                                         <div class="form-group col-lg-12">
-                                            <label>Judul</label>
-                                            <input type="text" value="{{ old('judul') }}" class="form-control" name="judul" placeholder="Judul Informasi" required>
+                                            <label>Istilah</label>
+                                            <input type="text" value="{{ old('judul') }}" class="form-control" name="judul" placeholder="Istilah yang akan dijelaskan" required>
                                         </div>
                                     </div>
 
@@ -87,6 +88,14 @@ Create Edukasi
                                         <div class="form-group col-lg-12">
                                             <label>Deskripsi</label>
                                             <textarea name="deskripsi" class="summernote">{{ old('deskripsi') }}</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-lg-12">
+                                            <label>Referensi (optional)</label>
+                                            <p>Referensi tambahan bacaan terkait istilah yang sedang dijelaskan. Gunakan titik koma (;) sebagai pemisah jika lebih dari satu, Referensi bisa dalam bentuk URL atau artikel</p>
+                                            <textarea type="text" rows="4" class="form-control" name="referensi" placeholder="Contoh: Url 1; Article 1; Url 2">{{ old('referensi') }}</textarea>
                                         </div>
                                     </div>
 

@@ -135,7 +135,7 @@
                             <li class="{{ active('chambers.v1.gunungapi.ven.index') }}">
                                 <a class="m-l" href="{{ route('chambers.v1.gunungapi.ven.index') }}">Informasi Letusan</a>
                             </li>
-                            <li class="{{ active('chambers.krb.index') }}">
+                            <li>
                                 <a class="m-l" href="{{ route('chambers.krb-gunungapi.index') }}">Peta KRB</a>
                             </li>
                             <li class="{{ active('chambers.v1.vona.*') }}">
@@ -151,7 +151,7 @@
                     <li class="{{ active('chambers.v1.gempabumi.*') }}">
                         <a href="#">
                             <span class="nav-label"> Gempa Bumi</span>
-                            <span class="fa arrow"></span>                    
+                            <span class="fa arrow"></span>
                         </a>
                         <ul class="nav nav-third-level">
                             <li class="{{ active('chambers.v1.gempabumi.index') }}">
@@ -228,7 +228,7 @@
                 </ul>
             </li>
 
-            <li class="{{ active(['chambers.datadasar.*','chambers.cctv.*','chambers.laporan.*','chambers.laporan.search','chambers.pos.*','chambers.letusan.*','chambers.draft.*','chambers.peralatan.*','chambers.rsam.*','chambers.krb-gunungapi.*','chambers.rekomendasi.*', 'chambers.resume-harian.*']) }}">
+            <li class="{{ active(['chambers.datadasar.*','chambers.cctv.*','chambers.laporan.*','chambers.laporan.search','chambers.pos.*','chambers.letusan.*','chambers.draft.*','chambers.peralatan.*','chambers.rsam.*','chambers.rekomendasi.*', 'chambers.resume-harian.*']) }}">
                 <a href="#">
                     <span class="nav-label">Gunung Api</span>
                     <span class="fa arrow"></span>
@@ -271,7 +271,7 @@
                     <li class="{{ active('chambers.rekomendasi.index') }}">
                         <a href="{{ route('chambers.rekomendasi.index') }}">Daftar Rekomendasi</a>
                     </li>
-                    <li class="{{ active('chambers.krb.index') }}">
+                    <li>
                         <a href="{{ route('chambers.krb-gunungapi.index') }}">Peta KRB</a>
                     </li>
                     <li class="{{ active('chambers.pos.index') }}">
@@ -302,7 +302,7 @@
                         <a href="{{ route('chambers.gempabumi.index') }}">Daftar Kejadian</a>
                     </li>
                     <li class="{{ active('chambers.gempabumi.tanggapan.index') }}">
-                        <a href="{{ route('chambers.gempabumi.tanggapan.index') }}">Daftar Tanggapan</a>
+                        <a href="{{ route('chambers.gempabumi.tanggapan.index') }}">Tanggapan</a>
                     </li>
                 </ul>
             </li>
@@ -319,6 +319,23 @@
                         <a href="{{ route('chambers.press.create') }}">Buat Press Release</a>
                     </li>
                     @yield('nav-edit-press')
+                </ul>
+            </li>
+            <li class="{{ active(['chambers.krb-gunungapi.*']) }}">
+                <a href="#">
+                    <span class="nav-label">Peta Bahaya</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li class="{{ active('chambers.krb-gunungapi.*') }}">
+                        <a href="{{ route('chambers.krb-gunungapi.index') }}">Gunung Api</a>
+                    </li>
+                    <li class="">
+                        <a href="">Gerakan Tanah</a>
+                    </li>
+                    <li class="">
+                        <a href="">Gempa Bumi</a>
+                    </li>
                 </ul>
             </li>
             <li class="{{ active(['chambers.edukasi.*']) }}">

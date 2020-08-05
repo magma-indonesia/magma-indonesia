@@ -9,6 +9,7 @@ Route::get('statistik/{year?}','StatistikController@index')
 Route::get('routes', 'RoutesController@index');
 
 Route::resource('edukasi', 'EdukasiController');
+Route::resource('glossary', 'GlossaryController');
 Route::resource('crs','CrsController');
 Route::resource('pengajuan','PengajuanController');
 Route::post('crs/lokasi','CrsController@getCities')->name('crs.getcities');
