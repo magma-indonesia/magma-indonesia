@@ -7,7 +7,7 @@
     <meta name="keywords" content="magma,esdm,bencana,gunungapi,pvmbg,badan geologi,vona,gempabumi,volcano" />
 
     <!-- Page title -->
-    <title>@yield('title')</title>
+    <title>@yield('title', config('app.name'))</title>
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     <link rel="icon" type="image/png" href="{{ asset('favicon-16x16.0.png') }}" sizes="16x16">
     <link rel="icon" type="image/png" href="{{ asset('favicon-32x32.0.png') }}" sizes="32x32">
@@ -23,14 +23,14 @@
     <meta name="twitter:creator" content="@KementerianESDM">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ config('app.name') }}">
-    <meta name="twitter:description" content="@yield('description', config('app.tag_line'))">
+    <meta name="twitter:description" content="@yield('title', config('app.tag_line'))">
     <meta name="twitter:image" content="{{ asset('snapshot.png') }}">
 
     <!-- Facebook -->
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="{{ config('app.url') }}">
-    <meta property="og:title" content="{{ config('app.name') }} | {{ config('app.tag_line') }}">
-    <meta property="og:description" content="@yield('description', config('app.tag_line'))">
+    <meta property="og:title" content="{{ config('app.name') }}}}">
+    <meta property="og:description" content="@yield('title', config('app.tag_line'))">
     <meta property="og:image" content="{{ asset('snapshot.png') }}">
     <meta property="og:image:secure_url" content="{{ asset('snapshot.png') }}">
     <meta property="og:image:type" content="image/png">

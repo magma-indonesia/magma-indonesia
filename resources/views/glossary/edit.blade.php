@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-Create Glossary
+Edit {{ $glossary->judul }}
 @endsection
 
 @section('add-vendor-css')
@@ -17,7 +17,7 @@ Create Glossary
                 <i class="pe-7s-ribbon fa-2x text-danger"></i>
             </h1>
             <h1 class="m-b-md">
-                <strong>Create Glossary</strong>
+                <strong>Edit {{ $glossary->judul }}</strong>
             </h1>
 
             <div id="hbreadcrumb">
@@ -26,13 +26,13 @@ Create Glossary
                     <li><a href="{{ route('chambers.index') }}">Chamber</a></li>
                     <li><a href="{{ route('chambers.glossary.index') }}">Glossary</a></li>
                     <li class="active">
-                        <span>Create</span>
+                        <span>Edit</span>
                     </li>
                 </ol>
             </div>
 
             <p class="m-b-lg tx-16">
-                Gunakan menu ini untuk menjelaskan suatu istilah yang biasa digunakan dalam mitigasi bencana geologi.
+                Gunakan menu ini merubah deskripsi istilah.
             </p>
             <div class="alert alert-danger">
                 <i class="fa fa-gears"></i> Halaman ini masih dalam tahap pengembangan. Error, bug, maupun penurunan performa bisa terjadi sewaktu-waktu
@@ -48,8 +48,9 @@ Create Glossary
         <div class="col-lg-12">
             <div class="hpanel hred">
                 <div class="panel-body">
-                    <form action="{{ route('chambers.glossary.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('chambers.glossary.update', $glossary->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <div class="p-m tab-pane active">
 
                             <div class="row m-b-lg">
@@ -79,14 +80,14 @@ Create Glossary
                                     <div class="row">
                                         <div class="form-group col-lg-12">
                                             <label>Istilah</label>
-                                            <input type="text" value="{{ old('judul') }}" class="form-control" name="judul" placeholder="Istilah yang akan dijelaskan" required>
+                                            <input type="text" value="{{ old('judul') ?: $glossary->judul }}" class="form-control" name="judul" placeholder="Istilah yang akan dijelaskan" required>
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="form-group col-lg-12">
                                             <label>Deskripsi</label>
-                                            <textarea name="deskripsi" class="summernote">{{ old('deskripsi') }}</textarea>
+                                            <textarea name="deskripsi" class="summernote">{{ old('deskripsi') ?: $glossary->deskripsi }}</textarea>
                                         </div>
                                     </div>
 
@@ -94,9 +95,45 @@ Create Glossary
                                         <div class="form-group col-lg-12">
                                             <label>Referensi/Rujukan/Sumber (optional)</label>
                                             <p>Referensi tambahan bacaan terkait istilah yang sedang dijelaskan. <b>Gunakan titik koma (;)</b> sebagai pemisah jika lebih dari satu, Referensi bisa dalam bentuk URL atau artikel</p>
-                                            <textarea type="text" rows="4" class="form-control" name="referensi" placeholder="Contoh: google.com; Bulletin Volcanology; usgs.gov">{{ old('referensi') }}</textarea>
+                                            <textarea type="text" rows="4" class="form-control" name="referensi" placeholder="Contoh: google.com; Bulletin Volcanology; usgs.gov">{{ old('referensi') ?: $glossary->reference }}</textarea>
                                         </div>
                                     </div>
+
+                                    @if ($glossary->glossary_files->isNotEmpty())
+                                    <div class="row">
+                                        <div class="form-group col-lg-12">
+                                            <label>File exist yang sedang digunakan</label>
+                                            <div><p>Pilih file yang akan dihapus</p></div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="hpanel">
+                                                        <div class="panel-body list">
+                                                            <div class="table-responsive project-list">
+                                                                <table class="table table-striped">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Hapus?</th>
+                                                                            <th>Preview</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach ($glossary->glossary_files as $file)
+                                                                        <tr>
+                                                                            <td><input type="checkbox" name="delete_files[]" class="i-checks" value="{{ $file->id }}"></td>
+                                                                            <td><img class="img-responsive" src="{{ $file->thumbnail }}" alt="{{ $glossary->judul.'_'.$file->id }}">
+                                                                            </td>
+                                                                        </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
 
                                     <div class="row">
                                         <div class="form-group col-lg-12">
@@ -124,9 +161,9 @@ Create Glossary
                                             <div><p>Segera publikasikan informasi</p></div>
                                             <div>
                                                 <label class="checkbox-inline"> 
-                                                <input name="is_published" class="i-checks" type="radio" value="1" id="status"> Ya </label> 
+                                                <input name="is_published" class="i-checks" type="radio" value="1" id="status" {{ $glossary->is_published ? 'checked' : '' }}> Ya </label> 
                                                 <label class="checkbox-inline">
-                                                <input name="is_published" class="i-checks" type="radio" value="0" id="status" checked> Tidak </label> 
+                                                <input name="is_published" class="i-checks" type="radio" value="0" id="status" {{ $glossary->is_published ? '' : 'checked' }}> Tidak </label> 
                                             </div>
                                         </div>
                                     </div>
@@ -174,20 +211,20 @@ $(document).ready(function() {
     })
 
     $('.summernote').summernote({
-        height: '300px',
-        toolbar: [
-            ['style', ['style']],
-            ['font', ['bold', 'italic', 'underline', 'clear']],
-            ['fontname', ['fontname']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['height', ['height']],
-            ['table', ['table']],
-            ['insert', ['hr']],
-            ['view', ['fullscreen', 'codeview']],
-            ['help', ['help']]
-        ]
-    });
+            height: '600px',
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'clear']],
+                ['fontname', ['fontname']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']],
+                ['table', ['table']],
+                ['insert', ['hr']],
+                ['view', ['fullscreen', 'codeview']],
+                ['help', ['help']]
+            ]
+        });
 });
 </script>
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Edukasi;
+use App\Glossary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -33,7 +34,7 @@ class EdukasiController extends Controller
      */
     public function index()
     {
-        return view('edukasi.index', ['edukasis' => Edukasi::withCount('edukasi_files')->get()]);
+        return view('edukasi.index', ['edukasis' => Edukasi::withCount('edukasi_files')->get(), 'glossaries_count' => Glossary::count()]);
     }
 
     /**
@@ -68,26 +69,29 @@ class EdukasiController extends Controller
         $edukasi->slug = $request->judul;
         $edukasi->deskripsi = $request->deskripsi;
         $edukasi->is_published = $request->is_published;
-        $edukasi->save();
+        $saved = $edukasi->save();
 
         $edukasi->refresh();
-        
-        if ($request->has('files')) {
-            foreach ($request->file('files') as $file) {
-                $edukasi->edukasi_files()->create([
-                    'filename' => $this->createThumbnail(
-                        $file->store('public/edukasi')
-                    )
-                ]);
-            }
-        }
 
-        if ($edukasi->save())
+        if ($saved)
+        {
+            if ($request->has('files')) 
+            {
+                foreach ($request->file('files') as $file) {
+                    $edukasi->edukasi_files()->create([
+                        'filename' => $this->createThumbnail(
+                            $file->store('public/edukasi')
+                        )
+                    ]);
+                }
+            }
+
             return redirect()->route('chambers.edukasi.index')
                     ->with('message', 'Informasi baru berhasil ditambahkan');
+        }
 
         return redirect()->route('chambers.edukasi.index')
-        ->with('message', 'Informasi baru gagal ditambahkan');
+            ->with('message', 'Informasi baru gagal ditambahkan');
     }
 
     /**
@@ -174,14 +178,10 @@ class EdukasiController extends Controller
             }
         }
 
-
         $edukasi->save();
-
-        $edukasi->refresh();
 
         return redirect()->route('chambers.edukasi.index')
                 ->with('message', 'Informasi berhasil dirubah');
-
     }
 
     /**

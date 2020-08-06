@@ -55,8 +55,9 @@
                 </a>
                 <div class="sub-item">
                     <ul>
-                        <li><a href="{{ route('v1.edukasi.show', ['slug' => 'magma-indonesia']) }}">Tentang MAGMA</a></li>
                         <li><a href="{{ route('v1.edukasi.index') }}">Informasi Publik</a></li>
+                        <li><a href="{{ route('v1.edukasi.glossary.index') }}">Glossary</a></li>
+                        <li><a href="{{ route('v1.edukasi.show', ['slug' => 'magma-indonesia']) }}">Tentang MAGMA</a></li>
                         <li><a href="https://www.youtube.com/channel/UCl6iW8jAJ9X-Fv68GIkCG_Q" target="_blank">PVMBG TV</a></li>
                     </ul>
                 </div>

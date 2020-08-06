@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-Edukasi
+Glossary
 @endsection
 
 @section('add-vendor-css')
@@ -19,7 +19,7 @@ Edukasi
                 <i class="pe-7s-ribbon fa-2x text-danger"></i>
             </h1>
             <h1 class="m-b-md">
-                <strong>Edukasi Informasi Publik</strong>
+                <strong>Glossary</strong>
             </h1>
 
             <div id="hbreadcrumb">
@@ -27,13 +27,13 @@ Edukasi
                     <li><a href="{{ route('chambers.index') }}">MAGMA</a></li>
                     <li><a href="{{ route('chambers.index') }}">Chamber</a></li>
                     <li class="active">
-                        <span>Edukasi</span>
+                        <span>Glossary</span>
                     </li>
                 </ol>
             </div>
 
             <p class="m-b-lg tx-16">
-                Menu ini menampilkan data informasi pengetahuan umum tentang terminology kebencanaan yang digunakan oleh PVMBG. Bersifat edukasi untuk informasi publik.
+                Gunakan menu ini untuk menjelaskan suatu istilah yang biasa digunakan dalam mitigasi bencana geologi.
             </p>
             <div class="alert alert-danger">
                 <i class="fa fa-gears"></i> Halaman ini masih dalam tahap pengembangan. Error, bug, maupun penurunan performa bisa terjadi sewaktu-waktu
@@ -55,19 +55,19 @@ Edukasi
             <div class="hpanel hred">
                 <div class="panel-body h-200">
                     <div class="stats-title pull-left">
-                        <h4>Jumlah Informasi</h4>
+                        <h4>Glossary</h4>
                     </div>
 
                     <div class="stats-icon pull-right">
-                        <i class="pe-7s-info fa-4x text-danger"></i>
+                        <i class="pe-7s-note2 fa-4x text-danger"></i>
                     </div>
 
                     <div class="m-t-xl">
-                        <h1>{{ $edukasis->count() }}</h1>
+                        <h1>{{ $glossaries->count() }}</h1>
                         <p>
                             Menu ini digunakan untuk melihat edukasi informasi apa yang pernah dibuat. 
                         </p>
-                        <a href="{{ route('chambers.edukasi.create') }}" class="btn btn-outline btn-danger"><i class="fa fa-plus"></i> Create</a>
+                        <a href="{{ route('chambers.glossary.create') }}" class="btn btn-outline btn-danger"><i class="fa fa-plus"></i> Create</a>
                     </div>
                 </div>
 
@@ -77,21 +77,20 @@ Edukasi
             <div class="hpanel hred">
                 <div class="panel-body h-200">
                     <div class="stats-title pull-left">
-                        <h4>Glossary</h4>
+                        <h4>Jumlah Informasi</h4>
                     </div>
 
                     <div class="stats-icon pull-right">
-                        <i class="pe-7s-note2 fa-4x text-danger"></i>
+                        <i class="pe-7s-info fa-4x text-danger"></i>
                     </div>
 
                     <div class="m-t-xl">
-                        <h1>{{ $glossaries_count }}</h1>
+                        <h1>{{ $edukasis_count }}</h1>
                         <p>
                             Menu ini digunakan untuk melihat edukasi informasi apa yang pernah dibuat. 
                         </p>
-
-                        <a href="{{ route('chambers.glossary.index') }}" class="btn btn-outline btn-info"> Daftar</a>
-                        <a href="{{ route('chambers.glossary.create') }}" class="btn btn-outline btn-danger"><i class="fa fa-plus"></i> Create</a>
+                        <a href="{{ route('chambers.edukasi.index') }}" class="btn btn-outline btn-info"> Daftar</a>
+                        <a href="{{ route('chambers.edukasi.create') }}" class="btn btn-outline btn-danger"><i class="fa fa-plus"></i> Create</a>
                     </div>
                 </div>
 
@@ -114,19 +113,19 @@ Edukasi
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($edukasis as $edukasi)
+                            @foreach ($glossaries as $glossary)
                             <tr>
-                                <td>{{ $edukasi->judul }}</td>
-                                <td>{{ \Illuminate\Support\Str::limit(strip_tags($edukasi->deskripsi), 100) }}</td>
-                                <td>{{ $edukasi->edukasi_files_count }}</td>
-                                <td>{{ $edukasi->is_published ? 'Ya' : 'Tidak' }}</td>
+                                <td>{{ $glossary->judul }}</td>
+                                <td>{{ \Illuminate\Support\Str::limit(strip_tags($glossary->deskripsi), 100) }}</td>
+                                <td>{{ $glossary->glossary_files_count }}</td>
+                                <td>{{ $glossary->is_published ? 'Ya' : 'Tidak' }}</td>
                                 <td>
-                                    <a href="{{ route('chambers.edukasi.show', $edukasi->slug) }}" class="btn btn-sm btn-info btn-outline m-b-xs" type="button" title="View">View</a>
-                                    <a href="{{ route('chambers.edukasi.edit', $edukasi) }}" class="btn btn-sm btn-warning btn-outline m-b-xs" type="button" title="Edit">Edit</a>
-                                    <a class="btn btn-sm btn-success btn-outline m-b-xs m-l form-submit" data-id="{{ $edukasi->id }}" type="button" title="Aktivasi" data-value="1">Publish</a>
-                                    <a class="btn btn-sm btn-danger btn-outline m-b-xs m-r form-submit" data-id="{{ $edukasi->id }}" type="button" title="Deaktivasi" data-value="0">Unpublish</a>
+                                    <a href="{{ route('chambers.glossary.show', $glossary->slug) }}" class="btn btn-sm btn-info btn-outline m-b-xs" type="button" title="View">View</a>
+                                    <a href="{{ route('chambers.glossary.edit', $glossary) }}" class="btn btn-sm btn-warning btn-outline m-b-xs" type="button" title="Edit">Edit</a>
+                                    <a class="btn btn-sm btn-success btn-outline m-b-xs m-l form-submit" data-id="{{ $glossary->id }}" type="button" title="Aktivasi" data-value="1">Publish</a>
+                                    <a class="btn btn-sm btn-danger btn-outline m-b-xs m-r form-submit" data-id="{{ $glossary->id }}" type="button" title="Deaktivasi" data-value="0">Unpublish</a>
                                     @role('Super Admin')
-                                    <a class="btn btn-sm btn-danger btn-outline m-b-xs form-submit" data-id="{{ $edukasi->id }}" type="button" title="Delete" data-value="delete"><i class="fa fa-trash"></i> Delete</a>
+                                    <a class="btn btn-sm btn-danger btn-outline m-b-xs form-submit" data-id="{{ $glossary->id }}" type="button" title="Delete" data-value="delete"><i class="fa fa-trash"></i> Delete</a>
                                     @endrole
                                 </td>
                             </tr>
@@ -139,14 +138,14 @@ Edukasi
     </div>
 </div>
 
-<form id="form-update" style="display:none;" method="POST" data-action="{{ route('chambers.edukasi.index') }}">
+<form id="form-update" style="display:none;" method="POST" data-action="{{ route('chambers.glossary.index') }}">
     @csrf
     @method('PUT')
     <input id="form-type" type="hidden" name="is_published" value="0">
 </form>
 
 @role('Super Admin')
-<form id="form-destroy" style="display:none;" method="POST" data-action="{{ route('chambers.edukasi.index') }}">
+<form id="form-destroy" style="display:none;" method="POST" data-action="{{ route('chambers.glossary.index') }}">
     @csrf
     @method('DELETE')
 </form>

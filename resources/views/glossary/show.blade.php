@@ -1,7 +1,7 @@
 @extends('layouts.slim')
 
 @section('title')
-{{ $edukasi->judul }}
+{{ $glossary->judul }}
 @endsection
 
 @section('add-vendor-css')
@@ -14,7 +14,7 @@
 @endsection
 
 @section('page-title')
-{{ $edukasi->judul }}
+{{ $glossary->judul }}
 @endsection
 
 @section('main')
@@ -22,16 +22,19 @@
     <div class="col-lg-9">
         <div class="card pd-20">
             <div class="card-body">
-                <h5 class="card-title tx-dark tx-medium mg-b-10">{{ $edukasi->judul }}</h5>
+                <h5 class="card-title tx-dark tx-medium mg-b-10">{{ $glossary->judul }}</h5>
                 <p class="card-subtitle tx-normal mg-b-15">Diperbarui pada
-                    {{ $edukasi->updated_at ? $edukasi->updated_at->formatLocalized('%A, %d %B %Y %H:%M:%S'). ' WIB' :  $edukasi->created_at->formatLocalized('%A, %d %B %Y %H:%M:%S'). ' WIB'}}
+                    {{ $glossary->updated_at ? $glossary->updated_at->formatLocalized('%A, %d %B %Y %H:%M:%S'). ' WIB' :  $glossary->created_at->formatLocalized('%A, %d %B %Y %H:%M:%S'). ' WIB'}}
                 </p>
-                @if (count($edukasi->edukasi_files))
+                <div class="mg-t-30 card-text">
+                    {!! htmlspecialchars_decode($glossary->deskripsi) !!}
+                </div>
+                @if (count($glossary->glossary_files))
                 <div class="bd pd-10 mg-b-10">
                     <div class="row">
-                        @foreach ($edukasi->edukasi_files as $index => $file)
+                        @foreach ($glossary->glossary_files as $index => $file)
                         <div class="col-4 col-lg-2 col-md-3 mg-b-10">
-                            <a href="{{ $file->url }}" data-lightbox="file-set"data-title="{{ $edukasi->judul.'_'.($index+1) }}">
+                            <a href="{{ $file->url }}" data-lightbox="file-set"data-title="{{ $glossary->judul.'_'.($index+1) }}">
                                 <img class="img-fluid" src="{{ $file->thumbnail }}" alt="" />
                             </a>
                         </div>
@@ -39,32 +42,8 @@
                     </div>
                 </div>
                 @endif
-                <div class="mg-t-30 card-text">
-                    {!! htmlspecialchars_decode($edukasi->deskripsi) !!}
-                </div>
             </div>
         </div>
-
-        @if (count($edukasi->edukasi_files))
-        <div class="card pd-20 mg-t-20">
-            <label class="slim-card-title">Download File(s)</label>
-            <div class="post-group">
-                <div class="row">
-                    @foreach ($edukasi->edukasi_files as $index => $file)
-                    <div class="col-lg-2 col-md-3 col-sm-6 col-6 mg-t-20">
-                        <div class="card bd-0">
-                            <img class="img-fluid" src="{{ $file->thumbnail }}" alt="Image">
-                            <div class="card-body bd bd-t-0">
-                                <a href="{{ $file->url }}" target="_blank"
-                                    download="{{ $edukasi->judul.'_'.($index+1) }}">File {{ $index+1 }}</a>
-                            </div>
-                        </div><!-- card -->
-                    </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-        @endif
     </div>
 
     <div class="col-lg-3 mg-t-20 mg-lg-t-0">

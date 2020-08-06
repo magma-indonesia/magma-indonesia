@@ -338,7 +338,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="{{ active(['chambers.edukasi.*']) }}">
+            <li class="{{ active(['chambers.edukasi.*','chambers.glossary.*']) }}">
                 <a href="#">
                     <span class="nav-label">Edukasi</span>
                     <span class="fa arrow"></span>
@@ -346,6 +346,9 @@
                 <ul class="nav nav-second-level">
                     <li class="{{ active('chambers.edukasi.*') }}">
                         <a href="{{ route('chambers.edukasi.index') }}">Informasi Publik</a>
+                    </li>
+                    <li class="{{ active('chambers.glossary.*') }}">
+                        <a href="{{ route('chambers.glossary.index') }}">Glossary</a>
                     </li>
                 </ul>
             </li>

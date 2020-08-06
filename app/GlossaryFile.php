@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EdukasiFile extends Model
+class GlossaryFile extends Model
 {
     protected $guarded = ['id'];
 
@@ -20,7 +20,7 @@ class EdukasiFile extends Model
      */
     public function getUrlAttribute()
     {
-        return asset('storage/edukasi/'.$this->attributes['filename']);
+        return asset('storage/glossary/'.$this->attributes['filename']);
     }
 
     /**
@@ -30,16 +30,16 @@ class EdukasiFile extends Model
      */
     public function getThumbnailAttribute()
     {
-        return asset('storage/edukasi/thumbnails/'.$this->attributes['filename']);
+        return asset('storage/glossary/thumbnails/'.$this->attributes['filename']);
     }
-
+    
     /**
      * Undocumented function
      *
-     * @return \App\Edukasi
+     * @return \App\Glossary
      */
     public function edukasi()
     {
-        return $this->belongsTo('App\Edukasi');
+        return $this->belongsTo('App\Glossary');
     }
 }
