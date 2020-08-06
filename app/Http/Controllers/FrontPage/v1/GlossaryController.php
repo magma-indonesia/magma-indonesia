@@ -15,7 +15,7 @@ class GlossaryController extends Controller
      */
     public function index()
     {
-        return view('v1.home.glossary-index', ['glossaries' => Glossary::with('glossary_files')->orderBy('judul')->get()]);
+        return view('v1.home.glossary-index', ['glossaries' => Glossary::with('glossary_files')->whereIsPublished(1)->orderBy('judul')->get()]);
     }
 
     /**
