@@ -34,7 +34,7 @@
                     <div class="row">
                         @foreach ($glossary->glossary_files as $index => $file)
                         <div class="col-4 col-lg-2 col-md-3 mg-b-10">
-                            <a href="{{ $file->url }}" data-lightbox="file-set"data-title="{{ $glossary->judul.'_'.($index+1) }}">
+                            <a href="{{ $file->url }}" data-lightbox="file-set" data-title="{{ $glossary->judul.'_'.($index+1) }}">
                                 <img class="img-fluid" src="{{ $file->thumbnail }}" alt="" />
                             </a>
                         </div>
