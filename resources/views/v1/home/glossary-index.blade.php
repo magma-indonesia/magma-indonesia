@@ -22,7 +22,12 @@ Glossary
 @section('main')
 <div class="section-wrapper">
     <label class="section-title">Table Glossary</label>
-    <p class="mg-b-20 mg-sm-b-40">Daftar istilah yang digunakan dalam kebencanaan geologi.</p>
+    <p class="mg-b-20">Daftar istilah yang digunakan dalam kebencanaan geologi.</p>
+    @auth
+    <div class="mg-b-20 mg-sm-b-40">
+        <a class="btn btn-primary" href="{{ route('chambers.glossary.create') }}">Tambah Baru</a>
+    </div>
+    @endauth
     <div class="table-wrapper">
         <table id="table-glossary" class="table display responsive">
             <thead>
