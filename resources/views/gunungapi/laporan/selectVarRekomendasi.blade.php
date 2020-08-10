@@ -163,8 +163,8 @@ Step 2 - Rekomendasi
 @endsection
 
 @section('add-vendor-script')
-    <script src="{{ asset('vendor/sweetalert/lib/sweet-alert.min.js') }}"></script>
     @role('Super Admin')
+    <script src="{{ asset('vendor/sweetalert/lib/sweet-alert.min.js') }}"></script>
     <script src="{{ asset('vendor/json-viewer/jquery.json-viewer.js') }}"></script>
     @endrole
 @endsection
@@ -197,6 +197,7 @@ Step 2 - Rekomendasi
                 $('#create-rekomendasi').iCheck('check');
             });
 
+            @role('Super Admin')
             $('.delete-rekomendasi').on('click', function(e) {
                 var $url = $(this).val(),
                     $id = $(this).attr('rekomendasi-id');
@@ -239,6 +240,7 @@ Step 2 - Rekomendasi
                 });
 
             })
+            @endrole
         });
     </script>
 @endsection
