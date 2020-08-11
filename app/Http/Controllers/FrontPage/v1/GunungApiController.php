@@ -209,7 +209,7 @@ class GunungApiController extends Controller
         $page = $request->has('page') ? $request->page : 1;
 
         $records = Cache::remember('v1/home/vens:records:'.$ven->erupt_id, 60, function() {
-            return MagmaVen::with('gunungapi:ga_code,ga_nama_gapi')
+            return MagmaVen::with('gunungapi:ga_code,ga_nama_gapi,ga_elev_gapi')
                 ->select('ga_code')
                 ->distinct('ga_code')
                 ->get();
@@ -222,7 +222,7 @@ class GunungApiController extends Controller
         $grouped = $vens->groupBy('erupt_tgl');
 
         $counts = Cache::remember('v1/home/vens:count:'.$ven->erupt_id, 120, function () {
-            return MagmaVen::with('gunungapi:ga_code,ga_nama_gapi')
+            return MagmaVen::with('gunungapi:ga_code,ga_nama_gapi,ga_elev_gapi')
                     ->select('ga_code','erupt_tgl', DB::raw('count(*) as total'))
                     ->where('erupt_tgl','like','%'.now()->format('Y').'%')
                     ->groupBy('ga_code')
@@ -235,7 +235,7 @@ class GunungApiController extends Controller
 
     public function showVen(Request $request, $id = null)
     {
-        $ven = MagmaVen::with('gunungapi:ga_code,ga_zonearea,ga_nama_gapi,ga_lat_gapi,ga_lon_gapi')
+        $ven = MagmaVen::with('gunungapi:ga_code,ga_zonearea,ga_nama_gapi,ga_lat_gapi,ga_lon_gapi,ga_elev_gapi')
                         ->findOrFail($id);
 
         $stats = StatistikMagmaVen::updateOrCreate([
