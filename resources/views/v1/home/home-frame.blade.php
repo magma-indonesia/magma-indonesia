@@ -293,7 +293,7 @@
             $(document).on('click', '#load_krb', function() {
                 var $button = $(this);
                 var layerKrb = L.esri.featureLayer({
-                        url: 'https://services5.arcgis.com/PVHDEj0uwgUfQbbd/arcgis/rest/services/KRB_GA_ID_310120/FeatureServer/0',
+                        url: 'https://services5.arcgis.com/h3r17ndRvhy4NFDq/arcgis/rest/services/KRB_Gunung_Api/FeatureServer/0',
                     }).bindPopup(function(layer) {
                         switch (layer.feature.properties.INDGA) {
                             case 1:
