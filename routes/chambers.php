@@ -70,6 +70,7 @@ Route::group(['prefix' => 'gunungapi'], function () {
     Route::resource('cctv','KameraGunungApiController');
     Route::resource('seismometer','SeismometerController');
     Route::resource('krb-gunungapi','PetaKrbGunungApiController');
+    Route::resource('home-krb','HomeKrbController');
     Route::get('daftar-rekomendasi','VarRekomendasiController@index')
             ->name('rekomendasi.index');
 

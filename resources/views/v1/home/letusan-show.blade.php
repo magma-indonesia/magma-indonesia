@@ -112,7 +112,7 @@ $(document).ready(function () {
     }
 
     var url = '{{ url('/') }}';
-    var krb_esri = 'https://services5.arcgis.com/h3r17ndRvhy4NFDq/arcgis/rest/services/KRB_Gunung_Api/FeatureServer/0';
+    var krb_esri = '{{ $home_krb->url }}';
     var query = "MAG_CODE='{{ $ven->ga_code }}'";
     var map = L.map('map', {
                     zoomControl: false,

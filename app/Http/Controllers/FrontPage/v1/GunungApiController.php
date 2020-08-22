@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\FrontPage\v1;
 
+use App\HomeKrb;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
@@ -22,6 +23,13 @@ class GunungApiController extends Controller
 
     protected $vars;
     protected $grouped;
+
+    protected function cacheHomeKrb()
+    {
+        return Cache::rememberForever('home:krb', function () {
+            return HomeKrb::latest()->first(); 
+        });
+    }
 
     protected function setVisual($var)
     {
@@ -235,6 +243,7 @@ class GunungApiController extends Controller
 
     public function showVen(Request $request, $id = null)
     {
+        $home_krb = $this->cacheHomeKrb();
         $ven = MagmaVen::with('gunungapi:ga_code,ga_zonearea,ga_nama_gapi,ga_lat_gapi,ga_lon_gapi,ga_elev_gapi')
                         ->findOrFail($id);
 
@@ -246,7 +255,7 @@ class GunungApiController extends Controller
 
         $stats->increment('hit');
         
-        return view('v1.home.letusan-show', compact('ven'));
+        return view('v1.home.letusan-show', compact('ven','home_krb'));
     }
 
     public function indexVar(Request $request, $q = null)
@@ -272,7 +281,7 @@ class GunungApiController extends Controller
 
     public function showVar($id)
     {
-
+        $home_krb = $this->cacheHomeKrb();
         $vars = Cache::remember('v1/home/var:show:'.$id, 120, function() use ($id) {
             return MagmaVar::with('gunungapi:ga_code,ga_kab_gapi,ga_prov_gapi,ga_lat_gapi,ga_lon_gapi,ga_elev_gapi,ga_zonearea')
                     ->whereNo($id)
@@ -306,7 +315,7 @@ class GunungApiController extends Controller
             return $vars->first();
         });
 
-        return view('v1.home.var-show', compact('var'));
+        return view('v1.home.var-show', compact('var','home_krb'));
     }
 
 }

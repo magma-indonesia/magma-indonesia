@@ -7,6 +7,7 @@
 @section('add-vendor-css')
 @role('Super Admin')
 <link rel="stylesheet" href="{{ asset('vendor/sweetalert/lib/sweet-alert.css') }}" />
+<link rel="stylesheet" href="{{ asset('vendor/bootstrap-datepicker-master/dist/css/bootstrap-datepicker3.min.css') }}" />
 @endrole
 <link rel="stylesheet" href="{{ asset('vendor/lightbox2/css/lightbox.min.css') }}" />
 @endsection
@@ -40,6 +41,158 @@
 
 @section('content-body')
 <div class="content content-boxed">
+    @hasanyrole('Super Admin|GIS Admin')
+    <div class="row">
+        <div class="col-lg-12">
+            @if ($home_krbs->isEmpty())
+            <div class="alert alert-danger">
+                <i class="fa fa-gears"></i> Belum ada Service ArcGis yang dibuat. Tambahkan sekarang pada menu di bawah ini</a>
+            </div>
+
+            <div class="hpanel">
+                <div class="panel-heading">
+                    Daftar Service ArcGis yang pernah dibuat
+                </div>
+
+                <div class="panel-body">
+                    <form action="{{ route('chambers.home-krb.store') }}" method="post">
+                        @csrf
+                        <div class="tab-content">
+                            <div class="p-m tab-pane active">
+                                <div class="row">
+                                    <div class="col-lg-4 text-center">
+                                        <i class="pe-7s-note fa-4x text-muted"></i>
+                                        <p class="m-t-md">
+                                            <strong>Tambahkan Link service ArcGis untuk Peta KRB Gunung Api</strong>, service yang digunakan adalah yang dibuat terkini.
+                                        </p>
+                                    </div>
+
+                                    <div class="col-lg-8">
+                                        <div class="row p-md">
+
+                                            @if ($errors->any())
+                                            <div class="form-group col-sm-12">
+                                                <div class="alert alert-danger">
+                                                @foreach ($errors->all() as $error)
+                                                    <p>{{ $error }}</p>
+                                                @endforeach
+                                                </div>
+                                            </div>
+                                            @endif
+
+                                            <div class="form-group col-sm-12">
+                                                <label>URL Service ArcGis</label>
+                                                <p>Contoh: https://services5.arcgis.com/h3r17ndRvhy4NFDq/arcgis/rest/services/KRB_Gunung_Api/FeatureServer/0</p>
+                                                <input name="url" class="form-control" type="text" value="{{ old('url') }}">
+                                            </div>
+
+                                            <div class="form-group col-sm-12">
+                                                <label>Tanggal Expired</label>
+                                                <input name="expired_at" id="date" class="form-control" type="text" value="{{ now()->format('Y-m-d') }}">
+                                            </div>
+
+                                            <div class="form-group col-sm-12">
+                                                <div class="m-t-xs">
+                                                    <button class="btn btn-primary" type="submit">Tambahkan URL</button>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            @else
+
+            <div class="hpanel">
+                <div class="panel-heading">
+                    Daftar Service ArcGis yang pernah dibuat
+                </div>
+
+                <div class="panel-body float-e-margins">
+                    <form action="{{ route('chambers.home-krb.store') }}" method="post">
+                        @csrf
+                        <div class="tab-content">
+                            <div class="p-m tab-pane active">
+                                <div class="row">
+                                    <div class="col-lg-4 text-center">
+                                        <i class="pe-7s-note fa-4x text-muted"></i>
+                                        <p class="m-t-md">
+                                            <strong>Tambahkan Link service ArcGis untuk Peta KRB Gunung Api</strong>, service yang digunakan adalah yang dibuat terkini.
+                                        </p>
+                                    </div>
+
+                                    <div class="col-lg-8">
+                                        <div class="row p-md">
+
+                                            @if ($errors->any())
+                                            <div class="form-group col-sm-12">
+                                                <div class="alert alert-danger">
+                                                @foreach ($errors->all() as $error)
+                                                    <p>{{ $error }}</p>
+                                                @endforeach
+                                                </div>
+                                            </div>
+                                            @endif
+
+                                            <div class="form-group col-sm-12">
+                                                <label>URL Service ArcGis</label>
+                                                <p>Contoh: https://services5.arcgis.com/h3r17ndRvhy4NFDq/arcgis/rest/services/KRB_Gunung_Api/FeatureServer/0</p>
+                                                <input name="url" class="form-control" type="text" value="{{ old('url') }}">
+                                            </div>
+
+                                            <div class="form-group col-sm-12">
+                                                <label>Tanggal Expired</label>
+                                                <input name="expired_at" id="date" class="form-control" type="text" value="{{ now()->format('Y-m-d') }}">
+                                            </div>
+
+                                            <div class="form-group col-sm-12">
+                                                <div class="m-t-xs">
+                                                    <button class="btn btn-primary" type="submit">Tambahkan URL</button>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table id="table-krb" class="table table-condensed table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>URL</th>
+                                    <th>Dibuat</th>
+                                    <th>Expired</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($home_krbs as $key => $home_krb)
+                                <tr>
+                                    <td>{{ $key+1 }}</td>
+                                    <td>{{ $home_krb->url }}</td>
+                                    <td>{{ $home_krb->created_at }}</td>
+                                    <td>{{ $home_krb->expired_at->format('Y-m-d') }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            @endif
+        </div>
+    </div>
+    @endhasanyrole
+
     <div class="row">
         <div class="col-lg-12">
             {{-- Peta KRB --}}
@@ -119,6 +272,8 @@
 @section('add-vendor-script')
 @role('Super Admin')
 <script src="{{ asset('vendor/sweetalert/lib/sweet-alert.min.js') }}"></script>
+<script src="{{ asset('vendor/moment/moment.js') }}"></script>
+<script src="{{ asset('vendor/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.min.js') }}"></script>
 @endrole
 <script src="{{ asset('vendor/lightbox2/js/lightbox.min.js') }}"></script>
 @endsection
@@ -254,6 +409,31 @@ $(document).ready(function () {
         sweet_alert($value, $url, $data);
 
         return false;
+    });
+
+    $.fn.datepicker.dates['id'] = {
+        days: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
+        daysShort: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
+        daysMin: ['Mi', 'Se', 'Sl', 'Rb', 'Km', 'Jm', 'Sa'],
+        months: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+        monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+        today: 'Hari ini',
+        clear: 'Bersihkan',
+        format: 'yyyy-mm-dd',
+        titleFormat: 'MM yyyy',
+        weekStart: 1
+    };
+
+    $('#date').datepicker({
+        startDate: '2015-05-01',
+        endDate: '{{ now()->addYears(2)->format('Y-m-d') }}',
+        language: 'id',
+        todayHighlight: true,
+        todayBtn: 'linked',
+        enableOnReadonly: true,
+        minViewMode: 0,
+        maxViewMode: 2,
+        readOnly: true,
     });
 });
 </script>

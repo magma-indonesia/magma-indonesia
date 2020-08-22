@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Gadd;
+use App\HomeKrb;
 use Illuminate\Http\Request;
 use App\PetaKrbGunungApi as KRB;
 use Illuminate\Support\Facades\Storage;
@@ -17,8 +18,10 @@ class PetaKrbGunungApiController extends Controller
      */
     public function index()
     {
-        $krbs = KRB::with('gunungapi:code,name')->get();
-        return view('gunungapi.krb.index', compact('krbs'));
+        return view('gunungapi.krb.index', [
+            'krbs' => KRB::with('gunungapi:code,name')->get(),
+            'home_krbs' => HomeKrb::orderBy('created_at','desc')->get()
+        ]);
     }
 
     /**

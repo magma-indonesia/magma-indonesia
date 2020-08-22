@@ -9,6 +9,7 @@ use App\v1\Gadd;
 use App\v1\MagmaVar as OldVar;
 use App\v1\GertanCrs as Crs;
 use App\v1\MagmaRoq as Roq;
+use App\HomeKrb;
 use App\PublicCheckLocation as Check;
 use Illuminate\Support\Facades\DB;
 
@@ -19,6 +20,13 @@ class HomeController extends Controller
 
     use GunungApiTerdekat;
 
+    protected function cacheHomeKrb()
+    {
+        return Cache::rememberForever('home:krb', function () {
+            return HomeKrb::latest()->first(); 
+        });
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -26,6 +34,7 @@ class HomeController extends Controller
      */
     public function home()
     {
+        $home_krb = $this->cacheHomeKrb();
         $last_var = OldVar::select('no','var_log')->orderBy('no','desc')->first();
         $last_roq = Roq::select('no','datetime_wib','roq_logtime')
                         ->orderBy('datetime_wib','desc')
@@ -81,7 +90,7 @@ class HomeController extends Controller
             return Roq::orderBy('datetime_wib','desc')->limit(30)->get();
         });
         
-        return view('v1.home.home',compact('gadds','gertans','gempas'));
+        return view('v1.home.home',compact('gadds','gertans','gempas','home_krb'));
     }
 
     public function index()
@@ -91,6 +100,7 @@ class HomeController extends Controller
 
     public function frame()
     {
+        $home_krb = $this->cacheHomeKrb();
         $last_var = OldVar::select('no','var_log')->orderBy('no','desc')->first();
         $last_roq = Roq::select('no','datetime_wib','roq_logtime')
                         ->orderBy('datetime_wib','desc')
@@ -146,7 +156,7 @@ class HomeController extends Controller
             return Roq::orderBy('datetime_wib','desc')->limit(30)->get();
         });
         
-        return view('v1.home.home-frame',compact('gadds','gertans','gempas'));
+        return view('v1.home.home-frame',compact('gadds','gertans','gempas','home_krb'));
     }
 
     public function check(Request $request)
