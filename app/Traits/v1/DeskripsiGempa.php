@@ -182,9 +182,9 @@ trait DeskripsiGempa
             $this->var->{'var_'.$this->code_gempa.'_rmax'}
         ];
 
-        $this->arah_luncuran = $this->var->{'var_'.$this->code_gempa.'_alun'};
-
-        $arah = is_null($this->arah_luncuran) ? 'arah luncuran tidak teramati. ' : ' dan arah luncuran teramati ke arah '.$this->arah_luncuran.'. ';
+        $arah_luncuran = $this->var->{'var_'.$this->code_gempa.'_alun'};
+        
+        $arah = is_null($arah_luncuran) ? 'arah luncuran tidak teramati. ' : ' dan arah luncuran teramati ke arah '.str_replace_last(', ',' dan ', strtolower(implode(', ',$arah_luncuran->toArray()))).'. ';
 
         ($this->jarak_luncuran[0] == $this->jarak_luncuran[1]) AND ($this->jarak_luncuran[1] >5) ?
             $this->luncuran = 'Teramati guguran dengan jarak luncur '.$this->jarak_luncuran[1].' meter, '.$arah :

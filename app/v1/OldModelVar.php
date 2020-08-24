@@ -49,6 +49,9 @@ class OldModelVar extends Model
         ];
 
         $data = str_replace(', ',',',$value);
+        
+        if (is_array($data))
+            return $this->intersectVar($s_arah,$data);
 
         $arah = explode(',',$data);
 
