@@ -123,7 +123,7 @@
                                     <li class="list-group-item">
                                         <b>{{ \Carbon\Carbon::parse($details['date'])->formatLocalized('%A, %d %B %Y')}}</b>, {!! $details['visual'] ?: 'Belum ada laporan masuk' !!} 
                                         
-                                        @if ($details['visual_letusan'])
+                                        @if ($details['visual_letusan'] ?? false)
                                         <p class="m-t pd-r"><code>{{ $details['visual_letusan'] }}
                                             @if (!empty($details['visual_guguran']))
                                             {{ implode(' ', $details['visual_guguran']) }}
