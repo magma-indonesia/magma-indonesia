@@ -638,6 +638,18 @@ class OldModelVar extends Model
     }
 
     /**
+     * Menghilangkan nilai null
+     *
+     * @param string $value
+     * @return float
+     */
+    public function getVarLtsTmaxAttribute($value = '0') : float
+    {
+        return $this->rejectNull($value)
+            ->toInt()->getZero()->getMax();
+    }
+
+    /**
      * Skala untuk gempa terasa
      *
      * @param [type] $value

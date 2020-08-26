@@ -58,7 +58,15 @@
                         <hr>
                         <p class="pd-r">{!! $data['summary']['visual'] !!}</p>
 
-                        <button type="button" class="btn copy m-t" data-toggle="tooltip" data-placement="top" title="Copied!" data-clipboard-text="{!! $data['summary']['visual'] !!}">Copy</button>
+                        @if ($data['summary']['visual_letusan'])
+                        <p class="m-t pd-r"><code>{{ $data['summary']['visual_letusan'] }}
+                            @if (!empty($data['summary']['visual_guguran']))
+                            {{ implode(' ', $data['summary']['visual_guguran']) }}
+                            @endif
+                        </code></p>
+                        @endif
+
+                        <button type="button" class="btn copy m-t" data-toggle="tooltip" data-placement="top" title="Copied!" data-clipboard-text="{!! $data['summary']['visual'] !!}{!! $data['summary']['visual_letusan'] ?? '' !!}{!! !empty($data['summary']['visual_guguran']) ? implode(' ', $data['summary']['visual_guguran']) : '' !!}">Copy</button>
                     </div>
                 </div>
 
@@ -112,7 +120,17 @@
                             <div class="panel-body">
                                 <ul class="list-group m-t-lg">
                                 @foreach ($data['details'] as $details)
-                                    <li class="list-group-item"><b>{{ \Carbon\Carbon::parse($details['date'])->formatLocalized('%A, %d %B %Y')}}</b>, {!! $details['visual'] ?: 'Belum ada laporan masuk' !!}</li>
+                                    <li class="list-group-item">
+                                        <b>{{ \Carbon\Carbon::parse($details['date'])->formatLocalized('%A, %d %B %Y')}}</b>, {!! $details['visual'] ?: 'Belum ada laporan masuk' !!} 
+                                        
+                                        @if ($details['visual_letusan'])
+                                        <p class="m-t pd-r"><code>{{ $details['visual_letusan'] }}
+                                            @if (!empty($details['visual_guguran']))
+                                            {{ implode(' ', $details['visual_guguran']) }}
+                                            @endif
+                                        </code></p>
+                                        @endif
+                                    </li>
                                 @endforeach
                                 </ul>
                             </div>
@@ -154,7 +172,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($data['summary']['raw'] as $key => $gempa)
+                                            @foreach ($data['summary']['raw_gempa'] as $key => $gempa)
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $gempa['nama'] }}</td>
@@ -189,6 +207,13 @@
                                 <hr>
                                 <div class="row p-md">
                                     <div id="warna-asap" style="min-width: 310px; height: 480px; margin: 0 auto"></div>
+                                </div>
+                                @endif
+
+                                @if (!empty($data['highcharts']['tinggi_letusan']['series']))
+                                <hr>
+                                <div class="row p-md">
+                                    <div id="tinggi-letusan" style="min-width: 310px; height: 480px; margin: 0 auto"></div>
                                 </div>
                                 @endif
 
@@ -722,6 +747,82 @@
                 colorByPoint: true,
                 data: data.highcharts.warna_asap.series
             }]
+        });
+        @endif
+
+        @if (!empty($data['highcharts']['tinggi_letusan']['series']))
+        var asap = Highcharts.chart('tinggi-letusan', {
+            chart: {
+                type: 'column',
+                renderTo: 'tinggi-letusan',
+                events: {
+                    load: function() {
+                        this.renderer.image('{{ asset('logo-esdm-magma.png') }}', 80, 2, 80, 38)
+                            .add();
+                    }
+                }
+            },
+            credits: {
+                enabled: true,
+                text: 'Highcharts | MAGMA Indonesia - PVMBG, Badan Geologi, Kementerian ESDM'
+            },
+            title: {
+                text: 'Grafik Tinggi Letusan {{ $gadd->ga_nama_gapi }}'
+            },
+            xAxis: {
+                categories: data.highcharts.tinggi_letusan.categories,
+                labels: {
+                    style: {
+                        color: "#333333",   
+                        fontSize: "14px",
+                    }
+                }
+            },
+            yAxis: {
+                min: 0,
+                labels: {
+                    style: {
+                        color: "#333333",   
+                        fontSize: "14px",
+                    }
+                },
+                title: {
+                    text: 'Tinggi Letusan (meter dari puncak)'
+                },
+                allowDecimals: false
+            },
+            tooltip: {
+                enabled: true,
+                headerFormat: '<b>{point.x}</b><br/>',
+                pointFormat: '{point.y} meter'
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: data.highcharts.tinggi_letusan.series,
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom'
+                        }
+                    }
+                }]
+            },
+            exporting: {
+                enabled: true,
+                scale: 1,
+                sourceHeight: 360,
+                sourceWidth: 800
+            }
         });
         @endif
 

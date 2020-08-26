@@ -222,7 +222,8 @@ trait DeskripsiGempa
 
     protected function getGempaLuncuran()
     {
-        return $this->jumlah.' kali gempa '.$this->nama_gempa.' dengan amplitudo '.$this->minMax($this->amplitudo).' mm dan lama gempa '.$this->minMax($this->durasi).' detik. '.$this->luncuran;
+        return $this->jumlah.' kali gempa '.$this->nama_gempa.' dengan amplitudo '.$this->minMax($this->amplitudo).' mm dan lama gempa '.$this->minMax($this->durasi).' detik. ';
+        // .$this->luncuran;
     }
 
     protected function getGempaLetusan()

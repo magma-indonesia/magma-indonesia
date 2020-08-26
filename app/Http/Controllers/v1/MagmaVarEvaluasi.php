@@ -126,7 +126,7 @@ class MagmaVarEvaluasi extends Controller
     {
         return [
             'export_chart' => $this->getExportChart(),
-            'periode' => $this->getStart()->format('Y-m-d').' hingga '.$this->getEnd()->format('Y-m-d'),
+            'periode' => $this->getStart()->format('Y-m-d').' hingga '.$this->getEnd()->subDay()->format('Y-m-d'),
             'periode_report' => $this->getPeriodeReport($request),
             'highcharts' => [
                 'var' => [
@@ -157,13 +157,20 @@ class MagmaVarEvaluasi extends Controller
                     'series_min' => $this->transformSeries('column','var_kelembabanmin','Kelembaban Minimum'),
                     'series_max' => $this->transformSeries('column','var_kelembabanmin','Kelembaban Maximum')
                 ],
+                'tinggi_letusan' => [
+                    'categories' => $this->getCategories(),
+                    'series' => $this->transformSeries('column','var_lts_tmax','Tinggi Letusan')
+                ]
             ],
             'details' => $this->getDetails(),
             'widget' => $this->getWidgetJumlahGempa(),
             'summary' => [
                 'visual' => $this->getVisualSummary(),
+                'visual_letusan' => $this->visual_letusan,
+                'visual_guguran' => $this->visual_guguran,
                 'gempa' => $this->clearDeskripsiGempa()->getDeskripsiGempa($this->getVarSummary()),
-                'raw' => $this->getRawVarSummary()
+                'raw_gempa' => $this->getRawVarSummary(),
+                'raw_visual' => $this->raw_visual
             ]
         ];
     }
@@ -196,7 +203,7 @@ class MagmaVarEvaluasi extends Controller
         $this->formatDate($request);
         $this->cache = 'chambers/v1/gunungapi/evaluasi:result:'.$request->jenis.':'.$request->code.':'.$this->start_str.':'.$this->end_str.':'.implode(':',$request->gempa);
 
-        return Cache::remember($this->cache, 30, function () use($request) {
+        // return Cache::remember($this->cache, 30, function () use($request) {
             $this->setCodes($request->gempa)
                     ->setCategories()
                     ->setVars($request->code)
@@ -208,7 +215,7 @@ class MagmaVarEvaluasi extends Controller
                     ->setWidgetJumlahGempa();
     
             return $this->getResponseData($request);
-        });
+        // });
     }
 
     protected function setWidgetJumlahGempa()
@@ -317,6 +324,8 @@ class MagmaVarEvaluasi extends Controller
                                 ->kelembaban($var->var_kelembabanmin,$var->var_kelembabanmax)
                                 ->tekanan($var->var_tekananmin,$var->var_tekananmax)
                                 ->getVisual(),
+                    'visual_letusan' => $this->clearVisual()->letusan($var)->getVisual() ?: null,
+                    'visual_guguran' => $this->luncuran($var)->getVisualArray() ?: [],
                     'visual_lainnya' => $var->var_viskawah ?? 'Nihil',
                     'keterangan_lainnya' => $var->var_ketlain ?? 'Nihil',
                 ];
@@ -448,15 +457,14 @@ class MagmaVarEvaluasi extends Controller
 
     protected function implodeVar(String $key) : string
     {
-        return implode(',',array_unique($this->getVarsSplice()->pluck($key)->flatten()->toArray()));
+        return implode(',',array_unique($this->getVarsSplice()->pluck($key)->filter()->flatten()->toArray()));
     }
 
     protected function setVisualSummary()
     {
         $vars = $this->getVarsSplice();
 
-        $new = new MagmaVar();
-        $var = $new->fill([
+        $this->raw_visual = [
             'var_visibility' => $this->implodeVar('var_visibility'),
             'var_cuaca' => $this->implodeVar('var_cuaca'),
             'var_curah_hujan' => $vars->max('var_curah_hujan'),
@@ -475,7 +483,26 @@ class MagmaVarEvaluasi extends Controller
             'var_intasap' => $this->implodeVar('var_intasap'),
             'var_tekasap' => $this->implodeVar('var_tekasap'),
             'var_viskawah' => $this->implodeVar('var_viskawah'),
-        ]);
+            'var_lts' => $vars->sum('var_lts'),
+            'var_apg' => $vars->sum('var_apg'),
+            'var_apl' => $vars->sum('var_apl'),
+            'var_gug' => $vars->sum('var_gug'),
+            'var_lts_tmin' => $vars->where('var_lts_tmin','>',0)->min('var_lts_tmin') ?: 0,
+            'var_apg_rmin' => $vars->where('var_apg_rmin','>',0)->min('var_apg_rmin') ?: 0,
+            'var_apl_rmin' => $vars->where('var_apl_rmin','>',0)->min('var_apl_rmin') ?: 0,
+            'var_gug_rmin' => $vars->where('var_gug_rmin','>',0)->min('var_gug_rmin') ?: 0,
+            'var_lts_tmax' => $vars->max('var_lts_tmax'),
+            'var_apg_rmax' => $vars->max('var_apg_rmax'),
+            'var_apl_rmax' => $vars->max('var_apl_rmax'),
+            'var_gug_rmax' => $vars->max('var_gug_rmax'),
+            'var_lts_wasap' => $this->implodeVar('var_lts_wasap'),
+            'var_apg_alun' => $this->implodeVar('var_apg_alun'),
+            'var_apl_alun' => $this->implodeVar('var_apl_alun'),
+            'var_gug_alun' => $this->implodeVar('var_gug_alun'),
+        ];
+
+        $new = new MagmaVar();
+        $var = $new->fill($this->raw_visual);
 
         $asap = (object) [
             'wasap' => isset($var->var_wasap) ? $var->var_wasap->toArray() : [],
@@ -494,6 +521,9 @@ class MagmaVarEvaluasi extends Controller
                     ->tekanan($var->var_tekananmin,$var->var_tekananmax)
                     ->getVisual();
 
+        $this->visual_letusan = $this->clearVisual()->letusan($var)->getVisual() ?: null;
+        $this->visual_guguran = $this->luncuran($var)->getVisualArray() ?: [];
+
         return $this;
     }
 
@@ -502,7 +532,7 @@ class MagmaVarEvaluasi extends Controller
         return $this->visual_summary;        
     }
 
-    protected function transformSeries($chart, $key, $name = 'Name')
+    protected function transformSeries($chart, $key, $name = 'Name', $color = '#007fff')
     {
 
         $var = $this->getVarsMerged();
@@ -542,7 +572,7 @@ class MagmaVarEvaluasi extends Controller
                     return array([
                         'name' => $name,
                         'data' => $collection,
-                        'color' => '#007fff'
+                        'color' => $color
                     ]);
                 }
     

@@ -113,7 +113,7 @@ trait VisualAsap
 
     protected function warnaAsapLetusan($wasap)
     {
-        $wasap[0] != '-' ? $result = ' kolom abu letusan berwarna '.str_replace_last(', ',' hingga ', strtolower(implode(', ',$wasap))).'. ' : $result = ' kolom abu tidak teramati. ';
+        $result = $wasap->toArray()[0] != '-' ? ' kolom abu letusan berwarna '.str_replace_last(', ',' hingga ', strtolower(implode(', ',$wasap->toArray()))).'. ' : ' kolom abu tidak teramati. ';
         
         return $result;
     }
@@ -121,21 +121,63 @@ trait VisualAsap
     protected function tinggiLetusan($min,$max,$wasap)
     {
         ($min == $max) AND ($max >0) ?
-            $result = 'Teramati <b>Letusan</b> dengan tinggi '.$max.' meter dari puncak,'.$this->warnaAsapLetusan($wasap):
-            $result = '<b>Letusan</b> dan warna asap tidak teramati. ';
+            $result = 'Terjadi Letusan dengan tinggi '.$max.' meter dari puncak,'.$this->warnaAsapLetusan($wasap):
+            $result = 'Terekam Gempa Letusan, namun secara visual tinggi letusan dan warna abu tidak teramati. ';
 
         ($min != $max) AND ($min >0) ?
-            $result = 'Teramati <b>Letusan</b> dengan tinggi '.$min.'-'.$max.' meter dari puncak,'.$this->warnaAsapLetusan($wasap) :
-            $result = 'Teramati <b>Letusan</b> dengan tinggi '.$max.' meter dari puncak,'.$this->warnaAsapLetusan($wasap);
+            $result = 'Terjadi Letusan dengan tinggi '.$min.'-'.$max.' meter dari puncak,'.$this->warnaAsapLetusan($wasap) :
+            $result = 'Terjadi Letusan dengan tinggi '.$max.' meter dari puncak,'.$this->warnaAsapLetusan($wasap);
 
        return $result;
     }
 
-    protected function letusan($letusan, $result = '')
+    protected function letusan($var, $result = '')
     {
-        !empty($letusan) ? $result = $this->tinggiLetusan($letusan->tmin,$letusan->tmax,$letusan->wasap) : '';
+        $result = $var->var_lts ? $this->tinggiLetusan($var->var_lts_tmin,$var->var_lts_tmax,$var->var_lts_wasap) : '';
 
         $this->visual .= $result;
+        return $this;
+    }
+
+    protected function arahLuncuran($arah)
+    {
+        $result = !empty($arah) ? ' dan arah luncuran ke arah '.str_replace_last(', ',' hingga ', strtolower(implode(', ',$arah->toArray()))).'. ' : ' arah luncuran tidak teramati. ';
+        
+        return $result;
+    }
+
+    protected function panjangLuncuran($nama_gempa, $min,$max,$arah)
+    {
+        ($min == $max) AND ($max >0) ?
+            $result = $nama_gempa.' teramati dengan jarak luncur '.$max.' meter dari puncak,'.$this->arahLuncuran($arah):
+            $result = $nama_gempa.', namun jarak dan arah luncuran tidak teramati. ';
+
+        ($min != $max) AND ($min >0) ?
+            $result = $nama_gempa.' teramati dengan jarak luncur '.$min.'-'.$max.' meter dari puncak,'.$this->arahLuncuran($arah) :
+            $result = $nama_gempa.' teramati dengan jarak luncur '.$max.' meter dari puncak,'.$this->arahLuncuran($arah);
+
+       return $result;
+    }
+
+    protected function luncuran($var, $code_gempa = ['apl','apg','gug'], $result = '')
+    {
+        $this->visual_array = [];
+
+        $nama_gempa = [
+            'apl' => 'Awan Panas Letusan',
+            'apg' => 'Awan Panas Guguran',
+            'gug' => 'Guguran',
+        ];
+
+        foreach ($code_gempa as $code) {
+            $result = $var->{'var_'.$code} ? $this->panjangLuncuran($nama_gempa[$code], $var->{'var_'.$code.'_rmin'},$var->{'var_'.$code.'_rmax'},$var->{'var_'.$code.'_alun'}) : '';
+
+            if ($result)
+            {
+                array_push($this->visual_array, $result);
+            }
+        }
+
         return $this;
     }
 
@@ -155,6 +197,11 @@ trait VisualAsap
     public function getVisual()
     {
         return $this->visual;
+    }
+
+    public function getVisualArray()
+    {
+        return $this->visual_array;
     }
 
     public function clearVisual()
