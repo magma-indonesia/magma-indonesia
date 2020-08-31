@@ -38,11 +38,11 @@ Tanggapan Kejadian
                 <p class="card-subtitle tx-normal mg-b-15">Tanggapan dibuat oleh <a href="#">{{ $roq->laporan->pelapor }}</a><span class="visible-md visible-lg">, {{ $roq->laporan->waktu->formatLocalized('%d %B %Y').' pukul '.$roq->laporan->waktu->format('H:i:s').' WIB' }}</span></p>
                 <p class="card-text tx-16">
                     <span class="badge badge-warning pd-10 mg-t-10">{{ $roq->laporan->magnitude }}</span>
-                    @if ($roq->laporan->intensitas AND ($roq->laporan->intensitas != '-belum ada keterangan-'))
-                    <span class="badge badge-primary pd-10 mg-t-10">{{ $roq->laporan->intensitas }}</span>
-                    @endif
                     <span class="badge badge-primary pd-10 mg-t-10">{{ $roq->tanggapan->tsunami }}</span>
                 </p>
+                @if ($roq->laporan->intensitas AND ($roq->laporan->intensitas != '-belum ada keterangan-'))
+                <p class="blog-text bg-primary pd-10 mg-t-10 tx-white"><small>{{ $roq->laporan->intensitas }}</small></p>
+                @endif
                 <label class="slim-card-title">Lokasi dan Waktu Kejadian</label>
                 <p class="card-text pd-r-30">{{ $roq->tanggapan->pendahuluan }}</p>
                 <hr>

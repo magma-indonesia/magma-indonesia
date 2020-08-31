@@ -47,6 +47,9 @@ Tanggapan
                     <div class="timeline-body">
                         <p class="timeline-title"><a>{{ $roq->judul }}</a></p>
                         <p class="timeline-author">Tanggapan dibuat oleh <a href="#">{{ $roq->pelapor }}</a><span class="visible-md visible-lg">, {{ $roq->waktu->formatLocalized('%d %B %Y').' pukul '.$roq->waktu->format('H:i:s').' WIB' }}</span></p>
+                        @if ($roq->intensitas AND ($roq->intensitas != '-belum ada keterangan-'))
+                        <p class="blog-text bg-primary pd-10 mg-t-10 tx-white"><small>{{ $roq->intensitas }}</small></p>
+                        @endif
                         <div class="card pd-30">
                             <div class="row no-gutters">
                                 <div class="col-xs-12 col-md-10">
@@ -56,9 +59,6 @@ Tanggapan
                                     <p class="blog-text">{!! $roq->rekomendasi !!}</p>
                                     <p class="blog-text">
                                         <span class="badge badge-warning pd-10 mg-t-10">{{ $roq->magnitude }}</span>
-                                        @if ($roq->intensitas AND ($roq->intensitas != '-belum ada keterangan-'))
-                                        <span class="badge badge-primary pd-10 mg-t-10">{{ $roq->intensitas }}</span>
-                                        @endif
                                         <span class="badge badge-primary pd-10 mg-t-10">{{ $roq->tsunami }}</span>
                                     </p>
                                     <p class="blog-text"><a class="mg-t-20" href="{{ URL::signedRoute('v1.gempabumi.roq.show', ['id' => $roq->id]) }}" class="card-link">Lihat Detail</a></p>
