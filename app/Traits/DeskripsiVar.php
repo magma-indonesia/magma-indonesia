@@ -97,12 +97,12 @@ trait DeskripsiVar
        return $result;
     }
 
-    protected function arahLuncuran($arah)
-    {
-        is_null($arah) ? $result = 'arah luncuran tidak teramati. ' : $result = ' dan arah luncuran teramati ke arah '.$this->arah($arah).'. ';
+    // protected function arahLuncuran($arah)
+    // {
+    //     is_null($arah) ? $result = 'arah luncuran tidak teramati. ' : $result = ' dan arah luncuran teramati ke arah '.$this->arah($arah).'. ';
 
-        return $result;
-    }
+    //     return $result;
+    // }
 
     protected function jarakLuncur($min,$max,$arah)
     {
