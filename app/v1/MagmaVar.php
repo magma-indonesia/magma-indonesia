@@ -14,7 +14,7 @@ class MagmaVar extends OldModelVar
 
     protected $table = 'magma_var';
 
-    protected $guarded = ['id'];
+    protected $guarded = ['no'];
 
     protected $appends = [
         'data_date',
