@@ -87,7 +87,7 @@
                         <h1 class="m-xs">$1 206,90</h1>
 
                         <h3 class="font-extra-bold no-margins text-magma">
-                            All Income
+                            Pendapatan
                         </h3>
                         <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit vestibulum.</small>
                     </div>
