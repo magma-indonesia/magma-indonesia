@@ -651,7 +651,7 @@ class OldModelVar extends Model
      */
     public function getVarLtsWasapAttribute($value = '-')
     {
-        return $this->warnaLetusanAsap($this->attributes['var_lts_wasap']);
+        return $this->warnaLetusanAsap($value);
     }
 
     /**
