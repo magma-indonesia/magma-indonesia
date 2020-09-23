@@ -178,6 +178,23 @@ class OldModelVar extends Model
         return $this->intersectVar($s_wasap,$wasap);
     }
 
+    protected function warnaLetusanAsap($value)
+    {
+        $s_wasap = ['Putih','Kelabu','Merah','Hitam'];
+
+        if ($value == '-' || empty($value)) {
+            return null;
+        }
+
+        $wasap = str_replace(', ', ',', $value);
+        $wasap = str_replace('#',',',$wasap);
+
+        $wasap = str_replace('Coklat','Cokelat',$wasap);
+        $wasap = explode(',',$wasap);
+
+        return $this->intersectVar($s_wasap,$wasap);
+    }
+
     protected function skala($value)
     {
         $s_skala = ['I','II','III','IV','V','VI','VII'];
@@ -634,7 +651,7 @@ class OldModelVar extends Model
      */
     public function getVarLtsWasapAttribute($value = '-')
     {
-        return $this->warnaAsap($value);
+        return $this->warnaLetusanAsap($value);
     }
 
     /**
