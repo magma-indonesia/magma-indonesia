@@ -113,6 +113,9 @@ trait VisualAsap
 
     protected function warnaAsapLetusan($wasap)
     {
+        if ($wasap->isEmpty())
+        return ' kolom abu tidak teramati. ';
+
         $result = $wasap->toArray()[0] != '-' ? ' kolom abu letusan berwarna '.str_replace_last(', ',' hingga ', strtolower(implode(', ',$wasap->toArray()))).'. ' : ' kolom abu tidak teramati. ';
         
         return $result;

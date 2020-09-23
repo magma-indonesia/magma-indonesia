@@ -460,6 +460,11 @@ class MagmaVarEvaluasi extends Controller
         return implode(',',array_unique($this->getVarsSplice()->pluck($key)->filter()->flatten()->toArray()));
     }
 
+    protected function explodeVar(String $key)
+    {
+        return array_unique($this->getVarsSplice()->pluck($key)->filter()->flatten()->toArray());
+    }
+
     protected function setVisualSummary()
     {
         $vars = $this->getVarsSplice();
@@ -484,7 +489,7 @@ class MagmaVarEvaluasi extends Controller
             'var_tekasap' => $this->implodeVar('var_tekasap'),
             'var_viskawah' => $this->implodeVar('var_viskawah'),
             'var_lts' => $vars->sum('var_lts'),
-            'var_lts_wasap' => $this->implodeVar('var_lts_wasap'),
+            'var_lts_wasap' => $this->explodeVar('var_lts_wasap'),
             'var_apg' => $vars->sum('var_apg'),
             'var_apl' => $vars->sum('var_apl'),
             'var_gug' => $vars->sum('var_gug'),

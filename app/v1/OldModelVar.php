@@ -183,7 +183,7 @@ class OldModelVar extends Model
         $s_wasap = ['Putih','Kelabu','Merah','Hitam'];
 
         if ($value == '-' || empty($value)) {
-            return null;
+            return collect();
         }
 
         $wasap = str_replace(', ', ',', $value);
@@ -593,7 +593,7 @@ class OldModelVar extends Model
         $s_tekasap = ['Lemah','Sedang','Kuat'];
 
         if ($value == '-' || empty($value)) {
-            return null;
+            return [];
         }
 
         $tekasap = str_replace(', ',',',$value);
@@ -651,7 +651,7 @@ class OldModelVar extends Model
      */
     public function getVarLtsWasapAttribute($value = '-')
     {
-        return $this->warnaLetusanAsap($value);
+        return $this->warnaLetusanAsap($this->attributes['var_lts_wasap']);
     }
 
     /**
