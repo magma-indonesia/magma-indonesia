@@ -58,7 +58,7 @@
                         <hr>
                         <p class="pd-r">{!! $data['summary']['visual'] !!}</p>
 
-                        @if ($data['summary']['visual_letusan'] || $data['summary']['visual_guguran'])
+                        @if ($data['summary']['visual_letusan'])
                         <p class="m-t pd-r"><code>{{ $data['summary']['visual_letusan'] }}
                             @if (!empty($data['summary']['visual_guguran']))
                             {{ implode(' ', $data['summary']['visual_guguran']) }}
@@ -712,9 +712,7 @@
             },
             series: [{
                 name: 'Dominasi Arah Angin',
-                radius: [25, 110],
-                roseType: 'area',
-                startAngle: 112.5,
+                colorByPoint: true,
                 data: data.highcharts.arah_angin.series
             }]
         });
