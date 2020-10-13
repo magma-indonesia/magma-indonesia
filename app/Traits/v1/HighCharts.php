@@ -69,15 +69,6 @@ trait HighCharts
         return collect($this->codes);
     }
 
-    protected function setDate($start = null, $end =  null)
-    {
-        $this->start = $start ? Carbon::parse($start) : now()->subDays(90);
-        $this->start_str = strtotime($this->getStart()->format('Y-m-d'));
-        $this->end = $end ? Carbon::parse($end) : now();
-        $this->end_str = strtotime($this->getEnd()->format('Y-m-d'));
-        return $this;
-    }
-
     protected function setCategories()
     {
         $dates = new \DatePeriod(
@@ -92,6 +83,7 @@ trait HighCharts
         }
 
         $this->categories = collect($categories);
+        $this->end = Carbon::parse($this->categories->last());
         return $this;
     }
 

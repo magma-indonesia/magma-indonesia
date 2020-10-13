@@ -126,7 +126,7 @@ class MagmaVarEvaluasi extends Controller
     {
         return [
             'export_chart' => $this->getExportChart(),
-            'periode' => $this->getStart()->format('Y-m-d').' hingga '.$this->getEnd()->subDay()->format('Y-m-d'),
+            'periode' => $this->getStart()->format('Y-m-d').' hingga '.$this->getEnd()->format('Y-m-d'),
             'periode_report' => $this->getPeriodeReport($request),
             'highcharts' => [
                 'var' => [
@@ -252,6 +252,7 @@ class MagmaVarEvaluasi extends Controller
 
         $prev_year = Carbon::createFromFormat('Y-m-d', $request->start)->subYear()->format('Y');
 
+        // 2 Mingguan
         if ($request->jenis == '0') {
             $start = $month < 7 ? $prev_year.'-07-01' : $year.'-01-01';
             $this->start = Carbon::parse($start);
@@ -260,15 +261,15 @@ class MagmaVarEvaluasi extends Controller
             $this->end_str = strtotime($this->getEnd()->format('Y-m-d'));
             $this->days_count = 14;
             $this->splice_count = 0-$this->days_count;
-
             return $this;
         }
 
+        // Bulanan
         if ($request->jenis == '1') {
             $start = $month < 7 ? $prev_year.'-07-01' : $year.'-01-01';
             $this->start = Carbon::parse($start);
             $this->start_str = strtotime($this->getStart()->format('Y-m-d'));
-            $this->end = Carbon::parse($request->start)->endOfMonth();
+            $this->end = Carbon::parse($request->start)->endOfMonth()->subDay();
             $this->end_str = strtotime($this->getEnd()->format('Y-m-d'));
             $this->days_count = (int) Carbon::parse($request->start)->daysInMonth;
             $this->splice_count = 0-$this->days_count;
