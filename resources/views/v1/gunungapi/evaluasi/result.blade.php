@@ -59,11 +59,19 @@
                         <p class="pd-r">{!! $data['summary']['visual'] !!}</p>
 
                         @if ($data['summary']['visual_letusan'])
-                        <p class="m-t pd-r"><code>{{ $data['summary']['visual_letusan'] }}
-                            @if (!empty($data['summary']['visual_guguran']))
-                            {{ implode(' ', $data['summary']['visual_guguran']) }}
-                            @endif
-                        </code></p>
+                        <p class="m-t pd-r">
+                            <code>
+                                {{ $data['summary']['visual_letusan'] }}
+                            </code>
+                        </p>
+                        @endif
+
+                        @if ($data['summary']['visual_guguran'])
+                        <p class="m-t pd-r">
+                            <code>
+                                {{ implode(' ', $data['summary']['visual_guguran']) }}
+                            </code>
+                        </p>
                         @endif
 
                         <button type="button" class="btn copy m-t" data-toggle="tooltip" data-placement="top" title="Copied!" data-clipboard-text="{!! $data['summary']['visual'] !!}{!! $data['summary']['visual_letusan'] ?? '' !!}{!! !empty($data['summary']['visual_guguran']) ? implode(' ', $data['summary']['visual_guguran']) : '' !!}">Copy</button>
@@ -712,7 +720,9 @@
             },
             series: [{
                 name: 'Dominasi Arah Angin',
-                colorByPoint: true,
+                radius: [25, 110],
+                roseType: 'area',
+                startAngle: 112.5,
                 data: data.highcharts.arah_angin.series
             }]
         });
