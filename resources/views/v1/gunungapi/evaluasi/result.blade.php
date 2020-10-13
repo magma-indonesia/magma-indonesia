@@ -132,11 +132,14 @@
                                         <b>{{ \Carbon\Carbon::parse($details['date'])->formatLocalized('%A, %d %B %Y')}}</b>, {!! $details['visual'] ?: 'Belum ada laporan masuk' !!} 
                                         
                                         @if ($details['visual_letusan'] ?? false)
-                                        <p class="m-t pd-r"><code>{{ $details['visual_letusan'] }}
-                                            @if (!empty($details['visual_guguran']))
-                                            {{ implode(' ', $details['visual_guguran']) }}
-                                            @endif
-                                        </code></p>
+                                        <p class="m-t pd-r">
+                                            <code>{{ $details['visual_letusan'] }}</code></p>
+                                        @endif
+
+                                        @if ($details['visual_guguran'] ?? false)
+                                        <p class="m-t pd-r">
+                                            <code>{{ implode(' ', $details['visual_guguran']) }}</code>
+                                        </p>
                                         @endif
                                     </li>
                                 @endforeach
