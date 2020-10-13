@@ -153,7 +153,7 @@ trait VisualAsap
     {
         ($min == $max) AND ($max >0) ?
             $result = $nama_gempa.' teramati dengan jarak luncur '.$max.' meter dari puncak,'.$this->arahLuncuran($arah):
-            $result = $nama_gempa.', namun jarak dan arah luncuran tidak teramati. ';
+            $result = 'Terjadi '.$nama_gempa.', namun secara visual jarak dan arah luncuran tidak teramati. ';
 
         ($min != $max) AND ($min >0) ?
             $result = $nama_gempa.' teramati dengan jarak luncur '.$min.'-'.$max.' meter dari puncak,'.$this->arahLuncuran($arah) :
