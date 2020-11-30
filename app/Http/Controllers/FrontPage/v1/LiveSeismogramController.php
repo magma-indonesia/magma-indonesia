@@ -6,15 +6,15 @@ Use App\Gadd;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\LiveSeismogram;
-use Ping;
-use Image;
-use Storage;
+use Illuminate\Support\Facades\Storage;
+use Karlmonson\Ping\Facades\Ping;
+use Intervention\Image\Facades\Image;
 
 class LiveSeismogramController extends Controller
 {
     public function index()
     {
-        $health = Ping::check(config('app.winston_host'));
+        $health = Ping::check(config('app.winston_host').':16030');
 
         if ($health == 200)
         {
@@ -62,7 +62,7 @@ class LiveSeismogramController extends Controller
 
     public function show(Request $request)
     {
-        $health = Ping::check(config('app.winston_host'));
+        $health = Ping::check(config('app.winston_host') . ':16030');
 
         if ($health == 200)
         {
