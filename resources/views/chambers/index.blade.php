@@ -53,7 +53,7 @@
                                 <small>Pengunjung</small>
                             </div>
                             <div class="small m-t-xl">
-                                <i class="fa fa-clock-o"></i> Hingga {{ $latest_lts->updated_at->formatLocalized('%d %B %Y') }}
+                                <i class="fa fa-clock-o"></i> Periode 28 Nov 2019 - {{ $latest_lts->updated_at->formatLocalized('%d %B %Y') }}
                             </div>
                         </div>
                         <div class="col-md-4 text-center">
