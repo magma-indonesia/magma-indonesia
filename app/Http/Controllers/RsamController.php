@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use App\Gadd;
-use App\Seismometer;
-use Ping;
+use Karlmonson\Ping\Facades\Ping;
 
 class RsamController extends Controller
 {
     public function index()
     {
-        $health = Ping::check(config('app.winston_host'));
+        $health = Ping::check(config('app.winston_host'.':16030'));
 
         $gadds = Cache::remember('gadds.seismometers', 1440, function() {
             return Gadd::whereHas('seismometers')
