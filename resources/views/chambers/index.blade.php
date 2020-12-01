@@ -38,11 +38,11 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-4">
             <div class="hpanel">
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-4 text-center">
+                        <div class="col-md-12 text-center">
                             <div class="small">
                                 <i class="fa fa-clock-o"></i> Jumlah Pengunjung
                             </div>
@@ -56,7 +56,19 @@
                                 <i class="fa fa-clock-o"></i> Periode 28 Nov 2019 - {{ now()->formatLocalized('%d %b %Y') }}
                             </div>
                         </div>
-                        <div class="col-md-4 text-center">
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    Last update: {{ now()->formatLocalized('%d %b %Y') }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="hpanel">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
                             <div class="small">
                                 <i class="fa fa-bolt"></i> Jumlah Data MAGMA-VAR
                             </div>
@@ -70,7 +82,19 @@
                                 <i class="fa fa-clock-o"></i> Data dari Mei 2015
                             </div>
                         </div>
-                        <div class="col-md-4 text-center">
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    Last update: {{ $latest->updated_at->formatLocalized('%d %B %Y Pukul %T WIB') }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="hpanel">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
                             <div class="small">
                                 <i class="fa fa-clock-o"></i> Jumlah Data Letusan
                             </div>
@@ -87,7 +111,7 @@
                     </div>
                 </div>
                 <div class="panel-footer">
-                    Last update: {{ $latest->updated_at->formatLocalized('%d %B %Y Pukul %T WIB') }}
+                    Last update: {{ $latest_lts->updated_at->formatLocalized('%d %B %Y') }}
                 </div>
             </div>
         </div>
