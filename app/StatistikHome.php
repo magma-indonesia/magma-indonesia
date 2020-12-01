@@ -12,6 +12,6 @@ class StatistikHome extends Model
     ];
 
     protected $dates = [
-        'date',
+        'date:Y-m-d',
     ];
 }
