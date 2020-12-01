@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Jobs\UpdateHomeStatistik;
 use Closure;
 use App\StatistikHome;
 
@@ -17,7 +18,7 @@ class StatistikHomeMiddleware
     public function handle($request, Closure $next)
     {
         try {
-            StatistikHome::firstOrCreate(['date' => now()->format('Y-m-d')])->increment('hit');
+            UpdateHomeStatistik::dispatch();
             return $next($request);
         } catch (\Throwable $th) {
             return $next($request);

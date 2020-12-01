@@ -66,8 +66,8 @@ class LoginController extends Controller
             ],[
             ])->increment('hit');
 
-            SendLoginNotification::dispatch('web',$user)
-                ->delay(now()->addSeconds(3));
+            // SendLoginNotification::dispatch('web',$user)
+            //     ->delay(now()->addSeconds(3));
 
             return $this->sendLoginResponse($request);
         }
