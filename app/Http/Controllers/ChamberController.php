@@ -18,7 +18,7 @@ class ChamberController extends Controller
     {
         
         $statistics_chart = Cache::remember('visitor-v2', 10, function () {
-            $statistics = StatistikHome::limit(60)->orderBy('date')->get();
+            $statistics = StatistikHome::limit(60)->orderBy('date','desc')->get();
             return $this->setCategories($statistics)->setSeries()->getCharts();
         });
         
