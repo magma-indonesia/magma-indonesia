@@ -15,14 +15,17 @@ class ChamberController extends Controller
 
     public function index()
     {
-        $statistics = StatistikHome::limit(360)->orderBy('date')->get();
-        $statistics = $this->setCategories($statistics)->setSeries()->getCharts();
+        $statistics = StatistikHome::limit(60)->orderBy('date')->get();
+        $statistics_chart = $this->setCategories($statistics)->setSeries()->getCharts();
+        $statistics_sum = StatistikHome::sum('hit');
         $vars_count = MagmaVar::count();
         $latest = Magmavar::latest()->first();
         $lts_sum = EqLts::sum('jumlah');
         $latest_lts = EqLts::latest()->first();
-        return view('chambers.index', compact('vars_count','latest','lts_sum','latest_lts', 'statistics'));
-
+        return view('chambers.index', compact(
+            'vars_count','latest','lts_sum',
+            'latest_lts', 'statistics', 
+            'statistics_chart', 'statistics_sum'));
     }
 
     protected function setCategories($categories)
