@@ -5,8 +5,9 @@ namespace App\Console\Commands;
 use App\Seismometer;
 use App\LiveSeismogram as LiveSeismogramModel;
 use Illuminate\Console\Command;
-use Image;
-use Storage;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
+use Karlmonson\Ping\Facades\Ping;
 
 class LiveSeismogram extends Command
 {
@@ -63,34 +64,34 @@ class LiveSeismogram extends Command
      */
     public function handle()
     {
-        $this->info('['.now()->format('Y-m-d H:i:s').']'.'Updating Live Seismogram....');
+        $health = Ping::check(config('app.winston_host') . ':16030');
 
-        $watermark = Image::make('public/watermark-seismogram.png');
-
-        $seismometers = Seismometer::wherePublished(1)->get();
-        if ($seismometers->isNotEmpty())
+        if ($health == 200)
         {
-            $seismometers->each(function ($seismometer) use($watermark) {
+            $this->info('[' . now()->format('Y-m-d H:i:s') . ']' . 'Updating Live Seismogram....');
 
-                try {
-                    $image = Image::make($seismometer->full_url)
-                                ->insert($watermark, 'bottom-right', 80, 2);
-                    $filename = sha1(uniqid()).'.png';
+            $watermark = Image::make('public/watermark-seismogram.png');
 
-                    if (Storage::disk('seismogram')->put($filename, $image->stream()))
-                    {
-                        Storage::disk('seismogram')->put('thumb_'.$filename, $image->widen(300)->stream());
-                        $this->updateLiveSeismogram($seismometer, $filename);
+            $seismometers = Seismometer::wherePublished(1)->get();
+            if ($seismometers->isNotEmpty()) {
+                $seismometers->each(function ($seismometer) use ($watermark) {
+
+                    try {
+                        $image = Image::make($seismometer->full_url)
+                            ->insert($watermark, 'bottom-right', 80, 2);
+                        $filename = sha1(uniqid()) . '.png';
+
+                        if (Storage::disk('seismogram')->put($filename, $image->stream())) {
+                            Storage::disk('seismogram')->put('thumb_' . $filename, $image->widen(300)->stream());
+                            $this->updateLiveSeismogram($seismometer, $filename);
+                        }
+                    } catch (\Exception $e) {
+                        $this->updateLiveSeismogram($seismometer);
                     }
-                }
-    
-                catch (\Exception $e)
-                {
-                    $this->updateLiveSeismogram($seismometer);
-                }
-            });
-        }
+                });
+            }
 
-        $this->info('Seismogram berhasil diupdate');
+            $this->info('Seismogram berhasil diupdate');
+        }
     }
 }
