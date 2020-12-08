@@ -208,7 +208,6 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('update:live_seismogram')
             ->cron('*/10 * * * *')
-            ->pingBefore($this->getUrlWinston())
             ->appendOutputTo($filePath);
     }
 
