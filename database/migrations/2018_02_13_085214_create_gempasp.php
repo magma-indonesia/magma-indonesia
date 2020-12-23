@@ -22,8 +22,8 @@ class CreateGempasp extends Migration
         $table->smallInteger('jumlah')->default(0);
         $table->float('amin',5,2)->default(0.0);
         $table->float('amax',5,2)->default(0.0);
-        $table->float('spmin',5,2)->default(0.0);
-        $table->float('spmax',6,2)->default(0.0);
+        $table->float('spmin',8,2)->default(0.0);
+        $table->float('spmax',8,2)->default(0.0);
         $table->float('dmin',6,2)->default(0.0);
         $table->float('dmax',6,2)->default(0.0);
         $table->timestamps();
