@@ -18,16 +18,190 @@
             @include('includes.alert')
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-3" style="">
+            <div class="hpanel hbgred">
+                <div class="panel-body">
+                    <div class="text-center">
+                        <h3>Level IV (Awas)</h3>
+                        <p class="text-big font-light">
+                            {{ $gadds->where('ga_status',4)->count() }}
+                        </p>
+                        <small>
+                        @if($gadds->where('ga_status',4)->count())
+                        Pada saat ini terdapat {{$gadds->where('ga_status',4)->count()}} gunung api dengan aktivitas Level IV (Awas)
+                        @else
+                        Pada saat ini tidak ada gunung api dengan aktivitas Level IV (Awas)
+                        @endif
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3" style="">
+            <div class="hpanel hbgorange">
+                <div class="panel-body">
+                    <div class="text-center">
+                        <h3>Level III (Siaga)</h3>
+                        <p class="text-big font-light">
+                            {{ $gadds->where('ga_status',3)->count() }}
+                        </p>
+                        <small>
+                        @if($gadds->where('ga_status',3)->count())
+                        Pada saat ini terdapat {{$gadds->where('ga_status',3)->count()}} gunung api dengan aktivitas Level III (Siaga)
+                        @else
+                        Pada saat ini tidak ada gunung api dengan aktivitas Level III - (Siaga)
+                        @endif
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3" style="">
+            <div class="hpanel hbgyellow">
+                <div class="panel-body">
+                    <div class="text-center">
+                        <h3>Level II (Waspada)</h3>
+                        <p class="text-big font-light">
+                            {{ $gadds->where('ga_status',2)->count() }}
+                        </p>
+                        <small>
+                        @if($gadds->where('ga_status',2)->count())
+                        Pada saat ini terdapat {{$gadds->where('ga_status',2)->count()}} gunung api dengan aktivitas Level II (Waspada)
+                        @else
+                        Pada saat ini tidak ada gunung api dengan aktivitas Level II - (Waspada)
+                        @endif
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3" style="">
+            <div class="hpanel hbggreen">
+                <div class="panel-body">
+                    <div class="text-center">
+                        <h3>Level I (Normal)</h3>
+                        <p class="text-big font-light">
+                            {{ $gadds->where('ga_status',1)->count() }}
+                        </p>
+                        <small>
+                        @if($gadds->where('ga_status',1)->count())
+                        Pada saat ini terdapat {{$gadds->where('ga_status',1)->count()}} gunung api dengan aktivitas Level I (Normal)
+                        @else
+                        Pada saat ini tidak ada gunung api dengan aktivitas Level I - (Normal)
+                        @endif
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-lg-12">
-            <div class="hpanel">
-                <div class="panel-heading">
+            <div class="hpanel collapsed">
+                <div class="panel-heading hbuilt">
                     <div class="panel-tools">
                         <a class="showhide">
-                            <i class="fa fa-chevron-up"></i>
+                            <i class="fa fa-chevron-up"></i> Detail
                         </a>
                     </div>
-                    Informasi dan Statistik
+                    Tingkat Aktivitas Gunung Api
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table" cellspacing="1" cellpadding="1">
+                            <thead>
+                                <tr>
+                                    <th>Tingkat Aktivitas</th>
+                                    <th>Jumlah</th>
+                                    <th>Gunung Api</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Level IV (Awas)</td>
+                                    <td>{{ $gadds->where('ga_status',4)->count() }}</td>
+                                    <td>
+                                        @if($gadds->where('ga_status',4)->count())
+                                        <ul>
+                                            @foreach ($gadds->where('ga_status',4)->all() as $key => $gadd)
+                                            <li>{{ $gadd->ga_nama_gapi}} - {{ $gadd->ga_prov_gapi}}</li>
+                                            @endforeach
+                                        </ul>
+                                        @else
+                                        Tidak ada gunung api Level IV - (Awas)
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Level III (Siaga)</td>
+                                    <td>{{ $gadds->where('ga_status',3)->count() }}</td>
+                                    <td>
+                                        @if($gadds->where('ga_status',3)->count())
+                                        <ul>
+                                            @foreach ($gadds->where('ga_status',3)->all() as $key => $gadd)
+                                            <li>{{ $gadd->ga_nama_gapi}} - {{ $gadd->ga_prov_gapi}}</li>
+                                            @endforeach
+                                        </ul>
+                                        @else
+                                        Tidak ada gunung api Level III - (Siaga)
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Level II (Waspada)</td>
+                                    <td>{{ $gadds->where('ga_status',2)->count() }}</td>
+                                    <td>
+                                        @if($gadds->where('ga_status',2)->count())
+                                        <ul>
+                                            @foreach ($gadds->where('ga_status',2)->all() as $key => $gadd)
+                                            <li>{{ $gadd->ga_nama_gapi}} - {{ $gadd->ga_prov_gapi}}</li>
+                                            @endforeach
+                                        </ul>
+                                        @else
+                                        Tidak ada gunung api Level II - (Waspada)
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Level I (Normal)</td>
+                                    <td>{{ $gadds->where('ga_status',1)->count() }}</td>
+                                    <td>
+                                        @if($gadds->where('ga_status',1)->count())
+                                        <ul>
+                                            @foreach ($gadds->where('ga_status',1)->all() as $key => $gadd)
+                                            <li>{{ $gadd->ga_nama_gapi}} - {{ $gadd->ga_prov_gapi}}</li>
+                                            @endforeach
+                                        </ul>
+                                        @else
+                                        Tidak ada gunung api Level 1 - (Normal)
+                                        @endif
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="hpanel collapsed">
+                <div class="panel-heading hbuilt">
+                    <div class="panel-tools">
+                        <a class="showhide">
+                            <i class="fa fa-chevron-up"></i> Detail
+                        </a>
+                    </div>
+                    Informasi dan Statistik Pengunjung Magma
                 </div>
                 <div class="panel-body">
                     <div class="row">
