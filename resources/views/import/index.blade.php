@@ -758,6 +758,7 @@
                                         <th>#</th>
                                         <th>Jenis</th>
                                         <th>No</th>
+                                        <th>Updated at</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -766,6 +767,7 @@
                                         <td>{{ $key+1 }}</td>
                                         <td>{{ $temp->jenis }}</td>
                                         <td>{{ $temp->no }}</td>
+                                        <td>{{ $temp->updated_at }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
