@@ -4,17 +4,9 @@ namespace App\Http\Controllers\FrontPage\v1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Cache;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 use App\v1\GertanCrs as Crs;
-use App\v1\MagmaSigertan as Sigertan;
-use App\v1\SigertanAnggotaTim as AnggotaTim;
-use App\v1\SigertanFotoKejadian as FotoKejadian;
-use App\v1\SigertanFotoSosialisasi as FotoSosialisasi;
-use App\v1\SigertanRekomendasi as Rekomendasi;
-use App\v1\SigertanStatus as Status;
-use App\v1\SigertanVerifikator as Verifikator;
 
 class GerakanTanahController extends Controller
 {

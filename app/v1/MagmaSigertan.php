@@ -159,16 +159,32 @@ class MagmaSigertan extends Model
         return empty($value) ? null : explode('#',$value);
     }
 
+    /**
+     * Laporan kejadian dari aplikasi
+     * Community Reporting System
+     * 
+     * @return void
+     */
     public function crs()
     {
         return $this->belongsTo('App\v1\GertanCrs','crs_ids','crs_ids');
     }
 
+    /**
+     * Anggota tim
+     *
+     * @return void
+     */
     public function anggota()
     {
         return $this->hasMany('App\v1\SigertanAnggotaTim','qls_ids','qls_ids');
     }
 
+    /**
+     * Foto kejadian
+     *
+     * @return void
+     */
     public function foto_kejadian()
     {
         return $this->hasMany('App\v1\SigertanFotoKejadian','qls_ids','qls_ids');

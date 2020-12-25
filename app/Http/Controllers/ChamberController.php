@@ -55,7 +55,7 @@ class ChamberController extends Controller
 
         $vars = Cache::remember('v1/home/var:' . strtotime($last_var->var_log), 60, function () use ($ga_code) {
             return OldVar::select(DB::raw('t.*'))
-                ->from(DB::raw('(SELECT ga_code,cu_status,var_data_date,periode,var_perwkt,var_noticenumber,var_nama_pelapor FROM magma_var ORDER BY var_noticenumber DESC) t'))
+                ->from(DB::raw('(SELECT no,ga_code,cu_status,var_data_date,periode,var_perwkt,var_noticenumber,var_nama_pelapor FROM magma_var ORDER BY var_noticenumber DESC) t'))
                 ->whereIn('ga_code', $ga_code)
                 ->groupBy('t.ga_code')
                 ->get();
@@ -64,6 +64,7 @@ class ChamberController extends Controller
         $gadds = $gadds->map(function ($gadd, $key) use ($vars) {
             $var = $vars->where('ga_code', $gadd->ga_code)->first();
             $gadd->ga_status = $var->cu_status;
+            $gadd->var_no = $var->no;
             return $gadd;
         });
 

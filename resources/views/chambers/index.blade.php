@@ -128,11 +128,10 @@
                                     <td>{{ $gadds->where('ga_status',4)->count() }}</td>
                                     <td>
                                         @if($gadds->where('ga_status',4)->count())
-                                        <ul>
                                             @foreach ($gadds->where('ga_status',4)->all() as $key => $gadd)
-                                            <li>{{ $gadd->ga_nama_gapi}} - {{ $gadd->ga_prov_gapi}}</li>
+                                            <p><a href="{{ route('chambers.v1.gunungapi.laporan.show',['id'=> $gadd->var_no]) }}" class="btn btn-xs btn-magma"
+                                                style="margin-right: 3px;" target="_blank">View VAR</a> - {{ $gadd->ga_nama_gapi}} - {{ $gadd->ga_prov_gapi}}</p>
                                             @endforeach
-                                        </ul>
                                         @else
                                         Tidak ada gunung api Level IV - (Awas)
                                         @endif
@@ -143,11 +142,11 @@
                                     <td>{{ $gadds->where('ga_status',3)->count() }}</td>
                                     <td>
                                         @if($gadds->where('ga_status',3)->count())
-                                        <ul>
                                             @foreach ($gadds->where('ga_status',3)->all() as $key => $gadd)
-                                            <li>{{ $gadd->ga_nama_gapi}} - {{ $gadd->ga_prov_gapi}}</li>
+                                            <p><a href="{{ route('chambers.v1.gunungapi.laporan.show',['id'=> $gadd->var_no]) }}" class="btn btn-xs btn-magma"
+                                                style="margin-right: 3px;" target="_blank">View VAR</a> - {{ $gadd->ga_nama_gapi}} - {{ $gadd->ga_prov_gapi}}</p>
                                             @endforeach
-                                        </ul>
+
                                         @else
                                         Tidak ada gunung api Level III - (Siaga)
                                         @endif
@@ -158,11 +157,11 @@
                                     <td>{{ $gadds->where('ga_status',2)->count() }}</td>
                                     <td>
                                         @if($gadds->where('ga_status',2)->count())
-                                        <ul>
                                             @foreach ($gadds->where('ga_status',2)->all() as $key => $gadd)
-                                            <li>{{ $gadd->ga_nama_gapi}} - {{ $gadd->ga_prov_gapi}}</li>
+                                            <p><a href="{{ route('chambers.v1.gunungapi.laporan.show',['id'=> $gadd->var_no]) }}" class="btn btn-xs btn-magma"
+                                                style="margin-right: 3px;" target="_blank">View VAR</a> - {{ $gadd->ga_nama_gapi}} - {{ $gadd->ga_prov_gapi}}</p>
                                             @endforeach
-                                        </ul>
+
                                         @else
                                         Tidak ada gunung api Level II - (Waspada)
                                         @endif
@@ -173,11 +172,11 @@
                                     <td>{{ $gadds->where('ga_status',1)->count() }}</td>
                                     <td>
                                         @if($gadds->where('ga_status',1)->count())
-                                        <ul>
                                             @foreach ($gadds->where('ga_status',1)->all() as $key => $gadd)
-                                            <li>{{ $gadd->ga_nama_gapi}} - {{ $gadd->ga_prov_gapi}}</li>
+                                            <p><a href="{{ route('chambers.v1.gunungapi.laporan.show',['id'=> $gadd->var_no]) }}" class="btn btn-xs btn-magma"
+                                                style="margin-right: 3px;" target="_blank">View VAR</a> - {{ $gadd->ga_nama_gapi}} - {{ $gadd->ga_prov_gapi}}</p>
                                             @endforeach
-                                        </ul>
+
                                         @else
                                         Tidak ada gunung api Level 1 - (Normal)
                                         @endif
