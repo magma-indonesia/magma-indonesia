@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\KameraGunungApi;
 use App\Gadd;
-use Ping;
+use Karlmonson\Ping\Facades\Ping;
 use Image;
 
 class KameraGunungApiController extends Controller
