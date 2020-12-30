@@ -65,6 +65,7 @@ Kamera Gunung Api
 
         </div>
     </div>
+    <div class="pd-10">
 <p xmlns:dct="http://purl.org/dc/terms/" xmlns:cc="http://creativecommons.org/ns#"><a rel="cc:attributionURL"
         property="dct:title" href="https://magma.esdm.go.id/v1/gunung-api/cctv">MAGMA Indonesia Web Camera/CCTV
         Images</a> by <span property="cc:attributionName">Center for Volcanology and Geological Hazard Mitigation of
@@ -79,6 +80,7 @@ Kamera Gunung Api
             src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1"><img
             style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
             src="https://mirrors.creativecommons.org/presskit/icons/nd.svg?ref=chooser-v1"></a></p>
+    </div>
 </div>
 
 <form class="form-uuid" method="POST" action="#" style="display: none;">
