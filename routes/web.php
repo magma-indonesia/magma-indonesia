@@ -75,6 +75,10 @@ Route::name('v1.')->group(function () {
             ->name('gunungapi.cctv.show')
             ->middleware('signed');
 
+        Route::get('gunung-api/gallery','FrontPage\v1\GalleryGunungApiController@index')
+            ->name('gunungapi.gallery')
+            ->middleware('revalidate');
+
         Route::get('gunung-api/live-seismogram','FrontPage\v1\LiveSeismogramController@index')
             ->name('gunungapi.live-seismogram')
             ->middleware('revalidate');
