@@ -7,7 +7,7 @@
                     <span class="d-none d-xl-block">Peta </span>
                 </a>
             </li>
-            <li class="nav-item nav-item-15 with-sub {{ active(['v1.gunungapi.ven','v1.gunungapi.var','v1.vona.index','v1.vona.show']) }}">
+            <li class="nav-item nav-item-15 with-sub {{ active(['v1.gunungapi.*','v1.vona.*']) }}">
                 <a class="nav-link" href="#">
                     <i class="icon icon-volcano-warning"></i>
                     <span class="d-none d-xl-block">Gunung Api </span>
@@ -18,6 +18,7 @@
                         <li><a href="{{ route('v1.gunungapi.var') }}">Laporan Aktivitas</a></li>
                         <li><a href="{{ route('v1.gunungapi.ven') }}">Informasi Letusan</a></li>
                         <li><a href="{{ route('v1.gunungapi.cctv') }}">Kamera (CCTV)</a></li>
+                        <li><a href="{{ route('v1.gunungapi.gallery') }}">Gallery</a></li>
                         <li><a href="{{ route('v1.gunungapi.live-seismogram') }}">Live Seismogram</a></li>
                     </ul>
                     <label class="label-section mg-t-15">VONA <i class="icon ion-plane"></i></label>

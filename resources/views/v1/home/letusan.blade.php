@@ -3,6 +3,10 @@
 @section('title')
 Informasi Letusan
 @endsection
+
+@section('add-vendor-css')
+<link rel="stylesheet" href="{{ asset('vendor/lightbox2/css/lightbox.min.css') }}" />
+@endsection
  
 @section('breadcrumb')
 <li class="breadcrumb-item">Gunung Api</li>
@@ -67,7 +71,10 @@ Informasi Letusan
                         </p>
                         <div class="row mg-b-15">
                             <div class="col-6">
-                            <a href="#"><img src="{{ $ven->erupt_pht }}" class="img-fluid" alt=""></a>
+                            <a href="{{ $ven->erupt_pht }}" data-lightbox="file-set"
+                                data-title="{{ $ven->gunungapi->ga_nama_gapi.' '.\Carbon\Carbon::createFromFormat('Y-m-d', $date)->formatLocalized('%A, %d %B %Y') }}">
+                                <img class="bd img-fluid" src="{{ $ven->erupt_pht }}" alt="" />
+                            </a>
                             </div>
                         </div>
 
@@ -130,4 +137,8 @@ Informasi Letusan
         </div>
     </div>
 </div>
+@endsection
+
+@section('add-vendor-script')
+<script src="{{ asset('vendor/lightbox2/js/lightbox.min.js') }}"></script>
 @endsection
