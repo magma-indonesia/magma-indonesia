@@ -4,6 +4,7 @@ namespace App\Http\Controllers\FrontPage\v1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Jobs\UpdateGalleryStatistik;
 use App\v1\Gadd;
 use App\v1\MagmaVar;
 use Illuminate\Support\Facades\Cache;
@@ -58,5 +59,10 @@ class GalleryGunungApiController extends Controller
             'vars' => $vars,
             'gadds' => $gadds,
         ]);
+    }
+
+    public function statistic(Request $request)
+    {
+        UpdateGalleryStatistik::dispatch($request->no);
     }
 }

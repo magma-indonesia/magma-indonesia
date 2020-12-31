@@ -73,7 +73,7 @@ Gallery Foto Gunung Api
                     <td class="tx-center">
                         <a href="{{ $var->var_image }}" data-lightbox="file-set"
                             data-title="{{ $var->ga_nama_gapi.'_'.$var->data_date.' '.$var->periode }}">
-                            <img src="{{ $var->var_image }}" class="wd-100" alt="{{ $var->ga_nama_gapi.'_'.$var->data_date.' '.$var->periode }}">
+                            <img src="{{ $var->var_image }}" class="send wd-100" alt="{{ $var->ga_nama_gapi.'_'.$var->data_date.' '.$var->periode }}" data-value="{{ $var->no }}">
                         </a>
                     </td>
                     <td> {{ $var->ga_nama_gapi}} </td>
@@ -184,5 +184,22 @@ $(function(){
     });
 
 });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('.send').click(function(e) {
+            var no = $(this).data('value');
+            $.ajax({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                url: '{{ URL::signedRoute('v1.gunungapi.gallery.post') }}',
+                type: 'POST',
+                data: {no:no},
+                success: function(response) {
+                    console.log(response);
+                }
+            });
+        });
+    });
 </script>
 @endsection
