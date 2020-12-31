@@ -132,6 +132,9 @@
                             <li class="{{ active('chambers.v1.gunungapi.evaluasi.index') }}">
                                 <a class="m-l" href="{{ route('chambers.v1.gunungapi.evaluasi.index') }}">Evaluasi</a>
                             </li>
+                            <li>
+                                <a class="m-l" href="{{ route('v1.gunungapi.gallery') }}">Gallery Foto</a>
+                            </li>
                             <li class="{{ active('chambers.v1.gunungapi.ven.index') }}">
                                 <a class="m-l" href="{{ route('chambers.v1.gunungapi.ven.index') }}">Informasi Letusan</a>
                             </li>
