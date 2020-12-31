@@ -118,7 +118,7 @@ class ChamberController extends Controller
 
         $ga_code = $gadds->pluck('ga_code');
 
-        $vars = Cache::remember('v1/home/var:' . strtotime($last_var->var_log), 60, function () use ($ga_code) {
+        $vars = Cache::remember('chamber/home:' . strtotime($last_var->var_log), 60, function () use ($ga_code) {
             return OldVar::select(DB::raw('t.*'))
                 ->from(DB::raw('(SELECT no,ga_code,cu_status,var_data_date,periode,var_perwkt,var_noticenumber,var_nama_pelapor FROM magma_var ORDER BY var_noticenumber DESC) t'))
                 ->whereIn('ga_code', $ga_code)
