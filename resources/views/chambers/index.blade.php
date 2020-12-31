@@ -193,6 +193,80 @@
 
     <div class="row">
         <div class="col-lg-12">
+            <div class="hpanel">
+                <div class="panel-heading hbuilt">
+                    <div class="panel-tools">
+                        <a class="showhide">
+                            <i class="fa fa-chevron-up"></i> Detail
+                        </a>
+                    </div>
+                    Data Kejadian Gerakan Tanah {{ now()->format('Y') }}
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" cellspacing="1" cellpadding="1">
+                            <thead>
+                                <tr>
+                                    <th>Bulan</th>
+                                    <th>Jumlah Kejadian</th>
+                                    <th>Meninggal</th>
+                                    <th>Luka-luka</th>
+                                    <th>Rumah rusak</th>
+                                    <th>Rumah hancur</th>
+                                    <th>Rumah terancam</th>
+                                    <th>Bangunan rusak</th>
+                                    <th>Bangunan hancur</th>
+                                    <th>Bangunan terancam</th>
+                                    <th>Lahan rusak (hektar)</th>
+                                    <th>Jalan rusak (meter)</th>
+                                </tr>
+                            </thead>
+                                @foreach ($sigertan_table as $date => $gertan)
+                                @if ($loop->last)
+                                <tr>
+                                    <td><b>Total</b></td>
+                                    <td><b>{{ $sigertan_table->sum('jumlah_tanggapan') }}</b></td>
+                                    <td><b>{{ $sigertan_table->sum('meninggal') }}</b></td>
+                                    <td><b>{{ $sigertan_table->sum('luka_luka') }}</b></td>
+                                    <td><b>{{ $sigertan_table->sum('rumah_rusak') }}</b></td>
+                                    <td><b>{{ $sigertan_table->sum('rumah_hancur') }}</b></td>
+                                    <td><b>{{ $sigertan_table->sum('rumah_terancam') }}</b></td>
+                                    <td><b>{{ $sigertan_table->sum('bangunan_rusak') }}</b></td>
+                                    <td><b>{{ $sigertan_table->sum('bangunan_hancur') }}</b></td>
+                                    <td><b>{{ $sigertan_table->sum('bangunan_terancam') }}</b></td>
+                                    <td><b>{{ $sigertan_table->sum('lahan_rusak') }}</b></td>
+                                    <td><b>{{ $sigertan_table->sum('jalan_rusak') }}</b></td>
+                                </tr>
+                                @else
+                                <tr>
+                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $date.'-01')->formatLocalized('%B') }}</td>
+                                    <td>{{ $gertan['jumlah_tanggapan'] }}</td>
+                                    <td>{{ $gertan['meninggal'] }}</td>
+                                    <td>{{ $gertan['luka_luka'] }}</td>
+                                    <td>{{ $gertan['rumah_rusak'] }}</td>
+                                    <td>{{ $gertan['rumah_hancur'] }}</td>
+                                    <td>{{ $gertan['rumah_terancam'] }}</td>
+                                    <td>{{ $gertan['bangunan_rusak'] }}</td>
+                                    <td>{{ $gertan['bangunan_hancur'] }}</td>
+                                    <td>{{ $gertan['bangunan_terancam'] }}</td>
+                                    <td>{{ $gertan['lahan_rusak'] }}</td>
+                                    <td>{{ $gertan['jalan_rusak'] }}</td>
+                                </tr>
+                                @endif
+                                @endforeach
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
             <div class="hpanel collapsed">
                 <div class="panel-heading hbuilt">
                     <div class="panel-tools">
@@ -210,6 +284,7 @@
             </div>
         </div>
     </div>
+    
     <div class="row">
         <div class="col-lg-4">
             <div class="hpanel">

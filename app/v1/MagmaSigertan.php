@@ -20,6 +20,19 @@ class MagmaSigertan extends Model
     ];
 
     /**
+     * qls_kmd = Jumlah korban meninggal dunia
+     * qls_kll = luka-luka
+     * qls_rrk = rumah rusak
+     * qls_rhc = rumah hancur
+     * qls_rtr = rumah terancam
+     * qls_blr = bangunan rusak
+     * qls_blh = bangunan lain hancur
+     * qls_bla = bangunan lain terancam
+     * qls_llp = luas lahan pertanian (dalam hektar)
+     * qls_pjr = panjang jalan rusak (dalam meter)
+     */
+
+    /**
      * Satuan Bentang Alam
      *
      * @param string $value

@@ -19,7 +19,8 @@ class GertanCrs extends Model
     protected $table = 'magma_crs';
 
     protected $appends = [
-        'date'
+        'date',
+        'date_year_month',
     ];
 
     protected $fillable = [
@@ -55,6 +56,11 @@ class GertanCrs extends Model
     public function getDateAttribute()
     {
         return Carbon::createFromFormat('Y-m-d H:i:s' ,$this->attributes['crs_log'])->format('Y-m-d');
+    }
+
+    public function getDateYearMonthAttribute()
+    {
+        return Carbon::createFromFormat('Y-m-d H:i:s', $this->attributes['crs_log'])->format('Y-m');
     }
     
     public function getCrsPrvAttribute($value)

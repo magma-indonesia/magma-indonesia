@@ -6,7 +6,9 @@ use App\MagmaVar;
 use App\EqLts;
 use App\StatistikHome;
 use App\v1\Gadd;
+use App\v1\GertanCrs;
 use App\v1\MagmaVar as OldVar;
+use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 
@@ -16,8 +18,70 @@ class ChamberController extends Controller
     protected $visitor;
     protected $series;
 
+    protected function sigertanStatistik()
+    {
+        $last_crs = GertanCrs::has('tanggapan')
+                    ->with('tanggapan')
+                    ->where('crs_sta', 'TERBIT')
+                    ->whereBetween('crs_lat', [-12, 2])
+                    ->whereBetween('crs_lon', [89, 149])
+                    ->whereBetween('crs_log', [now()->subDays(60)->format('Y-m-d'), now()->format('Y-m-d')])
+                    ->orderBy('crs_log', 'desc')
+                    ->first();
+
+        $crses = Cache::remember('v1/home/crs:' . strtotime($last_crs->crs_log), 60, function () {
+            return GertanCrs::has('tanggapan')
+                ->with('tanggapan')
+                ->where('crs_sta', 'TERBIT')
+                ->whereBetween('crs_lat', [-12, 2])
+                ->whereBetween('crs_lon', [89, 149])
+                ->whereBetween('crs_log', [now()->startOfYear()->format('Y-m-d'), now()->endOfYear()->format('Y-m-d')])
+                ->orderBy('crs_log', 'desc')
+                ->get();
+        });
+
+        $crses = $crses->groupBy('date_year_month')->map(function ($crs) {
+            return [
+                'jumlah_tanggapan' => $crs->count('tanggapan'),
+                'meninggal' => $crs->sum('tanggapan.qls_kmd'),
+                'luka_luka' => $crs->sum('tanggapan.qls_kll'),
+                'rumah_rusak' => $crs->sum('tanggapan.qls_rrk'),
+                'rumah_hancur' => $crs->sum('tanggapan.qls_rhc'),
+                'rumah_terancam' => $crs->sum('tanggapan.qls_rtr'),
+                'bangunan_rusak' => $crs->sum('tanggapan.qls_blr'),
+                'bangunan_hancur' => $crs->sum('tanggapan.qls_blh'),
+                'bangunan_terancam' => $crs->sum('tanggapan.qls_bla'),
+                'lahan_rusak' => $crs->sum('tanggapan.qls_llp'),
+                'jalan_rusak' => $crs->sum('tanggapan.qls_pjr'),
+            ];
+        });
+
+        $period = collect(CarbonPeriod::create(now()->startOfYear(), '1 month', now()->endOfYear())->toArray());
+        $merged = $period->mapWithKeys(function ($carbon) {
+            return [
+                $carbon->format('Y-m') =>
+                [
+                    'meninggal' => 0,
+                    'luka_luka' => 0,
+                    'rumah_rusak' => 0,
+                    'rumah_hancur' => 0,
+                    'rumah_terancam' => 0,
+                    'bangunan_rusak' => 0,
+                    'bangunan_hancur' => 0,
+                    'bangunan_terancam' => 0,
+                    'lahan_rusak' => 0,
+                    'jalan_rusak' => 0,
+                ],
+            ];
+        })->merge($crses);
+
+        return $merged->sortKeys();
+    }
+
     public function index()
     {
+        $sigertan_table = $this->sigertanStatistik();
+
         $statistics_chart = Cache::remember('visitor-v2', 10, function () {
             $statistics = StatistikHome::limit(60)->orderBy('date','desc')->get();
             $statistics = $statistics->reverse()->values();
@@ -75,7 +139,8 @@ class ChamberController extends Controller
             'lts_sum',
             'latest_lts',
             'statistics_chart',
-            'statistics_sum'));
+            'statistics_sum',
+            'sigertan_table'));
     }
 
     protected function setCategories($categories)
