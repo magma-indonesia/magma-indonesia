@@ -24,7 +24,7 @@ class GalleryGunungApiController extends Controller
             abort(404);
         }
 
-        return MagmaVar::select('no','ga_code', 'ga_nama_gapi', 'var_data_date', 'var_image', 'periode')
+        return MagmaVar::select('no','ga_code', 'ga_nama_gapi', 'var_data_date', 'var_image', 'var_image_create', 'periode')
             ->where('var_visibility', 'like', '%Jelas%')
             ->where('ga_code', $request->code)
             ->whereBetween('var_data_date', [$request->start, $request->end])
@@ -36,7 +36,7 @@ class GalleryGunungApiController extends Controller
 
     protected function nonFilteredGallery()
     {
-        return MagmaVar::select('no', 'ga_code', 'ga_nama_gapi', 'var_data_date', 'var_image', 'periode')
+        return MagmaVar::select('no', 'ga_code', 'ga_nama_gapi', 'var_data_date', 'var_image', 'var_image_create','periode')
             ->where('var_visibility', 'like', '%Jelas%')
             ->orderBy('var_data_date', 'desc')
             ->orderBy('periode', 'desc')
