@@ -78,6 +78,9 @@ Route::name('v1.')->group(function () {
         Route::get('gunung-api/gallery','FrontPage\v1\GalleryGunungApiController@index')
             ->name('gunungapi.gallery')
             ->middleware('revalidate');
+        Route::get('gunung-api/gallery/search/{q?}', 'FrontPage\v1\GalleryGunungApiController@index')
+            ->name('gunungapi.gallery.search')
+            ->middleware('throttle:15,1');
 
         Route::get('gunung-api/live-seismogram','FrontPage\v1\LiveSeismogramController@index')
             ->name('gunungapi.live-seismogram')

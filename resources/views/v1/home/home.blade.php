@@ -107,6 +107,7 @@
                     <li class="hidden-lg"><a href="{{ route('v1.gunungapi.ven') }}"><span class="glyphicon glyphicon-th-list"></span> Informasi Letusan</a></li>
                     <li class="hidden-lg"><a href="{{ route('v1.vona.index') }}"><span class="glyphicon glyphicon-plane"></span> VONA</a></li>
                     <li class="hidden-lg"><a href="{{ route('v1.gunungapi.cctv') }}"><span class="glyphicon glyphicon-eye-open"></span> Kamera (CCTV)</a></li>
+                    <li class="hidden-lg"><a href="{{ route('v1.gunungapi.gallery') }}"><span class="glyphicon glyphicon-eye-open"></span> Gallery</a></li>
                     <li class="hidden-lg"><a href="{{ route('v1.gunungapi.live-seismogram') }}"><span class="glyphicon glyphicon-signal"></span> Live Seismogram</a></li>
                     <li class="divider hidden-lg"></li>
                     <li class="hidden-lg"><a href="{{ route('v1.gertan.sigertan') }}"><span><i class="icon icon-landslide"></i></span> Gerakan Tanah</a></li>
@@ -140,6 +141,7 @@
                         <li class="padding-magma-xs"><a href="{{ route('v1.gunungapi.ven') }}">Informasi Letusan (VEN)</a></li>
                         <li class="padding-magma-xs"><a href="{{ route('v1.vona.index') }}">VONA</a></li>
                         <li class="padding-magma-xs"><a href="{{ route('v1.gunungapi.cctv') }}">Kamera (CCTV)</a></li>
+                        <li class="padding-magma-xs"><a href="{{ route('v1.gunungapi.gallery') }}">Gallery</a></li>
                         <li class="padding-magma-xs"><a href="{{ route('v1.gunungapi.live-seismogram') }}">Live Seismogram</a></li>
                     </ul>
                 </li>

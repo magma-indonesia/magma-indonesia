@@ -80,7 +80,6 @@ class GunungApiController extends Controller
     protected function nonFilteredVen($ven, $page)
     {
         $last = MagmaVen::select('erupt_id','erupt_tsp')->orderBy('erupt_id','desc')->first();
-        $date = strtotime($last->erupt_tsp);
 
         $vens = Cache::remember('v1/home/vens:'.$last->erupt_tsp.':'.$page, 120, function() {
             return MagmaVen::with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea,ga_elev_gapi','user:vg_nip,vg_nama')
