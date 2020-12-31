@@ -209,7 +209,7 @@
                             <thead>
                                 <tr>
                                     <th>Bulan</th>
-                                    <th>Jumlah Kejadian</th>
+                                    <th>Jumlah Tanggapan</th>
                                     <th>Meninggal</th>
                                     <th>Luka-luka</th>
                                     <th>Rumah rusak</th>
