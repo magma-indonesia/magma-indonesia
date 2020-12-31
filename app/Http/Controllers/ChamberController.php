@@ -61,6 +61,7 @@ class ChamberController extends Controller
             return [
                 $carbon->format('Y-m') =>
                 [
+                    'jumlah_tanggapan' => 0,
                     'meninggal' => 0,
                     'luka_luka' => 0,
                     'rumah_rusak' => 0,
