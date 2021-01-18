@@ -101,12 +101,12 @@ Route::name('v1.')->group(function () {
             ->name('gertan.sigertan.search')
             ->middleware('throttle:15,1');
 
-        Route::get('gempa-bumi-dan-tsunami/tanggapan','FrontPage\v1\GempaBumiController@indexGempa')
+        Route::get('gempa-bumi-dan-tsunami/kajian','FrontPage\v1\GempaBumiController@indexGempa')
             ->name('gempabumi.roq');
-        Route::get('gempa-bumi-dan-tsunami/tanggapan/{id?}','FrontPage\v1\GempaBumiController@showGempa')
+        Route::get('gempa-bumi-dan-tsunami/kajian/{id?}','FrontPage\v1\GempaBumiController@showGempa')
             ->name('gempabumi.roq.show')
             ->middleware('signed');
-        Route::get('gempa-bumi-dan-tsunami/tanggapan/search/{q?}','FrontPage\v1\GerakanTanahController@indexGertan')
+        Route::get('gempa-bumi-dan-tsunami/kajian/search/{q?}','FrontPage\v1\GerakanTanahController@indexGertan')
             ->name('gempabumi.roq.search')
             ->middleware('throttle:15,1');
 

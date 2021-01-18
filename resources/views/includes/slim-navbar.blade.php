@@ -45,7 +45,7 @@
                 </a>
                 <div class="sub-item">
                     <ul>
-                        <li><a href="{{ route('v1.gempabumi.roq') }}">Tanggapan Kejadian</a></li>
+                        <li><a href="{{ route('v1.gempabumi.roq') }}">Kajian Kejadian</a></li>
                     </ul>
                 </div>
             </li>
