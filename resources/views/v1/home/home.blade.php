@@ -154,7 +154,7 @@
                 <li class="dropdown hidden-xs hidden-sm hidden-md">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="icon icon-earthquake" style="margin-right: 5px;"></i> Gempa Bumi <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li class="padding-magma-xs"><a href="{{ route('v1.gempabumi.roq') }}">Tanggapan Kejadian</a></li>
+                        <li class="padding-magma-xs"><a href="{{ route('v1.gempabumi.roq') }}">Kajian Kejadian</a></li>
                     </ul>
                 </li>
                 <li>

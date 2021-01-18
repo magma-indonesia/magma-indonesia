@@ -1,16 +1,16 @@
 @extends('layouts.slim') 
 
 @section('title')
-Tanggapan Gempa Bumi
+Kajian Gempa Bumi
 @endsection
  
 @section('breadcrumb')
 <li class="breadcrumb-item"><a>Gempa Bumi dan Tsunami</a></li>
-<li class="breadcrumb-item active" aria-current="page">Tanggapan</li>
+<li class="breadcrumb-item active" aria-current="page">Kajian</li>
 @endsection
 
 @section('page-title')
-Tanggapan
+Kajian
 @endsection
 
 @section('main')
@@ -46,7 +46,7 @@ Tanggapan
                     </div>
                     <div class="timeline-body">
                         <p class="timeline-title"><a>{{ $roq->judul }}</a></p>
-                        <p class="timeline-author">Tanggapan dibuat oleh <a href="#">{{ $roq->pelapor }}</a><span class="visible-md visible-lg">, {{ $roq->waktu->formatLocalized('%d %B %Y').' pukul '.$roq->waktu->format('H:i:s').' WIB' }}</span></p>
+                        <p class="timeline-author">Kajian dibuat oleh <a href="#">{{ $roq->pelapor }}</a><span class="visible-md visible-lg">, {{ $roq->waktu->formatLocalized('%d %B %Y').' pukul '.$roq->waktu->format('H:i:s').' WIB' }}</span></p>
                         @if ($roq->intensitas AND ($roq->intensitas != '-belum ada keterangan-'))
                         <p class="blog-text bg-primary pd-10 mg-t-10 tx-white"><small>{{ $roq->intensitas }}</small></p>
                         @endif
@@ -82,7 +82,7 @@ Tanggapan
     <div class="col-lg-4">
         <div class="card card-connection">
             <label class="slim-card-title">Filter Data Laporan</label>
-            <p>Cari data laporan dan tanggapan gempa bumi dan tsunami</p>
+            <p>Cari data laporan dan kajian gempa bumi dan tsunami</p>
             <form class="form-layout" role="form" method="GET" action="{{ route('v1.gempabumi.roq.search',['q' => 'q'])}}">
                 <div class="row">
                     <div class="col-lg-12">
