@@ -14,7 +14,7 @@ class LiveSeismogramController extends Controller
 {
     public function index()
     {
-        $health = Ping::check(config('app.winston_host').':16030');
+        $health = Ping::check(config('app.winston_host').':'.config('app.winston_port'));
 
         if ($health == 200)
         {
@@ -62,7 +62,7 @@ class LiveSeismogramController extends Controller
 
     public function show(Request $request)
     {
-        $health = Ping::check(config('app.winston_host') . ':16030');
+        $health = Ping::check(config('app.winston_host') . ':'.config('app.winston_port'));
 
         if ($health == 200)
         {
