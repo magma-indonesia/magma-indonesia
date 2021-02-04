@@ -10,7 +10,7 @@ class RsamController extends Controller
 {
     public function index()
     {
-        $health = Ping::check(config('app.winston_host').':16030');
+        $health = Ping::check(config('app.winston_host').':'.config('app.winston_port'));
 
         $gadds = Cache::remember('gadds.seismometers', 1440, function() {
             return Gadd::whereHas('seismometers')

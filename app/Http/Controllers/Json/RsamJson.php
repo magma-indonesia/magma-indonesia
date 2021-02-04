@@ -32,8 +32,8 @@ class RsamJson extends Controller
     protected function getWinstonUrl()
     {
         return sprintf('%s:%s/rsam%s%s%s%s%s',
-                env('WINSTON_URL','http://172.16.2.253'),
-                env('WINSTON_PORT','16030'),
+                config('app.winston_url'),
+                config('app.winston_port'),
                 $this->getChannel(),
                 $this->getStartDate(),
                 $this->getEndDate(),
