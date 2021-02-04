@@ -64,7 +64,7 @@ class LiveSeismogram extends Command
      */
     public function handle()
     {
-        $health = Ping::check(config('app.winston_host') . ':16030');
+        $health = Ping::check(config('app.winston_host') . ':'.config('app.winston_port'));
 
         if ($health == 200)
         {
