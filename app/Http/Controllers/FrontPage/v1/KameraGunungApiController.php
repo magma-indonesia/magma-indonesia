@@ -34,7 +34,13 @@ class KameraGunungApiController extends Controller
 
         if ($health == 200)
         {
-            $gadds = Gadd::select('code','name')->has('cctv')->withCount('cctv')->get();
+            $gadds = Gadd::select('code','name')
+                        ->whereHas('cctv', function ($query) {
+                            $query->where('publish',1);
+                        })
+                        ->withCount('cctv')
+                        ->get();
+                        
             $cctvs = $code === null ? $this->nonFilteredCCTV() : $this->filteredCCTV($code);
 
             if ($cctvs->isEmpty())
