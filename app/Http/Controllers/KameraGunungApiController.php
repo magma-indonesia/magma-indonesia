@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\KameraGunungApi;
 use App\Gadd;
 use Illuminate\Http\Request;
-use Image;
+use Intervention\Image\Facades\Image;
 
 class KameraGunungApiController extends Controller
 {

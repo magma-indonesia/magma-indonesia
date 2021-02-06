@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\KameraGunungApi;
 use App\Gadd;
 use Karlmonson\Ping\Facades\Ping;
-use Image;
+use Intervention\Image\Facades\Image;
 
 class KameraGunungApiController extends Controller
 {
