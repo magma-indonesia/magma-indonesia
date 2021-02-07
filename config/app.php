@@ -16,7 +16,7 @@ return [
 
     'name' => env('APP_NAME', 'MAGMA Indonesia'),
     'tag_line' => env('APP_TAG_LINE', 'Bridging The Will of Nature to Society'),
-    'cctv_url' => env('CCTV_url', 'http://storage.vsi.esdm.go.id'),
+    'cctv_url' => env('CCTV_URL', 'storage.vsi.esdm.go.id'),
     'cctv_host' => env('CCTV_HOST', '172.24.44.3'),
     'winston_url' => env('WINSTON_URL', 'http://172.16.2.253'),
     'winston_host' => env('WINSTON_HOST', '172.16.2.253'),

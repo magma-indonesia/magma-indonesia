@@ -12,7 +12,7 @@ class KameraGunungApiController extends Controller
 
     protected function getUrl($cctv)
     {
-        return 'http://'.config('app.cctv_host').$cctv->url;
+        return 'https://'.config('app.cctv_url').$cctv->url;
     }
 
     protected function getImage()

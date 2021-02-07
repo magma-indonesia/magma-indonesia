@@ -37,6 +37,6 @@ class KameraGunungApi extends Model
 
     public function getFullUrlAttribute()
     {
-        return 'http://'.config('app.cctv_host').$this->attributes['url'];
+        return 'https://'.config('app.cctv_url').$this->attributes['url'];
     }
 }

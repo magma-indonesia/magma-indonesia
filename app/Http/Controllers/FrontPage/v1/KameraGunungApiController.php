@@ -30,7 +30,7 @@ class KameraGunungApiController extends Controller
 
     public function index($code = null)
     {
-        $health = Ping::check(config('app.cctv_host'));
+        $health = Ping::check(config('app.cctv_url'));
 
         if ($health == 200)
         {
@@ -66,7 +66,7 @@ class KameraGunungApiController extends Controller
 
     public function show(Request $request)
     {
-        $health = Ping::check(config('app.cctv_host'));
+        $health = Ping::check(config('app.cctv_url'));
 
         if ($health == 200)
         {
