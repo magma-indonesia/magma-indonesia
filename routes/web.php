@@ -70,7 +70,7 @@ Route::name('v1.')->group(function () {
             
         Route::get('gunung-api/cctv/{code?}','FrontPage\v1\KameraGunungApiController@index')
             ->name('gunungapi.cctv')
-            ->middleware(['revalidate', 'throttle:30,1']);
+            ->middleware('throttle:30,1');
         Route::post('gunung-api/cctv','FrontPage\v1\KameraGunungApiController@show')
             ->name('gunungapi.cctv.show')
             ->middleware('signed');
