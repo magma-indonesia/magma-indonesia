@@ -68,8 +68,11 @@ Route::name('v1.')->group(function () {
             ->name('gunungapi.var.search')
             ->middleware('throttle:20,1');
             
-        Route::get('gunung-api/cctv/{code?}','FrontPage\v1\KameraGunungApiController@index')
+        Route::get('gunung-api/cctv','FrontPage\v1\KameraGunungApiController@index')
             ->name('gunungapi.cctv')
+            ->middleware('throttle:30,1');
+        Route::get('gunung-api/cctv/{code}','FrontPage\v1\KameraGunungApiController@filter')
+            ->name('gunungapi.cctv.filter')
             ->middleware('throttle:30,1');
         Route::post('gunung-api/cctv','FrontPage\v1\KameraGunungApiController@show')
             ->name('gunungapi.cctv.show')

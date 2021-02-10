@@ -37,7 +37,7 @@ Kamera Gunung Api
                 <div class="col-xs-12">
                     <a href="{{ route('v1.gunungapi.cctv') }}" type="button" class="btn btn-sm btn-primary mg-b-10">Semua Gunung Api</a>
                     @foreach ($gadds as $gadd)
-                    <a href="{{ route('v1.gunungapi.cctv',$gadd->code) }}" type="button" class="btn btn-sm btn-primary mg-b-10">{{ $gadd->name }} ({{ $gadd->cctv_count }})</a>
+                    <a href="{{ route('v1.gunungapi.cctv.filter', ['code' => $gadd->code]) }}" type="button" class="btn btn-sm btn-primary mg-b-10">{{ $gadd->name }} ({{ $gadd->cctv_count }})</a>
                     @endforeach
                 </div>
             </div>

@@ -28,7 +28,7 @@ class KameraGunungApiController extends Controller
                 ->get();
     }
 
-    public function index($code = null)
+    public function index()
     {
         $health = Ping::check(config('app.cctv_url'));
 
@@ -41,7 +41,7 @@ class KameraGunungApiController extends Controller
                         ->withCount('cctv')
                         ->get();
                         
-            $cctvs = $code === null ? $this->nonFilteredCCTV() : $this->filteredCCTV($code);
+            $cctvs = $this->nonFilteredCCTV();
 
             if ($cctvs->isEmpty())
                 abort(404);
@@ -62,6 +62,33 @@ class KameraGunungApiController extends Controller
         }
 
         abort(500, 'Server CCTV sedang Off');
+    }
+
+    public function filter($code)
+    {
+        $gadds = Gadd::select('code', 'name')
+                ->whereHas('cctv', function ($query) {
+                    $query->where('publish', 1);
+                })
+                ->withCount('cctv')
+                ->get();
+
+        $cctvs = $this->filteredCCTV($code);
+
+        if ($cctvs->isEmpty())
+            abort(404);
+
+        $cctvs->each(function ($item, $key) {
+            try {
+                $image = Image::make($item->full_url)
+                    ->widen(150)->stream('data-url');
+                $item['image'] = $image;
+            } catch (\Exception $e) {
+                $item['image'] = null;
+            }
+        });
+
+        return view('v1.home.cctv', compact('cctvs', 'gadds'));
     }
 
     public function show(Request $request)
