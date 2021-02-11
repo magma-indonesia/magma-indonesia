@@ -66,17 +66,17 @@ Route::name('v1.')->group(function () {
             ->middleware('signed');
         Route::get('gunung-api/laporan/search/{q?}','FrontPage\v1\GunungApiController@indexVar')
             ->name('gunungapi.var.search')
-            ->middleware('throttle:20,1');
+            ->middleware('custom_throttle:20,1');
             
         Route::get('gunung-api/cctv','FrontPage\v1\KameraGunungApiController@index')
             ->name('gunungapi.cctv')
-            ->middleware('throttle:30,1');
+            ->middleware('custom_throttle:20,1');
         Route::get('gunung-api/cctv/{code}','FrontPage\v1\KameraGunungApiController@filter')
             ->name('gunungapi.cctv.filter')
-            ->middleware('throttle:30,1');
-        Route::post('gunung-api/cctv','FrontPage\v1\KameraGunungApiController@show')
+            ->middleware('custom_throttle:30,1');
+        Route::post('gunung-api/cctv/show','FrontPage\v1\KameraGunungApiController@show')
             ->name('gunungapi.cctv.show')
-            ->middleware('signed');
+            ->middleware(['signed', 'custom_throttle:30,2']);
 
         Route::get('gunung-api/gallery','FrontPage\v1\GalleryGunungApiController@index')
             ->name('gunungapi.gallery')
@@ -86,7 +86,7 @@ Route::name('v1.')->group(function () {
             ->middleware('signed');
         Route::get('gunung-api/gallery/search/{q?}', 'FrontPage\v1\GalleryGunungApiController@index')
             ->name('gunungapi.gallery.search')
-            ->middleware('throttle:20,1');
+            ->middleware('custom_throttle:20,1');
 
         Route::get('gunung-api/live-seismogram','FrontPage\v1\LiveSeismogramController@index')
             ->name('gunungapi.live-seismogram')
@@ -102,7 +102,7 @@ Route::name('v1.')->group(function () {
             ->middleware('signed');
         Route::get('gerakan-tanah/tanggapan/search/{q?}','FrontPage\v1\GerakanTanahController@indexGertan')
             ->name('gertan.sigertan.search')
-            ->middleware('throttle:20,1');
+            ->middleware('custom_throttle:20,1');
 
         Route::get('gempa-bumi-dan-tsunami/kajian','FrontPage\v1\GempaBumiController@indexGempa')
             ->name('gempabumi.roq');
@@ -111,7 +111,7 @@ Route::name('v1.')->group(function () {
             ->middleware('signed');
         Route::get('gempa-bumi-dan-tsunami/kajian/search/{q?}','FrontPage\v1\GerakanTanahController@indexGertan')
             ->name('gempabumi.roq.search')
-            ->middleware('throttle:20,1');
+            ->middleware('custom_throttle:20,1');
 
         Route::get('edukasi','FrontPage\v1\EdukasiController@index')
             ->name('edukasi.index');

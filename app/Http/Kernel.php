@@ -79,5 +79,6 @@ class Kernel extends HttpKernel
         'owner' => \App\Http\Middleware\SelfCheck::class,
         'check.password' => \App\Http\Middleware\CheckPassword::class,
         'statistik.home' => \App\Http\Middleware\StatistikHomeMiddleware::class,
+        'custom_throttle' => \App\Http\Middleware\CustomThrottle::class,
     ];
 }
