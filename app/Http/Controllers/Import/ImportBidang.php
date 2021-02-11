@@ -53,7 +53,7 @@ class ImportBidang extends Import
             }
         }
 
-        catch (Exceptipn $e) {
+        catch (\Exception $e) {
             $this->sendError($e);
         }
 

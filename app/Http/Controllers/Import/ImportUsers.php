@@ -16,7 +16,19 @@ class ImportUsers extends Import
 
     public function import()
     {
-        $this->old = OldUser::orderBy('id')->get();
+        $this->old = OldUser::whereIn('vg_bid',[
+                'Pengamatan dan Penyelidikan Gunungapi',
+                'Mitigasi Gerakan Tanah',
+                'Mitigasi Gempabumi dan Tsunami',
+                'Balai Penyelidikan dan Pengembangan Teknologi Kebencanaan Geologi',
+                'Pusat Vulkanologi dan Mitigasi Bencana Geologi',
+                'Tata Usaha',
+                'MITIGASI GA',
+                'MITIGASI GT',
+                'BPPTKG',
+            ])
+            ->orderBy('id')
+            ->get();
         $this->old->each(function ($item, $key) {
             $this->setItem($item)->updateUser();
         });
@@ -41,7 +53,7 @@ class ImportUsers extends Import
             : null;
 
         try {
-            $update = User::updateOrCreate(
+            $update = User::firstOrCreate(
                 [ 
                     'nip' => $this->item->vg_nip 
                 ],
@@ -59,7 +71,7 @@ class ImportUsers extends Import
             }
         }
 
-        catch (Exception $e) {
+        catch (\Exception $e) {
             $this->sendError($e);
         }
 
