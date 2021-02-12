@@ -80,5 +80,6 @@ class Kernel extends HttpKernel
         'check.password' => \App\Http\Middleware\CheckPassword::class,
         'statistik.home' => \App\Http\Middleware\StatistikHomeMiddleware::class,
         'custom_throttle' => \App\Http\Middleware\CustomThrottle::class,
+        'blacklist' => \App\Http\Middleware\Blacklist::class,
     ];
 }

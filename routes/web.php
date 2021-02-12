@@ -70,13 +70,13 @@ Route::name('v1.')->group(function () {
             
         Route::get('gunung-api/cctv','FrontPage\v1\KameraGunungApiController@index')
             ->name('gunungapi.cctv')
-            ->middleware('custom_throttle:20,1');
+            ->middleware(['blacklist','custom_throttle:20,1']);
         Route::get('gunung-api/cctv/{code}','FrontPage\v1\KameraGunungApiController@filter')
             ->name('gunungapi.cctv.filter')
-            ->middleware('custom_throttle:30,1');
+            ->middleware(['blacklist', 'custom_throttle:30,1']);
         Route::post('gunung-api/cctv/show','FrontPage\v1\KameraGunungApiController@show')
             ->name('gunungapi.cctv.show')
-            ->middleware(['signed', 'custom_throttle:30,2']);
+            ->middleware(['blacklist','signed', 'custom_throttle:30,2']);
 
         Route::get('gunung-api/gallery','FrontPage\v1\GalleryGunungApiController@index')
             ->name('gunungapi.gallery')

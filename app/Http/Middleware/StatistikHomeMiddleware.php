@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use App\Jobs\UpdateHomeStatistik;
 use Closure;
-use App\StatistikHome;
 
 class StatistikHomeMiddleware
 {
