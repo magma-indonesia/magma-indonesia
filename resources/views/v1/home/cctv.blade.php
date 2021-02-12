@@ -55,7 +55,7 @@ Kamera Gunung Api
             <div class="card card-blog-overlay">
                 <img class="img-fit-cover" src="{{ $cctv->image }}" alt="">
                 <div class="card-footer">
-                    <small class="mg-r-10"><a href="" class="view" data-uuid="{{ $cctv->uuid }}" data-url="{{ URL::temporarySignedRoute('v1.gunungapi.cctv.show', now()->addMinutes(rand(7,13))) }}" style="cursor: pointer;">View</a></small>
+                    <small class="mg-r-10"><a href="" class="view" data-uuid="{{ $cctv->uuid }}" data-url="{{ URL::temporarySignedRoute('v1.gunungapi.cctv.show', now()->addMinutes(rand(7,13)), ['code' => $cctv->gunungapi->code]) }}" style="cursor: pointer;">View</a></small>
                     <small class="text-right">{{ $cctv->gunungapi->name }} - {{ $cctv->lokasi }}</small>
                 </div>
             </div>
