@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Jobs\UpdateAccessLog;
+use App\Jobs\UpdateBlacklistLog;
 use Closure;
 use Illuminate\Support\Facades\URL;
 
@@ -25,9 +26,11 @@ class Blacklist
         $ip = request()->header('X-Forwarded-For') ?: $request->ip();
         
         if (in_array($ip, $blacklisted)) {
-            UpdateAccessLog::dispatch($ip, URL::full());
+            UpdateBlacklistLog::dispatch($ip);
             abort(429);
         }
+
+        UpdateAccessLog::dispatch($ip, URL::full());
 
         return $next($request);
     }
