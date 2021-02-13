@@ -357,3 +357,5 @@ Route::name('v1.')->group(function () {
         });
     });
 });
+
+Route::get('test', 'TestController@index')->name('test');

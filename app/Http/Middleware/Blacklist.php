@@ -25,7 +25,7 @@ class Blacklist
 
         UpdateAccessLog::dispatch($ip, URL::full());
         
-        if (in_array($request->ip(), $blacklisted))
+        if (in_array($ip, $blacklisted))
             abort(403);
 
         return $next($request);
