@@ -19,7 +19,6 @@ class Blacklist
     {
         $blacklisted = [
             '104.21.44.208',
-            '104.21.44.208',
         ];
 
         UpdateAccessLog::dispatch($request->ip(), URL::full());
