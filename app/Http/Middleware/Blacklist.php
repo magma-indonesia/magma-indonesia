@@ -21,7 +21,9 @@ class Blacklist
             '104.21.44.208',
         ];
 
-        UpdateAccessLog::dispatch($request->ip(), URL::full());
+        $ip = request()->header('X-Forwarded-For') ?: $request->ip();
+
+        UpdateAccessLog::dispatch($ip, URL::full());
         
         if (in_array($request->ip(), $blacklisted))
             abort(403);
