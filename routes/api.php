@@ -116,6 +116,15 @@ Route::name('wovodat.')->group(function () {
     });
 });
 
+Route::name('winston.')->group(function () {
+    Route::group(['prefix' => 'winston'], function () {
+
+        Route::get('helicorder', 'Api\Winston\HelicorderController@index')->name('helicorder.index');
+        Route::get('helicorder/show', 'Api\Winston\HelicorderController@show')->name('helicorder.show');
+
+    });
+});
+
 Route::fallback(function(){
     return response()->json([
         'status' => 'false',
