@@ -30,7 +30,7 @@ class Blacklist
             abort(429);
         }
 
-        UpdateAccessLog::dispatch($ip, URL::full());
+        // UpdateAccessLog::dispatch($ip, URL::full());
 
         return $next($request);
     }
