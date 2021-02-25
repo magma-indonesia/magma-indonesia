@@ -118,8 +118,7 @@ class ImportMagmaVar extends Import
         }
 
         catch (Exception $e) {
-            $this->sendError($e);
-            dd($this->item, $this->rekomendasi);
+            $this->sendError([$this->item, $this->rekomendasi]);
         }
 
     }
