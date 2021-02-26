@@ -10,6 +10,7 @@ use App\VarKeteranganLain;
 use App\VarRekomendasi;
 use App\v1\MagmaVar as OldVar;
 use App\Traits\ImportHelper;
+use Exception;
 
 class ImportMagmaVar extends Import
 {
@@ -117,11 +118,7 @@ class ImportMagmaVar extends Import
         }
 
         catch (Exception $e) {
-<<<<<<< HEAD
-            $this->sendError([$this->item, $this->rekomendasi]);
-=======
             $this->sendError($e);
->>>>>>> parent of dbf07fe (Update ImportMagmaVar.php)
         }
 
     }
