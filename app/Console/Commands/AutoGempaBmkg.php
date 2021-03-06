@@ -8,9 +8,11 @@ use Carbon\Carbon;
 use App\v1\MagmaRoq;
 use App\Import as ImportApp;
 use App\Notifications\ImportNotification;
-use Log;
+use Illuminate\Support\Facades\Log;
 
 use App\Traits\v1\GunungApiTerdekat;
+use Exception;
+use Illuminate\Support\Collection;
 
 class AutoGempaBmkg extends Command
 {
@@ -51,9 +53,9 @@ class AutoGempaBmkg extends Command
     /**
      * Get $gempa attribute
      *
-     * @return void
+     * @return Collection
      */
-    protected function getGempa()
+    protected function getGempa() : Collection
     {
         return $this->gempa;
     }
@@ -248,7 +250,7 @@ class AutoGempaBmkg extends Command
     protected function getDataFromBmkg()
     {
         try {
-            $xml_en = XmlParser::load('https://data.bmkg.go.id/en_autogempa.xml');
+            $xml_en = XmlParser::load('https://data.bmkg.go.id/DataMKG/TEWS/en_autogempa.xml');
             $gempa_en = $xml_en->parse([
                 'tanggal' => ['uses' => 'gempa.Tanggal'],
                 'jam' => ['uses' => 'gempa.Jam'],
@@ -257,7 +259,7 @@ class AutoGempaBmkg extends Command
                 'bujur' => ['uses' => 'gempa.Bujur'],       
             ]);
     
-            $xml_id = XmlParser::load('https://data.bmkg.go.id/autogempa.xml');
+            $xml_id = XmlParser::load('https://data.bmkg.go.id/DataMKG/TEWS/autogempa.xml');
             $gempa_id = $xml_id->parse([
                 'kedalaman' => ['uses' => 'gempa.Kedalaman'],
                 'magnitude' => ['uses' => 'gempa.Magnitude'],
@@ -268,7 +270,7 @@ class AutoGempaBmkg extends Command
                 'wilayah_5' => ['uses' => 'gempa.Wilayah5'],         
             ]);
 
-            $xml_terasa = XmlParser::load('https://data.bmkg.go.id/lastgempadirasakan.xml');
+            $xml_terasa = XmlParser::load('https://data.bmkg.go.id/DataMKG/TEWS/lastgempadirasakan.xml');
             $terasa = $xml_terasa->parse([
                 'tanggal' => ['uses' => 'Gempa.Tanggal'],
                 'jam' => ['uses' => 'Gempa.Jam'],
