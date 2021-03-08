@@ -3,11 +3,13 @@
 namespace App\Jobs;
 
 use App\StatistikAccess;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\Log;
 
 class UpdateAccessLog implements ShouldQueue
 {
@@ -40,5 +42,16 @@ class UpdateAccessLog implements ShouldQueue
             'date' => now()->format('Y-m-d'),
             'url' => $this->url,
         ]);
+    }
+
+    /**
+     * The job failed to process.
+     *
+     * @param  Exception  $exception
+     * @return void
+     */
+    public function failed(Exception $exception)
+    {
+        Log::info('[FAILED] Accesses Log failed : ' . $this->ip);
     }
 }

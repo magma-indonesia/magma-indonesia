@@ -10,7 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Exception;
 
 use App\Notifications\UserLogin;
-use Log;
+use Illuminate\Support\Facades\Log;
 
 class SendLoginNotification implements ShouldQueue
 {
