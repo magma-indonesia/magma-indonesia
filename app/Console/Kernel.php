@@ -39,7 +39,7 @@ class Kernel extends ConsoleKernel
         $this->scheduleGunungApi($schedule);
         $this->scheduleGerakanTanah($schedule);
         $this->scheduleAdministrasi($schedule);
-        $this->scheduleGempaBumi($schedule);
+        // $this->scheduleGempaBumi($schedule);
     }
 
 
