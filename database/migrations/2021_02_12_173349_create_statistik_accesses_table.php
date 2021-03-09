@@ -15,10 +15,8 @@ class CreateStatistikAccessesTable extends Migration
     {
         Schema::create('statistik_accesses', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('ip_address')->index();
-            $table->date('date')->index();
-            $table->text('url')->nullable();
-            $table->index(['ip_address','date']);
+            $table->string('ip_address')->unique();
+            $table->bigInteger('hit')->default(0);
             $table->timestamps();
         });
     }

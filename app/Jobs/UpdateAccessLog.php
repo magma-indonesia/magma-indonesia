@@ -15,19 +15,18 @@ class UpdateAccessLog implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private $ip;
+    public $tries = 2;
 
-    private $url;
+    private $ip;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($ip, $url)
+    public function __construct($ip)
     {
         $this->ip = $ip;
-        $this->url = $url;
     }
 
     /**
@@ -38,10 +37,8 @@ class UpdateAccessLog implements ShouldQueue
     public function handle()
     {
         StatistikAccess::firstOrCreate([
-            'ip_address' => $this->ip,
-            'date' => now()->format('Y-m-d'),
-            'url' => $this->url,
-        ]);
+                'ip_address' => $this->ip
+            ])->increment('hit');
     }
 
     /**
