@@ -26,20 +26,13 @@ class Blacklist
         ];
 
         $ip = request()->header('X-Forwarded-For') ?: $request->ip();
-
-        if ($request->ip() == '192.227.75.86') {
-            UpdateAccessLog::dispatch($request->ip());
-        }
-
-        if (request()->ip() == '192.227.75.86') {
-            UpdateAccessLog::dispatch($request->ip());
-        }
-        
+        $ips = $request->ip().', '. request()->header('X-Forwarded-For');
+       
         if (in_array($ip, $blacklisted)) {
             UpdateBlacklistLog::dispatch($ip);
             abort(429);
         } else {
-            UpdateAccessLog::dispatch($ip);
+            UpdateAccessLog::dispatch($ip, $ips);
         }
 
         return $next($request);

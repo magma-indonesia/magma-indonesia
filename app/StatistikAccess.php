@@ -9,5 +9,6 @@ class StatistikAccess extends Model
     protected $fillable = [
         'ip_address',
         'hit',
+        'ips',
     ];
 }

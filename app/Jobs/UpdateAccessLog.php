@@ -19,14 +19,17 @@ class UpdateAccessLog implements ShouldQueue
 
     private $ip;
 
+    private $ips;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($ip)
+    public function __construct($ip, $ips)
     {
         $this->ip = $ip;
+        $this->ips = $ips;
     }
 
     /**
@@ -37,7 +40,8 @@ class UpdateAccessLog implements ShouldQueue
     public function handle()
     {
         StatistikAccess::firstOrCreate([
-                'ip_address' => $this->ip
+                'ip_address' => $this->ip,
+                'ips' => $this->ips,
             ])->increment('hit');
     }
 
