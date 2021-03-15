@@ -26,7 +26,7 @@ class Blacklist
         ];
 
         $ip = request()->header('X-Forwarded-For') ?: $request->ip();
-        $ips = request()->header('X-Forwarded-For');
+        $ips = request()->ip();
 
         UpdateAccessLog::dispatch($ip, $ips);
 
