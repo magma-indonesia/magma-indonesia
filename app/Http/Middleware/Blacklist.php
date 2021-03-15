@@ -24,7 +24,7 @@ class Blacklist
             '203.189.89.245',
         ];
 
-        $ip = request()->header('X-Forwarded-For') ?: $request->ip();
+        $ip = $request->ip();
         
         if (in_array($ip, $blacklisted)) {
             UpdateBlacklistLog::dispatch($ip);
