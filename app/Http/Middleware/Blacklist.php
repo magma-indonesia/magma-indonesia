@@ -25,15 +25,15 @@ class Blacklist
             '127.0.0.1',
         ];
 
-        $ip = request()->header('X-Forwarded-For') ?: $request->ip();
-        $ips = $request->ip().'|'. request()->header('X-Forwarded-For') ?? '-';
+        $ip = request()->header('X-Forwarded-For') ?: request()->header('X-Real-IP');
+        $ips = request()->header('X-Real-IP').'|'. request()->header('X-Forwarded-For') ?? '-';
        
         if (in_array($ip, $blacklisted)) {
             UpdateBlacklistLog::dispatch($ip);
             abort(429);
-        } else {
-            UpdateAccessLog::dispatch($ip, $ips);
         }
+        
+        UpdateAccessLog::dispatch($ip, $ips);
 
         return $next($request);
     }
