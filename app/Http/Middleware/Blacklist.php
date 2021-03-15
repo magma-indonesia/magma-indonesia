@@ -25,8 +25,8 @@ class Blacklist
             '127.0.0.1',
         ];
 
-        $ip = request()->header('X-Forwarded-For') ?: request()->header('X-Real-IP');
-        $ips = request()->header('X-Real-IP').'|'. request()->header('X-Forwarded-For') ?? '-';
+        $ip = request()->header('X-Forwarded-For') ?: $request->ip();
+        $ips = $request->ip();
        
         if (in_array($ip, $blacklisted)) {
             UpdateBlacklistLog::dispatch($ip);
