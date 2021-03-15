@@ -39,10 +39,11 @@ class UpdateAccessLog implements ShouldQueue
      */
     public function handle()
     {
-        StatistikAccess::firstOrCreate([
+        StatistikAccess::updateOrCreate([
                 'ip_address' => $this->ip,
-                'ips' => $this->ips,
-            ])->increment('hit');
+        ],[
+            'ips' => $this->ips,
+        ])->increment('hit');
     }
 
     /**
