@@ -29,9 +29,10 @@ class Blacklist
         if (in_array($ip, $blacklisted)) {
             UpdateBlacklistLog::dispatch($ip);
             abort(429);
+        } else {
+            UpdateAccessLog::dispatch($ip);
         }
 
-        UpdateAccessLog::dispatch($ip);
 
         return $next($request);
     }
