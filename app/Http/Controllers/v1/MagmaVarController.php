@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use App\Traits\VisualAsap;
 use App\Traits\v1\DeskripsiGempa;
 use App\Traits\JenisGempaVar;
+use Exception;
 
 class MagmaVarController extends Controller
 {
@@ -34,7 +35,7 @@ class MagmaVarController extends Controller
      * Set Variable session Visual untuk memeriksa foto visual temporary 
      *
      * @param \Illuminate\Http\Request $request
-     * @return void
+     * @return Illuminate\Http\Request
      */
     protected function setRequest($request)
     {
@@ -224,18 +225,31 @@ class MagmaVarController extends Controller
 
         foreach ($gempas as $gempa)
         {
-            $var_gempa = 'var_'.$gempa;
-            $raw = 'SUM('.$var_gempa.') as jumlah_'.$var_gempa;
-            $query = $query->selectRaw($var_gempa);
+            $raw = "SUM(var_$gempa) as $gempa";
             $query = $query->selectRaw($raw);
         }
 
         return $query->groupBy('magma_var.ga_nama_gapi')->get();
     }
 
-    protected function transfromFiltered($result)
+    protected function transfromFiltered($results)
     {
+        return $results->transform(function ($result) {
+            $data = [
+                'gunung_api' => $result['ga_nama_gapi'],
+            ];
 
+            foreach ($this->codes as $code => $namaGempa) {
+                if (array_key_exists($code, $result->toArray())) {
+                    $data['gempa'][] = [
+                        'nama' => $namaGempa,
+                        'jumlah' => $result[$code],
+                    ];
+                }
+            }
+
+            return $data;
+        });
     }
 
     /**
@@ -263,9 +277,22 @@ class MagmaVarController extends Controller
             ]);
 
             $result = $this->getResultFilterGempa($request);
-            $transformed = $this->transfromFiltered($result);
+            $results = $this->transfromFiltered($result);
 
-            return $result;
+            $headers = [
+                'Gunung Api',
+            ];
+
+            $dates = [
+                'start' => $request->start, 
+                'end' => $request->end,
+            ];
+
+            foreach ($results->first()['gempa'] as $gempa) {
+                $headers[] = $gempa['nama'];
+            }
+            
+            return view('v1.gunungapi.laporan.filter-gempa-result', compact('headers', 'results', 'dates'));
         }
 
         return view('v1.gunungapi.laporan.filter-gempa',compact('gadds','jenis_gempa'))->with('flash_message',
