@@ -8,6 +8,7 @@ class TestController extends Controller
 {
     public function index(Request $request)
     {
-        return dd($_SERVER, $request->header(), $request->ip() );
+        phpinfo();
+        return dd($_SERVER, $request->header(), $request->getClientIps() );
     }
 }
