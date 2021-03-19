@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Import;
 
-use Illuminate\Http\Request;
 use App\MagmaVen;
 use App\v1\MagmaVen as OldVen;
 use App\Traits\ImportHelper;
+use Exception;
 
 class ImportMagmaVen extends Import
 {
