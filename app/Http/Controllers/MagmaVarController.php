@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Cache;
 
 use App\Traits\JenisGempaVar;
 use App\Traits\VisualAsap;
+use Exception;
 
 class MagmaVarController extends Controller
 {
@@ -78,7 +79,6 @@ class MagmaVarController extends Controller
      * Set Variable session Visual untuk memeriksa foto visual temporary 
      *
      * @param \Illuminate\Http\Request $request
-     * @return void
      */
     protected function setVarVisual($request)
     {
@@ -89,7 +89,6 @@ class MagmaVarController extends Controller
     /**
      * Delete temporary photo sebelum finisihing upload
      *
-     * @return void
      */
     protected function deletePhoto()
     {
@@ -129,7 +128,6 @@ class MagmaVarController extends Controller
     /**
      * Delete file foto tambahan lainnya
      *
-     * @return void
      */
     protected function deletePhotoLainnya()
     {
@@ -339,7 +337,6 @@ class MagmaVarController extends Controller
      * Set session untuk data Kegempaan
      *
      * @param \Illuminate\Http\Request $request
-     * @return void
      */
     protected function createRekomendasi($request)
     {
