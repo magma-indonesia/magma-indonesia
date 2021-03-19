@@ -83,7 +83,7 @@ trait VisualAsap
 
     protected function visibility($data)
     {
-        $data[0] == 'Jelas' ? $var = 'terlihat jelas' : $var = 'tertutup '.$data[0];
+        $var = $data[0] == 'Jelas' ? 'terlihat jelas' : 'tertutup '.$data[0];
 
         count($data)>1 ? 
             $result = 'Gunung api '.$var.' hingga tertutup '.last($data).'. ' : 
