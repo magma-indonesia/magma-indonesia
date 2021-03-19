@@ -21,4 +21,9 @@ class Kantor extends Model
         return $this->belongsTo('App\PosPga','code','obscode');
     }
 
+    public function administrasi()
+    {
+        return $this->belongsTo('App\UserAdministratif', 'code', 'kantor_id');
+    }
+
 }
