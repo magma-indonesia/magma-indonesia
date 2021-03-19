@@ -51,27 +51,26 @@ Laporan Aktivitas Gunung Api (Volcanic Activity Report)
                         <small>Periode {{ $var->periode }}</small>
                     </div>
                     <div class="timeline-body">
-                        <p class="timeline-title"><a href="#">{{ $var->gunungapi }}</a></p>
+                        <p class="timeline-title"><a href="#">{{ $var->gunungapi }}</a>
+                        @switch($var->status)
+                            @case('1')
+                            <span class="badge badge-success">Level I (Normal)</span>
+                            @break
+                            @case('2')
+                            <span class="badge badge-warning tx-white">Level II (Waspada)</span>
+                            @break
+                            @case('3')
+                            <span class="badge bg-orange tx-white">Level III (Siaga)</span>
+                            @break
+                            @default
+                            <span class="badge badge-danger">Level IV (Awas)</span>
+                            @break
+                        @endswitch</p>
                         <p class="timeline-author">Dibuat oleh <span class="tx-primary">{{ $var->pelapor }}</span> - {{ \Carbon\Carbon::createFromFormat('Y-m-d', $date)->formatLocalized('%A, %d %B %Y') }}</p>
                         <div class="card bd-0 bd-b">
                             <div class="row no-gutters">
-                                <div class="col-xs-12 col-md-8">
-                                    @switch($var->status)
-                                        @case('1')
-                                            <h5><span class="badge badge-success">Level I (Normal)</span></h5>
-                                            @break
-                                        @case('2')
-                                            <h5><span class="badge badge-warning tx-white">Level II (Waspada)</span></h5>
-                                            @break
-                                        @case('3')
-                                            <h5><span class="badge bg-orange tx-white">Level III (Siaga)</span></h5>
-                                            @break
-                                        @default
-                                            <h5><span class="badge badge-danger">Level IV (Awas)</span></h5>
-                                            @break
-                                    @endswitch
-                                    <h5 class="blog-title">Pengamatan Visual</h5>
-                                    <p class="blog-text">{{ $var->visual }}</p>
+                                <div class="col-xs-12 col-md-12">
+                                    <p>{{ $var->visual }}</p>
                                     <a href="{{ URL::signedRoute('v1.gunungapi.var.show', ['id' => $var->id]) }}" class="card-link">Lihat Detail</a>
                                 </div>
                             </div>
