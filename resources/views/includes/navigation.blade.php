@@ -34,7 +34,7 @@
                 <div id="sparkline1" class="small-chart m-t-sm"></div>
                 <div>
                     <h4 class="font-extra-bold m-b-xs">
-                        {!! last(request()->getClientIps()) !!}
+                        {{ request()->ip() }}
                     </h4>
                     <small class="text-muted">IP address yang sedang digunakan oleh Anda.</small>
                 </div>
