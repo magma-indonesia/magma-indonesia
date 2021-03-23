@@ -33,15 +33,15 @@ class SeismometerController extends Controller
 
             $live_seismogram = $live->live_seismogram;
 
-            if ($live_seismogram->filename) {
-                $path = Storage::disk('seismogram')->get('thumb_'.$live_seismogram->filename);
+            try {
+                $path = Storage::disk('seismogram')->get('thumb_' . $live_seismogram->filename);
                 $image = Image::make($path)->stream('data-url');
-    
-                $live_seismogram['image'] = $image;
-            } else {
-                $live_seismogram['image'] = null;
-            }
 
+                $live_seismogram['image'] = $image;
+            } catch (\Throwable $th) {
+                $live_seismogram['image'] = null;
+
+            }
         });
 
         return view('gunungapi.seismometer.index', compact('gadds','lives'));
@@ -177,5 +177,17 @@ class SeismometerController extends Controller
             'success' => 0,
             'message' => 'Gagal dihapus'
         ]);
+    }
+
+    public function partial($code, $id)
+    {
+        $gadds = Gadd::has('seismometers')
+                        ->with('seismometers')
+                        ->whereCode($code)
+                        ->select('code', 'name')
+                        ->orderBy('name')
+                        ->get();
+
+        return view('gunungapi.letusan.partial-seismometer', compact('gadds','id'));
     }
 }

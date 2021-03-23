@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Import;
 use App\VarVisual;
 use Illuminate\Http\Request;
 use Exception;
-use Image;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use App\Traits\ImportHelper;
 
@@ -74,7 +74,7 @@ class ImportFotoVisual extends Import
         
                 return $this;
             }
-        } 
+        }
 
         catch (Exception $e) {
             $visual->file_old = null;

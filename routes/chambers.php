@@ -51,6 +51,11 @@ Route::name('indonesia.')->group(function () {
     });
 });
 
+Route::name('partial.')->group(function () {
+    Route::post('rekomendasi/{code?}/{status?}', 'VarRekomendasiController@partial')->name('rekomendasi');
+    Route::post('seismometer/{code?}/{id?}', 'SeismometerController@partial')->name('seismometer');
+});
+
 Route::name('stakeholder.')->group(function () {
     Route::group(['middleware' => ['role:Super Admin'], 'prefix' => 'stakeholder'], function () {
         Route::get('/','StakeholderController@index')->name('index');

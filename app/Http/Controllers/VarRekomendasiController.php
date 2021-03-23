@@ -87,4 +87,15 @@ class VarRekomendasiController extends Controller
     {
         //
     }
+
+    public function partial($code, $status)
+    {
+        $rekomendasis = VarRekomendasi::select('id', 'code_id', 'rekomendasi')
+                            ->where('code_id', $code)
+                            ->where('status', $status)
+                            ->orderByDesc('created_at')
+                            ->get();
+
+        return view('gunungapi.letusan.partial-rekomendasi', compact('rekomendasis'));
+    }
 }

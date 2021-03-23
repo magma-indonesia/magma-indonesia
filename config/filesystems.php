@@ -82,6 +82,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'ven' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/ven'),
+            'url' => env('APP_URL') . '/storage/ven',
+            'visibility' => 'public',
+        ],
+
         'krb-gunungapi' => [
             'driver' => 'local',
             'root' => storage_path('app/public/krb-gunungapi'),

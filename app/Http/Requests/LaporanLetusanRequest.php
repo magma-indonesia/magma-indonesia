@@ -20,84 +20,14 @@ class LaporanLetusanRequest extends FormRequest
             'visibility.boolean' => 'Visibility hanya memiliki nilai Teramati atau Tidak Teramati',
             'date.date_format' => 'Format tanggal tidak sesuai (Y-m-d H:i, contoh: 2017-10-02 23:20)',
             'height.between' => 'Tinggi kolom letusan minimum :min dan maksimum :max meter',
-            'wasap.*.in' => 'Data Warna Abu invalid',
+            'warna_asap.*.in' => 'Data Warna Abu invalid',
             'intensitas.*.in' => 'Data Intensitas invalid',
-            'arah.*.in' => 'Arah abu invalid',
-            '*.required' => 'Data harus diisi jika Visual Kolom Abu Teramati',
-            '*.numeric' => 'Data harus dalam bentuk numeric',
+            'arah_asap.*.in' => 'Arah abu invalid',
+            '*.required' => 'Data harus diisi jika Visual Letusan atau Guguran teramati.',
+            '*.numeric' => 'Data harus dalam bentuk Numeric',
             '*.between' => 'Nilai :attribute Minimum :min dan maksimum :max',
+            'rekomendasi_text.required_if' => 'Rekomendasi baru harus diisi.'
         ];
-    }
-
-    /**
-     * $option
-     *
-     * @var array
-     */
-    protected $option = [];
-
-    /**
-     * $teramati
-     *
-     * @var array
-     */
-    protected $teramati = [
-        'code' => 'required|size:3',
-        'visibility' => 'required|boolean',
-        'draft' => 'required|boolean',
-        'date' => 'required|date_format:Y-m-d H:i|before:tomorrow',
-        'height' => 'required|numeric|between:100,20000',
-        'wasap' => 'required|array',
-        'wasap.*' => 'in:Putih,Kelabu,Coklat,Hitam',
-        'intensitas' => 'required|array',
-        'intensitas.*' => 'required|in:Tipis,Sedang,Tebal',
-        'arah' => 'required|array',                
-        'arah.*' => 'required|in:Utara,Timur Laut,Timur,Tenggara,Selatan,Barat Daya,Barat,Barat Laut',
-        'amplitudo' => 'required|numeric|between:0.5,120',
-        'durasi' => 'required|numeric|between:0.5,600',
-        'status' => 'required|in:1,2,3,4',
-        'rekomendasi' => 'nullable',
-        'lainnya' => 'nullable',
-    ];
-
-    /**
-     * $tidakTeramati
-     *
-     * @var array
-     */
-    protected $tidakTeramati = [
-        'code' => 'required|size:3',
-        'visibility' => 'required|boolean',
-        'date' => 'required|date_format:Y-m-d H:i|before:tomorrow',
-        'draft' => 'required|boolean',
-        'status' => 'required|in:1,2,3,4',
-        'amplitudo' => 'required|numeric|between:0,120',
-        'durasi' => 'required|numeric|between:0,600',
-        'rekomendasi' => 'nullable',
-        'lainnya' => 'nullable',
-    ];
-
-    /**
-     * setOption
-     *
-     * @param mixed $visibility
-     * @return void
-     */
-    public function setOption($visibility)
-    {
-        $option = $visibility == '1' ? $this->teramati : $this->tidakTeramati;
-        $this->option = $option;
-        return $this;
-    }
-
-    /**
-     * getOption
-     *
-     * @return void
-     */
-    public function getOption()
-    {
-        return $this->option;
     }
 
     /**
@@ -117,6 +47,32 @@ class LaporanLetusanRequest extends FormRequest
      */
     public function rules()
     {
-        return $this->setOption($this->request->get('visibility'))->getOption();
+        return [
+            'code' => 'required|size:3',
+            'status' => 'required|in:1,2,3,4',
+            'date' => 'required|date_format:Y-m-d H:i:s|before:tomorrow',
+            'visibility' => 'required|boolean',
+            'height' => 'required_if:visibility,1|nullable|numeric|between:100,20000',
+            'warna_asap' => 'required_if:visibility,1|array',
+            'warna_asap.*' => 'required_if:visibility,1|in:Putih,Kelabu,Coklat,Hitam',
+            'intensitas' => 'required_if:visibility,1|array',
+            'intensitas.*' => 'required_if:visibility,1|in:Tipis,Sedang,Tebal',
+            'arah_abu' => 'required_if:visibility,1|array',
+            'arah_abu.*' => 'required_if:visibility,1|in:Utara,Timur Laut,Timur,Tenggara,Selatan,Barat Daya,Barat,Barat Laut',
+            'visibility_apg' => 'required|boolean',
+            'distance' => 'required_if:visibility_apg,1|nullable|numeric|between:100,25000',
+            'height_guguran' => 'required_if:visibility_apg,1|nullable|numeric|between:0,25000',
+            'arah_guguran' => 'required_if:visibility_apg,1|array',
+            'arah_guguran.*' => 'required_if:visibility_apg,1|in:Utara,Timur Laut,Timur,Tenggara,Selatan,Barat Daya,Barat,Barat Laut',
+            'amplitudo' => 'required|numeric|between:0,240',
+            'durasi' => 'required|numeric|between:0,10000',
+            'seismometer_id' => 'required|exists:seismometers,id',
+            'rekomendasi' => request()->rekomendasi == '9999' ? 'required' : 'required|exists:var_rekomendasis,id',
+            'rekomendasi_text' => 'required_if:rekomendasi,9999',
+            'lainnya' => 'nullable',
+            'foto' => (request()->visibility == '1' OR request()->visibility_apg == '1') ? 'required|file|mimetypes:image/jpeg' : 'nullable',
+            'draft' => 'required|boolean',
+            'is_blasted' => 'required|boolean',
+        ];
     }
 }

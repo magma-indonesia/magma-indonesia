@@ -16,7 +16,6 @@ class VonaSubscriber extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
         'email',
         'status',
     ];
