@@ -117,6 +117,11 @@ class Kernel extends ConsoleKernel
             ->pingBefore($this->getUrlMagma())
             ->appendOutputTo($filePath);
 
+        $schedule->command('import:subscribers')
+            ->daily()
+            ->pingBefore($this->getUrlMagma())
+            ->appendOutputTo($filePath);
+
         $schedule->command('import:vona')
             ->daily()
             ->pingBefore($this->getUrlMagma())

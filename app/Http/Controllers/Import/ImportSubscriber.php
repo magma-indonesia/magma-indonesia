@@ -18,6 +18,14 @@ class ImportSubscriber extends Import
 
     public function import()
     {
+        $empty_mails = OldSub::whereEmail('')->get();
+
+        if ($empty_mails->count()) {
+            $empty_mails->each(function ($mail) {
+                $mail->delete();
+            });
+        }
+
         $this->old = OldSub::whereBetween('no',[$this->startNo('subs'),$this->endNo('subs')])->get();
 
         $this->old = $this->old->reject(function ($value, $key) {
