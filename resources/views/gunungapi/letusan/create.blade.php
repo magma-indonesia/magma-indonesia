@@ -34,7 +34,7 @@ Buat VEN
             <h2 class="font-light m-b-xs">
                 Form Laporan Letusan Gunung Api
             </h2>
-            <small>Form</small>
+            <small>VEN dan VONA</small>
         </div>
     </div>
 </div>
@@ -46,7 +46,7 @@ Buat VEN
         <div class="col-lg-12">
             <div class="hpanel">
                 <div class="panel-heading">
-                    Form Informasi Letusan
+                    Form Informasi Letusan (VEN dan VONA)
                 </div>
                 <div class="panel-body">
 
@@ -242,6 +242,29 @@ Buat VEN
                                                 @endforeach
                                                 @endif
                                             </div>
+
+                                            <div class="form-group col-sm-12">
+                                                <label>Upload Foto Letusan</label>
+
+                                                <div class="form-group col-sm-12">
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-xs-12">
+                                                            <img class="img-responsive border-top border-bottom border-right border-left p-xs image-file-letusan" src="#" style="display:none;">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-sm-12">
+                                                    <label class="w-xs btn btn-outline btn-default btn-file">
+                                                        <i class="fa fa-upload"></i>
+                                                        <span class="label-file-letusan">Browse </span> 
+                                                        <input class="file-letusan" accept="image/jpeg" type="file" name="foto_letusan" style="display: none;">
+                                                    </label>
+                                                    @if( $errors->has('foto'))
+                                                    <label class="error" for="foto">{{ ucfirst($errors->first('foto')) }}</label>
+                                                    @endif
+                                                </div>
+
+                                            </div>
                                         </div>
                                     
                                     </div>
@@ -343,46 +366,33 @@ Buat VEN
                                                 @endforeach
                                                 @endif
                                             </div>
+
+                                            <div class="form-group col-sm-12">
+                                                <label>Upload Foto Guguran</label>
+                                                <div class="form-group col-sm-12">
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-xs-12">
+                                                            <img class="img-responsive border-top border-bottom border-right border-left p-xs image-file-guguran" src="#" style="display:none;">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-sm-12">
+                                                    <label class="w-xs btn btn-outline btn-default btn-file">
+                                                        <i class="fa fa-upload"></i>
+                                                        <span class="label-file-guguran">Browse </span> 
+                                                        <input class="file-guguran" accept="image/jpeg" type="file" name="foto_apg" style="display: none;">
+                                                    </label>
+                                                    @if( $errors->has('foto'))
+                                                    <label class="error" for="foto">{{ ucfirst($errors->first('foto')) }}</label>
+                                                    @endif
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="hr-line-dashed"></div>
-
-                                {{-- Foto Visual --}}
-                                <div class="row foto-visual" style="display: {{ (old('visibility_apg') == '0' AND old('visibility') == '0') ? 'none' :'block'}};">
-                                    <div class="col-lg-4 text-center">
-                                        <i class="pe-7s-camera fa-4x text-muted"></i>
-                                        <p class="m-t-md">
-                                            Upload foto visual Letusan atau Awan Panas Guguran
-                                        </p>
-                                    </div>
-
-                                    <div class="col-lg-8">
-                                        <div class="form-group col-sm-12">
-                                            <label>Upload foto</label>
-                                            <div class="form-group col-sm-12">
-                                                <div class="row">
-                                                    <div class="col-lg-6 col-xs-12">
-                                                        <img class="img-responsive border-top border-bottom border-right border-left p-xs image-file" src="#" style="display:none;">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-sm-12">
-                                                <label class="w-xs btn btn-outline btn-default btn-file">
-                                                    <i class="fa fa-upload"></i>
-                                                    <span class="label-file">Browse </span> 
-                                                    <input class="file" accept="image/jpeg" type="file" name="foto" style="display: none;">
-                                                </label>
-                                                @if( $errors->has('foto'))
-                                                <label class="error" for="foto">{{ ucfirst($errors->first('foto')) }}</label>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="hr-line-dashed foto-visual"></div>
 
                                 {{-- Seismik --}}
                                 <div class="row">
@@ -424,6 +434,7 @@ Buat VEN
                                             <label>Pilih stasiun - (optional)</label>
                                             <div class="input-group">
                                                 <select id="seismometer_id" class="form-control" name="seismometer_id">
+                                                    <option value="9999">-- Optional --</option>
                                                     @foreach ($gadds as $gadd)
                                                         @foreach ($gadd->seismometers as $seismometer)
                                                         <option value="{{ $seismometer->id }}" {{ old('seismometer_id') == $seismometer->id ? 'selected' : ''}}>{{ $gadd->name }} - {{ $seismometer->scnl }}</option>
@@ -589,15 +600,46 @@ Buat VEN
 
 @section('add-script')
 <script>
-$(document).ready(function () {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
+function getRekomendasis($code, $status) {
+    let $url = '{{ route("chambers.partial.rekomendasi") }}/'+$code+'/'+$status;
+
+    $.ajax({
+        url: $url,
+        type: 'POST',
+        success: function(data) {
+            $('.refresh-rekomendasi').html(data);
+        },
+        error: function(data){
+            console.log(data);
         }
     });
+};
 
-    var $code = $('#code').val();
-    var $status = $('#status').val();
+function getSeismometers($code, $id = 0) {
+    let $url = '{{ route("chambers.partial.seismometer") }}/'+$code+'/'+$id;
+
+    $.ajax({
+        url: $url,
+        type: 'POST',
+        success: function(data) {
+            let optional = '<option value="9999">-- Optional --</option>'+data
+            $('#seismometer_id').html(optional);
+        },
+        error: function(data){
+            console.log(data);
+        }
+    });
+};
+
+$(document).ready(function () {
+    let $code = $('#code').val();
+    let $status = $('#status').val();
     getRekomendasis($code, $status);
     getSeismometers($code, {{ empty(old('seismometer_id')) ? 0 : old('seismometer_id') }});
 
@@ -610,46 +652,42 @@ $(document).ready(function () {
     });
 
     $('#visibility').on('change',function(){
-        var $val = $(this).val();
-        if($val == '0')
-        {
-            $('.teramati').hide();
-        } else {
-            $('.teramati').show();
-        }
+        let $val = $(this).val();
+        $val == '0' ? $('.teramati').hide() : $('.teramati').show();
     });
 
     $('#visibility_apg').on('change',function(){
-        var $val = $(this).val();
-        if($val == '0')
-        {
-            $('.teramati-guguran').hide();
-        } else {
-            $('.teramati-guguran').show();
-        }
+        let $val = $(this).val();
+        $val == '0' ? $('.teramati-guguran').hide() : $('.teramati-guguran').show();
     });
 
-    $('#visibility, #visibility_apg').on('change',function(){
-        var $letusan = $('#visibility').val();
-        var $guguran = $('#visibility_apg').val();
-        if($letusan == '0' && $guguran == '0')
-        {
-            $('.foto-visual').hide();
-        } else {
-            $('.foto-visual').show();
-        }
-    });
-
-    $('input.file').on('change', function(e) {
-        var input = $(this),
+    $('input.file-guguran').on('change', function(e) {
+        let input = $(this),
             label = input.val()
                         .replace(/\\/g, '/')
                         .replace(/.*\//, ''),
             reader = new FileReader();
 
-        $('.label-file').html(label);
+        $('.label-file-guguran').html(label);
         reader.onload = function (e) {
-            $('.image-file')
+            $('.image-file-guguran')
+                .show()
+                .attr('src',e.target.result);
+        }
+
+        reader.readAsDataURL(this.files[0]);
+    });
+
+    $('input.file-letusan').on('change', function(e) {
+        let input = $(this),
+            label = input.val()
+                        .replace(/\\/g, '/')
+                        .replace(/.*\//, ''),
+            reader = new FileReader();
+
+        $('.label-file-letusan').html(label);
+        reader.onload = function (e) {
+            $('.image-file-letusan')
                 .show()
                 .attr('src',e.target.result);
         }
@@ -658,109 +696,77 @@ $(document).ready(function () {
     });
 
     $('#code').on('change', function() {
-        var $code = $('#code').val();
-        var $status = $('#status').val();
+        let $code = $('#code').val();
+        let $status = $('#status').val();
         getRekomendasis($code, $status);
         getSeismometers($code);
     });
 
     $('#status').on('change', function() {
-        var $code = $('#code').val();
-        var $status = $('#status').val();
+        let $code = $('#code').val();
+        let $status = $('#status').val();
         getRekomendasis($code, $status);
     });
 
     $('#load-seismometer').on('click', function() {
-        var $code = $('#code').val();
+        let $code = $('#code').val();
         getSeismometers($code);
     });
-
-    function getRekomendasis($code, $status) {
-        var $url = '{{ route("chambers.partial.rekomendasi") }}/'+$code+'/'+$status;
-
-        $.ajax({
-            url: $url,
-            type: 'POST',
-            success: function(data) {
-                $('.refresh-rekomendasi').html(data);
-            },
-            error: function(data){
-                console.log(data);
-            }
-        });
-    };
-
-    function getSeismometers($code, $id = 0) {
-        var $url = '{{ route("chambers.partial.seismometer") }}/'+$code+'/'+$id;
-
-        $.ajax({
-            url: $url,
-            type: 'POST',
-            success: function(data) {
-                $('#seismometer_id').html(data);
-            },
-            error: function(data){
-                console.log(data);
-            }
-        });
-    };
-
-    $(document).on('click','.showhide-rekomendasi', function (event) {
-        event.preventDefault();
-        var hpanel = $(this).closest('div.hpanel');
-        var icon = $(this).find('i:first');
-        var body = hpanel.find('div.panel-body');
-        var footer = hpanel.find('div.panel-footer');
-        body.slideToggle(300);
-        footer.slideToggle(200);
-
-        // Toggle icon from up to down
-        icon.toggleClass('fa-chevron-circle-up').toggleClass('fa-chevron-circle-down');
-        hpanel.toggleClass('').toggleClass('panel-collapse');
-        setTimeout(function () {
-            hpanel.resize();
-            hpanel.find('[id^=map-]').resize();
-        }, 50);
-    });
-
-    @role('Super Admin')
-    $('.delete-rekomendasi').on('click', function(e) {
-        var $url = $(this).val(),
-            $id = $(this).attr('rekomendasi-id');
-            $rekomendasi = $('.rekomendasi-'+$id);
-        
-        console.log($id);
-
-        swal({
-            title: "Anda yakin?",
-            text: "Data yang telah dihapus tidak bisa dikembalikan",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, hapus!",
-            cancelButtonText: "Gak jadi deh!",
-            closeOnConfirm: false,
-            closeOnCancel: true },
-        function (isConfirm) {
-            if (isConfirm) {                    
-                $.ajax({
-                    url: $url,
-                    type: 'POST',
-                    success: function(data) {
-                        if (data.success){
-                            swal("Berhasil!", data.message, "success");
-                            $rekomendasi.remove();
-                        }
-                    },
-                    error: function(data){
-                        console.log(data);
-                    }
-                });
-            }
-        });
-
-    });
-    @endrole
 });
+
+$(document).on('click','.showhide-rekomendasi', function (event) {
+    event.preventDefault();
+    let hpanel = $(this).closest('div.hpanel');
+    let icon = $(this).find('i:first');
+    let body = hpanel.find('div.panel-body');
+    let footer = hpanel.find('div.panel-footer');
+    body.slideToggle(300);
+    footer.slideToggle(200);
+
+    // Toggle icon from up to down
+    icon.toggleClass('fa-chevron-circle-up').toggleClass('fa-chevron-circle-down');
+    hpanel.toggleClass('').toggleClass('panel-collapse');
+    setTimeout(function () {
+        hpanel.resize();
+        hpanel.find('[id^=map-]').resize();
+    }, 50);
+});
+
+@role('Super Admin')
+$('.delete-rekomendasi').on('click', function(e) {
+    let $url = $(this).val();
+    let $id = $(this).attr('rekomendasi-id');
+    let $rekomendasi = $('.rekomendasi-'+$id);
+
+    swal({
+        title: "Anda yakin?",
+        text: "Data yang telah dihapus tidak bisa dikembalikan",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, hapus!",
+        cancelButtonText: "Gak jadi deh!",
+        closeOnConfirm: false,
+        closeOnCancel: true },
+    function (isConfirm) {
+        if (isConfirm) {                    
+            $.ajax({
+                url: $url,
+                type: 'POST',
+                success: function(data) {
+                    if (data.success){
+                        swal("Berhasil!", data.message, "success");
+                        $rekomendasi.remove();
+                    }
+                },
+                error: function(data){
+                    console.log(data);
+                }
+            });
+        }
+    });
+
+});
+@endrole
 </script>
 @endsection
