@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Import;
 use App\VarVisual;
 use Illuminate\Http\Request;
 use Exception;
-use Image;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use App\Traits\ImportHelper;
 
@@ -16,6 +16,7 @@ class ImportFotoVisual extends Import
     public function __construct()
     {
         ini_set('max_execution_time', 1200);
+        ini_set('memory_limit', '512M');
     }
 
     public function import(Request $request)
