@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\v1;
 
+use App\Exports\VenExportDeskripsi;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\v1\MagmaVen;
@@ -9,6 +10,7 @@ use App\v1\MagmaVar;
 use App\v1\Gadd;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MagmaVenController extends Controller
 {
@@ -51,6 +53,39 @@ class MagmaVenController extends Controller
         return view('v1.gunungapi.ven.show',compact('ven','visual'));
     }
 
+    protected function seismik($ven): ?string
+    {
+        $seismik = $ven->erupt_amp ? 'Erupsi ini terekam di seismograf dengan amplitudo maksimum ' . $ven->erupt_amp . ' mm dan durasi ' . $ven->erupt_drs . ' detik.' : null;
+        return $seismik;
+    }
+
+    protected function teramati($ven): string
+    {
+        $asl = $ven->erupt_tka + $ven->gunungapi->ga_elev_gapi;
+
+        $wasap = !empty($ven->erupt_wrn)
+            ? str_replace_last(', ', ' hingga ', strtolower(implode(', ', $ven->erupt_wrn)))
+            : strtolower($ven->erupt_wrn[0]);
+
+        $intensitas = !empty($ven->erupt_int)
+            ? str_replace_last(', ', ' hingga ', strtolower(implode(', ', $ven->erupt_int)))
+            : strtolower($ven->erupt_int[0]);
+
+        $arah = !empty($ven->erupt_arh)
+            ? str_replace_last(', ', ' dan ', strtolower(implode(', ', $ven->erupt_arh)))
+            : strtolower($ven->erupt_arh[0]);
+
+        $visual = 'Telah terjadi erupsi G. ' . $ven->gunungapi->ga_nama_gapi . ',' . $ven->gunungapi->ga_prov_gapi . ' pada hari ' . Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->formatLocalized('%A, %d %B %Y') . ', pukul ' . $ven->erupt_jam . ' ' . $ven->gunungapi->ga_zonearea . ' dengan tinggi kolom abu teramati &plusmn; ' . $ven->erupt_tka . ' m di atas puncak (&plusmn; ' . $asl . ' m di atas permukaan laut). Kolom abu teramati berwarna ' . $wasap . ' dengan intensitas ' . $intensitas . ' ke arah ' . $arah . '. ';
+
+        return $visual;
+    }
+
+    protected function tidakTeramati($ven): string
+    {
+        return 'Telah terjadi erupsi G. ' . $ven->gunungapi->ga_nama_gapi . ',' . $ven->gunungapi->ga_prov_gapi . ' pada hari ' . Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->formatLocalized('%A, %d %B %Y') . ', pukul ' . $ven->erupt_jam . ' ' . $ven->gunungapi->ga_zonearea . '. Visual letusan tidak teramati. ';
+    }
+    
+
     /**
      * Visual letusan teramati
      *
@@ -60,25 +95,11 @@ class MagmaVenController extends Controller
      */
     protected function visualTeramati($ven)
     {
-        $asl = $ven->erupt_tka+$ven->gunungapi->ga_elev_gapi;
+        $seismik = $this->seismik($ven) ?: '' ;
 
-        $wasap = !empty($ven->erupt_wrn) 
-            ? str_replace_last(', ',' hingga ', strtolower(implode(', ',$ven->erupt_wrn))) 
-            : strtolower($ven->erupt_wrn[0]);
+        $deskripsi = "{$this->teramati($ven)}{$seismik}";
 
-        $intensitas = !empty($ven->erupt_int)
-            ? str_replace_last(', ',' hingga ', strtolower(implode(', ',$ven->erupt_int))) 
-            : strtolower($ven->erupt_int[0]);
-
-        $arah = !empty($ven->erupt_arh)
-            ? str_replace_last(', ',' dan ', strtolower(implode(', ',$ven->erupt_arh))) 
-            : strtolower($ven->erupt_arh[0]);
-
-        $seismik = $ven->erupt_amp ? 'Erupsi ini terekam di seismograf dengan amplitudo maksimum '.$ven->erupt_amp.' mm dan durasi '.$ven->erupt_drs.' detik.' : '';        
-
-        $data = 'Telah terjadi erupsi G. '. $ven->gunungapi->ga_nama_gapi .', '. $ven->gunungapi->ga_prov_gapi .' pada hari '. Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->formatLocalized('%A, %d %B %Y') .', pukul '. $ven->erupt_jam.' '.$ven->gunungapi->ga_zonearea.' dengan tinggi kolom abu teramati &plusmn; '. $ven->erupt_tka .' m di atas puncak (&plusmn; '. $asl .' m di atas permukaan laut). Kolom abu teramati berwarna '. $wasap .' dengan intensitas '. $intensitas .' ke arah '. $arah .'. '.$seismik;
-
-        return $data;
+        return $deskripsi;
     }
 
     /**
@@ -89,11 +110,11 @@ class MagmaVenController extends Controller
      */
     protected function visualTidakTeramati($ven)
     {
-        $seismik = $ven->erupt_amp ? 'Erupsi ini terekam di seismograf dengan amplitudo maksimum '.$ven->erupt_amp.' mm dan durasi '.$ven->erupt_drs.' detik.' : '';
+        $seismik = $this->seismik($ven) ?: '';
 
-        $data = 'Telah terjadi erupsi G. '. $ven->gunungapi->ga_nama_gapi .', '. $ven->gunungapi->ga_prov_gapi .' pada hari '. Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->formatLocalized('%A, %d %B %Y') .', pukul '. $ven->erupt_jam.' '.$ven->gunungapi->ga_zonearea.'. Visual letusan tidak teramati. ';
+        $deskripsi = "{$this->tidakTeramati($ven)}{$seismik}";
 
-        return $data;
+        return $deskripsi;
     }
 
     protected function filter(Request $request)
@@ -230,4 +251,29 @@ class MagmaVenController extends Controller
         });
     }
 
+    public function export()
+    {
+        $vens = Cache::remember('export-vens', 10, function () {
+            return MagmaVen::with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea')->get();
+        });
+
+        $vens->transform(function ($ven) {
+            return [
+                'gunung_api' => $ven->gunungapi->ga_nama_gapi,
+                'waktu_kejadian' => $ven->erupt_tgl.' '.$ven->erupt_jam.':00',
+                'zona_waktu' => $ven->gunungapi->ga_zonearea,
+                'letusan_teramati' => $ven->erupt_vis ? 'Ya' : 'Tidak',
+                'tinggi_letusan' => $ven->erupt_vis ? $ven->erupt_tka : 0,
+                'deskripsi_visual_letusan' => $ven->erupt_vis == '1'  ? $this->teramati($ven) : $this->tidakTeramati($ven),
+                'deskripsi_seismik' => $this->seismik($ven) ?: '-',
+                'rekomendasi' => strip_tags(nl2br($ven->erupt_rek)),
+            ];
+        });
+
+        // return view('v1.exports.vens', compact('vens'));
+
+        $export = new VenExportDeskripsi($vens->toArray());
+
+        return Excel::download($export, 'ven.xlsx');
+    }
 }

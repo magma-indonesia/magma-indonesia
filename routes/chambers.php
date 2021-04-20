@@ -338,8 +338,11 @@ Route::name('v1.')->group(function () {
                     ->name('ven.index');
                 Route::get('ven/filter','v1\MagmaVenController@filter')
                     ->name('ven.filter');
+                Route::get('ven/export','v1\MagmaVenController@export')
+                    ->name('ven.export');
                 Route::get('ven/{id}','v1\MagmaVenController@show')
                     ->name('ven.show');
+                    
             });
         });
 
