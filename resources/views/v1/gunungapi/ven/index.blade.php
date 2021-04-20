@@ -41,8 +41,11 @@
                     </div>
                     <div class="panel-body float-e-margins">
                         <div class="row">
-                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                            <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
                                 <a href="{{ route('chambers.v1.gunungapi.ven.filter') }}" class="btn btn-outline btn-block btn-magma" type="button">Data Letusan (dari Data Gempa)</a>
+                            </div>
+                            <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
+                                <a href="{{ route('chambers.v1.gunungapi.ven.export') }}" class="btn btn-outline btn-block btn-magma" type="button">Download Seluruh VEN</a>
                             </div>
                         </div>
                     </div>

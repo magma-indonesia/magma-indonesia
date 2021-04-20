@@ -34,60 +34,81 @@ v1 - Users
 @endsection
 
 @section('content-body')
-    <div class="content animate-panel">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="hpanel">
-                    <div class="panel-heading">
-                        Tabel Users
+<div class="content">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="hpanel">
+                <div class="panel-heading">
+                    Filter Data Pegawai 
+                </div>
+                <div class="panel-body float-e-margins">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
+                            <a href="{{ route('chambers.v1.kantor.index') }}" class="btn btn-outline btn-block btn-magma" type="button">Berdasarkan Penempatan</a>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
+                            <a href="{{ route('chambers.v1.kantor.pos-pengamatan.index') }}" class="btn btn-outline btn-block btn-magma" type="button">Berdasarkan Pos Pengamatan</a>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
+                            <a href="{{ route('chambers.v1.kantor.gunung-api.index') }}"
+                                class="btn btn-outline btn-block btn-magma" type="button">Berdasarkan Gunung Api</a>
+                        </div>
                     </div>
-                    @if(Session::has('flash_message'))
-                    <div class="alert alert-success">
-                        <i class="fa fa-bolt"></i> {!! session('flash_message') !!}
-                    </div>
-                    @endif
-                    <div class="panel-body table-responsive">
-                        <table id="table-users" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Nama</th>
-                                    <th>NIP</th>
-                                    <th>Bidang</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Status</th>
-                                    <th style="min-width: 180px;">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($users as $user)
-                                <tr>
-                                    <td>{{ $user->vg_nama }}</td>
-                                    <td>{!! strlen($user->vg_nip)<18 ? $user->vg_nip.'<b>KTP</b>' : $user->vg_nip !!}</td>
-                                    <td>{{ $user->vg_bid }}</td>
-                                    <td>{{ $user->vg_email }}</td>
-                                    <td>{{ $user->vg_hp }}</td>
-                                    <td>{{ 'Aktif' }}
-                                    </td>
-                                    <td>
-                                        <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.v1.users.destroy',['id'=>$user->id]) }}" accept-charset="UTF-8">
-                                            @method('DELETE')
-                                            @csrf
-                                            <a href="{{ route('chambers.v1.users.edit',['id'=>$user->id]) }}" class="btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">Edit</a>                            
-                                            @role('Super Admin')                
-                                            <button value="Delete" class="btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
-                                            @endrole
-                                        </form>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                </div>
+            </div>
+
+            <div class="hpanel">
+                <div class="panel-heading">
+                    Tabel Users
+                </div>
+                @if(Session::has('flash_message'))
+                <div class="alert alert-success">
+                    <i class="fa fa-bolt"></i> {!! session('flash_message') !!}
+                </div>
+                @endif
+                <div class="panel-body table-responsive">
+                    <table id="table-users" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>NIP</th>
+                                <th>Bidang</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Status</th>
+                                <th style="min-width: 180px;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($users as $user)
+                            <tr>
+                                <td>{{ $user->vg_nama }}</td>
+                                <td>{!! strlen($user->vg_nip)<18 ? $user->vg_nip.'<b>KTP</b>' : $user->vg_nip !!}</td>
+                                <td>{{ $user->vg_bid }}</td>
+                                <td>{{ $user->vg_email }}</td>
+                                <td>{{ $user->vg_hp }}</td>
+                                <td>{{ 'Aktif' }}
+                                </td>
+                                <td>
+                                    <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.v1.users.destroy',['id'=>$user->id]) }}" accept-charset="UTF-8">
+                                        @method('DELETE')
+                                        @csrf
+                                        <a href="{{ route('chambers.v1.users.edit',['id'=>$user->id]) }}" class="btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">Edit</a>                            
+                                        @role('Super Admin')                
+                                        <button value="Delete" class="btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
+                                        @endrole
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+</div>
 @endsection
 
 @section('add-vendor-script')

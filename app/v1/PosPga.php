@@ -18,4 +18,17 @@ class PosPga extends Model
     {
         return $this->hasMany('App\v1\Absensi','obscode','obscode');
     }
+
+    public function users()
+    {
+        return $this->hasManyThrough(
+            'App\v1\User',
+            'App\v1\Kantor',
+            'obscode',
+            'vg_nip',
+            'obscode',
+            'vg_nip'
+        )->select('vg_peg.vg_nip', 'vg_peg.vg_nama')
+        ->where('vg_peg.status',1);
+    }
 }

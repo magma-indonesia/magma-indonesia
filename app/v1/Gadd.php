@@ -94,5 +94,24 @@ class Gadd extends Model
     {
         return $this->hasOne('App\v1\History','ga_code','ga_code');
     }
+
+    public function users()
+    {
+        return $this->hasManyThrough(
+            'App\v1\User',
+            'App\v1\Kantor',
+            'ga_code',
+            'vg_nip',
+            'ga_code',
+            'vg_nip'
+        )->select('vg_peg.vg_nip', 'vg_peg.vg_nama')
+        ->whereNotIn('pga_pos.obscode', ['BTK', 'PAG', 'PSM', 'PSG', 'PVG', 'BGL'])
+        ->where('vg_peg.status', 1);
+    }
+
+    public function pos_pgas()
+    {
+        return $this->hasMany('App\v1\PosPga','code_id','ga_code');
+    }
     
 }

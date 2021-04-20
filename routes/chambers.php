@@ -264,6 +264,13 @@ Route::name('v1.')->group(function () {
         Route::resource('press','v1\PressReleaseController');
         Route::resource('users','v1\UserController');
 
+        Route::get('kantor', 'v1\KantorController@index')
+            ->name('kantor.index');
+        Route::get('kantor/pos-pengamatan-gunung-api', 'v1\KantorController@indexByPosPengamatan')
+            ->name('kantor.pos-pengamatan.index');
+        Route::get('kantor/gunung-api', 'v1\KantorController@indexByGunungApi')
+            ->name('kantor.gunung-api.index');
+
         Route::get('gempabumi/filter','v1\MagmaRoqController@filter')
             ->name('gempabumi.filter');
         Route::post('gempabumi/filter','v1\MagmaRoqController@filter')
