@@ -37,7 +37,10 @@
                         Menu VONA
                     </div>
                     <div class="panel-body float-e-margins">
-                        <div class="col-md-3 col-lg-3 col-xs-12">
+                        <div class="col-md-3 col-lg-2 col-xs-12">
+                            <a href="{{ route('chambers.v1.vona.filter') }}" class="btn btn-outline btn-block btn-magma" type="button">Filter</a>
+                        </div>
+                        <div class="col-md-3 col-lg-2 col-xs-12">
                             <a href="{{ route('chambers.v1.subscribers.index') }}" class="btn btn-outline btn-block btn-magma" type="button">Subscribers</a>
                         </div>
                     </div>

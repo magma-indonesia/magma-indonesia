@@ -355,6 +355,7 @@ Route::name('v1.')->group(function () {
 
         Route::name('vona.')->group(function() {
             Route::get('vona','v1\VonaController@index')->name('index');
+            Route::get('vona/filter', 'v1\VonaController@filter')->name('filter');
             Route::get('vona/{no}','v1\VonaController@show')->name('show');
             Route::delete('vona/{no}','v1\VonaController@destroy')->name('destroy');
         });

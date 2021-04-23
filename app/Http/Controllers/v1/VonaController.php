@@ -6,8 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use App\v1\Vona;
-use App\Http\Resources\v1\VonaResource;
-use App\Http\Resources\v1\VonaCollection;
+use App\v1\Gadd;
 
 class VonaController extends Controller
 {
@@ -28,6 +27,37 @@ class VonaController extends Controller
                 });
 
         return view('v1.vona.index',compact('vonas'));
+    }
+
+    protected function download($request)
+    {
+        return 'download';
+    }
+
+    protected function filterResult($request)
+    {
+        $vonas = Vona::where('ga_code',$request->code)->get();
+
+        return $vonas;
+    }
+
+    public function filter(Request $request)
+    {
+        if ($request->has('form') AND $request->form == 'download') {
+            return $this->download($request);
+        }
+
+        $gadds = Cache::remember('chambers/v1/gadds', 240, function () {
+            return Gadd::select('ga_code', 'ga_nama_gapi')
+                ->whereNotIn('ga_code', ['TEO'])
+                ->orderBy('ga_nama_gapi', 'asc')
+                ->get();
+        });
+        
+        return view('v1.vona.filter', [
+            'gadds' => $gadds,
+            'vonas' => count($request->all()) ? $this->filterResult($request) : [],
+        ]);
     }
 
     /**
