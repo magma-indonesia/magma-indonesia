@@ -18,44 +18,21 @@ class MagmaVen extends Model
     protected $keyType = 'string';
     
     protected $casts = [
-        'wasap'         => 'array',
-        'intensitas'    => 'array',
-        'arah_asap'     => 'array',
+        'warna_asap' => 'array',
+        'intensitas' => 'array',
+        'arah_asap' => 'array',
     ];
 
     protected $dates = [
-        'date'
+        'datetime_utc'
     ];
 
     protected $with = [
         'user:nip,name'
     ];
-
+ 
     protected $appends = [
         'status_deskripsi'
-    ];
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'code_id',
-        'date', 
-        'visibility',
-        'height',
-        'wasap',
-        'intensitas',
-        'arah_asap',
-        'amplitudo',
-        'durasi',        
-        'photo',
-        'status',
-        'rekomendasi',
-        'lainnya',
-        'nip_pelapor',
-        'created_at'
     ];
 
     protected $guarded = ['id','uuid'];
@@ -96,4 +73,15 @@ class MagmaVen extends Model
     {
         return $this->hasOne('App\Vona','ven_uuid','uuid');
     }
+
+    /**
+     * Mendapatkan rekomendasi langsung dari Data Dasar
+     *
+     * @return void
+     */
+    public function rekomendasi()
+    {
+        return $this->belongsTo('App\VarRekomendasi', 'rekomendasi_id', 'id');
+    }
+
 }

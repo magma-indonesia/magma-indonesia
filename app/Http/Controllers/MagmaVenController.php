@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests\LaporanLetusanRequest;
 use App\MagmaVen;
 use App\Gadd;
+use App\Seismometer;
 use App\Vona;
 use Carbon\Carbon;
 
 use App\Traits\VisualLetusan;
+use App\VarRekomendasi;
 
 class MagmaVenController extends Controller
 {
@@ -22,10 +24,9 @@ class MagmaVenController extends Controller
      */
     public function index()
     {
-        $vens = MagmaVen::orderBy('date','desc')
-            ->paginate(30,['*'],'ven_page');
+        $vens = MagmaVen::with('gunungapi:code,name')->orderBy('date','desc')->paginate(30);
 
-        return view('gunungapi.letusan.index',compact('vens'));
+        return view('gunungapi.letusan.index', ['vens' => $vens]);
     }
 
     /**
@@ -35,8 +36,18 @@ class MagmaVenController extends Controller
      */
     public function create()
     {
-        $gadds = Gadd::select('code','name')->orderBy('name')->get();
-        return view('gunungapi.letusan.create',compact('gadds'));
+        return view('gunungapi.letusan.create', [
+            'gadds' => Gadd::has('seismometers')
+                        ->with('seismometers')
+                        ->select('code', 'name')
+                        ->orderBy('name')
+                        ->get(),
+            'rekomendasis' => VarRekomendasi::select('id','code_id','rekomendasi')
+                                ->where('code_id','AGU')
+                                ->where('status',1)
+                                ->orderByDesc('created_at')
+                                ->get(),
+        ]);
     }
 
     /**
@@ -155,29 +166,33 @@ class MagmaVenController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Requests\LaporanLetusanRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(LaporanLetusanRequest $request)
     {
-        // return $request;
-        $ven = new MagmaVen;
-        $vona = new Vona;
+        return $request;
+        // $path = $request->file('foto')->
 
-        $saveVen = $request->visibility == '1' 
-            ? $this->teramati($request,$ven)
-            : $this->tidakTeramati($request,$ven);
+        // return $path;
+        // return dd($request->file('foto')->path());
+        // $ven = new MagmaVen;
+        // $vona = new Vona;
 
-        $saveVona = $request->draft == '1' ? $this->draftVona($ven,$vona) : false ;
+        // $saveVen = $request->visibility == '1' 
+        //     ? $this->teramati($request,$ven)
+        //     : $this->tidakTeramati($request,$ven);
 
-        $uuid = $saveVona != false ? $vona->uuid : '' ;
+        // $saveVona = $request->draft == '1' ? $this->draftVona($ven,$vona) : false ;
 
-        if ($saveVen){
-            return redirect()->route('chambers.letusan.show',['uuid'=> $ven->uuid]);
-        }
+        // $uuid = $saveVona != false ? $vona->uuid : '' ;
 
-        return redirect()->route('chambers.letusan.index')
-            ->with('flash_message','Informasi letusan gagal ditambahkan. ');
+        // if ($saveVen){
+        //     return redirect()->route('chambers.letusan.show',['uuid'=> $ven->uuid]);
+        // }
+
+        // return redirect()->route('chambers.letusan.index')
+        //     ->with('flash_message','Informasi letusan gagal ditambahkan. ');
     }
     
     /**

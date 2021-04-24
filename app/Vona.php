@@ -31,36 +31,13 @@ class Vona extends Model
         'user:nip,name'
     ];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'noticenumber',
-        'issued',
-        'type', 
-        'code_id',
-        'cu_code',
-        'prev_code',
-        'location',
-        'vas',
-        'vch_summit',        
-        'vch_asl',
-        'vch_other',
-        'remarks',
-        'sent',
-        'nip_pelapor',
-        'nip_pengirim'
-    ];
-
     protected $guarded = ['id','uuid'];
 
     protected $hidden = ['id'];
 
     const SOURCE = "Indonesian Center for Volcanology and Geological Hazard Mitigation (CVGHM)";
 
-    const CONTACTS = "Center for Volcanology and Geological Hazard Mitigation (CVGHM), Tel: +62-22-727-2606, Facsimile: +62-22-720-2761, email : vsi@vsi.esdm.go.id";
+    const CONTACTS = "Center for Volcanology and Geological Hazard Mitigation (CVGHM), Tel: +62-22-727-2606, Facsimile: +62-22-720-2761, email : pvmbg@esdm.go.id";
 
     public function getIssuedUtcAttribute()
     {

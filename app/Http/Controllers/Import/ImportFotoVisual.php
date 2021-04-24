@@ -75,7 +75,7 @@ class ImportFotoVisual extends Import
         
                 return $this;
             }
-        } 
+        }
 
         catch (Exception $e) {
             $visual->file_old = null;

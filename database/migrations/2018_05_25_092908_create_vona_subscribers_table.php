@@ -15,8 +15,7 @@ class CreateVonaSubscribersTable extends Migration
     {
         Schema::create('vona_subscribers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->char('email',50)->unique()->index();
+            $table->string('email')->unique()->index();
             $table->boolean('status')->default(0);
             $table->timestamps();
         });
