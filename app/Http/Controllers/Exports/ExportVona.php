@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers\Exports;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\v1\Vona as OldVona;
 use App\Vona as NewVona;
-
-use App\Traits\ExportHelper;
+use Exception;
 
 class ExportVona extends Export
 {
@@ -17,10 +14,23 @@ class ExportVona extends Export
         ini_set('max_execution_time',1200);
     }
 
+    protected function fixNullNoticeNumber(): void
+    {
+        $vonas = NewVona::whereNull('noticenumber')->get();
+
+        if ($vonas->isNotEmpty()) {
+            $vonas->each(function ($vona) {
+                $vona->delete();
+            });
+        }
+    }
+
     public function export()
     {
+        $this->fixNullNoticeNumber();
+
         $this->new = NewVona::with('gunungapi','user')->orderBy('issued')
-                    ->whereBetween('issued',['2018-05-24',now()->format('Y-m-d')]);
+                    ->whereBetween('issued',['2015-08-31','2021-02-28']);
 
         $this->new->chunk(500, function($items) {
             foreach ($items as $key => $item) {
@@ -44,9 +54,9 @@ class ExportVona extends Export
         $contacts = 'Center for Volcanology and Geological Hazard Mitigation (CVGHM)
         Tel: +62-22-727-2606
         Facsimile: +62-22-720-2761
-        Email : vsi@vsi.esdm.go.id';
+        Email : pvmbg@esdm.go.id';
 
-        $notice = 'A new VONA will be issued if conditions change significantly or the colour code is changes.<br>Latest Volcanic information is posted at <strong>VONA | MAGMA Indonesia</strong> Website<br>Link : <a href="https://magma.vsi.esdm.go.id/vona/">https://magma.vsi.esdm.go.id/vona/</a>';
+        $notice = 'A new VONA will be issued if conditions change significantly or the colour code is changes.<br>Latest Volcanic information is posted at <strong>VONA | MAGMA Indonesia</strong> Website<br>Link : <a href="https://magma.esdm.go.id/v1/vona/">https://magma.esdm.go.id/v1/vona</a>';
 
         try {
             $update = OldVona::updateOrCreate(
