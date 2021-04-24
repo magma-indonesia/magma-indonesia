@@ -97,17 +97,18 @@ class VonaController extends Controller
 
     public function filter(Request $request)
     {
+        $vonas = collect([]);
+
         if ($request->has('form') AND $request->form == 'download') {
             return $this->export($request);
         }
 
         if ($request->has('form') and $request->form == 'filter') {
             $vonas = $this->result($request);
+            $vonas->isEmpty() ?
+                $request->session()->flash('empty', 'Hasil pencarian tidak ditemukan!') :
+                $request->session()->forget('empty');
         }
-
-        $vonas->isEmpty() ?
-            $request->session()->flash('empty', 'Hasil pencarian tidak ditemukan!') :
-            $request->session()->forget('empty');
 
         $gadds = Cache::remember('chambers/v1/gadds', 240, function () {
             return Gadd::select('ga_code', 'ga_nama_gapi')
