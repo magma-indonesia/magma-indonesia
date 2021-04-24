@@ -64,7 +64,7 @@ class HomeController extends Controller
         });
 
         $vona = Gadd::whereHas('vona', function ($query) {
-            $query->whereBetween('log',[now()->subWeek(),now()]);
+            $query->whereBetween('issued_time',[now()->subWeek(),now()]);
         })->select('ga_code','ga_nama_gapi')->get();
 
         $gadds = $gadds->map(function ($gadd, $key) use($vars,$vona) {
@@ -130,7 +130,7 @@ class HomeController extends Controller
         });
 
         $vona = Gadd::whereHas('vona', function ($query) {
-            $query->whereBetween('log',[now()->subWeek(),now()]);
+            $query->whereBetween('issued_time',[now()->subWeek(),now()]);
         })->select('ga_code','ga_nama_gapi')->get();
 
         $gadds = $gadds->map(function ($gadd, $key) use($vars,$vona) {
