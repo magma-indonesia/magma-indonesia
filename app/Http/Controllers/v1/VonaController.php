@@ -83,7 +83,8 @@ class VonaController extends Controller
             ->whereBetween('issued_time', [
                 $validated['start_date'],
                 $validated['end_date'],
-            ]);
+            ])
+            ->orderBy('issued_time','desc');
 
         return $vonas;
     }
