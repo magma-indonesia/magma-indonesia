@@ -162,7 +162,7 @@ class HomeController extends Controller
 
     public function check(Request $request)
     {
-        $validator = $this->validate($request, [
+        $validator = $request->validate($request, [
             'name' => 'required|min:4',
             'latitude' => 'required|numeric|between:-21.41,14.3069',
             'longitude' => 'required|numeric|between:73.65,153.41'
