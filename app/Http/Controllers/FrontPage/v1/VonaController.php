@@ -35,7 +35,7 @@ class VonaController extends Controller
         $this->vonas = Vona::where('ga_code',$request->code)
                     ->where('sent',1)
                     ->where('type','REAL')
-                    ->orderBy('log','desc')
+                    ->orderBy('issued_time','desc')
                     ->paginate(15);
 
         if ($this->vonas->isEmpty())
@@ -50,20 +50,19 @@ class VonaController extends Controller
 
     protected function nonFilteredVona($request)
     {
-
-        $vona = Vona::select('no','sent','log')
+        $vona = Vona::select('no','sent','issued_time','issued')
                     ->where('sent',1)
                     ->orderBy('issued_time','desc')
                     ->first();
 
         $page = $request->has('page') ? $request->page : 1;
 
-        $time = strtotime($vona->log);
+        $time = strtotime($vona->issued_time);
 
         $vonas = Cache::remember('v1/home/vona:'.$vona->no.':'.$page.':'.$time, 30, function() {
                     return Vona::where('sent',1)
                         ->where('type','REAL')
-                        ->orderBy('log','desc')
+                        ->orderBy('issued_time','desc')
                         ->paginate(15);
         });
 
