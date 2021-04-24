@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Vona;
 use App\v1\Vona as OldVona;
 use App\Traits\ImportHelper;
+use Exception;
 
 class ImportVona extends Import
 {
