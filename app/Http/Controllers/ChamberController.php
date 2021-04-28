@@ -25,7 +25,6 @@ class ChamberController extends Controller
                     ->where('crs_sta', 'TERBIT')
                     ->whereBetween('crs_lat', [-12, 2])
                     ->whereBetween('crs_lon', [89, 149])
-                    ->whereBetween('crs_log', [now()->subDays(60)->format('Y-m-d'), now()->format('Y-m-d')])
                     ->orderBy('crs_log', 'desc')
                     ->first();
 
@@ -88,11 +87,11 @@ class ChamberController extends Controller
             $statistics = $statistics->reverse()->values();
             return $this->setCategories($statistics)->setSeries()->getCharts();
         });
-        
+
         $statistics_sum = Cache::remember('visitor-sum', 10, function () {
             return StatistikHome::sum('hit');
         });
-        
+
         $vars_count = MagmaVar::count();
         $latest = Magmavar::latest()->first();
         $lts_sum = EqLts::sum('jumlah');
