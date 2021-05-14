@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 use App\v1\GertanCrs as Crs;
+use App\v1\MagmaSigertan;
 
 class GerakanTanahController extends Controller
 {
@@ -66,7 +67,7 @@ class GerakanTanahController extends Controller
         $start = strtotime($request->start);
         $end = strtotime($request->end);
 
-        $gertans = Cache::remember('v1/home/sigertan:search:'.$page.':'.$start.':'.$end, 120, function() use($request) {
+        $gertans = Cache::remember('v1/home/sigertan:search:'.$page.':'.$start.':'.$end, 10, function() use($request) {
             return Crs::has('tanggapan')
                     ->with('tanggapan')
                     ->where('crs_sta','TERBIT')
@@ -107,12 +108,13 @@ class GerakanTanahController extends Controller
 
     protected function nonFilteredGertan($request)
     {
-        $last = Crs::select('idx','crs_log')->orderBy('idx','desc')->first();
+        $last = MagmaSigertan::select('crs_ids','qls_led')->orderBy('qls_led','desc')->first();
+
         $page = $request->has('page') ? $request->page : 1;
 
-        $date = strtotime($last->crs_log);
+        $date = strtotime($last->qls_led);
 
-        $gertans = Cache::remember('v1/home/sigertan:'.$page.':'.$date, 120, function() {
+        $gertans = Cache::remember('v1/home/sigertan:'.$page.':'.$date, 10, function() {
             return Crs::has('tanggapan')
                     ->with('tanggapan')
                     ->where('crs_sta','TERBIT')
