@@ -89,7 +89,7 @@ class GerakanTanahController extends Controller
                         'judul' => 'Laporan Tanggapan Gerakan Tanah di '.$gertan->crs_vil.', '.$gertan->crs_rgn.', '.$gertan->crs_cty.', '.$gertan->crs_prv,
                         'pelapor' => $gertan->crs_usr,
                         'updated_at' => $gertan->crs_log,
-                        'deskripsi' => 'Gerakan tanah terjadi di '.$gertan->crs_vil.', '.$gertan->crs_rgn.', '.$gertan->crs_cty.', '.$gertan->crs_prv.' pada '.$gertan->crs_log->formatLocalized('%A, %d %B %Y').' pukul '.$gertan->crs_log->format('H:i:s').' '.$gertan->crs_zon.'. Secara Geografis, lokasi kejadian gerakan tanah terletak pada posisi '.$gertan->crs_lat.' LU dan '.$gertan->crs_lon.' BT.',
+                        'deskripsi' => 'Gerakan tanah terjadi di '.$gertan->crs_vil.', '.$gertan->crs_rgn.', '.$gertan->crs_cty.', '.$gertan->crs_prv.' pada '.$gertan->crs_dtm->formatLocalized('%A, %d %B %Y').' pukul '.$gertan->crs_dtm->format('H:i:s').' '.$gertan->crs_zon.'. Secara Geografis, lokasi kejadian gerakan tanah terletak pada posisi '.$gertan->crs_lat.' LU dan '.$gertan->crs_lon.' BT.',
                         'kerentanan' => empty($gertan->tanggapan->qls_zkg) ? null : 'Lokasi bencana berada pada Zona Potensi Gerakan Tanah '.str_replace_last(', ',' hingga ',title_case(implode(', ',$gertan->tanggapan->qls_zkg))).'.',
                         'rekomendasi' => empty($gertan->tanggapan->rekomendasi) ? null : nl2br($gertan->tanggapan->rekomendasi->qls_rec)
                     ];
@@ -134,7 +134,7 @@ class GerakanTanahController extends Controller
                         'judul' => 'Laporan Tanggapan Gerakan Tanah di '.$gertan->crs_vil.', '.$gertan->crs_rgn.', '.$gertan->crs_cty.', '.$gertan->crs_prv,
                         'pelapor' => $gertan->crs_usr,
                         'updated_at' => $gertan->crs_log,
-                        'deskripsi' => 'Gerakan tanah terjadi di '.$gertan->crs_vil.', '.$gertan->crs_rgn.', '.$gertan->crs_cty.', '.$gertan->crs_prv.' pada '.$gertan->crs_log->formatLocalized('%A, %d %B %Y').' pukul '.$gertan->crs_dtm->format('H:i:s').' '.$gertan->crs_zon.'. Secara Geografis, lokasi kejadian gerakan tanah terletak pada posisi '.$gertan->crs_lat.' LU dan '.$gertan->crs_lon.' BT.',
+                        'deskripsi' => 'Gerakan tanah terjadi di '.$gertan->crs_vil.', '.$gertan->crs_rgn.', '.$gertan->crs_cty.', '.$gertan->crs_prv.' pada '.$gertan->crs_dtm->formatLocalized('%A, %d %B %Y').' pukul '.$gertan->crs_dtm->format('H:i:s').' '.$gertan->crs_zon.'. Secara Geografis, lokasi kejadian gerakan tanah terletak pada posisi '.$gertan->crs_lat.' LU dan '.$gertan->crs_lon.' BT.',
                         'kerentanan' => empty($gertan->tanggapan->qls_zkg) ? null : 'Lokasi bencana berada pada Zona Potensi Gerakan Tanah '.str_replace_last(', ',' hingga ',title_case(implode(', ',$gertan->tanggapan->qls_zkg))).'.',
                         'rekomendasi' => empty($gertan->tanggapan->rekomendasi) ? null : nl2br($gertan->tanggapan->rekomendasi->qls_rec)
                     ];
@@ -168,7 +168,7 @@ class GerakanTanahController extends Controller
                 'anggota' => $gertan->tanggapan->anggota,
                 'judul' => 'Laporan Tanggapan Gerakan Tanah di '.$gertan->crs_vil.', '.$gertan->crs_rgn.', '.$gertan->crs_cty.', '.$gertan->crs_prv,
                 'updated_at' => $gertan->crs_log,
-                'deskripsi' => 'Gerakan tanah terjadi di '.$gertan->crs_vil.', '.$gertan->crs_rgn.', '.$gertan->crs_cty.', '.$gertan->crs_prv.' pada tanggal '.$gertan->crs_log->format('Y-m-d').' pukul '.$gertan->crs_log->format('H:i:s').' '.$gertan->crs_zon.'. Secara Geografis, lokasi kejadian gerakan tanah terletak pada posisi '.$gertan->crs_lat.' LU dan '.$gertan->crs_lon.' BT.',
+                'deskripsi' => 'Gerakan tanah terjadi di '.$gertan->crs_vil.', '.$gertan->crs_rgn.', '.$gertan->crs_cty.', '.$gertan->crs_prv.' pada tanggal '.$gertan->crs_dtm->format('Y-m-d').' pukul '.$gertan->crs_dtm->format('H:i:s').' '.$gertan->crs_zon.'. Secara Geografis, lokasi kejadian gerakan tanah terletak pada posisi '.$gertan->crs_lat.' LU dan '.$gertan->crs_lon.' BT.',
                 'peta' => empty($gertan->tanggapan->qls_pst) ? null : $gertan->tanggapan->qls_pst,
                 'foto_sosialisasi' => $gertan->tanggapan->foto_sosialisasi,
                 'foto_kejadian' => $gertan->tanggapan->foto_kejadian,
@@ -195,7 +195,7 @@ class GerakanTanahController extends Controller
 
     public function indexGertan(Request $request, $q = null)
     {
-        $q == 'q' ? $this->filteredGertan($request) 
+        $q == 'q' ? $this->filteredGertan($request)
                     : $this->nonFilteredGertan($request);
 
         $gertans = $this->getGertans();
