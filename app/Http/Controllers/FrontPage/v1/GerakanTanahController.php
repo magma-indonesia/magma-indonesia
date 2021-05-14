@@ -70,7 +70,7 @@ class GerakanTanahController extends Controller
             return Crs::has('tanggapan')
                     ->with('tanggapan')
                     ->where('crs_sta','TERBIT')
-                    ->whereBetween('crs_lat',[-12, 2])
+                    ->whereBetween('crs_lat',[-12, 3])
                     ->whereBetween('crs_lon',[89, 149])
                     ->whereBetween('crs_dtm',[$request->start,$request->end])
                     ->orderBy('crs_log','desc')
@@ -116,7 +116,7 @@ class GerakanTanahController extends Controller
             return Crs::has('tanggapan')
                     ->with('tanggapan')
                     ->where('crs_sta','TERBIT')
-                    ->whereBetween('crs_lat',[-12, 2])
+                    ->whereBetween('crs_lat',[-12, 3])
                     ->whereBetween('crs_lon',[89, 149])
                     ->orderBy('crs_log','desc')
                     ->simplePaginate(10);
