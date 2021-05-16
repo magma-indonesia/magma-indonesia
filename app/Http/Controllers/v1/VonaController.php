@@ -133,7 +133,7 @@ class VonaController extends Controller
     public function show($no)
     {
         $vona = Cache::remember('v1/vona-show-'.$no, 120, function () use($no) {
-            return Vona::findOrFail($no); 
+            return Vona::findOrFail($no);
         });
 
         return view('v1.vona.show',compact('vona'));
@@ -149,7 +149,7 @@ class VonaController extends Controller
     {
         $vona = Vona::findOrFail($no);
         // $vona->delete();
-        
+
         return redirect()->route('chambers.v1.vona.index')
                 ->with('flash_message','VONA berhasil dihapus!');
     }

@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    v1 | VONA 
+    v1 | VONA
 @endsection
 
 @section('content-header')
@@ -97,7 +97,7 @@
                                         <td>(10)</td>
                                         <td><b>Summit Elevation</b></td>
                                         <td><b>:</b></td>
-                                        <td>{{ round($vona->summit_elevation*3.3) }} FT ({{ $vona->summit_elevation }} M)</td>
+                                        <td>{{ round($vona->summit_elevation) }} FT ({{ $vona->summit_elevation/3.2 }} M)</td>
                                     </tr>
                                     <tr>
                                         <td>(11)</td>
@@ -166,5 +166,5 @@
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
 @endsection
