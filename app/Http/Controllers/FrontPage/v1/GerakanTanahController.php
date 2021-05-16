@@ -66,7 +66,7 @@ class GerakanTanahController extends Controller
         $start = strtotime($request->start);
         $end = strtotime($request->end);
 
-        $gertans = Cache::remember('v1/home/sigertan:search:'.$page.':'.$start.':'.$end, 120, function() use($request) {
+        $gertans = Cache::remember('v1/home/sigertan:search:'.$page.':'.$start.':'.$end, 10, function() use($request) {
             return Crs::has('tanggapan')
                     ->with('tanggapan')
                     ->where('crs_sta','TERBIT')
@@ -77,7 +77,7 @@ class GerakanTanahController extends Controller
                     ->simplePaginate(10);
         });
 
-        $grouped = Cache::remember('v1/home/sigertan:search:grouped:'.$page.':'.$start.':'.$end, 120, function() use($gertans) {
+        $grouped = Cache::remember('v1/home/sigertan:search:grouped:'.$page.':'.$start.':'.$end, 10, function() use($gertans) {
             $grouped = $gertans->groupBy('date');
             $grouped->each(function ($gertans, $key) {
                 $gertans->transform(function ($gertan, $key) {
@@ -112,7 +112,7 @@ class GerakanTanahController extends Controller
 
         $date = strtotime($last->crs_log);
 
-        $gertans = Cache::remember('v1/home/sigertan:'.$page.':'.$date, 120, function() {
+        $gertans = Cache::remember('v1/home/sigertan:'.$page.':'.$date, 10, function() {
             return Crs::has('tanggapan')
                     ->with('tanggapan')
                     ->where('crs_sta','TERBIT')
@@ -122,7 +122,7 @@ class GerakanTanahController extends Controller
                     ->simplePaginate(10);
         });
 
-        $grouped = Cache::remember('v1/home/sigertan:grouped:'.$page.':'.$date, 120, function() use($gertans) {
+        $grouped = Cache::remember('v1/home/sigertan:grouped:'.$page.':'.$date, 10, function() use($gertans) {
             $grouped = $gertans->groupBy('date');
             $grouped->each(function ($gertans, $key) {
                 $gertans->transform(function ($gertan, $key) {
