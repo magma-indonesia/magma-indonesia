@@ -33,7 +33,7 @@ Route::get('stakeholder/status', 'Api\StakeholderController@status')
 Route::name('v1.')->group(function () {
     Route::group(['middleware' => ['jwt.auth']], function() {
         Route::group(['prefix' => 'v1'], function () {
-            Route::get('import/vona','Api\ImportController@vona');       
+            Route::get('import/vona','Api\ImportController@vona');
             Route::get('user','Api\UserController@index');
             Route::get('user/{nip}','Api\UserController@show');
             Route::get('var/latest','Api\VarController@latest');
@@ -51,7 +51,7 @@ Route::name('v1.')->group(function () {
             Route::get('magma-var/{code}/{noticenumber?}','Api\v1\MagmaVarController@show');
             Route::get('magma-sigertan','Api\v1\MagmaSigertanController@index');
             Route::get('press-release','Api\v1\PressController@index');
-    
+
             Route::name('home.')->group(function () {
                 Route::group(['prefix' => 'home'], function () {
 
@@ -64,7 +64,7 @@ Route::name('v1.')->group(function () {
 
                     Route::get('esdm','Api\v1\EsdmController@index')
                             ->name('esdm');
-    
+
                     Route::group(['prefix' => 'gunung-api'], function () {
                         Route::get('/','Api\v1\HomeController@gunungapi')
                             ->name('gunung-api');
@@ -77,7 +77,7 @@ Route::name('v1.')->group(function () {
                         Route::get('/var/{code}','Api\v1\HomeController@showVar')
                             ->name('gunung-api.var.show');
                     });
-    
+
                     Route::group(['prefix' => 'gerakan-tanah'], function () {
                         Route::get('/','Api\v1\HomeController@gerakanTanah')
                             ->name('gerakan-tanah');
@@ -86,7 +86,7 @@ Route::name('v1.')->group(function () {
                         Route::get('/sigertan/{id}','Api\v1\HomeController@showSigertan')
                             ->name('gerakan-tanah.sigertan.show');
                     });
-    
+
                     Route::group(['prefix' => 'gempa-bumi'], function () {
                         Route::get('/','Api\v1\HomeController@gempaBumi')
                             ->name('gempa-bumi');
@@ -97,7 +97,18 @@ Route::name('v1.')->group(function () {
                     });
                 });
             });
-    
+
+            Route::name('python.')->group(function () {
+                Route::group(['prefix' => 'python'], function () {
+
+                    Route::group(['prefix' => 'magma-var'], function () {
+                        Route::get('evaluasi', 'Api\v1\MagmaVarEvaluasi@result')
+                            ->name('magma-var.evaluasi');
+                    });
+
+                });
+            });
+
         });
     });
 });
@@ -107,7 +118,7 @@ Route::name('wovodat.')->group(function () {
         Route::group(['prefix' => 'wovodat'], function () {
 
             Route::post('tilt/realtime/{deformation_station?}','Api\WOVOdat\DeformationTiltController@realtime')
-                ->name('tilt.realtime');            
+                ->name('tilt.realtime');
 
             Route::post('tilt/realtime/{deformation_station}/data','Json\WOVOdat\RealtimeTiltJson@json')
                 ->name('tilt.realtime.data');

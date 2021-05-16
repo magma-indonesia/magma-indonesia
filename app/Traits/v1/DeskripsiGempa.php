@@ -82,7 +82,7 @@ trait DeskripsiGempa
     ];
 
     protected $code_erupsi = ['lts'];
-    
+
     protected $code_terasa = ['trs'];
 
     protected function minMax($array)
@@ -183,7 +183,7 @@ trait DeskripsiGempa
         ];
 
         $arah_luncuran = $this->var->{'var_'.$this->code_gempa.'_alun'};
-        
+
         $arah = is_null($arah_luncuran) ? 'arah luncuran tidak teramati. ' : ' dan arah luncuran teramati ke arah '.str_replace_last(', ',' dan ', strtolower(implode(', ',$arah_luncuran->toArray()))).'. ';
 
         ($this->jarak_luncuran[0] == $this->jarak_luncuran[1]) AND ($this->jarak_luncuran[1] >5) ?
@@ -336,9 +336,9 @@ trait DeskripsiGempa
     protected function getDeskripsiGempa($var)
     {
         $this->var = $var;
-        foreach ($this->codes as $code_gempa => $nama_gempa) 
+        foreach ($this->codes as $code_gempa => $nama_gempa)
         {
-            $var->{'var_'.$code_gempa} > 0 ? 
+            $var->{'var_'.$code_gempa} > 0 ?
                     $this->setDeskripsiGempa($code_gempa) : false;
         }
         return $this->deskripsi_gempa;
