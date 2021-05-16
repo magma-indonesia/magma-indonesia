@@ -32,7 +32,7 @@ class MagmaVarController extends Controller
     protected $request;
 
     /**
-     * Set Variable session Visual untuk memeriksa foto visual temporary 
+     * Set Variable session Visual untuk memeriksa foto visual temporary
      *
      * @param \Illuminate\Http\Request $request
      * @return Illuminate\Http\Request
@@ -59,7 +59,7 @@ class MagmaVarController extends Controller
         $this->request->foto || $this->request->hasfoto == 0 ?
                     Storage::disk('temp')->delete('var/'.$filename) :
                     false;
-        
+
         return $this;
     }
 
@@ -89,8 +89,8 @@ class MagmaVarController extends Controller
                         $this->request->foto->storeAs('var',$filename ,'temp') :
                         null;
 
-            
-            $this->var_image = $upload ? 
+
+            $this->var_image = $upload ?
                         'https://magma.vsi.esdm.go.id/'.$path.'/'.$filename :
                         'https://magma.vsi.esdm.go.id/img/ga/IBU/IBU_20190503060512.png';
 
@@ -137,7 +137,7 @@ class MagmaVarController extends Controller
                 ->orderBy('ga_nama_gapi','asc')
                 ->get();
         });
-        
+
         $users = Cache::remember('v1/users-mga', 120, function () {
             return User::select('id','vg_nip','vg_nama')
                 ->where('vg_bid','Pengamatan dan Penyelidikan Gunungapi')
@@ -170,7 +170,7 @@ class MagmaVarController extends Controller
 
             $nip = $request->nip == 'all' ? '%' : $request->input('nip','%');
             $code = $request->gunungapi == 'all' ? '%' : strtoupper($request->input('gunungapi','%'));
-            $bulan = $request->input('bulan', Carbon::parse('first day of January')->format('Y-m-d'));        
+            $bulan = $request->input('bulan', Carbon::parse('first day of January')->format('Y-m-d'));
             $start = $request->input('start', Carbon::parse('first day of January')->format('Y-m-d'));
             $end = $request->input('end', Carbon::now()->format('Y-m-d'));
 
@@ -193,7 +193,7 @@ class MagmaVarController extends Controller
                         ->where('var_nip_pelapor','like',$nip)
                         ->orderBy('var_data_date','asc')
                         ->orderBy('var_data_date','desc');
-            
+
 
             if ($request->tipe == '5')
             {
@@ -201,9 +201,9 @@ class MagmaVarController extends Controller
             } else {
                 $vars->where('periode','like',$periode);
             }
-            
+
             $count = $vars->count();
-    
+
             $vars = $vars->paginate(31);
 
             return view('v1.gunungapi.laporan.filter',compact('vars','gadds','users'))->with('flash_result',
@@ -284,14 +284,14 @@ class MagmaVarController extends Controller
             ];
 
             $dates = [
-                'start' => $request->start, 
+                'start' => $request->start,
                 'end' => $request->end,
             ];
 
             foreach ($results->first()['gempa'] as $gempa) {
                 $headers[] = $gempa['nama'];
             }
-            
+
             return view('v1.gunungapi.laporan.filter-gempa-result', compact('headers', 'results', 'dates'));
         }
 
@@ -359,7 +359,7 @@ class MagmaVarController extends Controller
                     $pre_status = 'Level IV (Awas)';
                     break;
             }
-            
+
             $var_perwkt = $request->date == '00:00-24:00' ? '24 Jam' : '6 Jam';
 
             $var = [
@@ -392,7 +392,7 @@ class MagmaVarController extends Controller
         {
             return back()->withError('Error Create VAR');
         }
-   
+
     }
 
     /**
@@ -417,7 +417,7 @@ class MagmaVarController extends Controller
         if (empty(session('old_var')))
             return redirect()->route('chambers.v1.gunungapi.laporan.create.var');
 
-        $request->rekomendasi == 9999 ? 
+        $request->rekomendasi == 9999 ?
                         session()->put('var.var_rekom',$request->rekomendasi_text) : '';
 
         return redirect()->route('chambers.v1.gunungapi.laporan.create.visual');
@@ -520,7 +520,7 @@ class MagmaVarController extends Controller
     public function show($id)
     {
         $var = Cache::remember('v1/var-show-'.$id, 60, function () use($id) {
-            return OldVar::findOrFail($id); 
+            return OldVar::findOrFail($id);
         });
 
         $others = Cache::remember('v1/var-show-others-'.$id, 60, function () use($var) {
@@ -530,10 +530,10 @@ class MagmaVarController extends Controller
                     ->whereIn('periode',['00:00-06:00','06:00-12:00','12:00-18:00','18:00-24:00','00:00-24:00'])
                     ->get();
         });
-        
+
         $asap = (object) [
             'wasap' => isset($var->var_wasap) ? $var->var_wasap->toArray() : [],
-            'intasap' => isset($var->var_wasap) ? $var->var_intasap->toArray() : [], 
+            'intasap' => isset($var->var_wasap) ? $var->var_intasap->toArray() : [],
             'tasap_min' => $var->var_tasap_min,
             'tasap_max' => $var->var_tasap,
         ];
@@ -543,9 +543,10 @@ class MagmaVarController extends Controller
                     ->asap($var->var_asap, $asap)
                     ->cuaca($var->var_cuaca->toArray())
                     ->angin($var->var_kecangin->toArray(),$var->var_arangin->toArray())
+                    ->suhu($var->var_suhumin, $var->var_suhumax)
                     ->getVisual();
         });
-        
+
         $gempa = Cache::remember('v1/var-show-gempa-'.$id, 60, function () use($var) {
             return $this->getDeskripsiGempa($var);
         });
@@ -592,7 +593,7 @@ class MagmaVarController extends Controller
      *
      * @param Request $request
      * @return \Illuminate\Http\Response
-     */    
+     */
     public function exists(Request $request)
     {
         $ga_code = substr($request->code,0,3);

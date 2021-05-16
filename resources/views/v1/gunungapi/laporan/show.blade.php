@@ -56,7 +56,7 @@
                 <div class="panel-body">
                     <div class="stats-title pull-left">
                         <h3>Data Laporan Gunung Api</h3>
-                    </div> 
+                    </div>
                     <div class="stats-icon pull-right">
                         <i class="pe-7s-server fa-4x"></i>
                     </div>
@@ -66,7 +66,7 @@
                         <p>{{ $var->ga_nama_gapi }}</p>
                         <h4 class="font-bold">Tingkat Aktivitas</h4>
                         <p>
-                            @if($var->cu_status == '1') 
+                            @if($var->cu_status == '1')
                             Level I (Normal)
                             @elseif($var->cu_status == '2')
                             Level II (Waspada)
@@ -102,7 +102,7 @@
                     <br>
                     <div class="m-t-xl border-top">
                         <h4 class="font-bold">Visual dan Meteorologi</h4>
-                        <p>{{ $visual }}</p>
+                        <p>{!! $visual !!}</p>
                         @if(!empty($var->var_viskawah))
                         <h4 class="font-bold">Keterangan Visual Lainnya</h4>
                         <p>{{ $var->var_viskawah }}</p>
@@ -193,7 +193,7 @@
                                 {{ $value}}
                             </li>
                             @endforeach
-                        </ul>                  
+                        </ul>
                         @endif
                     </div>
                     <div class="border-top m-t-md">
