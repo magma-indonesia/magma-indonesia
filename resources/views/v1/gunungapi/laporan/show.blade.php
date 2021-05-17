@@ -103,6 +103,8 @@
                     <div class="m-t-xl border-top">
                         <h4 class="font-bold">Visual dan Meteorologi</h4>
                         <p>{!! $visual !!}</p>
+                        <button type="button" class="btn bt-sm copy" data-toggle="tooltip" data-placement="top" title="Copied!" data-clipboard-text="{!! $visual !!}">Copy</button>
+
                         @if(!empty($var->var_viskawah))
                         <h4 class="font-bold">Keterangan Visual Lainnya</h4>
                         <p>{{ $var->var_viskawah }}</p>
@@ -194,6 +196,9 @@
                             </li>
                             @endforeach
                         </ul>
+                        <textarea id="copy-gempa" style="height:0; position:absolute;z-index: -1;">{{ implode("\n",$gempa) }}</textarea>
+                        <button type="button" class="btn copy" data-toggle="tooltip" data-placement="top" title="Copied!" data-clipboard-action="copy"
+                                                            data-clipboard-target="#copy-gempa">Copy</button>
                         @endif
                     </div>
                     <div class="border-top m-t-md">
@@ -212,18 +217,35 @@
 @endsection
 
 @section('add-vendor-script')
-    @role('Super Admin')
-    <script src="{{ asset('vendor/json-viewer/jquery.json-viewer.js') }}"></script>
-    @endrole
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+@role('Super Admin')
+<script src="{{ asset('vendor/json-viewer/jquery.json-viewer.js') }}"></script>
+@endrole
 @endsection
 
 @section('add-script')
-    @role('Super Admin')
-    <script>
-        $(document).ready(function () {
-            $('#json-renderer-var').jsonViewer(@json($var), {collapsed: true});
-            $('#json-renderer-others').jsonViewer(@json($others), {collapsed: true});
-        });
-    </script>
-    @endrole
+<script>
+var clipboard = new ClipboardJS('.copy');
+
+clipboard.on('success', function(e) {
+    console.info('Action:', e.action);
+    console.info('Text:', e.text);
+    console.info('Trigger:', e.trigger);
+
+    e.clearSelection();
+});
+
+$('button[data-toggle="tooltip"]').tooltip({
+    animated: 'fade',
+    trigger: 'click'
+});
+</script>
+@role('Super Admin')
+<script>
+    $(document).ready(function () {
+        $('#json-renderer-var').jsonViewer(@json($var), {collapsed: true});
+        $('#json-renderer-others').jsonViewer(@json($others), {collapsed: true});
+    });
+</script>
+@endrole
 @endsection
