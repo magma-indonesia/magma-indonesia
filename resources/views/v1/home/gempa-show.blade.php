@@ -1,6 +1,6 @@
-@extends('layouts.slim') 
+@extends('layouts.slim')
 
-@section('title') 
+@section('title')
 Laporan Tanggapan Gempa Bumi {{ $roq->laporan->title }}, {{ $roq->laporan->pelapor }}
 @endsection
 
@@ -17,12 +17,12 @@ crossorigin=""></script>
 <link rel="stylesheet" href="{{ asset('css/leaflet.defaultextent.css') }}">
 <script src="{{ asset('js/leaflet.defaultextent.js') }}"></script>
 @endsection
- 
+
 @section('breadcrumb')
 <li class="breadcrumb-item"><a href="#">Gempa Bumi</a></li>
 <li class="breadcrumb-item active" aria-current="page">Tanggapan Kejadian</li>
 @endsection
- 
+
 @section('page-title')
 Tanggapan Kejadian
 @endsection
@@ -32,7 +32,7 @@ Tanggapan Kejadian
     <div class="col-lg-8">
         <div class="card mg-b-30">
             <div id="map" class="ht-250 ht-sm-300 ht-md-400 bd-0"></div>
-            
+
             <div class="card-body pd-30">
                 <h5 class="card-title tx-dark tx-medium mg-b-10">{{ $roq->laporan->title }}</h5>
                 <p class="card-subtitle tx-normal mg-b-15">Tanggapan dibuat oleh <a href="#">{{ $roq->laporan->pelapor }}</a><span class="visible-md visible-lg">, {{ $roq->laporan->waktu->formatLocalized('%d %B %Y').' pukul '.$roq->laporan->waktu->format('H:i:s').' WIB' }}</span></p>
@@ -40,21 +40,33 @@ Tanggapan Kejadian
                     <span class="badge badge-warning pd-10 mg-t-10">{{ $roq->laporan->magnitude }}</span>
                     <span class="badge badge-primary pd-10 mg-t-10">{{ $roq->tanggapan->tsunami }}</span>
                 </p>
+
                 @if ($roq->laporan->intensitas AND ($roq->laporan->intensitas != '-belum ada keterangan-'))
                 <p class="blog-text bg-primary pd-10 mg-t-10 tx-white"><small>{{ $roq->laporan->intensitas }}</small></p>
                 @endif
+
                 <label class="slim-card-title">Lokasi dan Waktu Kejadian</label>
                 <p class="card-text pd-r-30">{{ $roq->tanggapan->pendahuluan }}</p>
                 <hr>
+
+                @if ($roq->tanggapan->kondisi)
                 <label class="slim-card-title">Kondisi Wilayah</label>
                 <p class="card-text pd-r-30">{{ $roq->tanggapan->kondisi }}</p>
                 <hr>
+                @endif
+
+                @if ($roq->tanggapan->mekanisme)
                 <label class="slim-card-title">Mekanisme</label>
                 <p class="card-text pd-r-30">{{ $roq->tanggapan->mekanisme }}</p>
                 <hr>
+                @endif
+
+                @if ($roq->tanggapan->efek)
                 <label class="slim-card-title">Dampak</label>
                 <p class="card-text pd-r-30">{{ $roq->tanggapan->efek }}</p>
                 <hr>
+                @endif
+
                 <label class="slim-card-title">Rekomendasi</label>
                 <p class="card-text pd-r-30">{!! $roq->rekomendasi !!}</p>
             </div>
