@@ -115,7 +115,7 @@ class CreateRoqRequest extends FormRequest
 
         return implode(';',$roq_source);
     }
-    
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -187,12 +187,12 @@ class CreateRoqRequest extends FormRequest
             'mmi' => 'present|nullable',
             'nearest_volcano' => 'present|nullable',
             'roq_tanggapan' => 'required|boolean',
-            'roq_title' => 'required_if:roq_tanggapan,1',
-            'roq_intro' => 'required_if:roq_tanggapan,1',
-            'roq_konwil' => 'required_if:roq_tanggapan,1',
-            'roq_mekanisme' => 'required_if:roq_tanggapan,1',
-            'roq_efek' => 'required_if:roq_tanggapan,1',
-            'roq_rekom' => 'required_if:roq_tanggapan,1',
+            'roq_title' => 'nullable',
+            'roq_intro' => 'nullable',
+            'roq_konwil' => 'nullable',
+            'roq_mekanisme' => 'nullable',
+            'roq_efek' => 'nullable',
+            'roq_rekom' => 'nullable',
             'roq_source_code' => 'required_if:roq_tanggapan,1|array',
             'roq_source_code.*' => 'required_if:roq_tanggapan,1|in:BMKG,GFZ,USGS',
             'roq_tsu' => 'required_if:roq_tanggapan,1|boolean'
