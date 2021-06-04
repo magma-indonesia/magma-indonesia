@@ -110,8 +110,8 @@
                                         <td><b>Volcanic Cloud Height</b></td>
                                         <td><b>:</b></td>
                                         <td>
-                                        @if($vona->vch_height > 0)
-                                            {{ $vona->vch_height_text }}
+                                        @if($vona->vc_height > 0)
+                                            {{ $vona->vc_height_text }}
                                         @else
                                         Volcanic ash is not visible/observed.
                                         @endif</td>

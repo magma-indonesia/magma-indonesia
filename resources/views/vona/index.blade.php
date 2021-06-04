@@ -105,13 +105,13 @@
                                                 <button value="Delete" class="m-t-xs m-b-xs btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
                                             </form>
                                             @endrole
-                                        </td>                      
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
-                        {{ $vonas->links() }}                        
+                        {{ $vonas->links() }}
                     </div>
                 </div>
             </div>
@@ -133,7 +133,7 @@
             });
 
             $('body').on('submit','#deleteForm',function (e) {
-                e.preventDefault();                
+                e.preventDefault();
 
                 var $url = $(this).attr('action'),
                     $data = $(this).serialize();

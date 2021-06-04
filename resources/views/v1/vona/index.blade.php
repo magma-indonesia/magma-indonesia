@@ -78,7 +78,7 @@
                                         <td>{{ $vona->issued_time }}</td>
                                         <td>{{ $vona->cu_avcode }}</td>
                                         <td>{{ strtolower($vona->pre_avcode) }}</td>
-                                        <td>{{ $vona->vc_height ? $vona->vc_height.' m' : 'Not observed' }}</td>
+                                        <td>{{ $vona->vc_height ? intval($vona->vc_height/3.2).' m' : 'Not observed' }}</td>
                                         <td>{{ $vona->nama }}</td>
                                         <td>
                                             <a class="btn btn-sm btn-magma btn-outline" href="{{ route('chambers.v1.vona.show',['no' => $vona->no])}}" target="_blank">View</a>
