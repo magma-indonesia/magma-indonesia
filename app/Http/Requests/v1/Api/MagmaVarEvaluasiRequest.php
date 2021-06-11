@@ -13,7 +13,7 @@ class MagmaVarEvaluasiRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth('api')->check();
+        return true;
     }
 
     /**

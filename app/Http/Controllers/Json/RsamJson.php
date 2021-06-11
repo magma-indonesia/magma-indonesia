@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Tightenco\Collect\Support\Collection;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
-use StreamParser;
+use Rodenastyle\StreamParser\StreamParser;
 use App\Jobs\SendLoginNotification;
 
 class RsamJson extends Controller
