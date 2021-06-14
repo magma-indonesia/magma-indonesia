@@ -102,7 +102,7 @@ Route::name('v1.')->group(function () {
                 Route::group(['prefix' => 'python'], function () {
 
                     Route::group(['prefix' => 'magma-var'], function () {
-                        Route::get('evaluasi', 'Api\v1\MagmaVarEvaluasi@result')
+                        Route::get('evaluasi', 'Api\v1\Python\MagmaVarEvaluasi@result')
                             ->name('magma-var.evaluasi');
                     });
 
