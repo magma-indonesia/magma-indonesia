@@ -24,7 +24,7 @@ class MapController extends Controller
 {
     use VisualAsap,DeskripsiGempa;
 
-    public function showGempa(Request $request) 
+    public function showGempa(Request $request)
     {
         $id = $request->id;
         $roq = MagmaRoq::select('no','roq_logtime')->where('no',$id)->firstOrFail();
@@ -106,7 +106,7 @@ class MapController extends Controller
                     'tipe' => empty($gertan->tanggapan->qls_tgt) ? 'Belum dilaporkan.' : $gertan->tanggapan->qls_tgt,
                     'dampak' => $dampak ? $dampak : 'Belum ada informasi mengenai dampak dari kejadian gerakan tanah ini.',
                     'kondisi' => [
-                        'morfologi' => empty($gertan->tanggapan->qls_sba) ? 'Belum dilaporkan.' : 'Secara umum lokasi gerakan tanah ini merupakan daerah '.strtolower(implode(', ',$gertan->tanggapan->qls_sba)).' yang memiliki kemiringan lereng '.implode(', ',$gertan->tanggapan->qls_mrl),
+                        'morfologi' => empty($gertan->tanggapan->qls_sba) ? 'Belum dilaporkan.' : 'Secara umum lokasi gerakan tanah ini merupakan daerah '.strtolower(implode(', ',$gertan->tanggapan->qls_sba)). (empty($gertan->tanggapan->qls_mrl) ? '.' : ' yang memiliki kemiringan lereng ' . implode(', ', $gertan->tanggapan->qls_mrl)),
                         'geologi' => empty($gertan->tanggapan->qls_frm) ? 'Belum dilaporkan.' : 'Berdasarkan peta geologi, lokasi bencana tersusun oleh formasi '.$gertan->tanggapan->qls_frm.'. Jenis Batuan di antaranya adalah '.$gertan->tanggapan->qls_jbt.'. Jenis Pelapukan berupa '.$gertan->tanggapan->qls_jtp.'.'.$struktur,
                         'keairan' => empty($gertan->tanggapan->qls_air) ? 'Belum dilaporkan.' : 'Keairan di lokasi gerakan tanah berupa '.implode(', ',$gertan->tanggapan->qls_air).$kedalaman_air,
                         'tata_guna_lahan' => empty($gertan->tanggapan->qls_tgl) ? 'Belum dilaporkan.' : 'Tata Guna Lahan  di lokasi gerakan tanah ini berupa '.implode(', ',$gertan->tanggapan->qls_tgl).'.',
@@ -166,7 +166,7 @@ class MapController extends Controller
 
         $asap = (object) [
             'wasap' => isset($var->var_wasap) ? $var->var_wasap->toArray() : [],
-            'intasap' => isset($var->var_wasap) ? $var->var_intasap->toArray() : [], 
+            'intasap' => isset($var->var_wasap) ? $var->var_intasap->toArray() : [],
             'tasap_min' => $var->var_tasap_min,
             'tasap_max' => $var->var_tasap,
         ];
@@ -182,7 +182,7 @@ class MapController extends Controller
                     ->getVisual();
 
         $gempa = $this->getDeskripsiGempa($var);
-                
+
         $vona = !empty($vona) ? [
             'issued' => $vona->issued,
             'color_code' => $vona->cu_avcode,
@@ -222,7 +222,7 @@ class MapController extends Controller
                 'vona' => $vona,
             ]
         ];
-        
+
         return response()->json($data);
     }
 
@@ -246,7 +246,7 @@ class MapController extends Controller
     protected function failed($var)
     {
         return empty($var) ?
-            response()->json(['success' => '0', 'message' => 'Data VAR tidak ditemukan'], 500) : 
+            response()->json(['success' => '0', 'message' => 'Data VAR tidak ditemukan'], 500) :
             $this;
     }
 
