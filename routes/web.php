@@ -31,7 +31,7 @@ Route::get('logout','LoginController@logout')
 
 Route::name('v1.')->group(function () {
     Route::group(['prefix' => 'v1', 'middleware' => ['statistik.home']], function () {
-        
+
         Route::get('/','v1\HomeController@home')
             ->name('home');
         Route::get('home','v1\HomeController@index')
@@ -42,7 +42,10 @@ Route::name('v1.')->group(function () {
         Route::post('home/check-location','v1\HomeController@check')
             ->name('home.check-location')
             ->middleware('signed');
-            
+
+        Route::get('statistik/{year?}', 'StatistikController@index')
+            ->name('statistik.index');
+
         Route::get('vona','FrontPage\v1\VonaController@index')
             ->name('vona.index');
         Route::get('vona/{id}','FrontPage\v1\VonaController@show')
@@ -67,7 +70,7 @@ Route::name('v1.')->group(function () {
         Route::get('gunung-api/laporan/search/{q?}','FrontPage\v1\GunungApiController@indexVar')
             ->name('gunungapi.var.search')
             ->middleware('custom_throttle:20,1');
-            
+
         Route::get('gunung-api/cctv','FrontPage\v1\KameraGunungApiController@index')
             ->name('gunungapi.cctv')
             ->middleware(['blacklist','custom_throttle:20,1']);
@@ -161,11 +164,8 @@ Route::name('.projects')->group(function () {
 });
 
 Route::name('.edukasi')->group(function() {
-    
-});
 
-Route::get('statistik/{year?}','StatistikController@index')
-    ->name('statistik.index');
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -186,7 +186,7 @@ Route::group(['middleware' => ['web','auth']], function () {
             Route::get('photo/{id?}/{high?}','UserPhotoController@photo')->name('user.photo');
         });
         Route::get('var/{noticenumber}/{draft?}','MagmaVarPhotoController@show')->name('var.show');
-    });    
+    });
     Route::group(['prefix' => 'img'], function (){
         Route::get('/user/{id}', 'ImageController@user');
     });

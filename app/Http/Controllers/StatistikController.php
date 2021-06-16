@@ -2,116 +2,121 @@
 
 namespace App\Http\Controllers;
 
-use App\MagmaVar;
 use App\MagmaRoq;
-use App\EqLts;
-use App\VarGempa;
-use App\Vona;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\v1\MagmaVar;
+use App\v1\Vona;
+use Illuminate\Support\Carbon;
+use Carbon\CarbonPeriod;
+use Illuminate\Support\Facades\Cache;
 
 class StatistikController extends Controller
 {
 
-    protected function dataGempa($year,$month)
+    // protected function dataGempa($datePeriod)
+    // {
+    //     return [
+    //         'total_kejadian' => MagmaRoq::where('utc','like',$year.'-'.$month.'%')
+    //                                 ->count(),
+    //         'total_tanggapan' => MagmaRoq::whereHas('tanggapan')
+    //                                 ->where('utc','like',$year.'-'.$month.'%')
+    //                                 ->count()
+    //     ];
+    // }
+
+    // protected function dataGerakanTanah($datePeriod)
+    // {
+    //     return [
+    //         'total_laporan' => $gertans,
+    //         'total_tanggapan' => $tanggapan,
+    //         'dampak' => [
+    //             'meninggal' => $dampak->sum('meninggal'),
+    //             'luka_luka' => $dampak->sum('luka'),
+    //             'rumah_rusak' => $dampak->sum('rumah_rusak'),
+    //             'rumah_hancur' => $dampak->sum('rumah_hancur'),
+    //             'rumah_terancam' => $dampak->sum('rumah_terancam'),
+    //             'bangunan_rusak' => $dampak->sum('bangunan_rusak'),
+    //             'bangunan_hancur' => $dampak->sum('bangunan_hancur'),
+    //             'bangunan_terancam' => $dampak->sum('bangunan_terancam'),
+    //             'lahan_rusak' => $dampak->sum('lahan_rusak'),
+    //             'jalan_rusak' => $dampak->sum('jalan_rusak'),
+    //         ]
+    //     ];
+    // }
+
+    protected function data($datePeriod)
     {
-        return [
-            'total_kejadian' => MagmaRoq::where('utc','like',$year.'-'.$month.'%')
-                                    ->count(),
-            'total_tanggapan' => MagmaRoq::whereHas('tanggapan')
-                                    ->where('utc','like',$year.'-'.$month.'%')
-                                    ->count()
-        ];
+        $data = $datePeriod->map(function ($date) {
+
+            $vars = MagmaVar::select('no', 'var_data_date', 'var_perwkt', 'var_vta', 'var_vtb', 'var_lts', 'var_apg')
+            ->where('var_perwkt', '24 Jam')
+            ->whereBetween('var_data_date', [$date->format('Y-m-d'), $date->endOfMonth()->format('Y-m-d')])
+                ->get();
+
+            return [
+                'date' => $date->format('F Y'),
+                'jumlah' => [
+                    'laporan' => $vars->count(),
+                    'gempa_vulkanik' => $vars->sum('var_vta') + $vars->sum('var_vtb'),
+                    'gempa_letusan' => $vars->sum('var_lts'),
+                    'awan_panas_guguran' => $vars->sum('var_apg'),
+                    'gunung_meletus' => $vars->where('var_lts', '>', 0)->count(),
+                    'vona' => Vona::whereBetween('issued_time', [$date->startOfMonth()->format('Y-m-d'), $date->endOfMonth()->format('Y-m-d')])->count(),
+                ]
+            ];
+        });
+
+        return $data;
     }
 
-    protected function dataGerakanTanah($year,$month)
+    protected function dataCurrentYear($datePeriod)
     {
-        $dampak = \App\SigertanKerusakan::where('noticenumber_id','like','%'.$year.$month.'%')->get();
+        $data = Cache::remember('v1/statistik/' . $datePeriod->first()->format('Y'), 86400, function () use ($datePeriod) {
+            return $this->data($datePeriod);
+        });
 
-        $gertans = \App\SigertanCrs::where('type','GERAKAN TANAH')
-                    ->where('waktu_kejadian','like',$year.'-'.$month.'%')
-                    ->count();
-
-        $tanggapan = \App\SigertanCrs::whereHas('tanggapan')
-                    ->where('type','GERAKAN TANAH')
-                    ->where('waktu_kejadian','like',$year.'-'.$month.'%')
-                    ->count();
-
-        return [
-            'total_laporan' => $gertans,
-            'total_tanggapan' => $tanggapan,
-            'dampak' => [
-                'meninggal' => $dampak->sum('meninggal'),
-                'luka_luka' => $dampak->sum('luka'),
-                'rumah_rusak' => $dampak->sum('rumah_rusak'),
-                'rumah_hancur' => $dampak->sum('rumah_hancur'),
-                'rumah_terancam' => $dampak->sum('rumah_terancam'),
-                'bangunan_rusak' => $dampak->sum('bangunan_rusak'),
-                'bangunan_hancur' => $dampak->sum('bangunan_hancur'),
-                'bangunan_terancam' => $dampak->sum('bangunan_terancam'),
-                'lahan_rusak' => $dampak->sum('lahan_rusak'),
-                'jalan_rusak' => $dampak->sum('jalan_rusak'),
-            ]
-        ];
+        return $data;
     }
 
-    protected function dataGunungApi($year,$month)
+    protected function dataPreviousYear($datePeriod)
     {
-        $sum = \App\EqApg::where('noticenumber_id','like','%'.$year.$month.'%')->sum('jumlah');
-        $sum += \App\EqApl::where('noticenumber_id','like','%'.$year.$month.'%')->sum('jumlah');
-        $sum += \App\EqDev::where('noticenumber_id','like','%'.$year.$month.'%')->sum('jumlah');
-        $sum += \App\EqDpt::where('noticenumber_id','like','%'.$year.$month.'%')->sum('jumlah');
-        $sum += \App\EqGtb::where('noticenumber_id','like','%'.$year.$month.'%')->sum('jumlah');
-        $sum += \App\EqGug::where('noticenumber_id','like','%'.$year.$month.'%')->sum('jumlah');
-        $sum += \App\EqHbs::where('noticenumber_id','like','%'.$year.$month.'%')->sum('jumlah');
-        $sum += \App\EqHrm::where('noticenumber_id','like','%'.$year.$month.'%')->sum('jumlah');
-        $sum += \App\EqHyb::where('noticenumber_id','like','%'.$year.$month.'%')->sum('jumlah');
-        $sum += \App\EqLof::where('noticenumber_id','like','%'.$year.$month.'%')->sum('jumlah');
-        $sum += \App\EqLts::where('noticenumber_id','like','%'.$year.$month.'%')->sum('jumlah');
-        $sum += \App\EqMtr::where('noticenumber_id','like','%'.$year.$month.'%')->sum('jumlah');
-        $sum += \App\EqTej::where('noticenumber_id','like','%'.$year.$month.'%')->sum('jumlah');
-        $sum += \App\EqTel::where('noticenumber_id','like','%'.$year.$month.'%')->sum('jumlah');
-        $sum += \App\EqTor::where('noticenumber_id','like','%'.$year.$month.'%')->sum('jumlah');
-        $sum += \App\EqTre::where('noticenumber_id','like','%'.$year.$month.'%')->sum('jumlah');
-        $sum += \App\EqTrs::where('noticenumber_id','like','%'.$year.$month.'%')->sum('jumlah');
-        $sum += \App\EqVlp::where('noticenumber_id','like','%'.$year.$month.'%')->sum('jumlah');
-        $sum += \App\EqVta::where('noticenumber_id','like','%'.$year.$month.'%')->sum('jumlah');
-        $sum += \App\EqVtb::where('noticenumber_id','like','%'.$year.$month.'%')->sum('jumlah');
+        $data = Cache::rememberForever('v1/statistik/' . $datePeriod->first()->format('Y'), function () use ($datePeriod) {
+            return $this->data($datePeriod);
+        });
 
-        $vona = Vona::where('sent',1)
-                        ->where('issued','like',$year.'-'.$month.'%')
-                        ->count();
+        return $data;
+    }
 
-        $var = MagmaVar::where('noticenumber','like','%'.$year.$month.'%')
-                    ->count();
-
-        $lts = EqLts::where('noticenumber_id','like','%'.$year.$month.'%')
-                    ->get()
-                    ->sum('jumlah');
-
-        return [
-            'jumlah_laporan' => $var,
-            'jumlah_kegempaan' => $sum,
-            'jumlah_gempa_letusan' => $lts,
-            'jumlah_vona' => $vona,
-        ];
+    protected function dataGunungApi($datePeriod)
+    {
+        return $datePeriod->first()->format('Y') == now()->format('Y') ?
+            $this->dataCurrentYear($datePeriod) :
+            $this->dataPreviousYear($datePeriod);
     }
 
     public function index($year = null)
     {
+        $year = $year == now()->format('Y') ? null : $year;
 
-        $year = $year ?: now()->format('Y');
+        $years = collect(CarbonPeriod::create(
+            Carbon::createFromDate('2015')->startOfYear(),
+            '1 year',
+            now()->endOfYear(),
+        ));
 
-        for ($i=1; $i <=12 ; $i++) { 
-            $month = $i < 10 ? '0'.$i : $i;
-            $data[$year.'-'.$month] = [
-                'gempa_bumi' => $this->dataGempa($year,$month),
-                'gerakan_tanah' => $this->dataGerakanTanah($year,$month),
-                'gunung_api' => $this->dataGunungApi($year,$month),
-            ];
-        }
+        $datePeriod = collect(CarbonPeriod::create(
+            $year ? Carbon::createFromDate($year)->startOfYear() : now()->startOfYear(),
+            '1 month',
+            $year ? Carbon::createFromDate($year)->endOfYear() : now()->endOfMonth(),
+        ));
 
-        return $data;
+        // return [
+        //     'gunung_api' => $this->dataGunungApi($datePeriod),
+        // ];
+
+        return view('v1.home.statistik', [
+            'years' => $years,
+            'gunung_apis' => $this->dataGunungApi($datePeriod),
+        ]);
 
     }
 }
