@@ -16,13 +16,12 @@ class MagmaVarEvaluasi extends Controller
 
     public function result(MagmaVarEvaluasiRequest $request)
     {
-        $query = MagmaVar::select('ga_code', 'var_data_date', 'var_perwkt')
-            ->where('ga_code', 'SIN')
+        $query = MagmaVar::query()
+            ->select('ga_code', 'var_data_date', 'var_perwkt')
+            ->where('ga_code', $request->code_ga)
             ->where('var_perwkt', '24 Jam')
             ->whereBetween('var_data_date', [$request->start_date, $request->end_date])
             ->orderBy('var_data_date', 'asc');
-
-        $gempas = $request->gempa;
 
         foreach ($request->gempa as $gempa) {
             $query->addSelect('var_' . $gempa);
@@ -30,13 +29,17 @@ class MagmaVarEvaluasi extends Controller
 
         $vars = $query->get();
 
+        $gempas = $request->gempa;
+
         $vars->transform(function ($var) use ($gempas) {
             $data['date'] = $var->var_data_date->format('Y-m-d');
             $data['availability'] = 1;
 
             foreach ($gempas as $gempa) {
-                $data[Str::snake($this->codes[$gempa])] = $var->{'var_' . $gempa};
+                $data['gempa'][Str::snake(str_replace('/', ' ', $this->codes[$gempa]))] = $var->{'var_' . $gempa};
             }
+
+            $data['visual'] = $this->visual();
 
             return $data;
         });
@@ -44,9 +47,35 @@ class MagmaVarEvaluasi extends Controller
         return $this->fillEmptyData($vars, $request);
     }
 
+    protected function visual()
+    {
+        return [
+            'visibility' => [],
+            'cuaca' => [],
+            'asap' => [
+                'teramati' => false,
+                'tinggi_min' => 0,
+                'tinggi_max' => 0,
+                'warna' => [],
+                'intensitas' => [],
+                'tekanan' => [],
+            ],
+            'letusan' => [
+                'teramati' => false,
+                'tinggi_min' => 0,
+                'tinggi_max' => 0,
+                'warna' => [],
+            ],
+            'awan_panas_guguran' => [
+                'teramati' => false,
+                'jarak_min' => 0,
+                'jarak_max' => 0,
+            ],
+        ];
+    }
+
     protected function fillEmptyData($vars, $request)
     {
-        $gempas = $request->gempa;
 
         $pluckDate = $vars->pluck('date');
 
@@ -60,12 +89,15 @@ class MagmaVarEvaluasi extends Controller
         $diffs = $datePeriod->diff($pluckDate)->flatten();
 
         if ($diffs->isNotEmpty()) {
+
+            $gempas = $request->gempa;
+
             $diffs->transform(function ($diff) use ($gempas) {
                 $data['date'] = $diff;
                 $data['availability'] = 0;
 
                 foreach ($gempas as $gempa) {
-                    $data[Str::snake($this->codes[$gempa])] = 0;
+                    $data['gempa'][Str::snake(str_replace('/',' ',$this->codes[$gempa]))] = 0;
                 }
 
                 return $data;
