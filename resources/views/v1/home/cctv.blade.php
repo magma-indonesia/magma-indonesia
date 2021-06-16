@@ -1,4 +1,4 @@
-@extends('layouts.slim') 
+@extends('layouts.slim')
 
 @section('title')
 CCTV Gunung Api
@@ -18,7 +18,7 @@ CCTV Gunung Api
 }
 </style>
 @endsection
- 
+
 @section('breadcrumb')
 <li class="breadcrumb-item"><a>Gunung Api</a></li>
 <li class="breadcrumb-item active" aria-current="page">CCTV</li>
@@ -50,7 +50,7 @@ Kamera Gunung Api
         <div class="card-columns column-count-4">
 
             @foreach ($cctvs as $cctv)
-            
+
             @if ($cctv->image)
             <div class="card card-blog-overlay">
                 <img class="img-fit-cover" src="{{ $cctv->image }}" alt="">
