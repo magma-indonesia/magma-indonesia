@@ -8,6 +8,7 @@ use App\v1\Vona;
 use Illuminate\Support\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Validation\ValidationException;
 
 class StatistikController extends Controller
 {
@@ -95,6 +96,11 @@ class StatistikController extends Controller
 
     public function index($year = null)
     {
+        if ($year > now()->format('Y') OR $year < 2015)
+        {
+            abort(404);
+        }
+
         $year = $year == now()->format('Y') ? null : $year;
 
         $years = collect(CarbonPeriod::create(
@@ -108,10 +114,6 @@ class StatistikController extends Controller
             '1 month',
             $year ? Carbon::createFromDate($year)->endOfYear() : now()->endOfMonth(),
         ));
-
-        // return [
-        //     'gunung_api' => $this->dataGunungApi($datePeriod),
-        // ];
 
         return view('v1.home.statistik', [
             'years' => $years,
