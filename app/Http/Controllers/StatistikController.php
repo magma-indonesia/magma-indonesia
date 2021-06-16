@@ -53,7 +53,7 @@ class StatistikController extends Controller
                 ->get();
 
             return [
-                'date' => $date->format('F Y'),
+                'date' => $date->formatLocalized('F Y'),
                 'jumlah' => [
                     'laporan' => $vars->count(),
                     'gempa_vulkanik' => $vars->sum('var_vta') + $vars->sum('var_vtb'),
