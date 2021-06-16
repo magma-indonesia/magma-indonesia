@@ -96,12 +96,12 @@ class StatistikController extends Controller
 
     public function index($year = null)
     {
+        $year = $year === null ? now()->format('Y') : $year;
+
         if ($year > now()->format('Y') OR $year < 2015)
         {
             abort(404);
         }
-
-        $year = $year == now()->format('Y') ? null : $year;
 
         $years = collect(CarbonPeriod::create(
             Carbon::createFromDate('2015')->startOfYear(),
