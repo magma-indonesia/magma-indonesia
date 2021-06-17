@@ -45,7 +45,7 @@ class MagmaVarEvaluasiRequest extends FormRequest
             'end_date' => 'required|after_or_equal:start_date|before:today',
             'code_ga' => 'required|exists:magma.ga_dd,ga_code',
             'gempa' => 'nullable|array',
-            'gempa.*' => 'in:lts,apl,apg,gug,hbs,tre,tor,lof,hyb,vtb,vta,vlp,tel,trs,tej,dev,gtb,hrm,dpt,mtr'
+            'gempa.*' => 'in:*,lts,apl,apg,gug,hbs,tre,tor,lof,hyb,vtb,vta,vlp,tel,trs,tej,dev,gtb,hrm,dpt,mtr'
         ];
     }
 }
