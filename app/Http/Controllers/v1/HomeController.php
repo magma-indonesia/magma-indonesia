@@ -23,7 +23,7 @@ class HomeController extends Controller
     protected function cacheHomeKrb()
     {
         return Cache::rememberForever('home:krb', function () {
-            return HomeKrb::latest()->first(); 
+            return HomeKrb::latest()->first();
         });
     }
 
@@ -90,7 +90,7 @@ class HomeController extends Controller
         $gempas = Cache::remember('v1/home/gempa:'.strtotime($last_roq->roq_logtime), 60, function() {
             return Roq::orderBy('datetime_wib','desc')->limit(30)->get();
         });
-        
+
         return view('v1.home.home',compact('gadds','gertans','gempas','home_krb'));
     }
 
@@ -156,7 +156,7 @@ class HomeController extends Controller
         $gempas = Cache::remember('v1/home/gempa:'.strtotime($last_roq->roq_logtime), 60, function() {
             return Roq::orderBy('datetime_wib','desc')->limit(30)->get();
         });
-        
+
         return view('v1.home.home-frame',compact('gadds','gertans','gempas','home_krb'));
     }
 
@@ -186,16 +186,16 @@ class HomeController extends Controller
                 'name' => $request->name,
                 'ip_address' => $request->ip()
             ]);
-        
+
         $volcano = $this->getGunungApiTerdekat($request->latitude,$request->longitude);
 
-        if ($check) 
+        if ($check)
             return response()->json([
                 'success' => 1,
                 'message' => $check,
                 'volcano' => $volcano ?: null
             ]);
-        
+
         return response()->json([
             'success' => 0,
             'message' => $validator->errors()->all()
