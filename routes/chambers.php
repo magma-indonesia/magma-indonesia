@@ -56,6 +56,15 @@ Route::name('partial.')->group(function () {
     Route::post('seismometer/{code?}/{id?}', 'SeismometerController@partial')->name('seismometer');
 });
 
+Route::name('token.')->group(function () {
+    Route::group(['prefix' => 'token'], function () {
+        Route::get('/', 'TokenRequestController@index')
+            ->name('index');
+        Route::post('generate', 'TokenRequestController@generate')
+            ->name('generate');
+    });
+});
+
 Route::name('stakeholder.')->group(function () {
     Route::group(['middleware' => ['role:Super Admin'], 'prefix' => 'stakeholder'], function () {
         Route::get('/','StakeholderController@index')->name('index');
@@ -127,7 +136,7 @@ Route::group(['prefix' => 'gunungapi'], function () {
         ->name('laporan.create.var.visual');
     Route::post('laporan/create-var-visual','MagmaVarController@storeVarVisual')
         ->name('laporan.store.var.visual');
-        
+
     /**
      * Create and Store Var Klimatologi
      */
@@ -307,7 +316,7 @@ Route::name('v1.')->group(function () {
                     ->name('laporan.filter');
                 Route::get('laporan/filter/gempa','v1\MagmaVarController@filterGempa')
                     ->name('laporan.filter.gempa');
-                
+
                 Route::get('laporan/create-var','v1\MagmaVarController@createVar')
                     ->name('laporan.create.var');
                 Route::post('laporan/store-var','v1\MagmaVarController@storeVar')
@@ -354,7 +363,7 @@ Route::name('v1.')->group(function () {
                     ->name('ven.export');
                 Route::get('ven/{id}','v1\MagmaVenController@show')
                     ->name('ven.show');
-                    
+
             });
         });
 

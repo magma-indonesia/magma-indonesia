@@ -48,6 +48,11 @@
                     <span class="nav-label">Magma Chamber</span>
                 </a>
             </li>
+            <li class="{{ active(['chambers.token.*']) }}">
+                <a href="{{ route('chambers.token.index') }}">
+                    <span class="nav-label"> Token</span>
+                </a>
+            </li>
             {{-- <li class="{{ active('chambers.fun.fpl') }}">
                 <a href="{{ route('chambers.fun.fpl.index') }}">
                     <i class="fa fa-soccer-ball-o"></i>
@@ -81,7 +86,7 @@
                 <a href="#">
                     <span class="label label-magma">v.1</span>
                     <span class="nav-label"> Magma</span>
-                    <span class="fa arrow"></span>                    
+                    <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
                     <li class="{{ active('chambers.v1.users.index') }}">
@@ -102,7 +107,7 @@
                     <li class="{{ active(['chambers.v1.gunungapi.*','chambers.v1.subscribers.*','chambers.v1.vona.*']) }}">
                         <a href="#">
                             <span class="nav-label"> Gunung Api</span>
-                            <span class="fa arrow"></span>                    
+                            <span class="fa arrow"></span>
                         </a>
                         <ul class="nav nav-third-level">
                             <li class="{{ active('chambers.v1.gunungapi.data-dasar.index') }}">
@@ -192,7 +197,7 @@
             <li class="{{ active('chambers.administratif.*') }}">
                 <a href="#">
                     <span class="nav-label">Administrasi</span>
-                    <span class="fa arrow"></span>                    
+                    <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
                     <li class="{{ active('chambers.administratif.jabatan.index') }}">
@@ -280,7 +285,7 @@
                     <li class="{{ active('chambers.pos.index') }}">
                         <a href="{{ route('chambers.pos.index') }}">Pos Pengamatan</a>
                     </li>
-                    @yield('nav-edit-pos')                 
+                    @yield('nav-edit-pos')
                     @yield('nav-edit-datadasar')
                 </ul>
             </li>
