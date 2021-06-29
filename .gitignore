@@ -24,3 +24,4 @@ resources/views/tes/index.blade.php
 .vscode/*
 app/Http/Controllers/TesController.php
 *.log
+composer.lock
