@@ -13,7 +13,7 @@ class PressReleaseController extends Controller
 {
     /**
      * Adding middleware for protecttion
-     * 
+     *
      * @return boolean
      */
     public function __construct()
@@ -56,7 +56,7 @@ class PressReleaseController extends Controller
             'nama'      => 'required',
             'judul'     => 'required|min:10|max:200',
             'deskripsi' => 'required|min:140',
-            'file'      => 'nullable|image|mimes:jpg,png,jpeg,gif|max:700'
+            'file'      => 'nullable'
         ]);
 
         $press = new Press();
@@ -66,7 +66,7 @@ class PressReleaseController extends Controller
         $press->deskripsi = $request->deskripsi;
         $press->sent = 1;
 
-        if ($request->hasFile('file')) 
+        if ($request->hasFile('file'))
         {
             $filename = 'v2_'.time().'.'.$request->file->getClientOriginalExtension();
             $upload = $request->file('file')
@@ -75,18 +75,18 @@ class PressReleaseController extends Controller
                             $filename,
                             'magma-old-ftp'
                         );
-            $press->fotolink = 'https://magma.vsi.esdm.go.id/'.$upload;   
+            $press->fotolink = 'https://magma.vsi.esdm.go.id/'.$upload;
         } else {
             $press->fotolink = 'https://magma.vsi.esdm.go.id/img/empty-esdm.jpg';
         }
 
-        $messages = $press->save() ? 
+        $messages = $press->save() ?
                         'Press Release : '. $request->judul.' telah ditambahkan!' :
                         'Press Release : '. $request->judul.' gagal ditambahkan!' ;
 
         return redirect()->route('chambers.v1.press.index')
                     ->with('flash_message',$messages);
-            
+
     }
 
     /**
@@ -137,7 +137,7 @@ class PressReleaseController extends Controller
         $press->deskripsi = $request->deskripsi;
         $press->sent = 1;
 
-        if ($request->hasFile('file')) 
+        if ($request->hasFile('file'))
         {
             $filename = 'v2_'.time().'.'.$request->file->getClientOriginalExtension();
             $upload = $request->file('file')
@@ -146,10 +146,10 @@ class PressReleaseController extends Controller
                             $filename,
                             'magma-old-ftp'
                         );
-            $press->fotolink = 'https://magma.vsi.esdm.go.id/'.$upload;   
+            $press->fotolink = 'https://magma.vsi.esdm.go.id/'.$upload;
         }
 
-        $messages = $press->save() ? 
+        $messages = $press->save() ?
                         'Press Release : '. $request->judul.' berhasil dirubah!' :
                         'Press Release : '. $request->judul.' gagal dirubah!' ;
 
@@ -175,7 +175,7 @@ class PressReleaseController extends Controller
                 'success' => 1,
                 'message' => $judul.' berhasil dihapus.'
             ];
-    
+
             return response()->json($data);
         }
 
