@@ -127,7 +127,7 @@ class PressReleaseController extends Controller
             'nama'      => 'required',
             'judul'     => 'required|min:10|max:200',
             'deskripsi' => 'required|min:140',
-            'file'      => 'nullable|image|mimes:jpg,png,jpeg,gif|max:700'
+            'file'      => 'nullable'
         ]);
 
         $press =  Press::findOrFail($id);
