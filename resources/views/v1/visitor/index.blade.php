@@ -50,6 +50,8 @@
                             <a href="{{ route('chambers.v1.visitor.filter',['year' => '2017']) }}" type="button" class="btn btn-magma btn-outline">2017</a>
                             <a href="{{ route('chambers.v1.visitor.filter',['year' => '2018']) }}" type="button" class="btn btn-magma btn-outline">2018</a>
                             <a href="{{ route('chambers.v1.visitor.filter',['year' => '2019']) }}" type="button" class="btn btn-magma btn-outline">2019</a>
+                            <a href="{{ route('chambers.v1.visitor.filter',['year' => '2020']) }}" type="button" class="btn btn-magma btn-outline">2020</a>
+                            <a href="{{ route('chambers.v1.visitor.filter',['year' => '2021']) }}" type="button" class="btn btn-magma btn-outline">2021</a>
                         </div>
                         <hr>
                         <div class="row">
@@ -65,6 +67,7 @@
 @section('add-vendor-script')
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
 @endsection
 
 @section('add-script')
