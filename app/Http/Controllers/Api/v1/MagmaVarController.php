@@ -24,7 +24,7 @@ class MagmaVarController extends Controller
     {
         return (object) [
             'wasap' => isset($var->var_wasap) ? $var->var_wasap->toArray() : [],
-            'intasap' => isset($var->var_wasap) ? $var->var_intasap->toArray() : [], 
+            'intasap' => isset($var->var_wasap) ? $var->var_intasap->toArray() : [],
             'tasap_min' => $var->var_tasap_min,
             'tasap_max' => $var->var_tasap0,
         ];
@@ -76,7 +76,7 @@ class MagmaVarController extends Controller
                         'deskripsi' => empty($gempa) ? ['Kegempaan nihil.'] : $gempa,
                         'grafik' => env('MAGMA_URL').'img/eqhist/'.$var->gunungapi->ga_code.'.png',
                     ],
-                    'rekomendasi' => nl2br($var->var_rekom),
+                    'rekomendasi' => strip_tags(nl2br($var->var_rekom)),
                 ]
             ];
         });
@@ -91,7 +91,8 @@ class MagmaVarController extends Controller
      */
     public function index(Request $request)
     {
-        $last_var = OldVar::select('no','var_log')->orderBy('no','desc')->first();
+        $last_var = OldVar::select('no','var_log')
+            ->orderBy('no','desc')->first();
 
         $gadds = Cache::remember('v1/home/gadd', 120, function() {
             return Gadd::select(
@@ -103,14 +104,12 @@ class MagmaVarController extends Controller
             ->get();
         });
 
-        $ga_code = $gadds->pluck('ga_code');
-
-        $vars = Cache::remember('API/v1/home/var:'.strtotime($last_var->var_log), 60, function() use($ga_code) {
-            return OldVar::select(DB::raw('t.*'))
-                ->from(DB::raw('(SELECT * FROM magma_var ORDER BY var_data_date DESC, periode DESC ) t'))
-                ->whereIn('ga_code',$ga_code)
-                ->groupBy('t.ga_code')
-                ->with('gunungapi:ga_code,ga_nama_gapi,ga_kab_gapi,ga_prov_gapi,ga_lat_gapi,ga_lon_gapi,ga_elev_gapi,ga_zonearea')
+        $vars = Cache::remember('API/v1/home/var:'.strtotime($last_var->var_log), 60, function() {
+            $sub = OldVar::select('ga_code', DB::raw('MAX(var_noticenumber) AS latest_date'))->groupBy('ga_code');
+            return OldVar::join(DB::raw("({$sub->toSql()}) latest_table"), function ($join) {
+                    $join->on('latest_table.ga_code', '=', 'magma_var.ga_code')
+                        ->on('latest_table.latest_date', '=', 'magma_var.var_noticenumber');
+                })->with('gunungapi:ga_code,ga_nama_gapi,ga_kab_gapi,ga_prov_gapi,ga_lat_gapi,ga_lon_gapi,ga_elev_gapi,ga_zonearea')
                 ->get();
         });
 
@@ -131,7 +130,7 @@ class MagmaVarController extends Controller
                     ->where('var_noticenumber',$noticenumber)
                     ->firstOrFail();
             });
-            
+
             return new MagmaVarResource($var);
         }
 

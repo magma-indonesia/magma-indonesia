@@ -25,3 +25,7 @@ resources/views/tes/index.blade.php
 app/Http/Controllers/TesController.php
 *.log
 composer.lock
+*.css
+public/.htaccess
+*.svg
+*.js
