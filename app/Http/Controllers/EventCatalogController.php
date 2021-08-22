@@ -16,10 +16,33 @@ class EventCatalogController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
      */
-    public function index()
+    public function index(Request $request)
     {
-        return EventCatalog::all();
+        $eventCatalogs = EventCatalog::query();
+
+        if (count($request->toArray())) {
+            // buat diisi filter
+        }
+
+        return view('gunungapi.event-catalog.index', [
+            'gadds' => Cache::remember('event-catalog/seismometer', 120, function () {
+                return Gadd::has('seismometers')
+                        ->select('code', 'name')
+                        ->orderBy('name')
+                        ->get();
+            }),
+            'types' => Cache::remember('event-types', 120, function() {
+                return EventType::all();
+            }),
+            'eventCatalogs' => $eventCatalogs->with(
+                'gunungapi:code,name',
+                'user:nip,name',
+                'type:code,name'
+            )->orderBy('p_datetime_utc')
+            ->paginate(100),
+        ]);
     }
 
     /**
@@ -71,10 +94,9 @@ class EventCatalogController extends Controller
                 'duration' => $validated['durations'][$key],
                 'maximum_amplitude' => $validated['durations'][$key],
                 'nip' => auth()->user()->nip,
+                'created_at' => now(),
             ];
         }
-
-        // return $data;
 
         EventCatalog::insert($data);
 
@@ -89,7 +111,7 @@ class EventCatalogController extends Controller
      */
     public function show(EventCatalog $eventCatalog)
     {
-        //
+        return $eventCatalog;
     }
 
     /**
@@ -100,7 +122,7 @@ class EventCatalogController extends Controller
      */
     public function edit(EventCatalog $eventCatalog)
     {
-        //
+        return $eventCatalog;
     }
 
     /**

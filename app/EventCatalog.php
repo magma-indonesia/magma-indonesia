@@ -24,7 +24,7 @@ class EventCatalog extends Model
 
     public function gunungapi()
     {
-        return $this->belongsTo('App\Gadd', 'code_id', 'code');
+        return $this->belongsTo('App\Gadd', 'code', 'code');
     }
 
     public function seismometers()

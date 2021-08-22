@@ -14,9 +14,9 @@
 @section('content-header')
 <div class="content animate-panel content-boxed normalheader">
     <div class="hpanel">
-        <div class="panel-body">   
+        <div class="panel-body">
             <h2 class="font-light m-b-xs">
-                Daftar Kebencanaan Geologi 
+                Daftar Kebencanaan Geologi
             </h2>
             <small class="font-light"> Digunakan dalam laporan Kebencanan Geologi Harian</small>
         </div>
@@ -25,12 +25,12 @@
 @endsection
 
 @section('content-body')
-<div class="content content-boxed animate-panel">
+<div class="content content-boxed">
 
     @if ($pendahuluans->count() == 0)
     <div class="row">
         <div class="col-lg-12">
-            <div class="hpanel">   
+            <div class="hpanel">
                 <div class="alert alert-danger">
                     <i class="fa fa-gears"></i> Data Pendahuluan Bencana Geologi belum ada. <a href="{{ route('chambers.bencana-geologi-pendahuluan.create') }}"><b>Mau buat baru?</b></a>
                 </div>
@@ -42,7 +42,7 @@
     @if ($resumes->isEmpty() AND $pendahuluans->count() >0)
     <div class="row">
         <div class="col-lg-12">
-            <div class="hpanel">   
+            <div class="hpanel">
                 <div class="alert alert-danger">
                     <i class="fa fa-gears"></i> Data Bencana Geologi harian belum ada. <a href="{{ route('chambers.resume-harian.create') }}"><b>Generate Laporan?</b></a>
                 </div>
@@ -161,13 +161,13 @@
                                                     <button class="btn btn-primary" type="submit">Generate Rangkuman</button>
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    
+
                     </form>
                 </div>
 
@@ -261,13 +261,13 @@
                                                     <button class="btn btn-primary" type="submit">Simpan dan Pilih Pendahuluan >></button>
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    
+
                     </form>
                 </div>
                 @else
@@ -317,13 +317,13 @@
                                                     <button class="btn btn-primary" type="submit">Simpan dan Pilih Pendahuluan >></button>
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    
+
                     </form>
                 </div>
 
@@ -454,7 +454,7 @@
                                             <button value="Delete" class="btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
                                         </form>
                                     </td>
-                                    @endrole                                
+                                    @endrole
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -505,7 +505,7 @@ $(document).ready(function() {
     });
 
     $('body').on('submit','#deleteForm',function (e) {
-        e.preventDefault();                
+        e.preventDefault();
 
         var $url = $(this).attr('action'),
             $data = $(this).serialize();
