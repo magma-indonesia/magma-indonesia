@@ -29,3 +29,5 @@ composer.lock
 public/.htaccess
 *.svg
 *.js
+*.svg
+*.css
