@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EventCatalogController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/','ChamberController@index')->name('index');
@@ -54,6 +55,7 @@ Route::name('indonesia.')->group(function () {
 Route::name('partial.')->group(function () {
     Route::post('rekomendasi/{code?}/{status?}', 'VarRekomendasiController@partial')->name('rekomendasi');
     Route::post('seismometer/{code?}/{id?}', 'SeismometerController@partial')->name('seismometer');
+    Route::post('seismometer/{code?}/{scnl?}', 'SeismometerController@partialScnl')->name('seismometer.scnl');
 });
 
 Route::name('token.')->group(function () {
@@ -173,6 +175,8 @@ Route::group(['prefix' => 'gunungapi'], function () {
     Route::resource('laporan','ActivityGaController', ['except' => [
         'create','store','edit','update'
     ]]);
+
+    Route::resource('event-catalog', 'EventCatalogController');
 });
 
 Route::name('gerakan-tanah.')->group(function() {

@@ -19,7 +19,7 @@ class CreateVonasTable extends Migration
             $table->char('noticenumber', 11)->nullable();
             $table->uuid('ven_uuid')->nullable();
             $table->foreign('ven_uuid')->references('uuid')->on('magma_vens')->onDelete('cascade');
-            $table->dateTime('issued');
+            $table->dateTimeTz('issued');
             $table->enum('type', ['REAL', 'EXERCISE'])->default('REAL');
             $table->char('code_id', 3)->index();
             $table->foreign('code_id')->references('code')->on('ga_dd');

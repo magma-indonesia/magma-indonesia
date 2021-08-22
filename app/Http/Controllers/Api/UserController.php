@@ -10,11 +10,11 @@ use App\Http\Resources\UserResource;
 use App\Http\Resources\UserCollection;
 use App\Notifications\UserLogin;
 use App\Notifications\User As UserNotification;
-use JWTAuth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserController extends Controller
 {
-    
+
     /**
      * Get the token array structure.
      *
@@ -40,7 +40,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $users = User::query();
-            
+
         $users = $users->select('id','name','nip','email','phone','last_login_at','last_login_ip');
 
         if ($request->has('bidang')) {
@@ -50,12 +50,12 @@ class UserController extends Controller
             });
         }
 
-        $users = $users->paginate(30);  
+        $users = $users->paginate(30);
         return new UserCollection($users);
-        
+
     }
 
-    /** 
+    /**
      * Login Controller User
      * @param  \Illuminate\Http\Request  $request
      * @return View
@@ -90,7 +90,7 @@ class UserController extends Controller
             return response()->json(['success' => false, 'error' => 'Unauthorized'], 401);
         }
 
-        catch (JWTException $e) {
+        catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
             return response()->json(['success' => false, 'error' => 'Token tidak bisa dibuat'], 500);
         }
     }
@@ -133,7 +133,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($nip)
-    {   
+    {
         try {
             $user = User::where('nip',$nip)->first();
             return new UserResource($user);
@@ -152,7 +152,7 @@ class UserController extends Controller
      */
     public function status(Request $request)
     {
-       
+
         try {
             if (JWTAuth::parseToken()->authenticate()) {
                 $payload = auth('api')->payload();
@@ -160,20 +160,20 @@ class UserController extends Controller
             }
 
             return $this->ApiException(419, 'Token Invalid');
-        } 
-        
+        }
+
         catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $exception) {
             return $this->ApiException(419, $exception->getMessage());
-        } 
-        
+        }
+
         catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $exception) {
             return $this->ApiException(419, $exception->getMessage());
         }
-        
+
         catch (\Tymon\JWTAuth\Exceptions\TokenBlacklistedException $exception) {
             return $this->ApiException(419, $exception->getMessage());
         }
-        
+
         catch (\Tymon\JWTAuth\Exceptions\JWTException $exception) {
             return $this->ApiException(500, 'Token Invalid');
         }
@@ -190,7 +190,7 @@ class UserController extends Controller
     public function logout(Request $request)
     {
         $user = JWTAuth::parseToken()->invalidate();
-        
+
         return response()->json([
             'data' => [ 'success' => true, 'message' => 'Berhasil menghapus token'],
         ]);

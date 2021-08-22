@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class Gadd extends Model
 {
@@ -38,7 +38,7 @@ class Gadd extends Model
         'deleted_at',
     ];
 
-    /**     
+    /**
      *   Masing-masing Gunungapi bisa memiliki lebih
      *   dari 1 Status. Catatan peningkatan atau penurunan level Gunung Api
      */
@@ -47,7 +47,7 @@ class Gadd extends Model
         return $this->hasMany('App\Status','code_id','code');
     }
 
-    /**     
+    /**
      *   Masing-masing Gunungapi bisa memiliki lebih
      *   dari 1 Pos Pengamatan Gunung Api
      */
@@ -56,7 +56,7 @@ class Gadd extends Model
         return $this->hasMany('App\PosPga','code_id','code');
     }
 
-    /**     
+    /**
      *   Masing-masing Gunungapi bisa memiliki lebih
      *   dari 1 Vars
      */
@@ -65,7 +65,7 @@ class Gadd extends Model
         return $this->hasMany('App\MagmaVar','code_id','code');
     }
 
-    /**     
+    /**
      *   Masing-masing Gunungapi bisa memiliki lebih
      *   dari 1 VEN
      */
@@ -74,8 +74,8 @@ class Gadd extends Model
         return $this->has('App\MagmaVen','code_id','code');
     }
 
-    /**     
-     *   Masing-masing Gunungapi hanya memiliki 
+    /**
+     *   Masing-masing Gunungapi hanya memiliki
      *   1 laporan harian
      */
     public function latest_vars()
@@ -86,8 +86,8 @@ class Gadd extends Model
                     });
     }
 
-    /**     
-     *   Masing-masing Gunungapi hanya memiliki 
+    /**
+     *   Masing-masing Gunungapi hanya memiliki
      *   1 laporan VEN Terkini
      */
     public function latest_vens()
@@ -99,8 +99,8 @@ class Gadd extends Model
                     });
     }
 
-    /**     
-     *   Masing-masing Gunungapi hanya memiliki 
+    /**
+     *   Masing-masing Gunungapi hanya memiliki
      *   1 laporan VONA Terkini
      */
     public function latest_vona()
@@ -143,13 +143,18 @@ class Gadd extends Model
     }
 
     /**
-     * Masing-masing gunungapi banyak CCTV
+     * Masing-masing gunungapi banyak Seismometer
      *
      * @return void
      */
     public function seismometers()
     {
         return $this->hasMany('App\Seismometer','code','code');
+    }
+
+    public function events()
+    {
+        return $this->hasMany('App\EventCatalog', 'scnl', 'scnl');
     }
 
     /**

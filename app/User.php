@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -16,7 +18,7 @@ class User extends Authenticatable implements JWTSubject
         'created_at',
         'updated_at',
         'last_login_at'
-    ];    
+    ];
 
     protected $casts = [
         'status' => 'boolean'
@@ -61,8 +63,8 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 
-        'nip', 
+        'name',
+        'nip',
         'email',
         'phone',
         'password',
@@ -79,7 +81,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'password', 
+        'password',
         'remember_token',
         'status',
     ];
@@ -96,11 +98,11 @@ class User extends Authenticatable implements JWTSubject
      * @var string
      */
     public function setPasswordAttribute($password)
-    {   
+    {
         $this->attributes['password'] = bcrypt($password);
     }
 
-    /**     
+    /**
      *   Masing-masing user hanya memiliki 1 Bidang
      */
 
@@ -114,7 +116,7 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne('App\UserAdministratif','user_id','id');
     }
 
-    /**     
+    /**
      *   Masing-masing user hanya memiliki 1 Foto
      */
 
@@ -123,7 +125,7 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne('App\UserPhoto','user_id','id');
     }
 
-    /**     
+    /**
      *   Masing-masing user bisa memiliki lebih
      *   dari 1 Press Release
      */
@@ -132,7 +134,7 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany('App\Press');
     }
 
-    /**     
+    /**
      *   Gunung Api
      *   Masing-masing user bisa memiliki lebih
      *   dari 1 Vars
@@ -142,7 +144,7 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany('App\MagmaVar','nip_pelapor','nip');
     }
 
-    /**     
+    /**
      *   Gerakan Tanah
      *   Masing-masing user bisa memiliki lebih
      *   dari 1 Crs
@@ -155,7 +157,7 @@ class User extends Authenticatable implements JWTSubject
     /**
      * Setiap user bisa memiliki lebih dari 1 absensi
      *
-     * @return void
+     * @return HasMany;
      */
     public function absensi()
     {
@@ -165,7 +167,7 @@ class User extends Authenticatable implements JWTSubject
     /**
      * Setiap user login lebih dari 1 kali
      *
-     * @return void
+     * @return HasMany;
      */
     public function statistik_logins()
     {
@@ -175,7 +177,7 @@ class User extends Authenticatable implements JWTSubject
     /**
      * Setiap user bisa memiliki lebih dari 1 absensi
      *
-     * @return void
+     * @return HasOne;
      */
     public function latest_absensi()
     {
@@ -185,7 +187,7 @@ class User extends Authenticatable implements JWTSubject
     /**
      * Setiap user bisa terdaftar lebih dari 1 kegiatan
      *
-     * @return void
+     * @return HasMany;
      */
     public function anggota_kegiatan()
     {
@@ -195,7 +197,7 @@ class User extends Authenticatable implements JWTSubject
     /**
      * Jumlah Dinas Kegiatan
      *
-     * @return void
+     * @return int
      */
     public function getJumlahDinasAttribute()
     {
@@ -205,7 +207,7 @@ class User extends Authenticatable implements JWTSubject
     /**
      * Jumlah Uang Lapangan yang diterima
      *
-     * @return void
+     * @return int
      */
     public function getJumlahRealisasiAttribute()
     {
@@ -214,5 +216,10 @@ class User extends Authenticatable implements JWTSubject
         $uang_penginapan_tigapuluh = $anggota->sum('penginapan_tigapuluh_total');
 
         return $uang_harian+$uang_penginapan_tigapuluh;
+    }
+
+    public function events()
+    {
+        return $this->hasMany('App\EventCatalog', 'scnl', 'scnl');
     }
 }

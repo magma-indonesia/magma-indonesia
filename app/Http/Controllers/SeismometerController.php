@@ -6,6 +6,7 @@ use App\Gadd;
 use App\Seismometer;
 use App\LiveSeismogram;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
@@ -85,6 +86,9 @@ class SeismometerController extends Controller
                 'published' => $request->published,
             ]
         );
+
+        // Used in EventCatalogController@create
+        Cache::forget('event-catalog/seismometer');
 
         return redirect()->route('chambers.seismometer.index');
     }
@@ -189,5 +193,17 @@ class SeismometerController extends Controller
                         ->get();
 
         return view('gunungapi.letusan.partial-seismometer', compact('gadds','id'));
+    }
+
+    public function partialScnl($code, $scnl)
+    {
+        $gadds = Gadd::has('seismometers')
+            ->with('seismometers')
+            ->whereCode($code)
+            ->select('code', 'name')
+            ->orderBy('name')
+            ->get();
+
+        return view('gunungapi.letusan.partial-seismometer', compact('gadds', 'scnl'));
     }
 }

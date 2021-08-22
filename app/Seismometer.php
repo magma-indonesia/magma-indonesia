@@ -46,6 +46,11 @@ class Seismometer extends Model
         return $this->hasOne('App\LiveSeismogram');
     }
 
+    public function events()
+    {
+        return $this->hasMany('App\EventCatalog', 'scnl', 'scnl');
+    }
+
     public function getFullUrlAttribute()
     {
         return config('app.winston_url').':'.config('app.winston_port').'/heli?code='.$this->attributes['scnl'].'&w=1200&h=720&lb=1';
