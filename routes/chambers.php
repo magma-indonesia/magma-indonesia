@@ -53,9 +53,11 @@ Route::name('indonesia.')->group(function () {
 });
 
 Route::name('partial.')->group(function () {
-    Route::post('rekomendasi/{code?}/{status?}', 'VarRekomendasiController@partial')->name('rekomendasi');
-    Route::post('seismometer/{code?}/{id?}', 'SeismometerController@partial')->name('seismometer');
-    Route::post('seismometer/{code?}/{scnl?}', 'SeismometerController@partialScnl')->name('seismometer.scnl');
+    Route::group(['prefix' => 'partial'], function () {
+        Route::post('rekomendasi/{code?}/{status?}', 'VarRekomendasiController@partial')->name('rekomendasi');
+        Route::post('seismometer/letusan/{code?}/{id?}', 'SeismometerController@partial')->name('seismometer');
+        Route::post('seismometer/event-catalog/{code?}/{scnl?}', 'SeismometerController@partialScnl')->name('seismometer.scnl');
+    });
 });
 
 Route::name('token.')->group(function () {

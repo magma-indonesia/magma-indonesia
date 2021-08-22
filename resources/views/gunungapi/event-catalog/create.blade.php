@@ -100,26 +100,6 @@ Tambahkan Kejadian Gempa Gunung Api
                                             @endif
                                         </div>
 
-                                        {{-- Stasiun Seismik --}}
-                                        <div class="form-group col-sm-12">
-                                            <label>Pilih stasiun</label>
-                                            <div class="input-group">
-                                                <select id="seismometer_id" class="form-control" name="seismometer_id">
-                                                    <option value="9999">-- Optional --</option>
-                                                </select><span class="input-group-btn">
-                                                    <button id="load-seismometer" type="button"
-                                                        class="btn btn-primary">Refresh</button></span>
-                                            </div>
-                                            <span class="help-block m-b-none">Tambahkan seismometer jika tidak ada dalam daftar. Kemudian klik tombol <b>refresh</b></span>
-
-                                            <a href="{{ route('chambers.seismometer.create') }}"
-                                                class="btn btn-info m-t-md" target="_blank">Tambah Seismometer</a>
-
-                                            @if( $errors->has('seismometer_id'))
-                                            <label class="error"
-                                                for="seismometer_id">{{ ucfirst($errors->first('seismometer_id')) }}</label>
-                                            @endif
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="hr-line-dashed"></div>
@@ -152,7 +132,27 @@ Tambahkan Kejadian Gempa Gunung Api
                                             </div>
                                             <div class="panel-body">
 
-                                                <div class="form-group col-sm-12">
+                                        {{-- Stasiun Seismik --}}
+                                        <div class="form-group col-sm-12">
+                                            <label>Pilih stasiun</label>
+                                            <div class="input-group">
+                                                <select id="seismometer_id" class="form-control" name="seismometer_id[]">
+                                                    <option value="9999">Loading...</option>
+                                                </select>
+                                                <span class="input-group-btn">
+                                                    <button onclick="window.open('{{ route('chambers.seismometer.create') }}', '_blank')" type="button"class="btn btn-info">Tambah Seismometer</button>
+                                                    <button id="load-seismometer" type="button"class="btn btn-primary">Refresh</button>
+                                                    </span>
+                                            </div>
+                                            <span class="help-block m-b-none">Tambahkan seismometer jika tidak ada dalam daftar. Kemudian klik tombol <b>refresh</b></span>
+
+                                            @if( $errors->has('seismometer_id'))
+                                            <label class="error"
+                                                for="seismometer_id">{{ ucfirst($errors->first('seismometer_id')) }}</label>
+                                            @endif
+                                        </div>
+
+                                                <div class="form-group col-sm-8">
                                                     <label>Jenis Gempa</label>
                                                     <select id="types" class="form-control" name="events[]">
                                                         @foreach($types as $type)
@@ -161,7 +161,7 @@ Tambahkan Kejadian Gempa Gunung Api
                                                     </select>
                                                 </div>
 
-                                                <div class="form-group col-sm-12">
+                                                <div class="form-group col-sm-4">
                                                     <label>Zona Waktu</label>
                                                     <select name="zones[]" class="form-control">
                                                         <option value="Asia/Jakarta">WIB</option>
@@ -172,37 +172,24 @@ Tambahkan Kejadian Gempa Gunung Api
                                                 </div>
 
                                                 <div class="form-group col-sm-12">
-                                                    <label>Waktu Mulai Gempa atau Waktu Tiba Gelombang P*</label>
+                                                    <label>Waktu Mulai Event atau Waktu Tiba Gelombang P*</label>
                                                     <div class="row">
-                                                        <div class="col-sm-8">
+                                                        <div class="col-sm-12">
                                                             <input type="text" class="form-control datetimepicker-input datetimepicker-p" id="p_datetime_1" name="p_times[]" required/>
                                                         </div>
-                                                        <div class="col-sm-4">
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control" name="p_milidetik[]" min="0" max="999" value="0" required />
-                                                                <span class="input-group-addon">milidetik</span>
-                                                            </div>
-                                                        </div>
                                                     </div>
-                                                    <span class="help-block m-b-none">*) Jika gelombang memiliki nilai S-P, masukkan waktu tiba gelombang P. Jika tidak, masukkan waktu gempa mulai terjadi</span>
+                                                    <span class="help-block m-b-none">*) <b>Presisi waktu dalam milidetik.</b> Jika gelombang memiliki nilai S-P, masukkan waktu tiba gelombang P. Jika tidak, masukkan waktu gempa mulai terjadi</span>
 
                                                 </div>
                                                 <div class="form-group col-sm-12">
                                                     <label>Waktu Tiba Gelombang S*</label>
                                                     <div class="row">
-                                                        <div class="col-sm-8">
+                                                        <div class="col-sm-12">
                                                             <input type="text" class="form-control datetimepicker-input datetimepicker-s" id="s_datetime_1" name="s_times[]"/>
                                                         </div>
-                                                        <div class="col-sm-4">
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control" name="s_milidetik[]" min="0" max="999" value="0"/>
-                                                                <span class="input-group-addon">milidetik</span>
-                                                            </div>
-                                                        </div>
-                                                        <input class="s-start" type="hidden" name="s_starts[]" value="">
                                                     </div>
 
-                                                    <span class="help-block m-b-none">*) Jika gelombang memiliki nilai S-P, masukkan waktu tiba gelombang S. Jika tidak memiliki nilai S-P, boleh dikosongi.</span>
+                                                    <span class="help-block m-b-none">*) <b>Presisi waktu dalam milidetik.</b> Jika gelombang memiliki nilai S-P, masukkan waktu tiba gelombang S. Jika tidak memiliki nilai S-P, boleh dikosongi.</span>
                                                 </div>
 
 
@@ -285,9 +272,10 @@ $(document).ready(function () {
         maxDate: '{{ now()->addDay(1)->format('Y-m-d')}}',
         sideBySide: true,
         locale: 'id',
-        format: 'YYYY-MM-DD HH:mm:ss',
+        format: 'YYYY-MM-DD HH:mm:ss.SSS',
     };
-    getSeismometers($code, {{ empty(old('seismometer_id')) ? 'PSAG_EHZ_VG_00' : old('seismometer_id') }});
+
+    getSeismometers($code, "{{ empty(old('seismometer_id[0]')) ? 'PSAG_EHZ_VG_00' : old('seismometer_id[0]') }}");
 
     $('#p_datetime_1').datetimepicker(options);
 
@@ -307,7 +295,7 @@ $(document).ready(function () {
         var $event = $(this).closest('.hpanel').clone(),
             $removePlus = $event.find('.remove-event').remove(),
             $remove = ' <a role="button" class="btn btn-small btn-danger remove-event">Hapus Event</a>',
-            $addRemove = $event.find('a').after($remove);
+            $addRemove = $event.find('.add-event').after($remove);
 
         $(this).closest('.hpanel').after($event);
 

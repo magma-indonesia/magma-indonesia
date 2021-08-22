@@ -7,6 +7,7 @@ use App\EventType;
 use App\Gadd;
 use App\Http\Requests\EventCatalogRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 
 class EventCatalogController extends Controller
@@ -47,7 +48,37 @@ class EventCatalogController extends Controller
      */
     public function store(EventCatalogRequest $request)
     {
-        return $request;
+        $validated = $request->validated();
+
+        foreach ($validated['events'] as $key => $event) {
+            $data[] = [
+                'code' => $validated['code'],
+                'scnl' => $validated['seismometer_id'][$key],
+                'code_event' => $event,
+                'p_datetime_utc' => Carbon::createFromFormat(
+                    'Y-m-d H:i:s.v',
+                    $validated['p_times'][$key],
+                    $validated['zones'][$key]
+                )->setTimezone('UTC'),
+                's_datetime_utc' => Carbon::createFromFormat(
+                    'Y-m-d H:i:s.v',
+                    $validated['s_times'][$key],
+                    $validated['zones'][$key]
+                )->setTimezone('UTC'),
+                'p_datetime_local' => $validated['p_times'][$key],
+                's_datetime_local' => $validated['s_times'][$key],
+                'timezone' => $validated['zones'][$key],
+                'duration' => $validated['durations'][$key],
+                'maximum_amplitude' => $validated['durations'][$key],
+                'nip' => auth()->user()->nip,
+            ];
+        }
+
+        // return $data;
+
+        EventCatalog::insert($data);
+
+        return $data;
     }
 
     /**

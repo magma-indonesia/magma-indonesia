@@ -21,10 +21,10 @@ class CreateEventCatalogsTable extends Migration
             $table->foreign('scnl')->references('scnl')->on('seismometers');
             $table->char('code_event', 15)->index();
             $table->foreign('code_event')->references('code')->on('event_types');
-            $table->dateTimeTz('p_datetime_utc')->index();
-            $table->dateTimeTz('s_datetime_utc')->nullable();
-            $table->dateTimeTz('p_datetime_local')->index();
-            $table->dateTimeTz('s_datetime_local')->nullable();
+            $table->dateTimeTz('p_datetime_utc',3)->index();
+            $table->dateTimeTz('s_datetime_utc',3)->nullable();
+            $table->dateTimeTz('p_datetime_local',3)->index();
+            $table->dateTimeTz('s_datetime_local',3)->nullable();
             $table->float('p_s_duration')->nullable();
             $table->enum('timezone', ['Asia/Jakarta', 'Asia/Makassar', 'Asia/Jayapura'])->default('Asia/Jakarta');
             $table->float('duration')->comment('seconds');

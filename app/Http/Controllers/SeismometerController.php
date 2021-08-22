@@ -204,6 +204,6 @@ class SeismometerController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('gunungapi.letusan.partial-seismometer', compact('gadds', 'scnl'));
+        return view('gunungapi.event-catalog.partial-seismometer', compact('gadds', 'scnl'));
     }
 }

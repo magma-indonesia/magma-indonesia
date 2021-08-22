@@ -6,12 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class EventCatalog extends Model
 {
-    protected $dates = [
-        'p_datetime_utc',
-        'p_datetime_local',
-        's_datetime_utc',
-        's_datetime_local',
-    ];
+    // protected $dates = [
+    //     'p_datetime_utc',
+    //     'p_datetime_local',
+    //     's_datetime_utc',
+    //     's_datetime_local',
+    // ];
+
+    // protected $casts = [
+    //     'p_datetime_utc' => 'datetime:Y-m-d H:i:s.v',
+    //     'p_datetime_local' => 'datetime:Y-m-d H:i:s.v',
+    //     's_datetime_utc' => 'datetime:Y-m-d H:i:s.v',
+    //     's_datetime_local' => 'datetime:Y-m-d H:i:s.v',
+    // ];
 
     protected $guarded = ['id'];
 

@@ -18,10 +18,16 @@ class EventCatalogRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        $this->merge([
-            'postcode' => mb_strtoupper($this->events),
-            'reg_no' => mb_strtoupper($this->reg_no),
-        ]);
+        // foreach ($this->p_times as $key => $time) {
+        //     $times[] = [
+        //         'p_time' => $time.'.'.$this->p_milidetik[$key],
+        //         's_time' => $this->s_times[$key] == null ? null : $this->s_times[$key] . '.' . $this->s_milidetik[$key],
+        //     ];
+        // }
+
+        // $this->merge([
+        //     'times' => $times,
+        // ]);
     }
 
     /**
@@ -33,7 +39,8 @@ class EventCatalogRequest extends FormRequest
     {
         return [
             'code' => 'required|size:3',
-            'seismometer_id' => 'required|exists:seismometers,id',
+            'seismometer_id' => 'required|array',
+            'seismometer_id.*' => 'required|exists:seismometers,scnl',
             'events' => 'required|array',
             'p_times' => 'required|array',
             's_times' => 'required|array',
@@ -41,12 +48,11 @@ class EventCatalogRequest extends FormRequest
             'durations' => 'required|array',
             'amplitudes' => 'required|array',
             'events.*' => 'required|exists:event_types,code',
-            'p_times.*' => 'nullable|date_format:Y-m-d H:i:s',
-            's_times.*' => 'nullable|date_format:Y-m-d H:i:s',
+            'p_times.*' => 'required|date_format:Y-m-d H:i:s.v',
+            's_times.*' => 'nullable|date_format:Y-m-d H:i:s.v|after:p_times.*',
             'zones.*' => 'required|in:Asia/Jakarta, Asia/Makassar, Asia/Jayapura, UTC',
             'durations.*' => 'required|numeric|min:0',
             'amplitudes.*' => 'required|numeric|between:0,240',
-
         ];
     }
 }
