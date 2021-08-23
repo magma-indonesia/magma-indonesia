@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-Tambahkan Kejadian Gempa Gunung Api
+Rubah {{ $eventCatalog->type->name }}
 @endsection
 
 @section('add-vendor-css')
@@ -40,14 +40,14 @@ Tambahkan Kejadian Gempa Gunung Api
                         <a href="{{ route('chambers.event-catalog.index') }}">Event Catalog</a>
                     </li>
                     <li class="active">
-                        <span>Add event(s)</span>
+                        <span>Rubah event</span>
                     </li>
                 </ol>
             </div>
             <h2 class="font-light m-b-xs">
-                Form untuk menambahkan katalog event gempa gunung api
+                {{ $eventCatalog->gunungapi->name }} - {{ $eventCatalog->seismometer->scnl }} - {{ $eventCatalog->type->name }}
             </h2>
-            <small>Untuk membantu pendataan seluruh jenis kejadian gempa yang terekam di Gunung Api</small>
+            <small>Waktu mulai gempa {{ $eventCatalog->p_datetime_utc }} UTC</small>
         </div>
     </div>
 </div>
@@ -63,9 +63,9 @@ Tambahkan Kejadian Gempa Gunung Api
                 </div>
 
                 <div class="panel-body">
-                    <form id="form" method="POST"
-                        action="{{ route('chambers.event-catalog.store') }}">
-                        @csrf
+                    <form id="form" method="POST" action="{{ route('chambers.event-catalog.update', $eventCatalog) }}">
+                    @csrf
+                    @method('PUT')
 
                         <div class="tab-content">
                             <div class="p-m">
@@ -79,13 +79,12 @@ Tambahkan Kejadian Gempa Gunung Api
                                     </div>
 
                                     <div class="col-lg-8">
-                                        {{-- Nama Gunung Api --}}
                                         <div class="form-group col-sm-12">
                                             <label>Gunung Api</label>
                                             <select id="code" class="form-control" name="code">
                                                 @foreach($gadds as $gadd)
                                                 <option value="{{ $gadd->code }}"
-                                                    {{ old('code') == $gadd->code ? 'selected' : ''}}>{{ $gadd->name }}
+                                                    {{ $eventCatalog->gunungapi->code == $gadd->code ? 'selected' : ''}}>{{ $gadd->name }}
                                                 </option>
                                                 @endforeach
                                             </select>
@@ -95,7 +94,6 @@ Tambahkan Kejadian Gempa Gunung Api
                                                 for="code">{{ ucfirst($errors->first('code')) }}</label>
                                             @endif
                                         </div>
-
                                     </div>
                                 </div>
                                 <div class="hr-line-dashed"></div>
@@ -123,16 +121,12 @@ Tambahkan Kejadian Gempa Gunung Api
                                         @endif
 
                                         <div class="hpanel event">
-                                            <div class="panel-heading">
-                                                <label>Event <span class="event-number">1</span></label>
-                                            </div>
                                             <div class="panel-body">
-                                                {{-- Stasiun Seismik --}}
                                                 <div class="form-group col-sm-12">
                                                     <label>Pilih stasiun</label>
                                                     <div class="input-group">
-                                                        <select id="seismometer_id" class="form-control" name="seismometer_id[]">
-                                                            <option value="9999">Loading...</option>
+                                                        <select id="seismometer_id" class="form-control" name="seismometer_id">
+                                                            <option value="">Loading...</option>
                                                         </select>
                                                         <span class="input-group-btn">
                                                             <button onclick="window.open('{{ route('chambers.seismometer.create') }}', '_blank')" type="button"class="btn btn-info">Tambah Seismometer</button>
@@ -140,29 +134,24 @@ Tambahkan Kejadian Gempa Gunung Api
                                                             </span>
                                                     </div>
                                                     <span class="help-block m-b-none">Tambahkan seismometer jika tidak ada dalam daftar. Kemudian klik tombol <b>refresh</b></span>
-
-                                                    @if( $errors->has('seismometer_id'))
-                                                    <label class="error"
-                                                        for="seismometer_id">{{ ucfirst($errors->first('seismometer_id')) }}</label>
-                                                    @endif
                                                 </div>
 
                                                 <div class="form-group col-sm-8">
                                                     <label>Jenis Gempa</label>
-                                                    <select id="types" class="form-control" name="events[]">
+                                                    <select id="types" class="form-control" name="event">
                                                         @foreach($types as $type)
-                                                        <option value="{{ $type->code }}">{{ $type->name }}</option>
+                                                        <option value="{{ $type->code }}" {{ $eventCatalog->type->code == $type->code ? 'selected' : ''}}>{{ $type->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
 
                                                 <div class="form-group col-sm-4">
                                                     <label>Zona Waktu</label>
-                                                    <select name="zones[]" class="form-control">
-                                                        <option value="Asia/Jakarta">WIB</option>
-                                                        <option value="Asia/Makassar">WITA</option>
-                                                        <option value="Asia/Jayapura">WIT</option>
-                                                        <option value="UTC">UTC</option>
+                                                    <select name="zone" class="form-control">
+                                                        <option value="Asia/Jakarta" {{ $eventCatalog->time_zone == "Asia/Jakarta" ? 'selected' : ''}}>WIB</option>
+                                                        <option value="Asia/Makassar" {{ $eventCatalog->time_zone == "Asia/Makassar" ? 'selected' : ''}}>WITA</option>
+                                                        <option value="Asia/Jayapura" {{ $eventCatalog->time_zone == "Asia/Jayapura" ? 'selected' : ''}}>WIT</option>
+                                                        <option value="UTC" {{ $eventCatalog->time_zone == "UTC" ? 'selected' : ''}}>UTC</option>
                                                     </select>
                                                 </div>
 
@@ -170,16 +159,17 @@ Tambahkan Kejadian Gempa Gunung Api
                                                     <label>Waktu Mulai Event atau Waktu Tiba Gelombang P*</label>
                                                     <div class="row">
                                                         <div class="col-sm-12">
-                                                            <input type="text" class="form-control datetimepicker-input datetimepicker-p" id="p_datetime_1" name="p_times[]" required/>
+                                                            <input type="text" value="{{ $eventCatalog->p_datetime_local }}" class="form-control datetimepicker-input datetimepicker-p" id="p_datetime_1" name="p_time" required/>
                                                         </div>
                                                     </div>
                                                     <span class="help-block m-b-none">*) <b>Presisi waktu dalam milidetik.</b> Jika gelombang memiliki nilai S-P, masukkan waktu tiba gelombang P. Jika tidak, masukkan waktu gempa mulai terjadi</span>
                                                 </div>
+
                                                 <div class="form-group col-sm-12">
                                                     <label>Waktu Tiba Gelombang S*</label>
                                                     <div class="row">
                                                         <div class="col-sm-12">
-                                                            <input type="text" class="form-control datetimepicker-input datetimepicker-s" id="s_datetime_1" name="s_times[]"/>
+                                                            <input type="text" value="{{ $eventCatalog->s_datetime_local }}" class="form-control datetimepicker-input datetimepicker-s" id="s_datetime_1" name="s_time"/>
                                                         </div>
                                                     </div>
 
@@ -189,27 +179,22 @@ Tambahkan Kejadian Gempa Gunung Api
                                                 <div class="form-group col-sm-6">
                                                     <label>Durasi Event</label>
                                                     <div class="input-group">
-                                                        <input type="number" class="form-control" name="durations[]" required min="0" value="0" /> <span class="input-group-addon">detik</span>
+                                                        <input type="number" class="form-control" name="duration" required min="0" value="{{ $eventCatalog->duration }}" /> <span class="input-group-addon">detik</span>
                                                     </div>
-
                                                 </div>
+
                                                 <div class="form-group col-sm-6">
                                                     <label>Amplitude Maksimal</label>
                                                     <div class="input-group">
-                                                        <input type="number" class="form-control" name="amplitudes[]" required min="0" value="0" />
+                                                        <input type="number" class="form-control" name="amplitude" required min="0" value="{{ $eventCatalog->maximum_amplitude }}" />
                                                         <span class="input-group-addon">mm</span>
                                                     </div>
 
                                                 </div>
                                             </div>
                                             <div class="panel-footer">
-                                                <a role="button" class="btn btn-small btn-primary add-event">Tambah Event Baru</a>
+                                                <button type="submit" class="btn btn-small btn-primary">Simpan Perubahan</button>
                                             </div>
-                                        </div>
-
-                                        <hr>
-                                        <div class="text-left m-t-xs">
-                                            <button type="submit" class="submit btn btn-primary" href="#"> Simpan <i class="fa fa-angle-double-right"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -237,7 +222,7 @@ $.ajaxSetup({
     }
 });
 
-function getSeismometers($code, $scnl = 'PSAG_EHZ_VG_00') {
+function getSeismometers($code, $scnl = '{{ $eventCatalog->seismometer->scnl }}') {
     let $url = '{{ route("chambers.partial.seismometer.scnl") }}/'+$code+'/'+$scnl;
 
     $.ajax({
@@ -263,7 +248,7 @@ $(document).ready(function () {
         format: 'YYYY-MM-DD HH:mm:ss.SSS',
     };
 
-    getSeismometers($code, "{{ empty(old('seismometer_id[0]')) ? 'PSAG_EHZ_VG_00' : old('seismometer_id[0]') }}");
+    getSeismometers($code, "{{ empty(old('seismometer_id')) ? $eventCatalog->seismometer->scnl : old('seismometer_id') }}");
 
     $('#p_datetime_1').datetimepicker(options);
 
@@ -278,40 +263,6 @@ $(document).ready(function () {
         let $code = $('#code').val();
         getSeismometers($code);
     });
-
-    $('form').on('click', '.add-event', function(e) {
-        var $event = $(this).closest('.hpanel').clone(),
-            $removePlus = $event.find('.remove-event').remove(),
-            $remove = ' <a role="button" class="btn btn-small btn-danger remove-event">Hapus Event</a>',
-            $addRemove = $event.find('.add-event').after($remove);
-
-        $(this).closest('.hpanel').after($event);
-
-        let length = $('.event').length;
-        let p_name = 'p_datetime_'+length;
-        let s_name = 's_datetime_'+length;
-        let datetime_p = $event.find('.datetimepicker-p');
-        let datetime_s = $event.find('.datetimepicker-s');
-
-        $event.find('.event-number').html(length);
-        datetime_p.attr('id',p_name);
-        datetime_s.attr('id',s_name);
-
-        $('#'+p_name).datetimepicker(options);
-        $('#'+s_name).datetimepicker(options);
-
-    });
-
-    $('form').on('click','.remove-event',function(){
-        $(this).closest('.hpanel').remove();
-
-        var $events = $('.event-number');
-        $events.each(function (index) {
-            $(this).html(index+1);
-        });
-
-    });
-
 });
 </script>
 @endsection

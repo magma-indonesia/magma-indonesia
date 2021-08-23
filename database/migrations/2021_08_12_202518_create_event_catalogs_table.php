@@ -25,14 +25,14 @@ class CreateEventCatalogsTable extends Migration
             $table->dateTimeTz('s_datetime_utc',3)->nullable();
             $table->dateTimeTz('p_datetime_local',3)->index();
             $table->dateTimeTz('s_datetime_local',3)->nullable();
-            $table->float('p_s_duration')->nullable();
+            $table->float('p_s_duration')->nullable()->comment('seconds');
             $table->enum('timezone', ['Asia/Jakarta', 'Asia/Makassar', 'Asia/Jayapura'])->default('Asia/Jakarta');
             $table->float('duration')->comment('seconds');
             $table->float('maximum_amplitude');
             $table->text('other_information')->nullable();
             $table->char('nip', 18)->index();
             $table->foreign('nip')->references('nip')->on('users');
-            $table->unique(['scnl', 'p_datetime_utc']);
+            $table->unique(['code', 'scnl', 'code_event', 'p_datetime_utc']);
             $table->index(['scnl', 'code_event']);
             $table->timestamps();
         });

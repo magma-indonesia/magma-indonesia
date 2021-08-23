@@ -59,9 +59,9 @@ Event Catalog
             @endforeach
             @endif
 
-            @if(Session::has('flash_resume'))
+            @if(Session::has('flash_event'))
             <div class="alert alert-success">
-                <i class="fa fa-bolt"></i> {!! session('flash_resume') !!}
+                <i class="fa fa-bolt"></i> {!! session('flash_event') !!}
             </div>
             @endif
 
@@ -101,22 +101,33 @@ Event Catalog
 
                                 <div class="form-group col-sm-12">
                                     <label>Jenis Gempa</label>
-                                    <select id="type" class="form-control" name="type">
-                                        <option value="*">-- Semua --</option>
-                                        @foreach($types as $type)
-                                        <option value="{{ $type->code }}">{{ $type->name }}</option>
+                                    <div class="row">
+                                        @foreach ($types->chunk(10) as $type)
+                                        <div class="col-lg-6">
+                                            @foreach ($type as $item)
+                                            <div class="checkbox">
+                                            <label><input name="types[]" value="{{ $item->code }}" type="checkbox" class="i-checks type" checked> {{ $item->name}}</label>
+                                            </div>
+                                            @endforeach
+                                        </div>
                                         @endforeach
-                                    </select>
+                                    </div>
                                 </div>
 
-                                <div class="form-group col-sm-6">
-                                    <label>Tanggal Awal</label>
-                                    <input name="start_date" id="date" class="form-control" type="text" value="{{ now()->subDays(14)->format('Y-m-d') }}">
+                                <div class="form-group col-sm-12">
+                                    <label>Pilih Semua Gempa</label>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" class="i-checks all" checked> Check All</label>
+                                    </div>
                                 </div>
 
-                                <div class="form-group col-sm-6">
-                                    <label>Tanggal Akhir</label>
-                                    <input name="end_date" id="date" class="form-control" type="text" value="{{ now()->format('Y-m-d') }}">
+                                <div class="form-group col-sm-12">
+                                    <label>Range Tanggal</label>
+                                    <div class="input-group input-daterange">
+                                        <input id="start_date" type="text" class="form-control" value="{{ now()->subDays(14)->format('Y-m-d') }}" name="start_date">
+                                        <div class="input-group-addon"> - </div>
+                                        <input id="end_date" type="text" class="form-control" value="{{ now()->format('Y-m-d') }}" name="end_date">
+                                    </div>
                                 </div>
 
                                 <div class="form-group col-sm-12">
@@ -140,11 +151,13 @@ Event Catalog
                             <tr>
                                 <th>#</th>
                                 <th>Gunung Api</th>
+                                <th>Stasiun</th>
                                 <th>Gempa</th>
                                 <th>P-Arrival (UTC)</th>
                                 <th>S-Arrival (UTC)</th>
                                 <th>Durasi</th>
-                                <th>Max. Amplitude</th>
+                                <th>Amplitude</th>
+                                <th>Pelapor</th>
                                 <th width="20%">Action</th>
                             </tr>
                         </thead>
@@ -153,14 +166,14 @@ Event Catalog
                             <tr>
                                 <td>{{ $eventCatalogs->firstItem()+$key }}</td>
                                 <td>{{ $eventCatalog->gunungapi->name }}</td>
+                                <td>{{ $eventCatalog->seismometer->scnl }}</td>
                                 <td>{{ $eventCatalog->type->name }}</td>
                                 <td>{{ $eventCatalog->p_datetime_utc }}</td>
-                                <td>{{ $eventCatalog->s_datetime_utc }}</td>
+                                <td>{{ $eventCatalog->s_datetime_utc ?? '-'}}</td>
                                 <td>{{ $eventCatalog->duration }}</td>
                                 <td>{{ $eventCatalog->maximum_amplitude }}</td>
+                                <td>{{ $eventCatalog->user->name }}</td>
                                 <td>
-                                    <a href="{{ route('chambers.event-catalog.show', $eventCatalog) }}" class="btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">View</a>
-
                                     @if (auth()->user()->nip === $eventCatalog->nip || auth()->user()->hasRole('Super Admin'))
                                     <a href="{{ route('chambers.event-catalog.edit', $eventCatalog) }}" class="btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>
 
@@ -169,6 +182,8 @@ Event Catalog
                                         @csrf
                                         <button value="Delete" class="btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
                                     </form>
+                                    @else
+                                    -
                                     @endif
                                 </td>
                             </tr>
@@ -187,11 +202,53 @@ Event Catalog
 @section('add-vendor-script')
 <!-- DataTables buttons scripts -->
 <script src="{{ asset('vendor/sweetalert/lib/sweet-alert.min.js') }}"></script>
+<script src="{{ asset('vendor/moment/moment.js') }}"></script>
+<script src="{{ asset('vendor/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.min.js') }}"></script>
 @endsection
 
 @section('add-script')
 <script>
 $(document).ready(function () {
+
+    $('.input-daterange').datepicker({
+        startDate: '2015-05-01',
+        endDate: '{{ now()->format('Y-m-d') }}',
+        language: 'id',
+        todayHighlight: true,
+        todayBtn: 'linked',
+        enableOnReadonly: false,
+        format: 'yyyy-mm-dd',
+    });
+
+    $('.input-daterange input').each(function() {
+        $(this).datepicker().on('changeDate', function(e){
+            var startDate = $('#start_date').val(),
+                endDate = $('#end_date').val(),
+                isValid = Date.parse(startDate) <= Date.parse(endDate);
+            console.log(isValid);
+        });
+    });
+
+    var $checkAll = $('input.all'),
+        $checkboxes = $('input.type');
+
+    $checkAll.on('ifChecked ifUnchecked', function(event) {
+        if (event.type == 'ifChecked') {
+            $checkboxes.iCheck('check');
+        } else {
+            $checkboxes.iCheck('uncheck');
+        }
+    });
+
+    $checkboxes.on('ifChanged', function(event){
+        if($checkboxes.filter(':checked').length == $checkboxes.length) {
+            $checkAll.prop('checked', 'checked');
+        } else {
+            $checkAll.removeProp('checked');
+        }
+        $checkAll.iCheck('update');
+    });
+
     $('body').on('submit','#deleteForm',function (e) {
         e.preventDefault();
 

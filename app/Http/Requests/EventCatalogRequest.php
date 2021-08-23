@@ -16,20 +16,6 @@ class EventCatalogRequest extends FormRequest
         return auth()->check();
     }
 
-    protected function prepareForValidation(): void
-    {
-        // foreach ($this->p_times as $key => $time) {
-        //     $times[] = [
-        //         'p_time' => $time.'.'.$this->p_milidetik[$key],
-        //         's_time' => $this->s_times[$key] == null ? null : $this->s_times[$key] . '.' . $this->s_milidetik[$key],
-        //     ];
-        // }
-
-        // $this->merge([
-        //     'times' => $times,
-        // ]);
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -50,7 +36,7 @@ class EventCatalogRequest extends FormRequest
             'events.*' => 'required|exists:event_types,code',
             'p_times.*' => 'required|date_format:Y-m-d H:i:s.v',
             's_times.*' => 'nullable|date_format:Y-m-d H:i:s.v|after:p_times.*',
-            'zones.*' => 'required|in:Asia/Jakarta, Asia/Makassar, Asia/Jayapura, UTC',
+            'zones.*' => 'required|in:Asia/Jakarta,Asia/Makassar,Asia/Jayapura,UTC',
             'durations.*' => 'required|numeric|min:0',
             'amplitudes.*' => 'required|numeric|between:0,240',
         ];

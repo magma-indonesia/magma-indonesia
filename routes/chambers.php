@@ -178,7 +178,9 @@ Route::group(['prefix' => 'gunungapi'], function () {
         'create','store','edit','update'
     ]]);
 
-    Route::resource('event-catalog', 'EventCatalogController');
+    Route::resource('event-catalog', 'EventCatalogController', ['except' => [
+        'show',
+    ]]);
 });
 
 Route::name('gerakan-tanah.')->group(function() {
