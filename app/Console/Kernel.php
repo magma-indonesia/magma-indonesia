@@ -45,9 +45,9 @@ class Kernel extends ConsoleKernel
 
     /**
      * Scheduler untuk mengkompilasi laporan MAGMA-VAR 24 jam:
-     * 
+     *
      * Data VAR
-     * 
+     *
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
@@ -63,7 +63,7 @@ class Kernel extends ConsoleKernel
 
     /**
      * Scheduler untuk Import Data Gunung Api, meliputi:
-     * 
+     *
      * Data Rekomendasi
      * Data VAR
      * Data VAR Visual
@@ -72,7 +72,7 @@ class Kernel extends ConsoleKernel
      * Data VAR Harian
      * Data Informasi Letusan (VEN)
      * Data VONA
-     * 
+     *
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
@@ -101,7 +101,7 @@ class Kernel extends ConsoleKernel
             ->cron('0 2,8,14,20 * * *')
             ->pingBefore($this->getUrlMagma())
             ->appendOutputTo($filePath);
-    
+
         $schedule->command('import:gempa')
             ->cron('0 2,8,14,20 * * *')
             ->pingBefore($this->getUrlMagma())
@@ -112,28 +112,28 @@ class Kernel extends ConsoleKernel
             ->pingBefore($this->getUrlMagma())
             ->appendOutputTo($filePath);
 
-        $schedule->command('import:ven')
-            ->daily()
-            ->pingBefore($this->getUrlMagma())
-            ->appendOutputTo($filePath);
+        // $schedule->command('import:ven')
+        //     ->daily()
+        //     ->pingBefore($this->getUrlMagma())
+        //     ->appendOutputTo($filePath);
 
         $schedule->command('import:subscribers')
             ->daily()
             ->pingBefore($this->getUrlMagma())
             ->appendOutputTo($filePath);
 
-        $schedule->command('import:vona')
-            ->daily()
-            ->pingBefore($this->getUrlMagma())
-            ->appendOutputTo($filePath);
+        // $schedule->command('import:vona')
+        //     ->daily()
+        //     ->pingBefore($this->getUrlMagma())
+        //     ->appendOutputTo($filePath);
     }
 
     /**
      * Scheduler untuk Import Kegempaan (MAGMA-ROQ), meliputi:
-     * 
+     *
      * Data BMKG
      * Data MAGMA-ROQ
-     * 
+     *
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
@@ -154,10 +154,10 @@ class Kernel extends ConsoleKernel
 
     /**
      * Scheduler untuk Import Data Gerakan Tanah (Sigertan), meliputi:
-     * 
+     *
      * Data CRS
      * Data MAGMA-Sigertan
-     * 
+     *
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
@@ -179,10 +179,10 @@ class Kernel extends ConsoleKernel
 
     /**
      * Scheduler untuk Import Data Administrasi, meliputi:
-     * 
+     *
      * Data Absensi Pegawai
      * Data Pengajuan
-     * 
+     *
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
@@ -203,7 +203,7 @@ class Kernel extends ConsoleKernel
 
     /**
      * Scheduler untuk Update data Live Seismogram per 10 menit:
-     * 
+     *
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
