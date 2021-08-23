@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    Gunung Api | Laporan Letusan 
+    Gunung Api | Laporan Letusan
 @endsection
 
 @section('add-vendor-css')
@@ -28,7 +28,7 @@
             </div>
 
             <p class="m-b-lg tx-16">
-                Gunakan menu ini untuk membuat Informasi Laporan Letusan Gunung Api (Volcano Eruption Notice). Laporan yang dibuat di menu ini akan juga akan dipublikasikan di MAGMA v1 dan langsung dibuatkan <b>Draft VONA</b>. VONA yang dibuat tidak langsung dikirim, akan tetapi masih dalam bentuk Draft. 
+                Gunakan menu ini untuk membuat Informasi Laporan Letusan Gunung Api (Volcano Eruption Notice). Laporan yang dibuat di menu ini akan juga akan dipublikasikan di MAGMA v1 dan langsung dibuatkan <b>Draft VONA</b>. VONA yang dibuat tidak langsung dikirim, akan tetapi masih dalam bentuk Draft.
             </p>
             <div class="alert alert-danger">
                 <i class="fa fa-gears"></i> Halaman ini masih dalam tahap pengembangan. Error, bug, maupun penurunan
@@ -74,6 +74,7 @@
             </div>
         </div>
 
+        @if ($vens->isNotEmpty())
         <div class="col-lg-6 col-xs-12">
             <div class="hpanel hred">
                 <div class="panel-body">
@@ -95,8 +96,11 @@
                 </div>
             </div>
         </div>
+        @endif
+
     </div>
 
+    @if ($vens->isNotEmpty())
     <div class="row">
         <div class="col-lg-12">
             <div class="hpanel">
@@ -106,7 +110,7 @@
                     <i class="fa fa-bolt"></i> {!! session('flash_message') !!}
                 </div>
                 @endif
-                
+
                 <div class="panel-body">
                     {{ $vens->links() }}
                     <div class="table-responsive">
@@ -122,7 +126,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-    
+
                             </tbody>
                         </table>
                     </div>
@@ -130,6 +134,7 @@
             </div>
         </div>
     </div>
+    @endif
 
 </div>
 @endsection
@@ -142,7 +147,7 @@
     <script>
         $(document).ready(function () {
             $('body').on('submit','#deleteForm',function (e) {
-                e.preventDefault();                
+                e.preventDefault();
 
                 var $url = $(this).attr('action'),
                     $data = $(this).serialize();
