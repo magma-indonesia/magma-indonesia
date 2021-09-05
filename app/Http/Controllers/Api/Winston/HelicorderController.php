@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Winston;
 
+use App\Gadd;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Seismometer;
@@ -11,7 +12,10 @@ class HelicorderController extends Controller
 {
     public function index()
     {
-        return Seismometer::with('gunungapi')->get();
+        return Gadd::has('seismometers')
+            ->with('seismometers')
+            ->select('name','code','tzone')
+            ->get();
     }
 
     public function show(Request $request)
