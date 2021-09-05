@@ -35,26 +35,34 @@ Route::name('v1.')->group(function () {
         Route::group(['prefix' => 'v1'], function () {
             Route::get('import/vona','Api\ImportController@vona')
                 ->name('import.vona');
+
             Route::get('user','Api\UserController@index')
                 ->name('user.index');
             Route::get('user/{nip}','Api\UserController@show');
+
             Route::get('var/latest','Api\VarController@latest');
             Route::get('var/{id}','Api\VarController@show');
+
             Route::get('vona','Api\v1\VonaController@index')
                     ->name('vona');
             Route::get('vona/latest','Api\v1\VonaController@latest')
                     ->name('vona.latest');
             Route::get('vona/{uuid}','Api\v1\VonaController@show')
                     ->name('vona.show');
+
             Route::get('magma-roq','Api\OldRoqController@index');
             Route::get('magma-roq/{no}','Api\OldRoqController@show');
+
             Route::get('magma-ven','Api\v1\MagmaVenController@index');
+
             Route::get('magma-var','Api\v1\MagmaVarController@index');
             Route::get('magma-var/filter','Api\v1\MagmaVarController@filter')
                 ->name('magma-var.filter');
             Route::get('magma-var/{code}/{noticenumber?}','Api\v1\MagmaVarController@show')
                 ->name('magma-var.show');
+
             Route::get('magma-sigertan','Api\v1\MagmaSigertanController@index');
+
             Route::get('press-release','Api\v1\PressController@index');
 
             Route::name('home.')->group(function () {
@@ -145,8 +153,10 @@ Route::name('wovodat.')->group(function () {
 Route::name('winston.')->group(function () {
     Route::group(['prefix' => 'winston'], function () {
 
-        Route::get('helicorder', 'Api\Winston\HelicorderController@index')->name('helicorder.index');
-        Route::get('helicorder/show', 'Api\Winston\HelicorderController@show')->name('helicorder.show');
+        Route::get('helicorder', 'Api\Winston\HelicorderController@index')
+            ->name('helicorder.index');
+        Route::get('helicorder/show', 'Api\Winston\HelicorderController@show')
+            ->name('helicorder.show');
 
     });
 });
