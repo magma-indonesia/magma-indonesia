@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Api\v1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\v1\Api\MagmaVarFilterRequest;
 use App\v1\MagmaVar as OldVar;
-use App\v1\MagmaVarOptimize;
-use App\Http\Resources\v1\MagmaVarResource;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -93,6 +92,32 @@ class MagmaVarController extends Controller
      * Undocumented function
      *
      * @param Collection $vars
+     * @return void
+     */
+    protected function transformPaginationData($vars)
+    {
+        $varsTransformed = $this->indexResponse($vars->getCollection())->toArray();
+
+        $varsTransformedAndPaginated = new \Illuminate\Pagination\LengthAwarePaginator(
+            $varsTransformed,
+            $vars->total(),
+            $vars->perPage(),
+            $vars->currentPage(),
+            [
+                'path' => request()->url(),
+                'query' => [
+                    'page' => $vars->currentPage()
+                ]
+            ]
+        );
+
+        return $varsTransformedAndPaginated;
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param Collection $vars
      * @return Collection
      */
     protected function indexResponse(Collection $vars)
@@ -152,21 +177,32 @@ class MagmaVarController extends Controller
                 ->paginate(15);
         });
 
-        $varsTransformed = $this->indexResponse($vars->getCollection())->toArray();
+        return $this->transformPaginationData($vars);
+    }
 
-        $varsTransformedAndPaginated = new \Illuminate\Pagination\LengthAwarePaginator(
-            $varsTransformed,
-            $vars->total(),
-            $vars->perPage(),
-            $vars->currentPage(),
-            [
-                'path' => request()->url(),
-                'query' => [
-                    'page' => $vars->currentPage()
-                ]
-            ]
-        );
 
-        return $varsTransformedAndPaginated;
+    /**
+     * Filter VAR
+     *
+     * @param \App\Http\Requests\v1\Api\MagmaVarFilterRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function filter(MagmaVarFilterRequest $request)
+    {
+        $validated = $request->validated();
+
+        $vars = OldVar::query();
+
+        $vars->when($request->has('start_date'), function($query) use($validated) {
+            $query->whereBetween('var_data_date', [$validated['start_date'], $validated['end_date']]);
+        });
+
+        $vars = $vars->where('ga_code', $validated['code'])
+            ->where('var_perwkt','24 Jam')
+            ->orderBy('var_data_date', 'desc')
+            ->orderBy('periode', 'desc')
+            ->paginate(15);
+
+        return $this->transformPaginationData($vars);
     }
 }
