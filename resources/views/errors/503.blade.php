@@ -8,4 +8,4 @@
     </div>
 @endsection
 
-@section('message', __($exception->getMessage() ?: 'Sorry, we are doing some maintenance. Please check back soon.'))
+@section('message', __($exception->getMessage() ?: 'Dicari Developer MAGMA yang sesuai dengan fungsionalnya.'))
