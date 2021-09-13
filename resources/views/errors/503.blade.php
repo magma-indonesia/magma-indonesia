@@ -1,6 +1,6 @@
 @extends('errors::illustrated-layout')
 
-@section('code', '503')
+@section('code', '500')
 @section('title', __('Service Unavailable'))
 
 @section('image')
@@ -8,4 +8,4 @@
     </div>
 @endsection
 
-@section('message', __($exception->getMessage() ?: 'Dicari Developer MAGMA yang sesuai dengan fungsionalnya.'))
+@section('message', __($exception->getMessage() ?: 'Service temporarily unavailable'))
