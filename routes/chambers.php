@@ -38,6 +38,8 @@ Route::name('administratif.')->group(function () {
 Route::get('absensi/search','AbsensiController@search')->name('absensi.search');
 Route::resource('absensi','AbsensiController');
 
+Route::get('users/statistik/login/{date?}', 'StatistikLoginController@index')
+    ->name('users.statistik.login');
 Route::get('users/reset','UserController@reset')
     ->name('users.reset');
 Route::put('users/reset','UserController@resetPassword')

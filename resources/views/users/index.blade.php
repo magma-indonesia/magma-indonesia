@@ -50,6 +50,7 @@
                         @role('Super Admin')
                         <a href="{{ route('chambers.users.create') }}" type="button" class="btn btn-magma btn-outline">Tambah Data Pegawai</a>
                         <a href="{{ route('chambers.users.reset') }}" type="button" class="btn btn-danger btn-outline">Reset Password</a>
+                        <a href="{{ route('chambers.users.statistik.login') }}" type="button" class="btn btn-danger btn-outline">Login Stats</a>
                         @endrole
                     </div>
 
@@ -76,17 +77,17 @@
                                     <tr>
                                         <td>{{ $user->name }}</td>
                                         <td>{!! strlen($user->nip)<18 ? $user->nip.'<b>KTP</b>' : $user->nip !!}</td>
-                                        <td>{{ $user->administrasi->bidang->nama ?? '-' }}</td>                
+                                        <td>{{ $user->administrasi->bidang->nama ?? '-' }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->phone }}</td>
                                         <td>{{ $user->status ? 'Aktif':'Tidak Aktif' }}</td>
                                         @role('Super Admin')
-                                        <td>{{ $user->roles()->pluck('name')->implode(', ') }}</td>    
-                                        <td>                                         
+                                        <td>{{ $user->roles()->pluck('name')->implode(', ') }}</td>
+                                        <td>
                                             <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.users.destroy',['id'=>$user->id]) }}" accept-charset="UTF-8">
                                                 @method('DELETE')
                                                 @csrf
-                                                <a href="{{ route('chambers.users.edit',['id'=>$user->id]) }}" class="btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>                                            
+                                                <a href="{{ route('chambers.users.edit',['id'=>$user->id]) }}" class="btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>
                                                 <button value="Delete" class="btn btn-sm btn-danger btn-outline delete" type="submit">Delete</button>
                                             </form>
                                         </td>
@@ -139,7 +140,7 @@
             });
 
             $('body').on('submit','#deleteForm',function (e) {
-                e.preventDefault();                
+                e.preventDefault();
 
                 var $url = $(this).attr('action'),
                     $data = $(this).serialize();
