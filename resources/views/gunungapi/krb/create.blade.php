@@ -77,7 +77,7 @@
                             <div class="col-sm-9">
                                 <label class="w-xs btn btn-outline btn-default btn-file">
                                     <i class="fa fa-upload"></i>
-                                    <span class="label-krb">Browse </span> 
+                                    <span class="label-krb">Browse </span>
                                     <input class="file" type="file" name="krb" style="display: none;">
                                 </label>
                                 <button type="button" class="w-xs btn btn-danger clear-krb"><i class="fa fa-trash"></i> Clear</button>
@@ -103,10 +103,10 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Tayangkan KRB?</label>
                             <div>
-                                <label class="checkbox-inline"> 
-                                <input name="published" class="i-checks" type="radio" value="1" id="published"> Ya </label> 
                                 <label class="checkbox-inline">
-                                <input name="published" class="i-checks" type="radio" value="0" id="published" checked> Tidak </label> 
+                                <input name="published" class="i-checks" type="radio" value="1" id="published"> Ya </label>
+                                <label class="checkbox-inline">
+                                <input name="published" class="i-checks" type="radio" value="0" id="published" checked> Tidak </label>
                             </div>
                         </div>
 

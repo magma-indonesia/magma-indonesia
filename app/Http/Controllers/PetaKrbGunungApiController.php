@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Gadd;
 use App\HomeKrb;
+use App\Http\Requests\PetaKrbGunungApiRequest;
 use Illuminate\Http\Request;
 use App\PetaKrbGunungApi as KRB;
 use Illuminate\Support\Facades\Storage;
@@ -42,16 +43,19 @@ class PetaKrbGunungApiController extends Controller
         $large = Image::make(storage_path('app/'.$path))->resize(2560, 2560, function ($constraint) {
             $constraint->aspectRatio();
         })->encode('jpg');
+
         Storage::disk('public')->put('krb-gunungapi/large/'.$filename, $large);
 
         $medium = Image::make(storage_path('app/public/krb-gunungapi/large/'.$filename))->resize(1280, 1280, function ($constraint) {
             $constraint->aspectRatio();
         })->encode('jpg');
+
         $medium = Storage::disk('public')->put('krb-gunungapi/medium/'.$filename, $medium);
 
         $thumbnail = Image::make(storage_path('app/public/krb-gunungapi/medium/'.$filename))->resize(150, 150, function ($constraint) {
             $constraint->aspectRatio();
         })->encode('jpg');
+
         Storage::disk('public')->put('krb-gunungapi/thumbnails/'.$filename, $thumbnail);
 
         return [
@@ -65,39 +69,31 @@ class PetaKrbGunungApiController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\PetaKrbGunungApiRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PetaKrbGunungApiRequest $request)
     {
         ini_set('max_execution_time', 1200);
 
-        $this->validate($request, [
-            'code' => 'required|exists:ga_dd,code',
-            'tahun' => 'nullable|integer',
-            'krb' => 'required|image|max:80000',
-        ],[
-            'code.required' => 'Gunung Api belum dipilih',
-            'code.exists' => 'Gunung Api tidak ditemukan',
-            'krb.required' => 'File KRB tidak ditemukan',
-            'krb.max' => 'File KRB harus kurang dari <80MB',
-            'krb.mimes' => 'File KRB harus berformat JPG',
-        ]);
+        $validated = $request->validated();
+
+        return $validated;
 
         $meta = $this->createFile(
             $request->file('krb')->store('public/krb-gunungapi')
         );
- 
+
         KRB::create([
-            'code' => $request->code,
-            'tahun' => $request->tahun,
+            'code' => $validated['code'],
+            'tahun' => $validated['tahun'],
             'filename' => $meta['filename'],
             'size' => $meta['size'],
             'large_size' => $meta['large_size'],
             'medium_size' => $meta['medium_size'],
             'nip' => auth()->user()->nip,
-            'keterangan' => $request->keterangan,
-            'published' => $request->published,
+            'keterangan' => $validated['keterangan'],
+            'published' => $validated['published'],
         ]);
 
         return redirect()->route('chambers.krb-gunungapi.index');
