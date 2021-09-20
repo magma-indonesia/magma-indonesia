@@ -60,7 +60,7 @@ class EdukasiController extends Controller
             'deskripsi' => 'required|min:144',
             'is_published' => 'required|boolean',
             'files' => 'sometimes|required|array',
-            'files.*' => 'sometimes|required|image|max:3000',
+            'files.*' => 'sometimes|required|mimes:jpeg,jpg,png|max:5000',
         ]);
 
         $edukasi = new Edukasi();
@@ -75,7 +75,7 @@ class EdukasiController extends Controller
 
         if ($saved)
         {
-            if ($request->has('files')) 
+            if ($request->has('files'))
             {
                 foreach ($request->file('files') as $file) {
                     $edukasi->edukasi_files()->create([
@@ -146,7 +146,7 @@ class EdukasiController extends Controller
             'deskripsi' => 'required|min:144',
             'is_published' => 'required|boolean',
             'files' => 'sometimes|required|array',
-            'files.*' => 'sometimes|required|image|max:3000',
+            'files.*' => 'sometimes|required|mimes:jpeg,jpg,png|max:5000',
             'delete_files' => 'sometimes|required|array',
             'delete_files.*' => 'sometimes|required|exists:edukasi_files,id',
         ]);
