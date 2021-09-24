@@ -24,7 +24,7 @@ class SeismometerController extends Controller
                     ->select('code','name')
                     ->with('seismometers')
                     ->withCount('seismometers')
-                    ->orderBy('name')
+                    ->orderBy('code')
                     ->get();
 
         $lives = Seismometer::with('live_seismogram','gunungapi:code,name')
