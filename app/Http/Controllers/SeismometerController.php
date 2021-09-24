@@ -56,7 +56,7 @@ class SeismometerController extends Controller
      */
     public function create()
     {
-        $gadds = Gadd::all();
+        $gadds = Gadd::orderBy('name')->get();
         return view('gunungapi.seismometer.create', compact('gadds'));
     }
 
