@@ -6,6 +6,7 @@ use App\Gadd;
 use App\Seismometer;
 use App\LiveSeismogram;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
@@ -87,6 +88,8 @@ class SeismometerController extends Controller
             ]
         );
 
+        Artisan::call('update:live_seismogram');
+
         // Used in EventCatalogController@create
         Cache::forget('event-catalog/seismometer');
 
@@ -157,6 +160,8 @@ class SeismometerController extends Controller
                 'filename' => null,
             ]);
         }
+
+        Artisan::call('update:live_seismogram');
 
         return redirect()->route('chambers.seismometer.index');
     }
