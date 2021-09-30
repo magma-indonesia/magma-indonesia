@@ -70,7 +70,7 @@ class LiveSeismogram extends Command
         {
             $this->info('[' . now()->format('Y-m-d H:i:s') . ']' . 'Updating Live Seismogram....');
 
-            $watermark = Image::make(public_path('watermark-seismogram.png'));
+            $watermark = Image::make(base_path('public/watermark-seismogram.png'));
 
             $seismometers = Seismometer::wherePublished(1)->get();
             if ($seismometers->isNotEmpty()) {

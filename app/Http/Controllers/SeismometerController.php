@@ -88,7 +88,9 @@ class SeismometerController extends Controller
             ]
         );
 
-        Artisan::call('update:live_seismogram');
+        if ($request->published) {
+            Artisan::call('update:live_seismogram');
+        }
 
         // Used in EventCatalogController@create
         Cache::forget('event-catalog/seismometer');
