@@ -43,6 +43,11 @@
 
         {{--  Sidebar  --}}
         <ul class="nav" id="side-menu">
+            <li class="">
+                <a href="{{ route('v1.home') }}">
+                    <span class="nav-label">Home</span>
+                </a>
+            </li>
             <li class="{{ active('chambers') }}">
                 <a href="{{ route('chambers.index') }}">
                     <span class="nav-label">Magma Chamber</span>
