@@ -112,7 +112,7 @@ Route::name('v1.')->group(function () {
         Route::get('gempa-bumi-dan-tsunami/kajian/{id?}','FrontPage\v1\GempaBumiController@showGempa')
             ->name('gempabumi.roq.show')
             ->middleware('signed');
-        Route::get('gempa-bumi-dan-tsunami/kajian/search/{q?}','FrontPage\v1\GerakanTanahController@indexGertan')
+        Route::get('gempa-bumi-dan-tsunami/kajian/search/{q?}', 'FrontPage\v1\GempaBumiController@indexGempa')
             ->name('gempabumi.roq.search')
             ->middleware('custom_throttle:20,1');
 

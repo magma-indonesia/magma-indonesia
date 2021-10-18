@@ -1,9 +1,9 @@
-@extends('layouts.slim') 
+@extends('layouts.slim')
 
 @section('title')
 Kajian Gempa Bumi
 @endsection
- 
+
 @section('breadcrumb')
 <li class="breadcrumb-item"><a>Gempa Bumi dan Tsunami</a></li>
 <li class="breadcrumb-item active" aria-current="page">Kajian</li>
@@ -68,14 +68,16 @@ Kajian
                     </div>
                 </div>
                 @endforeach
-                    
+
                 @endforeach
             </div>
-            
+
             {{ $gempas->appends(Request::except('page'))->onEachSide(1)->links('vendor.pagination.slim-simple') }}
         </div>
         @else
-
+        <div class="alert alert-danger pd-30 mg-b-30" role="alert">
+            <strong>Hasil pencarian tidak ditemukan!</strong> Silahkan ulangi dan ganti parameter pencarian Anda.
+        </div>
         @endif
     </div>
 

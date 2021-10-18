@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Cache;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 use App\v1\MagmaRoq;
 
 class GempaBumiController extends Controller
 {
-    
+
     protected $gempas;
     protected $grouped;
 
@@ -42,7 +42,7 @@ class GempaBumiController extends Controller
 
         $gempas = Cache::remember('v1/home/roqs:search:'.$page.':'.$start.':'.$end, 120, function () use ($request){
             return MagmaRoq::where('roq_tanggapan','YA')
-                    ->where('datetime_wib',[$request->start,$request->end])
+                    ->whereBetween('datetime_wib',[$request->start,$request->end])
                     ->orderBy('datetime_wib','desc')
                     ->simplePaginate(10);
         });
@@ -70,7 +70,7 @@ class GempaBumiController extends Controller
                     ];
                 });
             });
-            
+
             return $grouped;
         });
 
@@ -119,7 +119,7 @@ class GempaBumiController extends Controller
                     ];
                 });
             });
-            
+
             return $grouped;
         });
 
@@ -127,7 +127,6 @@ class GempaBumiController extends Controller
         $this->grouped = $grouped;
 
         return $this;
-        
     }
 
     public function showGempa($id)
@@ -166,7 +165,7 @@ class GempaBumiController extends Controller
                     'rekomendasi' => $roq->roq_tanggapan == 'YA' ? nl2br($roq->roq_rekom) :  'Belum ada rekomendasi.',
                 ];
             });
-            
+
             return $roqs->first();
         });
 
