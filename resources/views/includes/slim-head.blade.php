@@ -16,7 +16,7 @@
     <link rel="apple-touch-icon" href="{{ asset('favicon-180x180.0.png') }}" sizes="180x180">
     <link rel="dns-prefetch" href="{{ config('app.url') }}">
     <link rel="dns-prefetch" href="https://magma.vsi.esdm.go.id/">
-    <link itemprop="thumbnailUrl" href="{{ asset('snapshot.png') }}">
+    <link itemprop="thumbnailUrl" href="@yield('thumbnail', asset('snapshot.png'))">
 
     <!-- Twitter -->
     <meta name="twitter:site" content="@id_magma">
@@ -24,15 +24,15 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="@yield('title', config('app.tag_line'))">
     <meta name="twitter:description" content="{{ config('app.name') }}">
-    <meta name="twitter:image" content="{{ asset('snapshot.png') }}">
+    <meta name="twitter:image" content="@yield('thumbnail', asset('snapshot.png'))">
 
     <!-- Facebook -->
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="{{ config('app.url') }}">
     <meta property="og:title" content="@yield('title', config('app.tag_line'))">
     <meta property="og:description" content="{{ config('app.name') }}">
-    <meta property="og:image" content="{{ asset('snapshot.png') }}">
-    <meta property="og:image:secure_url" content="{{ asset('snapshot.png') }}">
+    <meta property="og:image" content="@yield('thumbnail', asset('snapshot.png'))">
+    <meta property="og:image:secure_url" content="@yield('thumbnail', asset('snapshot.png'))">
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -50,6 +50,6 @@
     <link rel="stylesheet" href="{{ asset('css/icon-magma.css') }}">
     <link rel="stylesheet" href="{{ asset('slim/css/slim.css') }}">
     <link rel="stylesheet" href="{{ asset('slim/css/slim-magma.css') }}">
-    
+
     @yield('add-css')
 </head>
