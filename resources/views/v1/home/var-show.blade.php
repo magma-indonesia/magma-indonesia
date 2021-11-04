@@ -1,4 +1,8 @@
-@extends('layouts.slim') 
+@extends('layouts.slim')
+
+@section('thumbnail')
+{{ $var->foto }}
+@endsection
 
 @section('title')
 Laporan Aktivitas Gunung Api - {{ $var->gunungapi }}, {{ $var->tanggal_deskripsi }}, periode {{ $var->periode }}
@@ -22,7 +26,7 @@ crossorigin=""></script>
 <link rel="stylesheet" href="{{ asset('css/leaflet.defaultextent.css') }}">
 <script src="{{ asset('js/leaflet.defaultextent.js') }}"></script>
 @endsection
-    
+
 @section('breadcrumb')
 <li class="breadcrumb-item"><a href="#">Gunung Api</a></li>
 <li class="breadcrumb-item"><a href="#">Laporan Aktivitas</a></li>
@@ -178,7 +182,7 @@ $(document).ready(function () {
 
         window.open(
             e.target.getAttribute('href'),
-            'twitterwindow', 
+            'twitterwindow',
             'height=450, width=550, toolbar=0, location=0, menubar=0, directories=0, scrollbars=0'
         );
     });
@@ -233,7 +237,7 @@ $(document).ready(function () {
                     var krb = 'Kawasan Rawan Bencana (KRB) I';
                     break;
             case 2:
-                    var krb = 'Kawasan Rawan Bencana (KRB) II';                        
+                    var krb = 'Kawasan Rawan Bencana (KRB) II';
                     break;
                 default:
                     var krb = 'Kawasan Rawan Bencana (KRB) III';
