@@ -34,7 +34,10 @@ class GlossaryController extends Controller
      */
     public function index()
     {
-        return view('glossary.index', ['glossaries' => Glossary::orderBy('judul')->withCount('glossary_files')->get(), 'edukasis_count' => Edukasi::count()]);
+        return view('glossary.index', [
+            'glossaries' => Glossary::orderBy('judul')->with('user:nip,name')->withCount('glossary_files')->get(),
+            'edukasis_count' => Edukasi::count(),
+        ]);
     }
 
     /**
@@ -46,7 +49,7 @@ class GlossaryController extends Controller
     {
         return view('glossary.create');
     }
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -77,7 +80,7 @@ class GlossaryController extends Controller
 
         if ($saved)
         {
-            if ($request->has('files')) 
+            if ($request->has('files'))
             {
                 foreach ($request->file('files') as $file) {
                     $glossary->glossary_files()->create([

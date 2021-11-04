@@ -65,7 +65,7 @@ Glossary
                     <div class="m-t-xl">
                         <h1>{{ $glossaries->count() }}</h1>
                         <p>
-                            Menu ini digunakan untuk melihat edukasi informasi apa yang pernah dibuat. 
+                            Menu ini digunakan untuk melihat edukasi informasi apa yang pernah dibuat.
                         </p>
                         <a href="{{ route('chambers.glossary.create') }}" class="btn btn-outline btn-danger"><i class="fa fa-plus"></i> Create</a>
                     </div>
@@ -87,7 +87,7 @@ Glossary
                     <div class="m-t-xl">
                         <h1>{{ $edukasis_count }}</h1>
                         <p>
-                            Menu ini digunakan untuk melihat edukasi informasi apa yang pernah dibuat. 
+                            Menu ini digunakan untuk melihat edukasi informasi apa yang pernah dibuat.
                         </p>
                         <a href="{{ route('chambers.edukasi.index') }}" class="btn btn-outline btn-info"> Daftar</a>
                         <a href="{{ route('chambers.edukasi.create') }}" class="btn btn-outline btn-danger"><i class="fa fa-plus"></i> Create</a>
@@ -109,6 +109,7 @@ Glossary
                                 <th data-breakpoints="xs sm md" data-title="Deskripsi">Deskripsi</th>
                                 <th data-sortable="false" data-breakpoints="xs sm md" data-title="Jumlah File(s)">Jumlah File(s)</th>
                                 <th data-title="Published">Published</th>
+                                <th data-title="Kontributor">Kontributor</th>
                                 <th data-sortable="false" data-breakpoints="xs sm md" data-title="Action" width="40%">Action</th>
                             </tr>
                         </thead>
@@ -119,6 +120,7 @@ Glossary
                                 <td>{{ \Illuminate\Support\Str::limit(strip_tags($glossary->deskripsi), 100) }}</td>
                                 <td>{{ $glossary->glossary_files_count }}</td>
                                 <td>{{ $glossary->is_published ? 'Ya' : 'Tidak' }}</td>
+                                <td>{{ $glossary->user->name }}</td>
                                 <td>
                                     <a href="{{ route('chambers.glossary.show', $glossary->slug) }}" class="btn btn-sm btn-info btn-outline m-b-xs" type="button" title="View">View</a>
                                     <a href="{{ route('chambers.glossary.edit', $glossary) }}" class="btn btn-sm btn-warning btn-outline m-b-xs" type="button" title="Edit">Edit</a>
