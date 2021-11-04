@@ -24,7 +24,8 @@
             <div class="card-body">
                 <h5 class="card-title tx-dark tx-medium mg-b-10">{{ $glossary->judul }}</h5>
                 <p class="card-subtitle tx-normal mg-b-15">Diperbarui pada
-                    {{ $glossary->updated_at ? $glossary->updated_at->formatLocalized('%A, %d %B %Y %H:%M:%S'). ' WIB' :  $glossary->created_at->formatLocalized('%A, %d %B %Y %H:%M:%S'). ' WIB'}}
+                    {{ $glossary->updated_at ? $glossary->updated_at->formatLocalized('%A, %d %B %Y %H:%M:%S'). ' WIB' :
+                    $glossary->created_at->formatLocalized('%A, %d %B %Y %H:%M:%S'). ' WIB'}}
                 </p>
                 <div class="mg-t-30 card-text">
                     {!! htmlspecialchars_decode($glossary->deskripsi) !!}
@@ -34,7 +35,8 @@
                     <div class="row">
                         @foreach ($glossary->glossary_files as $index => $file)
                         <div class="col-4 col-lg-2 col-md-3 mg-b-10">
-                            <a href="{{ $file->url }}" data-lightbox="file-set" data-title="{{ $glossary->judul.'_'.($index+1) }}">
+                            <a href="{{ $file->url }}" data-lightbox="file-set"
+                                data-title="{{ $glossary->judul.'_'.($index+1) }}">
                                 <img class="img-fluid" src="{{ $file->thumbnail }}" alt="" />
                             </a>
                         </div>
@@ -55,8 +57,8 @@
             <h6 class="slim-card-title">Pusat Vulkanologi dan Mitigasi Bencana Geologi</h6>
             <div class="tx-20">
                 <a href="https://www.facebook.com/pvmbg" class="tx-primary mg-r-5"><i class="fa fa-facebook"></i></a>
-                <a href="https://twitter.com/pvmbg_/" class="tx-info mg-r-5"><i class="fa fa-twitter"></i></a>
-                <a href="https://www.instagram.com/pvmbg_/" class="tx-pink mg-r-5"><i
+                <a href="https://twitter.com/vulkanologi_mbg" class="tx-info mg-r-5"><i class="fa fa-twitter"></i></a>
+                <a href="https://www.instagram.com/pvmbg_kesdm/" class="tx-pink mg-r-5"><i
                         class="fa fa-instagram"></i></a>
             </div>
             <hr>

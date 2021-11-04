@@ -26,6 +26,7 @@ class GlossaryController extends Controller
      */
     public function show(String $slug)
     {
-        //
+        $glossary = Glossary::whereSlug($slug)->firstOrFail();
+        return view('v1.home.glossary-show', ['glossary' => $glossary]);
     }
 }

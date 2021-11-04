@@ -33,13 +33,20 @@ Glossary
             <thead>
                 <tr>
                     <th>Istilah</th>
-                    <th class="wd-80p">deskripsi</th>
+                    <th class="wd-80p">Deskripsi</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($glossaries as $glossary)
                 <tr>
-                    <td>{{ $glossary->judul }}</td>
+                    <td>
+                        <a href="{{ route('v1.edukasi.glossary.show', $glossary->slug) }}" class="tx-inverse tx-medium d-block">{{ $glossary->judul }}</a>
+                        @auth
+                        <p class="tx-12">
+                            <a href="{{ route('chambers.glossary.edit', $glossary) }}">Rubah</a>
+                        </p>
+                        @endauth
+                    </td>
                     <td>
                         <div>
                             {!! $glossary->deskripsi !!}
@@ -80,5 +87,5 @@ $(document).ready(function() {
         }
     });
 });
-</script>    
+</script>
 @endsection
