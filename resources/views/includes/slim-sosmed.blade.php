@@ -5,8 +5,8 @@
     <h6 class="slim-card-title">Pusat Vulkanologi dan Mitigasi Bencana Geologi</h6>
     <div class="tx-20">
         <a href="https://www.facebook.com/pvmbg" class="tx-primary mg-r-5"><i class="fa fa-facebook"></i></a>
-        <a href="https://twitter.com/vulkanologi_mbg" class="tx-info mg-r-5"><i class="fa fa-twitter"></i></a>
-        <a href="https://www.instagram.com/pvmbg_kesdm/" class="tx-pink mg-r-5"><i class="fa fa-instagram"></i></a>
+        <a href="https://twitter.com/pvmbg_" class="tx-info mg-r-5"><i class="fa fa-twitter"></i></a>
+        <a href="https://www.instagram.com/pvmbg_/" class="tx-pink mg-r-5"><i class="fa fa-instagram"></i></a>
     </div>
     <hr>
     <h6 class="slim-card-title">Badan Geologi</h6>

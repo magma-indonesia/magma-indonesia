@@ -43,7 +43,7 @@
 
         <!-- Calcite Maps Bootstrap -->
         <link rel="stylesheet" href="{{ asset('css/calcite-maps-bootstrap.min-v0.3.css') }}">
-    
+
         <!-- Calcite Maps -->
         <link rel="stylesheet" href="{{ asset('css/calcite-maps-esri-leaflet.min-v0.3.css') }}">
         <link rel="stylesheet" href="{{ asset('fonts/calcite/calcite-ui.css') }}">
@@ -84,7 +84,7 @@
     <body class="calcite-nav-top calcite-margin-all calcite-zoom-bottom-right calcite-layout-small-title">
         <!-- Navbar -->
         <nav class="navbar calcite-navbar navbar-fixed-top calcite-bg-custom calcite-text-light" style="background-color: rgba(0, 127, 255, 0.8);">
-            
+
             <!-- Menu -->
             <div class="dropdown calcite-dropdown calcite-bg-custom calcite-text-light" role="presentation">
                 <a class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">
@@ -102,7 +102,7 @@
                     <li><a role="button" data-target="#setLocation" data-toggle="modal" data-dismiss="modal" aria-haspopup="true"><span class="glyphicon glyphicon-info-sign"></span> Cek Lokasi</a></li>
                     <li class="divider"></li>
                     <li><a role="button" data-target="#panelVolcanoes" aria-haspopup="true"><span class="glyphicon glyphicon-search"></span> Cari Gunung Api</a></li>
-                    <li><a role="button" data-target="#panelInfo" aria-haspopup="true"><span class="glyphicon glyphicon-tasks"></span> Status Gunung Api</a></li>
+                    <li class="hidden-lg"><a href="{{ route('v1.gunungapi.tingkat-aktivitas') }}"><span class="glyphicon glyphicon-tasks"></span>Tingkat Aktivitas</a></li>
                     <li class="hidden-lg"><a href="{{ route('v1.gunungapi.var') }}"><span class="glyphicon glyphicon-stats"></span> Laporan Gunung Api</a></li>
                     <li class="hidden-lg"><a href="{{ route('v1.gunungapi.ven') }}"><span class="glyphicon glyphicon-th-list"></span> Informasi Letusan</a></li>
                     <li class="hidden-lg"><a href="{{ route('v1.vona.index') }}"><span class="glyphicon glyphicon-plane"></span> VONA</a></li>
@@ -129,7 +129,7 @@
                 <img src="{{ asset('magma-logo-small.png') }}" style="height:24px;margin-left:5px;">
                 <span class="calcite-title-main" style="margin-left:15px;"><a class="calcite-title-main" href="{{ route('v1.home') }}">MAGMA Indonesia</a></span>
                 <span class="calcite-title-sub hidden-xs" style="margin-left:15px;">Bridging the will of nature to society</span>
-                <span class="calcite-title-divider hidden-xs hidden-sm hidden-md"></span>   
+                <span class="calcite-title-divider hidden-xs hidden-sm hidden-md"></span>
             </div>
 
             {{-- Links --}}
@@ -137,6 +137,7 @@
                 <li class="dropdown hidden-xs hidden-sm hidden-md">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="icon icon-volcano-warning" style="margin-right: 5px;"></i> Gunung Api <b class="caret"></b></a>
                     <ul class="dropdown-menu">
+                        <li class="padding-magma-xs"><a href="{{ route('v1.gunungapi.tingkat-aktivitas') }}">Tingkat Aktivitas</a></li>
                         <li class="padding-magma-xs"><a href="{{ route('v1.gunungapi.var') }}">Laporan Aktivitas (VAR)</a></li>
                         <li class="padding-magma-xs"><a href="{{ route('v1.gunungapi.ven') }}">Informasi Letusan (VEN)</a></li>
                         <li class="padding-magma-xs"><a href="{{ route('v1.vona.index') }}">VONA</a></li>
@@ -171,8 +172,8 @@
         </nav>
 
         <!-- Map Container  -->
-        <div class="calcite-map">                
-            <div id="map" class="calcite-map-absolute"></div>    
+        <div class="calcite-map">
+            <div id="map" class="calcite-map-absolute"></div>
         </div>
 
         <!-- Panel -->
@@ -182,8 +183,8 @@
             <div id="panelInfo" style="background-color: rgba(0, 127, 255, 0.8)" class="panel collapse">
                 <div id="headingInfo" class="panel-heading" role="tab">
                     <div class="panel-title">
-                        <a class="panel-toggle" role="button" data-toggle="collapse" href="#collapseInfo" aria-expanded="true" aria-controls="collapseInfo"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span><span class="panel-label">Informasi Gunung Api</span></a> 
-                        <a class="panel-close" role="button" data-toggle="collapse" data-target="#panelInfo"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>  
+                        <a class="panel-toggle" role="button" data-toggle="collapse" href="#collapseInfo" aria-expanded="true" aria-controls="collapseInfo"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span><span class="panel-label">Informasi Gunung Api</span></a>
+                        <a class="panel-close" role="button" data-toggle="collapse" data-target="#panelInfo"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>
                     </div>
                 </div>
                 <div id="collapseInfo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingInfo">
@@ -246,8 +247,8 @@
             <div id="panelVolcanoes" style="background-color: rgba(0, 127, 255, 0.8)" class="panel collapse">
                 <div id="headingVolcanoes" class="panel-heading" role="tab">
                     <div class="panel-title">
-                        <a class="panel-toggle collapsed" role="button" data-toggle="collapse" href="#collapseVolcanoes" aria-expanded="false" aria-controls="collapseVolcanoes"><span class="glyphicon glyphicon-search" aria-hidden="true"></span><span class="panel-label">Gunungapi</span></a> 
-                        <a class="panel-close" role="button" data-toggle="collapse" data-target="#panelVolcanoes"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>  
+                        <a class="panel-toggle collapsed" role="button" data-toggle="collapse" href="#collapseVolcanoes" aria-expanded="false" aria-controls="collapseVolcanoes"><span class="glyphicon glyphicon-search" aria-hidden="true"></span><span class="panel-label">Gunungapi</span></a>
+                        <a class="panel-close" role="button" data-toggle="collapse" data-target="#panelVolcanoes"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>
                     </div>
                 </div>
 
@@ -266,8 +267,8 @@
             <div id="panelBasemaps" style="background-color: rgba(0, 127, 255, 0.8)" class="panel collapse">
                 <div id="headingBasemaps" class="panel-heading" role="tab">
                     <div class="panel-title">
-                        <a class="panel-toggle collapsed" role="button" data-toggle="collapse" href="#collapseBasemaps" aria-expanded="false" aria-controls="collapseBasemaps"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span><span class="panel-label">Basemaps</span></a> 
-                        <a class="panel-close" role="button" data-toggle="collapse" data-target="#panelBasemaps"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>  
+                        <a class="panel-toggle collapsed" role="button" data-toggle="collapse" href="#collapseBasemaps" aria-expanded="false" aria-controls="collapseBasemaps"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span><span class="panel-label">Basemaps</span></a>
+                        <a class="panel-close" role="button" data-toggle="collapse" data-target="#panelBasemaps"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>
                     </div>
                 </div>
                 <div id="collapseBasemaps" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingBasemaps">
@@ -310,7 +311,7 @@
                                                 <button type="button" class="btn btn-info" data-dismiss="modal">Penghargaan</button>
                                             </div>
                                         </div>
-                                        <br> 
+                                        <br>
                                     </div>
                                 </div>
                             </div>
@@ -319,7 +320,7 @@
                 </div>
             </div>
         </div>
-          
+
         <div class="modal fade" id="modalSources" tabindex="-1" role="dialog" aria-labelledby="splashlModal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -364,7 +365,7 @@
                                                 <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
                                             </div>
                                         </div>
-                                        <br> 
+                                        <br>
                                     </div>
                                 </div>
                             </div>
@@ -441,15 +442,15 @@
         </div>
 
         <!-- ======= -->
-        <!-- Leaflet --> 
-        
+        <!-- Leaflet -->
+
         <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
         <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('vendor/slimScroll/jquery.slimscroll.min.js') }}"></script>
         <script src="{{ asset('js/calcitemaps-v0.3.js') }}"></script>
 
         <!-- ====== -->
-        <!-- jQuery --> 
+        <!-- jQuery -->
         <!-- ====== -->
         <script>
         $(document).ready(function () {
@@ -495,7 +496,7 @@
                     }
                     return 6;
             }
-            
+
             // Map Inititiation
             var map = L.map('map', {
                         zoomControl: false,
@@ -536,7 +537,7 @@
                 .setPrefix('MAGMA Indonesia')
                 .addAttribution('<a href="http://esdm.go.id" title="Badan Geologi, ESDM" target="_blank">Badan Geologi, ESDM</a>')
                 .addTo(map);
-            
+
             // ==========
             // Gunung Api
             // ==========
@@ -556,7 +557,7 @@
                 addKrb = [],
                 markers = {};
 
-            
+
             // Set Marker Gunung Api
             $.each(markersGunungApi, function(index, gunungapi) {
                 var ga_code = gunungapi.ga_code,
@@ -611,7 +612,7 @@
                         GunungapiAwas.push(markerId);
                         break;
                 }
-                
+
                 if (!(L.Browser.mobile)) {
                     markerId.bindTooltip(setTitle+' - '+status);
                 };
@@ -632,7 +633,7 @@
             var mapMegaThrust = L.esri.featureLayer({
                 url: 'https://services5.arcgis.com/PVHDEj0uwgUfQbbd/arcgis/rest/services/megathrust/FeatureServer/0',
             });
-            
+
             addMegaThrust.push(mapMegaThrust);
             L.layerGroup(addMegaThrust).addTo(map);
 
@@ -652,7 +653,7 @@
                                 var krb = 'Kawasan Rawan Bencana (KRB) I';
                                 break;
                             case 2:
-                                var krb = 'Kawasan Rawan Bencana (KRB) II';                        
+                                var krb = 'Kawasan Rawan Bencana (KRB) II';
                                 break;
                             default:
                                 var krb = 'Kawasan Rawan Bencana (KRB) III';
@@ -670,7 +671,7 @@
 
                 addKrb.push(mapKrb);
                 L.layerGroup(addKrb).addTo(map);
-                
+
             });
 
             function markerFunction(ga_code) {
@@ -729,7 +730,7 @@
                             railVisible: false,
                             size: '10px',
                             alwaysVisible: false
-                        });  
+                        });
                     },
                     error: function(error, status) {
                         if (error.status == 419) {
@@ -769,9 +770,9 @@
                     layerLabels = L.esri.basemapLayer(basemap + 'Labels');
                     map.addLayer(layerLabels);
                 }
-                    
+
                 if (basemap === 'Imagery') {
-                        layerWorldTransportation.addTo(map); 
+                        layerWorldTransportation.addTo(map);
                     } else if (map.hasLayer(layerWorldTransportation)) {
                         map.removeLayer(layerWorldTransportation);
                     }
@@ -835,7 +836,7 @@
                     updateWidth.maxWidth = maxPopUpWidth();
                     updateWidth.minWidth = maxPopUpWidth();
                 var popup = markers_gertan[markerGertan].getPopup();
-                    
+
                 $.ajax({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     url: '{{ URL::signedRoute('v1.json.sigertan.show') }}',
@@ -869,7 +870,7 @@
                             railVisible: false,
                             size: '10px',
                             alwaysVisible: false
-                        });  
+                        });
                     },
                     error: function(error, status) {
                         if (error.status == 419) {
@@ -941,7 +942,7 @@
                     updateWidth.maxWidth = maxPopUpWidth();
                     updateWidth.minWidth = maxPopUpWidth();
                 var popup = markers_gempa[markerGempa].getPopup();
-                    
+
                 $.ajax({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     url: '{{ URL::signedRoute('v1.json.gempa.show') }}',
@@ -971,7 +972,7 @@
                         } else {
                             var setTanggapan = '<li class="list-group-item bg-black"><h5><b>Tanggapan :</b></h5>Belum ada tanggapan.</li>';
                         }
-                        
+
                         var setPopUpContent = '<div class="panel panel-default bg-black no-border"><div class="panel-heading bg-black text-bold text-white"><h4><b>' + setTitle + '</b></h4></div><div class="panel-body"><h5><b>Peta :</b>'+setPeta+'</div><ul class="list-group"><li class="list-group-item bg-black"><h5><b>Magnitudo :</b></h5> ' + setMagnitudo + '</li><li class="list-group-item bg-black"><h5><b>Waktu Kejadian :</b></h5> ' + setWaktu + '</li><li class="list-group-item bg-black"><h5><b>Koordinat dan Kedalaman :</b></h5> ' + setKoordinat + '</li><li class="list-group-item bg-black"><h5><b>Wilayah :</b></h5> ' + setTitle + '</li><li class="list-group-item bg-black"><h5><b>Intensitas gempa (Skala MMI): :</b></h5> ' + setIntensitas + '</li><li class="list-group-item bg-black"><h5><b>Gunung Api Terdekat :</b></h5> ' + setGunung + '</li>' + setTanggapan + '<li class="list-group-item bg-black"><h5><b>Sumber Data :</b></h5> ' + setSumber + '</li></ul></div>';
 
                         popup.setContent(setPopUpContent);
@@ -983,7 +984,7 @@
                             railVisible: false,
                             size: '10px',
                             alwaysVisible: false
-                        });  
+                        });
 
                     },
                     error: function(error, status) {
@@ -1033,17 +1034,17 @@
                         loadingButton.button('loading');
                     },
                     success: function(response) {
-                        loadingButton.button('reset');                        
+                        loadingButton.button('reset');
                         if (response.success) {
                             pinLocation(latitude,longitude,name,response.volcano);
                         }
                     },
                     error: function (xhr) {
-                        loadingButton.button('reset');                        
+                        loadingButton.button('reset');
                         $('.validation-errors').html('');
                         $.each(xhr.responseJSON.errors, function(key,value) {
                             $('.validation-errors').append('<div class="alert alert-danger">'+value+'</div');
-                        }); 
+                        });
                     },
                 });
             };

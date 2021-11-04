@@ -57,6 +57,9 @@ Route::name('v1.')->group(function () {
             ->name('press.show')
             ->middleware('signed');
 
+        Route::get('gunung-api/tingkat-aktivitas','FrontPage\v1\GunungApiController@tingkatAktivitas')
+            ->name('gunungapi.tingkat-aktivitas');
+
         Route::get('gunung-api/informasi-letusan/{code?}','FrontPage\v1\GunungApiController@indexVen')
             ->name('gunungapi.ven');
         Route::get('gunung-api/informasi-letusan/{id}/show','FrontPage\v1\GunungApiController@showVen')

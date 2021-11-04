@@ -27,7 +27,7 @@ class GunungApiController extends Controller
     protected function cacheHomeKrb()
     {
         return Cache::rememberForever('home:krb', function () {
-            return HomeKrb::latest()->first(); 
+            return HomeKrb::latest()->first();
         });
     }
 
@@ -35,7 +35,7 @@ class GunungApiController extends Controller
     {
         $asap = (object) [
             'wasap' => isset($var->var_wasap) ? $var->var_wasap->toArray() : [],
-            'intasap' => isset($var->var_wasap) ? $var->var_intasap->toArray() : [], 
+            'intasap' => isset($var->var_wasap) ? $var->var_intasap->toArray() : [],
             'tasap_min' => $var->var_tasap_min,
             'tasap_max' => $var->var_tasap,
         ];
@@ -46,7 +46,7 @@ class GunungApiController extends Controller
                             ->cuaca($var->var_cuaca->toArray())
                             ->angin($var->var_kecangin->toArray(),$var->var_arangin->toArray())
                             ->getVisual();
-        
+
         return $this;
     }
 
@@ -253,7 +253,7 @@ class GunungApiController extends Controller
         ]);
 
         $stats->increment('hit');
-        
+
         return view('v1.home.letusan-show', compact('ven','home_krb'));
     }
 
@@ -310,11 +310,53 @@ class GunungApiController extends Controller
                     'gempa' => $this->getDeskripsiGempa($var),
                 ];
             });
-    
+
             return $vars->first();
         });
 
         return view('v1.home.var-show', compact('var','home_krb'));
     }
 
+    public function tingkatAktivitas()
+    {
+        $last_var = MagmaVar::select('no', 'var_log')->orderBy('no', 'desc')->first();
+        $gadds = Cache::remember('v1/home/gadd', 120, function () {
+            return Gadd::select(
+                'ga_code',
+                'ga_nama_gapi',
+                'ga_kab_gapi',
+                'ga_prov_gapi',
+                'ga_koter_gapi',
+                'ga_elev_gapi',
+                'ga_lon_gapi',
+                'ga_lat_gapi',
+                'ga_status'
+            )
+                ->whereNotIn('ga_code', ['TEO'])
+                ->orderBy('ga_nama_gapi', 'asc')
+                ->get();
+        });
+
+        $ga_code = $gadds->pluck('ga_code');
+
+        $vars = Cache::remember('chamber/home:' . strtotime($last_var->var_log), 60, function () {
+            $sub = MagmaVar::select('ga_code', DB::raw('MAX(var_noticenumber) AS latest_date'))->groupBy('ga_code');
+            return MagmaVar::select('no', 'magma_var.ga_code', 'cu_status', 'var_data_date', 'periode', 'var_perwkt', 'var_noticenumber', 'var_nama_pelapor')
+            ->join(DB::raw("({$sub->toSql()}) latest_table"), function ($join) {
+                $join->on('latest_table.ga_code', '=', 'magma_var.ga_code')
+                ->on('latest_table.latest_date', '=', 'magma_var.var_noticenumber');
+            })->get();
+        });
+
+        $gadds = $gadds->map(function ($gadd, $key) use ($vars) {
+            $var = $vars->where('ga_code', $gadd->ga_code)->first();
+            $gadd->ga_status = $var->cu_status;
+            $gadd->var_no = $var->no;
+            return $gadd;
+        });
+
+        return view('v1.home.tingkat-aktivitas', [
+            'gadds' => $gadds,
+        ]);
+    }
 }

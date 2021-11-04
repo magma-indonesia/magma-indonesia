@@ -1,13 +1,13 @@
-@extends('layouts.slim') 
+@extends('layouts.slim')
 
 @section('title')
 Laporan Aktivitas Gunung Api
 @endsection
 
 @section('add-vendor-css')
-<link href="{{ asset('slim/lib/select2/css/select2.min.css') }}" rel="stylesheet">    
+<link href="{{ asset('slim/lib/select2/css/select2.min.css') }}" rel="stylesheet">
 @endsection
- 
+
 @section('breadcrumb')
 <li class="breadcrumb-item"><a>Gunung Api</a></li>
 <li class="breadcrumb-item active" aria-current="page">Laporan Aktivitas</li>
@@ -105,9 +105,9 @@ Laporan Aktivitas Gunung Api (Volcanic Activity Report)
                                 <option label="Choose one"></option>
                                 @foreach ($gadds as $gadd)
                                 @if ($loop->first)
-                                <option value="{{ $gadd->ga_code }}" selected>{{ $gadd->ga_nama_gapi }}</option>                                                
+                                <option value="{{ $gadd->ga_code }}" selected>{{ $gadd->ga_nama_gapi }}</option>
                                 @else
-                                <option value="{{ $gadd->ga_code }}">{{ $gadd->ga_nama_gapi }}</option>            
+                                <option value="{{ $gadd->ga_code }}">{{ $gadd->ga_nama_gapi }}</option>
                                 @endif
                                 @endforeach
                             </select>
