@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Traits\VisualAsap;
 use App\Traits\v1\DeskripsiGempa;
+use Illuminate\Support\Facades\URL;
 
 class MagmaVarController extends Controller
 {
@@ -53,6 +54,7 @@ class MagmaVarController extends Controller
     protected function getVarDescription($var)
     {
         $gempa = $this->clearDeskripsiGempa()->getDeskripsiGempa($var);
+        $url = URL::signedRoute('v1.gunungapi.var.show', ['id' => $var->no]);
 
         return [
             'gunung_api' => [
@@ -85,6 +87,11 @@ class MagmaVarController extends Controller
                 'code' => $var->gunungapi->ga_code,
                 'noticenumber' => $var->var_noticenumber,
             ]),
+            'share' => [
+                'url' =>  $url,
+                'description' => "Laporan {$var->var_perwkt} Jam Aktivitas Gunung Api {$var->gunungapi->ga_nama_gapi}. Tanggal {$var->var_data_date->format('Y-m-d')} pukul {$var->periode} {$var->gunungapi->ga_zonearea}. {$url}",
+                'photo' => $var->var_image,
+            ],
         ];
     }
 
