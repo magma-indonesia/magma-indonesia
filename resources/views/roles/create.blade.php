@@ -1,8 +1,8 @@
-@extends('layouts.default') 
+@extends('layouts.default')
 
-@section('title') 
-    MAGMA | Create Role
-@endsection 
+@section('title')
+Create Role
+@endsection
 
 @section('content-header')
 <div class="small-header">
@@ -31,7 +31,7 @@
 @endsection
 
 @section('content-body')
-<div class="content animate-panel">
+<div class="content">
     <div class="row">
         <div class="col-lg-offset-3 col-lg-6">
             <div class="hpanel">
@@ -45,19 +45,19 @@
                     <form role="form" id="form" method="POST" action="{{ route('chambers.roles.store') }}">
                         @csrf
                         <div class="form-group">
-                            <label>Nama Role</label> 
+                            <label>Nama Role</label>
                             <input name="name" type="text" placeholder="Masukkan Nama Role" class="form-control" value="{{ old('name') }}" required>
                             @if( $errors->has('name'))
                             <label class="error" for="name">{{ ucfirst($errors->first('name')) }}</label>
                             @endif
                         </div>
-                        
+
                         @if(!$permissions->isEmpty())
                         <div class="form-group">
                             <label>Permissions</label>
                             @foreach($permissions as $permission)
                             <div class="checkbox">
-                                <label><input name="permissions[]" value="{{$permission->id}}" type="checkbox" class="i-checks"> {{$permission->name}} </label>    
+                                <label><input name="permissions[]" value="{{$permission->id}}" type="checkbox" class="i-checks"> {{$permission->name}} </label>
                             </div>
                             @endforeach
                             @if( $errors->has('permissions'))
@@ -66,9 +66,9 @@
                         </div>
                         @endif
                         <div class="form-group">
-                            <label>Pilih Semua</label> 
+                            <label>Pilih Semua</label>
                             <div class="checkbox">
-                                <label><input name="check-all" type="checkbox" class="i-checks all"> Check All</label>    
+                                <label><input name="check-all" type="checkbox" class="i-checks all"> Check All</label>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -79,11 +79,11 @@
         </div>
     </div>
 </div>
-@endsection 
+@endsection
 
 @section('add-vendor-script')
 <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
-@endsection 
+@endsection
 
 @section('add-script')
 <script>
@@ -92,7 +92,7 @@
         var $checkAll = $('input.all'),
             $checkboxes = $('input.i-checks');
 
-        $checkAll.on('ifChecked ifUnchecked', function(event) {        
+        $checkAll.on('ifChecked ifUnchecked', function(event) {
             if (event.type == 'ifChecked') {
                 $checkboxes.iCheck('check');
             } else {

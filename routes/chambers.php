@@ -203,6 +203,9 @@ Route::resource('permissions', 'PermissionController', ['except' => [
     'show','edit'
 ]]);
 
+Route::get('roles/assign', 'RoleController@assign')
+    ->name('roles.assign');
+Route::post('roles/assign', 'RoleController@saveRole');
 Route::resource('roles', 'RoleController');
 Route::resource('press','PressController');
 

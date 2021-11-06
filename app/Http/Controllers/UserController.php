@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserCreate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -16,7 +17,7 @@ class UserController extends Controller
 
     /**
      * Adding middleware for protecttion
-     * 
+     *
      * @return boolean
      */
     public function __construct()
@@ -37,7 +38,7 @@ class UserController extends Controller
         list(, $photo)      = explode(',', $photo);
         $photo = base64_decode($photo);
         $photoName = uniqid().$filetype;
-        
+
         $uploadPhoto = Storage::disk('user')->put($photoName, $photo);
 
         if (Storage::disk('user')->exists(optional($user->photo)->filename))
@@ -62,7 +63,7 @@ class UserController extends Controller
                 ]
             );
         } else {
-            return redirect()->back()->with('flash_message','Gagal upload photo User.');    
+            return redirect()->back()->with('flash_message','Gagal upload photo User.');
         }
 
         return $success ? true : false;
@@ -86,66 +87,27 @@ class UserController extends Controller
      */
     public function create()
     {
-        $bidangs = Bidang::whereIn('code',['mga','mgb','mgt','bpt','btu'])->get();
-        return view('users.create',compact('bidangs'));
+        return view('users.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UserCreate  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserCreate $request)
     {
+        $user = User::create($request->toArray());
 
-        $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'nip' => 'required|digits:18|unique:users,nip',
-            'bidang' => 'required|in:2,3,4,5,6',
-            'phone' => 'required|digits_between:10,12|unique:users,phone',
-            'email' => 'required|email|max:255|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
-            'status' => 'required|boolean'
-        ],[
-            'name.required' => 'Nama tidak boleh kosong',
-            'nip.required' => 'NIP tidak boleh kosong',
-            'bidang.required' => 'Bidang harus dipilih',
-            'phone.required' => 'No HP harus diisi',
-            'email.required' => 'Email tidak boleh kosong',
-            'password' => 'Password tidak boleh kosong',
-            'status.required' => 'Status harus dipilih',
-            'name.string' => 'Nama harus berformat huruf',
-            'nip.digits' => 'NIP maksimal memiliki 18 karakter numerik',
-            'nip.unique' => 'NIP telah digunakan oleh orang lain',
-            'bidang.in' => 'Bidang yang dipilih tidak terdafatr',
-            'phone.digits' => 'No HP tidak boleh lebih dari 12 angka',
-            'phone.unique' => 'No HP telah digunakan oleh orang lain',
-            'email.email' => 'Alamat email tidak valid',
-            'email.unique' => 'Alamat email telah digunakan oleh orang lain',
-            'password.min' => 'Password Minimal 6 karakter',
-            'password.confirmed' => 'Password Konfirmasi tidak sama',
-            'status.boolean' => 'Tipe status tidak valid',
-        ]); 
-     
-        $user = User::create($request->except(['bidang','imagebase64']));
-
-        $bidang = UserAdministratif::create([
-            'user_id' => $user->id,
-            'bidang_id' => $request->bidang
-        ]);
-        
-        $uploadPhoto = !empty($request->filetype) ? $this->uploadPhoto($user, $request->imagebase64, $request->filetype) : true;
-
-        if ($user AND $uploadPhoto)
+        if ($user)
         {
-            $user->notify(new UserNotification('create',$user));
             return redirect()->route('chambers.users.index')
                     ->with('flash_message',$request->name.' berhasil ditambahkan.');
         }
 
         return redirect()->route('chambers.users.index')
-                ->with('flash_message','User gagal ditambahkan.');    
+                ->with('flash_message','User gagal ditambahkan.');
     }
 
     /**
@@ -167,7 +129,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::findOrFail($id); 
+        $user = User::findOrFail($id);
         $roles = Role::get();
         $bidangs = Bidang::whereIn('code',['mga','mgb','mgt','bpt','btu'])->get();
 
@@ -184,7 +146,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
-        
+
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'nip' => 'required|digits:18|unique:users,nip,'.$user->id,
@@ -220,11 +182,11 @@ class UserController extends Controller
         ]);
 
         $input = $request->except(['imagebase64']);
-        $name  = $request->name;        
+        $name  = $request->name;
         $user->fill($input)->save();
-            
-        $uploadPhoto = !empty($request->filetype) ? 
-                            $this->uploadPhoto($user,$request->imagebase64,$request->filetype) : 
+
+        $uploadPhoto = !empty($request->filetype) ?
+                            $this->uploadPhoto($user,$request->imagebase64,$request->filetype) :
                             true;
 
         if ($request->has('roles'))
@@ -233,7 +195,7 @@ class UserController extends Controller
             isset($roles) ? $user->roles()->sync($roles) : $user->roles()->detach();
         }
 
-        $user->notify(new UserNotification('update',$user));        
+        $user->notify(new UserNotification('update',$user));
 
         return redirect()->route('chambers.users.index')
             ->with('flash_message',
@@ -251,7 +213,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $nama = $user->name;
         if ($user->delete()) {
-            $user->notify(new UserNotification('delete',$user));            
+            $user->notify(new UserNotification('delete',$user));
         }
 
         $data = [

@@ -50,6 +50,7 @@
 
                 <div class="panel-body float-e-margins">
                     <a href="{{ route('chambers.roles.create') }}" type="button" class="btn btn-magma btn-outline">Tambah Roles Pegawai</a>
+                    <a href="{{ route('chambers.roles.assign') }}" type="button" class="btn btn-magma btn-outline">Assign Roles</a>
                 </div>
 
                 <div class="panel-body">

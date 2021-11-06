@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -11,7 +12,7 @@ class RoleController extends Controller
 
     /**
      * Adding middleware for protecttion
-     * 
+     *
      * @return boolean
      */
     public function __construct()
@@ -63,8 +64,8 @@ class RoleController extends Controller
             $name = $request->name;
             $permissions = $request->permissions;
             foreach ($permissions as $permission) {
-                $p = Permission::where('id', '=', $permission)->firstOrFail(); 
-                $role = Role::where('name', '=', $name)->first(); 
+                $p = Permission::where('id', '=', $permission)->firstOrFail();
+                $role = Role::where('name', '=', $name)->first();
                 $role->givePermissionTo($p);
             }
         }
@@ -94,7 +95,7 @@ class RoleController extends Controller
     public function edit($id)
     {
         //
-        $role = Role::findOrFail($id); 
+        $role = Role::findOrFail($id);
         $permissions = Permission::get();
 
         return view('roles.edit', compact('role', 'permissions'));
@@ -111,13 +112,13 @@ class RoleController extends Controller
     {
         //
         $role = Role::findOrFail($id);
-        
+
         $this->validate($request, [
             'name'=>'required|max:50|unique:roles,name,'.$role->id,
             'permissions' =>'required',
         ]);
 
-        $input = $request->except(['permissions']);     
+        $input = $request->except(['permissions']);
         $permissions = $request['permissions'];
         $role->fill($input)->save();
 
@@ -155,5 +156,27 @@ class RoleController extends Controller
         ];
 
         return response()->json($data);
+    }
+
+    public function assign()
+    {
+        return view('roles.assign', [
+            'roles' => Role::all(),
+            'users' => User::select('nip','name')->orderBy('name')->get(),
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function saveRole(Request $request)
+    {
+        $user = User::where('nip', $request->nip)->first();
+        $user->syncRoles($request->roles);
+
+        return redirect()->route('chambers.users.index');
     }
 }
