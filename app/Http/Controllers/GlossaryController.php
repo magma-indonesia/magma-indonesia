@@ -149,7 +149,7 @@ class GlossaryController extends Controller
 
         $this->validate($request, [
             'judul' => 'required|max:200|unique:glossaries,id,'.$glossary->id,
-            'deskripsi' => 'required|min:100',
+            'deskripsi' => 'required|min:20',
             'referensi' => 'nullable',
             'is_published' => 'required|boolean',
             'files' => 'sometimes|required|array',
