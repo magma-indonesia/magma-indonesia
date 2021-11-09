@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use App\User;
-use App\UserAdministratif;
 use App\Notifications\User as UserNotification;
 use App\UserBidang as Bidang;
 use Spatie\Permission\Models\Role;
