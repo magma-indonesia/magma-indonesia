@@ -56,7 +56,7 @@ Informasi Letusan
                         </div>
                         @endif
                         <div class="col-md-7 col-lg-6 col-xl-7">
-                            <p class="blog-category tx-danger">{{ \Carbon\Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->formatLocalized('%A, %d %B %Y') }} , {{ ((\Carbon\Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->diff(now())->days) <1 )? 'Hari ini' : \Carbon\Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->diffForHumans() }}</p>
+                            <p class="blog-category tx-danger">{{ \Carbon\Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->formatLocalized('%A, %d %B %Y') }}, {{ ((\Carbon\Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->diff(now())->days) <1 )? 'Hari ini' : \Carbon\Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->diffForHumans() }}</p>
                             <h5 class="blog-title"><a>Gunung Api {{ $ven->gunungapi->ga_nama_gapi }}</a></h5>
                             <p class="card-subtitle tx-normal mg-b-15">Dibuat oleh, {{ $ven->user->vg_nama }}</p>
                             <p>
