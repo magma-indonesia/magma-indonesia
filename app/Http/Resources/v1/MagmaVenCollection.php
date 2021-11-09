@@ -14,6 +14,6 @@ class MagmaVenCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return MagmaVenResource::collection($this->collection);
     }
 }
