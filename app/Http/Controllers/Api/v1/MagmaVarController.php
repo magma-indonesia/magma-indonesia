@@ -58,6 +58,7 @@ class MagmaVarController extends Controller
 
         return [
             'gunung_api' => [
+                'code' => $var->gunungapi->ga_code,
                 'nama' => $var->gunungapi->ga_nama_gapi,
                 'deskripsi' => 'Terletak di Kab\Kota ' . $var->gunungapi->ga_kab_gapi . ', ' . $var->gunungapi->ga_prov_gapi . ' dengan posisi geografis di Latitude ' . $var->gunungapi->ga_lat_gapi . '&deg;LU, Longitude ' . $var->gunungapi->ga_lon_gapi . '&deg;BT dan memiliki ketinggian ' . $var->gunungapi->ga_elev_gapi . ' mdpl',
                 'status' => $var->cu_status,
