@@ -67,6 +67,7 @@ class MagmaVarController extends Controller
                 ]
             ],
             'laporan_terakhir' => [
+                'noticenumber' => $var->var_noticenumber,
                 'tanggal' => 'Laporan per ' . $var->var_perwkt . ' jam, tanggal ' . $var->var_data_date->format('Y-m-d') . ' pukul ' . $var->periode . ' ' . $var->gunungapi->ga_zonearea,
                 'dibuat_oleh' =>  $var->var_nama_pelapor,
                 'visual' => [
@@ -79,7 +80,7 @@ class MagmaVarController extends Controller
                 ],
                 'gempa' => [
                     'deskripsi' => empty($gempa) ? ['Kegempaan nihil.'] : $gempa,
-                    'grafik' => env('MAGMA_URL') . 'img/eqhist/' . $var->gunungapi->ga_code . '.png',
+                    'grafik' => config('app.magma_old_url') . 'img/eqhist/' . $var->gunungapi->ga_code . '.png',
                 ],
                 'rekomendasi' => strip_tags(nl2br($var->var_rekom)),
             ],
