@@ -85,6 +85,8 @@ Route::name('v1.')->group(function () {
                             ->name('gunung-api.letusan');
                         Route::get('/informasi-letusan/latest','Api\v1\MagmaVenController@latest')
                             ->name('gunung-api.letusan.latest');
+                        Route::get('/informasi-letusan/{id}','Api\v1\MagmaVenController@show')
+                            ->name('gunung-api.letusan.show');
                         Route::get('/status','Api\v1\HomeController@gunungapiStatus')
                             ->name('gunung-api.status');
                         Route::get('/var/{code}','Api\v1\HomeController@showVar')
