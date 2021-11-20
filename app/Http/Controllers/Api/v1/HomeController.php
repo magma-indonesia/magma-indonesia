@@ -56,7 +56,7 @@ class HomeController extends Controller
                 $query->whereBetween('log',[now()->subWeek(),now()]);
             })->select('ga_code','ga_nama_gapi')->get();
         });
-        
+
         $gadds = Cache::remember('v1/home/gadd:'.strtotime($last_var->var_log), 60, function() use ($gadds, $vars, $vona){
             $gadds = $gadds->map(function ($gadd, $key) use ($vars, $vona) {
                 $var = $vars->where('ga_code',$gadd->ga_code)->first();
@@ -69,7 +69,7 @@ class HomeController extends Controller
 
             return $gadds;
         });
-        
+
         return $gadds;
     }
 
@@ -78,7 +78,7 @@ class HomeController extends Controller
         $gadds = $this->gunungapi();
 
         return [
-            'url' => route('v1.gunungapi.var'),
+            'url' => route('v1.gunungapi.tingkat-aktivitas'),
             'latest' => [
                 [
                     'level' => 4,
@@ -132,7 +132,7 @@ class HomeController extends Controller
 
             return $gertans;
         });
-        
+
         return $gertans;
     }
 
@@ -181,7 +181,7 @@ class HomeController extends Controller
             });
             return $roqs;
         });
-        
+
         return $gempas;
     }
 
@@ -241,7 +241,7 @@ class HomeController extends Controller
 
         $asap = (object) [
             'wasap' => isset($var->var_wasap) ? $var->var_wasap->toArray() : [],
-            'intasap' => isset($var->var_wasap) ? $var->var_intasap->toArray() : [], 
+            'intasap' => isset($var->var_wasap) ? $var->var_intasap->toArray() : [],
             'tasap_min' => $var->var_tasap_min,
             'tasap_max' => $var->var_tasap,
         ];
@@ -257,7 +257,7 @@ class HomeController extends Controller
                     ->getVisual();
 
         $gempa = $this->getDeskripsiGempa($var);
-                
+
         $vona = !empty($vona) ? [
             'issued' => $vona->issued,
             'color_code' => $vona->cu_avcode,
@@ -300,7 +300,7 @@ class HomeController extends Controller
                 'vona' => $vona,
             ]
         ];
-        
+
         return response()->json($data);
     }
 
@@ -414,7 +414,7 @@ class HomeController extends Controller
     protected function failed($var)
     {
         return empty($var) ?
-            response()->json(['success' => '0', 'message' => 'Data VAR tidak ditemukan'], 500) : 
+            response()->json(['success' => '0', 'message' => 'Data VAR tidak ditemukan'], 500) :
             $this;
     }
 }

@@ -163,7 +163,24 @@ class MagmaVarController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Vona  $vona
+     * @param  string $code
+     * @return Collection
+     */
+    protected function showByCode($code)
+    {
+        return Cache::remember('v1/api/var-show-' . $code, 60, function () use ($code) {
+            return OldVar::where('ga_code', $code)
+                ->orderBy('var_data_date', 'desc')
+                ->orderBy('periode', 'desc')
+                ->paginate(15);
+        });
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  string $code
+     * @param  string|null $noticenumber
      * @return \Illuminate\Http\Response
      */
     public function show($code, $noticenumber = null)
@@ -179,16 +196,10 @@ class MagmaVarController extends Controller
             return $this->getVarDescription($var);
         }
 
-        $vars = Cache::remember('v1/api/var-show-'.$code, 60, function () use($code) {
-            return OldVar::where('ga_code',$code)
-                ->orderBy('var_data_date','desc')
-                ->orderBy('periode','desc')
-                ->paginate(15);
-        });
+        $vars = $this->showByCode($code);
 
         return $this->transformPaginationData($vars);
     }
-
 
     /**
      * Filter VAR
