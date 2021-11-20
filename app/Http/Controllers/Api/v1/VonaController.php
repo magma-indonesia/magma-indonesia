@@ -12,19 +12,20 @@ use Illuminate\Support\Facades\URL;
 
 class VonaController extends Controller
 {
-    
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {        
+    {
         $last_vona = Vona::select('no')->orderBy('no','desc')->first();
         $page = $request->has('vona_page') ? $request->vona_page : 1;
 
         $vonas = Cache::remember('v1/api/vonas-'.$last_vona->no.'-page-'.$page, 30, function() {
             return Vona::orderBy('no','desc')
+                ->with('volcano:ga_code,ga_nama_gapi,ga_lat_gapi,ga_lon_gapi,ga_elev_gapi')
                 ->where('sent',1)
                 ->paginate(30,['*'],'vona_page');
         });
@@ -34,15 +35,10 @@ class VonaController extends Controller
 
     public function latest()
     {
-        $vona = Vona::where('sent',1)->orderBy('no','desc')->first();
+        $vona = Vona::with('volcano:ga_code,ga_nama_gapi,ga_lat_gapi,ga_lon_gapi,ga_elev_gapi')
+                ->where('sent',1)->orderBy('no','desc')->first();
 
-        return [
-            'gunungapi' => $vona->ga_nama_gapi,
-            'datetime_utc' => $vona->issued_time,
-            'aviation_code' => $vona->cu_avcode,
-            'url' => URL::signedRoute('v1.vona.show',['id' => $vona->no]),
-        ];
-        return $vona;
+        return new VonaResource($vona);
     }
 
     /**
@@ -53,7 +49,7 @@ class VonaController extends Controller
      */
     public function show($uuid)
     {
-        $vona = Vona::findOrFail($uuid);
+        $vona = Vona::with('volcano:ga_code,ga_nama_gapi,ga_lat_gapi,ga_lon_gapi,ga_elev_gapi')->findOrFail($uuid);
         return new VonaResource($vona);
     }
 

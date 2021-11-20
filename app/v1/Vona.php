@@ -83,4 +83,9 @@ class Vona extends Model
         return Carbon::parse($this->getIssuedTimeAttribute())->formatLocalized('%d %B %Y');
     }
 
+    public function volcano()
+    {
+        return $this->belongsTo('App\v1\Gadd', 'ga_code', 'ga_code');
+    }
+
 }
