@@ -62,7 +62,7 @@ class MagmaSigertanResource extends JsonResource
             'deskripsi' => $this->deskripsi(),
             'kerentanan' => empty($this->tanggapan->qls_zkg) ? null : 'Lokasi bencana berada pada Zona Potensi Gerakan Tanah ' . str_replace_last(', ', ' hingga ', title_case(implode(', ', $this->tanggapan->qls_zkg))) . '.',
             'rekomendasi' => empty($this->tanggapan->rekomendasi) ? null : nl2br($this->tanggapan->rekomendasi->qls_rec),
-            'url' => URL::route('api.v1.home.gerakan-tanah.sigertan.show', ['id' => $this->crs_ids]),
+            'url' => URL::route('api.v1.home.gerakan-tanah.show', ['id' => $this->crs_ids]),
             'share' => [
                 'url' =>  $this->signedUrl(),
                 'description' => $this->deskripsi(),
