@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\v1\MagmaVen;
-use Illuminate\Support\Facades\URL;
+use App\Http\Requests\v1\Api\MagmaVenFilterRequest;
 use App\Http\Resources\v1\MagmaVenCollection;
 use App\Http\Resources\v1\MagmaVenResource;
 use Illuminate\Support\Facades\Cache;
@@ -26,7 +26,7 @@ class MagmaVenController extends Controller
 
         $page = $request->has('page') ? $request->page : 1;
 
-        $vens = Cache::remember('v1/api/letusan-index:' . $ven->erupt_id.':'.$page, 10, function () {
+        $vens = Cache::remember('v1/api/letusan:' . $ven->erupt_id.':'.$page, 10, function () {
             return MagmaVen::with('user','gunungapi:ga_code,ga_zonearea,ga_nama_gapi,ga_lat_gapi,ga_lon_gapi,ga_elev_gapi')
                 ->orderBy('erupt_tgl', 'desc')
                 ->orderBy('erupt_jam', 'desc')
@@ -38,9 +38,11 @@ class MagmaVenController extends Controller
 
     public function show($id)
     {
-        $ven = MagmaVen::where('erupt_id', $id)
+        $ven = Cache::remember('v1/api/letusan/' . $id, 60, function () use ($id) {
+            return MagmaVen::where('erupt_id', $id)
             ->with('user', 'gunungapi:ga_code,ga_zonearea,ga_nama_gapi,ga_lat_gapi,ga_lon_gapi,ga_elev_gapi')
             ->firstOrFail();
+        });
 
         return new MagmaVenResource($ven);
     }
@@ -48,10 +50,33 @@ class MagmaVenController extends Controller
     public function latest()
     {
         $ven = MagmaVen::with('user', 'gunungapi:ga_code,ga_zonearea,ga_nama_gapi,ga_lat_gapi,ga_lon_gapi,ga_elev_gapi')
-        ->orderBy('erupt_tgl', 'desc')
-        ->orderBy('erupt_jam', 'desc')
-        ->first();
+                ->orderBy('erupt_tgl', 'desc')
+                ->orderBy('erupt_jam', 'desc')
+                ->first();
 
         return new MagmaVenResource($ven);
+    }
+
+    /**
+     * Filter VEN
+     *
+     * @param \App\Http\Requests\v1\Api\MagmaVenFilterRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function filter(MagmaVenFilterRequest $request)
+    {
+        $validated = $request->validated();
+
+        $vens = MagmaVen::query();
+
+        $vens->when($request->has('start_date'), function ($query) use ($validated) {
+            $query->whereBetween('erupt_tgl', [$validated['start_date'], $validated['end_date']]);
+        });
+
+        $vens = $vens->where('ga_code', $validated['code'])
+            ->orderBy('erupt_tgl', 'desc')
+            ->paginate(15);
+
+        return new MagmaVenCollection($vens);
     }
 }

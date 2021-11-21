@@ -4,7 +4,7 @@ namespace App\Http\Resources\v1;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class MagmaSigertanCollection extends ResourceCollection
+class MagmaRoqCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -14,6 +14,6 @@ class MagmaSigertanCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return MagmaSigertanResource::collection($this->collection);
+        return MagmaRoqResource::collection($this->collection);
     }
 }

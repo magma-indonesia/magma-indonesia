@@ -44,16 +44,20 @@ Route::name('v1.')->group(function () {
             Route::get('var/{id}','Api\VarController@show');
 
             Route::get('vona','Api\v1\VonaController@index')
-                    ->name('vona');
+                ->name('vona.index');
+            Route::get('vona/filter', 'Api\v1\MagmaVenController@filter')
+                ->name('vona.filter');
             Route::get('vona/latest','Api\v1\VonaController@latest')
-                    ->name('vona.latest');
+                ->name('vona.latest');
             Route::get('vona/{uuid}','Api\v1\VonaController@show')
-                    ->name('vona.show');
+                ->name('vona.show');
 
             Route::get('magma-roq','Api\OldRoqController@index');
             Route::get('magma-roq/{no}','Api\OldRoqController@show');
 
             Route::get('magma-ven','Api\v1\MagmaVenController@index');
+            Route::get('magma-ven/filter', 'Api\v1\MagmaVenController@filter')
+                ->name('magma-ven.filter');
 
             Route::get('magma-var','Api\v1\MagmaVarController@index');
             Route::get('magma-var/filter','Api\v1\MagmaVarController@filter')
@@ -85,6 +89,8 @@ Route::name('v1.')->group(function () {
                             ->name('gunung-api.letusan');
                         Route::get('/informasi-letusan/latest','Api\v1\MagmaVenController@latest')
                             ->name('gunung-api.letusan.latest');
+                        Route::get('/informasi-letusan/filter', 'Api\v1\MagmaVenController@filter')
+                            ->name('gunung-api.letusan.filter');
                         Route::get('/informasi-letusan/{id}','Api\v1\MagmaVenController@show')
                             ->name('gunung-api.letusan.show');
                         Route::get('/status','Api\v1\HomeController@gunungapiStatus')
@@ -94,21 +100,25 @@ Route::name('v1.')->group(function () {
                     });
 
                     Route::group(['prefix' => 'gerakan-tanah'], function () {
-                        Route::get('/','Api\v1\HomeController@gerakanTanah')
+                        Route::get('/', 'Api\v1\MagmaSigertanController@index')
                             ->name('gerakan-tanah');
-                        Route::get('/latest','Api\v1\HomeController@gerakanTanahLatest')
+                        Route::get('/filter', 'Api\v1\MagmaSigertanController@filter')
+                            ->name('gerakan-tanah.filter');
+                        Route::get('/latest', 'Api\v1\MagmaSigertanController@latest')
                             ->name('gerakan-tanah.latest');
-                        Route::get('/sigertan/{id}','Api\v1\HomeController@showSigertan')
-                            ->name('gerakan-tanah.sigertan.show');
+                        Route::get('/{id}', 'Api\v1\MagmaSigertanController@show')
+                            ->name('gerakan-tanah.show');
                     });
 
                     Route::group(['prefix' => 'gempa-bumi'], function () {
-                        Route::get('/','Api\v1\HomeController@gempaBumi')
+                        Route::get('/', 'Api\v1\MagmaRoqController@index')
                             ->name('gempa-bumi');
-                        Route::get('/latest','Api\v1\HomeController@gempaBumiLatest')
+                        Route::get('/filter', 'Api\v1\MagmaRoqController@filter')
+                            ->name('gempa-bumi.filter');
+                        Route::get('/latest', 'Api\v1\MagmaRoqController@latest')
                             ->name('gempa-bumi.latest');
-                        Route::get('/roq/{id}','Api\v1\HomeController@showGempaBumi')
-                            ->name('gempa-bumi.roq.show');
+                        Route::get('/{id}', 'Api\v1\MagmaRoqController@show')
+                            ->name('gempa-bumi.show');
                     });
                 });
             });
@@ -127,10 +137,10 @@ Route::name('v1.')->group(function () {
             Route::name('android.')->group(function () {
                 Route::group(['prefix' => 'android'], function () {
 
-                    Route::group(['prefix' => 'public'], function () {
-                        Route::post('token', 'Api\AndroidPublicController@public')
-                        ->name('public.token');
-                    });
+                    // Route::group(['prefix' => 'public'], function () {
+                    //     Route::post('token', 'Api\AndroidPublicController@public')
+                    //     ->name('public.token');
+                    // });
                 });
             });
 
