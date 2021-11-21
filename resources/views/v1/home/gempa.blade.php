@@ -48,7 +48,7 @@ Kajian
                         <p class="timeline-title"><a>{{ $roq->judul }}</a></p>
                         <p class="timeline-author">Kajian dibuat oleh <a href="#">{{ $roq->pelapor }}</a><span class="visible-md visible-lg">, {{ $roq->waktu->formatLocalized('%d %B %Y').' pukul '.$roq->waktu->format('H:i:s').' WIB' }}</span></p>
                         @if ($roq->intensitas AND ($roq->intensitas != '-belum ada keterangan-'))
-                        <p class="blog-text bg-primary pd-10 mg-t-10 tx-white"><small>{{ $roq->intensitas }}</small></p>
+                        <p class="blog-text bg-primary pd-10 mg-t-10 tx-white"><small>Intensitas MMI: {{ $roq->intensitas }}</small></p>
                         @endif
                         <div class="card pd-30">
                             <div class="row no-gutters">

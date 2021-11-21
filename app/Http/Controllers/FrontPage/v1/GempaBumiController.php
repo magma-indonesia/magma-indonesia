@@ -105,7 +105,7 @@ class GempaBumiController extends Controller
                 $gempas->transform(function ($roq, $key) {
                     return (object) [
                         'id' => $roq->no,
-                        'judul' => $roq->area,
+                        'judul' => $roq->roq_title,
                         'pelapor' => $roq->roq_nama_pelapor ? $roq->roq_nama_pelapor : 'Belum ada.',
                         'waktu' => $roq->datetime_wib,
                         'kota_terdekat' => $roq->koter ?: null,
