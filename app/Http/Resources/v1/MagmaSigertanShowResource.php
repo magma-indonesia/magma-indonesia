@@ -31,6 +31,7 @@ class MagmaSigertanShowResource extends JsonResource
 
         return [
             'laporan' => [
+                'id' => $this->crs_ids,
                 'peta' => empty($this->tanggapan->qls_pst) ? null : $this->tanggapan->qls_pst,
                 'pelapor' => $this->crs_usr,
                 'judul' => 'Laporan Tanggapan Gerakan Tanah di ' . $this->crs_vil . ', ' . $this->crs_rgn . ', ' . $this->crs_cty . ', ' . $this->crs_prv,
