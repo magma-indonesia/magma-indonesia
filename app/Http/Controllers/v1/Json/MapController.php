@@ -88,7 +88,8 @@ class MapController extends Controller
 
         $dampak = $korban.$luka.$rumah_rusak.$rumah_hancur.$rumah_terancam.$bangunan_hancur.$bangunan_rusak.$bangunan_terancam.$lahan_rusak.$jalan_rusak;
 
-        $struktur = $gertan->tanggapan->qls_str ? ' Struktur berupa '.$gertan->tanggapan->qls_str : '';
+        $pelapukan = $gertan->tanggapan->qls_jtp ? 'Jenis Pelapukan berupa ' . $gertan->tanggapan->qls_jtp . '.' : '';
+        $struktur = $gertan->tanggapan->qls_str ? ' Struktur berupa ' . $gertan->tanggapan->qls_str . '.' : '';
 
         $kedalaman_air = $gertan->tanggapan->qls_dep ? ' dengan kedalaman air tanah sekitar '.$gertan->tanggapan->qls_dep.' meter di bawah permukaan.' : '.';
 
@@ -107,7 +108,7 @@ class MapController extends Controller
                     'dampak' => $dampak ? $dampak : 'Belum ada informasi mengenai dampak dari kejadian gerakan tanah ini.',
                     'kondisi' => [
                         'morfologi' => empty($gertan->tanggapan->qls_sba) ? 'Belum dilaporkan.' : 'Secara umum lokasi gerakan tanah ini merupakan daerah '.strtolower(implode(', ',$gertan->tanggapan->qls_sba)). (empty($gertan->tanggapan->qls_mrl) ? '.' : ' yang memiliki kemiringan lereng ' . implode(', ', $gertan->tanggapan->qls_mrl)),
-                        'geologi' => empty($gertan->tanggapan->qls_frm) ? 'Belum dilaporkan.' : 'Berdasarkan peta geologi, lokasi bencana tersusun oleh formasi '.$gertan->tanggapan->qls_frm.'. Jenis Batuan di antaranya adalah '.$gertan->tanggapan->qls_jbt.'. Jenis Pelapukan berupa '.$gertan->tanggapan->qls_jtp.'.'.$struktur,
+                        'geologi' => empty($gertan->tanggapan->qls_frm) ? 'Belum dilaporkan.' : 'Berdasarkan peta geologi, lokasi bencana tersusun oleh formasi '.$gertan->tanggapan->qls_frm.'. Jenis Batuan di antaranya adalah '.$gertan->tanggapan->qls_jbt. '. ' . $pelapukan . $struktur,
                         'keairan' => empty($gertan->tanggapan->qls_air) ? 'Belum dilaporkan.' : 'Keairan di lokasi gerakan tanah berupa '.implode(', ',$gertan->tanggapan->qls_air).$kedalaman_air,
                         'tata_guna_lahan' => empty($gertan->tanggapan->qls_tgl) ? 'Belum dilaporkan.' : 'Tata Guna Lahan  di lokasi gerakan tanah ini berupa '.implode(', ',$gertan->tanggapan->qls_tgl).'.',
                         'kerentanan' => empty($gertan->tanggapan->qls_zkg) ? 'Belum dilaporkan.' : 'Berdasarkan Peta Potensi Gerakan Tanah yang dikeluarkan Badan Geologi, Pusat Vulkanologi dan Mitigasi Bencana Geologi pada bulan ini, lokasi bencana berada pada Zona Potensi Gerakan Tanah '.str_replace_last(', ',' hingga ',title_case(implode(', ',$gertan->tanggapan->qls_zkg))).'. Yang artinya daerah ini memiliki potensi '.strtolower(str_replace_last(', ',' hingga ',implode(', ',$gertan->tanggapan->qls_zkg))).' untuk terjadi gerakan tanah.',
