@@ -28,4 +28,16 @@
     @yield('add-css')
     {{-- Protect from Telkom Shit ad injection --}}
     <!-- </head> -->
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-213713124-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-213713124-1');
+    </script>
 </head>
