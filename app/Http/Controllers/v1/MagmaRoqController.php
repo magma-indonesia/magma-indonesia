@@ -12,7 +12,7 @@ class MagmaRoqController extends Controller
 {
     /**
      * Adding middleware for protecttion
-     * 
+     *
      * @return boolean
      */
     public function __construct()
@@ -80,6 +80,7 @@ class MagmaRoqController extends Controller
                 'roq_tanggapan' => $request->roq_tanggapan ? 'YA' : 'TIDAK',
                 'roq_title' => $request->roq_title,
                 'roq_tsu' => $request->roq_tsu ? 'YA' : 'TIDAK',
+                'merusak' => $request->merusak,
                 'roq_intro' => $request->roq_intro,
                 'roq_konwil' => $request->roq_konwil,
                 'roq_mekanisme' => $request->roq_mekanisme,
@@ -93,7 +94,7 @@ class MagmaRoqController extends Controller
             ]
         );
 
-        $messages = $roq ? 
+        $messages = $roq ?
                         'Kejadian Gempa Bumi berhasil ditambahkan!' :
                         'Kejadian Gempa Bumi gagal ditambahkan!' ;
 
@@ -158,6 +159,7 @@ class MagmaRoqController extends Controller
                 'roq_tanggapan' => $request->roq_tanggapan ? 'YA' : 'TIDAK',
                 'roq_title' => $request->roq_title,
                 'roq_tsu' => $request->roq_tsu ? 'YA' : 'TIDAK',
+                'merusak' => $request->merusak,
                 'roq_intro' => $request->roq_intro,
                 'roq_konwil' => $request->roq_konwil,
                 'roq_mekanisme' => $request->roq_mekanisme,
@@ -171,7 +173,7 @@ class MagmaRoqController extends Controller
             ]
         );
 
-        $messages = $roq ? 
+        $messages = $roq ?
                         'Kejadian Gempa Bumi berhasil ditambahkan!' :
                         'Kejadian Gempa Bumi gagal ditambahkan!' ;
 
@@ -221,9 +223,9 @@ class MagmaRoqController extends Controller
                     ->where('roq_nip_pelapor','like',$request->nip != 'all' ? $request->nip : '%')
                     ->orderBy('datetime_wib');
 
-        $roqs = $request->form == 'download' ? 
+        $roqs = $request->form == 'download' ?
                     $roqs->get() :
-                    $roqs->select('no','datetime_wib','magnitude','roq_tanggapan','roq_nip_pelapor','roq_nama_pelapor','latlon_text','area','depth')->get(); 
+                    $roqs->select('no','datetime_wib','magnitude','roq_tanggapan','roq_nip_pelapor','roq_nama_pelapor','latlon_text','area','depth')->get();
 
         return $roqs;
     }
@@ -244,7 +246,7 @@ class MagmaRoqController extends Controller
 
         $filtereds = count($request->all()) ? $this->applyFilter($request) : collect([]);
 
-        if ($request->isMethod('post') AND $filtereds->isEmpty()) 
+        if ($request->isMethod('post') AND $filtereds->isEmpty())
             return back()->with('flash_filter','Hasil pencarian tidak ditemukan');
 
         if ($request->form == 'download')
