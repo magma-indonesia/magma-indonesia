@@ -63,7 +63,7 @@
                                         </p>
                                     </div>
                                     <div class="col-lg-9">
-        
+
                                         @if ($errors->any())
                                         <div class="row m-b-md">
                                             <div class="col-lg-12">
@@ -85,7 +85,7 @@
                                                 </div>
                                             </div>
                                         </div>
-        
+
                                         <div class="row">
                                             <div class="form-group col-lg-8">
                                                 <label>Lintang</label>
@@ -96,7 +96,7 @@
                                                 <span class="help-block m-b-none">BMKG menggunakan acuan <b>Lintang Utara (LU)</b></span>
                                             </div>
                                         </div>
-        
+
                                         <div class="row">
                                             <div class="form-group col-lg-8">
                                                 <label>Bujur</label>
@@ -106,7 +106,7 @@
                                                 </div>
                                             </div>
                                         </div>
-        
+
                                         <div class="row">
                                             <div class="form-group col-lg-8">
                                                 <label>Magnitudo</label>
@@ -124,7 +124,7 @@
                                                 <span class="help-block m-b-none"><b>*Kosongi</b> jika tidak ada</span>
                                             </div>
                                         </div>
-        
+
                                         <div class="row">
                                             <div class="form-group col-lg-8">
                                                 <label>Kedalaman</label>
@@ -134,7 +134,7 @@
                                                 </div>
                                             </div>
                                         </div>
-        
+
                                         <div class="row">
                                             <div class="form-group col-lg-8">
                                                 <label>Wilayah</label>
@@ -149,7 +149,7 @@
                                                 <span class="help-block m-b-none">Biasanya menggunakan <b>akhiran dari Wilayah</b>, contoh 55 km Tenggara <b>MANOKWARISEL-PAPUABRT</b>.</span>
                                             </div>
                                         </div>
-        
+
                                         <div class="row">
                                             <div class="form-group col-lg-8">
                                                 <label>Gunung Api Terdekat</label>
@@ -157,7 +157,7 @@
                                                 <span class="help-block m-b-none"><b>*Kosongi</b> jika tidak tahu</span>
                                             </div>
                                         </div>
-        
+
                                         <div class="row">
                                             <div class="form-group col-lg-8">
                                                 <hr>
@@ -170,7 +170,7 @@
                                                 </div>
                                             </div>
                                         </div>
-        
+
                                         <div class="tanggapan" style="{{ (old('roq_tanggapan') == '0') || empty(old('roq_tanggapan')) ? 'display: none;' : ''}}">
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
@@ -178,42 +178,42 @@
                                                     <input name="roq_title" id="roq_title" class="form-control" type="text" value="{{old('roq_title')}}">
                                                 </div>
                                             </div>
-        
+
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
                                                     <label>Pendahuluan</label>
                                                     <textarea id="roq_intro" placeholder="Gunakan tata bahasa Indonesia yang baik dan benar dan hindari penggunaan singkatan." name="roq_intro" class="form-control p-m" rows="4">{{old('roq_intro')}}</textarea>
                                                 </div>
                                             </div>
-        
+
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
                                                     <label>Kondisi Wilayah</label>
                                                     <textarea id="roq_konwil" placeholder="Gunakan tata bahasa Indonesia yang baik dan benar dan hindari penggunaan singkatan." name="roq_konwil" class="form-control p-m" rows="4">{{old('roq_konwil')}}</textarea>
                                                 </div>
                                             </div>
-        
+
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
                                                     <label>Mekanisme</label>
                                                     <textarea id="roq_mekanisme" placeholder="Gunakan tata bahasa Indonesia yang baik dan benar dan hindari penggunaan singkatan." name="roq_mekanisme" class="form-control p-m" rows="4">{{old('roq_mekanisme')}}</textarea>
                                                 </div>
                                             </div>
-        
+
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
                                                     <label>Efek</label>
                                                     <textarea id="roq_efek" placeholder="Gunakan tata bahasa Indonesia yang baik dan benar dan hindari penggunaan singkatan." name="roq_efek" class="form-control p-m" rows="4">{{old('roq_efek')}}</textarea>
                                                 </div>
                                             </div>
-        
+
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
                                                     <label>Rekomendasi</label>
                                                     <textarea id="roq_rekom" placeholder="Gunakan tata bahasa Indonesia yang baik dan benar dan hindari penggunaan singkatan." name="roq_rekom" class="form-control p-m" rows="4">{{old('roq_rekom')}}</textarea>
                                                 </div>
                                             </div>
-        
+
                                             <div class="row">
                                                 <div class="form-group col-lg-12">
                                                     <label>Sumber Data</label>
@@ -224,10 +224,22 @@
                                                     </div>
                                                 </div>
                                             </div>
-        
+
                                             <div class="row">
                                                 <div class="form-group col-lg-6">
-                                                    <label>Potensi Tsunami ?</label>
+                                                    <label>Apakah gempanya merusak?</label>
+                                                    <div class="checkbox">
+                                                        <label class="checkbox-inline"><input name="merusak" value="1" type="radio" class="i-checks merusak" {{ old('merusak') == '1' ? 'checked' : ''}}> Ya </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label class="checkbox-inline"><input name="merusak" value="0" type="radio" class="i-checks merusak" {{ (old('merusak') == '0') || empty(old('merusak')) ? 'checked' : ''}}> Tidak </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-lg-6">
+                                                    <label>Potensi Tsunami?</label>
                                                     <div class="checkbox">
                                                         <label class="checkbox-inline"><input name="roq_tsu" value="1" type="radio" class="i-checks tsunami" {{ old('roq_tsu') == '1' ? 'checked' : ''}}> Berpotensi terjadi Tsunami </label>
                                                     </div>
@@ -236,9 +248,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-        
+
                                         </div>
-        
+
                                     </div>
                                 </div>
                                 <div class="row">

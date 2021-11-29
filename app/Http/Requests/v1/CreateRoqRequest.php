@@ -165,7 +165,9 @@ class CreateRoqRequest extends FormRequest
             'roq_source_code.array' => 'Parameter nilai Sumber Data harus dalam bentuk Array (hubungi Admin untuk penjelasan).',
             'roq.roq_source_code.*.in' => 'Sumber Data tidak masuk dalam data.',
             'roq_tsu.required_if' => '<b>Potensi Tsunami</b> harus dipilih jika <b>Tanggapan</b> dibuat.',
-            'roq_tsu.boolean' => 'Tsunami hanya tersedia pilihan Berpotensi atau Tidak Berpotensi.'
+            'roq_tsu.boolean' => 'Tsunami hanya tersedia pilihan Berpotensi atau Tidak Berpotensi.',
+            'merusak.required_if' => '<b>Informasi gempa merusak atau tidak</b> harus dipilih jika <b>Tanggapan</b> dibuat.',
+            'merusak.boolean' => 'Informasi gempa merusak harus diisi.'
         ];
     }
 
@@ -195,7 +197,8 @@ class CreateRoqRequest extends FormRequest
             'roq_rekom' => 'nullable',
             'roq_source_code' => 'required_if:roq_tanggapan,1|array',
             'roq_source_code.*' => 'required_if:roq_tanggapan,1|in:BMKG,GFZ,USGS',
-            'roq_tsu' => 'required_if:roq_tanggapan,1|boolean'
+            'roq_tsu' => 'required_if:roq_tanggapan,1|boolean',
+            'merusak' => 'required_if:roq_tanggapan,1|boolean',
         ];
     }
 }
