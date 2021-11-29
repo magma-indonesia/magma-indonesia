@@ -42,6 +42,7 @@ class MagmaRoq extends Model
         'roq_tanggapan',
         'roq_title',
         'roq_tsu',
+        'merusak',
         'roq_intro',
         'roq_konwil',
         'roq_mekanisme',
