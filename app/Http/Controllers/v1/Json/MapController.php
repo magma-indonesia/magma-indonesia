@@ -7,15 +7,9 @@ use App\Http\Controllers\Controller;
 use App\v1\MagmaVar as OldVar;
 use App\v1\Vona;
 use App\v1\Gadd;
-use App\v1\User;
-use App\v1\PosPga;
 use App\v1\GertanCrs as Crs;
-use App\v1\MagmaSigertan;
 use App\v1\MagmaRoq;
-use App\Http\Requests\v1\CreateVar;
-use App\Http\Requests\v1\CreateVarRekomendasi;
 use Illuminate\Support\Facades\Cache;
-use Carbon\Carbon;
 
 use App\Traits\VisualAsap;
 use App\Traits\v1\DeskripsiGempa;
