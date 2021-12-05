@@ -18,6 +18,8 @@ class PetaKrbGunungApi extends Model
         'thumbnail',
         'size_kb',
         'size_mb',
+        'medium_size_mb',
+        'large_size_mb',
         'size_gb',
     ];
 
@@ -83,6 +85,26 @@ class PetaKrbGunungApi extends Model
     public function getSizeMbAttribute()
     {
         return $this->getMegaByte($this->attributes['size']);
+    }
+
+    /**
+     * Size Medium Image in MB
+     *
+     * @return String
+     */
+    public function getMediumSizeMbAttribute()
+    {
+        return $this->getMegaByte($this->attributes['medium_size']);
+    }
+
+    /**
+     * Size Large Image in MB
+     *
+     * @return String
+     */
+    public function getLargeSizeMbAttribute()
+    {
+        return $this->getMegaByte($this->attributes['large_size']);
     }
 
     /**

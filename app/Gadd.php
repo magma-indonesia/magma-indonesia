@@ -171,4 +171,9 @@ class Gadd extends Model
     {
         return $this->hasOne('App\BencanaGeologi','code','code');
     }
+
+    public function peta_krbs()
+    {
+        return $this->hasMany('App\PetaKrbGunungApi', 'code', 'code');
+    }
 }
