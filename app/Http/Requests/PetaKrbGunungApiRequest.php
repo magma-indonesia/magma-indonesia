@@ -44,6 +44,7 @@ class PetaKrbGunungApiRequest extends FormRequest
             'tahun' => 'nullable|integer',
             'krb' => 'required|mimes:jpeg,png,jpg|max:80000',
             'keterangan' => 'nullable',
+            'published' => 'required|boolean',
         ];
     }
 }

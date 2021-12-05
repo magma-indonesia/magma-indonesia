@@ -96,7 +96,7 @@
                                                     <button class="btn btn-primary" type="submit">Tambahkan URL</button>
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -154,7 +154,7 @@
                                                     <button class="btn btn-primary" type="submit">Tambahkan URL</button>
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -233,7 +233,7 @@
                                 <tr>
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $krb->gunungapi->name }}</td>
-                                    <td><a href="{{ $krb->medium_url }}" data-lightbox="file-set-{{ $key }}"data-title="{{ $krb->gunungapi->name.'_'.($key+1) }}"><img class="img-fluid" src="{{ $krb->thumbnail }}" alt="" /></a></td>
+                                    <td><a href="{{ $krb->medium_url }}" data-lightbox="file-set-{{ $key }}" data-title="{{ $krb->gunungapi->name.'_'.($key+1) }}"><img class="img-fluid" src="{{ $krb->thumbnail }}" alt="" /></a></td>
                                     <td>{{ $krb->size_mb }}</td>
                                     <td>{{ $krb->published ? 'Ya' : 'Tidak' }}</td>
                                     <td>
@@ -350,7 +350,7 @@ $(document).ready(function () {
     }
 
     $('body').on('submit','#deleteForm',function (e) {
-        e.preventDefault();                
+        e.preventDefault();
 
         var $url = $(this).attr('action'),
             $data = $(this).serialize();

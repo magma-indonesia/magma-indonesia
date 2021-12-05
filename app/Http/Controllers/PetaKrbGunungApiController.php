@@ -78,8 +78,6 @@ class PetaKrbGunungApiController extends Controller
 
         $validated = $request->validated();
 
-        return $validated;
-
         $meta = $this->createFile(
             $request->file('krb')->store('public/krb-gunungapi')
         );
@@ -108,7 +106,7 @@ class PetaKrbGunungApiController extends Controller
     public function show($id)
     {
         $krb = KRB::findOrFail($id);
-        return Storage::disk('krb-gunungapi')->download($krb->filename);
+        return Storage::disk('krb-gunungapi')->get($krb->filename);
     }
 
     /**
