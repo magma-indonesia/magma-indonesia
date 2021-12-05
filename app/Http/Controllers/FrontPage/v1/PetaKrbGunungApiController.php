@@ -17,6 +17,7 @@ class PetaKrbGunungApiController extends Controller
             ->with(['peta_krbs' => function ($query) {
                 $query->where('published', 1);
             }])
+            ->orderBy('name')
             ->get();
 
         return view('v1.home.peta-krb', [

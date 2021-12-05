@@ -39,9 +39,9 @@ Peta Kawasan Rawan Bencana (KRB) Gunung Api
                     <tr>
                         <td class=""> {{ $gadd->name }} </td>
                         <td class="">
-                            <a href="{{ $krb->medium_url }}" data-lightbox="file-set-{{ $key }}" data-title="{{ $krb->gunungapi->name.'_'.($key+1) }}"><img class="img-fluid" src="{{ $krb->thumbnail }}" alt="" /></a>
+                            <a href="{{ $krb->medium_url }}" data-lightbox="file-set-{{ $gadd->code }}-{{ $key }}" data-title="{{ $krb->gunungapi->name.'_'.($key+1) }}"><img class="img-fluid" src="{{ $krb->thumbnail }}" alt="" /></a>
                         </td>
-                        <td class="valign-middle">2019</td>
+                        <td class="valign-middle">{{ $krb->tahun }}</td>
                         <td class="valign-middle">
                             <a href="{{ $krb->url }}" class="btn btn-primary mg-b-10" type="button" download="Original">Original ({{ $krb->size_mb }})</a>
                             <a href="{{ $krb->large_url }}" class="btn btn-primary mg-b-10" type="button" download="Large">Medium ({{ $krb->medium_size_mb }})</a>
