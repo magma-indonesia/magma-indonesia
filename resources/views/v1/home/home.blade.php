@@ -116,6 +116,7 @@
                     <li class="hidden-lg"><a href="{{ route('v1.gunungapi.tingkat-aktivitas') }}"><span class="glyphicon glyphicon-tasks"></span>Tingkat Aktivitas</a></li>
                     <li class="hidden-lg"><a href="{{ route('v1.gunungapi.var') }}"><span class="glyphicon glyphicon-stats"></span> Laporan Gunung Api</a></li>
                     <li class="hidden-lg"><a href="{{ route('v1.gunungapi.ven') }}"><span class="glyphicon glyphicon-th-list"></span> Informasi Letusan</a></li>
+                    <li class="hidden-lg"><a href="{{ route('v1.gunungapi.peta-kawasan-rawan-bencana') }}"><span class="glyphicon glyphicon-cloud-download"></span> Download Peta KRB</a></li>
                     <li class="hidden-lg"><a href="{{ route('v1.vona.index') }}"><span class="glyphicon glyphicon-plane"></span> VONA</a></li>
                     <li class="hidden-lg"><a href="{{ route('v1.gunungapi.cctv') }}"><span class="glyphicon glyphicon-eye-open"></span> Kamera (CCTV)</a></li>
                     <li class="hidden-lg"><a href="{{ route('v1.gunungapi.gallery') }}"><span class="glyphicon glyphicon-eye-open"></span> Gallery</a></li>
@@ -151,6 +152,7 @@
                         <li class="padding-magma-xs"><a href="{{ route('v1.gunungapi.tingkat-aktivitas') }}">Tingkat Aktivitas</a></li>
                         <li class="padding-magma-xs"><a href="{{ route('v1.gunungapi.var') }}">Laporan Aktivitas (VAR)</a></li>
                         <li class="padding-magma-xs"><a href="{{ route('v1.gunungapi.ven') }}">Informasi Letusan (VEN)</a></li>
+                        <li class="padding-magma-xs"><a href="{{ route('v1.gunungapi.peta-kawasan-rawan-bencana') }}">Download Peta KRB</a></li>
                         <li class="padding-magma-xs"><a href="{{ route('v1.vona.index') }}">VONA</a></li>
                         <li class="padding-magma-xs"><a href="{{ route('v1.gunungapi.cctv') }}">Kamera (CCTV)</a></li>
                         <li class="padding-magma-xs"><a href="{{ route('v1.gunungapi.gallery') }}">Gallery</a></li>
