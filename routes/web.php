@@ -57,6 +57,9 @@ Route::name('v1.')->group(function () {
             ->name('press.show')
             ->middleware('signed');
 
+        Route::get('gunung-api/peta-kawasan-rawan-bencana','FrontPage\v1\PetaKrbGunungApiController@index')
+            ->name('gunungapi.peta-kawasan-rawan-bencana');
+
         Route::get('gunung-api/tingkat-aktivitas','FrontPage\v1\GunungApiController@tingkatAktivitas')
             ->name('gunungapi.tingkat-aktivitas');
 
@@ -65,6 +68,7 @@ Route::name('v1.')->group(function () {
         Route::get('gunung-api/informasi-letusan/{id}/show','FrontPage\v1\GunungApiController@showVen')
             ->name('gunungapi.ven.show')
             ->middleware('signed');
+
         Route::get('gunung-api/laporan','FrontPage\v1\GunungApiController@indexVar')
             ->name('gunungapi.var');
         Route::get('gunung-api/laporan/{id?}','FrontPage\v1\GunungApiController@showVar')
