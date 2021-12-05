@@ -18,6 +18,7 @@ class Gadd extends Model
     protected $fillable = [
         'ga_code',
         'ga_nama_gapi',
+        'slug',
         'ga_tzone',
         'ga_zonearea',
         'ga_kab_gapi',
@@ -113,5 +114,5 @@ class Gadd extends Model
     {
         return $this->hasMany('App\v1\PosPga','code_id','ga_code');
     }
-    
+
 }
