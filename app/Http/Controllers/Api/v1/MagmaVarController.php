@@ -66,7 +66,7 @@ class MagmaVarController extends Controller
                     'latitude' => $var->gunungapi->ga_lat_gapi,
                     'longitude' => $var->gunungapi->ga_lon_gapi
                 ],
-                'elevasi' => $var->gunungapi->ga_elev_gapi,
+                'elevation' => $var->gunungapi->ga_elev_gapi,
             ],
             'laporan_terakhir' => [
                 'noticenumber' => $var->var_noticenumber,
