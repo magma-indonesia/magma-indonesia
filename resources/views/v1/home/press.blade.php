@@ -1,9 +1,13 @@
-@extends('layouts.slim') 
+@extends('layouts.slim')
+
+@section('thumbnail')
+{{ $press->fotolink }}
+@endsection
 
 @section('title')
 Press Release
 @endsection
- 
+
 @section('breadcrumb')
 <li class="breadcrumb-item" aria-current="page">Press Release</li>
 @endsection
