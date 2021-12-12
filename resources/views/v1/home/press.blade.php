@@ -1,9 +1,5 @@
 @extends('layouts.slim')
 
-@section('thumbnail')
-{{ $press->fotolink }}
-@endsection
-
 @section('title')
 Press Release
 @endsection
