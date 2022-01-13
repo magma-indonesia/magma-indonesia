@@ -644,7 +644,7 @@
 
             // add megathrust layer
             var mapMegaThrust = L.esri.featureLayer({
-                url: 'https://services5.arcgis.com/PVHDEj0uwgUfQbbd/arcgis/rest/services/megathrust/FeatureServer/0',
+                url: 'https://services9.arcgis.com/BvrmTdn7GU5knQXz/arcgis/rest/services/megathrust/FeatureServer/0',
             });
 
             addMegaThrust.push(mapMegaThrust);
