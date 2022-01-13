@@ -42,7 +42,7 @@ Peta Kawasan Rawan Bencana (KRB) Gunung Api
                     @foreach ($gadd->peta_krbs as $key => $krb)
                     <tr>
                         <td class=""> {{ $index = $index+$key+1 }} </td>
-                        <td class=""> {{ $gadd->name }} </td>
+                        <td class=""> {{ $gadd->name }} {{ $krb->keterangan ? '- '.$krb->keterangan : '' }}</td>
                         <td class="">
                             <a href="{{ $krb->medium_url }}" data-lightbox="file-set-{{ $gadd->code }}-{{ $key }}" data-title="{{ $krb->gunungapi->name.'_'.($key+1) }}"><img class="img-fluid" src="{{ $krb->thumbnail }}" alt="" /></a>
                         </td>
