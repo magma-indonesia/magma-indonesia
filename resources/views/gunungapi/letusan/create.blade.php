@@ -118,6 +118,23 @@ Buat Informasi Letusan (VEN)
                                             <label class="error" for="date">{{ ucfirst($errors->first('date')) }}</label>
                                             @endif
                                         </div>
+
+                                        {{-- Erupsi sedang berlangsung --}}
+                                        <div class="form-group col-sm-12">
+                                            <label>Apakah erupsi sedang berlangsung?</label>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <label class="checkbox-inline"><input name="erupsi_berlangsung" value="1" type="radio" class="i-checks draft"
+                                                            {{ old('erupsi_berlangsung') == '1' ? 'checked' : ''}}> Ya </label>
+                                                    <label class="checkbox-inline"><input name="erupsi_berlangsung" value="0" type="radio" class="i-checks draft"
+                                                            {{ (old('erupsi_berlangsung') == '0' OR empty(old('erupsi_berlangsung'))) ? 'checked' : ''}}> Tidak </label>
+                                                    <span class="help-block m-b-none">Pilih Opsi ini jika ketika laporan dibuat, erupsi masih berlangsung.</span>
+                                                    @if( $errors->has('erupsi_berlangsung'))
+                                                    <label class="error" for="erupsi_berlangsung">{{ ucfirst($errors->first('erupsi_berlangsung')) }}</label>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -395,6 +412,7 @@ Buat Informasi Letusan (VEN)
                                                 <input name="durasi" class="form-control" type="text" value="{{ empty(old('durasi')) ? '' : old('durasi') }}">
                                                 <span class="input-group-addon" style="min-width: 75px;">detik</span>
                                             </div>
+                                            <span class="help-block m-b-none">Jika <b>erupsi sedang berlangsung</b>, isi dengan waktu durasi saat pelaporan, tidak perlu menunggu kejadian erupsi selesai.</span>
                                             @if( $errors->has('durasi'))
                                             <label class="error" for="durasi">{{ ucfirst($errors->first('durasi')) }}</label>
                                             @endif

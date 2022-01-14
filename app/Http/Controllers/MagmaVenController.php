@@ -9,9 +9,12 @@ use App\Gadd;
 use App\Seismometer;
 use App\Vona;
 use Carbon\Carbon;
+use Shivella\Bitly\BitlyServiceProvider;
 
 use App\Traits\VisualLetusan;
 use App\VarRekomendasi;
+use Shivella\Bitly\Client\BitlyClient;
+use Shivella\Bitly\Facade\Bitly;
 
 class MagmaVenController extends Controller
 {
@@ -166,6 +169,22 @@ class MagmaVenController extends Controller
 
     }
 
+    protected function generateSms($request)
+    {
+        $gadd = Gadd::select('code','name', 'zonearea')
+            ->with('sms_locations')
+            ->where('code', $request->code)
+            ->first();
+
+        $masking = config('app.sms_masking');
+        $messages = "Terjadi letusan G. {$gadd->name} pada {$request->date}{$gadd->zonearea} {$masking}";
+
+        return [
+            'messages' => $messages,
+            'location' => $gadd->sms_locations->pluck('kode_kabupaten'),
+        ];
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -174,7 +193,11 @@ class MagmaVenController extends Controller
      */
     public function store(LaporanLetusanRequest $request)
     {
-        return $request;
+        return [
+            'request' => $request->toArray(),
+            'sms' => $request->is_blasted ? $this->generateSms($request) : null,
+            'vona' => null,
+        ];
         // $path = $request->file('foto')->
 
         // return $path;

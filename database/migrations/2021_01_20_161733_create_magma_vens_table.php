@@ -22,6 +22,7 @@ class CreateMagmaVensTable extends Migration
             $table->dateTimeTz('datetime_utc');
             $table->enum('timezone', ['Asia/Jakarta', 'Asia/Makassar', 'Asia/Jayapura'])
                 ->default('Asia/Jakarta');
+            $table->boolean('erupsi_berlangsung')->default(0);
             $table->boolean('visibility')->default(0);
             $table->integer('height')->default(0);
             $table->json('warna_abu')->nullable();
@@ -33,10 +34,12 @@ class CreateMagmaVensTable extends Migration
             $table->float('distance')->default(0.0);
             $table->json('arah_guguran')->nullable();
             $table->string('foto_letusan')->nullable();
+            $table->string('thumbnail')->nullable();
             $table->string('old_photo')->nullable();
             $table->text('informasi_lainnya')->nullable();
             $table->integer('rekomendasi_id')->unsigned();
             $table->foreign('rekomendasi_id')->references('id')->on('var_rekomendasis');
+            $table->boolean('has_vona')->default(0);
             $table->boolean('sms_blast')->default(0);
             $table->char('nip_pelapor', 18)->index();
             $table->foreign('nip_pelapor')->references('nip')->on('users');

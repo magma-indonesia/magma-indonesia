@@ -176,4 +176,14 @@ class Gadd extends Model
     {
         return $this->hasMany('App\PetaKrbGunungApi', 'code', 'code');
     }
+
+    /**
+     * Masing-masing gunungapi memiliki banyak lokasi kabupaten
+     *
+     * @return void
+     */
+    public function sms_locations()
+    {
+        return $this->hasMany('App\SmsLocation', 'code_id', 'code');
+    }
 }

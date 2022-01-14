@@ -15,8 +15,9 @@ class LaporanLetusanRequest extends FormRequest
     {
         return [
             'code.required' => 'Kode gunung api tidak terdaftar',
+            'code.exists' => 'Kode gunung api tidak terdaftar',
             'code.size'  => 'Kode gunung api tidak terdaftar',
-            'jenis.required' => 'Jenis erupsi yang dipilih',
+            'erupsi_berlangsung.required' => 'Informasi erupsi sedang berlangsung belum dipilih',
             'jenis.in'  => 'Pilih antara Erupsi atau Awan Panas Guguran',
             'visibility.required' => 'Visibility belum diisi',
             'visibility.boolean' => 'Visibility hanya memiliki nilai Teramati atau Tidak Teramati',
@@ -25,7 +26,7 @@ class LaporanLetusanRequest extends FormRequest
             'warna_asap.*.in' => 'Data Warna Abu invalid',
             'intensitas.*.in' => 'Data Intensitas invalid',
             'arah_asap.*.in' => 'Arah abu invalid',
-            '*.required' => 'Data harus diisi jika Visual Letusan atau Guguran teramati.',
+            '*.required' => 'Data harus diisi jika Visual Letusan atau Guguran teramati',
             '*.numeric' => 'Data harus dalam bentuk Numeric',
             '*.between' => 'Nilai :attribute Minimum :min dan maksimum :max',
             'rekomendasi_text.required_if' => 'Rekomendasi baru harus diisi'
@@ -67,10 +68,11 @@ class LaporanLetusanRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'code' => 'required|size:3',
+            'code' => 'required|size:3|exists:ga_dd,code',
             'jenis' => 'required|in:apg,lts',
             'status' => 'required|in:1,2,3,4',
             'date' => 'required|date_format:Y-m-d H:i:s|before:tomorrow',
+            'erupsi_berlangsung' => 'required|boolean',
             'visibility' => 'required|boolean',
             'height' => 'required_if:visibility,1|nullable|numeric|between:0,20000',
             'warna_asap' => 'required_if:visibility,1|array',
@@ -88,7 +90,8 @@ class LaporanLetusanRequest extends FormRequest
             'is_blasted' => 'required|boolean',
         ];
 
-        $rules = request()->jenis == 'apg' ? array_merge($rules, $this->awanPanasGuguran()) : array_merge($rules, $this->letusan());
+        $rules = request()->jenis == 'apg' ?
+            array_merge($rules, $this->awanPanasGuguran()) : array_merge($rules, $this->letusan());
 
         return $rules;
     }
