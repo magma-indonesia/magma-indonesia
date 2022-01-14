@@ -16,11 +16,11 @@ class MagmaVen extends Model
     protected $primaryKey = 'uuid';
 
     protected $keyType = 'string';
-    
+
     protected $casts = [
-        'warna_asap' => 'array',
+        'warna_abu' => 'array',
         'intensitas' => 'array',
-        'arah_asap' => 'array',
+        'arah_abu' => 'array',
     ];
 
     protected $dates = [
@@ -30,14 +30,20 @@ class MagmaVen extends Model
     protected $with = [
         'user:nip,name'
     ];
- 
+
     protected $appends = [
         'status_deskripsi'
     ];
 
-    protected $guarded = ['id','uuid'];
+    protected $guarded = [
+        'id',
+        'uuid',
+    ];
 
-    protected $hidden = ['id','nip_pelapor'];
+    protected $hidden = [
+        'id',
+        'nip_pelapor',
+    ];
 
     /**
      * Scope a status query

@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-Buat VEN
+Buat Informasi Letusan (VEN)
 @endsection
 
 @section('add-vendor-css')
@@ -24,7 +24,7 @@ Buat VEN
                         <a href="{{ route('chambers.datadasar.index') }}">Gunung Api</a>
                     </li>
                     <li>
-                        <a href="{{ route('chambers.letusan.index') }}">Letusan</a>
+                        <a href="{{ route('chambers.letusan.index') }}">Informasi Letusan</a>
                     </li>
                     <li class="active">
                         <span>Buat Laporan</span>
@@ -49,10 +49,18 @@ Buat VEN
                     Form Informasi Letusan (VEN dan VONA)
                 </div>
                 <div class="panel-body">
+                    @if ($errors->any())
+                    <div class="form-group col-sm-12">
+                        <div class="alert alert-danger">
+                        @foreach ($errors->all() as $error)
+                            <p>{{ $error }}</p>
+                        @endforeach
+                        </div>
+                    </div>
+                    @endif
 
                     <form id="form" class="form-horizontal" method="POST" action="{{ route('chambers.letusan.store') }}" enctype="multipart/form-data">
                         @csrf
-
                         <div class="tab-content">
                             <div class="p-m tab-pane active">
 
@@ -65,7 +73,16 @@ Buat VEN
                                     </div>
 
                                     <div class="col-lg-8">
-                                        
+
+                                        {{-- Pilih Jenis letusan --}}
+                                        <div class="form-group col-sm-12">
+                                            <label>Jenis</label>
+                                            <select id="jenis" class="form-control" name="jenis">
+                                                <option value="lts" {{ old('jenis') == 'lts' ? 'selected' : ''}}>Erupsi/Letusan</option>
+                                                <option value="apg" {{ old('jenis') == 'apg' ? 'selected' : ''}}>Awan Panas Guguran</option>
+                                            </select>
+                                        </div>
+
                                         {{-- Nama Gunung Api --}}
                                         <div class="form-group col-sm-12">
                                             <label>Gunung Api</label>
@@ -81,7 +98,7 @@ Buat VEN
 
                                         {{-- Status --}}
                                         <div class="form-group col-sm-12">
-                                            <label>Status Gunung Api</label>
+                                            <label>Tingkat Aktivitas Gunung Api</label>
                                             <select id="status" class="form-control" name="status">
                                                 <option value="1" {{ old('status') == '1' ? 'selected' : ''}}>Level I (Normal)</option>
                                                 <option value="2" {{ old('status') == '2' ? 'selected' : ''}}>Level II (Waspada)</option>
@@ -111,15 +128,15 @@ Buat VEN
                                     <div class="col-lg-4 text-center">
                                         <i class="pe-7s-cloud-upload fa-4x text-muted"></i>
                                         <p class="m-t-md">
-                                            Masukkan parameter pemantauan visual <b>Letusan</b>.
+                                            Masukkan parameter pemantauan visual <b>Letusan atau Awan Panas Guguran</b>.
                                         </p>
                                     </div>
 
                                     <div class="col-lg-8">
-                                    
+
                                         {{-- Visual Kolom Abu --}}
                                         <div class="form-group col-sm-12">
-                                            <label>Visual Letusan</label>
+                                            <label>Parameter Visual</label>
                                             <select id="visibility" class="form-control" name="visibility">
                                                 <option value="1" {{ old('visibility') == '1' ? 'selected' : ''}}>Teramati</option>
                                                 <option value="0" {{ old('visibility') == '0' ? 'selected' : ''}}>Tidak Teramati</option>
@@ -132,12 +149,12 @@ Buat VEN
                                         <div class="teramati" style="display: {{ old('visibility') == '0' ? 'none' :'block'}};">
                                             {{-- Tinggi Letusan --}}
                                             <div class="form-group col-sm-12">
-                                                <label>Tinggi Letusan</label>
-
+                                                <label>Tinggi Letusan/Tinggi Abu akibat guguran</label>
                                                 <div class="input-group">
-                                                    <input placeholder="Antara 100 - 20000 meter" name="height" class="form-control" type="text" value="{{ empty(old('height')) ? '' : old('height') }}">
+                                                    <input placeholder="Maksimal 20000 meter" name="height" class="form-control" type="text" value="{{ empty(old('height')) ? '' : old('height') }}">
                                                     <span class="input-group-addon h-bg-red">meter, di atas puncak</span>
                                                 </div>
+                                                <span class="help-block m-b-none">Untuk <b>Awan Panas Guguran</b> masukkan nilai 0 jika tinggi abu akibat APG masih di bawah puncak</span>
                                                 @if( $errors->has('height'))
                                                 <label class="error" for="height">{{ ucfirst($errors->first('height')) }}</label>
                                                 @endif
@@ -146,7 +163,7 @@ Buat VEN
 
                                             {{-- Warna Abu --}}
                                             <div class="form-group col-sm-12">
-                                                <label>Warna Abu</label>
+                                                <label>Warna Abu Letusan/Awan Panas Guguran</label>
 
                                                     <div class="row">
                                                         <div class="col-sm-3">
@@ -178,7 +195,7 @@ Buat VEN
                                             </div>
 
                                             {{-- Intensitas --}}
-                                            <div class="form-group col-sm-12">
+                                            <div class="jenis-lts form-group col-sm-12" style="display: {{ old('jenis') == 'apg' ? 'none' :'apg'}};">
                                                 <label>Intensitas</label>
                                                 <div class="row">
                                                     <div class="col-lg-12">
@@ -256,24 +273,24 @@ Buat VEN
                                                 <div class="form-group col-sm-12">
                                                     <label class="w-xs btn btn-outline btn-default btn-file">
                                                         <i class="fa fa-upload"></i>
-                                                        <span class="label-file-letusan">Browse </span> 
+                                                        <span class="label-file-letusan">Browse </span>
                                                         <input class="file-letusan" accept="image/jpeg" type="file" name="foto_letusan" style="display: none;">
                                                     </label>
-                                                    @if( $errors->has('foto'))
-                                                    <label class="error" for="foto">{{ ucfirst($errors->first('foto')) }}</label>
+                                                    @if( $errors->has('foto_letusan'))
+                                                    <label class="error" for="foto_letusan">{{ ucfirst($errors->first('foto')) }}</label>
                                                     @endif
                                                 </div>
 
                                             </div>
                                         </div>
-                                    
+
                                     </div>
                                 </div>
-                                
-                                <div class="hr-line-dashed"></div>
+
+                                <div class="hr-line-dashed jenis-apg teramati" style="display: {{ old('jenis') == 'apg' ? 'block' :'none'}};"></div>
 
                                 {{-- Awan Panas Guguran --}}
-                                <div class="row">
+                                <div class="row jenis-apg teramati" style="display: {{ old('jenis') == 'apg' ? 'block' :'none'}};">
                                     <div class="col-lg-4 text-center">
                                         <i class="pe-7s-cloud-download fa-4x text-muted"></i>
                                         <p class="m-t-md">
@@ -283,25 +300,13 @@ Buat VEN
 
                                     <div class="col-lg-8">
 
-                                        {{-- Visual Awan Panas Guguran--}}
-                                        <div class="form-group col-sm-12">
-                                            <label>Visual Awan Panas Guguran</label>
-                                            <select id="visibility_apg" class="form-control" name="visibility_apg">
-                                                <option value="1" {{ old('visibility_apg') == '1' ? 'selected' : ''}}>Teramati</option>
-                                                <option value="0" {{ old('visibility_apg') == '0' ? 'selected' : ''}}>Tidak Teramati</option>
-                                            </select>
-                                            @if( $errors->has('visibility_apg'))
-                                            <label class="error" for="visibility_apg">{{ ucfirst($errors->first('visibility_apg')) }}</label>
-                                            @endif
-                                        </div>
-
-                                        <div class="teramati-guguran" style="display: {{ old('visibility_apg') == '0' ? 'none' :'block'}};">
+                                        <div class="teramati" style="display: {{ old('visibility') == '0' ? 'none' :'block'}};">
                                             {{-- Jarak Guguran --}}
                                             <div class="form-group col-sm-12">
                                                 <label>Jarak Guguran</label>
 
                                                 <div class="input-group">
-                                                    <input placeholder="Antara 100 - 20000 meter" name="distance" class="form-control" type="text" value="{{ empty(old('distance')) ? '' : old('distance') }}">
+                                                    <input placeholder="Maksimal 20,0000 meter" name="distance" class="form-control" type="numeric" value="{{ empty(old('distance')) ? '' : old('distance') }}">
                                                     <span class="input-group-addon h-bg-red">meter, dari puncak</span>
                                                 </div>
                                                 @if( $errors->has('distance'))
@@ -309,22 +314,9 @@ Buat VEN
                                                 @endif
                                             </div>
 
-                                            {{-- Tinggi Abu Guguran --}}
-                                            <div class="form-group col-sm-12">
-                                                <label>Tinggi abu akibat guguran - (optional)</label>
-                                                <div class="input-group">
-                                                    <input placeholder="Antara 100 - 20000 meter" name="height_guguran" class="form-control" type="text" value="{{ empty(old('height_guguran')) ? '0' : old('height_guguran') }}">
-                                                    <span class="input-group-addon h-bg-red">meter, dari puncak</span>
-                                                </div>
-                                                <span class="help-block m-b-none">Jika teramati, masukkan tinggi abu yang dihasilkan dari guguran. Info ini akan digunakan dalam men-generate VONA. <b>Abaikan atau isi 0</b> jika tinggi abunya masih di bawah puncak.</span>
-                                                @if( $errors->has('height_guguran'))
-                                                <label class="error" for="height_guguran">{{ ucfirst($errors->first('height_guguran')) }}</label>
-                                                @endif
-                                            </div>
-
                                             {{-- Arah Guguran --}}
                                             <div class="form-group col-sm-12">
-                                                <label>Arah Guguran ke</label>
+                                                <label>Arah Guguran mengarah ke</label>
 
                                                 <div class="row">
                                                     <div class="col-sm-3">
@@ -365,27 +357,6 @@ Buat VEN
                                                     @break
                                                 @endforeach
                                                 @endif
-                                            </div>
-
-                                            <div class="form-group col-sm-12">
-                                                <label>Upload Foto Guguran</label>
-                                                <div class="form-group col-sm-12">
-                                                    <div class="row">
-                                                        <div class="col-lg-6 col-xs-12">
-                                                            <img class="img-responsive border-top border-bottom border-right border-left p-xs image-file-guguran" src="#" style="display:none;">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group col-sm-12">
-                                                    <label class="w-xs btn btn-outline btn-default btn-file">
-                                                        <i class="fa fa-upload"></i>
-                                                        <span class="label-file-guguran">Browse </span> 
-                                                        <input class="file-guguran" accept="image/jpeg" type="file" name="foto_apg" style="display: none;">
-                                                    </label>
-                                                    @if( $errors->has('foto'))
-                                                    <label class="error" for="foto">{{ ucfirst($errors->first('foto')) }}</label>
-                                                    @endif
-                                                </div>
                                             </div>
 
                                         </div>
@@ -431,10 +402,10 @@ Buat VEN
 
                                         {{-- Seismometer --}}
                                         <div class="form-group col-sm-12">
-                                            <label>Pilih stasiun - (optional)</label>
+                                            <label>Pilih stasiun</label>
                                             <div class="input-group">
                                                 <select id="seismometer_id" class="form-control" name="seismometer_id">
-                                                    <option value="9999">-- Optional --</option>
+                                                    <option value="9999">-- Pilih Stasiun --</option>
                                                     @foreach ($gadds as $gadd)
                                                         @foreach ($gadd->seismometers as $seismometer)
                                                         <option value="{{ $seismometer->id }}" {{ old('seismometer_id') == $seismometer->id ? 'selected' : ''}}>{{ $gadd->name }} - {{ $seismometer->scnl }}</option>
@@ -526,7 +497,7 @@ Buat VEN
                                             </div>
 
                                         </div>
-                                        
+
                                         {{-- Keterangan Lainnya --}}
                                         <div class="form-group col-sm-12">
                                             <label>Keterangan Lainnya (opsional)</label>
@@ -628,13 +599,26 @@ function getSeismometers($code, $id = 0) {
         url: $url,
         type: 'POST',
         success: function(data) {
-            let optional = '<option value="9999">-- Optional --</option>'+data
+            let optional = '<option value="9999">-- Pilih Stasiun --</option>'+data
             $('#seismometer_id').html(optional);
         },
         error: function(data){
             console.log(data);
         }
     });
+};
+
+function showLetusan() {
+    $('.jenis-apg').hide();
+    $('.jenis-lts').show();
+};
+
+function hideLetusan() {
+    if ($('#visibility').val() == '1') {
+        $('.jenis-apg').show();
+    }
+
+    $('.jenis-lts').hide();
 };
 
 $(document).ready(function () {
@@ -651,31 +635,14 @@ $(document).ready(function () {
         format: 'YYYY-MM-DD HH:mm:ss',
     });
 
+    $('#jenis').on('change',function(){
+        let $val = $(this).val();
+        $val == 'lts' ? showLetusan() : hideLetusan();
+    });
+
     $('#visibility').on('change',function(){
         let $val = $(this).val();
         $val == '0' ? $('.teramati').hide() : $('.teramati').show();
-    });
-
-    $('#visibility_apg').on('change',function(){
-        let $val = $(this).val();
-        $val == '0' ? $('.teramati-guguran').hide() : $('.teramati-guguran').show();
-    });
-
-    $('input.file-guguran').on('change', function(e) {
-        let input = $(this),
-            label = input.val()
-                        .replace(/\\/g, '/')
-                        .replace(/.*\//, ''),
-            reader = new FileReader();
-
-        $('.label-file-guguran').html(label);
-        reader.onload = function (e) {
-            $('.image-file-guguran')
-                .show()
-                .attr('src',e.target.result);
-        }
-
-        reader.readAsDataURL(this.files[0]);
     });
 
     $('input.file-letusan').on('change', function(e) {
@@ -749,7 +716,7 @@ $('.delete-rekomendasi').on('click', function(e) {
         closeOnConfirm: false,
         closeOnCancel: true },
     function (isConfirm) {
-        if (isConfirm) {                    
+        if (isConfirm) {
             $.ajax({
                 url: $url,
                 type: 'POST',

@@ -16,7 +16,7 @@ use App\VarRekomendasi;
 class MagmaVenController extends Controller
 {
     use VisualLetusan;
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -24,9 +24,12 @@ class MagmaVenController extends Controller
      */
     public function index()
     {
-        $vens = MagmaVen::with('gunungapi:code,name')->orderBy('date','desc')->paginate(30);
+        $vens = MagmaVen::with('gunungapi:code,name')
+            ->orderBy('date','desc')->paginate(30);
 
-        return view('gunungapi.letusan.index', ['vens' => $vens]);
+        return view('gunungapi.letusan.index', [
+            'vens' => $vens
+        ]);
     }
 
     /**
@@ -84,9 +87,9 @@ class MagmaVenController extends Controller
 
         if ($type == 'lat')
         {
-            return $sym.$deg.' deg '.$min.' min '.$sec.' sec '; 
+            return $sym.$deg.' deg '.$min.' min '.$sec.' sec ';
         }
-        return 'E '.$deg.' deg '.$min.' min '.$sec.' sec'; 
+        return 'E '.$deg.' deg '.$min.' min '.$sec.' sec';
     }
 
     protected function translateDirection($arah)
@@ -158,9 +161,9 @@ class MagmaVenController extends Controller
         $vona->vch_asl = $vch_asl;
         $vona->vch_other = $other;
         $vona->nip_pelapor = auth()->user()->nip;
-        
+
         return $vona->save() ? true : false;
-        
+
     }
 
     /**
@@ -179,7 +182,7 @@ class MagmaVenController extends Controller
         // $ven = new MagmaVen;
         // $vona = new Vona;
 
-        // $saveVen = $request->visibility == '1' 
+        // $saveVen = $request->visibility == '1'
         //     ? $this->teramati($request,$ven)
         //     : $this->tidakTeramati($request,$ven);
 
@@ -194,7 +197,7 @@ class MagmaVenController extends Controller
         // return redirect()->route('chambers.letusan.index')
         //     ->with('flash_message','Informasi letusan gagal ditambahkan. ');
     }
-    
+
     /**
      * Display the specified resource.
      *
@@ -254,7 +257,7 @@ class MagmaVenController extends Controller
 
             return response()->json($data);
         }
-        
+
         $data = [
             'success' => 1,
             'message' => $message.' berhasil dihapus.'
