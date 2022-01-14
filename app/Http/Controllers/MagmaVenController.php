@@ -169,6 +169,11 @@ class MagmaVenController extends Controller
 
     }
 
+    protected function generateLetusan($request)
+    {
+        return $request->jenis == 'apg' ? 'Awan Panas Guguran' : 'Letusan';
+    }
+
     protected function generateSms($request)
     {
         $gadd = Gadd::select('code','name', 'zonearea')
@@ -177,7 +182,7 @@ class MagmaVenController extends Controller
             ->first();
 
         $masking = config('app.sms_masking');
-        $messages = "Terjadi letusan G. {$gadd->name} pada {$request->date}{$gadd->zonearea} {$masking}";
+        $messages = "Terjadi {$this->generateLetusan($request)} G. {$gadd->name} pada {$request->date}{$gadd->zonearea} {$masking}";
 
         return [
             'messages' => $messages,
