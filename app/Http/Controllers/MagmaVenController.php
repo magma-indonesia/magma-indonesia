@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\LaporanLetusanRequest;
 use App\MagmaVen;
+use App\v1\MagmaVen as OldVen;
 use App\Gadd;
 use App\Seismometer;
 use App\Vona;
@@ -13,6 +14,8 @@ use Shivella\Bitly\BitlyServiceProvider;
 
 use App\Traits\VisualLetusan;
 use App\VarRekomendasi;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\URL;
 use Shivella\Bitly\Client\BitlyClient;
 use Shivella\Bitly\Facade\Bitly;
 
@@ -174,6 +177,28 @@ class MagmaVenController extends Controller
         return $request->jenis == 'apg' ? 'Awan Panas Guguran' : 'Letusan';
     }
 
+    protected function sendSms($message, $locations)
+    {
+        $url = config('app.sms_url').'/pvmbg/alert/pvmbg';
+
+        $messages = [
+            'user' => config('app.sms_user'),
+            'pwd' => config('app.sms_password'),
+            'sms' => $message,
+            'lokasi' => implode(',', $locations->toArray()),
+        ];
+
+        $client = new Client();
+        $request = $client->get($url,[
+                'query' => $messages
+            ]
+        );
+
+        $response = json_decode($request->getBody(), true);
+
+        return $response;
+    }
+
     protected function generateSms($request)
     {
         $gadd = Gadd::select('code','name', 'zonearea')
@@ -181,13 +206,132 @@ class MagmaVenController extends Controller
             ->where('code', $request->code)
             ->first();
 
+        switch ($request->status) {
+            case '1':
+                $status = 'Level I (Normal)';
+                break;
+            case '2':
+                $status = 'Level II (Waspada)';
+                break;
+            case '3':
+                $status = 'Level III (Siaga)';
+                break;
+            default:
+                $status = 'Level IV (Awas)';
+                break;
+        }
+
         $masking = config('app.sms_masking');
-        $messages = "Terjadi {$this->generateLetusan($request)} G. {$gadd->name} pada {$request->date}{$gadd->zonearea} {$masking}";
+        $message = "Terjadi {$this->generateLetusan($request)} G. {$gadd->name} - {$status} pada {$request->date}{$gadd->zonearea} {$masking}";
+        $locations = $gadd->sms_locations->pluck('kode_kabupaten');
+
+        return $this->sendSms($message, $locations);
 
         return [
-            'messages' => $messages,
-            'location' => $gadd->sms_locations->pluck('kode_kabupaten'),
+            'message' => $message,
+            'message_length' => strlen($message),
+            'message_encode' => urlencode($message),
+            'location' => $locations,
         ];
+    }
+
+    protected function datetimeUtc($datetime, $tz)
+    {
+        $datetime_utc = Carbon::createFromTimeString($datetime, $tz)->setTimezone('UTC');
+
+        return $datetime_utc;
+    }
+
+    protected function saveOldVen($request)
+    {
+        $datetime = Carbon::createFromTimeString($request->date);
+        $date = $datetime->format('Y-m-d');
+        $time = $datetime->format('H:i');
+
+        switch ($request->status) {
+            case '1':
+                $status = 'Level I (Normal)';
+                break;
+            case '2':
+                $status = 'Level II (Waspada)';
+                break;
+            case '3':
+                $status = 'Level III (Siaga)';
+                break;
+            default:
+                $status = 'Level IV (Awas)';
+                break;
+        }
+
+        $oldVen = OldVen::firstOrCreate([
+            'ga_code' => $request->code,
+            'erupt_tgl' => $date,
+            'erupt_jam' => $time,
+        ],[
+            'erupt_vis' => $request->visibility,
+            'erupt_tka' => $request->visibility ? $request->height : 0,
+            'erupt_wrn' => $request->visibility ? implode(', ', $request->warna_asap) : '-',
+            'erupt_int' => $request->visibility ? implode(', ', $request->intensitas) : '-',
+            'erupt_arh' => $request->visibility ? implode(', ', $request->arah_abu) : '-',
+            'erupt_amp' => $request->visibility ? $request->amplitudo : 0,
+            'erupt_drs' => $request->visibility ? $request->durasi : 0,
+            'erupt_pht' => $request->visibility ? '-' : '-',
+            'erupt_sta' => $status,
+            'erupt_rek' => VarRekomendasi::findOrFail($request->rekomendasi)->rekomendasi,
+            'erupt_ket' => $request->lainnya ?: '-',
+            'erupt_usr' => auth()->user()->nip,
+            'is_blasted' => $request->is_blasted,
+            'erupt_tsp' => now(),
+        ]);
+
+        return $oldVen;
+    }
+
+    protected function saveVen($request)
+    {
+        $gadd = Gadd::where('code', $request->code)->firstOrFail();
+
+        switch ($gadd->zonearea) {
+            case 'WIB':
+                $tz = 'Asia/Jakarta';
+                break;
+            case 'WITA':
+                $tz = 'Asia/Makassar';
+                break;
+            default:
+                $tz = 'Asia/Jayapura';
+                break;
+        }
+
+        $ven = MagmaVen::firstOrCreate([
+            'code_id' => $request->code,
+            'jenis' => $request->jenis,
+            'datetime_utc' => $this->datetimeUtc($request->date, $tz)->format('Y-m-d H:i:s'),
+        ],[
+            'timezone' => $tz,
+            'erupsi_berlangsung' => $request->erupsi_berlangsung,
+            'visibility' => $request->visibility,
+            'height' => $request->height ?? 0,
+            'warna_abu' => $request->warna_asap ?? null,
+            'intensitas' => $request->intensitas ?? null,
+            'arah_abu' => $request->arah_abu ?? null,
+            'amplitudo' => $request->amplitudo,
+            'durasi' => $request->durasi,
+            'seismometer_id' => $request->seismometer_id,
+            'status' => $request->status,
+            'distance' => $request->distance,
+            'arah_guguran' => $request->arah_guguran,
+            'foto_letusan' => null,
+            'thumbnail' => null,
+            'informasi_lainnya' => $request->lainnya ?? null,
+            'rekomendasi_id' => $request->rekomendasi,
+            'has_vona' => $request->draft,
+            'sms_blast' => $request->is_blasted,
+            'nip_pelapor' => auth()->user()->nip,
+            'published_at' => now(),
+        ]);
+
+        return $ven;
     }
 
     /**
@@ -198,25 +342,17 @@ class MagmaVenController extends Controller
      */
     public function store(LaporanLetusanRequest $request)
     {
+        $oldVen = $this->saveOldVen($request);
+        $urlOldVen = URL::signedRoute('v1.gunungapi.ven.show', $oldVen);
+
+        $ven = $this->saveVen($request);
+
         return [
             'request' => $request->toArray(),
             'sms' => $request->is_blasted ? $this->generateSms($request) : null,
+            'url_old_ven' => $urlOldVen,
             'vona' => null,
         ];
-        // $path = $request->file('foto')->
-
-        // return $path;
-        // return dd($request->file('foto')->path());
-        // $ven = new MagmaVen;
-        // $vona = new Vona;
-
-        // $saveVen = $request->visibility == '1'
-        //     ? $this->teramati($request,$ven)
-        //     : $this->tidakTeramati($request,$ven);
-
-        // $saveVona = $request->draft == '1' ? $this->draftVona($ven,$vona) : false ;
-
-        // $uuid = $saveVona != false ? $vona->uuid : '' ;
 
         // if ($saveVen){
         //     return redirect()->route('chambers.letusan.show',['uuid'=> $ven->uuid]);

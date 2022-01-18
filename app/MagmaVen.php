@@ -21,6 +21,7 @@ class MagmaVen extends Model
         'warna_abu' => 'array',
         'intensitas' => 'array',
         'arah_abu' => 'array',
+        'arah_guguran' => 'array',
     ];
 
     protected $dates = [

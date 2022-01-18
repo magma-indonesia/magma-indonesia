@@ -45,10 +45,7 @@ class LaporanLetusanRequest extends FormRequest
 
     protected function letusan()
     {
-        return [
-            'intensitas' => 'required_if:visibility,1|array',
-            'intensitas.*' => 'required_if:visibility,1|in:Tipis,Sedang,Tebal',
-        ];
+        return [];
     }
 
     protected function awanPanasGuguran()
@@ -77,6 +74,8 @@ class LaporanLetusanRequest extends FormRequest
             'height' => 'required_if:visibility,1|nullable|numeric|between:0,20000',
             'warna_asap' => 'required_if:visibility,1|array',
             'warna_asap.*' => 'required_if:visibility,1|in:Putih,Kelabu,Coklat,Hitam',
+            'intensitas' => 'required_if:visibility,1|array',
+            'intensitas.*' => 'required_if:visibility,1|in:Tipis,Sedang,Tebal',
             'arah_abu' => 'required_if:visibility,1|array',
             'arah_abu.*' => 'required_if:visibility,1|in:Utara,Timur Laut,Timur,Tenggara,Selatan,Barat Daya,Barat,Barat Laut',
             'amplitudo' => 'required|numeric|between:0,240',

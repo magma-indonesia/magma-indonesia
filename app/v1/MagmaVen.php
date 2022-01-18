@@ -13,31 +13,16 @@ class MagmaVen extends Model
     protected $primaryKey = 'erupt_id';
 
     protected $casts = [
+        'is_published' => 'boolean',
+        'is_blasted' => 'boolean',
         'erupt_tsp' => 'datetime:Y-m-d H:i:s'
     ];
 
     public $timestamps = false;
 
-    protected $fillable = [
-        'ga_code',
-        'erupt_tgl',
-        'erupt_jam',
-        'erupt_vis',
-        'erupt_tka',
-        'erupt_wrn',
-        'erupt_int',
-        'erupt_arh',
-        'erupt_amp',
-        'erupt_drs',
-        'erupt_pht',
-        'erupt_sta',
-        'erupt_rek',
-        'erupt_ket',
-        'erupt_usr',
-        'erupt_tsp'
+    protected $guarded = [
+        'erupt_id',
     ];
-
-    protected $guard = ['erupt_id'];
 
     /**
      * Merubah status dari string menjadi integer

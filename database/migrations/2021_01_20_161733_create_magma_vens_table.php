@@ -30,6 +30,8 @@ class CreateMagmaVensTable extends Migration
             $table->json('arah_abu')->nullable();
             $table->float('amplitudo', 6, 2)->default(0);
             $table->float('durasi', 8, 2)->default(0);
+            $table->integer('seismometer_id')->unsigned();
+            $table->foreign('seismometer_id')->references('id')->on('seismometers');
             $table->enum('status', ['1', '2', '3', '4']);
             $table->float('distance')->default(0.0);
             $table->json('arah_guguran')->nullable();
@@ -43,6 +45,7 @@ class CreateMagmaVensTable extends Migration
             $table->boolean('sms_blast')->default(0);
             $table->char('nip_pelapor', 18)->index();
             $table->foreign('nip_pelapor')->references('nip')->on('users');
+            $table->dateTimeTz('published_at')->nullable();
             $table->timestamps();
         });
     }

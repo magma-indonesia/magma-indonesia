@@ -180,7 +180,7 @@ Buat Informasi Letusan (VEN)
 
                                             {{-- Warna Abu --}}
                                             <div class="form-group col-sm-12">
-                                                <label>Warna Abu Letusan/Awan Panas Guguran</label>
+                                                <label>Warna abu</label>
 
                                                     <div class="row">
                                                         <div class="col-sm-3">
@@ -212,7 +212,7 @@ Buat Informasi Letusan (VEN)
                                             </div>
 
                                             {{-- Intensitas --}}
-                                            <div class="jenis-lts form-group col-sm-12" style="display: {{ old('jenis') == 'apg' ? 'none' :'apg'}};">
+                                            <div class="form-group col-sm-12">
                                                 <label>Intensitas</label>
                                                 <div class="row">
                                                     <div class="col-lg-12">
@@ -234,7 +234,7 @@ Buat Informasi Letusan (VEN)
 
                                             {{-- Arah Abu --}}
                                             <div class="form-group col-sm-12">
-                                                <label>Abu Mengarah ke</label>
+                                                <label>Abu di udara mengarah ke</label>
 
                                                 <div class="row">
                                                     <div class="col-sm-3">
@@ -278,7 +278,7 @@ Buat Informasi Letusan (VEN)
                                             </div>
 
                                             <div class="form-group col-sm-12">
-                                                <label>Upload Foto Letusan</label>
+                                                <label>Upload foto letusan</label>
 
                                                 <div class="form-group col-sm-12">
                                                     <div class="row">
@@ -323,7 +323,7 @@ Buat Informasi Letusan (VEN)
                                                 <label>Jarak Guguran</label>
 
                                                 <div class="input-group">
-                                                    <input placeholder="Maksimal 20,0000 meter" name="distance" class="form-control" type="numeric" value="{{ empty(old('distance')) ? '' : old('distance') }}">
+                                                    <input placeholder="Maksimal 20000 meter" name="distance" class="form-control" type="numeric" value="{{ empty(old('distance')) ? '' : old('distance') }}">
                                                     <span class="input-group-addon h-bg-red">meter, dari puncak</span>
                                                 </div>
                                                 @if( $errors->has('distance'))
@@ -333,7 +333,7 @@ Buat Informasi Letusan (VEN)
 
                                             {{-- Arah Guguran --}}
                                             <div class="form-group col-sm-12">
-                                                <label>Arah Guguran mengarah ke</label>
+                                                <label>Guguran mengarah ke</label>
 
                                                 <div class="row">
                                                     <div class="col-sm-3">
@@ -394,7 +394,7 @@ Buat Informasi Letusan (VEN)
                                     <div class="col-lg-8">
                                         {{-- Rekaman Seismik --}}
                                         <div class="form-group col-sm-12">
-                                            <label>Amplitudo Maksimum</label>
+                                            <label>Amplitudo Maksimum (max: 240mm)</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon" style="min-width: 100px;">Amplitudo</span>
                                                 <input id="amplitudo" name="amplitudo" class="form-control" type="text" value="{{ empty(old('amplitudo')) ? '' : old('amplitudo') }}">
@@ -412,7 +412,7 @@ Buat Informasi Letusan (VEN)
                                                 <input name="durasi" class="form-control" type="text" value="{{ empty(old('durasi')) ? '' : old('durasi') }}">
                                                 <span class="input-group-addon" style="min-width: 75px;">detik</span>
                                             </div>
-                                            <span class="help-block m-b-none">Jika <b>erupsi sedang berlangsung</b>, isi dengan waktu durasi saat pelaporan, tidak perlu menunggu kejadian erupsi selesai.</span>
+                                            <span class="help-block m-b-none">Jika <b>erupsi sedang berlangsung</b>, isi dengan waktu durasi saat pelaporan, <b>tidak perlu</b> menunggu kejadian erupsi selesai.</span>
                                             @if( $errors->has('durasi'))
                                             <label class="error" for="durasi">{{ ucfirst($errors->first('durasi')) }}</label>
                                             @endif
@@ -432,7 +432,7 @@ Buat Informasi Letusan (VEN)
                                                 </select><span class="input-group-btn">
                                                     <button id="load-seismometer" type="button" class="btn btn-primary">Load</button></span>
                                             </div>
-
+                                            <span class="help-block m-b-none">Pilih stasiun seismik yang digunakan dalam pelaporan. Jika tidak ada, bisa ditambahkan menggunakan tombol <b>Tambah Seismometer</b> di bawah</span>
                                             <a href="{{ route('chambers.seismometer.create') }}" class="btn btn-info m-t-md" target="_blank">Tambah Seismometer</a>
                                             @if( $errors->has('seismometer_id'))
                                             <label class="error" for="seismometer_id">{{ ucfirst($errors->first('seismometer_id')) }}</label>

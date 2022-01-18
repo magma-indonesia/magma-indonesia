@@ -22,6 +22,11 @@ return [
     'winston_host' => env('WINSTON_HOST', '172.16.2.253'),
     'winston_port' => env('WINSTON_PORT', 16035),
 
+    'sms_url' => env('SMS_URL', 'localhost'),
+    'sms_user' => env('SMS_USER', 'user'),
+    'sms_password' => env('SMS_PASSWORD', 'password'),
+    'sms_masking' => env('SMS_MASKING', '::PVMBGKMINFO'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
