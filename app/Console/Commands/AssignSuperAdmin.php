@@ -65,6 +65,7 @@ class AssignSuperAdmin extends Command
             '198102182006041001',
             '198706202009011002',
             '198602082009121002',
+            '197403272002121001',
         ]);
 
         Role::where('name','Super Admin')->exists()
