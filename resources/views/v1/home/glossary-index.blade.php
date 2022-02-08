@@ -51,6 +51,9 @@ Glossary
                         <div>
                             {!! $glossary->deskripsi !!}
                         </div>
+                        <div>
+                            <small class="tx-light tx-source">{{  $glossary->reference  }}</small>
+                        </div>
                         @if ($glossary->glossary_files->isNotEmpty())
                         <div class="bd pd-10 mg-b-10">
                             @foreach ($glossary->glossary_files as $index => $file)
