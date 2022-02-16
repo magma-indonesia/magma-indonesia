@@ -35,15 +35,7 @@ return [
 
     'connections' => [
 
-        'sqlite' => [
-            'driver' => 'sqlite',
-            'url' => env('DATABASE_URL'),
-            'database' => env('DB_DATABASE', database_path('database.sqlite')),
-            'prefix' => '',
-            'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
-        ],
-
-        'mysql' => [
+        'magma' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
@@ -63,32 +55,30 @@ return [
             ]) : [],
         ],
 
-        'pgsql' => [
-            'driver' => 'pgsql',
-            'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+        'magma_v1' => [
+            'driver' => 'mysql',
+            'host' => env('MAGMA_V1_PRIVATE_IP', 'forge'),
+            'port' => env('MAGMA_V1_PORT', 'forge'),
+            'database' => env('MAGMA_V1_DATABASE', 'forge'),
+            'username' => env('MAGMA_V1_USERNAME', 'forge'),
+            'password' => env('MAGMA_V1_PASSWORD', 'forge'),
             'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
             'prefix' => '',
-            'prefix_indexes' => true,
-            'search_path' => 'public',
-            'sslmode' => 'prefer',
+            'strict' => false
         ],
 
-        'sqlsrv' => [
-            'driver' => 'sqlsrv',
-            'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', 'localhost'),
-            'port' => env('DB_PORT', '1433'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
-            'charset' => 'utf8',
+        'wovodat' => [
+            'driver' => 'mysql',
+            'host' => env('WOVO_HOST', 'forge'),
+            'port' => env('WOVO_PORT', 'forge'),
+            'database' => env('WOVO_DATABASE', 'forge'),
+            'username' => env('WOVO_USERNAME', 'forge'),
+            'password' => env('WOVO_PASSWORD', 'forge'),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
-            'prefix_indexes' => true,
+            'strict' => false
         ],
 
     ],

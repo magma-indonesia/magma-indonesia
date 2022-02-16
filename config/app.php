@@ -15,7 +15,8 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'MAGMA Indonesia'),
+    'tag_line' => env('APP_TAG_LINE', 'Bridging The Will of Nature to Society'),
 
     /*
     |--------------------------------------------------------------------------

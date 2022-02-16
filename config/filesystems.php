@@ -42,15 +42,12 @@ return [
             'visibility' => 'public',
         ],
 
-        's3' => [
-            'driver' => 's3',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => env('AWS_DEFAULT_REGION'),
-            'bucket' => env('AWS_BUCKET'),
-            'url' => env('AWS_URL'),
-            'endpoint' => env('AWS_ENDPOINT'),
-            'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
+        'magma_v1' => [
+            'driver' => 'sftp',
+            'host' => env('MAGMA_V1_FTP_HOST', 'forge'),
+            'username' => env('MAGMA_V1_FTP_USERNAME', 'forge'),
+            'password' => env('MAGMA_V1_FTP_PASSWORD', 'forge'),
+            'root' => env('MAGMA_V1_FTP_ROOT', 'forge')
         ],
 
     ],
