@@ -33,7 +33,7 @@ Kamera Gunung Api
     <div class="col-12">
         <div class="card pd-30 mg-b-20">
             <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/aGA5fbir_4Q" title="PVMBG - CCTV"
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/Ts4bUfsdBEA" title="PVMBG - CCTV"
                     frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
             </div>
