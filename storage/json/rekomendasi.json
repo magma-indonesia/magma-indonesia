@@ -1,0 +1,890 @@
+[
+   {
+      "code": "AGU",
+      "gunung_api": "Agung",
+      "status": "1",
+      "rekomendasi": "Masyarakat di sekitar G. Agung dan pendaki/pengunjung/wisatawan direkomendasikan agar membatasi aktivitas di area kawah puncak G. Agung.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "AGU",
+      "gunung_api": "Agung",
+      "status": "1",
+      "rekomendasi": "Masyarakat yang bermukim dan beraktivitas di sekitar aliran-aliran sungai yang berhulu di G. Agung agar mewaspadai potensi ancaman bahaya sekunder berupa aliran lahar hujan yang dapat terjadi terutama pada musim hujan dan jika material erupsi masih terpapar di area puncak. Area potensi landaan aliran lahar hujan mengikuti aliran-aliran sungai yang berhulu di G. Agung.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "AMB",
+      "gunung_api": "Ambang",
+      "status": "1",
+      "rekomendasi": "Masyarakat disekitar G. Ambang dan pengunjung /wisatawan membatasi aktivitas (tidak berlama - lama dan tidak bermalam di area kawah aktif),serta tidak mendekati lubang hembusan gas yang berada di sekitar kawah untuk menghindari potensi bahaya gas beracun.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "KRA",
+      "gunung_api": "Anak Krakatau",
+      "status": "2",
+      "rekomendasi": "Masyarakat/wisatawan tidak diperbolehkan mendekati kawah dalam radius 2 km dari kawah",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "RAN",
+      "gunung_api": "Anak Ranakah",
+      "status": "1",
+      "rekomendasi": "Masyarakat di sekitar G. Anak Ranakah maupun pengunjung wisatawan/pendaki agar tidak beraktivitas didalam area kawah aktif, serta tidak mendekati lubang tembusan gas yang berada disekitar kawah untuk menghindari potensi gas beracun dan juga membatasi aktivitas (tidak berlama-lama) disekitar area kawah.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "WEL",
+      "gunung_api": "Arjuno Welirang",
+      "status": "1",
+      "rekomendasi": "Penduduk/ masyarakat di sekitar G. ArjunoWelirang dan pengunjung / wisatawan/ pendaki dilarang memasuki areal kawah aktif G. ArjunoWelirang .",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "AWU",
+      "gunung_api": "Awu",
+      "status": "2",
+      "rekomendasi": "Masyarakat dan pengunjung/wisatawan agar tidak mendekati dan beraktivitas di dalam radius 1 kilometer dari kawah puncak G. Awu.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "BAN",
+      "gunung_api": "Banda Api",
+      "status": "2",
+      "rekomendasi": "Masyarakat di sekitar G. Banda Api dan pengunjung/wisatawan agar tidak beraktivitas di dalam radius 1 km dari kawah G. Banda Api.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "BAT",
+      "gunung_api": "Batur",
+      "status": "1",
+      "rekomendasi": "Masyarakat di sekitar G. Batur dan pengunjung/wisatawan agar membatasi aktivitas (tidak berlama-lama) dan tidak bermalam di area kawah aktif, serta tidak mendekati lubang tembusan gas yang berada di sekitar kawah untuk menghindari potensi bahaya gas beracun",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "TAR",
+      "gunung_api": "Batutara",
+      "status": "1",
+      "rekomendasi": "Masyarakat dan pengunjung/wisatawan agar tidak mengunjungi/memasuki Pulau Batutara.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "BRO",
+      "gunung_api": "Bromo",
+      "status": "2",
+      "rekomendasi": "Masyarakat di sekitar G. Bromo dan pengunjung/wisatawan/ pendaki tidak memasuki kawasan dalam radius 1 km dari kawah aktif G. Bromo.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "BRO",
+      "gunung_api": "Bromo",
+      "status": "2",
+      "rekomendasi": "Masyarakat di sekitar G. Bromo, pedagang, wisatawan, pendaki, dan pengelola wisata G. Bromo agar mewaspadai terjadinya letusan freatik yang bersifat tiba - tiba dan tanpa didahului oleh gejala-gejala vulkanik yang jelas.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "TEL",
+      "gunung_api": "Bur Ni Telong",
+      "status": "1",
+      "rekomendasi": "Masyarakat dan pengunjung/pendaki Gunung Api Bur Ni Telong tidak diperbolehkan berada di daerah fumarola dan solfatara pada saat cuaca mendung atau hujan karena konsentrasi gas dapat membahayakan kehidupan.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "CER",
+      "gunung_api": "Ciremai",
+      "status": "1",
+      "rekomendasi": "Masyarakat dan pengunjung/wisatawan tidak diperbolehkan turun ke dasar kawah dan dalam kondisi mendung/hujan agar tidak mendekat ke kawah.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "COL",
+      "gunung_api": "Colo",
+      "status": "1",
+      "rekomendasi": "Masyarakat di sekitar G. Colo dan pengunjung/wisatawan agar membatasi aktivitas (tidak berlama-lama) dan tidak bermalam di area kawah aktif, serta tidak mendekati lubang tembusan gas yang berada di sekitar kawah untuk menghindari potensi bahaya gas beracun.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "DEM",
+      "gunung_api": "Dempo",
+      "status": "2",
+      "rekomendasi": "Agar masyarakat, pengunjung/wisatawan tidak mendekati dan bermalam (camping) di pusat aktivitas kawah Marapi - G. Dempo dalam radius 1 km, mengingat kawah sebagai pusat letusan dan gas-gas vulkanik yang dapat membahayakan bagi kehidupan.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "DIE",
+      "gunung_api": "Dieng",
+      "status": "1",
+      "rekomendasi": "Masyarakat dan wisatawan tidak mendekati Kawah Sileri pada jarak 500 meter dari bibir Kawah.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "DIE",
+      "gunung_api": "Dieng",
+      "status": "1",
+      "rekomendasi": "Masyarakat tidak melakukan aktivitas di Kawah Timbang, karena adanya ancaman bahaya gas CO2 dan H2S yang berbahaya bagi kehidupan.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "DIE",
+      "gunung_api": "Dieng",
+      "status": "1",
+      "rekomendasi": "Masyarakat agar Waspada jika melakukan penggalian tanah di sekitar Kawah Timbang dengan kedalaman lebih dari 1 (satu) meter karena dapat berpotensi terancam bahaya gas CO2 dan H2S.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "DIE",
+      "gunung_api": "Dieng",
+      "status": "1",
+      "rekomendasi": "Masyarakat agar tidak mendekati dan tidak beraktivitas di sekitar Kawah Siglagah paska semburan lumpur",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "DIE",
+      "gunung_api": "Dieng",
+      "status": "1",
+      "rekomendasi": "Masyarakat agar tetap tenang tidak terpancing isu-isu terkait dengan aktivitas Gunungapi Dieng dan agar selalu mengikuti arahan dari Badan Penanggulangan Bencana Daerah (BPBD) Provinsi Jawa Tengah.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "DIE",
+      "gunung_api": "Dieng",
+      "status": "1",
+      "rekomendasi": "Pemerintah Provinsi Jawa Tengah dan BPBD Kab. Banjarnegara, BPBD Kab. Wonosobo, serta BPBD Kab. Batang agar selalu berkoordinasi dengan Pusat Vulkanologi dan Mitigasi Bencana Geologi atau melalui Pos Pengamatan Gunungapi Dieng di Desa Karangtengah, Kecamatan Batur, Kabupaten Banjarnegara, Telp. 081215015284, tentang aktivitas Gunungapi Dieng.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "DUK",
+      "gunung_api": "Dukono",
+      "status": "2",
+      "rekomendasi": "Masyarakat di sekitar G. Dukono dan pengunjung/wisatawan agar tidak beraktivitas, mendaki, dan mendekati Kawah Malupang Warirang di dalam radius 2 km.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "DUK",
+      "gunung_api": "Dukono",
+      "status": "2",
+      "rekomendasi": "Mengingat letusan dengan abu vulkanik secara periodik terjadi dan sebaran abu mengikuti arah dan kecepatan angin, sehingga area landaan abunya tidak tetap, maka direkomendasikan agar masyarakat di sekitar G. Dukono untuk selalu menyediakan masker/penutup hidung dan mulut untuk digunakan pada saat dibutuhkan guna menghindari ancaman bahaya abu vulkanik pada sistem pernafasan.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "EBU",
+      "gunung_api": "Ebulobo",
+      "status": "1",
+      "rekomendasi": "Masyarakat di sekitar G. Ebulobo dan pengunjung/wisatawan agar membatasi aktivitas (tidak berlama-lama) dan tidak bermalam di area kawah aktif di Utara puncak, serta tidak mendekati lubang tembusan gas yang berada di sekitar kawah untuk menghindari potensi bahaya gas beracun.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "EGO",
+      "gunung_api": "Egon",
+      "status": "1",
+      "rekomendasi": "Masyarakat di sekitar G. Egon dan pengunjung/wisatawan dapat beraktivitas seperti biasanya namun disarankan agar membatasi aktivitas (tidak berlama-lama) dan tidak bermalam di area kawah aktif, serta tidak mendekati lubang tembusan gas yang berada di sekitar area kawah untuk menghindari potensi bahaya yang mungkin terjadi, seperti di antaranya gas beracun.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "GAL",
+      "gunung_api": "Galunggung",
+      "status": "1",
+      "rekomendasi": "Masyarakat/pengunjung/wisatawan/pendaki tidak diperbolehkan untuk bermalam dan tidak turun ke dalam danau kawah pada saat mendung dan hujan",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "GAL",
+      "gunung_api": "Galunggung",
+      "status": "1",
+      "rekomendasi": "Masyarakat/pengunjung tidak diperbolehkan berenang dan mengkonsumsi air danau kawah dikarenakan dapat menimbulkan keluhan atau gangguan kesehatan",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "GML",
+      "gunung_api": "Gamalama",
+      "status": "2",
+      "rekomendasi": "Masyarakat di sekitar G. Gamalama dan pengunjung/wisatawan agar tidak beraktivitas di dalam radius 1.5 km dari kawah puncak G.Gamalama",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "GML",
+      "gunung_api": "Gamalama",
+      "status": "2",
+      "rekomendasi": "Pada musim hujan, masyarakat yang tinggal di sekitar aliran sungai yang berhulu di G. Gamalama agar mewaspadai potensi ancaman bahaya sekunder berupa aliran lahar.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "GMK",
+      "gunung_api": "Gamkonora",
+      "status": "2",
+      "rekomendasi": "Masyarakat di sekitar G.Gamkonora dan pengunjung/wisatawan agar tidak beraktivitas didalam radius 1,5 km dari kawah puncak.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "GED",
+      "gunung_api": "Gede",
+      "status": "1",
+      "rekomendasi": "Masyarakat, pengunjung dan wisatawan tidak diperbolehkan turun ke dasar kawah dan dalam kondisi mendung atau hujan agar tidak mendekat ke kawah.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "GUN",
+      "gunung_api": "Guntur",
+      "status": "1",
+      "rekomendasi": "Masyarakat dan pengunjung/ wisatawan/ pendaki dihimbau untuk tidak mendekati kawah aktif Gunungapi Guntur",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "IBU",
+      "gunung_api": "Ibu",
+      "status": "2",
+      "rekomendasi": "Masyarakat di sekitar G. Ibu dan pengunjung/ wisatawan agar tidak beraktivitas di dalam radius 2,0 km dan perluasan sektoral berjarak 3,5 km ke arah bukaan kawah di bagian utara dari kawah aktif G. Ibu.\nJika terjadi hujan abu, masyarakat yang beraktivitas diluar rumah disarankan untuk menggunakan pelindung hidung, mulut (masker) dan mata (kacamata).",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "IJE",
+      "gunung_api": "Ijen",
+      "status": "1",
+      "rekomendasi": "Masyarakat disekitar G. Ijen dan pengunjung/wisatawan/penambang agar tidak mendekati bibir kawah maupun turun dan mendekati dasar kawah yang ada di puncak G. Ijen serta tidak boleh menginap dalam kawasan G. Ijen dalam radius 500 m dari kawah.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "WER",
+      "gunung_api": "Ile Werung",
+      "status": "2",
+      "rekomendasi": "Masyarakat direkomendasikan untuk sementara waktu agar menghindar aktivitas di sekitar pantai di area lokasi bualan dan menghindar berlayar/melaut di sekitar area tersebut untuk mengantisipasi potensi perubahan /kenaikan muka air laut. PVMBG terus melakukan pemantauan dan evaluasi aktifits kompleks Giunungapi ili Werung dan melakukan koorsinasi dengan BPBD setempat untuk melakukan sosialisasi.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "BOL",
+      "gunung_api": "Ili Boleng",
+      "status": "1",
+      "rekomendasi": "Masyarakat di sekitar Gunungapi Ile Boleng dan pengunjung atau wisatawan agar jangan beraktivitas atau berlama-lama di dalam kawah dan jangan mendekati lubang tembusan gas untuk menghindari gas beracun.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "LEW",
+      "gunung_api": "Ili Lewotolok",
+      "status": "3",
+      "rekomendasi": "Masyarakat di sekitar G. Ili Lewotolok maupun pengunjung/pendaki/wisatawan direkomendasikan agar tidak melakukan aktivitas di dalam radius 3 km dari puncak/kawah G. Ili Lewotolok. Masyarakat Desa Jontona agar selalu mewaspadai potensi ancaman bahaya longsoran material lapuk yang dapat disertai oleh awan panas dari bagian tenggara puncak/kawah G. Ili Lewotolok.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "LEW",
+      "gunung_api": "Ili Lewotolok",
+      "status": "3",
+      "rekomendasi": "Mengingat potensi bahaya abu vulkanik yang dapat mengakibatkan gangguan pernapasan (ISPA) maupun gangguan kesehatan lainnya maka masyarakat yang berada disekitar G. Ili Lewotolok agar menyiapkan masker penutup hidung dan mulut maupun perlengkapan lain untuk melindungi mata dan kulit.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "LEW",
+      "gunung_api": "Ili Lewotolok",
+      "status": "3",
+      "rekomendasi": "Mengingat abu vulkanik hingga saat ini jatuh di beberapa sektor di sekeliling G. Ili Lewotolok maka masyarakat yang bermukim di sekitar aliran sungai-sungai yang berhulu di puncak G. Ili Lewotolok agar mewaspadai ancaman lahar terutama disaat musim hujan.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "LEW",
+      "gunung_api": "Ili Lewotolok",
+      "status": "3",
+      "rekomendasi": "Seluruh masyarakat maupun instansi terkait lainnya dapat memantau perkembangan status maupun rekomendasi G. Ili Lewotolok setiap saat melalui aplikasi MAGMA Indonesia yang dapat diunduh di Google Play. Para pemangku kepentingan di sektor penerbangan dapat mengakses fitur VONA (Volcano Observatory Notice for Aviation).",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "LEW",
+      "gunung_api": "Ili Lewotolok",
+      "status": "3",
+      "rekomendasi": "Seluruh pihak agar menjaga kondusivitas suasana di Pulau Lembata, tidak menyebarkan narasi bohong (hoax) dan tidak terpancing isu-isu tentang erupsi G. Ili Lewotolok yang tidak jelas sumbernya.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "LEW",
+      "gunung_api": "Ili Lewotolok",
+      "status": "3",
+      "rekomendasi": "Pemerintah Daerah, BPBD Provinsi dan Kabupaten agar senantiasa berkoordinasi dengan Pos PGA Ili Lewotolok di Desa Laranwutun, Kecamatan Ile Ape atau Pusat Vulkanologi dan Mitigasi Bencana Geologi di Bandung.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "LIK",
+      "gunung_api": "Inielika",
+      "status": "1",
+      "rekomendasi": "Masyarakat di sekitar G. Inielika dan pengunjung/wisatawan agar tidak beraktivitas di dalam area kawah aktif, tidak mendekati lubang tembusan gas yang berada di sekitar kawah, serta membatasi aktivitas (tidak berlama-lama berada) di sekitar area kawah aktif",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "RIE",
+      "gunung_api": "Inierie",
+      "status": "1",
+      "rekomendasi": "Masyarakat di sekitar G. Inierie dan pengunjung/wisatawan agar membatasi aktivitas (tidak berlama-lama) dan tidak bermalam di area kawah aktif, serta tidak mendekati lubang tembusan gas yang berada di sekitar kawah untuk menghindari potensi bahaya gas beracun.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "IYA",
+      "gunung_api": "Iya",
+      "status": "1",
+      "rekomendasi": "Masyarakat di sekitar G. Iya dan pengunjung/wisatawan agar membatasi aktivitas (tidak berlama-lama) dan tidak bermalam di area kawah aktif, serta tidak mendekati lubang tembusan gas yang berada di sekitar kawah untuk menghindari potensi bahaya gas beracun.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "KAB",
+      "gunung_api": "Kaba",
+      "status": "1",
+      "rekomendasi": "Pengunjung / wisatawan dihimbau agar tidak mendekati danau kawah /pusat aktivitas gunung api Kaba, karena cuaca mendung/tidak ada sinarnya matahari dan tidak ada angin bisa terjadi secara tiba-tiba, sehingga gas beracun yang keluar dari perut bumi tidak terurai/terkonsentrasi di permukaan kawah dapat membahayakan kehidupan.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "KAR",
+      "gunung_api": "Karangetang",
+      "status": "2",
+      "rekomendasi": "Masyarakat dan pengunjung/wisatawan agar tidak mendekati, tidak melakukan pendakian dan tidak beraktivitas di dalam zona prakiraan bahaya yaitu radius 1.5 km dari puncak Kawah Dua (Kawah Utara) dan Kawah Utama (selatan) serta area perluasan sektoral ke arah Barat sejauh 2.5 km serta sepanjang kali Malebuhe.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "KAR",
+      "gunung_api": "Karangetang",
+      "status": "2",
+      "rekomendasi": "Mewaspadai guguran lava dan awan panas guguran yang dapat terjadi sewaktu-waktu dari penumpukan material lava sebelumnya karena kondisinya belum stabil dan mudah runtuh, terutama kesektor selatan, tenggara, barat dan barat daya.\r",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "KAR",
+      "gunung_api": "Karangetang",
+      "status": "2",
+      "rekomendasi": "Masyarakat yang tinggal di sekitar bantaran sungai-sungai yang berhulu dari puncak G. Karangetang agar meningkatkan kesiapsiagaan dari potensi ancaman lahar hujan dan banjir bandang yang dapat mengalir hingga ke pantai.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "KLM",
+      "gunung_api": "Kelimutu",
+      "status": "1",
+      "rekomendasi": "Masyarakat di sekitar G. Kelimutu dan pengunjung/wisatawan agar membatasi aktivitas di sekitar area kawah dengan tidak melewati pagar pembatas, tidak mendekati kawah danau, dan tidak bermalam di dalam kawah untuk menghindari potensi bahaya gas beracun.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "KLD",
+      "gunung_api": "Kelud",
+      "status": "1",
+      "rekomendasi": "Masyarakat dan wisatawan untuk tidak memasuki/mendekat kawasan kawah aktif Gunungapi Kelud karena bisa terjadi aktivitas vulkanik tiba-tiba yang dapat mengancam keselamatan.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "KER",
+      "gunung_api": "Kerinci",
+      "status": "2",
+      "rekomendasi": "Masyarakat disekitar gunungapi kerinci dan pengunjung/wisatawan tidak diperbolehkan mendaki kawah yang ada dipuncak gunungapi kerinci didalam radius 3 km dari kawah aktif (masyarakat dilarang beraktivitas didalam radius bahaya/KRB III).",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "KER",
+      "gunung_api": "Kerinci",
+      "status": "2",
+      "rekomendasi": "Sebaiknya jalur penerbangan disekitar gunungapi kerinci dihindari karena sewaktu-waktu masih memiliki potensi letusan abu dengan ketinggian yang dapat mengganggu jalur penerbangan.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "LER",
+      "gunung_api": "Lereboleng",
+      "status": "1",
+      "rekomendasi": "Masyarakat disekitar gunungapi Lereboleng dan pengunjung / wisatawan agar jangan beraktivitas atau berlama - lama di dalam kawah dan jangan mendekati lubang tembusan gas untuk menghindari bahaya gas beracun",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "LWK",
+      "gunung_api": "Lewotobi Laki-laki",
+      "status": "1",
+      "rekomendasi": "Masyarakat di sekitar G. Lewotobi Laki-laki dan pengunjung/wisatawan agar membatasi aktivitas (tidak berlama-lama) dan tidak bermalam di area kawah aktif, serta tidak mendekati lubang tembusan gas yang berada di sekitar kawah untuk menghindari potensi bahaya gas beracun.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "LWP",
+      "gunung_api": "Lewotobi Perempuan",
+      "status": "1",
+      "rekomendasi": "Masyarakat disekitar G. Lewotobi Perempuan dan pengunjung, agar membatasi aktivitas( tidak berlama lama) dan tidak bermalam di area kawah aktif,serta tidak mendekati lubang tembusan gas yang berada disekitar kawah untuk menghindari potensi bahaya gas beracun.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "LOK",
+      "gunung_api": "Lokon",
+      "status": "2",
+      "rekomendasi": "Masyarakat dan wisatawan untuk tidak mendekati dan melakukan aktivitas di dalam radius 1.5 km dari Kawah Tompaluan (Pusat Aktivitas)",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "LOK",
+      "gunung_api": "Lokon",
+      "status": "2",
+      "rekomendasi": "Jika terjadi letusan & hujan abu, masyarakat di himbau untuk tetap berada di dalam rumah, dan apabila berada di luar rumah disarankan untuk menggunakan pelindung hidung, mulut (masker) dan mata (kacamata).",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "LOK",
+      "gunung_api": "Lokon",
+      "status": "2",
+      "rekomendasi": "Mewaspadai potensi lahar pada sungai-sungai yang berhulu dari puncak G. Lokon terutama pada musim hujan.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "MAH",
+      "gunung_api": "Mahawu",
+      "status": "1",
+      "rekomendasi": "Masyarakat di sekitar G. Mahawu dan pengunjung/wisatawan agar membatasi aktivitas (tidak berlama-lama) dan tidak bermalam di area kawah aktif, serta tidak mendekati lubang hembusan gas yang berada di sekitar kawah untuk menghindari potensi bahaya gas beracun.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "MAR",
+      "gunung_api": "Marapi",
+      "status": "2",
+      "rekomendasi": "Masyarakat disekitar Gunungapi Marapi dan pengunjung/wisatawan tidak diperbolehkan mendaki Gunungapi Marapi pada radius 3Km dari kawah/puncak.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "MER",
+      "gunung_api": "Merapi",
+      "status": "3",
+      "rekomendasi": "Potensi bahaya saat ini berupa guguran lava dan awanpanas pada sektor selatan-barat daya meliputi Sungai Boyong sejauh maksimal 5 km, Sungai Bedog, Krasak, Bebeng sejauh maksimal 7 km. Pada sektor tenggara meliputi Sungai Woro sejauh maksimal 3 km dan Sungai Gendol 5 km. Sedangkan lontaran material vulkanik bila terjadi letusan eksplosif dapat menjangkau radius 3 km dari puncak.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "MER",
+      "gunung_api": "Merapi",
+      "status": "3",
+      "rekomendasi": "Masyarakat agar tidak melakukan kegiatan apapun di daerah potensi bahaya.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "MER",
+      "gunung_api": "Merapi",
+      "status": "3",
+      "rekomendasi": "Masyarakat agar mengantisipasi gangguan akibat abu vulkanik dari erupsi Gunung Merapi serta mewaspadai bahaya lahar terutama saat terjadi hujan di seputar G. Merapi.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "MER",
+      "gunung_api": "Merapi",
+      "status": "3",
+      "rekomendasi": "Penambangan di alur sungai yang berhulu di Gunung Merapi dalam KRB III direkomendasikan untuk dihentikan.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "MER",
+      "gunung_api": "Merapi",
+      "status": "3",
+      "rekomendasi": "Pelaku wisata direkomendasikan tidak melakukan kegiatan pada daerah potensi bahaya dan bukaan kawah sejauh 5 km dari puncak Gunung Merapi.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "MER",
+      "gunung_api": "Merapi",
+      "status": "3",
+      "rekomendasi": "Jika terjadi perubahan aktivitas yang signifikan, maka status aktivitas Gunung Merapi akan segera ditinjau kembali.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "PAP",
+      "gunung_api": "Papandayan",
+      "status": "1",
+      "rekomendasi": "Masyarakat di sekitar G. Papandayan dan pengunjung, wisatawan, pendaki tidak diperbolehkan beraktivitas dan menginap dalam kawasan bukaan kawah aktif yang ada di dalam kompleks G. Papandayan yaitu : Kawah Baru, Kawah Emas, Kawah Nangklak, Kawah Manuk/Balagadama dalam radius 500 meter, serta ketika cuaca mendung dan hujan.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "PAP",
+      "gunung_api": "Papandayan",
+      "status": "1",
+      "rekomendasi": "Masyarakat di sekitar G. Papandayan, pedagang, wisatawan, pendaki, dan pengelola wisata G. Papandayan agar mewaspadai terjadinya letusan freatik yang bersifat tiba-tiba dan tanpa didahului oleh gejala-gejala vulkanik yang jelas.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "PEU",
+      "gunung_api": "Peut Sague",
+      "status": "1",
+      "rekomendasi": "Masyarakat/pendaki G. Peut Sague tidak diperbolehkan memasuki area kawah aktif dan tidak diperbolehkan bermalam disekitar kawah.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "RAU",
+      "gunung_api": "Raung",
+      "status": "1",
+      "rekomendasi": "Agar Masyarakat dan pengunjung/wisatawan tidak turun ke dasar kawah atau mendekati kawah yang ada di puncak serta tidak berkemah di sekitar puncak/bibir kaldera/kawah Gn. Raung untuk menghindari potensi bahaya gas-gas vulkanik yang dapat membahayakan jiwa manusia.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "RIN",
+      "gunung_api": "Rinjani",
+      "status": "2",
+      "rekomendasi": "Masyarakat di sekitar G. Rinjani dan pendaki/pengunjung/wisatawan agar tidak beraktivitas/berkemah di dalam area tubuh G. Barujari termasuk di area lava baru dan seluruh area di dalam radius 1,5 km dari kawah G. Barujari.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "RIN",
+      "gunung_api": "Rinjani",
+      "status": "2",
+      "rekomendasi": "Pendakian diperbolehkan kecuali di seluruh bagian tubuh G. Barujari (lihat poin 1), karena material lava letusan masih bertemperatur tinggi dan tidak stabil sehingga rawan untuk terjadi rockfall/longsoran batu.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "RIN",
+      "gunung_api": "Rinjani",
+      "status": "2",
+      "rekomendasi": "Meskipun tidak dapat dipastikan, namun potensi letusan G. Rinjani masih ada. Oleh karena itu pendaki/pengunjung/wisatawan yang beraktivitas di luar radius 1,5 km dari G. Barujari maupun masyarakat di sekitar G. Rinjani diharapkan untuk selalu menyiapkan masker, penutup hidung dan mulut serta pelindung mata agar terhindar dari infeksi saluran pernapasan akut (ISPA) dan iritasi mata jika terjadi letusan abu.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "RIN",
+      "gunung_api": "Rinjani",
+      "status": "2",
+      "rekomendasi": "Masyarakat di sekitar G. Rinjani diharap untuk tetap tenang namun tetap menjaga kewaspadaan, tidak terpancing isu-isu tentang erupsi G. Rinjani yang tidak jelas sumbernya.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "ROK",
+      "gunung_api": "Rokatenda",
+      "status": "1",
+      "rekomendasi": "Masyarakat disekitar G. Rokatenda dan wisatawan dihimbau agar tidak melakukan kegiatan di sekitar kawah G . Rokatenda untuk menghindari ancaman gas beracun maupun disekitar lembah/sungai yang berhulu di G. Rokatenda untuk menghindari banjir lahar akibat hujan.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "ROK",
+      "gunung_api": "Rokatenda",
+      "status": "1",
+      "rekomendasi": "Masyarakat agar senantiasa mengikuti arahan pemerintah daerah setempat serta tidak mempercayai isu-isu mengenai aktivitas G. Rokatenda yang tidak jelas sumbernya.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "ROK",
+      "gunung_api": "Rokatenda",
+      "status": "1",
+      "rekomendasi": "Pusat Vulkanologi dan Mitigasi Bencana Geologi, Badan Geologi akan selalu berkoordinasi dengan BNPB, pemerintah setempat, BPBD provinsi Nusa Tenggara Timur dan BPBD Kab Sikka dalam memberikan informasi tentang aktivitas G. Rokatenda.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "ROK",
+      "gunung_api": "Rokatenda",
+      "status": "1",
+      "rekomendasi": "Masyarakat maupun BNPB, BPBD, provinsi Nusa Tenggara Timur, BPBD Kab Sikka dan instansi terkait lainnya dapat memantau perkembangan tingkat aktivitas maupun rekomendasi G. Rokatenda setiap saat melalui Magma Indonesia yang dapat diakses melalui website https://magma.esdm.go.id atau apps di Android Magma Indonesia yang dapat diunduh di Google Play Store.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "RUA",
+      "gunung_api": "Ruang",
+      "status": "1",
+      "rekomendasi": "Masyarakat di sekitar G.Ruang dan pengunjung/wisatawan agar membatasi aktivitas (tidak berlama-lama) dan tidak bermalam di daerah kawah aktif, serta tidak mendekati lubang tembusan gas yang berada di sekitar kawah untuk menghindari potensi bahaya gas beracun",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "SAL",
+      "gunung_api": "Salak",
+      "status": "1",
+      "rekomendasi": "Masyarakat disekitaran Gunungapi Salak dan para pengunjung/wisatawan, tidak diperbolehkan mendekati Kawah (Kawah Ratu, Kawah Hirup, Kawah Paeh), apalagi di musim hujan.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "SAN",
+      "gunung_api": "Sangeangapi",
+      "status": "2",
+      "rekomendasi": "Masyarakat di sekitar G. Sangeangapi dan pengunjung/wisatawan agar tidak beraktivitas di dalam radius 1.5 km dari kawah G. Sangeangapi.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "SAN",
+      "gunung_api": "Sangeangapi",
+      "status": "2",
+      "rekomendasi": "Masyarakat di sekitar G. Sangeangapi dan pengunjung/wisatawan agar mewaspadai bahaya aliran piroklastik serta tidak diperbolehkan mendekati dan beraktivitas di daerah di antara Lembah Sori Wala dan Sori Mantau hingga mencapai pantai, serta pada Lembah Sori Boro dan Sori Oi.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "SAN",
+      "gunung_api": "Sangeangapi",
+      "status": "2",
+      "rekomendasi": "Masyarakat, petani, pengunjung/wisatawan tidak diperbolehkan mendekati dan beraktivitas pada semua lembah sungai yang berhulu dari pusat aktivitas/puncak G. Sangeangapi untuk menghindari potensi ancaman bahaya aliran lahar yang mungkin terjadi pada saat hujan.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "SMR",
+      "gunung_api": "Semeru",
+      "status": "3",
+      "rekomendasi": "Tidak melakukan aktivitas apapun di sektor tenggara di sepanjang Besuk Kobokan, sejauh 13 km dari puncak (pusat erupsi). Di luar jarak tersebut, masyarakat tidak melakukan aktivitas pada jarak 500 meter dari tepi sungai (sempadan sungai) di sepanjang Besuk Kobokan karena berpotensi terlanda perluasan awan panas dan aliran lahar hingga jarak 17 km dari puncak.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "SMR",
+      "gunung_api": "Semeru",
+      "status": "3",
+      "rekomendasi": "Tidak beraktivitas dalam radius 5 Km dari kawah/puncak Gunung Api Semeru karena rawan terhadap bahaya lontaran batu (pijar).",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "SMR",
+      "gunung_api": "Semeru",
+      "status": "3",
+      "rekomendasi": "Mewaspadai potensi awan panas guguran (APG), guguran lava, dan lahar di sepanjang aliran sungai/lembah yang berhulu di puncak Gunung Api Semeru, terutama sepanjang Besuk Kobokan, Besuk Bang, Besuk Kembar, dan Besuk Sat serta potensi lahar pada sungai-sungai kecil yang merupakan anak sungai dari Besuk Kobokan.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "SEU",
+      "gunung_api": "Seulawah Agam",
+      "status": "1",
+      "rekomendasi": "Masyarakat dan pengunjung tidak diperbolehkan masuk ke kawasan solfatara dan bermalam disekitar kawah karena konsentrasi gas vulkanik dapat membahayakan kehidupan.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "SIN",
+      "gunung_api": "Sinabung",
+      "status": "3",
+      "rekomendasi": "Masyarakat dan pengunjung/wisatawan agar tidak melakukan aktivitas pada desa-desa yang sudah direlokasi, serta lokasi di dalam radius radial 3 km dari puncak G.Sinabung, serta radius sektoral 5 km untuk sektor selatan-timur, dan 4 km untuk sektor timur-utara dan barat.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "SIN",
+      "gunung_api": "Sinabung",
+      "status": "3",
+      "rekomendasi": "Jika terjadi hujan abu, masyarakat dihimbau memakai masker bila keluar rumah untuk mengurangi dampak kesehatan dari abu vulkanik. Mengamankan sarana air bersih serta membersihkan atap rumah dari abu vulkanik yang lebat agar tidak roboh.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "SIN",
+      "gunung_api": "Sinabung",
+      "status": "3",
+      "rekomendasi": "Masyarakat yang berada dan bermukim di dekat sungai-sungai yang berhulu di G. Sinabung agar tetap waspada terhadap bahaya lahar.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "SIR",
+      "gunung_api": "Sirung",
+      "status": "2",
+      "rekomendasi": "Masyarakat di sekitar G. Sirung maupun pengunjung/wisatawan direkomendasikan agar tidak melakukan aktivitas di dalam radius 1.5 km dari puncak/kawah G. Sirung.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "SLA",
+      "gunung_api": "Slamet",
+      "status": "1",
+      "rekomendasi": "Masyarakat dan pengunjung/wisatawan tidak berada/beraktivitas dalam radius 1km dari kawah puncak G. Slamet.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "SOP",
+      "gunung_api": "Soputan",
+      "status": "2",
+      "rekomendasi": "Masyarakat di sekitar G. Soputan maupun pengunjung/wisatawan/pendaki agar tidak beraktivitas di dalam radius 1.5 km dari puncak G. Soputan dan dalam wilayah sektoral arah barat-baratlaut sejauh 2.5 km yang merupakan daerah bukaan kawah, guna menghindari ancaman leleran lava dan awan panas guguran.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "SOP",
+      "gunung_api": "Soputan",
+      "status": "2",
+      "rekomendasi": "Masyarakat yang bermukim/beraktivitas disekitar bantaran sungai yang berhulu di sekitar lereng G. Soputan juga di rekomendasikan agar mewaspadai terjadinya ancaman aliran lahar terutama ketika musim hujan, beberapa sungai yang perlu diwaspadai di antaranya adalah S. Ranowangko, S. Lawian, S. Popang dan Londola Kelewahu.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "SOP",
+      "gunung_api": "Soputan",
+      "status": "2",
+      "rekomendasi": "Jika terjadi hujan abu, masyarakat dianjurkan menggunakan masker penutup hidung dan mulut, guna mengantisipasi terhadap gangguan saluran pernapasan.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "SOR",
+      "gunung_api": "Sorik Marapi",
+      "status": "1",
+      "rekomendasi": "Masyarakat disekitar Gunungapi Sorik Marapi dan pengunjung/wisatawan tidak diperbolehkan mendekati kawah dalam jarak dekat.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "SBG",
+      "gunung_api": "Sumbing",
+      "status": "1",
+      "rekomendasi": "Pengunjung/wisatawan agar berhati-hati ketika berada di lokasi kawah karena struktur batunya labil dan mudah lepas serta tidak berkemah di dasar kawah karena dimungkinkan terdapat gas vulkanik beracun pada malam hari terutama pada saat cuaca buruk.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "SUN",
+      "gunung_api": "Sundoro",
+      "status": "1",
+      "rekomendasi": "Masyarakat disekitar G.Sundoro agar tenang, tidak terpancing isu tentang letusan G.Sundoro.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "SUN",
+      "gunung_api": "Sundoro",
+      "status": "1",
+      "rekomendasi": "Masyarakat disekitar G. Sundoro dan pengunjung/wisatawan tidak diperbolehkan mendekati bibir kawah puncak G.Sundoro dalam radius 200 meter.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "SUN",
+      "gunung_api": "Sundoro",
+      "status": "1",
+      "rekomendasi": "Masyarakat yang bertempat tinggal di sekitar G. Sundoro dalam KRB II bisa beraktivitas seperti biasa dan tetap memperhatikan perkembangan kegiatan G.Sundoro yang dikeluarkan oleh BPBD setempat.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "SUN",
+      "gunung_api": "Sundoro",
+      "status": "1",
+      "rekomendasi": "Pusat Vulkanologi dan Mitigasi Bencana Geologi selalu berkoordinasi dengan Pemerintah Jawa Tengah dan BPBD kabupaten Temanggung, BPBD kabupaten Wonosobo tentang aktivitas G.Sundoro, Masyarakat agar selalu mengikuti arahan dari BPBD setempat.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "SUN",
+      "gunung_api": "Sundoro",
+      "status": "1",
+      "rekomendasi": "Agar BPBD kabupaten Temanggung, kabupaten Wonosobo senantiasa berkoordinasi dengan pos pengamatan Gunungapi Sundoro dan Sumbing di Desa Gentingsari Kecamatan Bansari kabupaten Temanggung atau dengan Pusat Vulkanologi dan Mitigasi Bencana Geologi di Bandung.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "TAL",
+      "gunung_api": "Talang",
+      "status": "1",
+      "rekomendasi": "Masyarakat disekitar Gunungapi Talang dan pengunjung/wisatawan tidak diperbolehkan mendekati kawah utama dan kawah selatan dalam jarak dekat",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "TAM",
+      "gunung_api": "Tambora",
+      "status": "1",
+      "rekomendasi": "Masyarakat di sekitar G. Tambora dan pengunjung/wisatawan agar tidak mendekati Kubah Lava Doro Afi Toi maupun Doro Afi Bou dan tidak mendekati lubang tembusan gas yang berada di dasar kaldera Tambora, serta membatasi aktivitas (tidak berlama-lama berada) di sekitar pusat aktivitas.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "TAN",
+      "gunung_api": "Tandikat",
+      "status": "1",
+      "rekomendasi": "Pengunjung/wisatawan agar berhati-hati ketika berada di lokasi kawah karena struktur batunya labil dan mudah lepas serta tidak berkemah di dasar kawah karena dimungkinkan terdapat gas vulkanik beracun pada malam hari terutama pada saat cuaca buruk.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "TGK",
+      "gunung_api": "Tangkoko",
+      "status": "1",
+      "rekomendasi": "Masyarakat di sekitar G. Tangkoko dan pengunjung/wisatawan agar membatasi aktivitas (tidak berlama-lama) dan tidak bermalam di area kawah aktif,\r\nserta tidak mendekati lubang tembusan gas yang berada di sekitar kawah untuk menghindari potensi bahaya gas beracun.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "TPR",
+      "gunung_api": "Tangkuban Parahu",
+      "status": "1",
+      "rekomendasi": "Masyarakat di sekitar G. Tangkuban Parahu dan pengunjung, wisatawan, pendaki agar tidak turun ke dasar Kawah Ratu dan turun/mendekat ke kawah-kawah aktif lain G. Tangkuban Parahu dan tidak boleh menginap dalam kawasan kawah-kawah aktif yang ada di dalam kompleks G. Tangkuban Parahu, serta ketika cuaca mendung dan hujan dikarenakan terdapatnya gas-gas vulkanik yang dapat membahayakan kehidupan manusia.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "TPR",
+      "gunung_api": "Tangkuban Parahu",
+      "status": "1",
+      "rekomendasi": "Masyarakat di sekitar G. Tangkuban Parahu, pedagang, wisatawan, pendaki, dan pengelola wisata G. Tangkuban Parahu agar mewaspadai terjadinya letusan freatik yang bersifat tiba-tiba dan tanpa didahului oleh gejala-gejala vulkanik yang jelas.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "WUR",
+      "gunung_api": "Wurlali",
+      "status": "1",
+      "rekomendasi": "Masyarakat di sekitar G. Wurlali dan pengunjung/wisatawan agar membatasi aktivitas (tidak berlama-lama) dan tidak bermalam di area kawah aktif, serta tidak mendekati lubang tembusan gas yang berada di sekitar kawah untuk menghindari potensi bahaya gas beracun.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   }
+]
