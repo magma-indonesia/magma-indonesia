@@ -15,9 +15,14 @@ class CreateMagmaVarRekomendasisTable extends Migration
     {
         Schema::connection('magma')->create('magma_var_rekomendasis', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('ga_code', 3)->index();
+            $table->string('ga_code', 3)
+                ->charset('utf8')
+                ->collation('utf8_unicode_ci')
+                ->index();
             $table->foreign('ga_code')->references('ga_code')->on('ga_dd');
-            $table->enum('status', ['1', '2', '3', '4']);
+            $table->enum('status', ['1', '2', '3', '4'])
+                ->charset('utf8')
+                ->collation('utf8_unicode_ci');
             $table->date('date');
             $table->boolean('is_active')->default(0);
             $table->unique(['ga_code','status','date']);
