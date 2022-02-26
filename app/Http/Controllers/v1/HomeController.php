@@ -55,12 +55,10 @@ class HomeController extends Controller
         $ga_code = $gadds->pluck('ga_code');
 
         $vars = Cache::remember('v1/home/var:'.strtotime($last_var->var_log), 60, function() {
-            $sub = OldVar::select('ga_code', DB::raw('MAX(var_noticenumber) AS latest_date'))->groupBy('ga_code');
-            return OldVar::select('no', 'magma_var.ga_code', 'cu_status', 'var_data_date', 'periode', 'var_perwkt', 'var_noticenumber', 'var_nama_pelapor')
-                ->join(DB::raw("({$sub->toSql()}) latest_table"), function ($join) {
-                    $join->on('latest_table.ga_code', '=', 'magma_var.ga_code')
-                        ->on('latest_table.latest_date', '=', 'magma_var.var_noticenumber');
-                })->get();
+            return OldVar::from(DB::raw('magma_var, (SELECT magma_var.ga_code, MAX(magma_var.var_noticenumber) AS var_noticenumber FROM magma_var GROUP BY magma_var.ga_code) AS latest_var'))
+                ->select('no', 'magma_var.ga_code', 'cu_status', 'var_data_date', 'periode', 'var_perwkt', 'magma_var.var_noticenumber', 'var_nama_pelapor')
+                ->whereRaw('magma_var.ga_code = latest_var.ga_code AND magma_var.var_noticenumber = latest_var.var_noticenumber')
+                ->get();
         });
 
         $vona = Gadd::whereHas('vona', function ($query) {
