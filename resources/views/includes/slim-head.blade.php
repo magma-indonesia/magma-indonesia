@@ -39,7 +39,7 @@
 
     <!-- Meta -->
     <meta name="description" content="{{ config('app.name') }}">
-    <meta name="author" content="Kementerian Energi dan Sumber Daya Mineral">
+    <meta name="author" content="Pusat Vulkanologi dan Mitigasi Bencana Geologi">
 
     <!-- vendor css -->
     <link href="{{ asset('slim/lib/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
