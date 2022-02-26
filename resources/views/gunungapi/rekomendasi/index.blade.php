@@ -13,9 +13,9 @@
 @section('content-header')
     <div class="content animate-panel content-boxed normalheader">
         <div class="hpanel">
-            <div class="panel-body">   
+            <div class="panel-body">
                 <h2 class="font-light m-b-xs">
-                    Daftar Rekomendasi MAGMA-VAR 
+                    Daftar Rekomendasi MAGMA-VAR
                 </h2>
                 <small class="font-light"> Digunakan dalam pelaporan MAGMA-VAR</small>
             </div>
@@ -52,14 +52,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($gadds as $key => $gadd)
-                                
-                                @foreach ($gadd->rekomendasi as $rekomendasi)
+                                @php
+                                    $counter = 0;
+                                @endphp
+                                @foreach ($gadds as $gadd)
+
+                                @foreach ($gadd->rekomendasi as $key => $rekomendasi)
+                                @php
+                                    $counter = $counter+1;
+                                @endphp
                                 <tr>
+                                    <td>{{ $counter }}</td>
                                     <td>{{ $gadd->name }}</td>
                                     <td>{{ $rekomendasi->status_text }}</td>
                                     <td>{!! nl2br($rekomendasi->rekomendasi) !!}</td>
-                                </tr>  
+                                </tr>
                                 @endforeach
 
                                 @endforeach
@@ -78,7 +85,7 @@
 <script>
     $(document).ready(function () {
         $('body').on('submit','#deleteForm',function (e) {
-            e.preventDefault();                
+            e.preventDefault();
 
             var $url = $(this).attr('action'),
                 $data = $(this).serialize();
