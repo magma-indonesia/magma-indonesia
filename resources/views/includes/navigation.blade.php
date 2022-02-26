@@ -58,12 +58,6 @@
                     <span class="nav-label"> Token</span>
                 </a>
             </li>
-            {{-- <li class="{{ active('chambers.fun.fpl') }}">
-                <a href="{{ route('chambers.fun.fpl.index') }}">
-                    <i class="fa fa-soccer-ball-o"></i>
-                    <span class="nav-label"> Fpl </span>
-                </a>
-            </li>  --}}
             @role('Super Admin')
             <li class="{{ active(['chambers.stakeholder.*']) }}">
                 <a href="#">
@@ -121,6 +115,7 @@
                             <li class="">
                                 <a class="m-l" href="{{ route('chambers.resume-harian.index') }}">Resume Harian</a>
                             </li>
+
                             <li class="">
                                 <a class="m-l" href="{{ route('chambers.event-catalog.index') }}">Event Catalog</a>
                             </li>
