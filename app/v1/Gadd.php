@@ -65,8 +65,9 @@ class Gadd extends Model
     public function var()
     {
         return $this->hasOne('App\v1\MagmaVar','ga_code','ga_code')
-                    ->orderBy('var_data_date','desc')
-                    ->orderBy('periode','desc');
+                ->from(DB::raw('magma_var, (SELECT magma_var.ga_code, MAX(magma_var.var_noticenumber) AS var_noticenumber FROM magma_var GROUP BY magma_var.ga_code) AS latest_var'))
+                ->select('magma_var.*')
+                ->whereRaw('magma_var.ga_code = latest_var.ga_code AND magma_var.var_noticenumber = latest_var.var_noticenumber');
     }
 
     public function vona()
@@ -108,6 +109,18 @@ class Gadd extends Model
         )->select('vg_peg.vg_nip', 'vg_peg.vg_nama')
         ->whereNotIn('pga_pos.obscode', ['BTK', 'PAG', 'PSM', 'PSG', 'PVG', 'BGL'])
         ->where('vg_peg.status', 1);
+    }
+
+    public function rekomendasis()
+    {
+        return $this->hasManyThrough(
+            'App\v1\MagmaVarListRekomendasi',
+            'App\v1\MagmaVarRekomendasi',
+            'ga_code',
+            'magma_var_rekomendasi_id',
+            'ga_code',
+            'id'
+        )->select('magma_var_list_rekomendasis.rekomendasi');
     }
 
     public function pos_pgas()
