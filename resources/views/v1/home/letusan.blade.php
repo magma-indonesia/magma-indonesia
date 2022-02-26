@@ -1,4 +1,4 @@
-@extends('layouts.slim') 
+@extends('layouts.slim')
 
 @section('title')
 Informasi Letusan
@@ -7,7 +7,7 @@ Informasi Letusan
 @section('add-vendor-css')
 <link rel="stylesheet" href="{{ asset('vendor/lightbox2/css/lightbox.min.css') }}" />
 @endsection
- 
+
 @section('breadcrumb')
 <li class="breadcrumb-item">Gunung Api</li>
 <li class="breadcrumb-item active" aria-current="page">Letusan</li>
@@ -34,7 +34,7 @@ Informasi Letusan
 
         <div class="card pd-30">
             {{ $vens->appends(Request::except('page'))->onEachSide(1)->links('vendor.pagination.slim-paginate') }}
-            <div class="timeline-group mg-t-20 mg-b-20">    
+            <div class="timeline-group mg-t-20 mg-b-20">
                 @foreach ($grouped as $date => $grouped_vens)
 
                 @if ($date != now()->format('Y-m-d'))
@@ -61,9 +61,9 @@ Informasi Letusan
                         <p class="timeline-author">Dibuat oleh <a href="#">{{ $ven->user->vg_nama }}</a></p>
                         <p class="timeline-text">
                             @if ($ven->erupt_vis)
-                                Terjadi erupsi G. {{ $ven->gunungapi->ga_nama_gapi }} pada hari {{ \Carbon\Carbon::createFromFormat('Y-m-d', $date)->formatLocalized('%A, %d %B %Y') }}, pukul {{ $ven->erupt_jam.' '.$ven->gunungapi->ga_zonearea }} dengan tinggi kolom abu teramati &plusmn; {{ $ven->erupt_tka }} m di atas puncak (&plusmn; {{ $ven->erupt_tka+$ven->gunungapi->ga_elev_gapi }} m di atas permukaan laut). Kolom abu teramati berwarna {{ str_replace_last(', ',' hingga ', strtolower(implode(', ',$ven->erupt_wrn))) }} dengan intensitas {{ str_replace_last(', ',' hingga ', strtolower(implode(', ',$ven->erupt_int)))  }} ke arah {{ str_replace_last(', ',' dan ', strtolower(implode(', ',$ven->erupt_arh))) }}. 
+                                Terjadi erupsi G. {{ $ven->gunungapi->ga_nama_gapi }} pada hari {{ \Carbon\Carbon::createFromFormat('Y-m-d', $date)->formatLocalized('%A, %d %B %Y') }}, pukul {{ $ven->erupt_jam.' '.$ven->gunungapi->ga_zonearea }} dengan tinggi kolom abu teramati &plusmn; {{ $ven->erupt_tka }} m di atas puncak (&plusmn; {{ $ven->erupt_tka+$ven->gunungapi->ga_elev_gapi }} m di atas permukaan laut). Kolom abu teramati berwarna {{ str_replace_last(', ',' hingga ', strtolower(implode(', ',$ven->erupt_wrn))) }} dengan intensitas {{ str_replace_last(', ',' hingga ', strtolower(implode(', ',$ven->erupt_int)))  }} ke arah {{ str_replace_last(', ',' dan ', strtolower(implode(', ',$ven->erupt_arh))) }}.
                             @else
-                                Terjadi erupsi G. {{ $ven->gunungapi->ga_nama_gapi }} pada hari {{ \Carbon\Carbon::createFromFormat('Y-m-d', $date)->formatLocalized('%A, %d %B %Y') }}, pukul {{ $ven->erupt_jam.' '.$ven->gunungapi->ga_zonearea }}. Visual letusan tidak teramati. 
+                                Terjadi erupsi G. {{ $ven->gunungapi->ga_nama_gapi }} pada hari {{ \Carbon\Carbon::createFromFormat('Y-m-d', $date)->formatLocalized('%A, %d %B %Y') }}, pukul {{ $ven->erupt_jam.' '.$ven->gunungapi->ga_zonearea }}. Visual letusan tidak teramati.
                             @endif
                             @if ($ven->erupt_amp)
                             Erupsi ini terekam di seismograf dengan amplitudo maksimum {{ $ven->erupt_amp }} mm dan durasi {{ $ven->erupt_drs }} detik.
@@ -86,7 +86,7 @@ Informasi Letusan
                     </div>
                 </div>
                 @endforeach
-                
+
                 @endforeach
             </div>
             {{ $vens->appends(Request::except('page'))->onEachSide(1)->links('vendor.pagination.slim-paginate') }}
@@ -98,7 +98,7 @@ Informasi Letusan
         <div class="card card-connection">
             <label class="slim-card-title">Jumlah Letusan Tahun {{ now()->format('Y') }}</label>
             @foreach ($counts as $ven)
-            
+
                 <div class="row row-xs">
                     <div class="col-4 tx-primary">{{ $ven->total }}</div>
                     <div class="col-8">Jumlah letusan <b class="tx-orange">Gunung {{ $ven->gunungapi->ga_nama_gapi }}</b> yang pernah tercatat.</div>
