@@ -44,6 +44,11 @@ class MagmaVar extends OldModelVar
     {
         return $this->hasOne('App\v1\CompileVar','ga_code','ga_code');
     }
-    
+
+    public function rekomendasi()
+    {
+        return $this->belongsTo('App\v1\MagmaVarRekomendasi', 'magma_var_rekomendasi_id','id');
+    }
+
     // protected $dates = ['var_data_date'];
 }
