@@ -105,6 +105,13 @@ Route::name('v1.')->group(function () {
             ->name('gunungapi.live-seismogram.show')
             ->middleware('signed');
 
+        Route::get('gunung-api/laporan-harian', 'FrontPage\v1\LaporanHarianController@index')
+            ->name('gunungapi.laporan-harian')
+            ->middleware('revalidate');
+        Route::get('gunung-api/laporan-harian/{date}', 'FrontPage\v1\LaporanHarianController@show')
+            ->name('gunungapi.laporan-harian.show')
+            ->middleware('signed');
+
         Route::get('gerakan-tanah/tanggapan','FrontPage\v1\GerakanTanahController@indexGertan')
             ->name('gertan.sigertan');
         Route::get('gerakan-tanah/tanggapan/{id?}','FrontPage\v1\GerakanTanahController@showGertan')
