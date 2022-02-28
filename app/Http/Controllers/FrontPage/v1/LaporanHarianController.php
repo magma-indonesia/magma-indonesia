@@ -327,13 +327,13 @@ class LaporanHarianController extends Controller
             'magma_var_rekomendasi_id' => $rekomendasi->id
         ]);
 
-        return tap($var->load('lists'));
+        return tap($var->load('rekomendasi.lists'));
     }
 
     protected function rekomendasi(MagmaVar $var)
     {
         if (is_null($var->rekomendasi)) {
-            return $this->updateRekomendasi($var)->lists->pluck('rekomendasi');
+            return $this->updateRekomendasi($var)->rekomendasi->lists->pluck('rekomendasi');
         }
 
         return $var->rekomendasi->lists->pluck('rekomendasi');
@@ -365,8 +365,6 @@ class LaporanHarianController extends Controller
                 'rekomendasi' => $this->rekomendasi($gadd->var),
             ];
         });
-
-        return $gadds;
 
         return view('v1.home.laporan-harian', [
             'gadds' => $gadds
