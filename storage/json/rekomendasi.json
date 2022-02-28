@@ -886,5 +886,21 @@
       "rekomendasi": "Masyarakat di sekitar G. Wurlali dan pengunjung/wisatawan agar membatasi aktivitas (tidak berlama-lama) dan tidak bermalam di area kawah aktif, serta tidak mendekati lubang tembusan gas yang berada di sekitar kawah untuk menghindari potensi bahaya gas beracun.",
       "is_active": "1",
       "date": "2022-02-09"
+   },
+   {
+      "code": "LAM",
+      "gunung_api": "Lamongan",
+      "status": "1",
+      "rekomendasi": "Dalam Tingkat Aktivitas Level I (Normal), maka direkomendasikan agar masyarakat dan pengunjung/wisatawan/pendaki tidak turun dan mendekati dasar kawah di puncak G. Lamongan, serta tidak menginap di dalam kawasan puncak G. Lamongan.",
+      "is_active": "1",
+      "date": "2022-02-09"
+   },
+   {
+      "code": "KIE",
+      "gunung_api": "Kie Besi",
+      "status": "1",
+      "rekomendasi": "Masyarakat di sekitar G. Kie Besi dan pengunjung/pendaki agar tidak beraktivitas dalam area kawah aktif. Tidak mendekati lubang hembusan gas, serta membatasi aktivitas/tidak berlama-lama berada di sekitar kawah G. Kie Besi Makian.",
+      "is_active": "1",
+      "date": "2022-02-09"
    }
 ]
