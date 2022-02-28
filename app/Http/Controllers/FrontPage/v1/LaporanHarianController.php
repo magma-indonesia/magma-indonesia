@@ -316,6 +316,29 @@ class LaporanHarianController extends Controller
         return $gempas;
     }
 
+    protected function updateRekomendasi(MagmaVar $var)
+    {
+        $rekomendasi = MagmaVarRekomendasi::where('ga_code', $var->ga_code)
+                            ->where('status', $var->cu_status)
+                            ->orderByDesc('date')
+                            ->first();
+
+        $var->update([
+            'magma_var_rekomendasi_id' => $rekomendasi->id
+        ]);
+
+        return tap($var->load('lists'));
+    }
+
+    protected function rekomendasi(MagmaVar $var)
+    {
+        if (is_null($var->rekomendasi)) {
+            return $this->updateRekomendasi($var)->lists->pluck('rekomendasi');
+        }
+
+        return $var->rekomendasi->lists->pluck('rekomendasi');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -339,9 +362,11 @@ class LaporanHarianController extends Controller
                     'letusan' => $this->letusan($gadd->var),
                     'guguran' => $this->guguran($gadd->var),
                 ],
-                'rekomendasi' => collect($gadd->var->rekomendasi->lists->pluck('rekomendasi')),
+                'rekomendasi' => $this->rekomendasi($gadd->var),
             ];
         });
+
+        return $gadds;
 
         return view('v1.home.laporan-harian', [
             'gadds' => $gadds
