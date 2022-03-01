@@ -327,7 +327,7 @@ class LaporanHarianController extends Controller
             'magma_var_rekomendasi_id' => $rekomendasi->id
         ]);
 
-        return tap($var->load('rekomendasi.lists'));
+        return $var->load('rekomendasi.lists');
     }
 
     protected function rekomendasi(MagmaVar $var)
