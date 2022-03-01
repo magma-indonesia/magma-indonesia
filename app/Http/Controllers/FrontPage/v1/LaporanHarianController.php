@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\FrontPage\v1;
 
 use App\Http\Controllers\Controller;
+use App\Traits\v1\DeskripsiGempa;
 use App\v1\Gadd;
 use App\v1\MagmaVar;
 use App\v1\MagmaVarListRekomendasi;
@@ -316,7 +317,41 @@ class LaporanHarianController extends Controller
         return $gempas;
     }
 
-    protected function updateRekomendasi(MagmaVar $var)
+    protected function kegempaan(MagmaVar $var)
+    {
+        $gempas = collect([
+            'lts' => 'Letusan/Erupsi',
+            'apl' => 'Awan Panas Letusan',
+            'apg' => 'Awan Panas Guguran',
+            'gug' => 'Guguran',
+            'hbs' => 'Hembusan',
+            'hrm' => 'Harmonik',
+            'tre' => 'Tremor Non-Harmonik',
+            'tor' => 'Tornillo',
+            'lof' => 'Low Frequency',
+            'hyb' => 'Hybrid/Fase Banyak',
+            'vtb' => 'Vulkanik Dangkal',
+            'vta' => 'Vulkanik Dalam',
+            'vlp' => 'Very Long Period',
+            'tel' => 'Tektonik Lokal',
+            'trs' => 'Terasa',
+            'tej' => 'Tektonik Jauh',
+            'dev' => 'Double Event',
+            'gtb' => 'Getaran Banjir',
+            'dpt' => 'Deep Tremor',
+            'mtr' => 'Tremor Menerus'
+        ])->transform(function ($namaGempa, $codeGempa) use ($var) {
+            if ($var->{'var_' . $codeGempa}) {
+                return "{$var->{'var_' .$codeGempa}} kali gempa {$namaGempa}";
+            }
+        })->reject(function ($gempa) {
+            return is_null($gempa);
+        })->flatten();
+
+        return $gempas;
+    }
+
+    protected function updateRekomendasi(MagmaVar $var): MagmaVar
     {
         $rekomendasi = MagmaVarRekomendasi::where('ga_code', $var->ga_code)
                             ->where('status', $var->cu_status)
@@ -362,12 +397,17 @@ class LaporanHarianController extends Controller
                     'letusan' => $this->letusan($gadd->var),
                     'guguran' => $this->guguran($gadd->var),
                 ],
+                'kegempaan' => $this->kegempaan($gadd->var),
                 'rekomendasi' => $this->rekomendasi($gadd->var),
             ];
         });
 
+        $groupedByStatus = $gadds->groupBy('status')->sortKeysDesc();
+
+        // return $groupedByStatus;
+
         return view('v1.home.laporan-harian', [
-            'gadds' => $gadds
+            'groupedByStatus' => $groupedByStatus
         ]);
     }
 
