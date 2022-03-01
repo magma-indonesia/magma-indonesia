@@ -26,7 +26,7 @@ Laporan Harian
                 role="tab"
                 aria-controls="home-{{ $loop->index }}"
                 aria-selected="true"
-            >{{ $status }}</a>
+            >{{ $status }} - {{ $gadds->count() }}</a>
         @else
             <a
                 href="#tab-{{ $loop->index }}"
@@ -36,7 +36,7 @@ Laporan Harian
                 role="tab"
                 aria-controls="home-{{ $loop->index }}"
                 aria-selected="true"
-            >{{ $status }}</a>
+            >{{ $status }} - {{ $gadds->count() }}</a>
         @endif
         @endforeach
     </nav>
