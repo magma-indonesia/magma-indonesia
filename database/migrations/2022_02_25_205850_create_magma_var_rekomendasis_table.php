@@ -13,21 +13,23 @@ class CreateMagmaVarRekomendasisTable extends Migration
      */
     public function up()
     {
-        Schema::connection('magma')->create('magma_var_rekomendasis', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('ga_code', 3)
-                ->charset('utf8')
-                ->collation('utf8_unicode_ci')
-                ->index();
-            $table->foreign('ga_code')->references('ga_code')->on('ga_dd');
-            $table->enum('status', ['1', '2', '3', '4'])
-                ->charset('utf8')
-                ->collation('utf8_unicode_ci');
-            $table->date('date');
-            $table->boolean('is_active')->default(0);
-            $table->unique(['ga_code','status','date']);
-            $table->timestamps();
-        });
+        if (!Schema::connection('magma')->hasTable('magma_var_rekomendasis')) {
+            Schema::connection('magma')->create('magma_var_rekomendasis', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('ga_code', 3)
+                    ->charset('utf8')
+                    ->collation('utf8_unicode_ci')
+                    ->index();
+                $table->foreign('ga_code')->references('ga_code')->on('ga_dd');
+                $table->enum('status', ['1', '2', '3', '4'])
+                    ->charset('utf8')
+                    ->collation('utf8_unicode_ci');
+                $table->date('date');
+                $table->boolean('is_active')->default(0);
+                $table->unique(['ga_code', 'status', 'date']);
+                $table->timestamps();
+            });
+        }
     }
 
     /**

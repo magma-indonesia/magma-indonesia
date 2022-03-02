@@ -13,16 +13,18 @@ class CreateMagmaVarListRekomendasisTable extends Migration
      */
     public function up()
     {
-        Schema::connection('magma')->create('magma_var_list_rekomendasis', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('magma_var_rekomendasi_id');
-            $table->foreign('magma_var_rekomendasi_id')
-                ->references('id')->on('magma_var_rekomendasis')
-                ->onDelete('cascade');
-            $table->longText('rekomendasi');
-            $table->boolean('is_active')->default(1);
-            $table->timestamps();
-        });
+        if (!Schema::connection('magma')->hasTable('magma_var_list_rekomendasis')) {
+            Schema::connection('magma')->create('magma_var_list_rekomendasis', function (Blueprint $table) {
+                $table->increments('id');
+                $table->unsignedInteger('magma_var_rekomendasi_id');
+                $table->foreign('magma_var_rekomendasi_id')
+                    ->references('id')->on('magma_var_rekomendasis')
+                    ->onDelete('cascade');
+                $table->longText('rekomendasi');
+                $table->boolean('is_active')->default(1);
+                $table->timestamps();
+            });
+        }
     }
 
     /**
