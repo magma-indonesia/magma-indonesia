@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\FrontPage\v1;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\UpdateLaporanHarianStatistik;
 use App\Traits\v1\DeskripsiGempa;
 use App\v1\Gadd;
 use App\v1\MagmaVar;
@@ -404,7 +405,7 @@ class LaporanHarianController extends Controller
 
         $groupedByStatus = $gadds->groupBy('status')->sortKeysDesc();
 
-        // return $groupedByStatus;
+        UpdateLaporanHarianStatistik::dispatch();
 
         return view('v1.home.laporan-harian', [
             'groupedByStatus' => $groupedByStatus

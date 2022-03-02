@@ -13,12 +13,14 @@ class CreateStatistikLaporanHariansTable extends Migration
      */
     public function up()
     {
-        Schema::create('statistik_laporan_harians', function (Blueprint $table) {
-            $table->increments('id');
-            $table->date('date')->unique();
-            $table->bigInteger('hit')->default(0);
-            $table->timestamps();
-        });
+        if (!Schema::connection('magma')->hasTable('statistik_laporan_harians')) {
+            Schema::create('statistik_laporan_harians', function (Blueprint $table) {
+                $table->increments('id');
+                $table->date('date')->unique();
+                $table->bigInteger('hit')->default(0);
+                $table->timestamps();
+            });
+        }
     }
 
     /**
