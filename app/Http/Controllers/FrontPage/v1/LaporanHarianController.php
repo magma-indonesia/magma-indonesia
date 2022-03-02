@@ -317,7 +317,7 @@ class LaporanHarianController extends Controller
         return $gempas;
     }
 
-    protected function kegempaan(MagmaVar $var)
+    protected function kegempaan(MagmaVar $var): Collection
     {
         $gempas = collect([
             'lts' => 'Letusan/Erupsi',
@@ -365,7 +365,7 @@ class LaporanHarianController extends Controller
         return $var->load('rekomendasi.lists');
     }
 
-    protected function rekomendasi(MagmaVar $var)
+    protected function rekomendasi(MagmaVar $var): Collection
     {
         if (is_null($var->rekomendasi)) {
             return $this->updateRekomendasi($var)->rekomendasi->lists->pluck('rekomendasi');
