@@ -22,7 +22,8 @@ class MagmaVar extends OldModelVar
 
     protected $casts = [
         'var_log' => 'datetime:Y-m-d H:i:s',
-        'var_data_date' => 'date:Y-m-d'
+        'var_data_date' => 'date:Y-m-d',
+        'sinar_api' => 'boolean'
     ];
 
     public function getVarKetlainAttribute($value)
