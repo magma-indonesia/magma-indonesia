@@ -13,14 +13,16 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * The attributes that are not mass assignable.
      *
-     * @var array<int, string>
+     * @var array
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
+    protected $guarded = [
+        'id',
+        'phone_verified_at',
+        'email_verified_at',
+        'is_active',
+        'is_verified',
     ];
 
     /**
@@ -34,11 +36,26 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
+     * The attributes that should be cast to native types.
      *
-     * @var array<string, string>
+     * @var array
      */
     protected $casts = [
+        'prefix' => 'array',
+        'suffix' => 'array',
+        'phone_verified_at' => 'datetime',
         'email_verified_at' => 'datetime',
+        'is_active' => 'boolean',
+        'is_verified' => 'boolean',
+    ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'age',
+        'loyalty',
     ];
 }
