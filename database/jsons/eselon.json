@@ -1,0 +1,332 @@
+[
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Sekretariat Badan Geologi",
+        "eselon_tiga" : "Bagian Rencana dan Laporan",
+        "eselon_empat" : "Subbagian Rencana Kerja"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Sekretariat Badan Geologi",
+        "eselon_tiga" : "Bagian Rencana dan Laporan",
+        "eselon_empat" : "Subbagian Pengelolaan Informasi"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Sekretariat Badan Geologi",
+        "eselon_tiga" : "Bagian Rencana dan Laporan",
+        "eselon_empat" : "Subbagian Evaluasi dan Laporan"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Sekretariat Badan Geologi",
+        "eselon_tiga" : "Bagian Kepegawaian dan Organisasi",
+        "eselon_empat" : "Subbagian Administrasi Kepegawaian"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Sekretariat Badan Geologi",
+        "eselon_tiga" : "Bagian Kepegawaian dan Organisasi",
+        "eselon_empat" : "Subbagian Pengelolaan Jabatan"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Sekretariat Badan Geologi",
+        "eselon_tiga" : "Bagian Kepegawaian dan Organisasi",
+        "eselon_empat" : "Subbagian Penataan Organisasi dan Tata Laksana"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Sekretariat Badan Geologi",
+        "eselon_tiga" : "Bagian Keuangan",
+        "eselon_empat" : "Subbagian Perbendaharaan"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Sekretariat Badan Geologi",
+        "eselon_tiga" : "Bagian Keuangan",
+        "eselon_empat" : "Subbagian Pengelolaan Barang Milik Negara"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Sekretariat Badan Geologi",
+        "eselon_tiga" : "Bagian Keuangan",
+        "eselon_empat" : "Subbagian Akuntansi"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Sekretariat Badan Geologi",
+        "eselon_tiga" : "Bagian Umum",
+        "eselon_empat" : "Subbagian Tata Usaha dan Rumah Tangga"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Sekretariat Badan Geologi",
+        "eselon_tiga" : "Bagian Umum",
+        "eselon_empat" : "Subbagian Hukum"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Sekretariat Badan Geologi",
+        "eselon_tiga" : "Bagian Umum",
+        "eselon_empat" : "Subbagian Hubungan Masyarakat dan Kerja Sama"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Sekretariat Badan Geologi",
+        "eselon_tiga" : "Museum Geologi",
+        "eselon_empat" : "Subbagian Tata Usaha"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Sekretariat Badan Geologi",
+        "eselon_tiga" : "Museum Geologi",
+        "eselon_empat" : "Seksi Dokumentasi dan Konservasi"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Sekretariat Badan Geologi",
+        "eselon_tiga" : "Museum Geologi",
+        "eselon_empat" : "Seksi Peragaan"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Sekretariat Badan Geologi",
+        "eselon_tiga" : "Museum Geologi",
+        "eselon_empat" : "Seksi Edukasi dan Informasi"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Sumber Daya Mineral, Batubara dan Panas Bumi",
+        "eselon_tiga" : "Bidang Mineral",
+        "eselon_empat" : "Subbidang Mineral Logam"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Sumber Daya Mineral, Batubara dan Panas Bumi",
+        "eselon_tiga" : "Bidang Mineral",
+        "eselon_empat" : "Subbidang Mineral Bukan Logam"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Sumber Daya Mineral, Batubara dan Panas Bumi",
+        "eselon_tiga" : "Bidang Batubara",
+        "eselon_empat" : "Subbidang Batubara dan Gambut"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Sumber Daya Mineral, Batubara dan Panas Bumi",
+        "eselon_tiga" : "Bidang Batubara",
+        "eselon_empat" : "Subbidang Gas Metana Batubara"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Sumber Daya Mineral, Batubara dan Panas Bumi",
+        "eselon_tiga" : "Bidang Panas Bumi",
+        "eselon_empat" : "Subbidang Eksplorasi Panas Bumi"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Sumber Daya Mineral, Batubara dan Panas Bumi",
+        "eselon_tiga" : "Bidang Panas Bumi",
+        "eselon_empat" : "Subbidang Evaluasi Panas Bumi"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Sumber Daya Mineral, Batubara dan Panas Bumi",
+        "eselon_tiga" : "Bagian Tata Usaha",
+        "eselon_empat" : "Subbagian Perencanaan dan Keuangan"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Sumber Daya Mineral, Batubara dan Panas Bumi",
+        "eselon_tiga" : "Bagian Tata Usaha",
+        "eselon_empat" : "Subbagian Umum dan Kepegawaian"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Vulkanologi dan Mitigasi Bencana Geologi",
+        "eselon_tiga" : "Bidang Mitigasi Gunung Api",
+        "eselon_empat" : "Subbidang Mitigasi Gunung Api Wilayah Timur"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Vulkanologi dan Mitigasi Bencana Geologi",
+        "eselon_tiga" : "Bidang Mitigasi Gunung Api",
+        "eselon_empat" : "Subbidang Mitigasi Gunung Api Wilayah Barat"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Vulkanologi dan Mitigasi Bencana Geologi",
+        "eselon_tiga" : "Bidang Mitigasi Gempa Bumi dan Tsunami",
+        "eselon_empat" : "Subbidang Mitigasi Gempa Bumi dan Tsunami Wilayah Timur"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Vulkanologi dan Mitigasi Bencana Geologi",
+        "eselon_tiga" : "Bidang Mitigasi Gempa Bumi dan Tsunami",
+        "eselon_empat" : "Subbidang Mitigasi Gempa Bumi dan Tsunami Wilayah Barat"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Vulkanologi dan Mitigasi Bencana Geologi",
+        "eselon_tiga" : "Bidang Gerakan Tanah",
+        "eselon_empat" : "Subbidang Gerakan Tanah Wilayah Timur"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Vulkanologi dan Mitigasi Bencana Geologi",
+        "eselon_tiga" : "Bidang Gerakan Tanah",
+        "eselon_empat" : "Subbidang Gerakan Tanah Wilayah Barat"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Vulkanologi dan Mitigasi Bencana Geologi",
+        "eselon_tiga" : "Balai Penyelidikan dan Pengembangan Teknologi Kebencanaan Geologi",
+        "eselon_empat" : "Seksi Gunung Merapi"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Vulkanologi dan Mitigasi Bencana Geologi",
+        "eselon_tiga" : "Balai Penyelidikan dan Pengembangan Teknologi Kebencanaan Geologi",
+        "eselon_empat" : "Seksi Metoda dan Teknologi"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Vulkanologi dan Mitigasi Bencana Geologi",
+        "eselon_tiga" : "Balai Penyelidikan dan Pengembangan Teknologi Kebencanaan Geologi",
+        "eselon_empat" : "Seksi Pengelolaan Laboratorium"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Vulkanologi dan Mitigasi Bencana Geologi",
+        "eselon_tiga" : "Balai Penyelidikan dan Pengembangan Teknologi Kebencanaan Geologi",
+        "eselon_empat" : "Subbagian Tata Usaha"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Vulkanologi dan Mitigasi Bencana Geologi",
+        "eselon_tiga" : "Bagian Tata Usaha",
+        "eselon_empat" : "Subbagian Perencanaan dan Keuangan"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Vulkanologi dan Mitigasi Bencana Geologi",
+        "eselon_tiga" : "Bagian Tata Usaha",
+        "eselon_empat" : "Subbagian Umum dan Kepegawaian"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Air Tanah dan Geologi Tata Lingkungan",
+        "eselon_tiga" : "Bidang Air Tanah",
+        "eselon_empat" : "Subbidang Inventarisasi dan Konservasi"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Air Tanah dan Geologi Tata Lingkungan",
+        "eselon_tiga" : "Bidang Air Tanah",
+        "eselon_empat" : "Subbidang Pendayagunaan Air Tanah"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Air Tanah dan Geologi Tata Lingkungan",
+        "eselon_tiga" : "Bidang Geologi Teknik",
+        "eselon_empat" : "Subbidang Pemetaan dan Inventarisasi Geologi Teknik"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Air Tanah dan Geologi Tata Lingkungan",
+        "eselon_tiga" : "Bidang Geologi Teknik",
+        "eselon_empat" : "Subbidang Evaluasi Geologi Teknik"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Air Tanah dan Geologi Tata Lingkungan",
+        "eselon_tiga" : "Bidang Geologi Lingkungan",
+        "eselon_empat" : "Subbidang Konservasi Geologi"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Air Tanah dan Geologi Tata Lingkungan",
+        "eselon_tiga" : "Bidang Geologi Lingkungan",
+        "eselon_empat" : "Subbidang Pengembangan Geologi Lingkungan."
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Air Tanah dan Geologi Tata Lingkungan",
+        "eselon_tiga" : "Balai Konservasi Air Tanah",
+        "eselon_empat" : "Seksi Pemantauan dan Penanggulangan"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Air Tanah dan Geologi Tata Lingkungan",
+        "eselon_tiga" : "Balai Konservasi Air Tanah",
+        "eselon_empat" : "Seksi Pengembangan Teknologi Konservasi"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Air Tanah dan Geologi Tata Lingkungan",
+        "eselon_tiga" : "Balai Konservasi Air Tanah",
+        "eselon_empat" : "Subbagian Tata Usaha"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Air Tanah dan Geologi Tata Lingkungan",
+        "eselon_tiga" : "Bagian Tata Usaha",
+        "eselon_empat" : "Subbagian Perencanaan dan Keuangan"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Air Tanah dan Geologi Tata Lingkungan",
+        "eselon_tiga" : "Bagian Tata Usaha",
+        "eselon_empat" : "Subbagian Umum dan Kepegawaian"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Survei Geologi",
+        "eselon_tiga" : "Bidang Pemetaan",
+        "eselon_empat" : "Subbidang Pemetaan Sistematik"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Survei Geologi",
+        "eselon_tiga" : "Bidang Pemetaan",
+        "eselon_empat" : "Subbidang Pemetaan Tematik"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Survei Geologi",
+        "eselon_tiga" : "Bidang Geosains",
+        "eselon_empat" : "Subbibdang Geologi Dasar dan Terapan"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Survei Geologi",
+        "eselon_tiga" : "Bidang Geosains",
+        "eselon_empat" : "Subbibdang Geofisika Dasar dan Terapan"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Survei Geologi",
+        "eselon_tiga" : "Bidang Sumber Daya Minyak dan Gas Bumi",
+        "eselon_empat" : "Subbidang Minyak dan Gas Bumi Konvensional"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Survei Geologi",
+        "eselon_tiga" : "Bidang Sumber Daya Minyak dan Gas Bumi",
+        "eselon_empat" : "Subbidang Minyak dan Gas Bumi Non Konvensional"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Survei Geologi",
+        "eselon_tiga" : "Bagian Tata Usaha",
+        "eselon_empat" : "Subbagian Perencanaan dan Keuangan"
+    },
+    {
+        "eselon_satu" : "Badan Geologi",
+        "eselon_dua" : "Pusat Survei Geologi",
+        "eselon_tiga" : "Bagian Tata Usaha",
+        "eselon_empat" : "Subbagian Umum dan Kepegawaian"
+    }
+]

@@ -13,9 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cities', function (Blueprint $table) {
-            $table->char('id', 4)->primary()->unique();
-            $table->char('name')->index();
+        Schema::create('gunung_api_provinces', function (Blueprint $table) {
+            $table->id();
+
+            $table->char('gunung_api_code', 3)
+                ->index();
+            $table->foreign('gunung_api_code')
+                ->on('gunung_apis')
+                ->references('code')
+                ->onDelete('cascade');
 
             $table->char('province_id', 2)
                 ->index();
@@ -24,7 +30,6 @@ return new class extends Migration
                 ->on('provinces')
                 ->onDelete('cascade');
 
-            $table->primary('id');
             $table->timestamps();
         });
     }
@@ -36,6 +41,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cities');
+        Schema::dropIfExists('gunung_api_provinces');
     }
 };

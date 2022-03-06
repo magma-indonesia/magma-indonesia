@@ -14,7 +14,31 @@ return new class extends Migration
     public function up()
     {
         Schema::create('villages', function (Blueprint $table) {
-            $table->id();
+            $table->char('id', 10)->primary()->unique();
+            $table->char('name')->index();
+
+            $table->char('province_id', 2)
+                ->index();
+            $table->foreign('province_id')
+                ->references('id')
+                ->on('provinces')
+                ->onDelete('cascade');
+
+            $table->char('city_id', 4)
+                ->index();
+            $table->foreign('city_id')
+                ->references('id')
+                ->on('cities')
+                ->onDelete('cascade');
+
+            $table->char('district_id', 6)
+                ->index();
+            $table->foreign('district_id')
+                ->references('id')
+                ->on('districts')
+                ->onDelete('cascade');
+
+            $table->primary('id');
             $table->timestamps();
         });
     }
