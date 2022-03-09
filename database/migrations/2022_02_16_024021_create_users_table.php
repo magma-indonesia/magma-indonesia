@@ -15,9 +15,12 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->id('employee_id');
+            $table->id('sipeg_id');
             $table->uuid('uuid')->unique();
             $table->string('name');
             $table->string('avatar')->nullable();
+            $table->string('sipeg_foto')->nullable();
             $table->json('prefix')->nullable();
             $table->json('suffix')->nullable();
             $table->char('nip', 18)->nullable()->unique();

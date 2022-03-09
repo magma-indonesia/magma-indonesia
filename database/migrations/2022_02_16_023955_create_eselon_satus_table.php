@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('eselon_satus', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('code')->unique();
+            $table->string('slug')->index();
+            $table->string('deskripsi_tugas')->nullable();
             $table->timestamps();
         });
     }

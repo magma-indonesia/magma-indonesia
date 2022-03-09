@@ -23,6 +23,13 @@ class FillUser extends Command
     protected $emails;
 
     /**
+     * EmailESDM collection from json file
+     *
+     * @var Collection
+     */
+    protected $emailESDM;
+
+    /**
      * Eselons collection from json file
      *
      * @var Collection
@@ -35,6 +42,11 @@ class FillUser extends Command
     }
 
     protected function emails(): Collection
+    {
+        return collect();
+    }
+
+    protected function emailESDM(): Collection
     {
         return collect();
     }
