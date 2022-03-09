@@ -11,7 +11,7 @@ class FillGunungApi extends Command
      *
      * @var string
      */
-    protected $signature = 'fuill:gunung-api';
+    protected $signature = 'fill:gunung-api';
 
     /**
      * The console command description.
