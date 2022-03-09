@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->id('employee_id');
-            $table->id('sipeg_id');
+            $table->bigInteger('employee_id')->nullable();
+            $table->bigInteger('sipeg_id')->nullable();
             $table->uuid('uuid')->unique();
+
             $table->string('name');
             $table->string('avatar')->nullable();
             $table->string('sipeg_foto')->nullable();
@@ -52,7 +53,6 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->timestamps();
             $table->timestamps();
         });
     }

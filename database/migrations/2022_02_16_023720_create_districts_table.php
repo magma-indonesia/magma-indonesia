@@ -31,7 +31,6 @@ return new class extends Migration
                 ->on('cities')
                 ->onDelete('cascade');
 
-            $table->primary('id');
             $table->timestamps();
         });
     }

@@ -24,7 +24,6 @@ return new class extends Migration
                 ->on('provinces')
                 ->onDelete('cascade');
 
-            $table->primary('id');
             $table->timestamps();
         });
     }
