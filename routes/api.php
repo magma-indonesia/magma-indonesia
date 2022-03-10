@@ -25,6 +25,9 @@ Route::post('login/stakeholder', 'Api\StakeholderController@login')
 Route::get('stakeholder/status', 'Api\StakeholderController@status')
     ->name('stakeholder.status');
 
+Route::get('login/v1', 'Api\v1\LoginController@login')
+    ->name('login.v1');
+
 // Route::group(['prefix' => 'tesuser'], function() {
 //     Route::get('mgt','TesUserMgtController@index');
 //     Route::get('mgb','TesUserMgbController@index');
