@@ -6,6 +6,7 @@ use App\Gadd;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\KameraGunungApi;
+use Illuminate\Support\Facades\Cache;
 use Karlmonson\Ping\Facades\Ping;
 use Intervention\Image\Facades\Image;
 
@@ -13,21 +14,25 @@ class KameraGunungApiController extends Controller
 {
     protected function filteredCCTV($code)
     {
-        return KameraGunungApi::with('gunungapi:code,name')
-            ->where('publish', 1)
-            ->where('code', $code)
-            ->orderBy('code')
-            ->get()
-            ->makeHidden(['full_url']);
+        return Cache::remember("kamera_gunungapi:{$code}", 60, function () use ($code) {
+            return KameraGunungApi::with('gunungapi:code,name')
+                ->where('publish', 1)
+                ->where('code', $code)
+                ->orderBy('code')
+                ->get()
+                ->makeHidden(['full_url']);
+        });
     }
 
     protected function nonFilteredCCTV()
     {
-        return KameraGunungApi::with('gunungapi:code,name')
-            ->where('publish', 1)
-            ->orderBy('code')
-            ->get()
-            ->makeHidden(['full_url']);
+        return Cache::remember('kamera_gunungapi', 60, function () {
+            return KameraGunungApi::with('gunungapi:code,name')
+                ->where('publish', 1)
+                ->orderBy('code')
+                ->get()
+                ->makeHidden(['full_url']);
+        });
     }
 
     public function index()
@@ -46,16 +51,6 @@ class KameraGunungApiController extends Controller
 
             if ($cctvs->isEmpty())
                 abort(404);
-
-            $cctvs->each(function ($item, $key) {
-                try {
-                    $image = Image::make($item->full_url)
-                        ->widen(150)->stream('data-url');
-                    $item['image'] = $image;
-                } catch (\Exception $e) {
-                    $item['image'] = null;
-                }
-            });
 
             return [
                 'cctvs' => $cctvs,
@@ -84,16 +79,6 @@ class KameraGunungApiController extends Controller
 
             if ($cctvs->isEmpty())
                 abort(404);
-
-            $cctvs->each(function ($item, $key) {
-                try {
-                    $image = Image::make($item->full_url)
-                        ->widen(150)->stream('data-url');
-                    $item['image'] = $image;
-                } catch (\Exception $e) {
-                    $item['image'] = null;
-                }
-            });
 
             return [
                 'cctvs' => $cctvs,
