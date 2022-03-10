@@ -12,6 +12,18 @@ use Intervention\Image\Facades\Image;
 
 class KameraGunungApiController extends Controller
 {
+    protected function gadd()
+    {
+        return Cache::remember('gadd_kamera', 60, function () {
+            return Gadd::select('code', 'name')
+                ->whereHas('cctv', function ($query) {
+                    $query->where('publish', 1);
+                })
+                ->withCount('cctv')
+                ->get();
+        });
+    }
+
     protected function filteredCCTV($code)
     {
         return Cache::remember("kamera_gunungapi:{$code}", 60, function () use ($code) {
@@ -40,12 +52,7 @@ class KameraGunungApiController extends Controller
         $health = Ping::check(config('app.cctv_url'));
 
         if ($health == 200) {
-            $gadds = Gadd::select('code', 'name')
-                ->whereHas('cctv', function ($query) {
-                    $query->where('publish', 1);
-                })
-                ->withCount('cctv')
-                ->get();
+            $gadds = $this->gadd();
 
             $cctvs = $this->nonFilteredCCTV();
 
@@ -54,11 +61,12 @@ class KameraGunungApiController extends Controller
 
             return [
                 'cctvs' => $cctvs,
-                'gadds' => $gadds
+                'gunung_api' => $gadds
             ];
         }
 
         return response()->json([
+            'status' => false,
             'message' => 'Server CCTV sedang offline'
         ], 500);
     }
@@ -68,13 +76,6 @@ class KameraGunungApiController extends Controller
         $health = Ping::check(config('app.cctv_url'));
 
         if ($health == 200) {
-            $gadds = Gadd::select('code', 'name')
-                ->whereHas('cctv', function ($query) {
-                    $query->where('publish', 1);
-                })
-                ->withCount('cctv')
-                ->get();
-
             $cctvs = $this->filteredCCTV($code);
 
             if ($cctvs->isEmpty())
@@ -86,6 +87,7 @@ class KameraGunungApiController extends Controller
         }
 
         return response()->json([
+            'status' => false,
             'message' => 'Server CCTV sedang offline'
         ], 500);
     }
@@ -95,8 +97,7 @@ class KameraGunungApiController extends Controller
         $health = Ping::check(config('app.cctv_url'));
 
         if ($health == 200) {
-            $cctv = KameraGunungApi::with('gunungapi:code,name')
-                ->where('publish', 1)
+            $cctv = KameraGunungApi::where('publish', 1)
                 ->where('uuid', $request->uuid)
                 ->firstOrFail();
 
@@ -106,12 +107,14 @@ class KameraGunungApiController extends Controller
                 return Image::make($cctv->full_url)->response();
             } catch (\Throwable $th) {
                 return response()->json([
+                    'status' => false,
                     'message' => 'Server CCTV sedang offline'
                 ], 500);
             }
         }
 
         return response()->json([
+            'status' => false,
             'message' => 'Server CCTV sedang offline'
         ], 500);
     }
