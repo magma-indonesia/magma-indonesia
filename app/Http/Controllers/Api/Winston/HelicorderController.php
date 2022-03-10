@@ -18,11 +18,14 @@ class HelicorderController extends Controller
             ->get();
     }
 
-    public function show(Request $request)
+    public function show($scnl, Request $request)
     {
-        $validatedData = $request->validate([
-            'code' => 'required',
-        ]);
+        if (!Seismometer::where('scnl',$scnl)->first()) {
+            return [
+                'status' => false,
+                'message' => 'Stasiun tidak ditemukan'
+            ];
+        }
 
         $time = $request->input('t1', -2);
         $width = $request->input('w', 720);
@@ -31,7 +34,7 @@ class HelicorderController extends Controller
         $timezone = $request->input('tz', 'Asia/Jakarta');
 
         $url =
-        config('app.winston_url') . ':' . config('app.winston_port') . '/heli?code=' . $validatedData['code'] . '&w='.$width.'&h='. $height.'&lb='. $label.'&tz='.$timezone.'&t1='.$time;
+        config('app.winston_url') . ':' . config('app.winston_port') . '/heli?code=' . $scnl . '&w='.$width.'&h='. $height.'&lb='. $label.'&tz='.$timezone.'&t1='.$time;
 
         try {
             return Image::make($url)->response();
