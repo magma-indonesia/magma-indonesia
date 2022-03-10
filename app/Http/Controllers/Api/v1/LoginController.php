@@ -8,6 +8,7 @@ use App\v1\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class LoginController extends Controller
 {
@@ -46,7 +47,7 @@ class LoginController extends Controller
         ];
     }
 
-    public function loginAttempt(array $validated, int $ttl = 120): array
+    protected function loginAttempt(array $validated, int $ttl = 120): array
     {
         $credentials = $this->credentials($validated);
 
@@ -54,11 +55,12 @@ class LoginController extends Controller
             $user = User::where('vg_nip', $validated['vg_nip'])
                     ->firstOrFail();
 
+            $expired_at = now()->addMinutes($ttl);
+
             $token = Auth::guard('api')->setTTL($ttl)->claims([
                             'roles' => Auth::user()->getRoleNames(),
+                            'expired_at' => $expired_at,
                         ])->attempt($credentials);
-
-            $expired_at = now()->addMinutes($ttl);
 
             return $this->respondWithToken($user, $token, $expired_at);
         }
@@ -76,5 +78,24 @@ class LoginController extends Controller
         return response()->json(
             $this->loginAttempt($validated)
         );
+    }
+
+    public function status(): JsonResponse
+    {
+        try {
+            JWTAuth::parseToken()->authenticate();
+        } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $exception) {
+            return $this->ApiException(419, $exception->getMessage());
+        } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $exception) {
+            return $this->ApiException(419, $exception->getMessage());
+        } catch (\Tymon\JWTAuth\Exceptions\TokenBlacklistedException $exception) {
+            return $this->ApiException(419, $exception->getMessage());
+        } catch (\Tymon\JWTAuth\Exceptions\JWTException $exception) {
+            return $this->ApiException(500, 'Token Invalid');
+        }
+
+        $payload = Auth::guard('stakeholder')->payload();
+
+        return response()->json($payload->toArray());
     }
 }
