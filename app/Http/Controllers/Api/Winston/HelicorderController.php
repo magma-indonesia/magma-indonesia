@@ -28,8 +28,8 @@ class HelicorderController extends Controller
         }
 
         $time = $request->input('t1', -2);
-        $width = $request->input('w', 720);
-        $height = $request->input('h', 320);
+        $width = $request->input('w', 1200);
+        $height = $request->input('h', 720);
         $label = $request->input('lb', 1);
         $timezone = $request->input('tz', 'Asia/Jakarta');
 
