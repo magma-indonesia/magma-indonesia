@@ -22,8 +22,8 @@ class LoginController extends Controller
     {
         return [
             'success' => 1,
-            'login' => $user->makeHidden(['id','status','log'])
-                ->toArray(),
+            'login' => [$user->makeHidden(['id','status','log'])
+                ->toArray()],
             'response' => [
                 'token' => $token,
                 'type' => 'bearer',
