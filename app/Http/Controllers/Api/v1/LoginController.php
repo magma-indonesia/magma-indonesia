@@ -20,9 +20,9 @@ class LoginController extends Controller
     protected function respondWithToken(User $user, string $token, Carbon $expired_at): array
     {
         return [
+            'success' => 1,
             'login' => $user->makeHidden(['id','status','log'])
                 ->toArray(),
-            'success' => 1,
             'response' => [
                 'token' => $token,
                 'type' => 'bearer',
@@ -32,17 +32,23 @@ class LoginController extends Controller
                     'hours' => $expired_at->diffInHours(now()),
                     'minutes' => $expired_at->diffInMinutes(now()),
                 ],
+                'roles' => Auth::user()->getRoleNames(),
             ]
+        ];
+    }
+
+    protected function credentials(array $validated): array
+    {
+        return [
+            $this->username($validated['vg_nip']) => $validated['vg_nip'],
+            'password' => $validated['vg_password'],
+            'status' => 1
         ];
     }
 
     public function loginAttempt(array $validated, int $ttl = 120): array
     {
-        $credentials = [
-            $this->username($validated['vg_nip']) => $validated['vg_nip'],
-            'password' => $validated['vg_password'],
-            'status' => 1
-        ];
+        $credentials = $this->credentials($validated);
 
         if (Auth::once($credentials)) {
             $user = User::where('vg_nip', $validated['vg_nip'])
