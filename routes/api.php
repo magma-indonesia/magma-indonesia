@@ -182,9 +182,9 @@ Route::name('winston.')->group(function () {
     });
 });
 
-Route::fallback(function(){
-    return response()->json([
-        'status' => 'false',
-        'code' => '404',
-        'message' => 'URL tidak ditemukan'], 404);
-});
+// Route::fallback(function(){
+//     return response()->json([
+//         'status' => 'false',
+//         'code' => '404',
+//         'message' => 'URL tidak ditemukan'], 404);
+// });
