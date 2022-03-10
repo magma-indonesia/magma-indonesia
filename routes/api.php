@@ -85,6 +85,12 @@ Route::name('v1.')->group(function () {
                     Route::group(['prefix' => 'gunung-api'], function () {
                         Route::get('/','Api\v1\HomeController@gunungapi')
                             ->name('gunung-api');
+                        Route::get('/cctv', 'Api\v1\KameraGunungApiController@index')
+                            ->name('gunung-api.cctv');
+                        Route::post('/cctv', 'Api\v1\KameraGunungApiController@show')
+                            ->name('gunung-api.cctv');
+                        Route::get('/cctv/{code}', 'Api\v1\KameraGunungApiController@filter')
+                            ->name('gunung-api.cctv.filter');
                         Route::get('/informasi-letusan','Api\v1\MagmaVenController@index')
                             ->name('gunung-api.letusan');
                         Route::get('/informasi-letusan/latest','Api\v1\MagmaVenController@latest')
@@ -167,7 +173,7 @@ Route::name('winston.')->group(function () {
 
         Route::get('helicorder', 'Api\Winston\HelicorderController@index')
             ->name('helicorder.index');
-        Route::get('helicorder/show', 'Api\Winston\HelicorderController@show')
+        Route::get('helicorder/{scnl}', 'Api\Winston\HelicorderController@show')
             ->name('helicorder.show');
 
     });
