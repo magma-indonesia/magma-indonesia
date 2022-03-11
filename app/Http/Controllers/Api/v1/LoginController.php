@@ -21,7 +21,7 @@ class LoginController extends Controller
     protected function respondWithToken(User $user, string $token, Carbon $expired_at): array
     {
         return [
-            'success' => 1,
+            'success' => '1',
             'login' => [$user->makeHidden(['id','status','log'])
                 ->toArray()],
             'response' => [
