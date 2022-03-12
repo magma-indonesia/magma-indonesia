@@ -65,7 +65,7 @@ class LoginController extends Controller
             return $this->respondWithToken($user, $token, $expired_at);
         }
 
-        return ['success' => false, 'error' => 'Unauthorized'];
+        return ['success' => '0', 'error' => 'Unauthorized'];
     }
 
     public function login(Request $request): JsonResponse
