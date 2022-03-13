@@ -110,7 +110,7 @@ Route::name('v1.')->group(function () {
             ->middleware('revalidate');
         Route::get('gunung-api/laporan-harian/{date}', 'FrontPage\v1\LaporanHarianController@show')
             ->name('gunungapi.laporan-harian.show')
-            ->middleware('signed');
+            ->middleware('revalidate');
 
         Route::get('gerakan-tanah/tanggapan','FrontPage\v1\GerakanTanahController@indexGertan')
             ->name('gertan.sigertan');

@@ -4,15 +4,11 @@ namespace App\Http\Controllers\FrontPage\v1;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\UpdateLaporanHarianStatistik;
-use App\Traits\v1\DeskripsiGempa;
 use App\v1\Gadd;
 use App\v1\MagmaVar;
-use App\v1\MagmaVarListRekomendasi;
 use App\v1\MagmaVarRekomendasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class LaporanHarianController extends Controller
@@ -352,12 +348,16 @@ class LaporanHarianController extends Controller
         return $gempas;
     }
 
-    protected function updateRekomendasi(MagmaVar $var): MagmaVar
+    protected function updateRekomendasi(MagmaVar $var): ?MagmaVar
     {
         $rekomendasi = MagmaVarRekomendasi::where('ga_code', $var->ga_code)
                             ->where('status', $var->cu_status)
                             ->orderByDesc('date')
                             ->first();
+
+        if (is_null($rekomendasi)) {
+            return null;
+        }
 
         $var->update([
             'magma_var_rekomendasi_id' => $rekomendasi->id
@@ -369,27 +369,26 @@ class LaporanHarianController extends Controller
     protected function rekomendasi(MagmaVar $var): Collection
     {
         if (is_null($var->rekomendasi)) {
-            return $this->updateRekomendasi($var)->rekomendasi->lists->pluck('rekomendasi');
+
+            $rekomendasi = $this->updateRekomendasi($var);
+
+            if (!is_null($rekomendasi)) {
+                return $rekomendasi->rekomendasi->lists->pluck('rekomendasi');
+            }
+
+            return collect(preg_split('/\n|\r\n/', $var->var_rekom))->reject(function ($rekomendasi) {
+                return empty($rekomendasi);
+            });
         }
 
         return $var->rekomendasi->lists->pluck('rekomendasi');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    protected function transformed(Collection $gadds): Collection
     {
-        $gadds = Gadd::select('ga_code', 'ga_nama_gapi')
-            ->whereNotIn('ga_code', ['TEO'])
-            ->where('laporan_harian',1)
-            ->orderBy('ga_nama_gapi')
-            ->with('var.rekomendasi.lists')
-            ->get();
-
-        $gadds->transform(function ($gadd) {
+        $filtered = $gadds->reject(function ($gadd) {
+            return is_null($gadd->var);
+        })->transform(function ($gadd) {
             return [
                 'name' => $gadd->ga_nama_gapi,
                 'status' => $this->status($gadd->var),
@@ -403,7 +402,29 @@ class LaporanHarianController extends Controller
             ];
         });
 
-        $groupedByStatus = $gadds->groupBy('status')->sortKeysDesc();
+        return $filtered->groupBy('status')->sortKeysDesc();
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $gadds = Gadd::select('ga_code', 'ga_nama_gapi')
+            ->whereNotIn('ga_code', ['TEO'])
+            ->where('laporan_harian',1)
+            ->orderBy('ga_nama_gapi')
+            ->with([
+                'var' => function ($query) {
+                    $query->latestVar();
+                },
+                'var.rekomendasi.lists'
+            ])
+            ->get();
+
+        $groupedByStatus = $this->transformed($gadds);
 
         UpdateLaporanHarianStatistik::dispatch();
 
@@ -436,12 +457,30 @@ class LaporanHarianController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $date
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($date)
     {
-        //
+        $gadds = Gadd::select('ga_code', 'ga_nama_gapi')
+            ->whereNotIn('ga_code', ['TEO'])
+            ->where('laporan_harian',1)
+            ->orderBy('ga_nama_gapi')
+            ->with([
+                'var' => function ($query) use ($date) {
+                    $query->byDate($date);
+                },
+                'var.rekomendasi.lists',
+            ])
+            ->get();
+
+        $groupedByStatus = $this->transformed($gadds);
+
+        UpdateLaporanHarianStatistik::dispatch();
+
+        return view('v1.home.laporan-harian', [
+            'groupedByStatus' => $groupedByStatus
+        ]);
     }
 
     /**

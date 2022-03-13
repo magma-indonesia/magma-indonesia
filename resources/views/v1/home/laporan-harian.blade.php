@@ -14,7 +14,7 @@ Laporan Harian
 @endsection
 
 @section('main')
-<div class="nav-statistics-wrapper">
+<div class="nav-statistics-wrapper mg-b-20">
     <nav class="nav">
         @foreach ($groupedByStatus as $status => $gadds)
         @if ($loop->first)

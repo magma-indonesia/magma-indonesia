@@ -15,20 +15,7 @@ class Gadd extends Model
 
     protected $table = 'ga_dd';
 
-    protected $fillable = [
-        'ga_code',
-        'ga_nama_gapi',
-        'slug',
-        'ga_tzone',
-        'ga_zonearea',
-        'ga_kab_gapi',
-        'ga_prov_gapi',
-        'ga_koter_gapi',
-        'ga_tipe_gapi',
-        'ga_elev_gapi',
-        'ga_lat_gapi',
-        'ga_lon_gapi'
-    ];
+    protected $guarded = ['no'];
 
     public function normal()
     {
@@ -64,10 +51,7 @@ class Gadd extends Model
 
     public function var()
     {
-        return $this->hasOne('App\v1\MagmaVar','ga_code','ga_code')
-                ->from(DB::raw('magma_var, (SELECT magma_var.ga_code, MAX(magma_var.var_noticenumber) AS var_noticenumber FROM magma_var GROUP BY magma_var.ga_code) AS latest_var'))
-                ->select('magma_var.*')
-                ->whereRaw('magma_var.ga_code = latest_var.ga_code AND magma_var.var_noticenumber = latest_var.var_noticenumber');
+        return $this->hasOne('App\v1\MagmaVar','ga_code','ga_code');
     }
 
     public function vona()

@@ -3,6 +3,8 @@
 namespace App\v1;
 
 use App\v1\OldModelVar;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
 class MagmaVar extends OldModelVar
 {
@@ -51,5 +53,18 @@ class MagmaVar extends OldModelVar
         return $this->belongsTo('App\v1\MagmaVarRekomendasi', 'magma_var_rekomendasi_id','id');
     }
 
-    // protected $dates = ['var_data_date'];
+    public function scopeByDate(Builder $query, $noticnumber): Builder
+    {
+        return $query->from(DB::raw('magma_var, (SELECT magma_var.ga_code, MAX(magma_var.var_noticenumber) AS var_noticenumber FROM magma_var WHERE magma_var.var_noticenumber LIKE "'.$noticnumber.'%" GROUP BY magma_var.ga_code) AS latest_var'))
+                ->select('magma_var.*')
+                ->whereRaw('magma_var.ga_code = latest_var.ga_code AND magma_var.var_noticenumber = latest_var.var_noticenumber');
+    }
+
+    public function scopeLatestVar(Builder $query): Builder
+    {
+        return $query->from(DB::raw('magma_var, (SELECT magma_var.ga_code, MAX(magma_var.var_noticenumber) AS var_noticenumber FROM magma_var GROUP BY magma_var.ga_code) AS latest_var'))
+                ->select('magma_var.*')
+                ->whereRaw('magma_var.ga_code = latest_var.ga_code AND magma_var.var_noticenumber = latest_var.var_noticenumber');
+    }
+
 }
