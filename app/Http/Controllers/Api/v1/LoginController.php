@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\v1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\StatistikLogin;
+use App\StatistikLoginVar;
 use App\v1\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
@@ -47,6 +49,14 @@ class LoginController extends Controller
         ];
     }
 
+    protected function statistic(User $user): void
+    {
+        StatistikLoginVar::updateOrCreate([
+            'nip' => $user->vg_nip,
+            'date' => now()->format('Y-m-d'),
+        ], [])->increment('hit');
+    }
+
     protected function loginAttempt(array $validated, int $ttl = 120): array
     {
         $credentials = $this->credentials($validated);
@@ -61,6 +71,8 @@ class LoginController extends Controller
                             'roles' => Auth::user()->getRoleNames(),
                             'expired_at' => $expired_at,
                         ])->attempt($credentials);
+
+            $this->statistic($user);
 
             return $this->respondWithToken($user, $token, $expired_at);
         }
