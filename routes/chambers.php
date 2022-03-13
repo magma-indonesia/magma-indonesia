@@ -71,6 +71,15 @@ Route::name('token.')->group(function () {
     });
 });
 
+Route::name('migration.')->group(function () {
+    Route::group(['prefix' => 'migration'], function () {
+        Route::get('/', 'MigrationController@index')
+            ->name('index');
+        Route::delete('/{migration}', 'MigrationController@destroy')
+            ->name('destroy');
+    });
+});
+
 Route::name('stakeholder.')->group(function () {
     Route::group(['middleware' => ['role:Super Admin'], 'prefix' => 'stakeholder'], function () {
         Route::get('/','StakeholderController@index')->name('index');
@@ -317,6 +326,8 @@ Route::name('v1.')->group(function () {
                         'create','store'
                     ]
                 ]);
+
+                Route::resource('laporan-harian', 'v1\LaporanHarianController');
 
                 Route::resource('form-kesimpulan','v1\KesimpulanController');
 
