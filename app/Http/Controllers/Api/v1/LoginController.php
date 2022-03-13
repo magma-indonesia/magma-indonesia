@@ -94,6 +94,15 @@ class LoginController extends Controller
         return ['success' => '0', 'error' => 'Unauthorized'];
     }
 
+    protected function apiException(int $code = 419, string $message): JsonResponse
+    {
+        return response()->json([
+            'success' => '0',
+            'code' => $code,
+            'message' => $message
+        ], $code);
+    }
+
     public function login(Request $request): JsonResponse
     {
         $validated = $request->validate([
@@ -121,16 +130,16 @@ class LoginController extends Controller
         try {
             JWTAuth::parseToken()->authenticate();
         } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $exception) {
-            return $this->ApiException(419, $exception->getMessage());
+            return $this->apiException(419, $exception->getMessage());
         } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $exception) {
-            return $this->ApiException(419, $exception->getMessage());
+            return $this->apiException(419, $exception->getMessage());
         } catch (\Tymon\JWTAuth\Exceptions\TokenBlacklistedException $exception) {
-            return $this->ApiException(419, $exception->getMessage());
+            return $this->apiException(419, $exception->getMessage());
         } catch (\Tymon\JWTAuth\Exceptions\JWTException $exception) {
-            return $this->ApiException(500, 'Token Invalid');
+            return $this->apiException(500, 'Token Invalid');
         }
 
-        $payload = Auth::guard('stakeholder')->payload();
+        $payload = Auth::guard('api')->payload();
 
         return response()->json($payload->toArray());
     }
