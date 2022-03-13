@@ -23,6 +23,7 @@ class Seismometer extends Model
         'latitude',
         'longitude',
         'is_active',
+        'is_primary',
         'hit',
         'published',
     ];
@@ -30,6 +31,7 @@ class Seismometer extends Model
     protected $casts = [
         'published' => 'boolean',
         'is_active' => 'boolean',
+        'is_primary' => 'boolean',
     ];
 
     protected $appends = [
