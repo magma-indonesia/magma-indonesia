@@ -6,11 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class StatistikLoginVar extends Model
 {
-    protected $fillable = [
-        'date',
-        'nip',
-        'hit',
-    ];
+    protected $guarded = ['id'];
 
     protected $dates = [
         'date',

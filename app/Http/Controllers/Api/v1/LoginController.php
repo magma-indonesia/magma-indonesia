@@ -20,7 +20,7 @@ class LoginController extends Controller
         return $username;
     }
 
-    protected function respondWithToken(User $user, string $token, Carbon $expired_at): array
+    protected function respondWithToken(User $user, string $token, Carbon $expired_at, array $statistik): array
     {
         return [
             'success' => '1',
@@ -36,7 +36,8 @@ class LoginController extends Controller
                     'minutes' => $expired_at->diffInMinutes(now()),
                 ],
                 'roles' => Auth::user()->getRoleNames(),
-            ]
+            ],
+            'statistic' => $statistik,
         ];
     }
 
@@ -49,12 +50,22 @@ class LoginController extends Controller
         ];
     }
 
-    protected function statistic(User $user): void
+    protected function statistic(User $user): array
     {
-        StatistikLoginVar::updateOrCreate([
+        $lastLogin = StatistikLoginVar::where('nip', $user->vg_nip)
+            ->latest()->first();
+
+        $statistik = StatistikLoginVar::updateOrCreate([
             'nip' => $user->vg_nip,
             'date' => now()->format('Y-m-d'),
-        ], [])->increment('hit');
+        ], []);
+
+        $statistik->increment('hit');
+
+        return [
+            'last_login' => is_null($lastLogin) ? null : $lastLogin->updated_at->format('Y-m-d H:i:s'),
+            'total_login' => $statistik->hit,
+        ];
     }
 
     protected function loginAttempt(array $validated, int $ttl = 120): array
@@ -72,9 +83,9 @@ class LoginController extends Controller
                             'expired_at' => $expired_at,
                         ])->attempt($credentials);
 
-            $this->statistic($user);
+            $statistik = $this->statistic($user);
 
-            return $this->respondWithToken($user, $token, $expired_at);
+            return $this->respondWithToken($user, $token, $expired_at, $statistik);
         }
 
         return ['success' => '0', 'error' => 'Unauthorized'];
