@@ -58,6 +58,15 @@
                     <span class="nav-label"> Token</span>
                 </a>
             </li>
+
+            @if (auth()->user()->nip === '198803152015031005')
+            <li class="{{ active(['chambers.migration.*']) }}">
+                <a href="{{ route('chambers.migration.index') }}">
+                    <span class="nav-label"> Migration</span>
+                </a>
+            </li>
+            @endif
+
             @role('Super Admin')
             <li class="{{ active(['chambers.stakeholder.*']) }}">
                 <a href="#">
