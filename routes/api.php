@@ -27,6 +27,8 @@ Route::get('stakeholder/status', 'Api\StakeholderController@status')
 
 Route::get('login/v1', 'Api\v1\LoginController@login')
     ->name('login.v1');
+Route::get('logout/v1', 'Api\v1\LoginController@logout')
+    ->name('logout.v1');
 Route::get('login/v1/status', 'Api\v1\LoginController@status')
     ->name('login.v1.status');
 

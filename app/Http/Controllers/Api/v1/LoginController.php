@@ -10,6 +10,7 @@ use App\v1\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class LoginController extends Controller
@@ -73,8 +74,10 @@ class LoginController extends Controller
         $credentials = $this->credentials($validated);
 
         if (Auth::once($credentials)) {
-            $user = User::where('vg_nip', $validated['vg_nip'])
+            $user = Cache::remember('login.v1', 60, function () use ($validated) {
+                return User::where('vg_nip', $validated['vg_nip'])
                     ->firstOrFail();
+            });
 
             $expired_at = now()->addMinutes($ttl);
 
@@ -101,6 +104,16 @@ class LoginController extends Controller
         return response()->json(
             $this->loginAttempt($validated)
         );
+    }
+
+    public function logout(): JsonResponse
+    {
+        JWTAuth::parseToken()->invalidate();
+
+        return response()->json([
+            'success' => '1',
+            'message' => 'Berhasil menghapus token',
+        ]);
     }
 
     public function status(): JsonResponse
