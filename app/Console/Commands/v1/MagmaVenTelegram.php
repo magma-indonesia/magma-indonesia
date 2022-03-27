@@ -56,12 +56,16 @@ class MagmaVenTelegram extends Command
         $ven = MagmaVen::with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea,ga_elev_gapi', 'user:vg_nip,vg_nama')->lastVen()->first();
         $venDate = Carbon::createFromFormat('Y-m-d H:i', "{$ven->erupt_tgl} {$ven->erupt_jam}");
 
-         if ($venDate->gt($venTelegram->datetime)) {
+        $this->info($venDate->gt($venTelegram->datetime) ? 'True' : 'False');
+
+        if ($venDate->gt($venTelegram->datetime)) {
+            $this->info('Sending...');
             $ven->notify(new TelegramMagmaVenTelegram($ven));
+            $this->info('Sent!');
             $ven->sent_to_telegram_at = now();
             $ven->save();
 
             $this->updateTelegramNotification($ven);
-         }
+        }
     }
 }
