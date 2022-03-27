@@ -59,13 +59,14 @@ class MagmaVenTelegram extends Command
         $this->info($venDate->gt($venTelegram->datetime) ? 'True' : 'False');
 
         if ($venDate->gt($venTelegram->datetime)) {
-            $this->info('Sending...');
+            $this->info('Telegram : Sending...');
             $ven->notify(new TelegramMagmaVenTelegram($ven));
-            $this->info('Sent!');
+            $this->info('Telegram : Sent!');
             $ven->sent_to_telegram_at = now();
             $ven->save();
-
+            $this->info('Ven : Updated!');
             $this->updateTelegramNotification($ven);
+            $this->info('Telegram : Updated!');
         }
     }
 }
