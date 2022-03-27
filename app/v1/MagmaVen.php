@@ -128,7 +128,7 @@ class MagmaVen extends Model
 
     public function scopeLastVen(Builder $query)
     {
-        return $query->orderBy('erupt_tgl','desc')->orderBy('erupt_jam');
+        return $query->orderBy('erupt_tgl','desc')->orderBy('erupt_jam', 'desc');
     }
 
     public function gunungapi()
