@@ -2,10 +2,14 @@
 
 namespace App\v1;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class MagmaVen extends Model
 {
+    use Notifiable;
+
     protected $connection = 'magma';
 
     protected $table = 'magma_erupt';
@@ -15,7 +19,8 @@ class MagmaVen extends Model
     protected $casts = [
         'is_published' => 'boolean',
         'is_blasted' => 'boolean',
-        'erupt_tsp' => 'datetime:Y-m-d H:i:s'
+        'erupt_tsp' => 'datetime:Y-m-d H:i:s',
+        'sent_to_telegram_at' => 'datetime:Y-m-d H:i:s',
     ];
 
     public $timestamps = false;
@@ -23,6 +28,17 @@ class MagmaVen extends Model
     protected $guarded = [
         'erupt_id',
     ];
+
+    /**
+     * Route notifications for the Telegram channel.
+     *
+     * @return int
+     */
+    public function routeNotificationForTelegram()
+    {
+        return "-1001228642046";
+    }
+
 
     /**
      * Merubah status dari string menjadi integer
@@ -108,6 +124,11 @@ class MagmaVen extends Model
     public function getEruptKetAttribute(string $value)
     {
         return $value == '-' ? null : $value;
+    }
+
+    public function scopeLastVen(Builder $query)
+    {
+        return $query->orderBy('erupt_tgl','desc')->orderBy('erupt_jam');
     }
 
     public function gunungapi()
