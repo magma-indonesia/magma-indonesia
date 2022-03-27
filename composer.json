@@ -13,6 +13,7 @@
         "guzzlehttp/guzzle": "^6.3",
         "intervention/image": "^2.4",
         "karlmonson/laravel-ping": "^1.0",
+        "laravel-notification-channels/telegram": "^1.0",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "~1.0",
         "laravolt/indonesia": "^0.7.0",
@@ -72,6 +73,9 @@
     "config": {
         "preferred-install": "dist",
         "sort-packages": true,
-        "optimize-autoloader": true
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "kylekatarnls/update-helper": true
+        }
     }
 }
