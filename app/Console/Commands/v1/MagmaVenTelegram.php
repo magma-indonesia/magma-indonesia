@@ -4,6 +4,7 @@ namespace App\Console\Commands\v1;
 
 use App\Notifications\v1\Telegram\MagmaVenTelegram as TelegramMagmaVenTelegram;
 use App\TelegramNotification;
+use App\Traits\v1\DeskripsiLetusan;
 use App\v1\MagmaVen;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
@@ -12,6 +13,8 @@ use Thujohn\Twitter\Facades\Twitter;
 
 class MagmaVenTelegram extends Command
 {
+    use DeskripsiLetusan;
+
     /**
      * The name and signature of the console command.
      *
