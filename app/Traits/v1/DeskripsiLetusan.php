@@ -46,7 +46,7 @@ trait DeskripsiLetusan
 
     public function gempa(MagmaVen $ven): string
     {
-        return "Erupsi ini terekam di seismograf dengan amplitudo maksimum {$ven->erupt_amp} mm dan durasi {$ven->erupt_drs} detik.";
+        return "Erupsi terekam di seismograf dengan amplitudo maksimum {$ven->erupt_amp} mm dan durasi {$ven->erupt_drs} detik.";
     }
 
     public function tanggal(MagmaVen $ven): string
@@ -64,5 +64,20 @@ trait DeskripsiLetusan
     public function deskripsi(MagmaVen $ven): string
     {
         return "Terjadi erupsi G. {$ven->gunungapi->ga_nama_gapi} {$this->tanggal($ven)}{$this->visual($ven)} {$this->gempa($ven)}";
+    }
+
+    public function ketinggianTwitter(MagmaVen $ven): string
+    {
+        return " dengan tinggi kolom abu teramati ± {$ven->erupt_tka} m di atas puncak.";
+    }
+
+    public function visualTwitter(MagmaVen $ven): string
+    {
+        return $ven->erupt_vis ? $this->ketinggianTwitter($ven) : '. Visual letusan tidak teramati.';
+    }
+
+    public function deskripsiTwitter(MagmaVen $ven): string
+    {
+        return "Terjadi erupsi G. {$ven->gunungapi->ga_nama_gapi} {$this->tanggal($ven)}{$this->visualTwitter($ven)} {$this->gempa($ven)} {$this->url($ven)}";
     }
 }
