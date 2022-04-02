@@ -7,6 +7,8 @@ use App\TelegramNotification;
 use App\v1\MagmaVen;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
+use Shivella\Bitly\Facade\Bitly;
+use Thujohn\Twitter\Facades\Twitter;
 
 class MagmaVenTelegram extends Command
 {
@@ -44,6 +46,17 @@ class MagmaVenTelegram extends Command
         ]);
     }
 
+    protected function sendToTwitter($ven): string
+    {
+        $tweet = $this->deskripsiTwitter($ven);
+        $url = Bitly::getUrl($this->url($ven));
+        $content = "{$tweet} {$url}";
+
+        Twitter::postTweet(['status' => $content, 'format' => 'json']);
+
+        return $url;
+    }
+
     /**
      * Execute the console command.
      *
@@ -63,8 +76,14 @@ class MagmaVenTelegram extends Command
             $ven->notify(new TelegramMagmaVenTelegram($ven));
             $this->info('Telegram : Sent!');
             $ven->sent_to_telegram_at = now();
+
+            $this->info('Twitter : Sending...');
+            $ven->bitly = $this->sendToTwitter($ven);
+            $this->info('Twitter : Sent!');
+
             $ven->save();
             $this->info('Ven : Updated!');
+
             $this->updateTelegramNotification($ven);
             $this->info('Telegram : Updated!');
         }

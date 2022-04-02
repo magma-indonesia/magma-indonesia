@@ -4,7 +4,6 @@ namespace App\Traits\v1;
 
 use App\v1\MagmaVen;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 
 trait DeskripsiLetusan
@@ -78,6 +77,6 @@ trait DeskripsiLetusan
 
     public function deskripsiTwitter(MagmaVen $ven): string
     {
-        return "Terjadi erupsi G. {$ven->gunungapi->ga_nama_gapi} {$this->tanggal($ven)}{$this->visualTwitter($ven)} {$this->gempa($ven)} {$this->url($ven)}";
+        return "Terjadi #erupsi G. {$ven->gunungapi->ga_nama_gapi} {$this->tanggal($ven)}{$this->visualTwitter($ven)} {$this->gempa($ven)} #PVMBG";
     }
 }
