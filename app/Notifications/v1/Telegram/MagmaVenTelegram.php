@@ -6,7 +6,6 @@ use App\Traits\v1\DeskripsiLetusan;
 use App\v1\MagmaVen;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use NotificationChannels\Telegram\TelegramChannel;
 use NotificationChannels\Telegram\TelegramFile;
 
