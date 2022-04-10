@@ -28,6 +28,7 @@ class MagmaSigertanShowResource extends JsonResource
         $pelapukan = $this->tanggapan->qls_jtp ? 'Jenis Pelapukan berupa ' . $this->tanggapan->qls_jtp.'.' : '';
         $struktur = $this->tanggapan->qls_str ? ' Struktur berupa ' . $this->tanggapan-> qls_str . '.' : '';
         $kedalaman_air = $this->tanggapan->qls_dep ? ' dengan kedalaman air tanah sekitar ' . $this->tanggapan->qls_dep . ' meter di bawah permukaan.' : '.';
+        $kemiringan_lereng = $this->tanggapan->qls_mrl ? ' yang memiliki kemiringan lereng ' . implode(', ', $this->tanggapan->qls_mrl) : '.';
 
         return [
             'laporan' => [
@@ -56,7 +57,7 @@ class MagmaSigertanShowResource extends JsonResource
                     'jalan_rusak' => $this->tanggapan->qls_pjr,
                 ],
                 'kondisi' => [
-                    'morfologi' => empty($this->tanggapan->qls_sba) ? null : 'Secara umum lokasi gerakan tanah ini merupakan daerah ' . strtolower(implode(', ', $this->tanggapan->qls_sba)) . ' yang memiliki kemiringan lereng ' . implode(', ', $this->tanggapan->qls_mrl),
+                    'morfologi' => empty($this->tanggapan->qls_sba) ? null : 'Secara umum lokasi gerakan tanah ini merupakan daerah ' . strtolower(implode(', ', $this->tanggapan->qls_sba)) . $kemiringan_lereng,
                     'geologi' => empty($this->tanggapan->qls_frm) ? null : 'Berdasarkan peta geologi, lokasi bencana tersusun oleh formasi ' . $this->tanggapan->qls_frm . '. Jenis Batuan di antaranya adalah ' . $this->tanggapan->qls_jbt . '. '.$pelapukan.$struktur,
                     'keairan' => empty($this->tanggapan->qls_air) ? null : 'Keairan di lokasi gerakan tanah berupa ' . implode(', ', $this->tanggapan->qls_air) . $kedalaman_air,
                     'tata_guna_lahan' => empty($this->tanggapan->qls_tgl) ? null : 'Tata Guna Lahan  di lokasi gerakan tanah ini berupa ' . implode(', ', $this->tanggapan->qls_tgl) . '.',
