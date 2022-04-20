@@ -28,6 +28,7 @@ class Blacklist
             '8.140.126.204',
             '218.28.13.203',
             '8.209.204.208',
+            '118.25.17.135',
         ];
 
         $ip = request()->header('X-Forwarded-For') ?: $request->ip();
