@@ -45,6 +45,10 @@ trait DeskripsiLetusan
 
     public function gempa(MagmaVen $ven): string
     {
+        if ($ven->erupsi_berlangsung) {
+            return "Saat laporan ini dibuat, erupsi masih berlangsung.";
+        }
+
         return "Erupsi terekam di seismograf dengan amplitudo maksimum {$ven->erupt_amp} mm dan durasi {$ven->erupt_drs} detik.";
     }
 
@@ -77,6 +81,6 @@ trait DeskripsiLetusan
 
     public function deskripsiTwitter(MagmaVen $ven): string
     {
-        return "Terjadi #erupsi G. {$ven->gunungapi->ga_nama_gapi} {$this->tanggal($ven)}{$this->visualTwitter($ven)} {$this->gempa($ven)} #PVMBG";
+        return "Terjadi #erupsi G. {$ven->gunungapi->ga_nama_gapi} {$this->tanggal($ven)}{$this->visualTwitter($ven)} {$this->gempa($ven)} #PVMBG @id_magma";
     }
 }
