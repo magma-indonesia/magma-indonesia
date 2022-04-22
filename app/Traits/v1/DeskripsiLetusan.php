@@ -35,12 +35,12 @@ trait DeskripsiLetusan
 
     public function ketinggian(MagmaVen $ven): string
     {
-        return " dengan tinggi kolom abu teramati ± {$ven->erupt_tka} m di atas puncak (± {$this->ketinggianMdpl($ven)} m di atas permukaan laut). {$this->kolomAbu($ven)}";
+        return "Tinggi kolom abu teramati ± {$ven->erupt_tka} m di atas puncak (± {$this->ketinggianMdpl($ven)} m di atas permukaan laut). {$this->kolomAbu($ven)}";
     }
 
     public function visual(MagmaVen $ven): string
     {
-        return $ven->erupt_vis ? $this->ketinggian($ven) : '. Visual letusan tidak teramati.';
+        return $ven->erupt_vis ? $this->ketinggian($ven) : 'Visual letusan tidak teramati.';
     }
 
     public function gempa(MagmaVen $ven): string
@@ -56,7 +56,7 @@ trait DeskripsiLetusan
     {
         $tanggal = Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->formatLocalized('%A, %d %B %Y');
         $waktu = "{$ven->erupt_jam} {$ven->gunungapi->ga_zonearea}";
-        return "pada hari $tanggal, pukul $waktu";
+        return "pada hari $tanggal, pukul $waktu.";
     }
 
     public function url(MagmaVen $ven): string
@@ -66,21 +66,21 @@ trait DeskripsiLetusan
 
     public function deskripsi(MagmaVen $ven): string
     {
-        return "Terjadi erupsi G. {$ven->gunungapi->ga_nama_gapi} {$this->tanggal($ven)}{$this->visual($ven)} {$this->gempa($ven)}";
+        return "Terjadi erupsi G. {$ven->gunungapi->ga_nama_gapi} {$this->tanggal($ven)} {$this->visual($ven)} {$this->gempa($ven)}";
     }
 
     public function ketinggianTwitter(MagmaVen $ven): string
     {
-        return " dengan tinggi kolom abu teramati ± {$ven->erupt_tka} m di atas puncak.";
+        return "Tinggi kolom abu teramati ± {$ven->erupt_tka} m di atas puncak.";
     }
 
     public function visualTwitter(MagmaVen $ven): string
     {
-        return $ven->erupt_vis ? $this->ketinggianTwitter($ven) : '. Visual letusan tidak teramati.';
+        return $ven->erupt_vis ? $this->ketinggianTwitter($ven) : 'Visual letusan tidak teramati.';
     }
 
     public function deskripsiTwitter(MagmaVen $ven): string
     {
-        return "Terjadi #erupsi G. {$ven->gunungapi->ga_nama_gapi} {$this->tanggal($ven)}{$this->visualTwitter($ven)} {$this->gempa($ven)} #PVMBG @id_magma";
+        return "Terjadi #erupsi G. {$ven->gunungapi->ga_nama_gapi} {$this->tanggal($ven)} {$this->visualTwitter($ven)} {$this->gempa($ven)} #PVMBG @id_magma";
     }
 }
