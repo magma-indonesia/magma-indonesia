@@ -51,6 +51,7 @@ Blacklist
                                     <th>No</th>
                                     <th>IP Address</th>
                                     <th>Hit</th>
+                                    <th>Created at</th>
                                     <th>Updated at</th>
                                     <th width="20%">Action</th>
                                 </tr>
@@ -61,6 +62,7 @@ Blacklist
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $diff->ip_address }}</td>
                                     <td>{{ $diff->hit }}</td>
+                                    <td>{{ $diff->created_at->format('Y-m-d H:i:s') }}</td>
                                     <td>{{ $diff->updated_at->format('Y-m-d H:i:s') }}</td>
                                     <td>
                                         <a class="btn btn-sm btn-magma btn-outline m-b-xs add-submit"
@@ -93,6 +95,7 @@ Blacklist
                                     <th>No</th>
                                     <th>IP Address</th>
                                     <th>Hit</th>
+                                    <th>Created at</th>
                                     <th>Updated at</th>
                                     <th width="20%">Action</th>
                                 </tr>
@@ -103,6 +106,7 @@ Blacklist
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $blacklist->ip_address }}</td>
                                     <td>{{ $blacklist->hit }}</td>
+                                    <td>{{ optional($blacklist->created_at)->format('Y-m-d H:i:s') }}</td>
                                     <td>{{ $blacklist->updated_at->format('Y-m-d H:i:s') }}</td>
                                     <td>
                                         <a class="btn btn-sm btn-danger btn-outline m-b-xs form-submit" data-id="{{ $blacklist->id }}" type="button" title="Delete" data-value="delete"><i class="fa fa-trash"></i> Delete</a>
@@ -132,7 +136,9 @@ Blacklist
                                     <th>No</th>
                                     <th>IP Address</th>
                                     <th>Hit</th>
+                                    <th>Created at</th>
                                     <th>Updated at</th>
+                                    <th>Hit/hour</th>
                                     <th width="20%">Action</th>
                                 </tr>
                             </thead>
@@ -142,7 +148,9 @@ Blacklist
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $access->ip_address }}</td>
                                     <td>{{ $access->hit }}</td>
+                                    <td>{{ $access->created_at->format('Y-m-d H:i:s') }}</td>
                                     <td>{{ $access->updated_at->format('Y-m-d H:i:s') }}</td>
+                                    <td>{{ round($access->hit/$access->created_at->diffInHours($access->updated_at)) }}</td>
                                     <td>
                                         <a class="btn btn-sm btn-magma btn-outline m-b-xs add-submit"
                                             data-ip="{{ $access->ip_address }}" type="button" title="Add"
