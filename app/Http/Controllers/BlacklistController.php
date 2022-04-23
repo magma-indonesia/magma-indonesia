@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Blacklist;
+use App\StatistikAccess;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class BlacklistController extends Controller
 {
@@ -14,7 +16,17 @@ class BlacklistController extends Controller
      */
     public function index()
     {
-        //
+        $blacklists = Blacklist::all();
+
+        $accesess = StatistikAccess::where('hit','>',500)
+            ->orderBy('updated_at','desc')
+            ->limit(100);
+
+        return view('blacklist.index', [
+            'blacklists' => $blacklists,
+            'accesses' => $accesess->get(),
+            'diff' => $accesess->pluck('ip_address')->diff($blacklists->pluck('ip_address'))->values(),
+        ]);
     }
 
     /**
@@ -35,41 +47,12 @@ class BlacklistController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        Blacklist::firstOrCreate(['ip_address' => $request->ip]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Blacklist  $blacklist
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Blacklist $blacklist)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Blacklist  $blacklist
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Blacklist $blacklist)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Blacklist  $blacklist
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Blacklist $blacklist)
-    {
-        //
+        return [
+            'message' => "$request->ip berhasil ditambahkan",
+            'success' => true
+        ];
     }
 
     /**
@@ -80,6 +63,12 @@ class BlacklistController extends Controller
      */
     public function destroy(Blacklist $blacklist)
     {
-        //
+        return $blacklist->delete() ? [
+            'message' => $blacklist->ip_address . ' berhasil dihapus',
+            'success' => true
+        ] : [
+            'message' => $blacklist->ip_address . ' gagal dihapus',
+            'success' => false
+        ];
     }
 }

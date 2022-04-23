@@ -80,6 +80,17 @@ Route::name('migration.')->group(function () {
     });
 });
 
+Route::name('blacklist.')->group(function () {
+    Route::group(['prefix' => 'blacklist'], function () {
+        Route::get('/', 'BlacklistController@index')
+            ->name('index');
+        Route::post('/store', 'BlacklistController@store')
+            ->name('store');
+        Route::delete('/{blacklist}', 'BlacklistController@destroy')
+            ->name('destroy');
+    });
+});
+
 Route::name('stakeholder.')->group(function () {
     Route::group(['middleware' => ['role:Super Admin'], 'prefix' => 'stakeholder'], function () {
         Route::get('/','StakeholderController@index')->name('index');

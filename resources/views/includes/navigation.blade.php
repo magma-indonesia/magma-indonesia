@@ -65,6 +65,12 @@
                     <span class="nav-label"> Migration</span>
                 </a>
             </li>
+
+            <li class="{{ active(['chambers.blacklist.*']) }}">
+                <a href="{{ route('chambers.blacklist.index') }}">
+                    <span class="nav-label"> Blacklist</span>
+                </a>
+            </li>
             @endif
 
             @role('Super Admin')
