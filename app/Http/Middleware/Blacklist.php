@@ -21,7 +21,7 @@ class Blacklist
     public function handle($request, Closure $next)
     {
         $blacklisted = Cache::remember('blacklist', 720, function () {
-            return AppBlacklist::pluck('ip_address');
+            return AppBlacklist::pluck('ip_address')->toArray();
         });
 
         $ip = request()->header('X-Forwarded-For') ?: $request->ip();
