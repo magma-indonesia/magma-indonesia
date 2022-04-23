@@ -34,6 +34,50 @@ Blacklist
 
 @section('content-body')
 <div class="content content-boxed">
+
+    @if ($diffs->isNotEmpty())
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="hpanel">
+                <div class="panel-heading">
+                    Daftar yang belum masuk blacklist
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table id="table" class="table table-condensed table-striped">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>IP Address</th>
+                                    <th>Hit</th>
+                                    <th>Updated at</th>
+                                    <th width="20%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($diffs as $key => $diff)
+                                <tr>
+                                    <td>{{ $key+1 }}</td>
+                                    <td>{{ $diff->ip_address }}</td>
+                                    <td>{{ $diff->hit }}</td>
+                                    <td>{{ $diff->updated_at->format('Y-m-d H:i:s') }}</td>
+                                    <td>
+                                        <a class="btn btn-sm btn-magma btn-outline m-b-xs add-submit"
+                                            data-ip="{{ $diff->ip_address }}" type="button" title="Add"
+                                            data-value="add"><i class="fa fa-plus"></i> Add</a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+
     <div class="row">
         <div class="col-lg-12">
             <div class="hpanel">
@@ -74,41 +118,40 @@ Blacklist
     </div>
 
     <div class="row">
-            <div class="col-lg-12">
-                <div class="hpanel">
-                    <div class="panel-heading">
-                        Daftar Access
-                    </div>
+        <div class="col-lg-12">
+            <div class="hpanel">
+                <div class="panel-heading">
+                    Daftar Access
+                </div>
 
-                    <div class="panel-body">
-                        <div class="table-responsive">
-                            <table id="table-access" class="table table-condensed table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>IP Address</th>
-                                        <th>Hit</th>
-                                        <th>Updated at</th>
-                                        <th width="20%">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($accesses as $key => $access)
-                                    <tr>
-                                        <td>{{ $key+1 }}</td>
-                                        <td>{{ $access->ip_address }}</td>
-                                        <td>{{ $access->hit }}</td>
-                                        <td>{{ $access->updated_at->format('Y-m-d H:i:s') }}</td>
-                                        <td>
-                                            <a class="btn btn-sm btn-magma btn-outline m-b-xs add-submit"
-                                                data-ip="{{ $access->ip_address }}" type="button" title="Delete"
-                                                data-value="delete"><i class="fa fa-plus"></i> Add</a>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table id="table-access" class="table table-condensed table-striped">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>IP Address</th>
+                                    <th>Hit</th>
+                                    <th>Updated at</th>
+                                    <th width="20%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($accesses as $key => $access)
+                                <tr>
+                                    <td>{{ $key+1 }}</td>
+                                    <td>{{ $access->ip_address }}</td>
+                                    <td>{{ $access->hit }}</td>
+                                    <td>{{ $access->updated_at->format('Y-m-d H:i:s') }}</td>
+                                    <td>
+                                        <a class="btn btn-sm btn-magma btn-outline m-b-xs add-submit"
+                                            data-ip="{{ $access->ip_address }}" type="button" title="Add"
+                                            data-value="add"><i class="fa fa-plus"></i> Add</a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

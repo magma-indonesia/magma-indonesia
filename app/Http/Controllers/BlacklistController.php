@@ -18,14 +18,15 @@ class BlacklistController extends Controller
     {
         $blacklists = Blacklist::all();
 
-        $accesess = StatistikAccess::where('hit','>',500)
+        $accesess = StatistikAccess::where('hit','>',1000)
             ->orderBy('updated_at','desc')
-            ->limit(100);
+            ->limit(20)
+            ->get();
 
         return view('blacklist.index', [
             'blacklists' => $blacklists,
-            'accesses' => $accesess->get(),
-            'diff' => $accesess->pluck('ip_address')->diff($blacklists->pluck('ip_address'))->values(),
+            'accesses' => $accesess,
+            'diffs' => $accesess->whereNotIn('ip_address', $blacklists->pluck('ip_address'))->values(),
         ]);
     }
 
