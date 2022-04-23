@@ -16,7 +16,7 @@ class BlacklistController extends Controller
      */
     public function index()
     {
-        $blacklists = Blacklist::where('hit','>',0)->orderBy('updated_at','desc')->get();
+        $blacklists = Blacklist::orderBy('updated_at','desc')->get();
 
         $accesess = StatistikAccess::where('hit','>',1000)
             ->orderBy('updated_at','desc')

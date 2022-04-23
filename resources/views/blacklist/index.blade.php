@@ -101,7 +101,7 @@ Blacklist
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($blacklists as $key => $blacklist)
+                                @foreach ($blacklists->where('hit','>',0) as $key => $blacklist)
                                 <tr>
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $blacklist->ip_address }}</td>
