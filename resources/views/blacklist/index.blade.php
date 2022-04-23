@@ -84,6 +84,49 @@ Blacklist
         <div class="col-lg-12">
             <div class="hpanel">
                 <div class="panel-heading">
+                    Latest Access
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table id="table-access" class="table table-condensed table-striped">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>IP Address</th>
+                                    <th>Hit</th>
+                                    <th>Created at</th>
+                                    <th>Updated at</th>
+                                    <th width="20%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($latests as $key => $latest)
+                                <tr>
+                                    <td>{{ $key+1 }}</td>
+                                    <td>{{ $latest->ip_address }}</td>
+                                    <td>{{ $latest->hit }}</td>
+                                    <td>{{ $latest->created_at->format('Y-m-d H:i:s') }}</td>
+                                    <td>{{ $latest->updated_at->format('Y-m-d H:i:s') }}</td>
+                                    <td>
+                                        <a class="btn btn-sm btn-magma btn-outline m-b-xs add-submit"
+                                            data-ip="{{ $latest->ip_address }}" type="button" title="Add"
+                                            data-value="add"><i class="fa fa-plus"></i> Add</a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="hpanel">
+                <div class="panel-heading">
                     Daftar Blacklist
                 </div>
 
@@ -164,7 +207,7 @@ Blacklist
                 </div>
             </div>
         </div>
-    </dvi>
+    </div>
 
 <form id="form-destroy" style="display:none;" method="POST" data-action="{{ route('chambers.blacklist.index') }}">
     @csrf

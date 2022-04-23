@@ -23,9 +23,14 @@ class BlacklistController extends Controller
             ->limit(20)
             ->get();
 
+        $latests = StatistikAccess::orderBy('updated_at', 'desc')
+            ->limit(10)
+            ->get();
+
         return view('blacklist.index', [
             'blacklists' => $blacklists,
             'accesses' => $accesess,
+            'latests' => $latests,
             'diffs' => $accesess->whereNotIn('ip_address', $blacklists->pluck('ip_address'))->values(),
         ]);
     }
