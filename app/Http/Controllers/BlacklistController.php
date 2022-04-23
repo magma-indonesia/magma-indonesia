@@ -50,6 +50,10 @@ class BlacklistController extends Controller
     {
         Blacklist::firstOrCreate(['ip_address' => $request->ip]);
 
+        Cache::remember('blacklist', 720, function () {
+            return Blacklist::pluck('ip_address')->values()->all();
+        });
+
         return [
             'message' => "$request->ip berhasil ditambahkan",
             'success' => true
@@ -64,10 +68,18 @@ class BlacklistController extends Controller
      */
     public function destroy(Blacklist $blacklist)
     {
-        return $blacklist->delete() ? [
-            'message' => $blacklist->ip_address . ' berhasil dihapus',
-            'success' => true
-        ] : [
+        if ($blacklist->delete()) {
+            Cache::remember('blacklist', 720, function () {
+                return Blacklist::pluck('ip_address')->values()->all();
+            });
+
+            return [
+                'message' => $blacklist->ip_address . ' berhasil dihapus',
+                'success' => true
+            ];
+        }
+
+        return [
             'message' => $blacklist->ip_address . ' gagal dihapus',
             'success' => false
         ];

@@ -6,6 +6,7 @@ use App\Blacklist;
 use App\Jobs\UpdateBlacklistLog;
 use App\StatistikAccess;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Cache;
 
 class UpdateBlacklist extends Command
 {
@@ -52,6 +53,10 @@ class UpdateBlacklist extends Command
         if ($diff->isNotEmpty()) {
             $diff->each(function ($ip) {
                 Blacklist::firstOrCreate(['ip_address' => $ip]);
+            });
+
+            Cache::remember('blacklist', 720, function () {
+                return Blacklist::pluck('ip_address')->values()->all();
             });
 
             return $this->info('Blacklist updated!');
