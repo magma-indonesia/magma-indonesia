@@ -97,6 +97,7 @@ Blacklist
                                     <th>Hit</th>
                                     <th>Created at</th>
                                     <th>Updated at</th>
+                                    <th>Hit/hour</th>
                                     <th width="20%">Action</th>
                                 </tr>
                             </thead>
@@ -108,6 +109,7 @@ Blacklist
                                     <td>{{ $latest->hit }}</td>
                                     <td>{{ $latest->created_at->format('Y-m-d H:i:s') }}</td>
                                     <td>{{ $latest->updated_at->format('Y-m-d H:i:s') }}</td>
+                                    <td>{{ $latest->created_at->diffInHours($latest->updated_at) ?round($latest->hit/$latest->created_at->diffInHours($latest->updated_at)) : 0 }}</td>
                                     <td>
                                         <a class="btn btn-sm btn-magma btn-outline m-b-xs add-submit"
                                             data-ip="{{ $latest->ip_address }}" type="button" title="Add"
