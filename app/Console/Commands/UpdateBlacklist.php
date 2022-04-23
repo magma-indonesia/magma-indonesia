@@ -55,6 +55,7 @@ class UpdateBlacklist extends Command
                 Blacklist::firstOrCreate(['ip_address' => $ip]);
             });
 
+            Cache::forget('blacklist');
             Cache::remember('blacklist', 720, function () {
                 return Blacklist::pluck('ip_address')->values()->all();
             });

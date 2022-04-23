@@ -49,7 +49,7 @@ class BlacklistController extends Controller
     public function store(Request $request)
     {
         Blacklist::firstOrCreate(['ip_address' => $request->ip]);
-
+        Cache::forget('blacklist');
         Cache::remember('blacklist', 720, function () {
             return Blacklist::pluck('ip_address')->values()->all();
         });
@@ -69,6 +69,7 @@ class BlacklistController extends Controller
     public function destroy(Blacklist $blacklist)
     {
         if ($blacklist->delete()) {
+            Cache::forget('blacklist');
             Cache::remember('blacklist', 720, function () {
                 return Blacklist::pluck('ip_address')->values()->all();
             });

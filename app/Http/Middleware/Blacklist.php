@@ -7,7 +7,6 @@ use App\Jobs\UpdateAccessLog;
 use App\Jobs\UpdateBlacklistLog;
 use Closure;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\URL;
 
 class Blacklist
 {
@@ -32,7 +31,6 @@ class Blacklist
         } else {
             UpdateAccessLog::dispatch($ip);
         }
-
 
         return $next($request);
     }
