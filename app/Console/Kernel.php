@@ -199,6 +199,10 @@ class Kernel extends ConsoleKernel
         //     ->pingBefore($this->getUrlMagma())
         //     ->appendOutputTo($filePath);
 
+        $schedule->command('update:blacklist')
+            ->daily()
+            ->appendOutputTo($filePath);
+
         $schedule->command('import:pengajuan')
             ->daily()
             ->pingBefore($this->getUrlMagma())
