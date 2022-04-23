@@ -29,6 +29,7 @@
     {{-- Protect from Telkom Shit ad injection --}}
     <!-- </head> -->
 
+    @if (config('app.debug') === false)
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-213713124-1"></script>
     <script>
@@ -40,4 +41,5 @@
 
         gtag('config', 'UA-213713124-1');
     </script>
+    @endif
 </head>
