@@ -89,7 +89,7 @@ Blacklist
 
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <table id="table-access" class="table table-condensed table-striped">
+                        <table id="table-latest" class="table table-condensed table-striped">
                             <thead>
                                 <tr>
                                     <th>No</th>
