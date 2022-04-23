@@ -200,7 +200,7 @@ class Kernel extends ConsoleKernel
         //     ->appendOutputTo($filePath);
 
         $schedule->command('update:blacklist')
-            ->daily()
+            ->hourly()
             ->appendOutputTo($filePath);
 
         $schedule->command('import:pengajuan')
