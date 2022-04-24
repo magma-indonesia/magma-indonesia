@@ -7,7 +7,7 @@ use App\v1\MagmaVen;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Telegram\TelegramChannel;
-use NotificationChannels\Telegram\TelegramFile;
+use NotificationChannels\Telegram\TelegramMessage;
 
 class MagmaVenTelegram extends Notification
 {
@@ -39,9 +39,7 @@ class MagmaVenTelegram extends Notification
 
     public function toTelegram($notifiable)
     {
-        return TelegramFile::create()
-            ->content($this->deskripsi($this->ven))
-            ->photo($this->ven->erupt_pht)
-            ->button('Lihat Laporan', $this->url($this->ven));
+        return TelegramMessage::create()
+            ->content($this->deskripsiTelegram($this->ven));
     }
 }

@@ -69,6 +69,11 @@ trait DeskripsiLetusan
         return "Terjadi erupsi G. {$ven->gunungapi->ga_nama_gapi} {$this->tanggal($ven)} {$this->visual($ven)} {$this->gempa($ven)}";
     }
 
+    public function deskripsiTelegram(MagmaVen $ven): string
+    {
+        return "Terjadi erupsi G. {$ven->gunungapi->ga_nama_gapi} {$this->tanggal($ven)} {$this->visual($ven)} {$this->gempa($ven)} [Detail Laporan]({$this->url($ven)})";
+    }
+
     public function ketinggianTwitter(MagmaVen $ven): string
     {
         return "Tinggi kolom abu teramati ± {$ven->erupt_tka} m di atas puncak.";
