@@ -45,7 +45,7 @@ class MagmaVenTelegram extends Command
             'model' => 'ven'
         ], [
             'model_id' => $ven->erupt_id,
-            'datetime' => "{$ven->erupt_tgl} {$ven->erupt_jam}:00",
+            'datetime' => $ven->utc,
         ]);
     }
 
@@ -60,6 +60,39 @@ class MagmaVenTelegram extends Command
         return $url;
     }
 
+    protected function convertToUTC(string $datetime, string $zonearea)
+    {
+        switch ($zonearea) {
+            case 'WIB':
+                $tz = 'Asia/Jakarta';
+                break;
+            case 'WITA':
+                $tz = 'Asia/Makassar';
+                break;
+            default:
+                $tz = 'Asia/Jayapura';
+                break;
+        }
+
+        $datetime_utc = Carbon::createFromTimeString($datetime, $tz)->setTimezone('UTC')->format('Y-m-d H:i:s');
+
+        return $datetime_utc;
+    }
+
+    protected function updateVen(): void
+    {
+        $vens = MagmaVen::with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea,ga_elev_gapi', 'user:vg_nip,vg_nama')->whereNull('utc')->get();
+
+        if ($vens->isNotEmpty()) {
+            $vens->each(function ($ven) {
+                $datetime = "{$ven->erupt_tgl} {$ven->erupt_jam}";
+                $zonearea = $ven->gunungapi->ga_zonearea;
+                $ven->utc = $this->convertToUTC($datetime, $zonearea);
+                $ven->save();
+            });
+        }
+    }
+
     /**
      * Execute the console command.
      *
@@ -67,6 +100,8 @@ class MagmaVenTelegram extends Command
      */
     public function handle()
     {
+        $this->updateVen();
+
         $venTelegram = TelegramNotification::where('model','ven')->first();
 
         $ven = MagmaVen::with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea,ga_elev_gapi', 'user:vg_nip,vg_nama')->lastVen()->first();

@@ -21,6 +21,8 @@ class MagmaVen extends Model
         'is_blasted' => 'boolean',
         'erupt_tsp' => 'datetime:Y-m-d H:i:s',
         'sent_to_telegram_at' => 'datetime:Y-m-d H:i:s',
+        'utc' => 'datetime:Y-m-d H:i:s',
+        'erupsi_berlangsung' => 'boolean',
     ];
 
     public $timestamps = false;
@@ -128,7 +130,7 @@ class MagmaVen extends Model
 
     public function scopeLastVen(Builder $query)
     {
-        return $query->orderBy('erupt_tgl','desc')->orderBy('erupt_jam', 'desc');
+        return $query->orderBy('utc','desc');
     }
 
     public function gunungapi()
