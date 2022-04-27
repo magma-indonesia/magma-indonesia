@@ -29,7 +29,7 @@ Kamera Gunung Api
 @endsection
 
 @section('main')
-<div class="row row-sm">
+{{-- <div class="row row-sm">
     <div class="col-12">
         <div class="card pd-30 mg-b-20">
             <div class="embed-responsive embed-responsive-16by9">
@@ -39,7 +39,7 @@ Kamera Gunung Api
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 <div class="row row-sm">
     <div class="col-12">
