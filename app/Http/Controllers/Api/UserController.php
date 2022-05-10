@@ -25,6 +25,7 @@ class UserController extends Controller
     protected function respondWithToken($token)
     {
         return response()->json([
+            'success' => true,
             'token' => $token,
             'type' => 'bearer',
             'expires_at' => Auth::guard('api')->factory()->getTTL() / 1440,
