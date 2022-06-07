@@ -144,7 +144,7 @@
 @section('add-script')
     <script>
         $(document).ready(function () {
-           
+
             $.fn.datepicker.dates['id'] = {
                 days: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
                 daysShort: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
@@ -160,7 +160,7 @@
 
             $('#date').datepicker({
                 startDate: '{{ now()->format('Y-m-d') }}',
-                endDate: '{{ now()->addYear()->format('Y-m-d') }}',
+                endDate: '{{ now()->addYears(5)->format('Y-m-d') }}',
                 language: 'id',
                 todayHighlight: true,
                 todayBtn: 'linked',
