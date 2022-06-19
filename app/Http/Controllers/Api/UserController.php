@@ -29,6 +29,10 @@ class UserController extends Controller
             'token' => $token,
             'type' => 'bearer',
             'expires_at' => Auth::guard('api')->factory()->getTTL() / 1440,
+            'user' => [
+                'nip' => auth()->user()->nip,
+                'name' => auth()->user()->name,
+            ],
         ]);
     }
 
