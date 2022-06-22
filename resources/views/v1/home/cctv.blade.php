@@ -77,7 +77,7 @@ Kamera Gunung Api
             <label class="slim-card-title">{{ $group }}</label>
             <div class="row row-xs">
                 @foreach ($cctvs as $cctv)
-                <div class="col-2">
+                <div class="col-sm-6 col-md-6 col-lg-3 col-xl-2">
                     <div class="card card-blog-overlay mg-b-10">
                         <img class="img-fit-cover" src="{{ $cctv->image }}" alt="">
                         <div class="card-footer">
