@@ -7,141 +7,141 @@ use App\KameraGunungApi;
 
 class UpdateCCTV extends Command
 {
-    protected $cctvs = 
+    protected $cctvs =
     [
         ['code' => 'SIN',
           'lokasi' => 'Pos Pengamatan',
-          'url' => '/monitoring/CCTV/Sinabung/Latest/cam_1.jpg',
+          'url' => '/storage/cctv/Sinabung/Latest/cam_1.jpg',
           'publish' => true
         ],
         ['code' => 'SIN',
           'lokasi' => 'Kebayekan',
-          'url' => '/monitoring/CCTV/Kebayaken/Latest/cam_1.jpg',
+          'url' => '/storage/cctv/Kebayaken/Latest/cam_1.jpg',
           'publish' => true
         ],
         ['code' => 'SIN',
           'lokasi' => 'Laukawar',
-          'url' => '/monitoring/CCTV/Laukawar/Latest/cam_1.jpg',
+          'url' => '/storage/cctv/Laukawar/Latest/cam_1.jpg',
           'publish' => true
         ],
         ['code' => 'SIN',
           'lokasi' => 'Tigapancur',
-          'url' => '/monitoring/CCTV/Tigapancur/Latest/cam_1.jpg',
+          'url' => '/storage/cctv/Tigapancur/Latest/cam_1.jpg',
           'publish' => true
         ],
         ['code' => 'MAR',
           'lokasi' => 'Pos Pengamatan',
-          'url' => '/monitoring/CCTV/Marapi/Latest/cam_1.jpg',
+          'url' => '/storage/cctv/Marapi/Latest/cam_1.jpg',
           'publish' => true
         ],
         ['code' => 'TAL',
           'lokasi' => 'Pos Pengamatan',
-          'url' => '/monitoring/CCTV/Talang/Latest/cam_1.jpg',
+          'url' => '/storage/cctv/Talang/Latest/cam_1.jpg',
           'publish' => true
         ],
         ['code' => 'KRA',
           'lokasi' => 'Pos Pengamatan',
-          'url' => '/monitoring/CCTV/Krakatau/Latest/cam_1.jpg',
+          'url' => '/storage/cctv/Krakatau/Latest/cam_1.jpg',
           'publish' => true
         ],
         ['code' => 'KRA',
           'lokasi' => 'Puncak Krakatau',
-          'url' => '/monitoring/CCTV/Krakatau/Latest/cam_2.jpg',
+          'url' => '/storage/cctv/Krakatau/Latest/cam_2.jpg',
           'publish' => true
         ],
         ['code' => 'GED',
           'lokasi' => 'Pos Pengamatan',
-          'url' => '/monitoring/CCTV/Gede/Latest/cam_1.jpg',
+          'url' => '/storage/cctv/Gede/Latest/cam_1.jpg',
           'publish' => true
         ],
         ['code' => 'TPR',
           'lokasi' => 'Tangkuban Parahu',
-          'url' => '/monitoring/CCTV/TangkubanParahu/Latest/cam_1.jpg',
+          'url' => '/storage/cctv/TangkubanParahu/Latest/cam_1.jpg',
           'publish' => true
         ],
         ['code' => 'GUN',
           'lokasi' => 'Pos Pengamatan',
-          'url' => '/monitoring/CCTV/Guntur/Latest/Guntur.jpg',
+          'url' => '/storage/cctv/Guntur/Latest/Guntur.jpg',
           'publish' => true
         ],
         ['code' => 'PAP',
           'lokasi' => 'Pos Pengamatan',
-          'url' => '/monitoring/CCTV/Papandayan/Latest/cam_1.jpg',
+          'url' => '/storage/cctv/Papandayan/Latest/cam_1.jpg',
           'publish' => true
         ],
         ['code' => 'GAL',
           'lokasi' => 'Pos Pengamatan',
-          'url' => '/monitoring/CCTV/Galunggung/Latest/cam_1.jpg',
+          'url' => '/storage/cctv/Galunggung/Latest/cam_1.jpg',
           'publish' => true
         ],
         ['code' => 'SLA',
           'lokasi' => 'Pos Pengamatan',
-          'url' => '/monitoring/CCTV/Slamet/Latest/cam_1.jpg',
+          'url' => '/storage/cctv/Slamet/Latest/cam_1.jpg',
           'publish' => true
         ],
         ['code' => 'DIE',
           'lokasi' => 'Timbang',
-          'url' => '/monitoring/CCTV/Dieng/Latest/cam_1.jpg',
+          'url' => '/storage/cctv/Dieng/Latest/cam_1.jpg',
           'publish' => true
         ],
         ['code' => 'DIE',
           'lokasi' => 'Sileri',
-          'url' => '/monitoring/CCTV/DiengSileri/Latest/cam_1.jpg',
+          'url' => '/storage/cctv/DiengSileri/Latest/cam_1.jpg',
           'publish' => true
         ],
         ['code' => 'SBG',
           'lokasi' => 'Pos Pengamatan',
-          'url' => '/monitoring/CCTV/Sumbing/Latest/cam_1.jpg',
+          'url' => '/storage/cctv/Sumbing/Latest/cam_1.jpg',
           'publish' => true
         ],
         ['code' => 'SUN',
           'lokasi' => 'Pos Pengamatan',
-          'url' => '/monitoring/CCTV/Sundoro/Latest/cam_1.jpg',
+          'url' => '/storage/cctv/Sundoro/Latest/cam_1.jpg',
           'publish' => true
         ],
         ['code' => 'MER',
           'lokasi' => 'Puncak Merapi',
-          'url' => '/monitoring/CCTV/Merapi/Latest/cam_1.jpg',
+          'url' => '/storage/cctv/Merapi/Latest/cam_1.jpg',
           'publish' => true
         ],
         ['code' => 'MER',
           'lokasi' => 'Thermal',
-          'url' => '/monitoring/CCTV/Merapi/Latest/cam_2.jpg',
+          'url' => '/storage/cctv/Merapi/Latest/cam_2.jpg',
           'publish' => true
         ],
         ['code' => 'KLD',
           'lokasi' => 'Puncak Kelud',
-          'url' => '/monitoring/CCTV/Kelut/Latest/cam_1.jpg',
+          'url' => '/storage/cctv/Kelut/Latest/cam_1.jpg',
           'publish' => true
         ],
         ['code' => 'BRO',
           'lokasi' => 'Pos Pengamatan',
-          'url' => '/monitoring/CCTV/Bromo/Latest/bromo_1.jpg',
+          'url' => '/storage/cctv/Bromo/Latest/bromo_1.jpg',
           'publish' => true
         ],
         ['code' => 'SMR',
           'lokasi' => 'Pos Pengamatan',
-          'url' => '/monitoring/CCTV/Semeru/Latest/SemeruPOS.jpg',
+          'url' => '/storage/cctv/Semeru/Latest/SemeruPOS.jpg',
           'publish' => true
         ],
         ['code' => 'SMR',
           'lokasi' => 'Sriti',
-          'url' => '/monitoring/CCTV/Semeru/Latest/SemeruSriti.jpg',
+          'url' => '/storage/cctv/Semeru/Latest/SemeruSriti.jpg',
           'publish' => true
         ],
         ['code' => 'IJE',
           'lokasi' => 'Kawah Ijen',
-          'url' => '/monitoring/CCTV/Ijen/Latest/cam_1.jpg',
+          'url' => '/storage/cctv/Ijen/Latest/cam_1.jpg',
           'publish' => true
         ],
         ['code' => 'AGU',
           'lokasi' => 'Batu Lompeh',
-          'url' => '/monitoring/CCTV/AgungBatulompeh/Latest/cam_1.jpg',
+          'url' => '/storage/cctv/AgungBatulompeh/Latest/cam_1.jpg',
           'publish' => true
         ],
         ['code' => 'LOK',
           'lokasi' => 'Pos Pengamatan',
-          'url' => '/monitoring/CCTV/Lokon/Latest/cam_1.jpg',
+          'url' => '/storage/cctv/Lokon/Latest/cam_1.jpg',
           'publish' => true
         ],
     ];
@@ -180,9 +180,10 @@ class UpdateCCTV extends Command
         $this->info('Updating Data CCTV....');
 
         foreach ($this->cctvs as $cctv) {
-            KameraGunungApi::create([
+            KameraGunungApi::updateOrCreate([
                 'code' => $cctv['code'],
                 'lokasi' => $cctv['lokasi'],
+            ],[
                 'url' => $cctv['url'],
                 'publish' => $cctv['publish'],
             ]);
