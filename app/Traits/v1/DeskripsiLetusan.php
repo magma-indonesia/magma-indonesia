@@ -82,7 +82,7 @@ trait DeskripsiLetusan
      */
     public function visual(MagmaVen $ven): string
     {
-        return $ven->erupt_vis ? $this->ketinggian($ven) : 'Visual letusan tidak teramati.';
+        return $ven->erupt_vis ? $this->ketinggian($ven) : 'Tinggi kolom erupsi tidak teramati.';
     }
 
     /**
@@ -165,7 +165,7 @@ trait DeskripsiLetusan
      */
     public function visualTwitter(MagmaVen $ven): string
     {
-        return $ven->erupt_vis ? $this->ketinggianTwitter($ven) : 'Visual letusan tidak teramati.';
+        return $ven->erupt_vis ? $this->ketinggianTwitter($ven) : 'Abu letusan tidak teramati.';
     }
 
     /**
