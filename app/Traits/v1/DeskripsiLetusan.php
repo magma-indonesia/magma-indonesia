@@ -64,14 +64,14 @@ trait DeskripsiLetusan
     }
 
     /**
-     * Tinggi kolom abu letusan
+     * Tinggi kolom letusan letusan
      *
      * @param MagmaVen $ven
      * @return string
      */
     public function ketinggian(MagmaVen $ven): string
     {
-        return "Tinggi kolom abu teramati ± {$ven->erupt_tka} m di atas puncak (± {$this->ketinggianMdpl($ven)} m di atas permukaan laut). {$this->kolomAbu($ven)}";
+        return "Tinggi kolom letusan teramati ± {$ven->erupt_tka} m di atas puncak (± {$this->ketinggianMdpl($ven)} m di atas permukaan laut). {$this->kolomAbu($ven)}";
     }
 
     /**
@@ -147,14 +147,14 @@ trait DeskripsiLetusan
     }
 
     /**
-     * Tinggi kolom abu letusan buat twitter
+     * Tinggi kolom letusan letusan buat twitter
      *
      * @param MagmaVen $ven
      * @return string
      */
     public function ketinggianTwitter(MagmaVen $ven): string
     {
-        return "Tinggi kolom abu teramati ± {$ven->erupt_tka} m di atas puncak.";
+        return "Tinggi kolom letusan teramati ± {$ven->erupt_tka} m di atas puncak.";
     }
 
     /**
