@@ -1,5 +1,7 @@
 @extends('layouts.slim')
 
+@section('container', 'container-fluid')
+
 @section('title')
 CCTV Gunung Api
 @endsection
@@ -48,8 +50,18 @@ Kamera Gunung Api
             <div class="row row-xs">
                 <div class="col-xs-12">
                     <a href="{{ route('v1.gunungapi.cctv') }}" type="button" class="btn btn-sm btn-primary mg-b-10">Semua Gunung Api</a>
-                    @foreach ($gadds as $gadd)
-                    <a href="{{ route('v1.gunungapi.cctv.filter', ['code' => $gadd->code]) }}" type="button" class="btn btn-sm btn-primary mg-b-10">{{ $gadd->name }} ({{ $gadd->cctv_count }})</a>
+                    @foreach ($gadds as $gadd => $cctvs)
+                    <a href="{{ route('v1.gunungapi.cctv.filter', ['code' => $cctvs->first()->code]) }}" type="button" class="btn btn-sm btn-primary mg-b-10">{{ $gadd }} ({{ $cctvs->count() }})</a>
+                    @endforeach
+                </div>
+            </div>
+
+            <label class="slim-card-title">Regions</label>
+            <div class="row row-xs">
+                <div class="col-xs-12">
+                    <a href="{{ route('v1.gunungapi.cctv') }}" type="button" class="btn btn-sm btn-primary mg-b-10">Semua Region</a>
+                    @foreach ($regions as $codeRegion => $region)
+                    <a href="{{ route('v1.gunungapi.cctv') }}?region={{ $codeRegion }}" type="button" class="btn btn-sm btn-primary mg-b-10">{{ $region }}</a>
                     @endforeach
                 </div>
             </div>
@@ -57,27 +69,34 @@ Kamera Gunung Api
     </div>
 </div>
 
+@foreach ($grouped as $group => $cctvs)
+@if ($cctvs->isNotEmpty())
 <div class="row row-sm">
     <div class="col-12">
-        <div class="card-columns column-count-4">
-
-            @foreach ($cctvs as $cctv)
-
-            @if ($cctv->image)
-            <div class="card card-blog-overlay">
-                <img class="img-fit-cover" src="{{ $cctv->image }}" alt="">
-                <div class="card-footer">
-                    <small class="mg-r-10"><a href="" class="view" data-uuid="{{ $cctv->uuid }}" data-url="{{ URL::temporarySignedRoute('v1.gunungapi.cctv.show', now()->addMinutes(rand(7,13)), ['code' => $cctv->gunungapi->code]) }}" style="cursor: pointer;">View</a></small>
-                    <small class="text-right">{{ $cctv->gunungapi->name }} - {{ $cctv->lokasi }}</small>
+        <div class="card pd-30 mg-b-20">
+            <label class="slim-card-title">{{ $group }}</label>
+            <div class="row row-xs">
+                @foreach ($cctvs as $cctv)
+                <div class="col-sm-6 col-md-6 col-lg-3 col-xl-2">
+                    <div class="card card-blog-overlay mg-b-10">
+                        <img class="img-fit-cover" src="{{ $cctv->image }}" alt="">
+                        <div class="card-footer">
+                            <small class="mg-r-10"><a href="" class="view" data-uuid="{{ $cctv->uuid }}"
+                                    data-url="{{ URL::temporarySignedRoute('v1.gunungapi.cctv.show', now()->addMinutes(rand(7,13)), ['code' => $cctv->gunungapi->code]) }}"
+                                    style="cursor: pointer;">View</a></small>
+                            <small class="text-right">{{ $cctv->gunungapi->name }} - {{ $cctv->lokasi }}</small>
+                        </div>
+                    </div>
                 </div>
+                @endforeach
             </div>
-            @endif
-
-            @endforeach
-
         </div>
     </div>
-    <div class="pd-10">
+</div>
+@endif
+@endforeach
+
+<div class="pd-10">
 <p xmlns:dct="http://purl.org/dc/terms/" xmlns:cc="http://creativecommons.org/ns#"><a rel="cc:attributionURL"
         property="dct:title" href="https://magma.esdm.go.id/v1/gunung-api/cctv">MAGMA Indonesia Web Camera/CCTV
         Images</a> by <span property="cc:attributionName">Center for Volcanology and Geological Hazard Mitigation of
