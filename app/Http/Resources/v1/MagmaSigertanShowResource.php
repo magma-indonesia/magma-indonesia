@@ -17,6 +17,25 @@ class MagmaSigertanShowResource extends JsonResource
         return 'Gerakan tanah terjadi di ' . $this->crs_vil . ', ' . $this->crs_rgn . ', ' . $this->crs_cty . ', ' . $this->crs_prv . ' pada ' . $this->crs_dtm->formatLocalized('%A, %d %B %Y') . ' pukul ' . $this->crs_dtm->format('H:i:s') . ' ' . $this->crs_zon . '. Secara Geografis, lokasi kejadian gerakan tanah terletak pada posisi ' . $this->crs_lat . ' LU dan ' . $this->crs_lon . ' BT.';
     }
 
+    protected function isoDateTime()
+    {
+        switch ($this->crs_zon) {
+            case 'WIB':
+                $tz = 'Asia/Jakarta';
+                break;
+            case 'WITA':
+                $tz = 'Asia/Makassar';
+                break;
+            default:
+                $tz = 'Asia/Jayapura';
+                break;
+        }
+
+        $isoDateTime = $this->crs_dtm->setTimezone($tz)->toIso8601String();
+
+        return $isoDateTime;
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -36,6 +55,11 @@ class MagmaSigertanShowResource extends JsonResource
                 'peta' => empty($this->tanggapan->qls_pst) ? null : $this->tanggapan->qls_pst,
                 'pelapor' => $this->crs_usr,
                 'judul' => 'Laporan Tanggapan Gerakan Tanah di ' . $this->crs_vil . ', ' . $this->crs_rgn . ', ' . $this->crs_cty . ', ' . $this->crs_prv,
+                'local_date' => $this->crs_dtm->format('Y-m-d'),
+                'local_time' => $this->crs_dtm->format('H-i-s'),
+                'local_datetime' => $this->crs_dtm->format('Y-m-d H:i:s'),
+                'time_zone' => $this->crs_zon,
+                'iso_datetime' => $this->isoDateTime(),
                 'updated_at' => 'Diperbarui pada tanggal ' . $this->crs_log->formatLocalized('%d %B %Y') . ' pukul ' . $this->crs_log->format('H:i:s') . ' WIB',
                 'tingkat_kerentanan' => $this->tanggapan->qls_zkg,
                 'deskripsi' => $this->deskripsi(),
