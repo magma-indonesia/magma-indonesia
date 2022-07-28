@@ -10,7 +10,6 @@ use App\v1\GertanCrs;
 use App\v1\MagmaRoq;
 use App\v1\MagmaVen;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
 
 class BencanaGeologiController extends Controller
 {
@@ -26,6 +25,8 @@ class BencanaGeologiController extends Controller
      * @param string $description
      * @param string $datetime
      * @param string $timeZone
+     * @param float $latitude
+     * @param float $longitude
      * @return array
      */
     protected function data(
