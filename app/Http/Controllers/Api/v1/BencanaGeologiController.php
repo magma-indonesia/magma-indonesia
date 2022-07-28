@@ -34,7 +34,9 @@ class BencanaGeologiController extends Controller
         ?string $photo = null,
         string $description,
         string $datetime,
-        string $timeZone
+        string $timeZone,
+        float $latitude,
+        float $longitude
     ): array
     {
         $carbonDatetime = Carbon::createFromFormat('Y-m-d H:i:s', $datetime);
@@ -51,6 +53,8 @@ class BencanaGeologiController extends Controller
             'time_zone' => $timeZone,
             'text_datetime' => $carbonDatetime->formatLocalized('%A, %d %B %Y'),
             'human_datetime' => $carbonDatetime->diffForHumans(),
+            'latitude' => $latitude,
+            'longitude' => $longitude,
         ];
     }
 
@@ -100,9 +104,11 @@ class BencanaGeologiController extends Controller
             'gempa-bumi',
             $magmaRoq->no,
             null,
-            Str::title($magmaRoq->roq_title),
+            str_replace('Â°',' ', $magmaRoq->roq_intro),
             $magmaRoq->datetime_wib->format('Y-m-d H:i:s'),
-            'WIB'
+            'WIB',
+            $magmaRoq->lat_lima,
+            $magmaRoq->lon_lima
         );
     }
 
@@ -127,7 +133,9 @@ class BencanaGeologiController extends Controller
             empty($gertanCrs->tanggapan->qls_pst) ? null : $gertanCrs->tanggapan->qls_pst,
             $this->deskripsiGerakanTanah($gertanCrs),
             $gertanCrs->crs_dtm->format('Y-m-d H:i:s'),
-            $gertanCrs->crs_zon
+            $gertanCrs->crs_zon,
+            $gertanCrs->crs_lat,
+            $gertanCrs->crs_lon
         );
     }
 
@@ -138,7 +146,7 @@ class BencanaGeologiController extends Controller
      */
     protected function letusanGunungApi(): array
     {
-        $ven = MagmaVen::with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea,ga_elev_gapi')->lastVen()->first();
+        $ven = MagmaVen::with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea,ga_lat_gapi,ga_lon_gapi,ga_elev_gapi')->lastVen()->first();
 
         return $this->data(
             'gunung-api',
@@ -146,7 +154,9 @@ class BencanaGeologiController extends Controller
             $ven->erupt_pht ?: null,
             $this->deskripsiTwitter($ven),
             "$ven->erupt_tgl $ven->erupt_jam:00",
-            $ven->gunungapi->ga_zonearea
+            $ven->gunungapi->ga_zonearea,
+            $ven->gunungapi->ga_lat_gapi,
+            $ven->gunungapi->ga_lon_gapi,
         );
     }
 
@@ -161,6 +171,6 @@ class BencanaGeologiController extends Controller
             $this->letusanGunungApi(),
             $this->kejadianGerakanTanah(),
             $this->kejadianGempaBumi(),
-        ])->sortByDesc('utc_datetime')->all();
+        ])->sortByDesc('utc_datetime')->values()->all();
     }
 }
