@@ -43,6 +43,9 @@ Route::name('v1.')->group(function () {
             Route::get('import/vona','Api\ImportController@vona')
                 ->name('import.vona');
 
+            Route::get('bencana-geologi/terkini', 'Api\v1\BencanaGeologiController@index')
+                ->name('bencana-geologi.terkini');
+
             Route::get('user','Api\UserController@index')
                 ->name('user.index');
             Route::get('user/{nip}','Api\UserController@show');

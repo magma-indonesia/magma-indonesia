@@ -114,6 +114,32 @@ trait DeskripsiLetusan
     }
 
     /**
+     * Convert date to ISO Format
+     *
+     * @param MagmaVen $ven
+     * @return string
+     */
+    public function isoDateTime(MagmaVen $ven): string
+    {
+        switch ($ven->gunungapi->ga_zonearea) {
+            case 'WIB':
+                $tz = 'Asia/Jakarta';
+                break;
+            case 'WITA':
+                $tz = 'Asia/Makassar';
+                break;
+            default:
+                $tz = 'Asia/Jayapura';
+                break;
+        }
+
+        $isoDateTime = Carbon::createFromFormat('Y-m-d H:i:s', "{$ven->erupt_tgl} {$ven->erupt_jam}:00", $tz)
+            ->toIso8601String();
+
+        return $isoDateTime;
+    }
+
+    /**
      * URL VEN
      *
      * @param MagmaVen $ven
