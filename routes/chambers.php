@@ -338,7 +338,7 @@ Route::name('v1.')->group(function () {
                     ]
                 ]);
 
-                Route::resource('laporan-harian', 'v1\LaporanHarianController');
+                // Route::resource('laporan-harian', 'v1\LaporanHarianController');
 
                 Route::resource('form-kesimpulan','v1\KesimpulanController');
 
