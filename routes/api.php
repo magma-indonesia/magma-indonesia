@@ -136,6 +136,11 @@ Route::name('v1.')->group(function () {
                         Route::get('/{id}', 'Api\v1\MagmaRoqController@show')
                             ->name('gempa-bumi.show');
                     });
+
+                    Route::group(['prefix' => 'edukasi'], function() {
+                        Route::get('glossary', 'Api\v1\GlossaryController@index')
+                            ->name('edukasi.glossary');
+                    });
                 });
             });
 

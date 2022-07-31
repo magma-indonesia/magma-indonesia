@@ -64,7 +64,7 @@ class GlossaryController extends Controller
             'referensi' => 'nullable',
             'is_published' => 'required|boolean',
             'files' => 'sometimes|required|array',
-            'files.*' => 'sometimes|required|image|max:3000',
+            'files.*' => 'sometimes|required|max:3000',
         ]);
 
         $glossary = new Glossary();
@@ -153,7 +153,7 @@ class GlossaryController extends Controller
             'referensi' => 'nullable',
             'is_published' => 'required|boolean',
             'files' => 'sometimes|required|array',
-            'files.*' => 'sometimes|required|image|max:3000',
+            'files.*' => 'sometimes|required|max:3000',
             'delete_files' => 'sometimes|required|array',
             'delete_files.*' => 'sometimes|required|exists:glossary_files,id',
         ]);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\FrontPage\v1;
 use App\Glossary;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 
 class GlossaryController extends Controller
 {
@@ -15,8 +16,12 @@ class GlossaryController extends Controller
      */
     public function index()
     {
+        $glossaries = Cache::remember('glossaries', 60, function () {
+            return Glossary::with('glossary_files')->whereIsPublished(1)->orderBy('judul')->get();
+        });
+
         return view('v1.home.glossary-index', [
-            'glossaries' => Glossary::with('glossary_files')->whereIsPublished(1)->orderBy('judul')->get()
+            'glossaries' => $glossaries,
         ]);
     }
 
