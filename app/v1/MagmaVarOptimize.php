@@ -13,4 +13,9 @@ class MagmaVarOptimize extends Model
     protected $primaryKey = 'no';
 
     protected $table = 'magma_var';
+
+    public function user()
+    {
+        return $this->belongsTo('App\v1\User', 'var_nip_pelapor', 'vg_nip');
+    }
 }

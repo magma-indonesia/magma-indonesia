@@ -134,6 +134,11 @@
                             <li class="">
                                 <a class="m-l" href="{{ route('chambers.event-catalog.index') }}">Event Catalog</a>
                             </li>
+
+                            <li class="{{ active('chambers.v1.gunungapi.rekap-laporan.index') }}">
+                                <a class="m-l" href="{{ route('chambers.v1.gunungapi.rekap-laporan.index') }}">Rekap Laporan</a>
+                            </li>
+
                             <li class="{{ active('chambers.v1.gunungapi.laporan.index') }}">
                                 <a class="m-l" href="{{ route('chambers.v1.gunungapi.laporan.index') }}">Daftar Laporan</a>
                             </li>

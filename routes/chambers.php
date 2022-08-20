@@ -338,6 +338,9 @@ Route::name('v1.')->group(function () {
                     ]
                 ]);
 
+                Route::get('rekap-laporan/{year?}', 'RekapPembuatLaporanController@index')
+                    ->name('rekap-laporan.index');
+
                 // Route::resource('laporan-harian', 'v1\LaporanHarianController');
 
                 Route::resource('form-kesimpulan','v1\KesimpulanController');
@@ -418,4 +421,4 @@ Route::name('v1.')->group(function () {
     });
 });
 
-Route::get('test', 'TestController@index')->name('test');
+Route::get('test/{year?}', 'RekapPembuatLaporanController@index')->name('test');
