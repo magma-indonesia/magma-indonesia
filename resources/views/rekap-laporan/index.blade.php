@@ -159,7 +159,7 @@ $(document).ready(function () {
         buttons: [
             { extend: 'csv', title: 'Rekap Laporan', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 ]} },
             { extend: 'pdf', title: 'Rekap Laporan', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 ]} },
-            { extend: 'print', className: 'Rekap Laporan', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 ]} }
+            { extend: 'pdfHtml5', orientation: 'landscape', pageSize: 'LEGAL', className: 'Rekap Laporan', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 ]} }
         ]
     });
 });
