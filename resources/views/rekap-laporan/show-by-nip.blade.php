@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-Rekap Laporan Bulanan
+Rekap Laporan {{ $user->vg_nama }}
 @endsection
 
 @section('add-vendor-css')
@@ -19,13 +19,14 @@ Rekap Laporan Bulanan
                 <i class="pe-7s-ribbon fa-2x text-danger"></i>
             </h1>
             <h1 class="m-b-md">
-                <strong>Rekap Laporan</strong>
+                <strong>{{ $user->vg_nama }}</strong>
             </h1>
 
             <div id="hbreadcrumb">
                 <ol class="breadcrumb">
                     <li><a href="{{ route('chambers.index') }}">MAGMA</a></li>
-                    <li class="active"><a href="{{ route('chambers.v1.gunungapi.rekap-laporan.index') }}">Rekap Laporan</a></li>
+                    <li><a href="{{ route('chambers.v1.gunungapi.rekap-laporan.index') }}">Rekap Laporan</a></li>
+                    <li class="active"><a href="{{ route('chambers.v1.gunungapi.rekap-laporan.show.nip', ['year' => $selected_year, 'nip' => $user->vg_nip]) }}">{{ $user->vg_nama }}</a></li>
                 </ol>
             </div>
 
@@ -33,14 +34,9 @@ Rekap Laporan Bulanan
                 Menu ini digunakan untuk memberikan gambaran rekapitulasi laporan yang dibuat oleh pengamat gunung api maupun staff gunung api setiap bulannya. Distribusi sebaran pembuatan laporan dapat dilihat dalam bentuk tabel di bawah ini.
             </p>
             <div class="alert alert-danger">
-                <i class="fa fa-gears"></i> Halaman ini masih dalam tahap pengembangan. Error, bug, maupun penurunan
-                performa bisa terjadi sewaktu-waktu
+                <i class="fa fa-gears"></i> Halaman ini masih dalam tahap pengembangan. Error, bug, maupun penurunan performa bisa terjadi sewaktu-waktu
             </div>
-            @if (session('message'))
-            <div class="alert alert-success">
-                <i class="fa fa-check"></i> {{ session('message') }}
-            </div>
-            @endif
+
         </div>
     </div>
 </div>
@@ -49,11 +45,11 @@ Rekap Laporan Bulanan
 @section('content-body')
 <div class="content no-top-padding">
     <div class="row">
-        <div class="col-lg-6 col-xs-12">
+        <div class="col-lg-4 col-xs-12">
             <div class="hpanel hred">
                 <div class="panel-body h-200">
                     <div class="stats-title pull-left">
-                        <h4>Rekap Laporan</h4>
+                        <h4>Rekap Laporan untuk {{ $user->vg_nama }}</h4>
                     </div>
 
                     <div class="stats-icon pull-right">
@@ -63,10 +59,10 @@ Rekap Laporan Bulanan
                     <div class="m-t-xl">
                         <h1>Tahun {{ $selected_year }}</h1>
                         <p>
-                            Menu untuk melihat rekapitulasi jumlah laporan yang dibuat oleh pengamat gunung api. Pilih tahun laporan yang ingin dilihat.
+                            Menu untuk melihat rekapitulasi jumlah laporan yang dibuat oleh <b>{{ $user->vg_nama }}</b>. Pilih tahun laporan yang ingin dilihat.
                         </p>
                         @foreach ($years as $year)
-                        <a href="{{ route('chambers.v1.gunungapi.rekap-laporan.index', $year->format('Y')) }}" class="btn btn-outline btn-danger m-t-xs {{ $selected_year == $year->format('Y') ? 'active disabled' : ''}}">{{ $year->format('Y') }}</a>
+                        <a href="{{ route('chambers.v1.gunungapi.rekap-laporan.show.nip', ['year' => $year->format('Y'), 'nip' => $user->vg_nip]) }}" class="btn btn-outline btn-danger m-t-xs {{ $selected_year == $year->format('Y') ? 'active disabled' : ''}}">{{ $year->format('Y') }}</a>
                         @endforeach
                     </div>
                 </div>
@@ -78,56 +74,40 @@ Rekap Laporan Bulanan
         <div class="col-lg-12">
             <div class="hpanel">
                 <div class="panel-heading">
-                    Rekap Laporan tahun {{ $selected_year }}
-                </div>
-
-                <div class="panel-body float-e-margins">
-                    <div class="row">
-                        <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
-                            <a href="{{ route('chambers.v1.gunungapi.rekap-laporan.index', ['year' => $selected_year, 'pengamatOnly' => 'true']) }}" class="btn btn-outline btn-block btn-magma" type="button">Hanya Pengamat Saja</a>
-                        </div>
-                    </div>
+                    Rekap Laporan tahun {{ $selected_year }} - {{ $user->vg_nama }}
                 </div>
 
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <table id="table-rekap" class="table table-condensed table-striped">
+                        <table id="table-rekap-user" class="table table-condensed table-striped">
                             <thead>
                                 <tr>
                                     <th>NIP</th>
                                     <th>Nama</th>
-                                    <th>Januari</th>
-                                    <th>Februari</th>
-                                    <th>Maret</th>
-                                    <th>April</th>
-                                    <th>Mei</th>
-                                    <th>Juni</th>
-                                    <th>Juli</th>
-                                    <th>Agustus</th>
-                                    <th>September</th>
-                                    <th>Oktober</th>
-                                    <th>November</th>
-                                    <th>Desember</th>
-                                    <th>Total</th>
+                                    <th>Gunung Api</th>
+                                    <th>Periode</th>
+                                    <th>Tanggal Laporan</th>
+                                    <th>Dibuat pada</th>
+                                    <th>Link Laporan</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($vars as $var)
                                 <tr>
-                                    <td class="border-right">{{ $var['nip'] }}</td>
-                                    <td class="border-right">
-                                        <a href="{{ route('chambers.v1.gunungapi.rekap-laporan.show.nip', ['year' => $selected_year, 'nip' => $var['nip'] ]) }}" style="color: #337ab7; text-decoration: none;">{{ $var['nama'] }}</a>
-                                    </td>
-                                    @foreach ($var['jumlah_laporan_per_bulan'] as $jumlah_laporan_per_bulan)
-                                    <td>{{ $jumlah_laporan_per_bulan }}</td>
-                                    @endforeach
-                                    <td>{{ $var['total_laporan_dibuat'] }}</td>
+                                    <td>{{ $var['nip'] }}</td>
+                                    <td class="border-right">{{ $var['nama'] }}</td>
+                                    <td>{{ $var['gunung_api'] }}</td>
+                                    <td>{{ $var['jenis_periode_laporan'] }}, {{ $var['periode_laporan'] }}</td>
+                                    <td>{{ $var['tanggal_laporan']->formatLocalized('%A, %d %B %Y') }}</td>
+                                    <td>{{ $var['dibuat_pada']->formatLocalized('%A, %d %B %Y %H:%M:%S') }} {{ $var['time_zone'] }}</td>
+                                    <td><a href="{{ $var['link'] }}" class="btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">View</a></td>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -154,16 +134,15 @@ Rekap Laporan Bulanan
 
 @section('add-script')
 <script>
-
-$(document).ready(function () {
+    $(document).ready(function () {
     // Initialize table
-    $('#table-rekap').dataTable({
+    $('#table-rekap-user').dataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
         "lengthMenu": [[50, 100, 150, -1], [50, 100, 150, "All"]],
         buttons: [
-            { extend: 'csv', title: 'Rekap Laporan', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 ]} },
-            { extend: 'pdf', title: 'Rekap Laporan', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 ]} },
-            { extend: 'pdfHtml5', orientation: 'landscape', pageSize: 'LEGAL', className: 'Rekap Laporan', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 ]} }
+            { extend: 'csv', title: 'Rekap Laporan', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5 ]} },
+            { extend: 'pdf', title: 'Rekap Laporan', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5 ]} },
+            { extend: 'pdfHtml5', orientation: 'landscape', pageSize: 'LEGAL', className: 'Rekap Laporan', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5 ]} }
         ]
     });
 });

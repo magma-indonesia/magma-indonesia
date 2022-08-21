@@ -340,6 +340,8 @@ Route::name('v1.')->group(function () {
 
                 Route::get('rekap-laporan/{year?}', 'RekapPembuatLaporanController@index')
                     ->name('rekap-laporan.index');
+                Route::get('rekap-laporan/{year}/{nip}', 'RekapPembuatLaporanController@showByNip')
+                    ->name('rekap-laporan.show.nip');
 
                 // Route::resource('laporan-harian', 'v1\LaporanHarianController');
 

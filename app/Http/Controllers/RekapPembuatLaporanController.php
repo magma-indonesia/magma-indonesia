@@ -4,17 +4,26 @@ namespace App\Http\Controllers;
 
 use App\v1\Kantor;
 use App\v1\MagmaVarOptimize;
+use App\v1\User;
 use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\URL;
 use InvalidArgumentException;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class RekapPembuatLaporanController extends Controller
 {
+    /**
+     * User MAGMA v1
+     *
+     * @var User
+     */
+    protected $user;
+
     /**
      * Hanya menunjukkan data yang dibuat oleh pengamat
      *
@@ -28,6 +37,18 @@ class RekapPembuatLaporanController extends Controller
      * @var null|string
      */
     protected $year = null;
+
+    /**
+     * Assigning User property
+     *
+     * @param string $nip
+     * @return self
+     */
+    protected function user(string $nip): self
+    {
+        $this->user = User::where('vg_nip', $nip)->firstOrFail();
+        return $this;
+    }
 
     /**
      * Membuat range tahun
@@ -103,6 +124,25 @@ class RekapPembuatLaporanController extends Controller
         })->count();
     }
 
+    protected function rekapLaporanByNip(Collection $vars)
+    {
+        $vars->transform(function ($var) {
+            return [
+                'nip' => $this->user->vg_nip,
+                'nama' => $this->user->vg_nama,
+                'gunung_api' => $var->gunungapi->ga_nama_gapi,
+                'tanggal_laporan' => Carbon::createFromFormat('Y-m-d', $var->var_data_date),
+                'jenis_periode_laporan' => $var->var_perwkt,
+                'periode_laporan' => $var->periode,
+                'dibuat_pada' => Carbon::createFromFormat('d/m/Y H:i:s', $var->var_issued),
+                'time_zone' => $var->gunungapi->ga_zonearea,
+                'link' => URL::route('chambers.v1.gunungapi.laporan.show', ['id' => $var->no]),
+            ];
+        });
+
+        return $vars;
+    }
+
     /**
      * Melakukan rekapitulasi laporan
      *
@@ -117,6 +157,7 @@ class RekapPembuatLaporanController extends Controller
 
         $groupedByNames->transform(function ($vars, $name) {
             return [
+                'nip' => $vars->first()['var_nip_pelapor'],
                 'nama' => $name,
                 'total_laporan_dibuat' => $vars->count(),
                 'jumlah_laporan_per_bulan' => [
@@ -161,6 +202,18 @@ class RekapPembuatLaporanController extends Controller
         return $vars->whereIn('var_nip_pelapor', $pengamats);
     }
 
+    protected function getVarsByNip(): Collection
+    {
+        $vars = MagmaVarOptimize::select('no', 'ga_code','var_data_date', 'var_perwkt', 'periode', 'var_nip_pelapor', 'var_noticenumber','var_issued')
+            ->with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea')
+            ->where('var_nip_pelapor', $this->user->vg_nip)
+            ->whereBetween('var_data_date', $this->dates())
+            ->orderBy('var_data_date', 'desc')
+            ->get();
+
+        return $this->rekapLaporanByNip($vars);
+    }
+
     /**
      * Mendapatkan data dari Magma VAR
      *
@@ -168,7 +221,7 @@ class RekapPembuatLaporanController extends Controller
      */
     protected function getVars(): Collection
     {
-        $vars = MagmaVarOptimize::select('var_data_date', 'var_nip_pelapor', 'var_log')
+        $vars = MagmaVarOptimize::select('var_data_date', 'var_nip_pelapor')
             ->whereBetween('var_data_date', $this->dates())
             ->with('user:vg_nip,vg_nama')
             ->get();
@@ -176,6 +229,13 @@ class RekapPembuatLaporanController extends Controller
         $vars = $this->pengamatOnly ? $this->rejectNonPengamat($vars) : $vars;
 
         return $this->rekapLaporan($vars);
+    }
+
+    protected function cacheVarsByNipForever(bool $forever = true)
+    {
+        if ($forever) {
+
+        }
     }
 
     /**
@@ -214,6 +274,18 @@ class RekapPembuatLaporanController extends Controller
             'vars' => $this->year == now()->format('Y') ? $this->cacheVarsForever(false) : $this->cacheVarsForever(),
             'selected_year' => $this->year,
             'years' => $this->years(),
+        ]);
+    }
+
+    public function showByNip(Request $request, string $year, string $nip)
+    {
+        $this->year($year)->user($nip);
+
+        return view('rekap-laporan.show-by-nip', [
+            'user' => $this->user,
+            'selected_year' => $this->year,
+            'years' => $this->years(),
+            'vars' => $this->getVarsByNip(),
         ]);
     }
 }

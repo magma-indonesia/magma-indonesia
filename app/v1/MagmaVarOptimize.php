@@ -18,4 +18,9 @@ class MagmaVarOptimize extends Model
     {
         return $this->belongsTo('App\v1\User', 'var_nip_pelapor', 'vg_nip');
     }
+
+    public function gunungapi()
+    {
+        return $this->belongsTo('App\v1\Gadd', 'ga_code', 'ga_code');
+    }
 }
