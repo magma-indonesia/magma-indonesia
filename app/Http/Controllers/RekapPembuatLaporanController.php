@@ -124,7 +124,13 @@ class RekapPembuatLaporanController extends Controller
         })->count();
     }
 
-    protected function rekapLaporanByNip(Collection $vars)
+    /**
+     * Menghitung rekap laporan berdsarkan identitas NIP
+     *
+     * @param Collection $vars
+     * @return Collection
+     */
+    protected function rekapLaporanByNip(Collection $vars): Collection
     {
         $vars->transform(function ($var) {
             return [
@@ -202,6 +208,11 @@ class RekapPembuatLaporanController extends Controller
         return $vars->whereIn('var_nip_pelapor', $pengamats);
     }
 
+    /**
+     * Mendapatkan semua laporan VARS berdasarkan NIP
+     *
+     * @return Collection
+     */
     protected function getVarsByNip(): Collection
     {
         $vars = MagmaVarOptimize::select('no', 'ga_code','var_data_date', 'var_perwkt', 'periode', 'var_nip_pelapor', 'var_noticenumber','var_issued')
@@ -231,11 +242,23 @@ class RekapPembuatLaporanController extends Controller
         return $this->rekapLaporan($vars);
     }
 
-    protected function cacheVarsByNipForever(bool $forever = true)
+    /**
+     * Cache VAR by NIP
+     *
+     * @param boolean $forever
+     * @return Collection
+     */
+    protected function cacheVarsByNipForever(bool $forever = true): Collection
     {
         if ($forever) {
-
+            return Cache::rememberForever("rekap-laporan-forever-{$this->year}-{$this->user->vg_nip}", function () {
+                return $this->getVarsByNip();
+            });
         }
+
+        return Cache::remember("rekap-laporan-{$this->year}-{$this->user->vg_nip}", 60, function () {
+            return $this->getVarsByNip();
+        });
     }
 
     /**
@@ -271,13 +294,22 @@ class RekapPembuatLaporanController extends Controller
         $this->year($year)->pengamatOnly($request);
 
         return view('rekap-laporan.index', [
-            'vars' => $this->year == now()->format('Y') ? $this->cacheVarsForever(false) : $this->cacheVarsForever(),
+            'vars' => $this->year == now()->format('Y') ?
+                $this->cacheVarsForever(false) : $this->cacheVarsForever(),
             'selected_year' => $this->year,
             'years' => $this->years(),
         ]);
     }
 
-    public function showByNip(Request $request, string $year, string $nip)
+    /**
+     * Menampilak hasil rekapan laporan VAR berdasarkan NIP
+     *
+     * @param Request $request
+     * @param string $year
+     * @param string $nip
+     * @return View
+     */
+    public function showByNip(Request $request, string $year, string $nip): View
     {
         $this->year($year)->user($nip);
 
@@ -285,7 +317,8 @@ class RekapPembuatLaporanController extends Controller
             'user' => $this->user,
             'selected_year' => $this->year,
             'years' => $this->years(),
-            'vars' => $this->getVarsByNip(),
+            'vars' => $this->year == now()->format('Y') ?
+                $this->cacheVarsByNipForever(false) : $this->cacheVarsByNipForever(),
         ]);
     }
 }
