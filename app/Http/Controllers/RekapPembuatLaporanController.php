@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\v1\Gadd;
 use App\v1\Kantor;
 use App\v1\MagmaVarOptimize;
 use App\v1\User;
@@ -37,6 +38,19 @@ class RekapPembuatLaporanController extends Controller
      * @var null|string
      */
     protected $year = null;
+
+    /**
+     * Slug gunung api
+     *
+     * @var null|string
+     */
+    protected $gunungApi = null;
+
+    protected function gunungApi(string $slug): self
+    {
+        $this->gunungApi = $slug;
+        return $this;
+    }
 
     /**
      * Assigning User property
@@ -124,6 +138,24 @@ class RekapPembuatLaporanController extends Controller
         })->count();
     }
 
+    protected function getStartDateFroCalendar(string $var_data_date, string $periode): string
+    {
+
+    }
+
+    protected function calendar(Collection $vars)
+    {
+        $vars->transform(function ($var) {
+            return [
+                'title' => $var->user->vg_nama,
+                'start' => $this->getStartDateFroCalendar($var->var_data_date, $var->periode),
+                'all_day' => false,
+            ];
+        });
+
+        return $vars;
+    }
+
     /**
      * Menghitung rekap laporan berdsarkan identitas NIP
      *
@@ -147,6 +179,14 @@ class RekapPembuatLaporanController extends Controller
         });
 
         return $vars;
+    }
+
+    protected function rekapLaporanByGunungApi(Collection $vars)
+    {
+        return [
+            'users' => $this->rekapLaporan($vars),
+            'calendar' => $this->calendar($vars),
+        ];
     }
 
     /**
@@ -242,6 +282,21 @@ class RekapPembuatLaporanController extends Controller
         return $this->rekapLaporan($vars);
     }
 
+    protected function getVarsByGunungApi()
+    {
+        $gadd = Gadd::where('slug', $this->gunungApi)->firstOrFail();
+
+        $vars = MagmaVarOptimize::select('no', 'ga_code','var_data_date', 'var_perwkt', 'periode', 'var_nip_pelapor', 'var_noticenumber','var_issued')
+            ->with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea')
+            ->with('user:vg_nip,vg_nama')
+            ->where('ga_code', $gadd->ga_code)
+            ->whereBetween('var_data_date', $this->dates())
+            ->orderBy('var_data_date', 'asc')
+            ->get();
+
+        return $this->rekapLaporanByGunungApi($vars);
+    }
+
     /**
      * Cache VAR by NIP
      *
@@ -282,6 +337,11 @@ class RekapPembuatLaporanController extends Controller
         });
     }
 
+    protected function cacheVarsGunungApiForever(bool $forever = true)
+    {
+        return $this->getVarsByGunungApi();
+    }
+
     /**
      * Menampilkan hasil rekapan laporan VAR
      *
@@ -320,5 +380,13 @@ class RekapPembuatLaporanController extends Controller
             'vars' => $this->year == now()->format('Y') ?
                 $this->cacheVarsByNipForever(false) : $this->cacheVarsByNipForever(),
         ]);
+    }
+
+    public function showByGunungApi(Request $request, string $year, string $slug)
+    {
+        $this->year($year)->gunungApi($slug);
+
+        return $this->year == now()->format('Y') ?
+            $this->cacheVarsGunungApiForever(false) : $this->cacheVarsGunungApiForever();
     }
 }
