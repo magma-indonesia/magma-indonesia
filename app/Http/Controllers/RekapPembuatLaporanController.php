@@ -42,13 +42,13 @@ class RekapPembuatLaporanController extends Controller
     /**
      * Slug gunung api
      *
-     * @var null|string
+     * @var Gadd
      */
-    protected $gunungApi = null;
+    protected $gunungApi;
 
     protected function gunungApi(string $slug): self
     {
-        $this->gunungApi = $slug;
+        $this->gunungApi = Gadd::where('slug', $slug)->firstOrFail();
         return $this;
     }
 
@@ -138,9 +138,49 @@ class RekapPembuatLaporanController extends Controller
         })->count();
     }
 
-    protected function getStartDateFroCalendar(string $var_data_date, string $periode): string
+    protected function getTimePeriod(string $periode): array
     {
+        switch ($periode) {
+            case '00:00-24:00':
+                return [
+                    'start' => '00:00:00',
+                    'end' => '23:59:59'
+                ];
+            case '00:00-06:00':
+                return [
+                    'start' => '00:00:00',
+                    'end' => '06:00:00'
+                ];
+            case '06:00-12:00':
+                return [
+                    'start' => '06:00:00',
+                    'end' => '12:00:00'
+                ];
+            case '12:00-18:00':
+                return [
+                    'start' => '12:00:00',
+                    'end' => '18:00:00'
+                ];
+            case '18:00-24:00':
+                return [
+                    'start' => '18:00:00',
+                    'end' => '23:59:59'
+                ];
+        }
+    }
 
+    protected function getStartDateFroCalendar(string $var_data_date, string $periode): array
+    {
+        return [
+            'start' => Carbon::createFromFormat(
+                'Y-m-d H:i:s',
+                $var_data_date . " " . $this->getTimePeriod($periode)['start'],
+                'UTC')->toISOString(),
+            'end' => Carbon::createFromFormat(
+                'Y-m-d H:i:s',
+                $var_data_date . " " . $this->getTimePeriod($periode)['end'],
+                'UTC')->toISOString(),
+        ];
     }
 
     protected function calendar(Collection $vars)
@@ -148,7 +188,7 @@ class RekapPembuatLaporanController extends Controller
         $vars->transform(function ($var) {
             return [
                 'title' => $var->user->vg_nama,
-                'start' => $this->getStartDateFroCalendar($var->var_data_date, $var->periode),
+                'date' => $this->getStartDateFroCalendar($var->var_data_date, $var->periode),
                 'all_day' => false,
             ];
         });
@@ -169,6 +209,7 @@ class RekapPembuatLaporanController extends Controller
                 'nip' => $this->user->vg_nip,
                 'nama' => $this->user->vg_nama,
                 'gunung_api' => $var->gunungapi->ga_nama_gapi,
+                'slug' => $var->gunungapi->slug,
                 'tanggal_laporan' => Carbon::createFromFormat('Y-m-d', $var->var_data_date),
                 'jenis_periode_laporan' => $var->var_perwkt,
                 'periode_laporan' => $var->periode,
@@ -256,13 +297,13 @@ class RekapPembuatLaporanController extends Controller
     protected function getVarsByNip(): Collection
     {
         $vars = MagmaVarOptimize::select('no', 'ga_code','var_data_date', 'var_perwkt', 'periode', 'var_nip_pelapor', 'var_noticenumber','var_issued')
-            ->with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea')
+            ->with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea,slug')
             ->where('var_nip_pelapor', $this->user->vg_nip)
             ->whereBetween('var_data_date', $this->dates())
             ->orderBy('var_data_date', 'desc')
             ->get();
 
-        return $this->rekapLaporanByNip($vars);
+        return $vars;
     }
 
     /**
@@ -279,22 +320,28 @@ class RekapPembuatLaporanController extends Controller
 
         $vars = $this->pengamatOnly ? $this->rejectNonPengamat($vars) : $vars;
 
-        return $this->rekapLaporan($vars);
+        return $vars;
     }
 
-    protected function getVarsByGunungApi()
+    protected function getIndexVarsByGunungApi()
     {
-        $gadd = Gadd::where('slug', $this->gunungApi)->firstOrFail();
+        $vars = MagmaVarOptimize::select('var_data_date', 'var_nip_pelapor')
+            ->whereBetween('var_data_date', $this->dates())
+            ->with('user:vg_nip,vg_nama')
+            ->get();
+    }
 
+    protected function getShowVarsByGunungApi()
+    {
         $vars = MagmaVarOptimize::select('no', 'ga_code','var_data_date', 'var_perwkt', 'periode', 'var_nip_pelapor', 'var_noticenumber','var_issued')
             ->with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea')
             ->with('user:vg_nip,vg_nama')
-            ->where('ga_code', $gadd->ga_code)
+            ->where('ga_code', $this->gunungApi->ga_code)
             ->whereBetween('var_data_date', $this->dates())
             ->orderBy('var_data_date', 'asc')
             ->get();
 
-        return $this->rekapLaporanByGunungApi($vars);
+        return $vars;
     }
 
     /**
@@ -307,12 +354,16 @@ class RekapPembuatLaporanController extends Controller
     {
         if ($forever) {
             return Cache::rememberForever("rekap-laporan-forever-{$this->year}-{$this->user->vg_nip}", function () {
-                return $this->getVarsByNip();
+                return $this->rekapLaporanByNip(
+                    $this->getVarsByNip()
+                );
             });
         }
 
         return Cache::remember("rekap-laporan-{$this->year}-{$this->user->vg_nip}", 60, function () {
-            return $this->getVarsByNip();
+            return $this->rekapLaporanByNip(
+                $this->getVarsByNip()
+            );
         });
     }
 
@@ -328,18 +379,34 @@ class RekapPembuatLaporanController extends Controller
 
         if ($forever) {
             return Cache::rememberForever("rekap-laporan-forever-{$this->year}-{$pengamatOnly}", function () {
-                return $this->getVars();
+                return $this->rekapLaporan($this->getVars());
             });
         }
 
         return Cache::remember("rekap-laporan-{$this->year}-{$pengamatOnly}", 60, function () {
-            return $this->getVars();
+            return $this->rekapLaporan($this->getVars());
         });
     }
 
-    protected function cacheVarsGunungApiForever(bool $forever = true)
+    protected function cacheIndexVarsGunungApiForever(bool $forever = true)
     {
-        return $this->getVarsByGunungApi();
+        return $this->getIndexVarsByGunungApi();
+    }
+
+    protected function cacheShowVarsGunungApiForever(bool $forever = true)
+    {
+        if ($forever) {
+            return Cache::rememberForever("rekap-laporan-show-gunungpi-forever-{$this->year}-{$this->gunungApi->slug}", function () {
+                return $this->rekapLaporanByGunungApi(
+                    $this->getShowVarsByGunungApi());
+            });
+        }
+
+        return Cache::remember("rekap-laporan-show-gunungpi-{$this->year}-{$this->gunungApi->slug}", 60, function () {
+            return $this->rekapLaporanByGunungApi(
+                $this->getShowVarsByGunungApi()
+            );
+        });
     }
 
     /**
@@ -382,11 +449,21 @@ class RekapPembuatLaporanController extends Controller
         ]);
     }
 
+    public function indexByGunungApi()
+    {
+        return 'ok';
+    }
+
     public function showByGunungApi(Request $request, string $year, string $slug)
     {
         $this->year($year)->gunungApi($slug);
 
-        return $this->year == now()->format('Y') ?
-            $this->cacheVarsGunungApiForever(false) : $this->cacheVarsGunungApiForever();
+        return view('rekap-laporan.show-by-gunungapi', [
+            'selected_year' => $this->year,
+            'years' => $this->years(),
+            'gadd' => $this->gunungApi,
+            'vars' => $this->year == now()->format('Y') ?
+                $this->cacheShowVarsGunungApiForever(false) : $this->cacheShowVarsGunungApiForever(),
+        ]);
     }
 }

@@ -49,7 +49,7 @@ Rekap Laporan Bulanan
 @section('content-body')
 <div class="content no-top-padding">
     <div class="row">
-        <div class="col-lg-6 col-xs-12">
+        <div class="col-lg-4 col-xs-12">
             <div class="hpanel hred">
                 <div class="panel-body h-200">
                     <div class="stats-title pull-left">
@@ -68,6 +68,29 @@ Rekap Laporan Bulanan
                         @foreach ($years as $year)
                         <a href="{{ route('chambers.v1.gunungapi.rekap-laporan.index', $year->format('Y')) }}" class="btn btn-outline btn-danger m-t-xs {{ $selected_year == $year->format('Y') ? 'active disabled' : ''}}">{{ $year->format('Y') }}</a>
                         @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-xs-12">
+            <div class="hpanel hred">
+                <div class="panel-body h-200">
+                    <div class="stats-title pull-left">
+                        <h4>Berdasarkan Gunung Api</h4>
+                    </div>
+
+                    <div class="stats-icon pull-right">
+                        <i class="pe-7s-note2 fa-4x text-danger"></i>
+                    </div>
+
+                    <div class="m-t-xl">
+                        <h1>Tahun {{ $selected_year }}</h1>
+                        <p>
+                            Menu untuk melihat rekapitulasi jumlah laporan yang dibuat oleh pengamat gunung api yang telah dikelompokkan berdasarkan gunung api.
+                        </p>
+
+                        <a href="{{ route('chambers.v1.gunungapi.rekap-laporan.index.gunung-api', ['year' => $selected_year]) }}" class="btn btn-outline btn-danger m-t-xs">Lihat</a>
                     </div>
                 </div>
             </div>

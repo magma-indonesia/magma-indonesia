@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\EventCatalogController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/','ChamberController@index')->name('index');
@@ -340,10 +339,13 @@ Route::name('v1.')->group(function () {
 
                 Route::get('rekap-laporan/{year?}', 'RekapPembuatLaporanController@index')
                     ->name('rekap-laporan.index');
-                Route::get('rekap-laporan/{year}/{nip}', 'RekapPembuatLaporanController@showByNip')
-                    ->name('rekap-laporan.show.nip');
+                Route::get('rekap-laporan/{year}/gunung-api', 'RekapPembuatLaporanController@indexByGunungApi')
+                    ->name('rekap-laporan.index.gunung-api');
                 Route::get('rekap-laporan/{year}/gunung-api/{slug}', 'RekapPembuatLaporanController@showByGunungApi')
                     ->name('rekap-laporan.show.gunung-api');
+                Route::get('rekap-laporan/{year}/{nip}', 'RekapPembuatLaporanController@showByNip')
+                    ->name('rekap-laporan.show.nip');
+
 
                 // Route::resource('laporan-harian', 'v1\LaporanHarianController');
 

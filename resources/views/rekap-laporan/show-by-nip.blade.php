@@ -96,7 +96,7 @@ Rekap Laporan {{ $user->vg_nama }}
                                 <tr>
                                     <td>{{ $var['nip'] }}</td>
                                     <td class="border-right">{{ $var['nama'] }}</td>
-                                    <td>{{ $var['gunung_api'] }}</td>
+                                    <td><a href="{{ route('chambers.v1.gunungapi.rekap-laporan.show.gunung-api', ['year' => $selected_year, 'slug' => $var['slug']]) }}">{{ $var['gunung_api'] }}</a></td>
                                     <td>{{ $var['jenis_periode_laporan'] }}, {{ $var['periode_laporan'] }}</td>
                                     <td>{{ $var['tanggal_laporan']->formatLocalized('%A, %d %B %Y') }}</td>
                                     <td>{{ $var['dibuat_pada']->formatLocalized('%A, %d %B %Y %H:%M:%S') }} {{ $var['time_zone'] }}</td>
