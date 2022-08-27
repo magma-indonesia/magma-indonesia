@@ -49,7 +49,7 @@ Rekap Laporan {{ $user->vg_nama }}
             <div class="hpanel hred">
                 <div class="panel-body h-200">
                     <div class="stats-title pull-left">
-                        <h4>Rekap Laporan untuk {{ $user->vg_nama }}</h4>
+                        <h4>Rekap Laporan</h4>
                     </div>
 
                     <div class="stats-icon pull-right">
@@ -57,7 +57,7 @@ Rekap Laporan {{ $user->vg_nama }}
                     </div>
 
                     <div class="m-t-xl">
-                        <h1>Tahun {{ $selected_year }}</h1>
+                        <h1>{{ $user->vg_nama }}</h1>
                         <p>
                             Menu untuk melihat rekapitulasi jumlah laporan yang dibuat oleh <b>{{ $user->vg_nama }}</b>. Pilih tahun laporan yang ingin dilihat.
                         </p>
@@ -96,7 +96,7 @@ Rekap Laporan {{ $user->vg_nama }}
                                 <tr>
                                     <td>{{ $var['nip'] }}</td>
                                     <td class="border-right">{{ $var['nama'] }}</td>
-                                    <td><a href="{{ route('chambers.v1.gunungapi.rekap-laporan.show.gunung-api', ['year' => $selected_year, 'slug' => $var['slug']]) }}">{{ $var['gunung_api'] }}</a></td>
+                                    <td><a href="{{ route('chambers.v1.gunungapi.rekap-laporan.show.gunung-api', ['year' => $selected_year, 'slug' => $var['slug']]) }}" style="color: #337ab7; text-decoration: none;">{{ $var['gunung_api'] }}</a></td>
                                     <td>{{ $var['jenis_periode_laporan'] }}, {{ $var['periode_laporan'] }}</td>
                                     <td>{{ $var['tanggal_laporan']->formatLocalized('%A, %d %B %Y') }}</td>
                                     <td>{{ $var['dibuat_pada']->formatLocalized('%A, %d %B %Y %H:%M:%S') }} {{ $var['time_zone'] }}</td>

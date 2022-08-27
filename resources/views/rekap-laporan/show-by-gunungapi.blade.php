@@ -28,6 +28,7 @@ Rekap Laporan {{ $gadd->ga_nama_gapi }}
                 <ol class="breadcrumb">
                     <li><a href="{{ route('chambers.index') }}">MAGMA</a></li>
                     <li><a href="{{ route('chambers.v1.gunungapi.rekap-laporan.index') }}">Rekap Laporan</a></li>
+                    <li><a href="{{ route('chambers.v1.gunungapi.rekap-laporan.index.gunung-api', ['year' => $selected_year]) }}">Gunung Api ({{ $selected_year }})</a></li>
                     <li class="active"><a href="#">{{ $gadd->ga_nama_gapi }}</a></li>
                 </ol>
             </div>

@@ -77,7 +77,7 @@ Rekap Laporan Bulanan
             <div class="hpanel hred">
                 <div class="panel-body h-200">
                     <div class="stats-title pull-left">
-                        <h4>Berdasarkan Gunung Api</h4>
+                        <h4>Rekap Laporan</h4>
                     </div>
 
                     <div class="stats-icon pull-right">
@@ -85,12 +85,14 @@ Rekap Laporan Bulanan
                     </div>
 
                     <div class="m-t-xl">
-                        <h1>Tahun {{ $selected_year }}</h1>
+                        <h1>Gunung Api</h1>
                         <p>
-                            Menu untuk melihat rekapitulasi jumlah laporan yang dibuat oleh pengamat gunung api yang telah dikelompokkan berdasarkan gunung api.
+                            Menu untuk melihat rekapitulasi jumlah laporan yang dibuat oleh pengamat gunung api yang telah <b>dikelompokkan berdasarkan gunung api</b>.
                         </p>
 
-                        <a href="{{ route('chambers.v1.gunungapi.rekap-laporan.index.gunung-api', ['year' => $selected_year]) }}" class="btn btn-outline btn-danger m-t-xs">Lihat</a>
+                        @foreach ($years as $year)
+                        <a href="{{ route('chambers.v1.gunungapi.rekap-laporan.index.gunung-api', ['year' => $year->format('Y')]) }}" class="btn btn-outline btn-danger m-t-xs">{{ $year->format('Y') }}</a>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -107,7 +109,15 @@ Rekap Laporan Bulanan
                 <div class="panel-body float-e-margins">
                     <div class="row">
                         <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
-                            <a href="{{ route('chambers.v1.gunungapi.rekap-laporan.index', ['year' => $selected_year, 'pengamatOnly' => 'true']) }}" class="btn btn-outline btn-block btn-magma" type="button">Hanya Pengamat Saja</a>
+
+                            @if ($pengamat_only)
+                                <a href="{{ route('chambers.v1.gunungapi.rekap-laporan.index', ['year' => $selected_year, 'pengamatOnly' => 'false']) }}"
+                                    class="btn btn-outline btn-block btn-magma" type="button">Tampilkan Semua</a>
+                            @else
+                                <a href="{{ route('chambers.v1.gunungapi.rekap-laporan.index', ['year' => $selected_year, 'pengamatOnly' => 'true']) }}"
+                                    class="btn btn-outline btn-block btn-magma" type="button">Tampilkan Hanya Pengamat</a>
+                            @endif
+
                         </div>
                     </div>
                 </div>
@@ -117,8 +127,8 @@ Rekap Laporan Bulanan
                         <table id="table-rekap" class="table table-condensed table-striped">
                             <thead>
                                 <tr>
-                                    <th>NIP</th>
                                     <th>Nama</th>
+                                    <th>NIP</th>
                                     <th>Januari</th>
                                     <th>Februari</th>
                                     <th>Maret</th>
@@ -137,10 +147,10 @@ Rekap Laporan Bulanan
                             <tbody>
                                 @foreach ($vars as $var)
                                 <tr>
-                                    <td class="border-right">{{ $var['nip'] }}</td>
                                     <td class="border-right">
                                         <a href="{{ route('chambers.v1.gunungapi.rekap-laporan.show.nip', ['year' => $selected_year, 'nip' => $var['nip'] ]) }}" style="color: #337ab7; text-decoration: none;">{{ $var['nama'] }}</a>
                                     </td>
+                                    <td class="border-right">{{ $var['nip'] }}</td>
                                     @foreach ($var['jumlah_laporan_per_bulan'] as $jumlah_laporan_per_bulan)
                                     <td>{{ $jumlah_laporan_per_bulan }}</td>
                                     @endforeach

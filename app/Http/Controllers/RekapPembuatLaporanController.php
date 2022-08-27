@@ -46,9 +46,36 @@ class RekapPembuatLaporanController extends Controller
      */
     protected $gunungApi;
 
+    /**
+     * Daftar Gunung Api
+     *
+     * @var Gadd
+     */
+    protected $gunungApis;
+
+    /**
+     * Menddapatkan slug gunung api
+     *
+     * @param string $slug
+     * @return self
+     */
     protected function gunungApi(string $slug): self
     {
         $this->gunungApi = Gadd::where('slug', $slug)->firstOrFail();
+        return $this;
+    }
+
+    /**
+     * Mendapatkan data gunung api
+     *
+     * @return self
+     */
+    protected function gunungApis(): self
+    {
+        $this->gunungApis = Cache::rememberForever('gunungApis', function () {
+            return Gadd::select('ga_code','slug', 'ga_nama_gapi', 'ga_zonearea')->get();
+        });
+
         return $this;
     }
 
@@ -138,6 +165,12 @@ class RekapPembuatLaporanController extends Controller
         })->count();
     }
 
+    /**
+     * Mendapatkan rentang waktu pelaporan start, dan end time
+     *
+     * @param string $periode
+     * @return array
+     */
     protected function getTimePeriod(string $periode): array
     {
         switch ($periode) {
@@ -169,6 +202,13 @@ class RekapPembuatLaporanController extends Controller
         }
     }
 
+    /**
+     * Mendapatkan waktu awal dan akhir pelaporan
+     *
+     * @param string $var_data_date
+     * @param string $periode
+     * @return array
+     */
     protected function getStartDateFroCalendar(string $var_data_date, string $periode): array
     {
         return [
@@ -183,7 +223,13 @@ class RekapPembuatLaporanController extends Controller
         ];
     }
 
-    protected function calendar(Collection $vars)
+    /**
+     * Formatting untuk calendar
+     *
+     * @param Collection $vars
+     * @return Collection
+     */
+    protected function calendar(Collection $vars): Collection
     {
         $vars->transform(function ($var) {
             return [
@@ -222,12 +268,77 @@ class RekapPembuatLaporanController extends Controller
         return $vars;
     }
 
-    protected function rekapLaporanByGunungApi(Collection $vars)
+    /**
+     * Rekap laporan per gunung api
+     *
+     * @param Collection $vars
+     * @return array
+     */
+    protected function rekapShowLaporanByGunungApi(Collection $vars): array
     {
         return [
             'users' => $this->rekapLaporan($vars),
             'calendar' => $this->calendar($vars),
         ];
+    }
+
+    /**
+     * Rekap laporan seluruh gunung api
+     *
+     * @param Collection $vars
+     * @return Collection
+     */
+    protected function rekapIndexLaporanByGunungApi(Collection $vars): Collection
+    {
+        return $this->groupedByGunungApis($vars)->transform(function ($vars, $namaGunungApi) {
+            return [
+                'gunungapi' => $namaGunungApi,
+                'slug' => $vars->first()->gunungapi->slug,
+                'link_gunungapi' => URL::route('chambers.v1.gunungapi.rekap-laporan.show.gunung-api', [
+                    'year' => $this->year,
+                    'slug' => $vars->first()->gunungapi->slug
+                ]),
+                'total_laporan' => $vars->count(),
+                'pelapors' => $this->groupedByNames($vars)->transform(function ($vars, $name) {
+                    return [
+                        'nama' => $name,
+                        'total_laporan' => $vars->count(),
+                        'laporan_6_jam' => $vars->where('var_perwkt', '6 Jam')->count(),
+                        'laporan_24_jam' => $vars->where('var_perwkt', '24 Jam')->count(),
+                        'link_user' => URL::route('chambers.v1.gunungapi.rekap-laporan.show.nip', [
+                            'year' => $this->year,
+                            'nip' => $vars->first()->user['vg_nip'],
+                        ]),
+                    ];
+                })->values(),
+            ];
+        })->values();
+    }
+
+    /**
+     * Pengelompokkan VARS berdasarkan gunung api
+     *
+     * @param Collection $vars
+     * @return Collection
+     */
+    protected function groupedByGunungApis(Collection $vars): Collection
+    {
+        return $vars->groupBy(function ($var) {
+            return $var->gunungapi->ga_nama_gapi;
+        })->sortKeys();
+    }
+
+    /**
+     * Pengelompokkan VARS berdasarkan nama pembuat laporan
+     *
+     * @param Collection $vars
+     * @return Collection
+     */
+    protected function groupedByNames(Collection $vars): Collection
+    {
+        return $vars->groupBy(function ($var) {
+            return $var->user->vg_nama ?? 'Guest';
+        })->sortKeys();
     }
 
     /**
@@ -238,11 +349,7 @@ class RekapPembuatLaporanController extends Controller
      */
     protected function rekapLaporan(Collection $vars): Collection
     {
-        $groupedByNames = $vars->groupBy(function ($var) {
-            return $var->user->vg_nama;
-        })->sortKeys();
-
-        $groupedByNames->transform(function ($vars, $name) {
+        return $this->groupedByNames($vars)->transform(function ($vars, $name) {
             return [
                 'nip' => $vars->first()['var_nip_pelapor'],
                 'nama' => $name,
@@ -262,9 +369,7 @@ class RekapPembuatLaporanController extends Controller
                     'desember' => $this->countLaporanPerBulan($vars, '12'),
                 ]
             ];
-        });
-
-        return $groupedByNames->values();
+        })->values();
     }
 
     /**
@@ -323,15 +428,30 @@ class RekapPembuatLaporanController extends Controller
         return $vars;
     }
 
-    protected function getIndexVarsByGunungApi()
+    /**
+     * Mendapatkan VARS berdasarkan gunung api
+     *
+     * @return Collection
+     */
+    protected function getIndexVarsByGunungApi(): Collection
     {
-        $vars = MagmaVarOptimize::select('var_data_date', 'var_nip_pelapor')
+        $vars = MagmaVarOptimize::select('ga_code','var_data_date', 'var_nip_pelapor', 'var_perwkt', 'var_issued')
             ->whereBetween('var_data_date', $this->dates())
+            ->with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea,slug')
             ->with('user:vg_nip,vg_nama')
             ->get();
+
+        $vars = $this->pengamatOnly ? $this->rejectNonPengamat($vars) : $vars;
+
+        return $vars;
     }
 
-    protected function getShowVarsByGunungApi()
+    /**
+     * Mendapatkan VARS per gunung api
+     *
+     * @return Collection
+     */
+    protected function getShowVarsByGunungApi(): Collection
     {
         $vars = MagmaVarOptimize::select('no', 'ga_code','var_data_date', 'var_perwkt', 'periode', 'var_nip_pelapor', 'var_noticenumber','var_issued')
             ->with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea')
@@ -388,22 +508,47 @@ class RekapPembuatLaporanController extends Controller
         });
     }
 
+    /**
+     * Cache hasil rekapan index gunung api
+     *
+     * @param boolean $forever
+     * @return void
+     */
     protected function cacheIndexVarsGunungApiForever(bool $forever = true)
     {
-        return $this->getIndexVarsByGunungApi();
+        $pengamatOnly = $this->pengamatOnly ? 'true' : 'false';
+
+        if ($forever) {
+            return Cache::rememberForever("rekap-laporan-index-gunungpi-forever-{$this->year}-{$pengamatOnly}", function () {
+                return $this->rekapIndexLaporanByGunungApi(
+                    $this->getIndexVarsByGunungApi());
+            });
+        }
+
+        return Cache::remember("rekap-laporan-index-gunungpi-{$this->year}-{$pengamatOnly}", 60, function () {
+            return $this->rekapIndexLaporanByGunungApi(
+                $this->getIndexVarsByGunungApi()
+            );
+        });
     }
 
+    /**
+     * Cache hasil rekapan per gunung api
+     *
+     * @param boolean $forever
+     * @return void
+     */
     protected function cacheShowVarsGunungApiForever(bool $forever = true)
     {
         if ($forever) {
             return Cache::rememberForever("rekap-laporan-show-gunungpi-forever-{$this->year}-{$this->gunungApi->slug}", function () {
-                return $this->rekapLaporanByGunungApi(
+                return $this->rekapShowLaporanByGunungApi(
                     $this->getShowVarsByGunungApi());
             });
         }
 
         return Cache::remember("rekap-laporan-show-gunungpi-{$this->year}-{$this->gunungApi->slug}", 60, function () {
-            return $this->rekapLaporanByGunungApi(
+            return $this->rekapShowLaporanByGunungApi(
                 $this->getShowVarsByGunungApi()
             );
         });
@@ -421,10 +566,11 @@ class RekapPembuatLaporanController extends Controller
         $this->year($year)->pengamatOnly($request);
 
         return view('rekap-laporan.index', [
-            'vars' => $this->year == now()->format('Y') ?
-                $this->cacheVarsForever(false) : $this->cacheVarsForever(),
+            'pengamat_only' => $this->pengamatOnly,
             'selected_year' => $this->year,
             'years' => $this->years(),
+            'vars' => $this->year == now()->format('Y') ?
+                $this->cacheVarsForever(false) : $this->cacheVarsForever(),
         ]);
     }
 
@@ -449,16 +595,42 @@ class RekapPembuatLaporanController extends Controller
         ]);
     }
 
-    public function indexByGunungApi()
+    /**
+     * Menampilak hasil rekapan laporan VAR yang dikelompokkan
+     * per gunung api
+     *
+     * @param Request $request
+     * @param string|null $year
+     * @return View
+     */
+    public function indexByGunungApi(Request $request, string $year = null): View
     {
-        return 'ok';
+        $this->year($year)->pengamatOnly($request)->gunungApis();
+
+        return view('rekap-laporan.index-gunungapi', [
+            'pengamat_only' => $this->pengamatOnly,
+            'selected_year' => $this->year,
+            'years' => $this->years(),
+            'gadds' => $this->gunungApis,
+            'vars' => $this->year == now()->format('Y') ?
+                $this->cacheIndexVarsGunungApiForever(false) : $this->cacheIndexVarsGunungApiForever(),
+        ]);
     }
 
-    public function showByGunungApi(Request $request, string $year, string $slug)
+    /**
+     * Menampilak hasil rekapan laporan VAR berdasarkan gunung api
+     *
+     * @param Request $request
+     * @param string $year
+     * @param string $slug
+     * @return View
+     */
+    public function showByGunungApi(Request $request, string $year, string $slug): View
     {
-        $this->year($year)->gunungApi($slug);
+        $this->year($year)->pengamatOnly($request)->gunungApi($slug);
 
         return view('rekap-laporan.show-by-gunungapi', [
+            'pengamat_only' => $this->pengamatOnly,
             'selected_year' => $this->year,
             'years' => $this->years(),
             'gadd' => $this->gunungApi,
