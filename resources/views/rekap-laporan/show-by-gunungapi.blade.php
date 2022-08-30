@@ -48,6 +48,136 @@ Rekap Laporan {{ $gadd->ga_nama_gapi }}
 @endsection
 
 @section('content-body')
+<div class="content no-top-padding">
+    <div class="row">
+        <div class="col-lg-4 col-xs-12">
+            <div class="hpanel hred">
+                <div class="panel-body h-200">
+                    <div class="stats-title pull-left">
+                        <h4>Rekap Laporan</h4>
+                    </div>
+
+                    <div class="stats-icon pull-right">
+                        <i class="pe-7s-note2 fa-4x text-danger"></i>
+                    </div>
+
+                    <div class="m-t-xl">
+                        <h1>Gunung Api</h1>
+                        <p>
+                            Menu untuk melihat rekapitulasi jumlah laporan yang dibuat oleh pengamat gunung api yang telah <b>dikelompokkan berdasarkan gunung api</b>.
+                        </p>
+
+                        @foreach ($years as $year)
+                        <a href="{{ route('chambers.v1.gunungapi.rekap-laporan.index.gunung-api', ['year' => $year->format('Y')]) }}" class="btn btn-outline btn-danger m-t-xs">{{ $year->format('Y') }}</a>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-xs-12">
+            <div class="hpanel hred">
+                <div class="panel-body h-200">
+                    <div class="stats-title pull-left">
+                        <h4>Rekap Laporan</h4>
+                    </div>
+
+                    <div class="stats-icon pull-right">
+                        <i class="pe-7s-note2 fa-4x text-danger"></i>
+                    </div>
+
+                    <div class="m-t-xl">
+                        <h1>{{ $gadd->ga_nama_gapi }}</h1>
+                        <p>
+                            Rekapitulasi laporan yang telah dikelompokkan berdasarkan gunung api. Gunakan tombol di bawah ini untuk memilih tahun laporan.
+                        </p>
+
+                        @foreach ($years as $year)
+                        <a href="{{ route('chambers.v1.gunungapi.rekap-laporan.index.gunung-api', ['year' => $year->format('Y'), 'slug' => $gadd->slug]) }}"
+                            class="btn btn-outline btn-danger m-t-xs {{ $selected_year == $year->format('Y') ? 'active disabled' : ''}}">{{
+                            $year->format('Y') }}</a>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="hpanel">
+                <div class="panel-heading">
+                    Rekap Laporan untuk Gunung Api {{ $gadd->ga_nama_gapi }}
+                </div>
+
+                <div class="panel-body float-e-margins">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
+
+                            @if ($pengamat_only)
+                            <a href="{{ route('chambers.v1.gunungapi.rekap-laporan.show.gunung-api', ['year' => $selected_year, 'slug' => $gadd->slug, 'pengamatOnly' => 'false']) }}"
+                                class="btn btn-outline btn-block btn-magma" type="button">Tampilkan Semua</a>
+                            @else
+                            <a href="{{ route('chambers.v1.gunungapi.rekap-laporan.show.gunung-api', ['year' => $selected_year, 'slug' => $gadd->slug, 'pengamatOnly' => 'true']) }}"
+                                class="btn btn-outline btn-block btn-magma" type="button">Tampilkan Hanya Pengamat</a>
+                            @endif
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-heading">
+                    Lihat Detail Laporan per Bulan
+                </div>
+                <div class="panel-body float-e-margins">
+                    @foreach ($months as $month)
+                    <a href="#" class="btn btn-outline btn-magma" type="button">{{ $month->formatLocalized('%B') }}</a>
+                    @endforeach
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table id="table-rekap" class="table table-condensed table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nama</th>
+                                    <th>NIP</th>
+                                    <th>Januari</th>
+                                    <th>Februari</th>
+                                    <th>Maret</th>
+                                    <th>April</th>
+                                    <th>Mei</th>
+                                    <th>Juni</th>
+                                    <th>Juli</th>
+                                    <th>Agustus</th>
+                                    <th>September</th>
+                                    <th>Oktober</th>
+                                    <th>November</th>
+                                    <th>Desember</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($vars['users'] as $var)
+                                <tr>
+                                    <td class="border-right">
+                                        <a href="{{ route('chambers.v1.gunungapi.rekap-laporan.show.nip', ['year' => $selected_year, 'nip' => $var['nip'] ]) }}" style="color: #337ab7; text-decoration: none;">{{ $var['nama'] }}</a>
+                                    </td>
+                                    <td class="border-right">{{ $var['nip'] }}</td>
+                                    @foreach ($var['jumlah_laporan_per_bulan'] as $jumlah_laporan_per_bulan)
+                                    <td>{{ $jumlah_laporan_per_bulan }}</td>
+                                    @endforeach
+                                    <td>{{ $var['total_laporan_dibuat'] }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('add-vendor-script')
@@ -72,7 +202,17 @@ Rekap Laporan {{ $gadd->ga_nama_gapi }}
 @section('add-script')
 <script>
 $(document).ready(function () {
-    var calendars = @json($vars['calendar']);
+    var dataCalendars = @json($vars['calendar']);
+
+    // Initialize table
+    $('#table-rekap').dataTable({
+        dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+        "lengthMenu": [[50, 100, 150, -1], [50, 100, 150, "All"]],
+        buttons: [
+            { extend: 'csv', title: 'Rekap Laporan {{ $gadd->ga_nama_gapi }}', className: 'btn-sm' },
+            { extend: 'pdfHtml5', orientation: 'landscape', pageSize: 'LEGAL', title: 'Rekap Laporan {{ $gadd->ga_nama_gapi }}', className: 'btn-sm' },
+        ]
+    });
 });
 </script>
 @endsection

@@ -150,11 +150,7 @@ Rekap Laporan Gunung Api
 
                                     <td>
                                     @foreach ($var['pelapors'] as $pelapor)
-                                        <a href="{{ $pelapor['link_user'] }}" style="color: #337ab7; text-decoration: none;">{{ $pelapor['nama'] }} ({{ $pelapor['total_laporan'] }})</a>
-
-                                        @if (!$loop->last)
-                                            <span> | </span>
-                                        @endif
+                                        <a href="{{ $pelapor['link_user'] }}" style="color: #337ab7; text-decoration: none;">{{ $pelapor['nama'] }} ({{ $pelapor['total_laporan'] }})</a>@if (!$loop->last) | @endif
                                     @endforeach
                                     </td>
                                 </tr>
@@ -167,4 +163,39 @@ Rekap Laporan Gunung Api
         </div>
     </div>
 </div>
+@endsection
+
+@section('add-vendor-script')
+
+<!-- DataTables -->
+<script src="{{ asset('vendor/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<!-- DataTables buttons scripts -->
+<script src="{{ asset('vendor/pdfmake/build/pdfmake.min.js') }}"></script>
+<script src="{{ asset('vendor/pdfmake/build/vfs_fonts.js') }}"></script>
+<script src="{{ asset('vendor/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables.net-buttons-bs/js/buttons.bootstrap.min.js') }}"></script>
+@role('Super Admin')
+<script src="{{ asset('vendor/sweetalert/lib/sweet-alert.min.js') }}"></script>
+@endrole
+
+@endsection
+
+@section('add-script')
+<script>
+    $(document).ready(function () {
+    // Initialize table
+    $('#table-rekap').dataTable({
+        dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+        "lengthMenu": [[50, 100, 150, -1], [50, 100, 150, "All"]],
+        buttons: [
+            { extend: 'csv', title: 'Rekap Laporan', className: 'btn-sm'},
+            { extend: 'pdfHtml5', orientation: 'landscape', pageSize: 'LEGAL', title: 'Rekap Laporan', className: 'btn-sm' },
+        ]
+    });
+});
+
+</script>
 @endsection

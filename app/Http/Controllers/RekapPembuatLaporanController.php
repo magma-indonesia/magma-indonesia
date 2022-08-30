@@ -40,6 +40,13 @@ class RekapPembuatLaporanController extends Controller
     protected $year = null;
 
     /**
+     * Bulan yang saat ini sedang dipilih
+     *
+     * @var null|string
+     */
+    protected $month = null;
+
+    /**
      * Slug gunung api
      *
      * @var Gadd
@@ -106,6 +113,22 @@ class RekapPembuatLaporanController extends Controller
     }
 
     /**
+     * Membuat range bulan
+     *
+     * @return Collection
+     */
+    protected function months(): Collection
+    {
+        return collect(CarbonPeriod::create(
+            Carbon::createFromDate(
+                $this->year
+            )->startOfYear(),
+            '1 month',
+            now()->endOfYear(),
+        ));
+    }
+
+    /**
      * Assigning untuk filter pengamat
      *
      * @param Request $request
@@ -121,7 +144,7 @@ class RekapPembuatLaporanController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Year validator
      *
      * @param string|null $year
      * @return self
@@ -131,6 +154,24 @@ class RekapPembuatLaporanController extends Controller
         try {
             $this->year = !is_null($year) ? $year : now()->format('Y');
             Carbon::createFromFormat('Y', $this->year);
+        } catch (InvalidArgumentException $th) {
+            abort(404);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Month validator
+     *
+     * @param Request $request
+     * @return self
+     */
+    protected function month(Request $request): self
+    {
+        try {
+            $this->month = $request->has('month') ?
+                Carbon::createFromFormat('m', $request->month)->format('m') : null;
         } catch (InvalidArgumentException $th) {
             abort(404);
         }
@@ -625,14 +666,16 @@ class RekapPembuatLaporanController extends Controller
      * @param string $slug
      * @return View
      */
-    public function showByGunungApi(Request $request, string $year, string $slug): View
+    public function showByGunungApi(Request $request, string $year, string $slug)
     {
         $this->year($year)->pengamatOnly($request)->gunungApi($slug);
 
         return view('rekap-laporan.show-by-gunungapi', [
             'pengamat_only' => $this->pengamatOnly,
             'selected_year' => $this->year,
+            'selected_month' => $this->month($request),
             'years' => $this->years(),
+            'months' => $this->months(),
             'gadd' => $this->gunungApi,
             'vars' => $this->year == now()->format('Y') ?
                 $this->cacheShowVarsGunungApiForever(false) : $this->cacheShowVarsGunungApiForever(),
