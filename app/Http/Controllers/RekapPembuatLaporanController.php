@@ -124,7 +124,9 @@ class RekapPembuatLaporanController extends Controller
                 $this->year
             )->startOfYear(),
             '1 month',
-            now()->endOfYear(),
+            Carbon::createFromDate(
+                $this->year
+            )->endOfYear(),
         ));
     }
 
@@ -250,7 +252,7 @@ class RekapPembuatLaporanController extends Controller
      * @param string $periode
      * @return array
      */
-    protected function getStartDateFroCalendar(string $var_data_date, string $periode): array
+    protected function getStartDateForCalendar(string $var_data_date, string $periode): array
     {
         return [
             'start' => Carbon::createFromFormat(
@@ -270,12 +272,12 @@ class RekapPembuatLaporanController extends Controller
      * @param Collection $vars
      * @return Collection
      */
-    protected function calendar(Collection $vars): Collection
+    protected function calendars(Collection $vars): Collection
     {
         $vars->transform(function ($var) {
             return [
                 'title' => $var->user->vg_nama,
-                'date' => $this->getStartDateFroCalendar($var->var_data_date, $var->periode),
+                'date' => $this->getStartDateForCalendar($var->var_data_date, $var->periode),
                 'all_day' => false,
             ];
         });
@@ -319,7 +321,7 @@ class RekapPembuatLaporanController extends Controller
     {
         return [
             'users' => $this->rekapLaporan($vars),
-            'calendar' => $this->calendar($vars),
+            'calendar' => $this->calendars($vars),
         ];
     }
 
@@ -669,6 +671,8 @@ class RekapPembuatLaporanController extends Controller
     public function showByGunungApi(Request $request, string $year, string $slug)
     {
         $this->year($year)->pengamatOnly($request)->gunungApi($slug);
+
+        dd($this->cacheShowVarsGunungApiForever(false));
 
         return view('rekap-laporan.show-by-gunungapi', [
             'pengamat_only' => $this->pengamatOnly,

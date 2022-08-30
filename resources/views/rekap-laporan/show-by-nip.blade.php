@@ -68,6 +68,31 @@ Rekap Laporan {{ $user->vg_nama }}
                 </div>
             </div>
         </div>
+
+        <div class="col-lg-4 col-xs-12">
+            <div class="hpanel hred">
+                <div class="panel-body h-200">
+                    <div class="stats-title pull-left">
+                        <h4>Rekap Laporan</h4>
+                    </div>
+
+                    <div class="stats-icon pull-right">
+                        <i class="pe-7s-note2 fa-4x text-danger"></i>
+                    </div>
+
+                    <div class="m-t-xl">
+                        <h1>Gunung Api</h1>
+                        <p>
+                            Menu untuk melihat rekapitulasi jumlah laporan yang dibuat oleh pengamat gunung api yang telah <b>dikelompokkan berdasarkan gunung api</b>.
+                        </p>
+
+                        @foreach ($years as $year)
+                        <a href="{{ route('chambers.v1.gunungapi.rekap-laporan.index.gunung-api', ['year' => $year->format('Y')]) }}" class="btn btn-outline btn-danger m-t-xs">{{ $year->format('Y') }}</a>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="row">

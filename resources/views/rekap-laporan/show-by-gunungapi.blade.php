@@ -93,7 +93,7 @@ Rekap Laporan {{ $gadd->ga_nama_gapi }}
                         </p>
 
                         @foreach ($years as $year)
-                        <a href="{{ route('chambers.v1.gunungapi.rekap-laporan.index.gunung-api', ['year' => $year->format('Y'), 'slug' => $gadd->slug]) }}"
+                        <a href="{{ route('chambers.v1.gunungapi.rekap-laporan.show.gunung-api', ['year' => $year->format('Y'), 'slug' => $gadd->slug]) }}"
                             class="btn btn-outline btn-danger m-t-xs {{ $selected_year == $year->format('Y') ? 'active disabled' : ''}}">{{
                             $year->format('Y') }}</a>
                         @endforeach
