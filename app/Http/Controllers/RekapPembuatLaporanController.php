@@ -672,8 +672,6 @@ class RekapPembuatLaporanController extends Controller
     {
         $this->year($year)->pengamatOnly($request)->gunungApi($slug);
 
-        dd($this->cacheShowVarsGunungApiForever(false));
-
         return view('rekap-laporan.show-by-gunungapi', [
             'pengamat_only' => $this->pengamatOnly,
             'selected_year' => $this->year,
