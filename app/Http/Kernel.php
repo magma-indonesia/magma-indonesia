@@ -81,5 +81,6 @@ class Kernel extends HttpKernel
         'statistik.home' => \App\Http\Middleware\StatistikHomeMiddleware::class,
         'custom_throttle' => \App\Http\Middleware\CustomThrottle::class,
         'blacklist' => \App\Http\Middleware\Blacklist::class,
+        'softban' => \App\Http\Middleware\SoftBan::class,
     ];
 }

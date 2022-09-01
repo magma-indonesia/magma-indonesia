@@ -395,7 +395,8 @@ Route::name('v1.')->group(function () {
                 Route::get('evaluasi/result','v1\MagmaVarEvaluasi@show')
                     ->name('evaluasi.show');
                 Route::get('evaluasi/result','v1\MagmaVarEvaluasi@result')
-                    ->name('evaluasi.result');
+                    ->name('evaluasi.result')
+                    ->middleware('softban');
                 Route::delete('evaluasi/result/{id}','v1\MagmaVarEvaluasi@destroy')
                     ->name('evaluasi.destroy');
 
