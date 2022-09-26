@@ -42,7 +42,7 @@ class CreateMagmaVensTable extends Migration
             $table->integer('rekomendasi_id')->unsigned();
             $table->foreign('rekomendasi_id')->references('id')->on('var_rekomendasis');
             $table->boolean('has_vona')->default(0);
-            $table->boolean('sms_blast')->default(0);
+            $table->boolean('is_blasted')->default(0);
             $table->char('nip_pelapor', 18)->index();
             $table->foreign('nip_pelapor')->references('nip')->on('users');
             $table->dateTimeTz('published_at')->nullable();
