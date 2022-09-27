@@ -174,6 +174,7 @@ class MagmaVenResource extends JsonResource
                 'visual' => $this->erupt_vis ? $this->visualTeramati() : $this->visualTidakTeramati(),
                 'instrumental' => "Erupsi ini terekam di seismograf dengan amplitudo maksimum {$this->erupt_amp} mm dan durasi {$this->erupt_drs} detik."
             ],
+            'rekomendasi' => nl2br($this->erupt_rek),
             'pelapor' => $this->user->vg_nama,
             'share' => [
                 'url' =>  $this->signedUrl(),
