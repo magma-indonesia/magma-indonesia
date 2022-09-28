@@ -4,12 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Uuid;
-use CyrildeWit\EloquentViewable\Viewable;
 use Carbon\Carbon;
 
 class Vona extends Model
 {
-    use Uuid,Viewable;
+    use Uuid;
 
     public $incrementing = false;
 
@@ -18,20 +17,27 @@ class Vona extends Model
     protected $keyType = 'string';
 
     protected $appends = [
-        'issued_utc',
         'source',
         'contacts'
     ];
 
     protected $casts = [
-        'sent' => 'boolean'
+        'is_sent' => 'boolean',
+        'is_visible' => 'boolean',
+        'is_continuing' => 'boolean',
+        'ash_color' => 'array',
+        'ash_intensity' => 'array',
+        'ash_directions' => 'array',
     ];
 
     protected $with = [
-        'user:nip,name'
+        'user:nip,name',
     ];
 
-    protected $guarded = ['id','uuid'];
+    protected $guarded = [
+        'id',
+        'uuid',
+    ];
 
     protected $hidden = ['id'];
 
@@ -39,12 +45,12 @@ class Vona extends Model
 
     const CONTACTS = "Center for Volcanology and Geological Hazard Mitigation (CVGHM), Tel: +62-22-727-2606, Facsimile: +62-22-720-2761, email : pvmbg@esdm.go.id";
 
-    public function getIssuedUtcAttribute()
-    {
-        return Carbon::createFromFormat('Y-m-d H:i:s' ,$this->attributes['issued'])->format('Ymd/Hi').'Z';
-    }
+    // public function getIssuedUtcAttribute()
+    // {
+    //     return Carbon::createFromFormat('Y-m-d H:i:s' ,$this->attributes['issued'])->format('Ymd/Hi').'Z';
+    // }
 
-    public function getPrevCodeAttribute($value)
+    public function getPreviousCodeAttribute($value)
     {
         return strtolower($value);
     }

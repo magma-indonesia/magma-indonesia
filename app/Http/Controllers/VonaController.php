@@ -43,9 +43,9 @@ class VonaController extends Controller
 
         if ($type == 'lat')
         {
-            return $sym.$deg.' deg '.$min.' min '.$sec.' sec '; 
+            return $sym.$deg.' deg '.$min.' min '.$sec.' sec ';
         }
-        return 'E '.$deg.' deg '.$min.' min '.$sec.' sec'; 
+        return 'E '.$deg.' deg '.$min.' min '.$sec.' sec';
     }
 
     /**
@@ -54,7 +54,7 @@ class VonaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {  
+    {
         $vonas = Vona::select('uuid','issued','cu_code','prev_code','vch_asl','code_id','nip_pelapor')
                 ->orderBy('issued','desc')
                 // ->where('sent',1)
@@ -69,7 +69,7 @@ class VonaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function search(Request $request)
-    {        
+    {
         $q = $request->q;
         // $vonas = Vona::orderBy('issued','desc')->where('sent',1)->paginate(30,['*'],'vona_page');
 
@@ -82,7 +82,7 @@ class VonaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function draft(Request $request)
-    {        
+    {
         $vonas = Vona::orderBy('issued','desc')
                 ->where('sent',0)
                 ->paginate(30,['*'],'vona_page');
@@ -102,7 +102,7 @@ class VonaController extends Controller
         $users = User::whereHas('bidang', function($query){
             $query->where('bidang_id','like',2);
         })->orderBy('name')->get();
-        
+
         return view('vona.create',compact('gadds','users'));
     }
 
