@@ -1,0 +1,69 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class VonaCreateRequest extends FormRequest
+{
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'code.required' => 'Kode gunung api tidak terdaftar',
+            'code.exists' => 'Kode gunung api tidak terdaftar',
+            'code.size'  => 'Kode gunung api tidak terdaftar',
+            'erupsi_berlangsung.required' => 'Informasi erupsi sedang berlangsung belum dipilih',
+            'visibility.required' => 'Visibility belum diisi',
+            'visibility.boolean' => 'Visibility hanya memiliki nilai Teramati atau Tidak Teramati',
+            'date.date_format' => 'Format tanggal tidak sesuai (Y-m-d H:i, contoh: 2017-10-02 23:20)',
+            'height.between' => 'Tinggi kolom letusan minimum :min dan maksimum :max meter',
+            'warna_asap.*.in' => 'Data Warna Abu invalid',
+            'intensitas.*.in' => 'Data Intensitas invalid',
+            'arah_asap.*.in' => 'Arah abu invalid',
+            '*.required' => 'Data harus diisi jika Visual Letusan atau Guguran teramati',
+            '*.numeric' => 'Data harus dalam bentuk Numeric',
+            '*.between' => 'Nilai :attribute Minimum :min dan maksimum :max',
+        ];
+    }
+
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return auth()->check();
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'code' => 'required|size:3|exists:ga_dd,code',
+            'jenis' => 'required|in:apg,lts',
+            'date' => 'required|date_format:Y-m-d H:i:s|before:tomorrow',
+            'erupsi_berlangsung' => 'required|boolean',
+            'visibility' => 'required|boolean',
+            'height' => 'required_if:visibility,1|nullable|numeric|between:0,20000',
+            'warna_asap' => 'required_if:visibility,1|array',
+            'warna_asap.*' => 'required_if:visibility,1|in:Putih,Kelabu,Coklat,Hitam',
+            'intensitas' => 'required_if:visibility,1|array',
+            'intensitas.*' => 'required_if:visibility,1|in:Tipis,Sedang,Tebal',
+            'arah_abu' => 'required_if:visibility,1|array',
+            'arah_abu.*' => 'required_if:visibility,1|in:Utara,Timur Laut,Timur,Tenggara,Selatan,Barat Daya,Barat,Barat Laut',
+            'amplitudo' => 'required|numeric|between:0,240',
+            'durasi' => 'required|numeric|between:0,10000',
+            'lainnya' => 'nullable',
+        ];
+    }
+}

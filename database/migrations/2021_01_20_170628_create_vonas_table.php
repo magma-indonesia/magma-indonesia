@@ -31,6 +31,8 @@ class CreateVonasTable extends Migration
             $table->json('ash_color')->nullable();
             $table->json('ash_intensity')->nullable();
             $table->json('ash_directions')->nullable();
+            $table->float('amplitude', 6, 2)->default(0);
+            $table->float('duration', 8, 2)->default(0);
             $table->string('ash_information')->comment('Volcano Cloud Height Other Information')->nullable();
             $table->text('remarks')->nullable();
             $table->boolean('is_sent')->default(0);

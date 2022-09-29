@@ -5,8 +5,7 @@ Buat VONA Gunung Api
 @endsection
 
 @section('add-vendor-css')
-<link rel="stylesheet"
-    href="{{ asset('vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}" />
 @role('Super Admin')
 <link rel="stylesheet" href="{{ asset('vendor/sweetalert/lib/sweet-alert.css') }}" />
 @endrole
@@ -109,7 +108,7 @@ Buat VONA Gunung Api
 
                                         {{-- Erupsi sedang berlangsung --}}
                                         <div class="form-group col-sm-12">
-                                            <label>Apakah erupsi sedang berlangsung?</label>
+                                            <label>Apakah erupsi saat ini sedang berlangsung?</label>
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <label class="checkbox-inline"><input name="erupsi_berlangsung" value="1" type="radio" class="i-checks draft"
@@ -300,6 +299,55 @@ Buat VONA Gunung Api
 
                                     </div>
                                 </div>
+
+                                <div class="hr-line-dashed"></div>
+
+                                {{-- Seismik --}}
+                                <div class="row">
+                                    <div class="col-lg-4 text-center">
+                                        <i class="pe-7s-graph3 fa-4x text-muted"></i>
+                                        <p class="m-t-md">
+                                            Masukkan nilai amplitudo maksimum dan lama durasi kejadian erupsi
+                                        </p>
+                                    </div>
+
+                                    <div class="col-lg-8">
+                                        {{-- Rekaman Seismik --}}
+                                        <div class="form-group col-sm-12">
+                                            <label>Amplitudo Maksimum Letusan</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon" style="min-width: 100px;">Amplitudo</span>
+                                                <input id="amplitudo" name="amplitudo" class="form-control" type="text" value="{{ empty(old('amplitudo')) ? '' : old('amplitudo') }}">
+                                                <span class="input-group-addon" style="min-width: 75px;">mm</span>
+                                            </div>
+                                            <span class="help-block m-b-none">Maksimal 240mm</span>
+                                            @if( $errors->has('amplitudo'))
+                                            <label class="error" for="amplitudo">{{ ucfirst($errors->first('amplitudo')) }}</label>
+                                            @endif
+                                        </div>
+
+                                        <div class="form-group col-sm-12">
+                                            <label>Durasi</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon" style="min-width: 100px;">Durasi</span>
+                                                <input name="durasi" class="form-control" type="text" value="{{ empty(old('durasi')) ? '' : old('durasi') }}">
+                                                <span class="input-group-addon" style="min-width: 75px;">detik</span>
+                                            </div>
+                                            <span class="help-block m-b-none">Jika <b>erupsi sedang berlangsung</b>, isi dengan waktu durasi saat pelaporan, <b>tidak perlu</b> menunggu kejadian erupsi selesai.</span>
+                                            @if( $errors->has('durasi'))
+                                            <label class="error" for="durasi">{{ ucfirst($errors->first('durasi')) }}</label>
+                                            @endif
+                                        </div>
+
+                                        {{-- Submit --}}
+                                        <div class="form-group col-sm-12">
+                                            <div class="hr-line-dashed"></div>
+                                            <button class="btn btn-primary" type="submit">Buat VONA</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </form>
