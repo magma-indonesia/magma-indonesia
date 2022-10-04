@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\v1\PressRelease;
 use App\Http\Resources\v1\PressCollection;
+use App\Http\Resources\v1\PressShowResource;
 
 class PressController extends Controller
 {
@@ -16,7 +17,13 @@ class PressController extends Controller
      */
     public function index(Request $request)
     {
-        $vars = PressRelease::orderBy('datetime','desc')->paginate(10);
-        return new PressCollection($vars);
+        $presses = PressRelease::orderBy('datetime','desc')->paginate(10);
+        return new PressCollection($presses);
+    }
+
+    public function show($id)
+    {
+        $press = PressRelease::findOrFail($id);
+        return new PressShowResource($press);
     }
 }

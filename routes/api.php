@@ -78,6 +78,7 @@ Route::name('v1.')->group(function () {
             Route::get('magma-sigertan','Api\v1\MagmaSigertanController@index');
 
             Route::get('press-release','Api\v1\PressController@index');
+            Route::get('press-release/{id}', 'Api\v1\PressController@show');
 
             Route::name('home.')->group(function () {
                 Route::group(['prefix' => 'home'], function () {
