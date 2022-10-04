@@ -17,10 +17,12 @@ class VonaCreateRequest extends FormRequest
             'code.required' => 'Kode gunung api tidak terdaftar',
             'code.exists' => 'Kode gunung api tidak terdaftar',
             'code.size'  => 'Kode gunung api tidak terdaftar',
+            'type.required' => 'Jenis VONA tidak ditemukan',
+            'type.in' => 'Jenis VONA tidak valid (Real atau Exercise?)',
             'erupsi_berlangsung.required' => 'Informasi erupsi sedang berlangsung belum dipilih',
             'visibility.required' => 'Visibility belum diisi',
             'visibility.boolean' => 'Visibility hanya memiliki nilai Teramati atau Tidak Teramati',
-            'date.date_format' => 'Format tanggal tidak sesuai (Y-m-d H:i, contoh: 2017-10-02 23:20)',
+            'date.date_format' => 'Format tanggal tidak sesuai (Y-m-d H:i:s, contoh: 2017-10-02 23:20:20)',
             'height.between' => 'Tinggi kolom letusan minimum :min dan maksimum :max meter',
             'warna_asap.*.in' => 'Data Warna Abu invalid',
             'intensitas.*.in' => 'Data Intensitas invalid',
@@ -50,7 +52,7 @@ class VonaCreateRequest extends FormRequest
     {
         return [
             'code' => 'required|size:3|exists:ga_dd,code',
-            'jenis' => 'required|in:apg,lts',
+            'type' => 'required|in:real,exercise',
             'date' => 'required|date_format:Y-m-d H:i:s|before:tomorrow',
             'erupsi_berlangsung' => 'required|boolean',
             'visibility' => 'required|boolean',
@@ -62,7 +64,7 @@ class VonaCreateRequest extends FormRequest
             'arah_abu' => 'required_if:visibility,1|array',
             'arah_abu.*' => 'required_if:visibility,1|in:Utara,Timur Laut,Timur,Tenggara,Selatan,Barat Daya,Barat,Barat Laut',
             'amplitudo' => 'required|numeric|between:0,240',
-            'durasi' => 'required|numeric|between:0,10000',
+            'durasi' => 'required_if:erupsi_berlangsung,0|nullable|numeric|between:0,10000',
             'lainnya' => 'nullable',
         ];
     }
