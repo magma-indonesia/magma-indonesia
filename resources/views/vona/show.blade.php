@@ -1,13 +1,13 @@
 @extends('layouts.default')
 
 @section('title')
-    VONA | Volcano Observatory Notice for Aviation
+VONA | Volcano Observatory Notice for Aviation
 @endsection
 
 @section('nav-show-vona')
-    <li class="{{ active('chambers.vona.*') }}">
-        <a href="{{ route('chambers.vona.show',['uuid' => $vona->uuid]) }}">{{$vona->gunungapi->name}}</a>
-    </li>
+<li class="{{ active('chambers.vona.*') }}">
+    <a href="{{ route('chambers.vona.show',['uuid' => $vona->uuid]) }}">{{$vona->gunungapi->name}}</a>
+</li>
 @endsection
 
 @section('content-header')
@@ -28,9 +28,9 @@
                     </ol>
                 </div>
                 <h2 class="font-light m-b-xs">
-                    {{ $vona->gunungapi->name.' '.$vona->issued_utc }}
+                    {{ $vona->gunungapi->name.' '.$vona->issued }}
                 </h2>
-                <small>VONA untuk Gunung {{ $vona->gunungapi->name }} diterbitkan pada {{ $vona->issued }} oleh {{ $vona->user->name }}</small>
+                <small>VONA untuk Gunung {{ $vona->gunungapi->name }} diterbitkan pada {{ $vona->issued_utc }} oleh {{ $vona->user->name }}</small>
             </div>
         </div>
     </div>
@@ -45,10 +45,10 @@
                         <span class="pull-right">
                             <i class="fa fa-user"> </i> {{ $vona->user->name }}
                         </span>
-                        <i class="fa fa-eye"> </i> {{ $vona->getViews() }}
+                        <i class="fa fa-eye"> </i> {{ $vona->gunungapi->name.' '.$vona->issued_utc }}
                     </div>
                     <div class="panel-body">
-                        @if ($vona->sent == 0) 
+                        @if ($vona->is_sent == 0)
                         <h3><span class="label label-danger">DRAFT VONA</span></h3>
                         <div class="hr-line-dashed"></div>
                         @endif
@@ -80,13 +80,13 @@
                                         <td>(4)</td>
                                         <td><b>Current Aviation Colour Code</b></td>
                                         <td><b>:</b></td>
-                                        <td><b>{{ $vona->cu_code }}</b></td>
+                                        <td><b>{{ $vona->current_code }}</b></td>
                                     </tr>
                                     <tr>
                                         <td>(5)</td>
                                         <td><b>Previous Aviation Colour Code</b></td>
                                         <td><b>:</b></td>
-                                        <td>{{ $vona->prev_code }}</td>
+                                        <td>{{ $vona->previous_code }}</td>
                                     </tr>
                                     <tr>
                                         <td>(6)</td>
@@ -104,7 +104,7 @@
                                         <td>(8)</td>
                                         <td><b>Volcano Location</b></td>
                                         <td><b>:</b></td>
-                                        <td>{{ $vona->location }}</td>
+                                        <td>{{ $location }}</td>
                                     </tr>
                                     <tr>
                                         <td>(9)</td>
@@ -122,24 +122,20 @@
                                         <td>(11)</td>
                                         <td><b>Volcanic Activity Summary</b></td>
                                         <td><b>:</b></td>
-                                        <td>{{ $vona->vas }}</td>
+                                        <td>Volcanic Activity Summary</td>
                                     </tr>
                                     <tr>
                                         <td>(12)</td>
                                         <td><b>Volcanic Cloud Height</b></td>
                                         <td><b>:</b></td>
                                         <td>
-                                        @if($vona->vch_asl > 0)
-                                        Best estimate of ash-cloud top is around {{ round($vona->vch_asl) }} FT ({{ round($vona->vch_asl*0.3048) }} M) above sea level, may be higher than what can be observed clearly. Source of height data: ground observer. 
-                                        @else
-                                        Volcanic ash not visbile/observed.
-                                        @endif</td>
+                                        Volcanic Cloud Height</td>
                                     </tr>
                                     <tr>
                                         <td>(13)</td>
                                         <td><b>Other Volcanic Cloud Information</b></td>
                                         <td><b>:</b></td>
-                                        <td>{{ $vona->vch_other ?? '-' }}</td>
+                                        <td>Other Volcanic Cloud Information</td>
                                     </tr>
                                     <tr>
                                         <td>(14)</td>
@@ -169,7 +165,7 @@
                         @else
                         <h4>{{ $vona->gunungapi->name.' '.$vona->issued_utc }}</h4>
                         @endif
-                        @if ($vona->sent == 0) 
+                        @if ($vona->is_sent == false)
                         <div class="hr-line-dashed"></div>
                         <h3><span class="label label-danger">DRAFT VONA</span></h3>
                         @endif

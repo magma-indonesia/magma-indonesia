@@ -45,10 +45,10 @@ class Vona extends Model
 
     const CONTACTS = "Center for Volcanology and Geological Hazard Mitigation (CVGHM), Tel: +62-22-727-2606, Facsimile: +62-22-720-2761, email : pvmbg@esdm.go.id";
 
-    // public function getIssuedUtcAttribute()
-    // {
-    //     return Carbon::createFromFormat('Y-m-d H:i:s' ,$this->attributes['issued'])->format('Ymd/Hi').'Z';
-    // }
+    public function getIssuedUtcAttribute()
+    {
+        return Carbon::createFromFormat('Y-m-d H:i:s' ,$this->attributes['issued'])->format('Ymd/Hi').'Z';
+    }
 
     public function getPreviousCodeAttribute($value)
     {
