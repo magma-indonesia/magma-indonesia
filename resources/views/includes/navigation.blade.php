@@ -395,9 +395,6 @@
                     <li class="{{ active('chambers.vona.index') }}">
                         <a href="{{ route('chambers.vona.index') }}">Daftar VONA</a>
                     </li>
-                    <li class="{{ active('chambers.vona.draft') }}">
-                        <a href="{{ route('chambers.vona.draft') }}">Draft VONA</a>
-                    </li>
                     <li class="{{ active('chambers.vona.create') }}">
                         <a href="{{ route('chambers.vona.create') }}">Buat VONA</a>
                     </li>
