@@ -52,8 +52,8 @@ VONA | Volcano Observatory Notice for Aviation
                         <h3><span class="label label-danger">DRAFT VONA</span></h3>
                         <div class="hr-line-dashed"></div>
                         @endif
-                        @if ($vona->type != 'REAL')
-                        <h4> VA EXERCISE APAC VOLCEX 18/02</h4>
+                        @if ($vona->type === 'EXERCISE')
+                        <h3> VA EXERCISE APAC VOLCEX 22/01</h3>
                         @else
                         <h4>{{ $vona->gunungapi->name.' '.$vona->issued_utc }}</h4>
                         @endif
@@ -147,7 +147,7 @@ VONA | Volcano Observatory Notice for Aviation
                                         <td>(15)</td>
                                         <td><b>Contacts</b></td>
                                         <td><b>:</b></td>
-                                        <td>Center for Volcanology and Geological Hazard Mitigation (CVGHM).<br> Tel: +62-22-727-2606.<br> Facsimile: +62-22-720-2761.<br> email : vsi@vsi.esdm.go.id</td>
+                                        <td>Center for Volcanology and Geological Hazard Mitigation (CVGHM).<br> Tel: +62-22-727-2606.<br> Facsimile: +62-22-720-2761.<br> email : pvmbg@esdm.go.id</td>
                                     </tr>
                                     <tr>
                                         <td>(16)</td>
@@ -160,8 +160,8 @@ VONA | Volcano Observatory Notice for Aviation
                                 </tbody>
                             </table>
                         </div>
-                        @if ($vona->type != 'REAL')
-                        <h4> VA EXERCISE VA EXERCISE VA EXERCISE </h4>
+                        @if ($vona->type === 'EXERCISE')
+                        <h3> VA EXERCISE VA EXERCISE VA EXERCISE </h3>
                         @else
                         <h4>{{ $vona->gunungapi->name.' '.$vona->issued_utc }}</h4>
                         @endif

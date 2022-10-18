@@ -28,9 +28,9 @@ class VonaController extends Controller
      */
     public function index(Request $request)
     {
-        $vonas = Vona::select('uuid','issued','cu_code','prev_code','vch_asl','code_id','nip_pelapor')
+        $vonas = Vona::select('uuid','issued', 'current_code', 'previous_code', 'ash_height','code_id','nip_pelapor')
                 ->orderBy('issued','desc')
-                // ->where('sent',1)
+                // ->where('is_sent',1)
                 ->paginate(30,['*'],'vona_page');
 
         return view('vona.index',compact('vonas'));
@@ -79,7 +79,13 @@ class VonaController extends Controller
         return view('vona.create',compact('gadds','users'));
     }
 
-    protected function noticenumber(Request $request)
+    /**
+     * Get Noticenumber of VONA
+     *
+     * @param Request $request
+     * @return String
+     */
+    protected function noticenumber(Request $request): string
     {
         $year = now()->format('Y');
         $code = $request->code;
@@ -89,14 +95,27 @@ class VonaController extends Controller
         return $year.$code.$vonaCount;
     }
 
-    protected function datetimeUtc($datetime, $tz)
+    /**
+     * Get date time in UTC
+     *
+     * @param string $datetime
+     * @param string $tz
+     * @return Carbon
+     */
+    protected function datetimeUtc(string $datetime, string $tz): Carbon
     {
         $datetime_utc = Carbon::createFromTimeString($datetime, $tz)->setTimezone('UTC');
 
         return $datetime_utc;
     }
 
-    protected function issued(Request $request)
+    /**
+     * Issued date (UTC) in VONA format
+     *
+     * @param Request $request
+     * @return string
+     */
+    protected function issued(Request $request): string
     {
         switch ($this->volcano->ga_zonearea) {
             case 'WIB':
@@ -113,7 +132,12 @@ class VonaController extends Controller
         return $this->datetimeUtc($request->date, $tz)->format('Y-m-d H:i:s');
     }
 
-    protected function previous_code(Request $request)
+    /**
+     * Get preivous code
+     *
+     * @return string
+     */
+    protected function previous_code(): string
     {
         if (is_null($this->latestVona))
             return 'unassigned';
@@ -121,7 +145,13 @@ class VonaController extends Controller
         return $this->latestVona->pre_avcode;
     }
 
-    protected function get_color(Request $request)
+    /**
+     * Get vona color code
+     *
+     * @param Request $request
+     * @return string
+     */
+    protected function get_color(Request $request): string
     {
         if ($request->height >= 6000)
             return 'RED';
@@ -132,54 +162,60 @@ class VonaController extends Controller
         return 'YELLOW';
     }
 
-    protected function current_code(Request $request)
+    /**
+     * Get vona current coior code
+     *
+     * @param Request $request
+     * @return string
+     */
+    protected function current_code(Request $request): string
     {
         return $request->visibility ? $this->get_color($request) : 'ORANGE';
     }
 
-    protected function convertLatitude()
+    protected function coordinateToString($coordinate, string $type)
     {
-        $coordinate = $this->volcano->ga_lat_gapi;
         [$degree, $decimal] = explode('.', $coordinate);
+
         $symbol = $degree > 0 ? 'N' : 'S';
+        if ($type === 'longitude') {
+            $symbol = 'E';
+        }
+
         $decimal = abs($coordinate) - abs($degree);
         $minute = floor($decimal * 60);
-        $second = round(($decimal*3600) - ($minute * 60));
+        $second = round(($decimal * 3600) - ($minute * 60));
 
-        $degree = sprintf('%02s', abs($degree));
+        $degree = $degree == '0' ? '0' : sprintf('%02s', abs($degree));
         $minute = sprintf('%02s', abs($minute));
         $second = sprintf('%02s', abs($second));
 
         return "$symbol $degree deg $minute min $second sec";
     }
 
-    protected function convertLongitude()
+    protected function convertLatitude(): string
     {
-        $coordinate = $this->volcano->ga_lon_gapi;
-        [$degree, $decimal] = explode('.', $coordinate);
-
-        $decimal = abs($coordinate) - abs($degree);
-        $minute = floor($decimal * 60);
-        $second = round(($decimal * 3600) - ($minute * 60));
-
-        $degree = sprintf('%02s', abs($degree));
-        $minute = sprintf('%02s', abs($minute));
-        $second = sprintf('%02s', abs($second));
-
-        return "E $degree deg $minute min $second sec";
+        $coordinate = $this->volcano->ga_lat_gapi;
+        return $this->coordinateToString($coordinate, 'latitude');
     }
 
-    protected function location()
+    protected function convertLongitude(): string
+    {
+        $coordinate = $this->volcano->ga_lon_gapi;
+        return $this->coordinateToString($coordinate, 'longitude');
+    }
+
+    protected function location(): string
     {
         return "{$this->convertLatitude()} {$this->convertLongitude()}";
     }
 
-    protected function volcano(Request $request)
+    protected function volcano(string $code): void
     {
-        $this->volcano = GaddOld::select('ga_code','ga_nama_gapi','ga_id_smithsonian','ga_elev_gapi','ga_lon_gapi','ga_lat_gapi','ga_prov_gapi', 'ga_prov_gapi_en','ga_zonearea')->where('ga_code', $request->code)->first();
+        $this->volcano = GaddOld::select('ga_code','ga_nama_gapi','ga_id_smithsonian','ga_elev_gapi','ga_lon_gapi','ga_lat_gapi','ga_prov_gapi', 'ga_prov_gapi_en','ga_zonearea')->where('ga_code', $code)->first();
     }
 
-    protected function latestVona(Request $request)
+    protected function latestVona(Request $request): void
     {
         $this->latestVona = VonaOld::with('volcano:ga_code,ga_nama_gapi,ga_id_smithsonian,ga_elev_gapi,ga_lon_gapi,ga_lat_gapi,ga_prov_gapi,ga_zonearea')
             ->where('ga_code', $request->code)
@@ -197,10 +233,9 @@ class VonaController extends Controller
     public function store(VonaCreateRequest $request)
     {
         $this->latestVona($request);
-        $this->volcano($request);
+        $this->volcano($request->code);
 
         $vona = Vona::create([
-            'noticenumber' => $this->noticenumber($request),
             'issued' => $this->issued($request),
             'type' => Str::upper($request->type),
             'code_id' => $request->code,
@@ -226,6 +261,10 @@ class VonaController extends Controller
 
     }
 
+    public function volcanoActivitySummary(Vona $vona)
+    {
+        $deskripsi = "Best estimate of ash-cloud top is around 13363 FT (4176 M) above sea level, may be higher than what can be observed clearly. Source of height data: ground observer."
+    }
     /**
      * Display the specified resource.
      *
@@ -235,8 +274,12 @@ class VonaController extends Controller
     public function show(Vona $vona)
     {
         $vona = Vona::findOrFail($vona->uuid);
-        $vona->addView();
-        return view('vona.show',compact('vona'));
+        $this->volcano($vona->code_id);
+        return view('vona.show', [
+            'vona' => $vona,
+            'location' => $this->location(),
+            'volcano_activity_summary' => $this->volcanoActivitySummary($vona),
+        ]);
     }
 
     /**

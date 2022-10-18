@@ -17,6 +17,7 @@ class Vona extends Model
     protected $keyType = 'string';
 
     protected $appends = [
+        'ash_height_ft',
         'source',
         'contacts'
     ];
@@ -47,12 +48,17 @@ class Vona extends Model
 
     public function getIssuedUtcAttribute()
     {
-        return Carbon::createFromFormat('Y-m-d H:i:s' ,$this->attributes['issued'])->format('Ymd/Hi').'Z';
+        return Carbon::createFromFormat('Y-m-d H:i:s', $this->attributes['issued'])->format('Ymd/Hi').'Z';
     }
 
     public function getPreviousCodeAttribute($value)
     {
         return strtolower($value);
+    }
+
+    public function getAshHeightFtAttribute($value)
+    {
+        return round($this->attributes['ash_height'] * 0.3048);
     }
 
     public function getSourceAttribute($value)

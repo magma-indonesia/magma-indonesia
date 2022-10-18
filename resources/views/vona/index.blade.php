@@ -1,11 +1,11 @@
 @extends('layouts.default')
 
 @section('title')
-    VONA | Volcano Observatory Notice for Aviation
+VONA | Volcano Observatory Notice for Aviation
 @endsection
 
 @section('add-vendor-css')
-    <link rel="stylesheet" href="{{ asset('vendor/sweetalert/lib/sweet-alert.css') }}" />
+<link rel="stylesheet" href="{{ asset('vendor/sweetalert/lib/sweet-alert.css') }}" />
 @endsection
 
 @section('content-header')
@@ -65,9 +65,10 @@
                         </form>
                     </div>
                 </div>
+
                 <div class="hpanel">
                     <div class="panel-heading">
-                        Daftar VONA Terkirim
+                        Daftar VONA Terkirim - ({{ $vonas->count() }})
                     </div>
                     <div class="panel-body">
                         {{ $vonas->links() }}
@@ -80,7 +81,7 @@
                                         <th>Issued (UTC)</th>
                                         <th>Current Code</th>
                                         <th>Previous Code</th>
-                                        <th>Cloud Height (ASL)</th>
+                                        <th>Ash Cloud Height (ASL)</th>
                                         <th>Sender</th>
                                         <th style="min-width: 180px;">Action</th>
                                     </tr>
@@ -91,9 +92,9 @@
                                         <td>{{ $vonas->firstItem()+$key }}</td>
                                         <td><a href="{{ route('chambers.vona.show',['uuid' => $vona->uuid])}}" target="_blank">{{ $vona->gunungapi->name }}</a></td>
                                         <td>{{ $vona->issued }}</td>
-                                        <td>{{ title_case($vona->cu_code) }}</td>
-                                        <td>{{ strtolower($vona->prev_code) }}</td>
-                                        <td>{{ $vona->vch_asl > 0 ? round($vona->vch_asl*0.3048).' meter' : 'Tidak teramati' }}</td>
+                                        <td>{{ $vona->current_code }}</td>
+                                        <td>{{ strtolower($vona->previous_code) }}</td>
+                                        <td>{{ $vona->ash_height > 0 ? $vona->ash_height.' meter' : 'Tidak teramati' }}</td>
                                         <td>{{ $vona->user->name }}</td>
                                         <td>
                                             <a href="{{ route('chambers.vona.show',['uuid'=>$vona->uuid]) }}" class="m-t-xs m-b-xs btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">View</a>
@@ -120,65 +121,64 @@
 @endsection
 
 @section('add-vendor-script')
-    <!-- DataTables buttons scripts -->
-    <script src="{{ asset('vendor/sweetalert/lib/sweet-alert.min.js') }}"></script>
+<script src="{{ asset('vendor/sweetalert/lib/sweet-alert.min.js') }}"></script>
 @endsection
 
 @section('add-script')
-    <script>
-        $(document).ready(function () {
+<script>
+$(document).ready(function () {
 
-            $('.click-here').click(function() {
-                window.open($(this).data('href'),'_blank');
-            });
+    $('.click-here').click(function() {
+        window.open($(this).data('href'),'_blank');
+    });
 
-            $('body').on('submit','#deleteForm',function (e) {
-                e.preventDefault();
+    $('body').on('submit','#deleteForm',function (e) {
+        e.preventDefault();
 
-                var $url = $(this).attr('action'),
-                    $data = $(this).serialize();
+        var $url = $(this).attr('action'),
+            $data = $(this).serialize();
 
-                swal({
-                    title: "Anda yakin?",
-                    text: "Data yang telah dihapus tidak bisa dikembalikan",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Yes, hapus!",
-                    cancelButtonText: "Gak jadi deh!",
-                    closeOnConfirm: false,
-                    closeOnCancel: true },
-                function (isConfirm) {
-                    if (isConfirm) {
-                        $.ajax({
-                            url: $url,
-                            data: $data,
-                            type: 'POST',
-                            success: function(data){
-                                console.log(data);
-                                if (data.success){
-                                    swal("Berhasil!", data.message, "success");
-                                    setTimeout(function(){
-                                        location.reload();
-                                    },2000);
-                                }
-                            },
-                            error: function(data){
-                                var $errors = {
-                                    'status': data.status,
-                                    'exception': data.responseJSON.exception,
-                                    'file': data.responseJSON.file,
-                                    'line': data.responseJSON.line
-                                };
-                                console.log($errors);
-                                swal("Gagal!", data.responseJSON.exception, "error");
-                            }
-                        });
+        swal({
+            title: "Anda yakin?",
+            text: "Data yang telah dihapus tidak bisa dikembalikan",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, hapus!",
+            cancelButtonText: "Gak jadi deh!",
+            closeOnConfirm: false,
+            closeOnCancel: true },
+        function (isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    url: $url,
+                    data: $data,
+                    type: 'POST',
+                    success: function(data){
+                        console.log(data);
+                        if (data.success){
+                            swal("Berhasil!", data.message, "success");
+                            setTimeout(function(){
+                                location.reload();
+                            },2000);
+                        }
+                    },
+                    error: function(data){
+                        var $errors = {
+                            'status': data.status,
+                            'exception': data.responseJSON.exception,
+                            'file': data.responseJSON.file,
+                            'line': data.responseJSON.line
+                        };
+                        console.log($errors);
+                        swal("Gagal!", data.responseJSON.exception, "error");
                     }
                 });
-
-                return false;
-            });
+            }
         });
-    </script>
+
+        return false;
+    });
+});
+</script>
 @endsection
