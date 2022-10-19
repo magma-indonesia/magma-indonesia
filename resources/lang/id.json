@@ -1,5 +1,13 @@
 {
     "Go Home": "Kembali ke MAGMA",
     "Sorry, your session has expired. Please refresh and try again.": "Maaf sesi Anda telah habis.",
-    "Sorry, we are doing some maintenance. Please check back soon.": "Mohon maaf, saat ini sedang dilakukan perbaikan. Silahkan nanti cek kembali."
+    "Sorry, we are doing some maintenance. Please check back soon.": "Mohon maaf, saat ini sedang dilakukan perbaikan. Silahkan nanti cek kembali.",
+    "Utara" : "North",
+    "Timur Laut": "Northeast",
+    "Timur": "East",
+    "Tenggara": "Southeast",
+    "Selatan": "South",
+    "Barat Daya": "Southwest",
+    "Barat": "West",
+    "Barat Laut": "Northwest"
 }
