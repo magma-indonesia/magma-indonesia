@@ -122,26 +122,25 @@ VONA | Volcano Observatory Notice for Aviation
                                         <td>(11)</td>
                                         <td><b>Volcanic Activity Summary</b></td>
                                         <td><b>:</b></td>
-                                        <td>Volcanic Activity Summary</td>
+                                        <td>{{ $volcano_activity_summary }}</td>
                                     </tr>
                                     <tr>
                                         <td>(12)</td>
                                         <td><b>Volcanic Cloud Height</b></td>
                                         <td><b>:</b></td>
-                                        <td>
-                                        Volcanic Cloud Height</td>
+                                        <td>{{ $volcanic_cloud_height }}</td>
                                     </tr>
                                     <tr>
                                         <td>(13)</td>
                                         <td><b>Other Volcanic Cloud Information</b></td>
                                         <td><b>:</b></td>
-                                        <td>Other Volcanic Cloud Information</td>
+                                        <td>{{ $other_volcanic_cloud_information }}</td>
                                     </tr>
                                     <tr>
                                         <td>(14)</td>
                                         <td><b>Remarks</b></td>
                                         <td><b>:</b></td>
-                                        <td>{{ $vona->remarks ?? '-' }}</td>
+                                        <td>{{ $remarks ?? '-' }}</td>
                                     </tr>
                                     <tr>
                                         <td>(15)</td>

@@ -17,6 +17,7 @@ class Vona extends Model
     protected $keyType = 'string';
 
     protected $appends = [
+        'issued_utc',
         'ash_height_ft',
         'source',
         'contacts'
@@ -29,6 +30,7 @@ class Vona extends Model
         'ash_color' => 'array',
         'ash_intensity' => 'array',
         'ash_directions' => 'array',
+        'issued' => 'datetime:Y-m-d H:i:s',
     ];
 
     protected $with = [

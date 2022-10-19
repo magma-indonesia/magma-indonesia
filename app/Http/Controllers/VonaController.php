@@ -109,6 +109,18 @@ class VonaController extends Controller
         return $datetime_utc;
     }
 
+    protected function zoneArea(string $zone): string
+    {
+        switch ($zone) {
+            case 'WIB':
+                return 'Asia/Jakarta';
+            case 'WITA':
+                return 'Asia/Makassar';
+            default:
+                return 'Asia/Jayapura';
+        }
+    }
+
     /**
      * Issued date (UTC) in VONA format
      *
@@ -117,17 +129,7 @@ class VonaController extends Controller
      */
     protected function issued(Request $request): string
     {
-        switch ($this->volcano->ga_zonearea) {
-            case 'WIB':
-                $tz = 'Asia/Jakarta';
-                break;
-            case 'WITA':
-                $tz = 'Asia/Makassar';
-                break;
-            default:
-                $tz = 'Asia/Jayapura';
-                break;
-        }
+        $tz = $this->zoneArea($this->volcano->ga_zonearea);
 
         return $this->datetimeUtc($request->date, $tz)->format('Y-m-d H:i:s');
     }
@@ -173,7 +175,7 @@ class VonaController extends Controller
         return $request->visibility ? $this->get_color($request) : 'ORANGE';
     }
 
-    protected function coordinateToString($coordinate, string $type)
+    protected function coordinateToString($coordinate, string $type): string
     {
         [$degree, $decimal] = explode('.', $coordinate);
 
@@ -261,10 +263,52 @@ class VonaController extends Controller
 
     }
 
-    public function volcanoActivitySummary(Vona $vona)
+    protected function ashCloudHeight(Vona $vona): string
     {
-        $deskripsi = "Best estimate of ash-cloud top is around 13363 FT (4176 M) above sea level, may be higher than what can be observed clearly. Source of height data: ground observer."
+        $feet = round($vona->ash_height*3.28084);
+        return "{$feet} FT ({$vona->ash_height} M)";
     }
+
+    protected function volcanicCloudHeight(Vona $vona): string
+    {
+        $deskripsi = "Best estimate of ash-cloud top is around {$this->ashCloudHeight($vona)} above sea level, may be higher than what can be observed clearly. Source of height data: ground observer.";
+
+        return $deskripsi;
+    }
+
+    protected function volcanoActivitySummary(Vona $vona): string
+    {
+        $utc = $vona->issued->format('Hm');
+        $tz = $this->zoneArea($this->volcano->ga_zonearea);
+        $local = Carbon::createFromTimeString($vona->issued, 'UTC')->setTimezone($tz)->format('Hm');
+
+        return "Eruption with volcanic ash cloud at {$utc} UTC ({$local} local)";
+    }
+
+    protected function otherVolcanicCloudInformation(Vona $vona): string
+    {
+        $direction = __($vona->ash_directions[0]);
+        return "Ash cloud moving to {$direction}";
+    }
+
+    protected function eruptionIsContinuing(Vona $vona): string
+    {
+        return $vona->is_continuing ? 'Eruption and ash emission is continuing.' : '';
+    }
+
+    protected function eruptionRecording(Vona $vona): string
+    {
+        return "Eruption recorded on seismogram with maximum amplitude {$vona->amplitude} mm and maximum duration {$vona->duration} second";
+    }
+
+    protected function remarks(Vona $vona): string
+    {
+        $eruptionIsContinuing = $this->eruptionIsContinuing($vona);
+        $eruptionRecording = $this->eruptionRecording($vona);
+
+        return "{$eruptionIsContinuing} {$eruptionRecording}";
+    }
+
     /**
      * Display the specified resource.
      *
@@ -275,10 +319,14 @@ class VonaController extends Controller
     {
         $vona = Vona::findOrFail($vona->uuid);
         $this->volcano($vona->code_id);
+
         return view('vona.show', [
             'vona' => $vona,
             'location' => $this->location(),
             'volcano_activity_summary' => $this->volcanoActivitySummary($vona),
+            'volcanic_cloud_height' => $this->volcanicCloudHeight($vona),
+            'other_volcanic_cloud_information' => $this->otherVolcanicCloudInformation($vona),
+            'remarks' => $this->remarks($vona),
         ]);
     }
 
