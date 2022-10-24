@@ -1,9 +1,9 @@
-@extends('layouts.slim') 
+@extends('layouts.slim')
 
 @section('title')
 VONA - {{ $vona->ga_code }} {{ $vona->issued }}
 @endsection
- 
+
 @section('breadcrumb')
 <li class="breadcrumb-item" aria-current="page">VONA</li>
 <li class="breadcrumb-item active" aria-current="page">{{ $vona->ga_code }} {{ $vona->issued }}</li>
@@ -18,7 +18,11 @@ VONA - {{ $vona->ga_code }} {{ $vona->issued }}
     <div class="col-lg-12">
         <div class="card card-table pd-l-30 pd-r-30">
             <div class="card-header">
+                @if ($vona->type === 'EXERCISE')
+                <h4 class="slim-card-title tx-18"> VA EXERCISE APAC VOLCEX 22/01</h4>
+                @else
                 <h4 class="slim-card-title tx-18">{{ $vona->ga_nama_gapi.' '.$vona->issued }}</h4>
+                @endif
             </div>
             <div class="table-responsive">
                 <table class="table table-mg-b">
@@ -124,7 +128,11 @@ VONA - {{ $vona->ga_code }} {{ $vona->issued }}
             </div>
         </div>
         <div class="card-footer bd">
-            <h4 class="slim-card-title tx-18">{{ $vona->ga_nama_gapi.' '.$vona->issued }}</h4>
+                @if ($vona->type === 'EXERCISE')
+                <h4 class="slim-card-title tx-18"> VA EXERCISE APAC VOLCEX 22/01</h4>
+                @else
+                <h4 class="slim-card-title tx-18">{{ $vona->ga_nama_gapi.' '.$vona->issued }}</h4>
+                @endif
         </div>
     </div>
 </div>
