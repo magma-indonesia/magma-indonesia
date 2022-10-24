@@ -231,7 +231,6 @@ Route::resource('press','PressController');
 Route::post('vona/send/{vona}', 'VonaController@sendEmail')
     ->name('vona.send-email');
 Route::resource('vona/subscribers','VonaSubscriberController');
-Route::resource('vona/exercise','VonaExerciseSubscriberController');
 Route::resource('vona', 'VonaController');
 
 Route::name('json.')->group(function () {

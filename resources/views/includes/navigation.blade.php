@@ -386,7 +386,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="{{ active(['chambers.vona.*','chambers.exercise.*']) }}">
+            <li class="{{ active(['chambers.vona.*']) }}">
                 <a href="#">
                     <span class="nav-label">VONA</span>
                     <span class="fa arrow"></span>
@@ -402,9 +402,6 @@
                     @role('Super Admin')
                     <li class="{{ active('chambers.subscribers.index') }}">
                         <a href="{{ route('chambers.subscribers.index') }}">Subscription</a>
-                    </li>
-                    <li class="{{ active('chambers.exercise.index') }}">
-                        <a href="{{ route('chambers.exercise.index') }}">Exercise Subscription</a>
                     </li>
                     @endrole
                 </ul>
