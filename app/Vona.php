@@ -33,6 +33,7 @@ class Vona extends Model
         'ash_intensity' => 'array',
         'ash_directions' => 'array',
         'issued' => 'datetime:Y-m-d H:i:s',
+        'sent_to_telegram' => 'datetime',
     ];
 
     protected $with = [
