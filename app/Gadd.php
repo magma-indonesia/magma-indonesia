@@ -22,6 +22,7 @@ class Gadd extends Model
         'zonearea',
         'district',
         'province',
+        'province_en',
         'nearest_city',
         'division',
         'volc_type',
