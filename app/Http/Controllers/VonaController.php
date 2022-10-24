@@ -123,6 +123,7 @@ class VonaController extends Controller
     {
         $subs = $this->subscribers($request);
         $vona->load('gunungapi');
+
         $subs->each(function ($sub) use ($vona) {
             Mail::to($sub->email)
                 ->queue(new VonaSend($vona));

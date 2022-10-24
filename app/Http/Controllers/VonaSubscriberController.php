@@ -16,9 +16,11 @@ class VonaSubscriberController extends Controller
      */
     public function index()
     {
-        $subs = Subscription::paginate(30,['*'],'sub_page');
+        $subs = Subscription::all();
 
-        return view('subscribers.index',compact('subs'));
+        return view('subscribers.index', [
+            'subs' => $subs,
+        ]);
     }
 
     /**
