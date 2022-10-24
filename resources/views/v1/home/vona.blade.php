@@ -122,7 +122,7 @@ VONA
             </div>
         @endif
 
-        <div class="card mg-b-10">
+        {{-- <div class="card mg-b-10">
             <div class="card-body">
                 <h5 class="card-title tx-dark tx-medium mg-b-10">Subscribe to get updates</h5>
 
@@ -150,7 +150,8 @@ VONA
 
                 <a href=""><u>Unsubscribe here</u></a>
             </div>
-        </div>
+        </div> --}}
+
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title tx-dark tx-medium mg-b-10">VONA Color Code</h5>
