@@ -34,7 +34,6 @@ class VonaController extends Controller
     {
         $this->vonas = Vona::where('ga_code',$request->code)
                     ->where('sent',1)
-                    ->where('type','REAL')
                     ->orderBy('issued_time','desc')
                     ->paginate(15);
 
@@ -61,7 +60,6 @@ class VonaController extends Controller
 
         $vonas = Cache::remember('v1/home/vona:'.$vona->no.':'.$page.':'.$time, 30, function() {
                     return Vona::where('sent',1)
-                        ->where('type','REAL')
                         ->orderBy('issued_time','desc')
                         ->paginate(15);
         });
@@ -90,7 +88,7 @@ class VonaController extends Controller
         $grouped = $this->getGrouped();
         $gadds = Gadd::select('ga_code','ga_nama_gapi')
                         ->whereHas('vona', function($query) {
-                            $query->where('sent',1)->where('type','REAL');
+                            $query->where('sent',1);
                         })
                         ->orderBy('ga_nama_gapi')
                         ->withCount('vona')
