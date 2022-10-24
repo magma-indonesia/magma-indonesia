@@ -129,7 +129,7 @@ VONA - {{ $vona->ga_code }} {{ $vona->issued }}
         </div>
         <div class="card-footer bd">
                 @if ($vona->type === 'EXERCISE')
-                <h4 class="slim-card-title tx-18"> VA EXERCISE APAC VOLCEX 22/01</h4>
+                <h4 class="slim-card-title tx-18"> VA EXERCISE VA EXERCISE VA EXERCISE</h4>
                 @else
                 <h4 class="slim-card-title tx-18">{{ $vona->ga_nama_gapi.' '.$vona->issued }}</h4>
                 @endif
