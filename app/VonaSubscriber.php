@@ -9,7 +9,7 @@ class VonaSubscriber extends Model
     protected $casts = [
         'status' => 'boolean'
     ];
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -17,6 +17,10 @@ class VonaSubscriber extends Model
      */
     protected $fillable = [
         'email',
+        'real',
+        'exercise',
+        'gladi',
+        'pvmbg',
         'status',
     ];
 }

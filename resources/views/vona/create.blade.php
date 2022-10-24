@@ -339,15 +339,35 @@ Buat VONA Gunung Api
                                             @endif
                                         </div>
 
-                                        {{-- Submit --}}
-                                        <div class="form-group col-sm-12">
-                                            <div class="hr-line-dashed"></div>
-                                            <button class="btn btn-primary" type="submit">Buat VONA</button>
-                                        </div>
-
                                     </div>
                                 </div>
 
+                                <div class="hr-line-dashed"></div>
+
+                                {{-- Remarks --}}
+                                <div class="row">
+                                    <div class="col-lg-4 text-center">
+                                        <i class="pe-7s-ticket fa-4x text-muted"></i>
+                                        <p class="m-t-md">
+                                            Tidak wajib. Tambahkan catatan lainnya jika diperlukan. <b>Wajib dalam bahasa inggris</b>.
+                                        </p>
+                                    </div>
+
+                                    <div class="col-lg-8">
+
+                                        {{-- Submit --}}
+                                        <div class="form-group col-sm-12">
+                                            <label>Remarks (opsional)</label>
+                                            <span class="help-block"><b>Wajib</b> dalam bahasa inggris</span>
+
+                                            <textarea placeholder="Kosongi jika tidak ada" name="remarks"class="form-control" rows="3">{{ old('remarks')}}</textarea>
+
+                                            <div class="hr-line-dashed"></div>
+
+                                            <button class="btn btn-primary" type="submit">Buat VONA</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>

@@ -228,9 +228,8 @@ Route::post('roles/assign', 'RoleController@saveRole');
 Route::resource('roles', 'RoleController');
 Route::resource('press','PressController');
 
-Route::get('vona/draft','VonaController@draft')->name('vona.draft');
-Route::get('vona/search','VonaController@search')->name('vona.search');
-Route::post('vona/send','VonaController@send')->name('vona.send');
+Route::post('vona/send/{vona}', 'VonaController@sendEmail')
+    ->name('vona.send-email');
 Route::resource('vona/subscribers','VonaSubscriberController');
 Route::resource('vona/exercise','VonaExerciseSubscriberController');
 Route::resource('vona', 'VonaController');
@@ -428,4 +427,5 @@ Route::name('v1.')->group(function () {
     });
 });
 
-Route::get('test/{year?}', 'RekapPembuatLaporanController@index')->name('test');
+// Route::get('test/{year?}', 'RekapPembuatLaporanController@index')->name('test');
+Route::get('test', 'TestController@index')->name('test');

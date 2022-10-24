@@ -100,7 +100,6 @@ class VonaController extends Controller
     public function show($id)
     {
         $vona = Vona::where('no',$id)->firstOrFail();
-        $vona->addView();
         return view('v1.home.vona-show',compact('vona'));
     }
 }

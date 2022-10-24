@@ -2,26 +2,38 @@
 
 namespace App\Mail;
 
-use App\v1\Vona;
+use App\Traits\VonaTrait;
+use App\Vona;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class VonaSend extends Mailable
+class VonaSend extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
+    use VonaTrait;
 
     public $vona;
+    public $location;
+    public $volcano_activity_summary;
+    public $volcanic_cloud_height;
+    public $other_volcanic_cloud_information;
+    public $remarks;
 
     /**
-     * Create a new message instance.
+     * get VONA model
      *
-     * @return void
+     * @param Vona $vona
      */
     public function __construct(Vona $vona)
     {
         $this->vona = $vona;
+        $this->location = $this->location($vona);
+        $this->volcano_activity_summary = $this->volcanoActivitySummary($vona);
+        $this->volcanic_cloud_height = $this->volcanicCloudHeight($vona);
+        $this->other_volcanic_cloud_information = $this->otherVolcanicCloudInformation($vona);
+        $this->remarks = $this->remarks($vona);
     }
 
     /**
@@ -31,7 +43,9 @@ class VonaSend extends Mailable
      */
     public function build()
     {
-        return $this->subject('VONA Sinabung 20210322/0913Z')
+        $subject = strtoupper($this->vona->gunungapi->name).' '. $this->vona->issued_utc;
+
+        return $this->subject("VONA {$subject}")
                     ->view('emails.vona.send');
     }
 }

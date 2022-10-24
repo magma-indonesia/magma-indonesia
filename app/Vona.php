@@ -5,10 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Uuid;
 use Carbon\Carbon;
+use Illuminate\Notifications\Notifiable;
 
 class Vona extends Model
 {
     use Uuid;
+    use Notifiable;
 
     public $incrementing = false;
 
@@ -47,6 +49,16 @@ class Vona extends Model
     const SOURCE = "Indonesian Center for Volcanology and Geological Hazard Mitigation (CVGHM)";
 
     const CONTACTS = "Center for Volcanology and Geological Hazard Mitigation (CVGHM), Tel: +62-22-727-2606, Facsimile: +62-22-720-2761, email : pvmbg@esdm.go.id";
+
+    /**
+     * Route notifications for the Telegram channel.
+     *
+     * @return int
+     */
+    public function routeNotificationForTelegram()
+    {
+        return config('services.telegram-bot-api.vona_channel');
+    }
 
     public function getIssuedUtcAttribute()
     {

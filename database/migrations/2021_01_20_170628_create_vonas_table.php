@@ -15,6 +15,7 @@ class CreateVonasTable extends Migration
     {
         Schema::create('vonas', function (Blueprint $table) {
             $table->increments('id');
+            $table->bigInteger('old_id')->nullable();
             $table->uuid('uuid')->unique();
             $table->char('noticenumber', 11)->unique()->nullable();
             $table->uuid('ven_uuid')->nullable();
