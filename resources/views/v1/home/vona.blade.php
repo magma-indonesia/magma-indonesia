@@ -1,9 +1,9 @@
-@extends('layouts.slim') 
+@extends('layouts.slim')
 
 @section('title')
 VONA
 @endsection
- 
+
 @section('breadcrumb')
 <li class="breadcrumb-item">VONA</li>
 <li class="breadcrumb-item active" aria-current="page">Issued</li>
@@ -12,7 +12,7 @@ VONA
 @section('page-title')
 VONA
 @endsection
- 
+
 @section('main')
 <div class="row row-sm row-timeline">
     <div class="col-lg-9">
@@ -80,10 +80,23 @@ VONA
                     </div>
 
                     <div class="timeline-body">
-                        <p class="timeline-title"><a href="#">{{ $vona->ga_nama_gapi }} - {{ $vona->issued }}</a>&nbsp;
+
+                        @if ($vona->type == 'EXERCISE')
+                        <div class="alert alert-outline alert-warning" role="alert">
+                            <strong>VA EXERCISE VA EXERCISE VA EXERCISE</strong>
+                        </div>
+                        @endif
+
+                        <p class="timeline-title"><a href="#">{{ $vona->ga_nama_gapi }} - {{ $vona->issued }}</a></p>
                         <p class="timeline-author"><a href="#">{{ $vona->nama }}</a>, {{ $vona->source }} - {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $vona->issued_time)->addHours(7)->diffForHumans() }} </p>
                         <p class="timeline-text">{{ ucfirst($vona->volcanic_act_summ).' '.$vona->vc_height_text.' '.$vona->other_vc_info }}.</p>
-                        <a class="card-link" href="{{ URL::signedRoute('v1.vona.show',['id' => $vona->no ]) }}">View</a>
+                        <a class="card-link m-b-10" href="{{ URL::signedRoute('v1.vona.show',['id' => $vona->no ]) }}">View</a>
+
+                        @if ($vona->type == 'EXERCISE')
+                        <div class="alert alert-outline alert-warning mg-t-20" role="alert">
+                            <strong>VA EXERCISE VA EXERCISE VA EXERCISE</strong>
+                        </div>
+                        @endif
                     </div>
                 </div>
                 @endforeach
@@ -101,6 +114,43 @@ VONA
         @endif
     </div>
     <div class="col-lg-3 mg-t-20 mg-lg-t-0">
+
+        @if (session('status'))
+            <div class="alert alert-success">
+                <strong>Well done!</strong> To complete the subscription process, please click the link in the email we just sent you.
+                If it doesn't show up in a few minutes, check your spam folder.
+            </div>
+        @endif
+
+        <div class="card mg-b-10">
+            <div class="card-body">
+                <h5 class="card-title tx-dark tx-medium mg-b-10">Subscribe to get updates</h5>
+
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger mg-b-10" role="alert">
+                            {{ $error }}
+                        </div>
+                    @endforeach
+                @endif
+
+                <form method="post" action="{{ route('v1.subscribe.store') }}">
+                    @csrf
+                    <div class="form-group">
+                        <input type="text" name="email" class="form-control" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="captcha" placeholder="Captcha" required>
+                    </div>
+                    <div class="form-group">
+                        {!!  captcha_img('flat') !!}
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block mg-b-10">Join the list</button>
+                </form>
+
+                <a href=""><u>Unsubscribe here</u></a>
+            </div>
+        </div>
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title tx-dark tx-medium mg-b-10">VONA Color Code</h5>
