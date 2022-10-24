@@ -86,7 +86,7 @@ class VonaController extends Controller
 
         $vona->update([
             'old_id' => $oldVona->no,
-            'noticenumber' => $oldVona->notic_number,
+            'noticenumber' => $oldVona->notice_number,
         ]);
 
         return redirect()->route('chambers.vona.show', ['uuid' => $vona->uuid]);
@@ -131,6 +131,11 @@ class VonaController extends Controller
 
         $vona->update([
             'is_sent' => 1,
+        ]);
+
+        $oldVona = V1Vona::where('no', $vona->old_id)->first();
+        $oldVona->update([
+            'sent' => 1,
         ]);
 
         return redirect()->route('chambers.vona.index');

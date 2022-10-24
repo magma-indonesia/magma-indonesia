@@ -242,7 +242,7 @@ trait VonaTrait
             'remarks' => $this->remarks($vona),
             'contacts' => $vona::CONTACTS,
             'next_notice' => $this->nextNotice(),
-            'sent' => 1,
+            'sent' => 0,
             'nip' => $vona->user->nip,
             'nama' => $vona->user->name,
             'sender' => $vona->user->nip,
