@@ -36,9 +36,9 @@ class VonaController extends Controller
      */
     public function index(Request $request)
     {
-        $vonas = Vona::select('uuid','issued', 'current_code', 'previous_code', 'ash_height','code_id','nip_pelapor')
+        $vonas = Vona::select('uuid','issued', 'current_code', 'previous_code', 'ash_height','code_id','nip_pelapor', 'is_sent')
                 ->orderBy('issued','desc')
-                ->paginate(30,['*'],'vona_page');
+                ->paginate(100,['*'],'vona_page');
 
         return view('vona.index',compact('vonas'));
     }
@@ -124,8 +124,8 @@ class VonaController extends Controller
     protected function subscribers(Request $request): Collection
     {
         return VonaSubscriber::where($request->group, 1)
-                    ->where('status', 1)
-                    ->get();
+                ->where('status', 1)
+                ->get();
     }
 
     /**
@@ -154,7 +154,12 @@ class VonaController extends Controller
      */
     protected function sendToTelegram(Vona $vona): void
     {
-        $vona->notify(new VonaTelegram($vona));
+        if (is_null($vona->sent_to_telegram)) {
+            $vona->notify(new VonaTelegram($vona));
+            $vona->update([
+                'sent_to_telegram' => now(),
+            ]);
+        }
     }
 
     /**
@@ -222,6 +227,13 @@ class VonaController extends Controller
         return redirect()->route('chambers.vona.index');
     }
 
+    /**
+     * Generate PDF for VONA
+     *
+     * @param Vona $vona
+     * @param Request $request
+     * @return void
+     */
     public function pdf(Vona $vona, Request $request)
     {
         $vona->load('gunungapi');
@@ -248,7 +260,7 @@ class VonaController extends Controller
      */
     public function edit(Vona $vona)
     {
-        return Vona::findOrFail($vona->uuid);
+        return Vona::findOrFail($vona->uuid)->load('gunungapi');
     }
 
     /**

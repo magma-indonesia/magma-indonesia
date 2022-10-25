@@ -5,6 +5,7 @@ VONA | Volcano Observatory Notice for Aviation
 @endsection
 
 @section('add-vendor-css')
+<link rel="stylesheet" href="{{ asset('vendor/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" />
 <link rel="stylesheet" href="{{ asset('vendor/sweetalert/lib/sweet-alert.css') }}" />
 @endsection
 
@@ -32,7 +33,7 @@ VONA | Volcano Observatory Notice for Aviation
 @endsection
 
 @section('content-body')
-<div class="content animate-panel content-boxed">
+<div class="content content-boxed">
 
     @if ($vonas->isNotEmpty())
     <div class="row">
@@ -46,59 +47,42 @@ VONA | Volcano Observatory Notice for Aviation
                         <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
                             <a href="{{ route('chambers.vona.create') }}" class="btn btn-outline btn-block btn-magma" type="button">Buat VONA Baru</a>
                         </div>
-                        {{-- <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
-                            <a href="{{ route('chambers.vona.draft') }}" class="btn btn-outline btn-block btn-magma" type="button">Draft VONA</a>
-                        </div> --}}
                     </div>
                 </div>
             </div>
-
-            {{-- <div class="hpanel">
-                <div class="panel-heading">
-                    Cari VONA
-                </div>
-                <div class="panel-body">
-                    <form role="form" id="form" method="GET" action="{{ route('chambers.vona.search') }}">
-                        <div class="input-group">
-                            <input name="q" class="form-control" type="text" placeholder="Cari VONA ...">
-                            <div class="input-group-btn">
-                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div> --}}
 
             <div class="hpanel">
                 <div class="panel-heading">
                     Daftar VONA Terkirim - ({{ $vonas->count() }})
                 </div>
+                {{ $vonas->links() }}
                 <div class="panel-body">
-                    {{ $vonas->links() }}
                     <div class="table-responsive">
-                        <table id="table-jabatan" class="table table-striped table-hover">
+                        <table id="table-vona" class="table table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>Volcano</th>
                                     <th>Issued (UTC)</th>
-                                    <th>Current Code</th>
-                                    <th>Previous Code</th>
-                                    <th>Ash Cloud Height (ASL)</th>
+                                    <th>Current Color</th>
+                                    <th>Previous Color</th>
+                                    <th>Ash Cloud Height</th>
                                     <th>Sender</th>
-                                    <th style="min-width: 180px;">Action</th>
+                                    <th>Status</th>
+                                    <th data-orderable="false" style="min-width: 180px;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($vonas as $key => $vona)
                                 <tr>
-                                    <td>{{ $vonas->firstItem()+$key }}</td>
+                                    <td>{{ $key+1 }}</td>
                                     <td><a href="{{ route('chambers.vona.show',['uuid' => $vona->uuid])}}" target="_blank">{{ $vona->gunungapi->name }}</a></td>
                                     <td>{{ $vona->issued }}</td>
                                     <td>{{ $vona->current_code }}</td>
                                     <td>{{ strtolower($vona->previous_code) }}</td>
                                     <td>{{ $vona->ash_height > 0 ? $vona->ash_height.' meter' : 'Tidak teramati' }}</td>
                                     <td>{{ $vona->user->name }}</td>
+                                    <td>{{ $vona->is_sent ? 'Terkirim' : 'Belum Terkirim' }}</td>
                                     <td>
                                         <a href="{{ route('chambers.vona.show',['uuid'=>$vona->uuid]) }}" class="m-t-xs m-b-xs btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">View</a>
                                         <a href="{{ route('chambers.vona.edit',['uuid'=>$vona->uuid]) }}" class="m-t-xs m-b-xs btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>
@@ -115,7 +99,7 @@ VONA | Volcano Observatory Notice for Aviation
                             </tbody>
                         </table>
                     </div>
-                    {{ $vonas->links() }}
+
                 </div>
             </div>
         </div>
@@ -134,12 +118,31 @@ VONA | Volcano Observatory Notice for Aviation
 @endsection
 
 @section('add-vendor-script')
+<!-- DataTables -->
+<script src="{{ asset('vendor/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<!-- DataTables buttons scripts -->
+<script src="{{ asset('vendor/pdfmake/build/vfs_fonts.js') }}"></script>
+<script src="{{ asset('vendor/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables.net-buttons-bs/js/buttons.bootstrap.min.js') }}"></script>
 <script src="{{ asset('vendor/sweetalert/lib/sweet-alert.min.js') }}"></script>
 @endsection
 
 @section('add-script')
 <script>
 $(document).ready(function () {
+
+    // Initialize table
+    $('#table-vona').dataTable({
+        dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+        "lengthMenu": [[30, 60, 100, -1], [30, 60, 100, "All"]],
+        buttons: [
+            { extend: 'csv', title: 'Vonas', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5,6 ]} },
+            { extend: 'print', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6 ]} }
+        ]
+    });
 
     $('.click-here').click(function() {
         window.open($(this).data('href'),'_blank');
