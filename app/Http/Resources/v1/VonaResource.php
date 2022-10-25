@@ -38,7 +38,7 @@ class VonaResource extends JsonResource
             'prev_code' => $this->pre_avcode,
             'location' => $this->volcano_location,
             'vas' => $this->volcanic_act_summ,
-            'vch_summit' => $this->vc_height-$this->summit_elevation,
+            'vch_summit' => $this->vc_height == 0 ? 0 : $this->vc_height-$this->summit_elevation,
             'vch_asl' => $this->vc_height,
             'vch_other' => $this->other_vc_info,
             'remarks' => $this->remarks,
