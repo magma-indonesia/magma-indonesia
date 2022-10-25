@@ -386,7 +386,7 @@
                                                 <tr>
                                                     <td>(14) <b>Remarks</b></td>
                                                     <td><b>:</b></td>
-                                                    <td>{{ $remarks ?? '-' }}</td>
+                                                    <td>{{ blank($remarks) ? '-' : $remarks }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>(15) <b>Contacts</b></td>
