@@ -41,7 +41,7 @@ class VonaResource extends JsonResource
             'vch_summit' => $this->vc_height == 0 ? 0 : $this->vc_height-$this->summit_elevation,
             'vch_asl' => $this->vc_height,
             'vch_other' => $this->other_vc_info,
-            'remarks' => $this->remarks,
+            'remarks' => blank($this->remarks) ? '-' : $this->remarks,
             'type' => $this->type,
             'sent' => $this->sent ? true : false,
             'volcano_information' => [

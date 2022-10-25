@@ -240,7 +240,7 @@ trait VonaTrait
             'vc_height' => $this->ashCloudHeight($vona),
             'vc_height_text' => $this->volcanicCloudHeight($vona),
             'other_vc_info' => $this->otherVolcanicCloudInformation($vona),
-            'remarks' => $this->remarks($vona),
+            'remarks' => blank($this->remarks($vona)) ? '-' : $this->remarks($vona),
             'contacts' => $vona::CONTACTS,
             'next_notice' => $this->nextNotice(),
             'sent' => 0,
