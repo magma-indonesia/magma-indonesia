@@ -152,7 +152,7 @@ VONA | Volcano Observatory Notice for Aviation
                                     <td>(14)</td>
                                     <td><b>Remarks</b></td>
                                     <td><b>:</b></td>
-                                    <td>{{ $remarks ?? '-' }}</td>
+                                    <td>{{ blank($remarks) ? '-' : $remarks }}</td>
                                 </tr>
                                 <tr>
                                     <td>(15)</td>

@@ -107,7 +107,7 @@
                             <td>(14)</td>
                             <td><b>Remarks</b></td>
                             <td><b>:</b></td>
-                            <td>{{ $vona->remarks ?? '-' }}</td>
+                            <td>{{ blank($vona->remarks) ? '-' : $vona->remarks }}</td>
                         </tr>
                         <tr>
                             <td>(15)</td>

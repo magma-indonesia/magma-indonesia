@@ -96,6 +96,22 @@ Buat VONA Gunung Api
                                             <label class="error" for="code">{{ ucfirst($errors->first('code')) }}</label>
                                             @endif
                                         </div>
+
+                                        {{-- Color code --}}
+                                        <div class="form-group col-sm-12">
+                                            <label>Color Code</label>
+                                            <select id="color" class="form-control" name="color">
+                                                <option value="auto" {{ old('color')=='auto' ? 'selected' : '' }}>Otomatis Berdasarkan Tinggi Abu</option>
+                                                <option value="red" {{ old('color')=='red' ? 'selected' : '' }}>RED</option>
+                                                <option value="orange" {{ old('color')=='orange' ? 'selected' : '' }}>ORANGE</option>
+                                                <option value="yellow" {{ old('color')=='yellow' ? 'selected' : '' }}>YELLOW</option>
+                                                <option value="green" {{ old('color')=='green' ? 'selected' : '' }}>GREEN</option>
+                                            </select>
+                                            <span class="help-block m-b-none">Pilihan warna <b>Otomatis</b> akan ditentukan berdasarkan tinggi abu teramati atau terjadi tidaknya letusan.</span>
+                                            @if( $errors->has('color'))
+                                            <label class="error" for="color">{{ ucfirst($errors->first('color')) }}</label>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
 
@@ -114,7 +130,7 @@ Buat VONA Gunung Api
 
                                         {{-- Visual Kolom Abu --}}
                                         <div class="form-group col-sm-12">
-                                            <label>Parameter Visual</label>
+                                            <label>Parameter Visual Letusan</label>
                                             <select id="visibility" class="form-control" name="visibility">
                                                 <option value="1" {{ old('visibility')=='1' ? 'selected' : '' }}>Teramati</option>
                                                 <option value="0" {{ old('visibility')=='0' ? 'selected' : '' }}>Tidak Teramati</option>
@@ -130,7 +146,7 @@ Buat VONA Gunung Api
                                                 <label>Tinggi Abu yang teramati</label>
                                                 <div class="input-group">
                                                     <input placeholder="Maksimal 20000 meter" name="height" class="form-control" type="text"
-                                                        value="{{ empty(old('height')) ? '' : old('height') }}">
+                                                        value="{{ empty(old('height')) ? '' : old('height') }}" >
                                                     <span class="input-group-addon h-bg-red">meter, di atas puncak</span>
                                                 </div>
 
@@ -286,57 +302,64 @@ Buat VONA Gunung Api
                                     </div>
 
                                     <div class="col-lg-8">
+
                                         {{-- Waktu Letusan --}}
                                         <div class="form-group col-sm-12">
-                                            <label>Waktu Letusan (Waktu Lokal)</label>
+                                            <label>Waktu Letusan/Waktu Laporan (Waktu Lokal)</label>
                                             <input name="date" id="datepicker" class="form-control" type="text" value="{{ empty(old('date')) ? now()->format('Y-m-d H:i') : old('date') }}">
+                                            <span class="help-block m-b-none">Gunakan <b>Waktu Laporan</b> jika tidak tidak terjadi letusan atau ingin <b>menurunkan Color Code</b> </span>
                                             @if( $errors->has('date'))
                                             <label class="error" for="date">{{ ucfirst($errors->first('date')) }}</label>
                                             @endif
                                         </div>
 
-                                        {{-- Rekaman Seismik --}}
-                                        <div class="form-group col-sm-12">
-                                            <label>Amplitudo Maksimum Letusan</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon" style="min-width: 100px;">Amplitudo</span>
-                                                <input id="amplitudo" name="amplitudo" class="form-control" type="text" value="{{ empty(old('amplitudo')) ? '' : old('amplitudo') }}">
-                                                <span class="input-group-addon" style="min-width: 75px;">mm</span>
-                                            </div>
-                                            <span class="help-block m-b-none">Maksimal 240mm</span>
-                                            @if( $errors->has('amplitudo'))
-                                            <label class="error" for="amplitudo">{{ ucfirst($errors->first('amplitudo')) }}</label>
-                                            @endif
-                                        </div>
+                                        <div class="green" style="display: {{ old('color') === 'green' ? 'none' :'block'}};">
 
-                                        {{-- Erupsi sedang berlangsung --}}
-                                        <div class="form-group col-sm-12">
-                                            <label>Apakah erupsi saat ini sedang berlangsung?</label>
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <label class="checkbox-inline"><input name="erupsi_berlangsung" value="1" type="radio" class="i-checks draft"
-                                                            {{ old('erupsi_berlangsung') == '1' ? 'checked' : ''}}> Ya </label>
-                                                    <label class="checkbox-inline"><input name="erupsi_berlangsung" value="0" type="radio" class="i-checks draft"
-                                                            {{ (old('erupsi_berlangsung') == '0' OR empty(old('erupsi_berlangsung'))) ? 'checked' : ''}}> Tidak </label>
-                                                    <span class="help-block m-b-none">Pilih Opsi ini jika ketika laporan dibuat, erupsi masih berlangsung.</span>
-                                                    @if( $errors->has('erupsi_berlangsung'))
-                                                    <label class="error" for="erupsi_berlangsung">{{ ucfirst($errors->first('erupsi_berlangsung')) }}</label>
-                                                    @endif
+                                            {{-- Rekaman Seismik --}}
+                                            <div class="form-group col-sm-12">
+                                                <label>Amplitudo Maksimum Letusan</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon" style="min-width: 100px;">Amplitudo</span>
+                                                    <input id="amplitudo" name="amplitudo" class="form-control" type="text" value="{{ empty(old('amplitudo')) ? '' : old('amplitudo') }}" >
+                                                    <span class="input-group-addon" style="min-width: 75px;">mm</span>
+                                                </div>
+                                                <span class="help-block m-b-none">Range amplitudo 0 - 240mm. Isi dengan 0 jika tidak ada rekaman letusan.</span>
+                                                @if( $errors->has('amplitudo'))
+                                                <label class="error" for="amplitudo">{{ ucfirst($errors->first('amplitudo')) }}</label>
+                                                @endif
+                                            </div>
+
+                                            {{-- Erupsi sedang berlangsung --}}
+                                            <div class="form-group col-sm-12">
+                                                <label>Apakah erupsi saat ini sedang berlangsung?</label>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <label class="checkbox-inline"><input name="erupsi_berlangsung" value="1" type="radio" class="i-checks draft"
+                                                                {{ old('erupsi_berlangsung') == '1' ? 'checked' : ''}}> Ya </label>
+                                                        <label class="checkbox-inline"><input name="erupsi_berlangsung" value="0" type="radio" class="i-checks draft"
+                                                                {{ (old('erupsi_berlangsung') == '0' OR empty(old('erupsi_berlangsung'))) ? 'checked' : ''}}> Tidak </label>
+                                                        <span class="help-block m-b-none">Pilih Opsi ini jika ketika laporan dibuat, erupsi masih berlangsung.</span>
+                                                        @if( $errors->has('erupsi_berlangsung'))
+                                                        <label class="error" for="erupsi_berlangsung">{{ ucfirst($errors->first('erupsi_berlangsung')) }}</label>
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div class="form-group col-sm-12">
-                                            <label>Durasi</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon" style="min-width: 100px;">Durasi</span>
-                                                <input name="durasi" class="form-control" type="text" value="{{ empty(old('durasi')) ? '' : old('durasi') }}">
-                                                <span class="input-group-addon" style="min-width: 75px;">detik</span>
+                                            {{-- Durasi Letusan --}}
+                                            <div class="form-group col-sm-12">
+                                                <label>Durasi</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon" style="min-width: 100px;">Durasi</span>
+                                                    <input name="durasi" class="form-control" type="text" value="{{ empty(old('durasi')) ? '' : old('durasi') }}" >
+                                                    <span class="input-group-addon" style="min-width: 75px;">detik</span>
+                                                </div>
+                                                <span class="help-block m-b-none">Jika <b>erupsi sedang berlangsung</b>, durasi waktu letusan boleh dikosongi.</span>
+                                                @if( $errors->has('durasi'))
+                                                <label class="error" for="durasi">{{ ucfirst($errors->first('durasi')) }}</label>
+                                                @endif
                                             </div>
-                                            <span class="help-block m-b-none">Jika <b>erupsi sedang berlangsung</b>, durasi waktu letusan boleh dikosongi.</span>
-                                            @if( $errors->has('durasi'))
-                                            <label class="error" for="durasi">{{ ucfirst($errors->first('durasi')) }}</label>
-                                            @endif
+
                                         </div>
 
                                     </div>
@@ -401,6 +424,11 @@ $(document).ready(function () {
     $('#visibility').on('change',function(){
         let $val = $(this).val();
         $val == '0' ? $('.teramati').hide() : $('.teramati').show();
+    });
+
+    $('#color').on('change',function(){
+        let $val = $(this).val();
+        $val == 'green' ? $('.green').hide() : $('.green').show();
     });
 });
 </script>

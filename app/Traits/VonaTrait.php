@@ -122,7 +122,8 @@ trait VonaTrait
      */
     protected function currentCode(Request $request): string
     {
-        return $request->visibility ? $this->getColor($request) : 'ORANGE';
+        return $request->color === 'auto' ?
+                $this->getColor($request) : strtoupper($request->color);
     }
 
     /**
@@ -271,7 +272,9 @@ trait VonaTrait
      */
     protected function volcanicCloudHeight(Vona $vona): string
     {
-        $deskripsi = "Best estimate of ash-cloud top is around {$this->ashCloudHeight($vona)} above sea level, may be higher than what can be observed clearly. Source of height data: ground observer.";
+        $deskripsi = $vona->ash_height == 0 ?
+            "Ash-cloud is not observed." :
+            "Best estimate of ash-cloud top is around {$this->ashCloudHeight($vona)} above sea level, may be higher than what can be observed clearly. Source of height data: ground observer.";
 
         return $deskripsi;
     }
@@ -299,6 +302,10 @@ trait VonaTrait
      */
     protected function otherVolcanicCloudInformation(Vona $vona): string
     {
+        if ($vona->ash_height == 0) {
+            return "Ash-cloud is not observed.";
+        };
+
         $direction = __($vona->ash_directions[0]);
         return "Ash cloud moving to {$direction}";
     }
@@ -322,7 +329,7 @@ trait VonaTrait
      */
     protected function eruptionRecording(Vona $vona): string
     {
-        return "Eruption recorded on seismogram with maximum amplitude {$vona->amplitude} mm and maximum duration {$vona->duration} second.";
+        return $vona->amplitude == 0 ? "" : "Eruption recorded on seismogram with maximum amplitude {$vona->amplitude} mm and maximum duration {$vona->duration} second.";
     }
 
     /**

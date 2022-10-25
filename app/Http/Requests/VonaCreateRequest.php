@@ -19,7 +19,10 @@ class VonaCreateRequest extends FormRequest
             'code.size'  => 'Kode gunung api tidak terdaftar',
             'type.required' => 'Jenis VONA tidak ditemukan',
             'type.in' => 'Jenis VONA tidak valid (Real atau Exercise?)',
+            'color.required' => 'Color Code tidak ditemukan',
+            'color.in' => 'Warna Color Code tidak valid',
             'erupsi_berlangsung.required' => 'Informasi erupsi sedang berlangsung belum dipilih',
+            'durasi.required_if' => 'Durasi erupsi perlu diisi jika erupsi telah selesai',
             'visibility.required' => 'Visibility belum diisi',
             'visibility.boolean' => 'Visibility hanya memiliki nilai Teramati atau Tidak Teramati',
             'date.date_format' => 'Format tanggal tidak sesuai (Y-m-d H:i:s, contoh: 2017-10-02 23:20:20)',
@@ -43,6 +46,14 @@ class VonaCreateRequest extends FormRequest
         return auth()->check();
     }
 
+    protected function greenConditional()
+    {
+        return [
+            'amplitudo' => request()->color == 'green' ? 'nullable|numeric|between:0,240' : 'required|numeric|between:0,240',
+            'durasi' => request()->color == 'green' ? 'nullable|numeric|between:0,10000' : 'required_if:erupsi_berlangsung,0|nullable|numeric|between:0,10000',
+        ];
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -50,9 +61,10 @@ class VonaCreateRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'code' => 'required|size:3|exists:ga_dd,code',
             'type' => 'required|in:real,exercise',
+            'color' => 'required|in:auto,red,orange,yellow,green',
             'date' => 'required|date_format:Y-m-d H:i:s|before:tomorrow',
             'erupsi_berlangsung' => 'required|boolean',
             'visibility' => 'required|boolean',
@@ -63,9 +75,11 @@ class VonaCreateRequest extends FormRequest
             'intensitas.*' => 'required_if:visibility,1|in:Tipis,Sedang,Tebal',
             'arah_abu' => 'required_if:visibility,1|array',
             'arah_abu.*' => 'required_if:visibility,1|in:Utara,Timur Laut,Timur,Tenggara,Selatan,Barat Daya,Barat,Barat Laut',
-            'amplitudo' => 'required|numeric|between:0,240',
-            'durasi' => 'required_if:erupsi_berlangsung,0|nullable|numeric|between:0,10000',
             'lainnya' => 'nullable',
         ];
+
+        $rules = array_merge($rules, $this->greenConditional());
+
+        return $rules;
     }
 }
