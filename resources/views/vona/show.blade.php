@@ -193,6 +193,13 @@ VONA | Volcano Observatory Notice for Aviation
                 <div class="panel-body float-e-margins p-xl">
                     <div class="row">
 
+                        <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
+                            <form method="post" action="{{ route('chambers.vona.pdf', $vona) }}">
+                                @csrf
+                                <button class="btn btn-outline btn-block btn-magma" type="submit">Download PDF</a>
+                            </form>
+                        </div>
+
                         @if ($vona->is_sent === false)
 
                             <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">

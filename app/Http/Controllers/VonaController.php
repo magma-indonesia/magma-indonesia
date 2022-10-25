@@ -17,7 +17,7 @@ use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\URL;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class VonaController extends Controller
 {
@@ -220,6 +220,24 @@ class VonaController extends Controller
         }
 
         return redirect()->route('chambers.vona.index');
+    }
+
+    public function pdf(Vona $vona, Request $request)
+    {
+        $vona->load('gunungapi');
+
+        $pdf = PDF::loadView('vona.pdf', [
+            'vona' => $vona,
+            'location' => $this->location($vona),
+            'volcano_activity_summary' => $this->volcanoActivitySummary($vona),
+            'volcanic_cloud_height' => $this->volcanicCloudHeight($vona),
+            'other_volcanic_cloud_information' => $this->otherVolcanicCloudInformation($vona),
+            'remarks' => $this->remarks($vona),
+        ]);
+
+        $filename = "{$vona->gunungapi->name} {$vona->issued}";
+
+        return $pdf->download($filename);
     }
 
     /**

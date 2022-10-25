@@ -230,6 +230,8 @@ Route::resource('press','PressController');
 
 Route::post('vona/send/{vona}', 'VonaController@send')
     ->name('vona.send-email');
+Route::post('vona/pdf/{vona}', 'VonaController@pdf')
+    ->name('vona.pdf');
 Route::resource('vona/subscribers','VonaSubscriberController');
 Route::resource('vona', 'VonaController');
 

@@ -198,6 +198,8 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Orchestra\Parser\XmlServiceProvider::class,
         Karlmonson\Ping\PingServiceProvider::class,
+        Mews\Captcha\CaptchaServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
         // CyrildeWit\EloquentViewable\EloquentViewableServiceProvider::class,
     ],
 
@@ -256,6 +258,7 @@ return [
         'XmlParser' => Orchestra\Parser\Xml\Facade::class,
         'StreamParser' => Rodenastyle\StreamParser\StreamParser::class,
         'Ping' => Karlmonson\Ping\Facades\Ping::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];
