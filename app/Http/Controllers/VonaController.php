@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\Cache;
 
 class VonaController extends Controller
 {
@@ -116,6 +117,16 @@ class VonaController extends Controller
     }
 
     /**
+     * Clear cache VONA
+     *
+     * @return void
+     */
+    protected function clearVonaCache(): void
+    {
+        Cache::tags('fp-vona.index')->flush();
+    }
+
+    /**
      * Get all subscribers
      *
      * @param Request $request
@@ -144,6 +155,8 @@ class VonaController extends Controller
         $oldVona->update([
             'sent' => 1,
         ]);
+
+        $this->clearVonaCache();
     }
 
     /**
@@ -179,6 +192,8 @@ class VonaController extends Controller
         $oldVona->update([
             'sent' => $request->group === 'send' ? 1 : 0,
         ]);
+
+        $this->clearVonaCache();
     }
 
     /**
@@ -249,7 +264,7 @@ class VonaController extends Controller
 
         $filename = "{$vona->gunungapi->name} {$vona->issued}";
 
-        return $pdf->download($filename);
+        return $pdf->download(Str::slug($filename));
     }
 
     /**

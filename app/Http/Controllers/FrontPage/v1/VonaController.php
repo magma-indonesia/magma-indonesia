@@ -58,13 +58,13 @@ class VonaController extends Controller
 
         $time = strtotime($vona->issued_time);
 
-        $vonas = Cache::remember('v1/home/vona:'.$vona->no.':'.$page, 30, function() {
+        $vonas = Cache::tags(['fp-vona.index'])->remember('v1/home/vona:'.$vona->no.':'.$page, 30, function() {
                     return Vona::where('sent',1)
                         ->orderBy('no','desc')
                         ->paginate(15);
         });
 
-        $grouped = Cache::remember('v1/home/vona:grouped:'.$vona->no.':'.$page, 30, function() use($vonas) {
+        $grouped = Cache::tags(['fp-vona.index'])->remember('v1/home/vona:grouped:'.$vona->no.':'.$page, 30, function() use($vonas) {
             return $vonas->groupBy(function ($vona) {
                 return Carbon::parse($vona->issued_time)->format('Y-m-d');
             });
