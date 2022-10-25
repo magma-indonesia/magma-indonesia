@@ -34,7 +34,7 @@ class VonaController extends Controller
     {
         $this->vonas = Vona::where('ga_code',$request->code)
                     ->where('sent',1)
-                    ->orderBy('issued_time','desc')
+                    ->orderBy('no','desc')
                     ->paginate(15);
 
         if ($this->vonas->isEmpty())
@@ -51,7 +51,7 @@ class VonaController extends Controller
     {
         $vona = Vona::select('no','sent','issued_time','issued')
                     ->where('sent',1)
-                    ->orderBy('issued_time','desc')
+                    ->orderBy('no','desc')
                     ->first();
 
         $page = $request->has('page') ? $request->page : 1;
@@ -60,7 +60,7 @@ class VonaController extends Controller
 
         $vonas = Cache::remember('v1/home/vona:'.$vona->no.':'.$page, 30, function() {
                     return Vona::where('sent',1)
-                        ->orderBy('issued_time','desc')
+                        ->orderBy('no','desc')
                         ->paginate(15);
         });
 
