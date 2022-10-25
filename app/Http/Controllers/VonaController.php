@@ -131,6 +131,15 @@ class VonaController extends Controller
     protected function sendToTelegram(Vona $vona): void
     {
         $vona->notify(new VonaTelegram($vona));
+
+        $vona->update([
+            'is_sent' => 1,
+        ]);
+
+        $oldVona = V1Vona::where('no', $vona->old_id)->first();
+        $oldVona->update([
+            'sent' => 1,
+        ]);
     }
 
     protected function sendOrUnsend(Vona $vona, Request $request): void
