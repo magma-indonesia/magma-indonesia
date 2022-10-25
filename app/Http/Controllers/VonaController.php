@@ -7,6 +7,7 @@ use App\Gadd;
 use App\Http\Requests\SendEmailRequest;
 use App\Http\Requests\VonaCreateRequest;
 use App\Mail\VonaSend;
+use App\Notifications\VonaTelegram;
 use App\Traits\VonaTrait;
 use App\User;
 use App\v1\Vona as V1Vona;
@@ -14,7 +15,9 @@ use App\VonaSubscriber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 
 class VonaController extends Controller
 {
@@ -112,14 +115,37 @@ class VonaController extends Controller
         ]);
     }
 
-    protected function subscribers(Request $request)
+    /**
+     * Get all subscribers
+     *
+     * @param Request $request
+     * @return Collection
+     */
+    protected function subscribers(Request $request): Collection
     {
         return VonaSubscriber::where($request->group, 1)
                     ->where('status', 1)
                     ->get();
     }
 
-    public function sendEmail(Vona $vona, SendEmailRequest $request)
+    protected function sendToTelegram(Vona $vona): void
+    {
+        $vona->notify(new VonaTelegram($vona));
+    }
+
+    protected function sendOrUnsend(Vona $vona, Request $request): void
+    {
+        $vona->update([
+            'is_sent' => $request->group === 'send' ? 1 : 0,
+        ]);
+
+        $oldVona = V1Vona::where('no', $vona->old_id)->first();
+        $oldVona->update([
+            'sent' => $request->group === 'send' ? 1 : 0,
+        ]);
+    }
+
+    protected function sendEmail(Vona $vona, Request $request): void
     {
         $subs = $this->subscribers($request);
         $vona->load('gunungapi');
@@ -137,6 +163,28 @@ class VonaController extends Controller
         $oldVona->update([
             'sent' => 1,
         ]);
+    }
+
+    /**
+     * Send VONA to stakeholders
+     *
+     * @param  \App\Vona  $vona
+     * @param SendEmailRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function send(Vona $vona, SendEmailRequest $request)
+    {
+        if (in_array($request->group, ['exercise', 'real', 'pvmbg'])) {
+            $this->sendEmail($vona, $request);
+        }
+
+        if (in_array($request->group, ['send', 'unsend'])) {
+            $this->sendOrUnsend($vona, $request);
+        }
+
+        if ($request->group === 'telegram') {
+            $this->sendToTelegram($vona, $request);
+        }
 
         return redirect()->route('chambers.vona.index');
     }
