@@ -128,10 +128,14 @@ class VonaController extends Controller
                     ->get();
     }
 
-    protected function sendToTelegram(Vona $vona): void
+    /**
+     * Update is_sent column
+     *
+     * @param Vona $vona
+     * @return void
+     */
+    protected function updateIsSent(Vona $vona): void
     {
-        $vona->notify(new VonaTelegram($vona));
-
         $vona->update([
             'is_sent' => 1,
         ]);
@@ -142,6 +146,25 @@ class VonaController extends Controller
         ]);
     }
 
+    /**
+     * Send VONA to telegram channel
+     *
+     * @param Vona $vona
+     * @return void
+     */
+    protected function sendToTelegram(Vona $vona): void
+    {
+        $vona->notify(new VonaTelegram($vona));
+        $this->updateIsSent($vona);
+    }
+
+    /**
+     * Send or unsend VONA
+     *
+     * @param Vona $vona
+     * @param Request $request
+     * @return void
+     */
     protected function sendOrUnsend(Vona $vona, Request $request): void
     {
         $vona->update([
@@ -154,6 +177,13 @@ class VonaController extends Controller
         ]);
     }
 
+    /**
+     * Send email to stakeholder
+     *
+     * @param Vona $vona
+     * @param Request $request
+     * @return void
+     */
     protected function sendEmail(Vona $vona, Request $request): void
     {
         $subs = $this->subscribers($request);
@@ -164,14 +194,7 @@ class VonaController extends Controller
                 ->queue(new VonaSend($vona));
         });
 
-        $vona->update([
-            'is_sent' => 1,
-        ]);
-
-        $oldVona = V1Vona::where('no', $vona->old_id)->first();
-        $oldVona->update([
-            'sent' => 1,
-        ]);
+        $this->updateIsSent($vona);
     }
 
     /**
