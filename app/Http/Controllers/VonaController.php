@@ -155,7 +155,6 @@ class VonaController extends Controller
     protected function sendToTelegram(Vona $vona): void
     {
         $vona->notify(new VonaTelegram($vona));
-        $this->updateIsSent($vona);
     }
 
     /**
@@ -194,7 +193,7 @@ class VonaController extends Controller
                 ->queue(new VonaSend($vona));
         });
 
-        $this->updateIsSent($vona);
+        $this->sendToTelegram($vona);
     }
 
     /**
@@ -208,6 +207,7 @@ class VonaController extends Controller
     {
         if (in_array($request->group, ['exercise', 'real', 'pvmbg'])) {
             $this->sendEmail($vona, $request);
+            $this->updateIsSent($vona);
         }
 
         if (in_array($request->group, ['send', 'unsend'])) {
@@ -216,6 +216,7 @@ class VonaController extends Controller
 
         if ($request->group === 'telegram') {
             $this->sendToTelegram($vona, $request);
+            $this->updateIsSent($vona);
         }
 
         return redirect()->route('chambers.vona.index');
