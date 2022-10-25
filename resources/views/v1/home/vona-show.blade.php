@@ -1,7 +1,7 @@
 @extends('layouts.slim')
 
 @section('title')
-VONA - {{ $vona->ga_nama_gapi }} {{ $vona->issued }}
+{{ $vona->ga_nama_gapi }} {{ $vona->issued }}
 @endsection
 
 @section('breadcrumb')
