@@ -2,13 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\VonaSubscriber as Subscription;
-use App\Gadd;
-use App\User;
+use App\Http\Requests\VonaSubscriberCreateRequest;
+use App\Http\Requests\VonaSubscriberUpdateRequest;
+use App\VonaSubscriber;
 
 class VonaSubscriberController extends Controller
 {
+    /**
+     * Email groups
+     *
+     * @var array
+     */
+    protected $groups = [
+        'real',
+        'exercise',
+        'pvmbg',
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +29,7 @@ class VonaSubscriberController extends Controller
     {
         $subs = Subscription::all();
 
-        return view('subscribers.index', [
+        return view('vona-subscribers.index', [
             'subs' => $subs,
         ]);
     }
@@ -30,18 +41,29 @@ class VonaSubscriberController extends Controller
      */
     public function create()
     {
-        //
+        return view('vona-subscribers.create', [
+            'groups' => $this->groups,
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  VonaSubscriberCreateRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(VonaSubscriberCreateRequest $request)
     {
-        //
+        VonaSubscriber::firstOrCreate([
+            'email' => $request->email,
+        ],[
+            'real' => in_array('real', $request->groups) ? 1 : 0,
+            'exercise' => in_array('exercise', $request->groups) ? 1 : 0,
+            'pvmbg' => in_array('pvmbg', $request->groups) ? 1 : 0,
+            'status' => $request->status,
+        ]);
+
+        return redirect()->route('chambers.subscribers.index');
     }
 
     /**
@@ -52,7 +74,7 @@ class VonaSubscriberController extends Controller
      */
     public function show($id)
     {
-        //
+        return redirect()->route('chambers.subscribers.index');
     }
 
     /**
@@ -63,19 +85,34 @@ class VonaSubscriberController extends Controller
      */
     public function edit($id)
     {
-        //
+        $subscriber = VonaSubscriber::findOrFail($id);
+
+        return view('vona-subscribers.edit', [
+            'subscriber' => $subscriber,
+            'groups' => $this->groups,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  VonaSubscriberUpdateRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(VonaSubscriberUpdateRequest $request, $id)
     {
-        //
+        $subscriber = VonaSubscriber::findOrFail($id);
+
+        $subscriber->update([
+            'email' => $request->email,
+            'real' => in_array('real', $request->groups) ? 1 : 0,
+            'exercise' => in_array('exercise', $request->groups) ? 1 : 0,
+            'pvmbg' => in_array('pvmbg', $request->groups) ? 1 : 0,
+            'status' => $request->status,
+        ]);
+
+        return redirect()->route('chambers.subscribers.index');
     }
 
     /**
@@ -86,6 +123,23 @@ class VonaSubscriberController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $subscriber = VonaSubscriber::findOrFail($id);
+        $email = $subscriber->email;
+
+        if ($subscriber->delete()) {
+            $data = [
+                'success' => 1,
+                'message' => $email . ' berhasil dihapus.'
+            ];
+
+            return response()->json($data);
+        }
+
+        $data = [
+            'success' => 0,
+            'message' => $email  . ' gagal dihapus.'
+        ];
+
+        return response()->json($data);
     }
 }
