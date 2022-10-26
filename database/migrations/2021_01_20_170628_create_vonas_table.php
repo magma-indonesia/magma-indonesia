@@ -17,7 +17,7 @@ class CreateVonasTable extends Migration
             $table->increments('id');
             $table->bigInteger('old_id')->nullable();
             $table->uuid('uuid')->unique();
-            $table->char('noticenumber', 11)->unique()->nullable();
+            $table->char('noticenumber', 100)->unique()->nullable();
             $table->uuid('ven_uuid')->nullable();
             $table->foreign('ven_uuid')->references('uuid')->on('magma_vens')->onDelete('cascade');
             $table->dateTimeTz('issued');
