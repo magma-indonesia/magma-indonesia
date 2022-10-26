@@ -179,6 +179,7 @@ VONA | Volcano Observatory Notice for Aviation
                     @endif
 
                     <div class="hr-line-dashed"></div>
+
                     @if ($vona->is_sent === false)
                     <div class="alert alert-outline alert-danger" role="alert">
                         <strong>VONA ini masih dalam bentuk draft dan belum dikirim</strong>
@@ -188,24 +189,35 @@ VONA | Volcano Observatory Notice for Aviation
                         <strong>VONA telah terkirim pada {{ $vona->updated_at }} WIB</strong>
                     </div>
                     @endif
+
+                    <hr>
+
+                    <div class="row m-b-none">
+                        <div class="col-sm-3" style="">
+                            <div class="hpanel">
+                                <div class="panel-body file-body">
+                                    <i class="fa fa-file-pdf-o text-info"></i>
+                                </div>
+                                <div class="panel-footer">
+                                    <form method="post" action="{{ route('chambers.vona.pdf', $vona) }}">
+                                        @csrf
+                                        <button class="btn btn-outline btn-block btn-magma" type="submit"><i class="fa fa-file-pdf-o"></i> Download PDF</a>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="panel-body float-e-margins p-xl">
                     <div class="row">
-
-                        <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
-                            <form method="post" action="{{ route('chambers.vona.pdf', $vona) }}">
-                                @csrf
-                                <button class="btn btn-outline btn-block btn-magma" type="submit"><i class="fa fa-file-pdf-o"></i> Download PDF</a>
-                            </form>
-                        </div>
 
                         @if ($vona->is_sent === false)
 
                             <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
                                 <form method="post" action="{{ route('chambers.vona.send-email', $vona) }}">
                                     @csrf
-                                    <button name="group" value="send" class="btn btn-outline btn-block btn-magma" type="submit"><i class="fa fa-save"></i> Publikasi <b>tanpa Kirim</b></a>
+                                    <button name="group" value="send" class="btn btn-outline btn-block btn-magma" type="submit"><i class="fa fa-save"></i> Publikasi <b>tanpa Kirim</b></button>
                                 </form>
                             </div>
 
@@ -213,14 +225,14 @@ VONA | Volcano Observatory Notice for Aviation
                             <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
                                 <form method="post" action="{{ route('chambers.vona.send-email', $vona) }}">
                                     @csrf
-                                    <button name="group" value="exercise" class="btn btn-outline btn-block btn-magma" type="submit">Krim VONA Exercise</a>
+                                    <button name="group" value="exercise" class="btn btn-outline btn-block btn-magma" type="submit"><i class="fa fa-mail-forward"></i> Kirim VONA Exercise</button>
                                 </form>
                             </div>
                             @else
                             <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
                                 <form method="post" action="{{ route('chambers.vona.send-email', $vona) }}">
                                     @csrf
-                                    <button name="group" value="real" class="btn btn-outline btn-block btn-magma" type="submit">Krim VONA</a>
+                                    <button name="group" value="real" class="btn btn-outline btn-block btn-magma" type="submit"><i class="fa fa-mail-forward"></i> Kirim VONA</button>
                                 </form>
                             </div>
                             @endif
@@ -229,7 +241,7 @@ VONA | Volcano Observatory Notice for Aviation
                         <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
                             <form method="post" action="{{ route('chambers.vona.send-email', $vona) }}">
                                 @csrf
-                                <button name="group" value="unsend" class="btn btn-outline btn-block btn-danger" type="submit">Unsend</a>
+                                <button name="group" value="unsend" class="btn btn-outline btn-block btn-danger" type="submit"><i class="fa fa-undo"></i> Batalkan Publish VONA</button>
                             </form>
                         </div>
                         @endif
@@ -238,14 +250,14 @@ VONA | Volcano Observatory Notice for Aviation
                         <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
                             <form method="post" action="{{ route('chambers.vona.send-email', $vona) }}">
                                 @csrf
-                                <button name="group" value="telegram" class="btn btn-outline btn-block btn-magma" type="submit">Krim Telegram</a>
+                                <button name="group" value="telegram" class="btn btn-outline btn-block btn-magma" type="submit"><i class="fa fa-telegram" aria-hidden="false"></i> Kirim Telegram</button>
                             </form>
                         </div>
 
                         <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
                             <form method="post" action="{{ route('chambers.vona.send-email', $vona) }}">
                                 @csrf
-                                <button name="group" value="pvmbg" class="btn btn-outline btn-block btn-magma" type="submit">Krim Grup PVMBG</a>
+                                <button name="group" value="pvmbg" class="btn btn-outline btn-block btn-magma" type="submit">Krim Grup PVMBG</button>
                             </form>
                         </div>
                         @endrole
