@@ -214,7 +214,9 @@ class VonaController extends Controller
                 ->queue(new VonaSend($vona));
         });
 
-        $this->sendToTelegram($vona);
+        if ($request->group !== 'pvmbg') {
+            $this->sendToTelegram($vona);
+        }
     }
 
     /**
