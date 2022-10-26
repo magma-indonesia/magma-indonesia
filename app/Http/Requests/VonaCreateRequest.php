@@ -22,7 +22,13 @@ class VonaCreateRequest extends FormRequest
             'color.required' => 'Color Code tidak ditemukan',
             'color.in' => 'Warna Color Code tidak valid',
             'erupsi_berlangsung.required' => 'Informasi erupsi sedang berlangsung belum dipilih',
-            'durasi.required_if' => 'Durasi erupsi perlu diisi jika erupsi telah selesai',
+            'amplitudo.required' => 'Amplitudo Gempa Letusan belum diisi',
+            'amplitudo.required_if' => 'Amplitudo Gempa Letusan harus diisi jika gempa letusan terekam di seismogram',
+            'amplitudo.numeric' => 'Amplitudo Gempa Letusan harus berisi angka',
+            'amplitudo_tremor.numeric' => 'Amplitudo Tremor harus berisi angka',
+            'amplitudo_tremor.required_if' => 'Amplitudo Tremor harus diisi jika tremor terekam di seismogram',
+            'amplitudo_tremor.required' => 'Amplitudo Maksimum Tremor Menerus belum diisi',
+            'durasi.required_if' => 'Durasi erupsi perlu diisi jika gempa letusan terekam',
             'visibility.required' => 'Visibility belum diisi',
             'visibility.boolean' => 'Visibility hanya memiliki nilai Teramati atau Tidak Teramati',
             'date.date_format' => 'Format tanggal tidak sesuai (Y-m-d H:i:s, contoh: 2017-10-02 23:20:20)',
@@ -49,8 +55,9 @@ class VonaCreateRequest extends FormRequest
     protected function greenConditional()
     {
         return [
-            'amplitudo' => request()->color == 'green' ? 'nullable|numeric|between:0,240' : 'required|numeric|between:0,240',
-            'durasi' => request()->color == 'green' ? 'nullable|numeric|between:0,10000' : 'required_if:erupsi_berlangsung,0|nullable|numeric|between:0,10000',
+            'amplitudo' => request()->color == 'green' ? 'nullable|numeric|between:0,240' : 'required_if:terjadi_gempa_letusan,1|nullable|numeric|between:0,240',
+            'durasi' => request()->color == 'green' ? 'nullable|numeric|between:0,10000' : 'required_if:terjadi_gempa_letusan,1|nullable|numeric|between:0,10000',
+            'amplitudo_tremor' => request()->color == 'green' ? 'nullable|numeric|between:0,240' : 'required_if:terjadi_tremor,1|nullable|numeric|between:0,240',
         ];
     }
 
@@ -67,6 +74,8 @@ class VonaCreateRequest extends FormRequest
             'color' => 'required|in:auto,red,orange,yellow,green',
             'date' => 'required|date_format:Y-m-d H:i:s|before:tomorrow',
             'erupsi_berlangsung' => 'required|boolean',
+            'terjadi_gempa_letusan' => 'required|boolean',
+            'terjadi_tremor' => 'required|boolean',
             'visibility' => 'required|boolean',
             'height' => 'required_if:visibility,1|nullable|numeric|between:0,20000',
             'warna_asap' => 'required_if:visibility,1|array',

@@ -101,13 +101,13 @@ Buat VONA Gunung Api
                                         <div class="form-group col-sm-12">
                                             <label>Color Code</label>
                                             <select id="color" class="form-control" name="color">
-                                                <option value="auto" {{ old('color')=='auto' ? 'selected' : '' }}>Otomatis Berdasarkan Tinggi Abu</option>
+                                                <option value="auto" {{ old('color')=='auto' ? 'selected' : '' }}>Otomatis oleh MAGMA</option>
                                                 <option value="red" {{ old('color')=='red' ? 'selected' : '' }}>RED</option>
                                                 <option value="orange" {{ old('color')=='orange' ? 'selected' : '' }}>ORANGE</option>
                                                 <option value="yellow" {{ old('color')=='yellow' ? 'selected' : '' }}>YELLOW</option>
                                                 <option value="green" {{ old('color')=='green' ? 'selected' : '' }}>GREEN</option>
                                             </select>
-                                            <span class="help-block m-b-none">Pilihan warna <b>Otomatis</b> akan ditentukan berdasarkan tinggi abu teramati atau terjadi tidaknya letusan.</span>
+                                            <span class="help-block m-b-none">Pilihan warna <b>Otomatis</b> akan ditentukan berdasarkan tinggi abu teramati atau ada tidaknya rekaman gempa letusan.</span>
                                             @if( $errors->has('color'))
                                             <label class="error" for="color">{{ ucfirst($errors->first('color')) }}</label>
                                             @endif
@@ -307,7 +307,7 @@ Buat VONA Gunung Api
                                         <div class="form-group col-sm-12">
                                             <label>Waktu Letusan/Waktu Laporan (Waktu Lokal)</label>
                                             <input name="date" id="datepicker" class="form-control" type="text" value="{{ empty(old('date')) ? now()->format('Y-m-d H:i') : old('date') }}">
-                                            <span class="help-block m-b-none">Gunakan <b>Waktu Laporan</b> jika tidak tidak terjadi letusan atau ingin <b>menurunkan Color Code</b> </span>
+                                            <span class="help-block m-b-none">Gunakan <b>Waktu Laporan</b> jika tidak tidak terjadi letusan.</span>
                                             @if( $errors->has('date'))
                                             <label class="error" for="date">{{ ucfirst($errors->first('date')) }}</label>
                                             @endif
@@ -315,50 +315,114 @@ Buat VONA Gunung Api
 
                                         <div class="green" style="display: {{ old('color') === 'green' ? 'none' :'block'}};">
 
-                                            {{-- Erupsi sedang berlangsung --}}
+                                            {{-- Terekam Gempa Letusan --}}
                                             <div class="form-group col-sm-12">
-                                                <label>Apakah erupsi saat ini sedang berlangsung?</label>
+                                                <hr>
+                                                <label>Apakah gempa letusan terekam di seismogram?</label>
                                                 <div class="row">
                                                     <div class="col-sm-12">
-                                                        <label class="checkbox-inline"><input name="erupsi_berlangsung" value="1" type="radio" class="i-checks draft"
-                                                                {{ old('erupsi_berlangsung') == '1' ? 'checked' : ''}}> Ya </label>
-                                                        <label class="checkbox-inline"><input name="erupsi_berlangsung" value="0" type="radio" class="i-checks draft"
-                                                                {{ (old('erupsi_berlangsung') == '0' OR empty(old('erupsi_berlangsung'))) ? 'checked' : ''}}> Tidak </label>
-                                                        <span class="help-block m-b-none">Pilih Opsi ini jika ketika laporan dibuat, erupsi masih berlangsung.</span>
-                                                        @if( $errors->has('erupsi_berlangsung'))
-                                                        <label class="error" for="erupsi_berlangsung">{{ ucfirst($errors->first('erupsi_berlangsung')) }}</label>
+                                                        <label class="checkbox-inline"><input name="terjadi_gempa_letusan" value="1" type="radio" class="i-checks draft"
+                                                            {{ (old('terjadi_gempa_letusan') == '1' OR empty(old('terjadi_gempa_letusan'))) ? 'checked' : ''}}> Ya </label>
+                                                        <label class="checkbox-inline"><input name="terjadi_gempa_letusan" value="0" type="radio" class="i-checks draft"
+                                                            {{ old('terjadi_gempa_letusan') == '0' ? 'checked' : ''}}> Tidak </label>
+                                                        <span class="help-block m-b-none">Pilih opsi ini jika <b>gempa letusan</b> terekam pada seismogram.</span>
+                                                        @if( $errors->has('terjadi_gempa_letusan'))
+                                                        <label class="error" for="terjadi_gempa_letusan">{{ ucfirst($errors->first('terjadi_gempa_letusan')) }}</label>
                                                         @endif
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            {{-- Rekaman Seismik --}}
+                                            {{-- Terekam tremor --}}
                                             <div class="form-group col-sm-12">
                                                 <hr>
-                                                <label>Amplitudo Maksimum Letusan</label>
-                                                <span class="help-block"><b>Isi dengan 0</b> jika tidak terjadi letusan. Range amplitudo 0 - 240mm.</span>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon" style="min-width: 100px;">Amplitudo</span>
-                                                    <input id="amplitudo" name="amplitudo" class="form-control" type="text" value="{{ empty(old('amplitudo')) ? '' : old('amplitudo') }}" >
-                                                    <span class="input-group-addon" style="min-width: 75px;">mm</span>
+                                                <label>Apakah pada saat ini terekam tremor menerus?</label>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <label class="checkbox-inline"><input name="terjadi_tremor" value="1" type="radio" class="i-checks draft"
+                                                                {{ old('terjadi_tremor') == '1' ? 'checked' : ''}}> Ya </label>
+                                                        <label class="checkbox-inline"><input name="terjadi_tremor" value="0" type="radio" class="i-checks draft"
+                                                                {{ (old('terjadi_tremor') == '0' OR empty(old('terjadi_tremor'))) ? 'checked' : ''}}> Tidak </label>
+                                                        <span class="help-block m-b-none">Pilih Opsi ini jika ketika laporan dibuat, masih terekam tremor menerus.</span>
+                                                        @if( $errors->has('terjadi_tremor'))
+                                                        <label class="error" for="terjadi_tremor">{{ ucfirst($errors->first('terjadi_tremor')) }}</label>
+                                                        @endif
+                                                    </div>
                                                 </div>
-                                                @if( $errors->has('amplitudo'))
-                                                <label class="error" for="amplitudo">{{ ucfirst($errors->first('amplitudo')) }}</label>
-                                                @endif
                                             </div>
 
-                                            {{-- Durasi Letusan --}}
-                                            <div class="form-group col-sm-12">
-                                                <label>Durasi</label>
-                                                <span class="help-block"><b>Isi dengan 0</b> jika tidak ada letusan. Jika <b>erupsi sedang berlangsung</b>, durasi waktu letusan boleh dikosongi. </span>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon" style="min-width: 100px;">Durasi</span>
-                                                    <input name="durasi" class="form-control" type="text" value="{{ empty(old('durasi')) ? '' : old('durasi') }}" >
-                                                    <span class="input-group-addon" style="min-width: 75px;">detik</span>
+
+                                            <div class="terjadi-gempa-letusan" style="display: {{ old('terjadi_gempa_letusan') == '0' ? 'none' :'block'}};">
+
+                                                {{-- Rekaman Seismik Gempa Letusan--}}
+                                                <div class="form-group col-sm-12">
+                                                    <hr>
+                                                    <h2>Gempa Letusan</h2>
+
+                                                    <label>Amplitudo Maksimum</label>
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon" style="min-width: 100px;">Amplitudo</span>
+                                                        <input id="amplitudo" name="amplitudo" class="form-control" type="text" value="{{ empty(old('amplitudo')) ? '' : old('amplitudo') }}" >
+                                                        <span class="input-group-addon" style="min-width: 75px;">mm</span>
+                                                    </div>
+
+                                                    <span class="help-block"><b>Isi dengan 0</b> jika tidak terjadi letusan. Range amplitudo 0 - 240mm.</span>
+
+                                                    @if( $errors->has('amplitudo'))
+                                                    <label class="error" for="amplitudo">{{ ucfirst($errors->first('amplitudo')) }}</label>
+                                                    @endif
                                                 </div>
 
-                                                @if( $errors->has('durasi'))
-                                                <label class="error" for="durasi">{{ ucfirst($errors->first('durasi')) }}</label>
+                                                {{-- Durasi Gempa Letusan --}}
+                                                <div class="form-group col-sm-12">
+                                                    <label>Durasi</label>
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon" style="min-width: 100px;">Durasi</span>
+                                                        <input name="durasi" class="form-control" type="text" value="{{ empty(old('durasi')) ? '' : old('durasi') }}" >
+                                                        <span class="input-group-addon" style="min-width: 75px;">detik</span>
+                                                    </div>
+
+                                                    <span class="help-block"><b>Isi dengan 0</b> jika tidak ada letusan. Jika <b>erupsi sedang berlangsung</b>, durasi waktu letusan boleh dikosongi. </span>
+
+                                                    @if( $errors->has('durasi'))
+                                                    <label class="error" for="durasi">{{ ucfirst($errors->first('durasi')) }}</label>
+                                                    @endif
+
+                                                    <label>Apakah erupsi saat ini sedang berlangsung?</label>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <label class="checkbox-inline"><input name="erupsi_berlangsung" value="1" type="radio" class="i-checks draft"
+                                                                    {{ old('erupsi_berlangsung') == '1' ? 'checked' : ''}}> Ya </label>
+                                                            <label class="checkbox-inline"><input name="erupsi_berlangsung" value="0" type="radio" class="i-checks draft"
+                                                                    {{ (old('erupsi_berlangsung') == '0' OR empty(old('erupsi_berlangsung'))) ? 'checked' : ''}}> Tidak </label>
+                                                            <span class="help-block m-b-none">Pilih Opsi ini jika ketika laporan dibuat, erupsi masih berlangsung.</span>
+                                                            @if( $errors->has('erupsi_berlangsung'))
+                                                            <label class="error" for="erupsi_berlangsung">{{ ucfirst($errors->first('erupsi_berlangsung')) }}</label>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {{-- Rekaman Seismik Tremor Menerus--}}
+                                            <div class="form-group col-sm-12 terjadi-tremor" style="display: {{ old('terjadi_tremor') == '1' ? 'block' :'none'}};">
+                                                <hr>
+                                                <h2>Tremor Menerus</h2>
+
+                                                <label>Amplitudo Maksimum</label>
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon" style="min-width: 100px;">Amplitudo</span>
+                                                    <input id="amplitudo_tremor" name="amplitudo_tremor" class="form-control" type="text" value="{{ empty(old('amplitudo_tremor')) ? '' : old('amplitudo_tremor') }}" >
+                                                    <span class="input-group-addon" style="min-width: 75px;">mm</span>
+                                                </div>
+
+                                                <span class="help-block"><b>Isi dengan 0</b> jika tidak ada rekaman tremor. Range amplitudo 0 - 240mm.</span>
+
+                                                @if( $errors->has('amplitudo_tremor'))
+                                                <label class="error" for="amplitudo_tremor">{{ ucfirst($errors->first('amplitudo_tremor')) }}</label>
                                                 @endif
                                             </div>
 
@@ -431,6 +495,16 @@ $(document).ready(function () {
     $('#color').on('change',function(){
         let $val = $(this).val();
         $val == 'green' ? $('.green').hide() : $('.green').show();
+    });
+
+    $("input[name='terjadi_tremor']").on('ifChecked', function() {
+        let $val = $(this).val();
+        $val == '0' ? $('.terjadi-tremor').hide() : $('.terjadi-tremor').show();
+    });
+
+    $("input[name='terjadi_gempa_letusan']").on('ifChecked', function() {
+        let $val = $(this).val();
+        $val == '0' ? $('.terjadi-gempa-letusan').hide() : $('.terjadi-gempa-letusan').show();
     });
 });
 </script>

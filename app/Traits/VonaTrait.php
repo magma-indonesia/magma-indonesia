@@ -105,6 +105,20 @@ trait VonaTrait
      */
     protected function getColor(Request $request): string
     {
+        if ($request->visibility == 0) {
+            if (($request->amplitudo == 0) and ($request->amplitudo_tremor == 0)) {
+                return 'GREEN';
+            }
+
+            if (($request->amplitudo > 0)) {
+                return 'ORANGE';
+            }
+
+            if (($request->amplitudo_tremor > 0)) {
+                return 'ORANGE';
+            }
+        }
+
         if ($request->height >= 6000)
             return 'RED';
 
@@ -291,7 +305,15 @@ trait VonaTrait
         $tz = $this->zoneArea($vona->gunungapi->zonearea);
         $local = Carbon::createFromTimeString($vona->issued, 'UTC')->setTimezone($tz)->format('Hm');
 
-        return "Eruption with volcanic ash cloud at {$utc} UTC ({$local} local)";
+        if ($vona->is_visible) {
+            return "Eruption with volcanic ash cloud at {$utc} UTC ({$local} local)";
+        }
+
+        if ($vona->amplitude > 0 || $vona->amplitude_tremor > 0) {
+            return "Eruption at {$utc} UTC ({$local} local)";
+        }
+
+        return "Ash-cloud is not observed.";
     }
 
     /**
@@ -321,9 +343,16 @@ trait VonaTrait
         return $vona->is_continuing ? 'Eruption and ash emission is continuing.' : '';
     }
 
-    protected function erupstionDuration(Vona $vona): string
+    /**
+     * Get text for tremor
+     *
+     * @param Vona $vona
+     * @return string
+     */
+    protected function eruptionTremor(Vona $vona): string
     {
-        return $vona->duration > 0 ? "and maximum duration {$vona->duration} second" : '.';
+        return $vona->amplitude_tremor > 0 ?
+            "Tremor recorded on seismogram with maximum amplitude {$vona->amplitude_tremor} mm." : "";
     }
 
     /**
@@ -355,8 +384,9 @@ trait VonaTrait
     {
         $eruptionIsContinuing = $this->eruptionIsContinuing($vona);
         $eruptionRecording = $this->eruptionRecording($vona);
+        $eruptionTremor = $this->eruptionTremor($vona);
         $remarks = $vona->remarks;
 
-        return "{$eruptionIsContinuing} {$eruptionRecording} {$remarks}";
+        return "{$eruptionIsContinuing} {$eruptionRecording} {$eruptionTremor} {$remarks}";
     }
 }
