@@ -196,7 +196,7 @@ VONA | Volcano Observatory Notice for Aviation
                         <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
                             <form method="post" action="{{ route('chambers.vona.pdf', $vona) }}">
                                 @csrf
-                                <button class="btn btn-outline btn-block btn-magma" type="submit">Download PDF</a>
+                                <button class="btn btn-outline btn-block btn-magma" type="submit"><i class="fa fa-file-pdf-o"></i> Download PDF</a>
                             </form>
                         </div>
 
@@ -205,7 +205,7 @@ VONA | Volcano Observatory Notice for Aviation
                             <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
                                 <form method="post" action="{{ route('chambers.vona.send-email', $vona) }}">
                                     @csrf
-                                    <button name="group" value="send" class="btn btn-outline btn-block btn-magma" type="submit">Simpan tanpa Kirim</a>
+                                    <button name="group" value="send" class="btn btn-outline btn-block btn-magma" type="submit"><i class="fa fa-save"></i> Publikasi <b>tanpa Kirim</b></a>
                                 </form>
                             </div>
 
@@ -238,14 +238,14 @@ VONA | Volcano Observatory Notice for Aviation
                         <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
                             <form method="post" action="{{ route('chambers.vona.send-email', $vona) }}">
                                 @csrf
-                                <button name="group" value="telegram" class="btn btn-outline btn-block btn-magma" type="submit">Krim VONA ke Telegram</a>
+                                <button name="group" value="telegram" class="btn btn-outline btn-block btn-magma" type="submit">Krim Telegram</a>
                             </form>
                         </div>
 
                         <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
                             <form method="post" action="{{ route('chambers.vona.send-email', $vona) }}">
                                 @csrf
-                                <button name="group" value="pvmbg" class="btn btn-outline btn-block btn-magma" type="submit">Krim VONA ke Grup PVMBG</a>
+                                <button name="group" value="pvmbg" class="btn btn-outline btn-block btn-magma" type="submit">Krim Grup PVMBG</a>
                             </form>
                         </div>
                         @endrole
