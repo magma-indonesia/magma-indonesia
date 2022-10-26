@@ -33,7 +33,7 @@ VONA | Volcano Observatory Notice for Aviation
 @endsection
 
 @section('content-body')
-<div class="content content-boxed">
+<div class="content">
 
     @if ($vonas->isNotEmpty())
     <div class="row">
@@ -44,7 +44,7 @@ VONA | Volcano Observatory Notice for Aviation
                 </div>
                 <div class="panel-body float-e-margins">
                     <div class="row">
-                        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                        <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
                             <a href="{{ route('chambers.vona.create') }}" class="btn btn-outline btn-block btn-magma" type="button">Buat VONA Baru</a>
                         </div>
                     </div>
@@ -62,13 +62,14 @@ VONA | Volcano Observatory Notice for Aviation
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Type</th>
                                     <th>Volcano</th>
                                     <th>Issued (UTC)</th>
                                     <th>Current Color</th>
                                     <th>Previous Color</th>
                                     <th>Ash Cloud Height</th>
-                                    <th>Sender</th>
                                     <th>Status</th>
+                                    <th>Sender</th>
                                     <th data-orderable="false" style="min-width: 180px;">Action</th>
                                 </tr>
                             </thead>
@@ -76,17 +77,18 @@ VONA | Volcano Observatory Notice for Aviation
                                 @foreach($vonas as $key => $vona)
                                 <tr>
                                     <td>{{ $key+1 }}</td>
+                                    <td>{{ $vona->type == 'REAL' ? 'Real' : 'Exercise' }}</td>
                                     <td><a href="{{ route('chambers.vona.show',['uuid' => $vona->uuid])}}" target="_blank">{{ $vona->gunungapi->name }}</a></td>
                                     <td>{{ $vona->issued }}</td>
                                     <td>{{ $vona->current_code }}</td>
                                     <td>{{ strtolower($vona->previous_code) }}</td>
                                     <td>{{ $vona->ash_height > 0 ? $vona->ash_height.' meter' : 'Tidak teramati' }}</td>
+                                    <td>{{ $vona->is_sent ? 'Published' : 'Draft' }}</td>
                                     <td>{{ $vona->user->name }}</td>
-                                    <td>{{ $vona->is_sent ? 'Terkirim' : 'Belum Terkirim' }}</td>
                                     <td>
                                         <a href="{{ route('chambers.vona.show',['uuid'=>$vona->uuid]) }}" class="m-t-xs m-b-xs btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">View</a>
-                                        <a href="{{ route('chambers.vona.edit',['uuid'=>$vona->uuid]) }}" class="m-t-xs m-b-xs btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>
                                         @role('Super Admin')
+                                        <a href="{{ route('chambers.vona.edit',['uuid'=>$vona->uuid]) }}" class="m-t-xs m-b-xs btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>
                                         <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.vona.destroy',['uuid'=>$vona->uuid]) }}" accept-charset="UTF-8">
                                             @method('DELETE')
                                             @csrf
