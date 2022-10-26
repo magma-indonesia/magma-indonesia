@@ -321,6 +321,11 @@ trait VonaTrait
         return $vona->is_continuing ? 'Eruption and ash emission is continuing.' : '';
     }
 
+    protected function erupstionDuration(Vona $vona): string
+    {
+        return $vona->duration > 0 ? "and maximum duration {$vona->duration} second" : '.';
+    }
+
     /**
      * Get eruption seismogram recording
      *
@@ -329,7 +334,15 @@ trait VonaTrait
      */
     protected function eruptionRecording(Vona $vona): string
     {
-        return $vona->amplitude == 0 ? "" : "Eruption recorded on seismogram with maximum amplitude {$vona->amplitude} mm and maximum duration {$vona->duration} second.";
+        if ($vona->amplitude == 0) {
+            return "";
+        }
+
+        if ($vona->amplitude > 0 AND $vona->duration > 0) {
+            return "Eruption recorded on seismogram with maximum amplitude {$vona->amplitude} mm and maximum duration {$vona->duration} second.";
+        }
+
+        return "Eruption recorded on seismogram with maximum amplitude {$vona->amplitude} mm.";
     }
 
     /**
