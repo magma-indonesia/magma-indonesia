@@ -24,10 +24,15 @@ trait VonaTrait
     {
         $year = now()->format('Y');
         $code = $request->code;
+        $prefix = $request->type == 'real' ? '' : 'EXERCISE-';
 
-        $vonaCount = VonaOld::where('issued', 'like', '2022%')->where('ga_code', $code)->count() + 1;
-        $vonaCount = sprintf('%03d', $vonaCount);
-        return $year . $code . $vonaCount;
+        $vonaCount = VonaOld::where('issued', 'like', '2022%')
+            ->where('ga_code', $code)
+            ->where('type', $request->type)
+            ->count();
+
+        $vonaCount = sprintf('%03d', $vonaCount + 1);
+        return $prefix . $year . $code . $vonaCount;
     }
 
     /**
