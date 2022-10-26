@@ -65,8 +65,8 @@ VONA | Volcano Observatory Notice for Aviation
                                     <th>Type</th>
                                     <th>Volcano</th>
                                     <th>Issued (UTC)</th>
-                                    <th>Current Color</th>
-                                    <th>Previous Color</th>
+                                    <th>Noticenumber</th>
+                                    <th>Current/Previous Color</th>
                                     <th>Ash Cloud Height</th>
                                     <th>Status</th>
                                     <th>Sender</th>
@@ -80,8 +80,8 @@ VONA | Volcano Observatory Notice for Aviation
                                     <td>{{ $vona->type == 'REAL' ? 'Real' : 'Exercise' }}</td>
                                     <td><a href="{{ route('chambers.vona.show',['uuid' => $vona->uuid])}}" target="_blank">{{ $vona->gunungapi->name }}</a></td>
                                     <td>{{ $vona->issued }}</td>
-                                    <td>{{ $vona->current_code }}</td>
-                                    <td>{{ strtolower($vona->previous_code) }}</td>
+                                    <td>{{ $vona->noticenumber }}</td>
+                                    <td>{{ $vona->current_code }}/{{ strtolower($vona->previous_code) }}</td>
                                     <td>{{ $vona->ash_height > 0 ? $vona->ash_height.' meter' : 'Tidak teramati' }}</td>
                                     <td>{{ $vona->is_sent ? 'Published' : 'Draft' }}</td>
                                     <td>{{ $vona->user->name }}</td>
