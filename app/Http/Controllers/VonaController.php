@@ -80,9 +80,9 @@ class VonaController extends Controller
             'ash_color' => $request->visibility ? $request->warna_asap : null,
             'ash_intensity' => $request->visibility ? $request->intensitas : null,
             'ash_directions' => $request->visibility ? $request->arah_abu : null,
-            'amplitude' => $request->terjadi_gempa_letusan ? $request->amplitudo : 0,
-            'amplitude_tremor' => $request->terjadi_tremor ? $request->amplitudo_tremor : 0,
-            'duration' => $request->terjadi_gempa_letusan ? $request->durasi : 0,
+            'amplitude' => ($request->terjadi_gempa_letusan || $request->code == 'green') ? ($request->amplitudo ?? 0) : 0,
+            'amplitude_tremor' => ($request->terjadi_tremor || $request->code == 'green') ? ($request->amplitudo_tremor ?? 0) : 0,
+            'duration' => ($request->terjadi_gempa_letusan || $request->code == 'green') ? ($request->durasi ?? 0) : 0,
             'remarks' => $request->remarks,
             'nip_pelapor' => auth()->user()->nip,
         ]);
