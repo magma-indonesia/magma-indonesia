@@ -60,15 +60,6 @@ class VonaController extends Controller
         return view('vona.create',compact('gadds','users'));
     }
 
-    protected function duration(Request $request)
-    {
-        if ($request->erupsi_berlangsung || $request->color == 'green') {
-            return 0;
-        }
-
-        return $request->durasi ?? 0;
-    }
-
     /**
      * Store a newly created resource in storage.
      *

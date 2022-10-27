@@ -44,8 +44,10 @@ class VonaTelegram extends Notification implements ShouldQueue
         . "{$this->vona->issued_utc}\n\n"
         . "*VOLCANO :*\n"
         . "{$this->vona->gunungapi->name} ({$this->vona->gunungapi->smithsonian_id})\n\n"
-        . "*COLOR CODE :*\n"
+        . "*CURRENT COLOR CODE :*\n"
         . "{$this->vona->current_code}\n\n"
+        . "*PREVIOUS COLOR CODE :*\n"
+        . "{$this->vona->previous_code}\n\n"
         . "*VOLCANIC ACTIVITY SUMMARY :*\n"
         . "{$this->volcanoActivitySummary($this->vona)}\n\n"
         . "*VOLCANIC CLOUD HEIGHT :*\n"
@@ -72,8 +74,6 @@ class VonaTelegram extends Notification implements ShouldQueue
 
     public function toTelegram($notifiable)
     {
-        $url = URL::signedRoute('v1.vona.show', ['id' => $this->vona->old_id]);
-
         return TelegramMessage::create()
             ->content($this->deskripsiVonaTelegram());
     }

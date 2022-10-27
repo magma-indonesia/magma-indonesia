@@ -405,4 +405,19 @@ trait VonaTrait
 
         return "{$eruptionIsContinuing} {$eruptionRecording} {$eruptionTremor} {$remarks}";
     }
+
+    /**
+     * Get duration based on condition
+     *
+     * @param Request $request
+     * @return float
+     */
+    protected function duration(Request $request): float
+    {
+        if ($request->erupsi_berlangsung || $request->color == 'green') {
+            return 0;
+        }
+
+        return $request->durasi ?? 0;
+    }
 }
