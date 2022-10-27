@@ -277,6 +277,19 @@ class VonaController extends Controller
     }
 
     /**
+     * Updating Old VONA Value
+     *
+     * @param Vona $vona
+     * @return void
+     */
+    public function reupdate(Vona $vona)
+    {
+        $this->updateToOldVona($vona);
+
+        return redirect()->route('chambers.vona.index');
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Vona  $vona

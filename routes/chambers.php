@@ -232,6 +232,8 @@ Route::post('vona/send/{vona}', 'VonaController@send')
     ->name('vona.send-email');
 Route::post('vona/pdf/{vona}', 'VonaController@pdf')
     ->name('vona.pdf');
+Route::post('vona/reupdate/{vona}', 'VonaController@reupdate')
+    ->name('vona.reupdate');
 Route::resource('vona/subscribers','VonaSubscriberController');
 Route::resource('vona', 'VonaController');
 

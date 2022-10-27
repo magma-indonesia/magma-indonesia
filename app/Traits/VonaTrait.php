@@ -272,6 +272,38 @@ trait VonaTrait
         return $vonaOld;
     }
 
+    protected function updateToOldVona(Vona $vona)
+    {
+        $vonaOld = VonaOld::findOrFail($vona->old_id);
+
+        $vonaOld->update(['issued' => $vona->issued_utc,
+            'issued_time' => $vona->issued,
+            'type' => $vona->type,
+            'ga_nama_gapi' => $vona->gunungapi->name,
+            'ga_id_smithsonian' => $vona->gunungapi->smithsonian_id,
+            'ga_code' => $vona->gunungapi->code,
+            'cu_avcode' => $vona->current_code,
+            'pre_avcode' => $vona->previous_code,
+            'source' => "{$vona->gunungapi->name} Volcano Observatory",
+            'volcano_location' => $this->location($vona),
+            'area' => "{$vona->gunungapi->province_en}, Indonesia",
+            'summit_elevation' => $this->summitElevation($vona->gunungapi->elevation),
+            'volcanic_act_summ' => $this->volcanoActivitySummary($vona),
+            'vc_height' => $this->ashCloudHeight($vona),
+            'vc_height_text' => $this->volcanicCloudHeight($vona),
+            'other_vc_info' => $this->otherVolcanicCloudInformation($vona),
+            'remarks' => blank($this->remarks($vona)) ? '-' : $this->remarks($vona),
+            'contacts' => $vona::CONTACTS,
+            'next_notice' => $this->nextNotice(),
+            'sent' => 0,
+            'nip' => $vona->user->nip,
+            'nama' => $vona->user->name,
+            'sender' => $vona->user->nip,
+        ]);
+
+        return $vonaOld;
+    }
+
     /**
      * Get text for ash cloud height in feet and meter
      *

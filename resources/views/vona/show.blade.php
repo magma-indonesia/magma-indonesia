@@ -260,6 +260,13 @@ VONA | Volcano Observatory Notice for Aviation
                                 <button name="group" value="pvmbg" class="btn btn-outline btn-block btn-magma" type="submit">Krim Grup PVMBG</button>
                             </form>
                         </div>
+
+                        <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
+                            <form method="post" action="{{ route('chambers.vona.reupdate', $vona) }}">
+                                @csrf
+                                <button name="group" value="reupdate" class="btn btn-outline btn-block btn-magma" type="submit">Update VONA v1</button>
+                            </form>
+                        </div>
                         @endrole
 
                     </div>
