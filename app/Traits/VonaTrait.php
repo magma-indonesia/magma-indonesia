@@ -306,9 +306,9 @@ trait VonaTrait
      */
     protected function volcanoActivitySummary(Vona $vona): string
     {
-        $utc = $vona->issued->format('Hm');
+        $utc = $vona->issued->format('Hi');
         $tz = $this->zoneArea($vona->gunungapi->zonearea);
-        $local = Carbon::createFromTimeString($vona->issued, 'UTC')->setTimezone($tz)->format('Hm');
+        $local = Carbon::createFromTimeString($vona->issued, 'UTC')->setTimezone($tz)->format('Hi');
 
         if ($vona->is_visible) {
             return "Eruption with volcanic ash cloud at {$utc} UTC ({$local} local)";
