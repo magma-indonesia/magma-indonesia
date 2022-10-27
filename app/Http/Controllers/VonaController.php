@@ -158,8 +158,6 @@ class VonaController extends Controller
         $oldVona->update([
             'sent' => 1,
         ]);
-
-        $this->clearVonaCache();
     }
 
     /**
@@ -199,8 +197,6 @@ class VonaController extends Controller
         $oldVona->update([
             'sent' => $request->group === 'send' ? 1 : 0,
         ]);
-
-        $this->clearVonaCache();
     }
 
     /**
@@ -248,6 +244,8 @@ class VonaController extends Controller
             $this->updateIsSent($vona);
         }
 
+        $this->clearVonaCache();
+
         return redirect()->route('chambers.vona.index');
     }
 
@@ -285,7 +283,7 @@ class VonaController extends Controller
     public function reupdate(Vona $vona)
     {
         $this->updateToOldVona($vona);
-
+        $this->clearVonaCache();
         return redirect()->route('chambers.vona.index');
     }
 
