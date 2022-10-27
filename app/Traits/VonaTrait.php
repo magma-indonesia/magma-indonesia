@@ -344,14 +344,70 @@ trait VonaTrait
         $local = Carbon::createFromTimeString($vona->issued, 'UTC')->setTimezone($tz)->format('Hi');
 
         if ($vona->is_visible) {
-            return "Eruption with volcanic ash cloud at {$utc} UTC ({$local} local)";
+            return "Eruption with volcanic ash cloud at {$utc} UTC ({$local} local).";
         }
 
         if ($vona->amplitude > 0 || $vona->amplitude_tremor > 0) {
-            return "Eruption at {$utc} UTC ({$local} local)";
+            return "Eruption at {$utc} UTC ({$local} local).";
         }
 
         return "Ash-cloud is not observed.";
+    }
+
+    protected function ashIntensity(Vona $vona): string
+    {
+        if (count($vona->ash_intensity) == 1) {
+            $intensity = strtolower(__($vona->ash_intensity[0]));
+            return "The intensity of volcanic ash is observed to be {$intensity}.";
+        }
+
+        $intensity = collect($vona->ash_intensity)->transform(function ($intensity) {
+            return strtolower(__($intensity));
+        });
+
+        return "The intensity of volcanic ash is observed from {$intensity->first()} to {$intensity->last()}.";
+    }
+
+    /**
+     * Ash color
+     *
+     * @param Vona $vona
+     * @return string
+     */
+    protected function ashColor(Vona $vona): string
+    {
+        if (count($vona->ash_color) == 1) {
+            $color = strtolower(__($vona->ash_color[0]));
+            return "Volcanic ash is observed to be {$color}.";
+        }
+
+        $colors = collect($vona->ash_color)->transform(function ($color) {
+            return strtolower(__($color));
+        });
+
+        return "Volcanic ash is observed to be {$colors->first()} to {$colors->last()}.";
+    }
+
+    /**
+     * Ash direction.
+     *
+     * @param Vona $vona
+     * @return string
+     */
+    protected function ashDirections(Vona $vona): string
+    {
+        if (count($vona->ash_directions) == 1) {
+            $direction = strtolower(__($vona->ash_directions[0]));
+            return "Ash cloud moving to {$direction}.";
+        }
+
+        $directions = collect($vona->ash_directions)->transform(function ($direction) {
+            return strtolower(__($direction));
+        })->toArray();
+
+        $directions = Str::replaceLast(', ', ' to ', implode(', ', $directions));
+
+        return "Ash cloud moving from {$directions}.";
     }
 
     /**
@@ -366,18 +422,13 @@ trait VonaTrait
             return "Ash-cloud is not observed.";
         };
 
-        if (count($vona->ash_directions) == 1) {
-            $direction = strtolower(__($vona->ash_directions[0]));
-            return "Ash cloud moving to {$direction}";
-        }
+        $data = [
+            $this->ashDirections($vona),
+            $this->ashColor($vona),
+            $this->ashIntensity($vona),
+        ];
 
-        $directions = collect($vona->ash_directions)->transform(function ($direction) {
-            return strtolower(__($direction));
-        })->toArray();
-
-        $directions = Str::replaceLast(', ', ' to ', implode(', ', $directions));
-
-        return "Ash cloud moving from {$directions}";
+        return implode(' ', $data);
     }
 
     /**
@@ -430,12 +481,14 @@ trait VonaTrait
      */
     protected function remarks(Vona $vona): string
     {
-        $eruptionIsContinuing = $this->eruptionIsContinuing($vona);
-        $eruptionRecording = $this->eruptionRecording($vona);
-        $eruptionTremor = $this->eruptionTremor($vona);
-        $remarks = $vona->remarks;
+        $data = array_filter([
+            $this->eruptionIsContinuing($vona),
+            $this->eruptionRecording($vona),
+            $this->eruptionTremor($vona),
+            $vona->remarks,
+        ]);
 
-        return "{$eruptionIsContinuing} {$eruptionRecording} {$eruptionTremor} {$remarks}";
+        return implode(' ', $data);
     }
 
     /**

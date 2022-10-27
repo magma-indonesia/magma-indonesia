@@ -9,5 +9,12 @@
     "Selatan": "South",
     "Barat Daya": "Southwest",
     "Barat": "West",
-    "Barat Laut": "Northwest"
+    "Barat Laut": "Northwest",
+    "Putih": "White",
+    "Kelabu": "Gray",
+    "Coklat": "Brown",
+    "Hitam": "Dark",
+    "Tipis": "Thin",
+    "Sedang": "Medium",
+    "Tebal": "Thick"
 }

@@ -101,11 +101,11 @@ Buat VONA Gunung Api
                                         <div class="form-group col-sm-12">
                                             <label>Color Code</label>
                                             <select id="color" class="form-control" name="color">
-                                                <option value="auto" {{ old('color')=='auto' ? 'selected' : '' }}>Otomatis oleh MAGMA</option>
                                                 <option value="red" {{ old('color')=='red' ? 'selected' : '' }}>RED</option>
                                                 <option value="orange" {{ old('color')=='orange' ? 'selected' : '' }}>ORANGE</option>
                                                 <option value="yellow" {{ old('color')=='yellow' ? 'selected' : '' }}>YELLOW</option>
                                                 <option value="green" {{ old('color')=='green' ? 'selected' : '' }}>GREEN</option>
+                                                <option value="auto" {{ old('color')=='auto' ? 'selected' : '' }}>Otomatis oleh MAGMA</option>
                                             </select>
                                             <span class="help-block m-b-none">Pilihan warna <b>Otomatis</b> akan ditentukan berdasarkan tinggi abu teramati atau ada tidaknya rekaman gempa letusan.</span>
                                             @if( $errors->has('color'))
