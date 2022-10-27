@@ -179,6 +179,10 @@ class VonaController extends Controller
      */
     protected function sendToTelegram(Vona $vona): void
     {
+        if (request()->user()->hasRole('Super Admin')) {
+            $vona->notify(new VonaTelegram($vona));
+        }
+
         if (is_null($vona->sent_to_telegram)) {
             $vona->notify(new VonaTelegram($vona));
             $vona->update([
