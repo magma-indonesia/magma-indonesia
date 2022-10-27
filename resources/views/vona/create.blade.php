@@ -376,7 +376,7 @@ Buat VONA Gunung Api
 
                                                 {{-- Durasi Gempa Letusan --}}
                                                 <div class="form-group col-sm-12">
-                                                    <label>Durasi</label>
+                                                    <label>Durasi Waktu Letusan</label>
 
                                                     <div class="input-group">
                                                         <span class="input-group-addon" style="min-width: 100px;">Durasi</span>
@@ -384,7 +384,7 @@ Buat VONA Gunung Api
                                                         <span class="input-group-addon" style="min-width: 75px;">detik</span>
                                                     </div>
 
-                                                    <span class="help-block"><b>Isi dengan 0</b> jika tidak ada letusan. Jika <b>erupsi sedang berlangsung</b>, durasi waktu letusan boleh dikosongi. </span>
+                                                    <span class="help-block">Jika <b>erupsi sedang berlangsung</b>, durasi waktu letusan boleh dikosongi. </span>
 
                                                     @if( $errors->has('durasi'))
                                                     <label class="error" for="durasi">{{ ucfirst($errors->first('durasi')) }}</label>

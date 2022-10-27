@@ -52,12 +52,27 @@ class VonaCreateRequest extends FormRequest
         return auth()->check();
     }
 
+    protected function durasiCondition()
+    {
+        if (request()->color == 'green') {
+            return 'nullable';
+        }
+
+        if (request()->erupsi_berlangsung) {
+            return 'nullable';
+        }
+
+        return 'required_if:terjadi_gempa_letusan,1|nullable|numeric|between:0,10000';
+    }
+
     protected function greenConditional()
     {
         return [
-            'amplitudo' => request()->color == 'green' ? 'nullable|numeric|between:0,240' : 'required_if:terjadi_gempa_letusan,1|nullable|numeric|between:0,240',
-            'durasi' => request()->color == 'green' ? 'nullable|numeric|between:0,10000' : 'required_if:terjadi_gempa_letusan,1|nullable|numeric|between:0,10000',
-            'amplitudo_tremor' => request()->color == 'green' ? 'nullable|numeric|between:0,240' : 'required_if:terjadi_tremor,1|nullable|numeric|between:0,240',
+            'amplitudo' => request()->color == 'green' ?
+                'nullable|numeric|between:0,240' : 'required_if:terjadi_gempa_letusan,1|nullable|numeric|between:0,240',
+            'amplitudo_tremor' => request()->color == 'green' ?
+                'nullable|numeric|between:0,240' : 'required_if:terjadi_tremor,1|nullable|numeric|between:0,240',
+            'durasi' => $this->durasiCondition(),
         ];
     }
 

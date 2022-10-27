@@ -60,6 +60,15 @@ class VonaController extends Controller
         return view('vona.create',compact('gadds','users'));
     }
 
+    protected function duration(Request $request)
+    {
+        if ($request->erupsi_berlangsung || $request->color == 'green') {
+            return 0;
+        }
+
+        return $request->durasi ?? 0;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -84,8 +93,7 @@ class VonaController extends Controller
                 ($request->amplitudo ?? 0) : 0,
             'amplitude_tremor' => ($request->terjadi_tremor || $request->code == 'green') ?
                 ($request->amplitudo_tremor ?? 0) : 0,
-            'duration' => ($request->terjadi_gempa_letusan || $request->code == 'green') ?
-                ($request->durasi ?? 0) : 0,
+            'duration' => $this->duration($request),
             'remarks' => $request->remarks,
             'nip_pelapor' => auth()->user()->nip,
         ]);

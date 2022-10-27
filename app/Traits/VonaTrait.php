@@ -8,6 +8,7 @@ use App\v1\Vona as VonaOld;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 
 trait VonaTrait
 {
@@ -203,7 +204,7 @@ trait VonaTrait
     protected function location(Vona $vona): string
     {
         $vona->load('gunungapi');
-        return "{$this->convertLatitude($vona->gunungapi->latitude)} {$this->convertLongitude($vona->gunungapi->latitude)}";
+        return "{$this->convertLatitude($vona->gunungapi->latitude)} {$this->convertLongitude($vona->gunungapi->longitude)}";
     }
 
     /**
@@ -333,8 +334,18 @@ trait VonaTrait
             return "Ash-cloud is not observed.";
         };
 
-        $direction = __($vona->ash_directions[0]);
-        return "Ash cloud moving to {$direction}";
+        if (count($vona->ash_directions) == 1) {
+            $direction = strtolower(__($vona->ash_directions[0]));
+            return "Ash cloud moving to {$direction}";
+        }
+
+        $directions = collect($vona->ash_directions)->transform(function ($direction) {
+            return strtolower(__($direction));
+        })->toArray();
+
+        $directions = Str::replaceLast(', ', ' to ', implode(', ', $directions));
+
+        return "Ash cloud moving from {$directions}";
     }
 
     /**
