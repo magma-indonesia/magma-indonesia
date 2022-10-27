@@ -335,6 +335,7 @@ class VonaController extends Controller
                 }
             }
 
+            $this->clearVonaCache();
             return response()->json($data);
         }
 
