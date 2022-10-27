@@ -23,7 +23,7 @@ class VonaController extends Controller
         $last_vona = Vona::select('no')->orderBy('no','desc')->first();
         $page = $request->has('vona_page') ? $request->vona_page : 1;
 
-        $vonas = Cache::remember('v1/api/vonas-'.$last_vona->no.'-page-'.$page, 30, function() {
+        $vonas = Cache::tags(['api-vona.index'])->remember('v1/api/vonas-'.$last_vona->no.'-page-'.$page, 30, function() {
             return Vona::orderBy('no','desc')
                 ->with('volcano:ga_code,ga_nama_gapi,ga_lat_gapi,ga_lon_gapi,ga_elev_gapi')
                 ->where('sent',1)
