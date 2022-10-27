@@ -129,7 +129,8 @@ class MapController extends Controller
                             ->orderBy('var_noticenumber','desc')
                             ->firstOrFail();
 
-        $vona = Vona::select('log')
+        $vona = Vona::select('log','type','sent','ga_code')
+                    ->where('type', 'REAL')
                     ->where('sent',1)
                     ->where('ga_code',$ga_code)
                     ->whereBetween('log',[now()->subWeek(),now()])
@@ -151,7 +152,7 @@ class MapController extends Controller
                 ->where('type','REAL')
                 ->where('sent',1)
                 ->orderBy('log','desc')
-                ->firstOrFail();
+                ->first();
             });
         }
 
