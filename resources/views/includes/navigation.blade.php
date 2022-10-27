@@ -59,6 +59,28 @@
                 </a>
             </li>
 
+            <li class="{{ active(['chambers.vona.*', 'chambers.subscribers.*']) }}">
+                <a href="#">
+                    <i class="pe-7s-plane"></i>
+                    <span class="nav-label">VONA</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li class="{{ active('chambers.vona.index') }}">
+                        <a href="{{ route('chambers.vona.index') }}">Daftar VONA</a>
+                    </li>
+                    <li class="{{ active('chambers.vona.create') }}">
+                        <a href="{{ route('chambers.vona.create') }}">Buat VONA</a>
+                    </li>
+                    @yield('nav-show-vona')
+                    @role('Super Admin')
+                    <li class="{{ active('chambers.subscribers.*') }}">
+                        <a href="{{ route('chambers.subscribers.index') }}">Subscription</a>
+                    </li>
+                    @endrole
+                </ul>
+            </li>
+
             @if (auth()->user()->nip === '198803152015031005')
             <li class="{{ active(['chambers.migration.*']) }}">
                 <a href="{{ route('chambers.migration.index') }}">
@@ -96,6 +118,7 @@
                 </a>
             </li>
             @endrole
+
             <li class="{{ active('chambers.v1.*') }}">
                 <a href="#">
                     <span class="label label-magma">v.1</span>
@@ -169,8 +192,8 @@
                             <li>
                                 <a class="m-l" href="{{ route('chambers.krb-gunungapi.index') }}">Peta KRB</a>
                             </li>
-                            <li class="{{ active('chambers.v1.vona.*') }}">
-                                <a class="m-l" href="{{ route('chambers.v1.vona.index') }}">VONA</a>
+                            <li class="">
+                                <a class="m-l" href="{{ route('chambers.vona.index') }}">VONA</a>
                             </li>
                             <li class="{{ active('chambers.cctv.index') }}">
                                 <a class="m-l" href="{{ route('chambers.cctv.index') }}">CCTV</a>
@@ -384,26 +407,6 @@
                     <li class="{{ active('chambers.glossary.*') }}">
                         <a href="{{ route('chambers.glossary.index') }}">Glossary</a>
                     </li>
-                </ul>
-            </li>
-            <li class="{{ active(['chambers.vona.*', 'chambers.subscribers.*']) }}">
-                <a href="#">
-                    <span class="nav-label">VONA</span>
-                    <span class="fa arrow"></span>
-                </a>
-                <ul class="nav nav-second-level">
-                    <li class="{{ active('chambers.vona.index') }}">
-                        <a href="{{ route('chambers.vona.index') }}">Daftar VONA</a>
-                    </li>
-                    <li class="{{ active('chambers.vona.create') }}">
-                        <a href="{{ route('chambers.vona.create') }}">Buat VONA</a>
-                    </li>
-                    @yield('nav-show-vona')
-                    @role('Super Admin')
-                    <li class="{{ active('chambers.subscribers.*') }}">
-                        <a href="{{ route('chambers.subscribers.index') }}">Subscription</a>
-                    </li>
-                    @endrole
                 </ul>
             </li>
 
