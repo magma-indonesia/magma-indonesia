@@ -18,6 +18,7 @@ class LaporanLetusanRequest extends FormRequest
             'code.exists' => 'Kode gunung api tidak terdaftar',
             'code.size'  => 'Kode gunung api tidak terdaftar',
             'erupsi_berlangsung.required' => 'Informasi erupsi sedang berlangsung belum dipilih',
+            'erupsi_berlangsung.boolean' => 'Informasi erupsi sedang berlangsung belum dipilih',
             'jenis.in'  => 'Pilih antara Erupsi atau Awan Panas Guguran',
             'visibility.required' => 'Visibility belum diisi',
             'visibility.boolean' => 'Visibility hanya memiliki nilai Teramati atau Tidak Teramati',
@@ -85,7 +86,7 @@ class LaporanLetusanRequest extends FormRequest
             'rekomendasi_text' => 'required_if:rekomendasi,9999',
             'lainnya' => 'nullable',
             'foto_letusan' => 'nullable',
-            'draft' => 'required|boolean',
+            'draft_vona' => 'required|boolean',
             'is_blasted' => 'required|boolean',
         ];
 

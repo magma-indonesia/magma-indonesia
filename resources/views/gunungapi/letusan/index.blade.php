@@ -87,7 +87,7 @@
                     <div class="m-t-xl">
                         <h1>{{ $vens->first()->gunungapi->name }}</h1>
                         <p>
-                            Letusan terjadi pada <b>{{ $vens->first()->date->formatLocalized('%A, %d %B %Y, %T WIB')}}</b>
+                            Letusan terjadi pada <b>{{ $vens->first()->datetime_utc->formatLocalized('%A, %d %B %Y, %T WIB')}}</b>
                         </p>
                         <h1>
                             <a href="{{ route('chambers.letusan.show' ,['id' => $vens->first()->id ]) }}" class="btn btn-outline btn-info" type="button" target="_blank"><i class="fa fa-eye"></i> Lihat Informasi</a>
@@ -119,14 +119,26 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Gunung Api</th>
-                                    <th>Waktu Kejadian</th>
+                                    <th>Waktu Kejadian (UTC)</th>
                                     <th>Visual</th>
-                                    <th>TInggi Letusan (m)</th>
+                                    <th>Jenis letusan</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-
+                                @foreach($vens as $key => $ven)
+                                <tr>
+                                    <td>{{ $vens->firstItem()+$key }}</td>
+                                    <td>{{ $ven->gunungapi->name }}</td>
+                                    <td>{{ $ven->datetime_utc }}</td>
+                                    <td>{{ $ven->visibility ? 'Teramati' : 'Tidak teramati' }}</td>
+                                    <td>{{ $ven->jenis == 'lts' ? 'Letusan' : 'Awan Panas Guguran' }}</td>
+                                    <td>
+                                        <a href="{{ route('chambers.letusan.show', $ven) }}"
+                                        class="btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">View</a>
+                                    </td>
+                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

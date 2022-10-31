@@ -31,7 +31,7 @@ class MagmaVenController extends Controller
     public function index()
     {
         $vens = MagmaVen::with('gunungapi:code,name')
-            ->orderBy('date','desc')->paginate(30);
+            ->orderBy('datetime_utc','desc')->paginate(30);
 
         return view('gunungapi.letusan.index', [
             'vens' => $vens
@@ -185,7 +185,7 @@ class MagmaVenController extends Controller
             'user' => config('app.sms_user'),
             'pwd' => config('app.sms_password'),
             'sms' => $message,
-            'lokasi' => implode(',', $locations->toArray()),
+            'lokasi' => implode(',', $locations),
         ];
 
         $client = new Client();
@@ -225,13 +225,14 @@ class MagmaVenController extends Controller
         $message = "Terjadi {$this->generateLetusan($request)} G. {$gadd->name} - {$status} pada {$request->date}{$gadd->zonearea} {$masking}";
         $locations = $gadd->sms_locations->pluck('kode_kabupaten');
 
-        return $this->sendSms($message, $locations);
+        // $response = $this->sendSms($message, $locations);
 
         return [
             'message' => $message,
             'message_length' => strlen($message),
-            'message_encode' => urlencode($message),
+            'message_encoded' => urlencode($message),
             'location' => $locations,
+            // 'responses' => $response,
         ];
     }
 
@@ -268,6 +269,7 @@ class MagmaVenController extends Controller
             'erupt_tgl' => $date,
             'erupt_jam' => $time,
         ],[
+            'erupsi_berlangsung' => $request->erupsi_berlangsung,
             'erupt_vis' => $request->visibility,
             'erupt_tka' => $request->visibility ? $request->height : 0,
             'erupt_wrn' => $request->visibility ? implode(', ', $request->warna_asap) : '-',
@@ -280,6 +282,7 @@ class MagmaVenController extends Controller
             'erupt_rek' => VarRekomendasi::findOrFail($request->rekomendasi)->rekomendasi,
             'erupt_ket' => $request->lainnya ?: '-',
             'erupt_usr' => auth()->user()->nip,
+            'is_published' => $request->is_blasted,
             'is_blasted' => $request->is_blasted,
             'erupt_tsp' => now(),
         ]);
@@ -326,7 +329,7 @@ class MagmaVenController extends Controller
             'informasi_lainnya' => $request->lainnya ?? null,
             'rekomendasi_id' => $request->rekomendasi,
             'has_vona' => $request->draft,
-            'sms_blast' => $request->is_blasted,
+            'is_blasted' => $request->is_blasted,
             'nip_pelapor' => auth()->user()->nip,
             'published_at' => now(),
         ]);

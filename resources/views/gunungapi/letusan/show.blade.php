@@ -70,7 +70,7 @@
                         @if(!empty($ven->rekomendasi))
                         <h3><b>Rekomendasi</b></h3>
                         <blockquote>
-                            <p>{!! nl2br($ven->rekomendasi) !!}</p>
+                            <p>{!! nl2br($ven->rekomendasi->rekomendasi) !!}</p>
                         </blockquote>
                         @endif
                         @if(!empty($ven->lainnya))

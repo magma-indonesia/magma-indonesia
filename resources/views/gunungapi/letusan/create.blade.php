@@ -532,7 +532,7 @@ Buat Informasi Letusan (VEN)
                                                     <label class="checkbox-inline"><input name="draft" value="0" type="radio" class="i-checks draft"
                                                             {{ (old('draft') == '0' OR empty(old('draft'))) ? 'checked' : ''}}> Tidak </label>
                                                     <span class="help-block m-b-none">Pilih Opsi ini jika ingin memasukkan laporan letusan ke dalam <label><a
-                                                                class="text-magma" href="{{ route('chambers.vona.draft')}}" target="_blank">Draft
+                                                                class="text-magma" href="{{ route('chambers.vona.index')}}" target="_blank">Daftar
                                                                 VONA</a></label>. VONA akan dibuat berdasarkan data-data pengamatan di atas.</span>
                                                     @if( $errors->has('draft'))
                                                     <label class="error" for="draft">{{ ucfirst($errors->first('draft')) }}</label>

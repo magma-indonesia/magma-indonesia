@@ -21,7 +21,7 @@ trait VisualLetusan
         $ven->height = $request->height;
         $ven->wasap = $request->wasap;
         $ven->intensitas = $request->intensitas;
-        $ven->arah_asap = $request->arah;
+        $ven->arah_abu = $request->arah;
         $ven->amplitudo = $request->amplitudo;
         $ven->durasi = $request->durasi;
         $ven->photo = null;
@@ -65,21 +65,21 @@ trait VisualLetusan
     {
         $asl = $ven->height+$ven->gunungapi->elevation;
 
-        $wasap = !empty($ven->wasap) 
-            ? str_replace_last(', ',' hingga ', strtolower(implode(', ',$ven->wasap))) 
+        $wasap = !empty($ven->wasap)
+            ? str_replace_last(', ',' hingga ', strtolower(implode(', ',$ven->wasap)))
             : strtolower($ven->wasap[0]);
 
         $intensitas = !empty($ven->intensitas)
-            ? str_replace_last(', ',' hingga ', strtolower(implode(', ',$ven->intensitas))) 
+            ? str_replace_last(', ',' hingga ', strtolower(implode(', ',$ven->intensitas)))
             : strtolower($ven->intensitas[0]);
 
-        $arah = !empty($ven->arah_asap)
-            ? str_replace_last(', ',' dan ', strtolower(implode(', ',$ven->arah_asap))) 
-            : strtolower($ven->arah_asap[0]);
+        $arah = !empty($ven->arah_abu)
+            ? str_replace_last(', ',' dan ', strtolower(implode(', ',$ven->arah_abu)))
+            : strtolower($ven->arah_abu[0]);
 
         $seismik = $ven->amplitudo ? 'Erupsi ini terekam di seismograf dengan amplitudo maksimum '.$ven->amplitudo.' mm dan durasi '.$ven->durasi.' detik.' : '';
-        
-        $data = 'Telah terjadi erupsi G. '. $ven->gunungapi->name .', '. $ven->gunungapi->province .' pada hari '. $ven->date->formatLocalized('%A, %d %B %Y') .', pukul '. $ven->date->format('H:i').' '.$ven->gunungapi->zonearea.' dengan tinggi kolom abu teramati &plusmn; '. $ven->height .' m di atas puncak (&plusmn; '. $asl .' m di atas permukaan laut). Kolom abu teramati berwarna '. $wasap .' dengan intensitas '. $intensitas .' ke arah '. $arah .'. '.$seismik;
+
+        $data = 'Telah terjadi erupsi G. '. $ven->gunungapi->name .', '. $ven->gunungapi->province .' pada hari '. $ven->datetime_utc->formatLocalized('%A, %d %B %Y') .', pukul '. $ven->datetime_utc->format('H:i').' '.$ven->gunungapi->zonearea.' dengan tinggi kolom abu teramati &plusmn; '. $ven->height .' m di atas puncak (&plusmn; '. $asl .' m di atas permukaan laut). Kolom abu teramati berwarna '. $wasap .' dengan intensitas '. $intensitas .' ke arah '. $arah .'. '.$seismik;
 
         return $data;
     }
@@ -92,7 +92,7 @@ trait VisualLetusan
      */
     protected function visualTidakTeramati($ven)
     {
-        $data = 'Telah terjadi erupsi G. '. $ven->gunungapi->name .', '. $ven->gunungapi->province .' pada hari '. $ven->date->formatLocalized('%A, %d %B %Y') .', pukul '. $ven->date->format('H:i').' '.$ven->gunungapi->zonearea.'. Visual letusan tidak teramati. Erupsi ini terekam di seismograf dengan amplitudo maksimum '.$ven->amplitudo.' mm dan durasi '.$ven->durasi.' detik.';
+        $data = 'Telah terjadi erupsi G. '. $ven->gunungapi->name .', '. $ven->gunungapi->province .' pada hari '. $ven->datetime_utc->formatLocalized('%A, %d %B %Y') .', pukul '. $ven->datetime_utc->format('H:i').' '.$ven->gunungapi->zonearea.'. Visual letusan tidak teramati. Erupsi ini terekam di seismograf dengan amplitudo maksimum '.$ven->amplitudo.' mm dan durasi '.$ven->durasi.' detik.';
 
         return $data;
     }
@@ -105,10 +105,10 @@ trait VisualLetusan
      */
     protected function visualLetusan($ven)
     {
-        $data = $ven->visibility == 1 
+        $data = $ven->visibility == 1
             ? $this->visualTeramati($ven)
             : $this->visualTidakTeramati($ven);
-        
+
         return $data;
     }
 }
