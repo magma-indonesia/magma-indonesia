@@ -15,6 +15,20 @@ trait VonaTrait
 
     protected $feet = 3.2;
 
+    protected function noticenumberTemp(Request $request)
+    {
+        $prefix = $request->type == 'real' ? '' : 'EXERCISE-';
+        $year = now()->format('Y');
+
+        $vonaCount = VonaOld::where('issued', 'like', '2022%')
+            ->where('ga_code', $request->code)
+            ->where('type', $request->type)
+            ->count();
+
+        $vonaCount = sprintf('%03d', $vonaCount + 500);
+        return $prefix . $year . $request->code . $vonaCount;
+    }
+
     /**
      * Get Noticenumber of VONA
      *
@@ -23,17 +37,20 @@ trait VonaTrait
      */
     protected function noticenumber(Request $request): string
     {
-        $year = now()->format('Y');
-        $code = $request->code;
-        $prefix = $request->type == 'real' ? '' : 'EXERCISE-';
+        if (now()->format('Y') === '2022') {
+            return $this->noticenumberTemp($request);
+        }
 
-        $vonaCount = VonaOld::where('issued', 'like', '2022%')
-            ->where('ga_code', $code)
+        $prefix = $request->type == 'real' ? '' : 'EXERCISE-';
+        $year = now()->format('Y');
+
+        $vonaCount = Vona::where('issued', 'like', now()->format('Y'))
+            ->where('code_id', $request->code)
             ->where('type', $request->type)
             ->count();
 
         $vonaCount = sprintf('%03d', $vonaCount + 1);
-        return $prefix . $year . $code . $vonaCount;
+        return $prefix . $year . $request->code . $vonaCount;
     }
 
     /**
