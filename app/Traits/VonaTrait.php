@@ -323,7 +323,7 @@ trait VonaTrait
 
     protected function updateToOldVona(Vona $vona)
     {
-        $vonaOld = VonaOld::findOrFail($vona->old_id)->load('gunungapi');
+        $vonaOld = VonaOld::findOrFail($vona->old_id);
 
         $vonaOld->update(['issued' => $vona->issued_utc,
             'issued_time' => $vona->issued,
