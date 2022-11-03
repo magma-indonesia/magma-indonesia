@@ -154,6 +154,11 @@ Buat VONA Gunung Api
                                                 <label class="error" for="height">{{ ucfirst($errors->first('height')) }}</label>
                                                 @endif
 
+                                                <div class="alert alert-info m-t-sm">
+                                                    Tinggi VONA akan dikalkulasi ulang oleh MAGMA dengan <b>menjumlahkan tinggi gunung api dengan tinggi kolom abu letusan</b>.
+                                                    <b>Jika total tinggi abu di atas 6000 mdpl</b>, maka color code VONA akan <b>dirubah secara otomatis oleh MAGMA menjadi RED.</b>
+                                                </div>
+
                                             </div>
 
                                             {{-- Warna Abu --}}
