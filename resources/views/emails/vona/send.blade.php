@@ -12,11 +12,10 @@
         }
 
         body {
-            background-color: #f6f6f6;
             font-family: sans-serif;
             -webkit-font-smoothing: antialiased;
-            font-size: 14px;
-            line-height: 1.4;
+            font-size: 10px;
+            line-height: 1.6;
             margin: 0;
             padding: 0;
             -ms-text-size-adjust: 100%;
@@ -32,18 +31,17 @@
 
         table td {
             font-family: sans-serif;
-            font-size: 14px;
+            font-size: 12px;
             vertical-align: top;
+            padding: 4px;
         }
 
-        .table th, .table td {
-            padding: 0.75rem;
+        .table td {
             vertical-align: top;
             border-top: 1px solid #dee2e6;
         }
 
         .body {
-            background-color: #f6f6f6;
             width: 100%;
         }
 
@@ -103,13 +101,13 @@
             color: #000000;
             font-family: sans-serif;
             font-weight: 400;
-            line-height: 1.4;
+            line-height: 1.6;
             margin: 0;
             margin-bottom: 30px;
         }
 
         h1 {
-            font-size: 35px;
+            font-size: 24px;
             font-weight: 300;
             text-align: center;
             text-transform: capitalize;
@@ -119,7 +117,7 @@
         ul,
         ol {
             font-family: sans-serif;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: normal;
             margin: 0;
             margin-bottom: 15px;
@@ -164,7 +162,7 @@
             color: #3498db;
             cursor: pointer;
             display: inline-block;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: bold;
             margin: 0;
             padding: 12px 25px;
@@ -237,7 +235,7 @@
             margin: 20px 0;
         }
 
-        @media only screen and (max-width: 620px) {
+        @media all {
             table[class=body] h1 {
                 font-size: 28px !important;
                 margin-bottom: 10px !important;
@@ -249,12 +247,12 @@
             table[class=body] td,
             table[class=body] span,
             table[class=body] a {
-                font-size: 16px !important;
+                font-size: 12px !important;
             }
 
             table[class=body] .wrapper,
             table[class=body] .article {
-                padding: 10px !important;
+                padding: 4px !important;
             }
 
             table[class=body] .content {
@@ -286,48 +284,6 @@
                 width: auto !important;
             }
         }
-
-        @media all {
-            .ExternalClass {
-                width: 100%;
-            }
-
-            .ExternalClass,
-            .ExternalClass p,
-            .ExternalClass span,
-            .ExternalClass font,
-            .ExternalClass td,
-            .ExternalClass div {
-                line-height: 100%;
-            }
-
-            .apple-link a {
-                color: inherit !important;
-                font-family: inherit !important;
-                font-size: inherit !important;
-                font-weight: inherit !important;
-                line-height: inherit !important;
-                text-decoration: none !important;
-            }
-
-            #MessageViewBody a {
-                color: inherit;
-                text-decoration: none;
-                font-size: inherit;
-                font-family: inherit;
-                font-weight: inherit;
-                line-height: inherit;
-            }
-
-            .btn-primary table td:hover {
-                background-color: #34495e !important;
-            }
-
-            .btn-primary a:hover {
-                background-color: #34495e !important;
-                border-color: #34495e !important;
-            }
-        }
     </style>
 </head>
 
@@ -350,120 +306,115 @@
                                                     <img src="{{ asset('email-vona-header.png') }}" alt="Header VONA">
                                                 </tr>
                                                 <tr style="background-color: rgba(0, 0, 0, 0.03);">
-                                                    <td colspan="4">
+                                                    <td colspan="3">
                                                         @if ($vona->type === 'EXERCISE')
-                                                        <h2 style="margin-bottom: 10px"><b>VA EXERCISE APAC VOLCEX 22/01</b></h2>
+                                                        <h2 style="margin-bottom: 10px"><b>VA EXERCISE APAC VOLCEX
+                                                                22/01</b></h2>
                                                         @else
-                                                        <h2 style="margin-bottom: 10px"><b>{{ strtoupper($vona->gunungapi->name) }} {{ $vona->issued_utc }}</b></h2>
+                                                        <h2 style="margin-bottom: 10px"><b>{{
+                                                                strtoupper($vona->gunungapi->name) }} {{
+                                                                $vona->issued_utc }}</b></h2>
                                                         @endif
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>(1)</td>
-                                                    <td colspan="3" style="word-wrap:break-word;"><b>VOLCANO OBSERVATORY NOTICE FOR AVIATION - VONA</b></td>
+                                                    <td colspan="3" style="word-wrap:break-word;">(1) <b>VOLCANO OBSERVATORY
+                                                            NOTICE FOR AVIATION - VONA</b></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>(2)</td>
-                                                    <td><b>Issued</b></td>
+                                                    <td>(2) <b>Issued</b></td>
                                                     <td><b>:</b></td>
                                                     <td>{{ $vona->issued_utc }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>(3)</td>
-                                                    <td><b>Volcano</b></td>
+                                                    <td>(3) <b>Volcano</b></td>
                                                     <td><b>:</b></td>
-                                                    <td>{{ $vona->gunungapi->name.' ('.$vona->gunungapi->smithsonian_id.')' }}</td>
+                                                    <td>{{ $vona->gunungapi->name.'
+                                                        ('.$vona->gunungapi->smithsonian_id.')' }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>(4)</td>
-                                                    <td><b>Current Aviation Colour Code</b></td>
+                                                    <td>(4) <b>Current Aviation Colour Code</b></td>
                                                     <td><b>:</b></td>
                                                     <td><b>{{ $vona->current_code }}</b></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>(5)</td>
-                                                    <td><b>Previous Aviation Colour Code</b></td>
+                                                    <td>(5) <b>Previous Aviation Colour Code</b></td>
                                                     <td><b>:</b></td>
                                                     <td>{{ $vona->previous_code }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>(6)</td>
-                                                    <td><b>Source</b></td>
+                                                    <td>(6) <b>Source</b></td>
                                                     <td><b>:</b></td>
                                                     <td>{{ $vona->gunungapi->name }} Volcano Observatory</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>(7)</td>
-                                                    <td><b>Notice Number</b></td>
+                                                    <td>(7) <b>Notice Number</b></td>
                                                     <td><b>:</b></td>
                                                     <td>{{ $vona->noticenumber }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>(8)</td>
-                                                    <td><b>Volcano Location</b></td>
+                                                    <td>(8) <b>Volcano Location</b></td>
                                                     <td><b>:</b></td>
                                                     <td>{{ $location }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>(9)</td>
-                                                    <td><b>Area</b></td>
+                                                    <td>(9) <b>Area</b></td>
                                                     <td><b>:</b></td>
                                                     <td>{{ $vona->gunungapi->province_en }}, Indonesia</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>(10)</td>
-                                                    <td><b>Summit Elevation</b></td>
+                                                    <td>(10) <b>Summit Elevation</b></td>
                                                     <td><b>:</b></td>
-                                                    <td>{{ round($vona->gunungapi->elevation*3.3) }} FT ({{ $vona->gunungapi->elevation }} M)</td>
+                                                    <td>{{ round($vona->gunungapi->elevation*3.2) }} FT ({{
+                                                        $vona->gunungapi->elevation }} M)</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>(11)</td>
-                                                    <td><b>Volcanic Activity Summary</b></td>
+                                                    <td>(11) <b>Volcanic Activity Summary</b></td>
                                                     <td><b>:</b></td>
                                                     <td>{{ $volcano_activity_summary }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>(12)</td>
-                                                    <td><b>Volcanic Cloud Height</b></td>
+                                                    <td>(12) <b>Volcanic Cloud Height</b></td>
                                                     <td><b>:</b></td>
                                                     <td>{{ $volcanic_cloud_height }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>(13)</td>
-                                                    <td><b>Other Volcanic Cloud Information</b></td>
+                                                    <td>(13) <b>Other Volcanic Cloud Information</b></td>
                                                     <td><b>:</b></td>
                                                     <td>{{ $other_volcanic_cloud_information }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>(14)</td>
-                                                    <td><b>Remarks</b></td>
+                                                    <td>(14) <b>Remarks</b></td>
                                                     <td><b>:</b></td>
                                                     <td>{{ blank($remarks) ? '-' : $remarks }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>(15)</td>
-                                                    <td><b>Contacts</b></td>
+                                                    <td>(15) <b>Contacts</b></td>
                                                     <td><b>:</b></td>
-                                                    <td>Center for Volcanology and Geological Hazard Mitigation (CVGHM).<br> Tel: +62-22-727-2606.<br> Facsimile:
+                                                    <td>Center for Volcanology and Geological Hazard Mitigation
+                                                        (CVGHM).<br> Tel: +62-22-727-2606.<br> Facsimile:
                                                         +62-22-720-2761.<br> email : pvmbg@esdm.go.id</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>(16)</td>
-                                                    <td><b>Next Notice</b></td>
+                                                    <td>(16) <b>Next Notice</b></td>
                                                     <td><b>:</b></td>
                                                     <td>A new VONA will be issued if conditions change significantly or
-                                                        the colour code is changes. Latest volcanic information is posted at <b>VONA | MAGMA
+                                                        the colour code is changes. Latest volcanic information is
+                                                        posted at <b>VONA | MAGMA
                                                             Indonesia</b> Website.<br>
-                                                        Link: <a
-                                                            href="{{ route('v1.vona.index')}}">{{ route('v1.vona.index')}}</a>
+                                                        Link: <a href="{{ route('v1.vona.index')}}">{{
+                                                            route('v1.vona.index')}}</a>
                                                     </td>
                                                 </tr>
                                                 <tr style="background-color: rgba(0, 0, 0, 0.03);">
                                                     <td colspan="4">
                                                         @if ($vona->type === 'EXERCISE')
-                                                        <h2 style="margin-bottom: 10px"><b>VA EXERCISE VA EXERCISE VA EXERCISE</b></h2>
+                                                        <h2 style="margin-bottom: 10px"><b>VA EXERCISE VA EXERCISE VA
+                                                                EXERCISE</b></h2>
                                                         @else
-                                                        <h2 style="margin-bottom: 10px"><b>{{ strtoupper($vona->gunungapi->name) }} {{ $vona->issued_utc }}</b></h2>
+                                                        <h2 style="margin-bottom: 10px"><b>{{
+                                                                strtoupper($vona->gunungapi->name) }} {{
+                                                                $vona->issued_utc }}</b></h2>
                                                         @endif
                                                     </td>
                                                 </tr>

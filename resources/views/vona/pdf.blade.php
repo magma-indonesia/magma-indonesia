@@ -365,7 +365,7 @@
                                                 <tr>
                                                     <td>(10) <b>Summit Elevation</b></td>
                                                     <td><b>:</b></td>
-                                                    <td>{{ round($vona->gunungapi->elevation*3.3) }} FT ({{
+                                                    <td>{{ round($vona->gunungapi->elevation*3.2) }} FT ({{
                                                         $vona->gunungapi->elevation }} M)</td>
                                                 </tr>
                                                 <tr>

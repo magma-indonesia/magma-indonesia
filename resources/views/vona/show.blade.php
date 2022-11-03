@@ -128,7 +128,7 @@ VONA | Volcano Observatory Notice for Aviation
                                     <td>(10)</td>
                                     <td><b>Summit Elevation</b></td>
                                     <td><b>:</b></td>
-                                    <td>{{ round($vona->gunungapi->elevation*3.3) }} FT ({{ $vona->gunungapi->elevation }} M)</td>
+                                    <td>{{ round($vona->gunungapi->elevation*3.2) }} FT ({{ $vona->gunungapi->elevation }} M)</td>
                                 </tr>
                                 <tr>
                                     <td>(11)</td>

@@ -121,6 +121,20 @@ trait VonaTrait
     }
 
     /**
+     * Get ash volcano height above sea level
+     *
+     * @param Request $request
+     * @return float
+     */
+    protected function ashCloudHeightAboveSeaLevel(Request $request): float
+    {
+        $elevation = Gadd::select('ga_code', 'ga_elev_gapi')
+            ->where('ga_code', $request->code)->first()->ga_elev_gapi;
+
+        return $request->height + $elevation;
+    }
+
+    /**
      * Get vona color code
      *
      * @param Request $request
@@ -142,13 +156,31 @@ trait VonaTrait
             }
         }
 
-        if ($request->height >= 6000)
+        $ashHeightAboveSeaLevel = $this->ashCloudHeightAboveSeaLevel($request);
+
+        if ($ashHeightAboveSeaLevel >= 6000)
             return 'RED';
 
-        if ($request->height > 0)
+        if ($ashHeightAboveSeaLevel > 0)
             return 'ORANGE';
 
         return 'YELLOW';
+    }
+
+    /**
+     * Get current color code if the choice is not Auto
+     *
+     * @param Request $request
+     * @return string
+     */
+    protected function getColorNonAuto(Request $request): string
+    {
+        $totalHeight = $request->height + $this->volcanoElevation($request);
+
+        if ($totalHeight >= 6000)
+            return 'RED';
+
+        return strtoupper($request->color);
     }
 
     /**
@@ -160,7 +192,7 @@ trait VonaTrait
     protected function currentCode(Request $request): string
     {
         return $request->color === 'auto' ?
-                $this->getColor($request) : strtoupper($request->color);
+                $this->getColor($request) : $this->getColorNonAuto($request);
     }
 
     /**
@@ -225,15 +257,15 @@ trait VonaTrait
     }
 
     /**
-     * Get text summit elevation
+     * Undocumented function
      *
-     * @param integer $elevation
+     * @param Vona $vona
      * @return string
      */
-    protected function summitElevation(int $elevation): string
+    protected function summitElevation(Vona $vona): string
     {
-        $feet = round($elevation * $this->feet);
-        return "{$feet} FT ({$elevation}) M";
+        $feet = round($vona->gunungapi->elevation * $this->feet);
+        return "{$feet} FT ({$vona->gunungapi->elevation}) M";
     }
 
     /**
@@ -272,7 +304,7 @@ trait VonaTrait
             'notice_number' => $this->noticenumber($request),
             'volcano_location' => $this->location($vona),
             'area' => "{$vona->gunungapi->province_en}, Indonesia",
-            'summit_elevation' => $this->summitElevation($vona->gunungapi->elevation),
+            'summit_elevation' => $this->summitElevation($vona),
             'volcanic_act_summ' => $this->volcanoActivitySummary($vona),
             'vc_height' => $this->ashCloudHeight($vona),
             'vc_height_text' => $this->volcanicCloudHeight($vona),
@@ -291,7 +323,7 @@ trait VonaTrait
 
     protected function updateToOldVona(Vona $vona)
     {
-        $vonaOld = VonaOld::findOrFail($vona->old_id);
+        $vonaOld = VonaOld::findOrFail($vona->old_id)->load('gunungapi');
 
         $vonaOld->update(['issued' => $vona->issued_utc,
             'issued_time' => $vona->issued,
@@ -304,7 +336,7 @@ trait VonaTrait
             'source' => "{$vona->gunungapi->name} Volcano Observatory",
             'volcano_location' => $this->location($vona),
             'area' => "{$vona->gunungapi->province_en}, Indonesia",
-            'summit_elevation' => $this->summitElevation($vona->gunungapi->elevation),
+            'summit_elevation' => $this->summitElevation($vona),
             'volcanic_act_summ' => $this->volcanoActivitySummary($vona),
             'vc_height' => $this->ashCloudHeight($vona),
             'vc_height_text' => $this->volcanicCloudHeight($vona),
@@ -329,8 +361,10 @@ trait VonaTrait
      */
     protected function ashCloudHeight(Vona $vona): string
     {
-        $feet = round($vona->ash_height * $this->feet);
-        return "{$feet} FT ({$vona->ash_height} M)";
+        $ashCloudAboveSeaLevel = $vona->ash_height + $vona->gunungapi->elevation;
+
+        $feet = round($ashCloudAboveSeaLevel * $this->feet);
+        return "{$feet} FT ({$ashCloudAboveSeaLevel} M)";
     }
 
     /**
@@ -341,9 +375,11 @@ trait VonaTrait
      */
     protected function volcanicCloudHeight(Vona $vona): string
     {
+        $feet = $vona->ash_height * $this->feet;
+
         $deskripsi = $vona->ash_height == 0 ?
             "Ash-cloud is not observed." :
-            "Best estimate of ash-cloud top is around {$this->ashCloudHeight($vona)} above sea level, may be higher than what can be observed clearly. Source of height data: ground observer.";
+            "Best estimate of ash-cloud top is around {$this->ashCloudHeight($vona)} above sea level or {$feet} FT ({$vona->ash_height} M) above summit. May be higher than what can be observed clearly. Source of height data: ground observer.";
 
         return $deskripsi;
     }
