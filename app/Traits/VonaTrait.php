@@ -306,7 +306,7 @@ trait VonaTrait
             'area' => "{$vona->gunungapi->province_en}, Indonesia",
             'summit_elevation' => $this->summitElevation($vona),
             'volcanic_act_summ' => $this->volcanoActivitySummary($vona),
-            'vc_height' => $this->ashCloudHeight($vona),
+            'vc_height' => $vona->ash_height + $vona->gunungapi->elevation,
             'vc_height_text' => $this->volcanicCloudHeight($vona),
             'other_vc_info' => $this->otherVolcanicCloudInformation($vona),
             'remarks' => blank($this->remarks($vona)) ? '-' : $this->remarks($vona),
@@ -325,6 +325,8 @@ trait VonaTrait
     {
         $vonaOld = VonaOld::findOrFail($vona->old_id);
 
+        $vona->load('gunungapi');
+
         $vonaOld->update(['issued' => $vona->issued_utc,
             'issued_time' => $vona->issued,
             'type' => $vona->type,
@@ -338,7 +340,7 @@ trait VonaTrait
             'area' => "{$vona->gunungapi->province_en}, Indonesia",
             'summit_elevation' => $this->summitElevation($vona),
             'volcanic_act_summ' => $this->volcanoActivitySummary($vona),
-            'vc_height' => $this->ashCloudHeight($vona),
+            'vc_height' => $vona->ash_height + $vona->gunungapi->elevation,
             'vc_height_text' => $this->volcanicCloudHeight($vona),
             'other_vc_info' => $this->otherVolcanicCloudInformation($vona),
             'remarks' => blank($this->remarks($vona)) ? '-' : $this->remarks($vona),
