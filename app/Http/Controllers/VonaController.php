@@ -246,7 +246,8 @@ class VonaController extends Controller
 
         $this->clearVonaCache();
 
-        return redirect()->route('chambers.vona.index');
+        return redirect()->route('chambers.vona.index')
+            ->with('message', 'VONA berhasil dikirim dan dipublikasikan');
     }
 
     /**

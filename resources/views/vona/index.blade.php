@@ -49,6 +49,12 @@ VONA | Volcano Observatory Notice for Aviation
                         </div>
                     </div>
                 </div>
+
+            @if (session('message'))
+            <div class="alert alert-success m-t-md">
+                <i class="fa fa-check"></i> {{ session('message') }}
+            </div>
+            @endif
             </div>
 
             <div class="hpanel">
