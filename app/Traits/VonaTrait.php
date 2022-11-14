@@ -175,9 +175,9 @@ trait VonaTrait
      */
     protected function getColorNonAuto(Request $request): string
     {
-        $totalHeight = $request->height + $this->volcanoElevation($request);
+        $ashHeightAboveSeaLevel = $this->ashCloudHeightAboveSeaLevel($request);
 
-        if ($totalHeight >= 6000)
+        if ($ashHeightAboveSeaLevel >= 6000)
             return 'RED';
 
         return strtoupper($request->color);
