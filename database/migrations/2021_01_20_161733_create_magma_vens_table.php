@@ -22,14 +22,14 @@ class CreateMagmaVensTable extends Migration
             $table->dateTimeTz('datetime_utc');
             $table->enum('timezone', ['Asia/Jakarta', 'Asia/Makassar', 'Asia/Jayapura'])
                 ->default('Asia/Jakarta');
-            $table->boolean('erupsi_berlangsung')->default(0);
-            $table->boolean('visibility')->default(0);
-            $table->integer('height')->default(0);
-            $table->json('warna_abu')->nullable();
-            $table->json('intensitas')->nullable();
-            $table->json('arah_abu')->nullable();
-            $table->float('amplitudo', 6, 2)->default(0);
-            $table->float('durasi', 8, 2)->default(0);
+            $table->boolean('is_continuing')->default(0);
+            $table->boolean('is_visible')->default(0);
+            $table->integer('ash_height')->default(0);
+            $table->json('ash_color')->nullable();
+            $table->json('ash_intensity')->nullable();
+            $table->json('ash_directions')->nullable();
+            $table->float('amplitude', 6, 2)->default(0);
+            $table->float('duration', 8, 2)->default(0);
             $table->integer('seismometer_id')->unsigned();
             $table->foreign('seismometer_id')->references('id')->on('seismometers');
             $table->enum('status', ['1', '2', '3', '4']);
@@ -42,10 +42,12 @@ class CreateMagmaVensTable extends Migration
             $table->integer('rekomendasi_id')->unsigned();
             $table->foreign('rekomendasi_id')->references('id')->on('var_rekomendasis');
             $table->boolean('has_vona')->default(0);
-            $table->boolean('is_blasted')->default(0);
             $table->char('nip_pelapor', 18)->index();
             $table->foreign('nip_pelapor')->references('nip')->on('users');
             $table->dateTimeTz('published_at')->nullable();
+            $table->dateTimeTz('blasted_at')->nullable();
+            $table->dateTimeTz('broadcasted_at')->nullable();
+            $table->enum('broadcasted_level',['1','2','3'])->nullable();
             $table->timestamps();
         });
     }
