@@ -25,12 +25,12 @@ Press Release
                     </figure>
                 </div>
                 <div class="col-md-7 col-lg-6 col-xl-7">
-                    <h5 class="blog-title"><a href="#">{{ $press->judul }}</a></h5>
+                    <h5 class="blog-title"><a href="{{ route('v1.press.show.slug', ['id' => $press->id, 'slug' => $press->slug ]) }}">{{ $press->judul }}</a></h5>
                     <div class="blog-text">
                         {{ \Illuminate\Support\Str::limit(strip_tags($press->deskripsi), 280) }}
                     </div>
                     <span class="blog-date">{{ $press->datetime ? $press->datetime->formatLocalized('%A, %d %B %Y %H:%M:%S'). ' WIB' : '' }}</span>
-                    <a href="{{ URL::signedRoute('v1.press.show', ['id' => $press->id ]) }}" class="card-link mg-t-20"> Read more</a>
+                    <a href="{{ route('v1.press.show.slug', ['id' => $press->id, 'slug' => $press->slug ]) }}" class="card-link mg-t-20"> Read more</a>
                 </div>
             </div>
         </div>
@@ -45,7 +45,7 @@ Press Release
                 @foreach ($randoms as $press)
                 <div class="post-item">
                     <span class="post-date">{{ $press->datetime ? $press->datetime->formatLocalized('%A, %d %B %Y %H:%M:%S'). ' WIB' :  $press->log->formatLocalized('%A, %d %B %Y %H:%M:%S'). ' WIB'}}</span>
-                    <p class="post-title"><a href="{{ URL::signedRoute('v1.press.show', ['id' => $press->id ]) }}">{{ $press->judul }}</a></p>
+                    <p class="post-title"><a href="{{ route('v1.press.show.slug', [$press->id, $press->slug ]) }}">{{ $press->judul }}</a></p>
                 </div>
                 @endforeach
             </div>

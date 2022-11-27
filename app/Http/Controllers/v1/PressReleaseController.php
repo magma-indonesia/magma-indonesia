@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Storage;
 use App\v1\PressRelease as Press;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
+use Exception;
 
 class PressReleaseController extends Controller
 {
@@ -63,11 +65,13 @@ class PressReleaseController extends Controller
         $press->datetime = Carbon::now()->toDateTimeString();
         $press->press_pelapor = $request->nama;
         $press->judul = $request->judul;
+        $press->slug = Str::slug($request->judul);
         $press->deskripsi = $request->deskripsi;
         $press->sent = 1;
 
-        if ($request->hasFile('file'))
-        {
+        $press->fotolink = 'https://magma.vsi.esdm.go.id/img/empty-esdm.jpg';
+
+        if ($request->hasFile('file')) {
             $filename = 'v2_'.time().'.'.$request->file->getClientOriginalExtension();
             $upload = $request->file('file')
                         ->storeAs(
@@ -76,8 +80,6 @@ class PressReleaseController extends Controller
                             'magma-old-ftp'
                         );
             $press->fotolink = 'https://magma.vsi.esdm.go.id/'.$upload;
-        } else {
-            $press->fotolink = 'https://magma.vsi.esdm.go.id/img/empty-esdm.jpg';
         }
 
         $messages = $press->save() ?
@@ -134,11 +136,11 @@ class PressReleaseController extends Controller
         $press->press_pelapor = $request->nama;
         $press->press_editor = $request->nama;
         $press->judul = $request->judul;
+        $press->slug = Str::slug($request->judul);
         $press->deskripsi = $request->deskripsi;
         $press->sent = 1;
 
-        if ($request->hasFile('file'))
-        {
+        if ($request->hasFile('file')) {
             $filename = 'v2_'.time().'.'.$request->file->getClientOriginalExtension();
             $upload = $request->file('file')
                         ->storeAs(

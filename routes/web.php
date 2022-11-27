@@ -52,7 +52,12 @@ Route::name('v1.')->group(function () {
             ->name('vona.show')
             ->middleware('signed');
 
+        // Route::post('subscribe', 'SubscriberController@store')
+        //     ->name('subscribe.store');
+
         Route::get('press-release','FrontPage\v1\PressController@index')->name('press.index');
+        Route::get('press-release/{id}/{slug}', 'FrontPage\v1\PressController@show')
+            ->name('press.show.slug');
         Route::get('press-release/{id}','FrontPage\v1\PressController@show')
             ->name('press.show')
             ->middleware('signed');
@@ -111,6 +116,9 @@ Route::name('v1.')->group(function () {
         Route::get('gunung-api/laporan-harian/{date}', 'FrontPage\v1\LaporanHarianController@show')
             ->name('gunungapi.laporan-harian.show')
             ->middleware('revalidate');
+
+        // Route::get('gunung-api/{name}', 'FrontPage\v1\GunungApiByVolcanoController@show')
+        //     ->name('gunungapi.show');
 
         Route::get('gerakan-tanah/tanggapan','FrontPage\v1\GerakanTanahController@indexGertan')
             ->name('gertan.sigertan');

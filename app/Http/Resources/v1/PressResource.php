@@ -37,7 +37,7 @@ class PressResource extends JsonResource
             'deskripsi' => Str::limit(strip_tags($this->deskripsi), 280),
             'image' => $this->fotolink,
             'share' => [
-                'url' =>  $this->signedUrl(),
+                'url' => URL::route('v1.press.show.slug', ['id' => $this->id, 'slug' => $this->slug]),
                 'description' => Str::limit(strip_tags($this->deskripsi), 280),
                 'photo' => $this->fotolink
             ],

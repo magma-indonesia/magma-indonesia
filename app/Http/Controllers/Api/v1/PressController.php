@@ -21,9 +21,12 @@ class PressController extends Controller
         return new PressCollection($presses);
     }
 
-    public function show($id)
+    public function show($id, $slug = null)
     {
-        $press = PressRelease::findOrFail($id);
+        $press = is_null($slug) ?
+            PressRelease::where('id', $id)->firstOrFail() :
+            PressRelease::where('id', $id)->where('slug', $slug)->firstOrFail();
+
         return new PressShowResource($press);
     }
 }

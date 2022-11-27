@@ -15,12 +15,15 @@ class PressController extends Controller
         return view('v1.home.press', compact('presses','randoms'));
     }
 
-    public function show($id)
+    public function show($id, $slug = null)
     {
-        $press = Press::where('id',$id)->firstOrFail();
+        $press = is_null($slug) ?
+            Press::where('id', $id)->firstOrFail() :
+            Press::where('id', $id)->where('slug', $slug)->firstOrFail();
+
         $randoms = Press::inRandomOrder()->limit(5)->get();
         $press->addView();
-        // return $press;
+
         return view('v1.home.press-show', compact('press','randoms'));
     }
 }
