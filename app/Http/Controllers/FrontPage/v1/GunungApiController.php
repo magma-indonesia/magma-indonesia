@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use App\v1\Gadd;
 use App\v1\MagmaVen;
 use App\v1\MagmaVar;
@@ -240,11 +241,16 @@ class GunungApiController extends Controller
         return view('v1.home.letusan',compact('vens','grouped','counts','records'));
     }
 
-    public function showVen(Request $request, $id = null)
+    public function showVen(Request $request, $id)
     {
-        $home_krb = $this->cacheHomeKrb();
+        abort_unless(is_numeric($id) AND $request->hasValidSignature(), 404);
+
         $ven = MagmaVen::with('gunungapi:ga_code,ga_zonearea,ga_nama_gapi,ga_lat_gapi,ga_lon_gapi,ga_elev_gapi')
-                        ->findOrFail($id);
+            ->where('uuid', 'like', $id)
+            ->orWhere('erupt_id', $id)
+            ->firstOrFail();
+
+        $home_krb = $this->cacheHomeKrb();
 
         $stats = StatistikMagmaVen::updateOrCreate([
             'erupt_id' => $id
