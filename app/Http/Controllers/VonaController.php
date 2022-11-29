@@ -9,7 +9,6 @@ use App\Http\Requests\VonaCreateRequest;
 use App\Mail\VonaSend;
 use App\Notifications\VonaTelegram;
 use App\Traits\VonaTrait;
-use App\User;
 use App\v1\Vona as V1Vona;
 use App\VonaSubscriber;
 use Illuminate\Http\Request;
@@ -51,13 +50,9 @@ class VonaController extends Controller
      */
     public function create()
     {
-        $gadds = Gadd::select('name','code')->orderBy('name')->get();
-
-        $users = User::whereHas('bidang', function($query){
-            $query->where('bidang_id','like',2);
-        })->orderBy('name')->get();
-
-        return view('vona.create',compact('gadds','users'));
+        return view('vona.create', [
+            'gadds' => Gadd::select('name','code')->orderBy('name')->get()
+        ]);
     }
 
     /**
@@ -296,7 +291,11 @@ class VonaController extends Controller
      */
     public function edit(Vona $vona)
     {
-        return Vona::findOrFail($vona->uuid)->load('gunungapi');
+        return view('vona.edit', [
+            'gadds' => Gadd::select('name', 'code')->orderBy('name')->get(),
+            'vona' => $vona->load('gunungapi')
+        ]);
+
     }
 
     /**

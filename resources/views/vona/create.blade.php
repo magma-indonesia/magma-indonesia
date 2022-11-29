@@ -140,7 +140,7 @@ Buat VONA Gunung Api
                                             @endif
                                         </div>
 
-                                        <div class="teramati" style="display: {{ old('visibility') == '0' ? 'none' :'block'}};">
+                                        <div class="green teramati" style="display: {{ (old('color')=='green' or old('visibility') == '0') ? 'none' :'block'}};">
                                             {{-- Tinggi Letusan --}}
                                             <div class="form-group col-sm-12">
                                                 <label>Tinggi Abu yang teramati</label>
@@ -312,7 +312,7 @@ Buat VONA Gunung Api
                                         <div class="form-group col-sm-12">
                                             <label>Waktu Letusan/Waktu Laporan (Waktu Lokal)</label>
                                             <input name="date" id="datepicker" class="form-control" type="text" value="{{ empty(old('date')) ? now()->format('Y-m-d H:i') : old('date') }}">
-                                            <span class="help-block m-b-none">Gunakan <b>Waktu Laporan</b> jika tidak tidak terjadi letusan.</span>
+                                            <span class="help-block m-b-none">Gunakan <b>Waktu Laporan</b> jika tidak terjadi letusan.</span>
                                             @if( $errors->has('date'))
                                             <label class="error" for="date">{{ ucfirst($errors->first('date')) }}</label>
                                             @endif
@@ -500,6 +500,8 @@ $(document).ready(function () {
     $('#color').on('change',function(){
         let $val = $(this).val();
         $val == 'green' ? $('.green').hide() : $('.green').show();
+        $val == 'green' ? $("#visibility").val('0') : $("#visibility").val('1');
+        $val == 'green' ? $("#visibility").prop( "disabled", true ) : $("#visibility").prop( "disabled", false )
     });
 
     $("input[name='terjadi_tremor']").on('ifChecked', function() {

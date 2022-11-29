@@ -93,8 +93,12 @@ VONA | Volcano Observatory Notice for Aviation
                                     <td>{{ $vona->user->name }}</td>
                                     <td>
                                         <a href="{{ route('chambers.vona.show',['uuid'=>$vona->uuid]) }}" class="m-t-xs m-b-xs btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">View</a>
-                                        @role('Super Admin')
+
+                                        @if (!$vona->is_sent or request()->user()->hasRole('Super Admin'))
                                         <a href="{{ route('chambers.vona.edit',['uuid'=>$vona->uuid]) }}" class="m-t-xs m-b-xs btn btn-sm btn-warning btn-outline" style="margin-right: 3px;">Edit</a>
+                                        @endif
+
+                                        @role('Super Admin')
                                         <form id="deleteForm" style="display:inline" method="POST" action="{{ route('chambers.vona.destroy',['uuid'=>$vona->uuid]) }}" accept-charset="UTF-8">
                                             @method('DELETE')
                                             @csrf
