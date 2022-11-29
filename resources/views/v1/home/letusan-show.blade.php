@@ -5,7 +5,7 @@
 @endsection
 
 @section('title')
-Letusan Gunung Api {{ $ven->gunungapi->ga_nama_gapi }}, {{ \Carbon\Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->formatLocalized('%A, %d %B %Y') }}
+Letusan Gunung Api {{ $ven->gunungapi->ga_nama_gapi }} - {{ \Carbon\Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->formatLocalized('%A, %d %B %Y') }} pukul {{ $ven->erupt_jam.' '.$ven->gunungapi->ga_zonearea }}
 @endsection
 
 @section('description')
