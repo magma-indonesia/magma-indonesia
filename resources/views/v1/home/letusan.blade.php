@@ -80,7 +80,7 @@ Informasi Letusan
 
                         <div class="row mg-b-15">
                             <div class="col-12">
-                                <a href="{{ URL::signedRoute('v1.gunungapi.ven.show', $ven) }}" class="btn btn-sm btn-outline-primary">Details</a>
+                                <a href="{{ route('v1.gunungapi.ven.show', $ven->uuid) }}" class="btn btn-sm btn-outline-primary">Details</a>
                             </div>
                         </div>
                     </div>

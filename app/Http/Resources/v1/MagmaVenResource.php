@@ -147,7 +147,7 @@ class MagmaVenResource extends JsonResource
             'rekomendasi' => nl2br($this->erupt_rek),
             'pelapor' => $this->user->vg_nama,
             'share' => [
-                'url' =>  $this->signedUrl(),
+                'url' =>  URL::route('v1.gunungapi.ven.show', $this->uuid),
                 'description' => $this->erupt_vis ? $this->shareVisualTeramati() : $this->shareVisualTidakTeramati(),
                 'photo' => $this->erupt_pht ?: null,
             ],
@@ -177,7 +177,7 @@ class MagmaVenResource extends JsonResource
             'rekomendasi' => nl2br($this->erupt_rek),
             'pelapor' => $this->user->vg_nama,
             'share' => [
-                'url' =>  $this->signedUrl(),
+                'url' =>  URL::route('v1.gunungapi.ven.show', $this->uuid),
                 'description' => $this->erupt_vis ? $this->shareVisualTeramati() : $this->shareVisualTidakTeramati(),
                 'photo' => $this->erupt_pht ?: null,
             ],

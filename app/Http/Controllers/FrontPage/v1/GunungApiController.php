@@ -243,7 +243,9 @@ class GunungApiController extends Controller
 
     public function showVen(Request $request, $id)
     {
-        abort_unless(is_numeric($id) AND $request->hasValidSignature(), 404);
+        if (is_numeric($id)) {
+            abort_unless($request->hasValidSignature(), 404);
+        }
 
         $ven = MagmaVen::with('gunungapi:ga_code,ga_zonearea,ga_nama_gapi,ga_lat_gapi,ga_lon_gapi,ga_elev_gapi')
             ->where('uuid', 'like', $id)
