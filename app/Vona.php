@@ -20,6 +20,7 @@ class Vona extends Model
 
     protected $appends = [
         'issued_utc',
+        'issued_local',
         'ash_height_ft',
         'source',
         'contacts'
@@ -64,6 +65,24 @@ class Vona extends Model
     public function getIssuedUtcAttribute()
     {
         return Carbon::createFromFormat('Y-m-d H:i:s', $this->attributes['issued'])->format('Ymd/Hi').'Z';
+    }
+
+    public function getIssuedLocalAttribute()
+    {
+        $zone = $this->gunungapi->zonearea;
+
+        switch ($zone) {
+            case 'WIB':
+                $zone = 'Asia/Jakarta';
+                break;
+            case 'WITA':
+                $zone = 'Asia/Makassar';
+                break;
+            default:
+                $zone = 'Asia/Jayapura';
+        }
+
+        return Carbon::createFromTimeString($this->attributes['issued'], 'UTC')->setTimezone($zone);
     }
 
     public function getPreviousCodeAttribute($value)
