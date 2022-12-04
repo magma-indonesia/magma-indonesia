@@ -245,12 +245,14 @@ class GunungApiController extends Controller
     {
         if (is_numeric($id)) {
             abort_unless($request->hasValidSignature(), 404);
+            $ven = MagmaVen::with('gunungapi:ga_code,ga_zonearea,ga_nama_gapi,ga_lat_gapi,ga_lon_gapi,ga_elev_gapi')
+                ->where('erupt_id', $id)
+                ->firstOrFail();
+        } else {
+            $ven = MagmaVen::with('gunungapi:ga_code,ga_zonearea,ga_nama_gapi,ga_lat_gapi,ga_lon_gapi,ga_elev_gapi')
+                ->where('uuid', 'like', $id)
+                ->firstOrFail();
         }
-
-        $ven = MagmaVen::with('gunungapi:ga_code,ga_zonearea,ga_nama_gapi,ga_lat_gapi,ga_lon_gapi,ga_elev_gapi')
-            ->where('uuid', 'like', $id)
-            ->orWhere('erupt_id', $id)
-            ->firstOrFail();
 
         $home_krb = $this->cacheHomeKrb();
 
