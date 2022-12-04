@@ -147,7 +147,7 @@ trait DeskripsiLetusan
      */
     public function url(MagmaVen $ven): string
     {
-        return URL::signedRoute('v1.gunungapi.ven.show', $ven);
+        return URL::route('v1.gunungapi.ven.show', $ven->uuid);
     }
 
     /**
