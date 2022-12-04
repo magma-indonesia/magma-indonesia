@@ -120,9 +120,9 @@ $(document).ready(function () {
         "lengthMenu": [[30, 60, 100, -1], [30, 60, 100, "All"]],
         buttons: [
             { extend: 'copy', className: 'btn-sm'},
-            { extend: 'csv', title: 'Daftar Users', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5 ]} },
-            { extend: 'pdf', title: 'Daftar Users', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5 ]} },
-            { extend: 'print', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3, 4, 5 ]} }
+            { extend: 'csv', title: 'Daftar Users', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3]} },
+            { extend: 'pdf', title: 'Daftar Users', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3]} },
+            { extend: 'print', className: 'btn-sm', exportOptions: { columns: [ 0, 1, 2, 3]} }
         ]
     });
 
