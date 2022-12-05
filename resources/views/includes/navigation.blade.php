@@ -363,17 +363,17 @@
                     </li>
                 </ul>
             </li>
-            <li class="{{ active(['chambers.press.*']) }}">
+            <li class="{{ active(['chambers.press-release.*']) }}">
                 <a href="#">
                     <span class="nav-label">Press Release</span>
                     <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
-                    <li class="{{ active('chambers.press.index') }}">
-                        <a href="{{ route('chambers.press.index') }}">Index Press Release</a>
+                    <li class="{{ active('chambers.press-release.index') }}">
+                        <a href="{{ route('chambers.press-release.index') }}">Daftar</a>
                     </li>
-                    <li class="{{ active('chambers.press.create') }}">
-                        <a href="{{ route('chambers.press.create') }}">Buat Press Release</a>
+                    <li class="{{ active('chambers.press-release.create') }}">
+                        <a href="{{ route('chambers.press-release.create') }}">Buat Baru</a>
                     </li>
                     @yield('nav-edit-press')
                 </ul>
