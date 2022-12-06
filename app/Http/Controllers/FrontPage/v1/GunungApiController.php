@@ -16,11 +16,14 @@ use App\v1\StatistikMagmaVen;
 
 use App\Traits\VisualAsap;
 use App\Traits\v1\DeskripsiGempa;
+use App\Traits\v1\DeskripsiLetusan;
 
 class GunungApiController extends Controller
 {
 
-    use VisualAsap,DeskripsiGempa;
+    use VisualAsap;
+    use DeskripsiGempa;
+    use DeskripsiLetusan;
 
     protected $vars;
     protected $grouped;
@@ -264,7 +267,11 @@ class GunungApiController extends Controller
 
         $stats->increment('hit');
 
-        return view('v1.home.letusan-show', compact('ven','home_krb'));
+        return view('v1.home.letusan-show', [
+            'ven' => $ven,
+            'deskripsi' => $this->deskripsi($ven),
+            'home_krb' => $home_krb,
+        ]);
     }
 
     public function indexVar(Request $request, $q = null)

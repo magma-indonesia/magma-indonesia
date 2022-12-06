@@ -65,8 +65,13 @@ Informasi Letusan
                             @else
                                 Terjadi erupsi G. {{ $ven->gunungapi->ga_nama_gapi }} pada hari {{ \Carbon\Carbon::createFromFormat('Y-m-d', $date)->formatLocalized('%A, %d %B %Y') }}, pukul {{ $ven->erupt_jam.' '.$ven->gunungapi->ga_zonearea }}. Visual letusan tidak teramati.
                             @endif
-                            @if ($ven->erupt_amp)
+
+                            @if ($ven->erupsi_berlangsung)
+                            Saat laporan ini dibuat, erupsi masih berlangsung.
+                            @elseif ($ven->erupt_amp)
                             Erupsi ini terekam di seismograf dengan amplitudo maksimum {{ $ven->erupt_amp }} mm dan durasi {{ $ven->erupt_drs }} detik.
+                            @else
+
                             @endif
                         </p>
                         <div class="row mg-b-15">

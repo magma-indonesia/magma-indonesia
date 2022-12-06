@@ -59,16 +59,7 @@ Informasi Letusan
                             <p class="blog-category tx-danger">{{ \Carbon\Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->formatLocalized('%A, %d %B %Y') }}, {{ ((\Carbon\Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->diff(now())->days) <1 )? 'Hari ini' : \Carbon\Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->diffForHumans() }}</p>
                             <h5 class="blog-title"><a>Gunung Api {{ $ven->gunungapi->ga_nama_gapi }}</a></h5>
                             <p class="card-subtitle tx-normal mg-b-15">Dibuat oleh, {{ $ven->user->vg_nama }}</p>
-                            <p>
-                            @if ($ven->erupt_vis)
-                                Terjadi erupsi G. {{ $ven->gunungapi->ga_nama_gapi }} pada hari {{ \Carbon\Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->formatLocalized('%A, %d %B %Y') }}, pukul {{ $ven->erupt_jam.' '.$ven->gunungapi->ga_zonearea }} dengan tinggi kolom abu teramati &plusmn; {{ $ven->erupt_tka }} m di atas puncak (&plusmn; {{ $ven->erupt_tka+$ven->gunungapi->ga_elev_gapi }} m di atas permukaan laut). Kolom abu teramati berwarna {{ str_replace_last(', ',' hingga ', strtolower(implode(', ',$ven->erupt_wrn))) }} dengan intensitas {{ str_replace_last(', ',' hingga ', strtolower(implode(', ',$ven->erupt_int)))  }} ke arah {{ str_replace_last(', ',' dan ', strtolower(implode(', ',$ven->erupt_arh))) }}.
-                            @else
-                                Terjadi erupsi G. {{ $ven->gunungapi->ga_nama_gapi }} pada hari {{ \Carbon\Carbon::createFromFormat('Y-m-d', $ven->erupt_tgl)->formatLocalized('%A, %d %B %Y') }}, pukul {{ $ven->erupt_jam.' '.$ven->gunungapi->ga_zonearea }}. Visual letusan tidak teramati.
-                            @endif
-                            @if ($ven->erupt_amp)
-                            Erupsi ini terekam di seismograf dengan amplitudo maksimum {{ $ven->erupt_amp }} mm dan durasi {{ $ven->erupt_drs }} detik.
-                            @endif
-                            </p>
+                            <p>{{ $deskripsi }}</p>
                             <h5 class="blog-title"><a>Rekomendasi</a></h5>
                             <p class="blog-text">
                                 {!! nl2br($ven->erupt_rek) !!}
