@@ -97,7 +97,11 @@ trait DeskripsiLetusan
             return "Saat laporan ini dibuat, erupsi masih berlangsung.";
         }
 
-        return "Erupsi terekam di seismograf dengan amplitudo maksimum {$ven->erupt_amp} mm dan durasi {$ven->erupt_drs} detik.";
+        if ($ven->erupt_amp) {
+            return "Erupsi terekam di seismograf dengan amplitudo maksimum {$ven->erupt_amp} mm dan durasi {$ven->erupt_drs} detik.";
+        }
+
+        return '';
     }
 
     /**
