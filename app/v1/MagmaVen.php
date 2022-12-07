@@ -23,6 +23,7 @@ class MagmaVen extends Model
         'sent_to_telegram_at' => 'datetime:Y-m-d H:i:s',
         'utc' => 'datetime:Y-m-d H:i:s',
         'erupsi_berlangsung' => 'boolean',
+        'vona_created_at' => 'datetime:Y-m-d H:i:s',
     ];
 
     public $timestamps = false;
