@@ -72,7 +72,7 @@ VONA | Subscription
                                 <tr>
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $sub->email }}</td>
-                                    <td>{{ $sub->real ? 'Real, ' : '' }} {{ $sub->exercise ? 'Exercise, ' : '' }} {{ $sub->pvmbg ? 'PVMBG, ' : '' }}</td>
+                                    <td>{{ $sub->developer ? 'Developer, ' : '' }} {{ $sub->real ? 'Real, ' : '' }} {{ $sub->exercise ? 'Exercise, ' : '' }} {{ $sub->pvmbg ? 'PVMBG, ' : '' }}</td>
                                     @role('Super Admin')
                                     <td>{!! $sub->status ? '<span class="label label-magma">Subscribed</span>' : '<span class="label label-danger">Unsubscribed</span>'!!}</td>
                                     <td>

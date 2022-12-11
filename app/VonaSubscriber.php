@@ -7,20 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class VonaSubscriber extends Model
 {
     protected $casts = [
-        'status' => 'boolean'
+        'status' => 'boolean',
+        'real' => 'boolean',
+        'exercise' => 'boolean',
+        'gladi' => 'boolean',
+        'pvmbg' => 'boolean',
+        'developer' => 'boolean',
     ];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'email',
-        'real',
-        'exercise',
-        'gladi',
-        'pvmbg',
-        'status',
+    protected $guarded = [
+        'id',
     ];
 }

@@ -43,7 +43,7 @@ class VonaSubscriberUpdateRequest extends FormRequest
         return [
             'email' => 'required|email|unique:vona_subscribers,email,'. $this->route('subscriber').',id',
             'groups' => 'required|array',
-            'groups.*' => 'required|in:real,exercise,pvmbg',
+            'groups.*' => 'required|in:real,exercise,pvmbg,developer',
             'status' => 'required|boolean',
         ];
     }

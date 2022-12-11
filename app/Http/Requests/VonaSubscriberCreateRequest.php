@@ -43,7 +43,7 @@ class VonaSubscriberCreateRequest extends FormRequest
         return [
             'email' => 'required|email',
             'groups' => 'required|array',
-            'groups.*' => 'required|in:real,exercise,pvmbg',
+            'groups.*' => 'required|in:real,exercise,pvmbg,developer',
             'status' => 'required|boolean',
         ];
     }

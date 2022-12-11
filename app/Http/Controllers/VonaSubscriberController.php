@@ -41,6 +41,9 @@ class VonaSubscriberController extends Controller
      */
     public function create()
     {
+        request()->user()->hasRole('Super Admin') ?
+            array_push($this->groups, 'developer') : $this->groups;
+
         return view('vona-subscribers.create', [
             'groups' => $this->groups,
         ]);
@@ -60,6 +63,7 @@ class VonaSubscriberController extends Controller
             'real' => in_array('real', $request->groups) ? 1 : 0,
             'exercise' => in_array('exercise', $request->groups) ? 1 : 0,
             'pvmbg' => in_array('pvmbg', $request->groups) ? 1 : 0,
+            'developer' => in_array('developer', $request->groups) ? 1 : 0,
             'status' => $request->status,
         ]);
 
@@ -87,6 +91,9 @@ class VonaSubscriberController extends Controller
     {
         $subscriber = VonaSubscriber::findOrFail($id);
 
+        request()->user()->hasRole('Super Admin') ?
+            array_push($this->groups, 'developer') : $this->groups;
+
         return view('vona-subscribers.edit', [
             'subscriber' => $subscriber,
             'groups' => $this->groups,
@@ -109,6 +116,7 @@ class VonaSubscriberController extends Controller
             'real' => in_array('real', $request->groups) ? 1 : 0,
             'exercise' => in_array('exercise', $request->groups) ? 1 : 0,
             'pvmbg' => in_array('pvmbg', $request->groups) ? 1 : 0,
+            'developer' => in_array('developer', $request->groups) ? 1 : 0,
             'status' => $request->status,
         ]);
 
