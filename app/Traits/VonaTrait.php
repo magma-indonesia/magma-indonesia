@@ -7,6 +7,7 @@ use App\Vona;
 use App\v1\Vona as VonaOld;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
@@ -559,5 +560,15 @@ trait VonaTrait
         }
 
         return $request->durasi ?? 0;
+    }
+
+    /**
+     * Clear cache VONA
+     *
+     * @return void
+     */
+    protected function clearVonaCache(): void
+    {
+        Cache::tags(['fp-vona.index', 'api-vona.index'])->flush();
     }
 }

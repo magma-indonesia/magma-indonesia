@@ -386,7 +386,12 @@
                                                 <tr>
                                                     <td>(14) <b>Remarks</b></td>
                                                     <td><b>:</b></td>
-                                                    <td>{{ blank($remarks) ? '-' : $remarks }}</td>
+                                                    <td>{{ blank($remarks) ? '-' : $remarks }}
+                                                        @if ($vona->old_ven_uuid)
+                                                        <br>
+                                                        <a href="{{ route('v1.gunungapi.ven.show', $ven->uuid) }}"><img src="{{ $ven->erupt_pht }}" alt="Header VONA"></a>
+                                                        @endif
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>(15) <b>Contacts</b></td>

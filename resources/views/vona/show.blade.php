@@ -260,6 +260,13 @@ VONA | Volcano Observatory Notice for Aviation
                         <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
                             <form method="post" action="{{ route('chambers.vona.send-email', $vona) }}">
                                 @csrf
+                                <button name="group" value="developer" class="btn btn-outline btn-block btn-warning" type="submit"><i class="fa fa-telegram" aria-hidden="false"></i> Kirim Developer</button>
+                            </form>
+                        </div>
+
+                        <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
+                            <form method="post" action="{{ route('chambers.vona.send-email', $vona) }}">
+                                @csrf
                                 <button name="group" value="telegram" class="btn btn-outline btn-block btn-magma" type="submit"><i class="fa fa-telegram" aria-hidden="false"></i> Kirim Telegram</button>
                             </form>
                         </div>

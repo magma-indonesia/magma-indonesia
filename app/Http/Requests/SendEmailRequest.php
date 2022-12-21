@@ -37,7 +37,7 @@ class SendEmailRequest extends FormRequest
     public function rules()
     {
         return [
-            'group' => 'required|in:real,exercise,pvmbg,send,unsend,telegram',
+            'group' => 'required|in:developer,real,exercise,pvmbg,send,unsend,telegram',
         ];
     }
 }

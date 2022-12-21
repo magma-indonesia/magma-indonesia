@@ -32,16 +32,18 @@ class TestController extends Controller
             'amplitudo_tremor' => 0,
             'remarks' => 'Generated from Volcanic Eruption Notice (VEN)',
             'erupsi_berlangsung' => $ven->erupsi_berlangsung,
+            'nip_pelapor' => $ven->erupt_usr,
             'old_ven_uuid' => $ven->uuid,
-            'group' => config('app.env') === 'local' ? 'developer' : 'real',
+            'group' => config('app.debug') ? 'developer' : 'real',
         ]);
 
-        // return $request;
+        return $request;
 
         $vona = new VonaService;
         $vona = $vona->storeVona($request);
 
         $ven->vona_created_at = now();
+        $ven->save();
 
         return $vona;
     }

@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Traits\VonaTrait;
+use App\v1\MagmaVen;
 use App\Vona;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -20,6 +21,7 @@ class VonaSend extends Mailable implements ShouldQueue
     public $volcanic_cloud_height;
     public $other_volcanic_cloud_information;
     public $remarks;
+    public $ven;
 
     /**
      * get VONA model
@@ -34,6 +36,9 @@ class VonaSend extends Mailable implements ShouldQueue
         $this->volcanic_cloud_height = $this->volcanicCloudHeight($vona);
         $this->other_volcanic_cloud_information = $this->otherVolcanicCloudInformation($vona);
         $this->remarks = $this->remarks($vona);
+        $this->ven = $vona->old_ven_uuid ?
+            MagmaVen::where('uuid', $vona->old_ven_uuid)->first() :
+            null;
     }
 
     /**
