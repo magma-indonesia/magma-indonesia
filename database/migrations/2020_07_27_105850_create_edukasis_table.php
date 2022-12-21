@@ -16,7 +16,7 @@ class CreateEdukasisTable extends Migration
         Schema::create('edukasis', function (Blueprint $table) {
             $table->increments('id');
             $table->char('nip',18)->index()->nullable();
-            $table->foreign('nip')->references('nip')->on('users')->onDelete('set null');;
+            $table->foreign('nip')->references('nip')->on('users')->onDelete('set null');
             $table->string('judul');
             $table->string('slug')->unique();
             $table->longText('deskripsi');
