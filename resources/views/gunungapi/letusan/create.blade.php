@@ -560,6 +560,24 @@ Buat Informasi Letusan (VEN)
 
                                         </div>
 
+                                        {{-- TV Digital --}}
+                                        <div class="form-group col-sm-12">
+                                            <label>Apakah akan dikirimkan pada TV Digital?</label>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <label class="checkbox-inline"><input name="is_broadcasted" value="1" type="radio" class="i-checks is-blasted"
+                                                            {{ old('is_broadcasted') == '1' ? 'checked' : ''}}> Ya </label>
+                                                    <label class="checkbox-inline"><input name="is_broadcasted" value="0" type="radio" class="i-checks is-blasted"
+                                                            {{ (old('is_broadcasted') == '0' OR empty(old('is_broadcasted'))) ? 'checked' : ''}}> Tidak </label>
+                                                    <span class="help-block m-b-none">Pilih Opsi ini jika ingin mengirimkan informasi peringatan dini melalui <b>TV Digital</b>. Jika ragu, pilih <b>Tidak.</b> Bisa dikirim nanti.</span>
+                                                    @if( $errors->has('is_broadcasted'))
+                                                    <label class="error" for="is_broadcasted">{{ ucfirst($errors->first('is_broadcasted')) }}</label>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                        </div>
+
                                         {{-- Submit --}}
                                         <div class="form-group col-sm-12">
                                             <div class="hr-line-dashed"></div>

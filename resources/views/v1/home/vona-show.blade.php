@@ -107,7 +107,17 @@
                             <td>(14)</td>
                             <td><b>Remarks</b></td>
                             <td><b>:</b></td>
-                            <td>{{ blank($vona->remarks) ? '-' : $vona->remarks }}</td>
+                            <td>
+                                {{ blank($vona->remarks) ? '-' : $vona->remarks }}
+                                @if ($vona->old_ven_uuid)
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <a href="{{ route('v1.gunungapi.ven.show', $ven->uuid) }}"><img class="img-responsive" src="{{ $ven->erupt_pht }}" alt="" /></a>
+                                    </div>
+                                </div>
+                                @endif
+                            </td>
                         </tr>
                         <tr>
                             <td>(15)</td>
