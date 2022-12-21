@@ -2,40 +2,47 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\SendVonaJob;
-use App\Mail\VonaSend;
-use App\v1\MagmaVar;
-use App\v1\Vona;
-use App\VonaSubscriber;
+use App\Services\VonaService;
+use App\v1\MagmaVen;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
-use Stevebauman\Location\Facades\Location;
 
 class TestController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        return DB::connection('magma')->table('magma_var')
-            ->selectRaw('DISTINCT ga_nama_gapi, cu_status')
-            ->whereBetween('var_data_date', ['2021-07-01', '2021-07-31'])
-            ->orderBy('ga_nama_gapi')
-            ->get();
+        $vens = MagmaVen::with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea,ga_elev_gapi', 'user:vg_nip,vg_nama')
+            ->whereNull('vona_created_at')->get();
 
-        // return MagmaVar::select(DB::raw('DISTINCT(ga_nama_gapi, cu_status)'))
-        //         ->whereBetween('var_data_date', [now()->startOfYear()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d')])
-        //         ->get();
-        // return $request->ip();
-        // return dd(Location::get('103.87.160.58'));
+        $ven = $vens->first();
 
-        // $vona = Vona::first();
+        $request = new Request([
+            'type' => 'real',
+            'code' => $ven->gunungapi->ga_code,
+            'color' => 'auto',
+            'visibility' => $ven->erupt_vis,
+            'height' => $ven->erupt_vis ? $ven->erupt_tka : 0,
+            'warna_asap' => $ven->erupt_wrn,
+            'intensitas' => $ven->erupt_int,
+            'arah_abu' => $ven->erupt_arh,
+            'date' => "{$ven->erupt_tgl} {$ven->erupt_jam}",
+            'terjadi_gempa_letusan' => $ven->erupt_amp ? 1 : 0,
+            'terjadi_tremor' => 0,
+            'amplitudo' => $ven->erupsi_berlangsung ? 0 : $ven->erupt_amp,
+            'durasi' => $ven->erupsi_berlangsung ? 0 : $ven->erupt_drs,
+            'amplitudo_tremor' => 0,
+            'remarks' => 'Generated from Volcanic Eruption Notice (VEN)',
+            'erupsi_berlangsung' => $ven->erupsi_berlangsung,
+            'old_ven_uuid' => $ven->uuid,
+            'group' => config('app.env') === 'local' ? 'developer' : 'real',
+        ]);
 
-        // return new VonaSend($vona);
+        // return $request;
 
-        // dispatch(new SendVonaJob($vona));
+        $vona = new VonaService;
+        $vona = $vona->storeVona($request);
 
-        // return 'oke';
-        // phpinfo();
-        // return dd($_SERVER, $request->header(), $request->getClientIps() );
+        $ven->vona_created_at = now();
+
+        return $vona;
     }
 }
