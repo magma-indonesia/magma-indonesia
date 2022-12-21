@@ -4,13 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Uuid;
-use Carbon\Carbon;
-use CyrildeWit\EloquentViewable\Viewable;
 
 class MagmaVen extends Model
 {
-    use Uuid,Viewable;
-    //
+    use Uuid;
+
     public $incrementing = false;
 
     protected $primaryKey = 'uuid';

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\FrontPage\v1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\v1\Gadd;
+use App\v1\MagmaVen;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 use App\v1\Vona;
@@ -100,6 +101,13 @@ class VonaController extends Controller
     public function show($id)
     {
         $vona = Vona::where('no',$id)->firstOrFail();
-        return view('v1.home.vona-show',compact('vona'));
+        $ven = $vona->old_ven_uuid ?
+            MagmaVen::where('uuid', $vona->old_ven_uuid)->first() :
+            null;
+
+        return view('v1.home.vona-show', [
+            'vona' => $vona,
+            'ven' => $ven,
+        ]);
     }
 }

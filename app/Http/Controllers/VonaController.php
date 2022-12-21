@@ -8,7 +8,9 @@ use App\Http\Requests\SendEmailRequest;
 use App\Http\Requests\VonaCreateRequest;
 use App\Mail\VonaSend;
 use App\Notifications\VonaTelegram;
+use App\Services\VonaService;
 use App\Traits\VonaTrait;
+use App\v1\MagmaVen;
 use App\v1\Vona as V1Vona;
 use App\VonaSubscriber;
 use Illuminate\Http\Request;
@@ -61,35 +63,9 @@ class VonaController extends Controller
      * @param  \App\Http\Requests\VonaCreateRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(VonaCreateRequest $request)
+    public function store(VonaCreateRequest $request, VonaService $vonaService)
     {
-        $vona = Vona::create([
-            'issued' => $this->issued($request),
-            'type' => Str::upper($request->type),
-            'code_id' => $request->code,
-            'is_visible' => $request->visibility,
-            'is_continuing' => $request->erupsi_berlangsung,
-            'current_code' => $this->currentCode($request),
-            'previous_code' => $this->previousCode($request),
-            'ash_height' => $request->visibility ? $request->height : 0,
-            'ash_color' => $request->visibility ? $request->warna_asap : null,
-            'ash_intensity' => $request->visibility ? $request->intensitas : null,
-            'ash_directions' => $request->visibility ? $request->arah_abu : null,
-            'amplitude' => ($request->terjadi_gempa_letusan || $request->code == 'green') ?
-                ($request->amplitudo ?? 0) : 0,
-            'amplitude_tremor' => ($request->terjadi_tremor || $request->code == 'green') ?
-                ($request->amplitudo_tremor ?? 0) : 0,
-            'duration' => $this->duration($request),
-            'remarks' => $request->remarks,
-            'nip_pelapor' => auth()->user()->nip,
-        ]);
-
-        $oldVona = $this->storeToOldVona($request, $vona);
-
-        $vona->update([
-            'old_id' => $oldVona->no,
-            'noticenumber' => $oldVona->notice_number,
-        ]);
+        $vona = $vonaService->storeVona($request);
 
         return redirect()->route('chambers.vona.show', ['uuid' => $vona->uuid]);
     }
@@ -103,6 +79,9 @@ class VonaController extends Controller
     public function show(Vona $vona)
     {
         $vona = Vona::findOrFail($vona->uuid)->load('gunungapi');
+        $ven = $vona->old_ven_uuid ?
+            MagmaVen::where('uuid', $vona->old_ven_uuid)->first() :
+            null;
 
         return view('vona.show', [
             'vona' => $vona,
@@ -111,6 +90,7 @@ class VonaController extends Controller
             'volcanic_cloud_height' => $this->volcanicCloudHeight($vona),
             'other_volcanic_cloud_information' => $this->otherVolcanicCloudInformation($vona),
             'remarks' => $this->remarks($vona),
+            'ven' => $ven,
         ]);
     }
 
@@ -225,7 +205,7 @@ class VonaController extends Controller
      */
     public function send(Vona $vona, SendEmailRequest $request)
     {
-        if (in_array($request->group, ['exercise', 'real', 'pvmbg'])) {
+        if (in_array($request->group, ['developer', 'exercise', 'real', 'pvmbg'])) {
             $this->sendEmail($vona, $request);
             $this->updateIsSent($vona);
         }
