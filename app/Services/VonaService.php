@@ -20,12 +20,19 @@ class VonaService
     use VonaTrait;
 
     /**
-     * Store VONA
+     * VONA model
+     *
+     * @var Vona
+     */
+    public $vona;
+
+    /**
+     * Store vona
      *
      * @param Request $request
-     * @return Vona
+     * @return self
      */
-    public function storeVona(Request $request): Vona
+    public function storeVona(Request $request): self
     {
         $vona = Vona::firstOrCreate([
             'issued' => $this->issued($request),
@@ -57,7 +64,9 @@ class VonaService
             'noticenumber' => $oldVona->notice_number,
         ]);
 
-        return $vona;
+        $this->vona = $vona;
+
+        return $this;
     }
 
     /**
@@ -203,5 +212,15 @@ class VonaService
         $filename = "{$vona->gunungapi->name} {$vona->issued}";
 
         return $pdf->download(Str::slug($filename));
+    }
+
+    /**
+     * Get VONA
+     *
+     * @return Vona|null
+     */
+    public function get(): ?Vona
+    {
+        return $this->vona ?: null;
     }
 }

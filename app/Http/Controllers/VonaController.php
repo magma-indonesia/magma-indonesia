@@ -57,7 +57,7 @@ class VonaController extends Controller
      */
     public function store(VonaCreateRequest $request, VonaService $vonaService)
     {
-        $vona = $vonaService->storeVona($request);
+        $vona = $vonaService->storeVona($request)->get();
 
         return redirect()->route('chambers.vona.show', ['uuid' => $vona->uuid]);
     }
