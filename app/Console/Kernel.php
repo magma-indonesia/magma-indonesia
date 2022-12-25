@@ -116,6 +116,10 @@ class Kernel extends ConsoleKernel
             ->cron('*/5 * * * *')
             ->pingBefore($this->getUrlMagma());
 
+        $schedule->command('send:vona-from-ven')
+            ->cron('*/5 * * * *')
+            ->pingBefore($this->getUrlMagma());
+
         // $schedule->command('import:ven')
         //     ->daily()
         //     ->pingBefore($this->getUrlMagma())
