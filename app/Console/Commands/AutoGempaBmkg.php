@@ -3,15 +3,10 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Orchestra\Parser\Xml\Facade as XmlParser;
-use Carbon\Carbon;
+use GuzzleHttp\Client;
 use App\v1\MagmaRoq;
-use App\Import as ImportApp;
-use App\Notifications\ImportNotification;
-use Illuminate\Support\Facades\Log;
-
 use App\Traits\v1\GunungApiTerdekat;
-use Exception;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
 class AutoGempaBmkg extends Command
@@ -26,12 +21,8 @@ class AutoGempaBmkg extends Command
      */
     protected $signature = 'gempa:bmkg';
 
-    protected $id_laporan;
-    protected $has_laporan = true;
-    protected $datetime;
-    protected $datetime_wib;
-    protected $datetime_utc;
-    protected $terasa_active = false;
+    protected $urlGempaTerkini = 'https://data.bmkg.go.id/DataMKG/TEWS/gempaterkini.json';
+    protected $urlGempaDirasakan = 'https://data.bmkg.go.id/DataMKG/TEWS/gempadirasakan.json';
 
     /**
      * The console command description.
@@ -51,245 +42,151 @@ class AutoGempaBmkg extends Command
     }
 
     /**
-     * Get $gempa attribute
+     * Fetching Gempa Terkini skala >= 5
      *
      * @return Collection
      */
-    protected function getGempa() : Collection
+    protected function gempaTerkini(): Collection
     {
-        return $this->gempa;
+        $http = new Client;
+        $response = $http->get($this->urlGempaTerkini);
+
+        return collect(json_decode((string) $response->getBody(), true)['Infogempa']['gempa']);
     }
 
-    protected function getMagnitude()
+    /**
+     * Fetching Gempa Dirasakan
+     *
+     * @return Collection
+     */
+    protected function gempaDirasakan(): Collection
     {
-        return explode(' ',$this->gempa['magnitude'])[0];
+        $http = new Client;
+        $response = $http->get($this->urlGempaDirasakan);
+
+        return collect(json_decode((string) $response->getBody(), true)['Infogempa']['gempa']);
     }
 
-    protected function getDepth()
+    /**
+     * Store ROQ
+     *
+     * @param array $gempa
+     * @return void
+     */
+    protected function storeRoq(array $gempa): void
     {
-        return explode(' ',$this->gempa['kedalaman'])[0];
+        MagmaRoq::create($gempa);
     }
 
-    protected function getLatitude()
+    /**
+     * Convert UTC to WIB
+     *
+     * @param string $utc
+     * @return string
+     */
+    protected function datetimeWib(string $utc): string
     {
-        $latitude = explode(' ',$this->gempa['lintang']);
-        $latitude = $latitude[1] == 'S' 
-                    ? strval(0-$latitude[0])
-                    : $latitude[0];
-
-        return $latitude;
+        return Carbon::parse($utc)->setTimezone('Asia/Jakarta')->format('Y-m-d H:i:s');
     }
 
-    protected function getLongitude()
+    /**
+     * Generate ID Laporan
+     *
+     * @param string $utc
+     * @return string
+     */
+    protected function idLaporan(string $utc): string
     {
-        $longitude = explode(' ',$this->gempa['bujur'])[0];
-        return $longitude;
+        $datetime = Carbon::parse($utc)->setTimezone('Asia/Jakarta')->format('YmdHis');
+        return "ROQ$datetime";
     }
 
-    protected function getArea()
+    /**
+     * Get Latitude
+     *
+     * @param string $coordinates
+     * @return string
+     */
+    protected function latitude(string $coordinates): string
     {
-        return $this->gempa['wilayah_1'];
+        return explode(',', $coordinates)[0];
     }
 
-    protected function getKoter()
+    /**
+     * Get Longitude
+     *
+     * @param string $coordinates
+     * @return string
+     */
+    protected function longitude(string $coordinates): string
     {
-        $koter = explode(' ',$this->getArea())[3];
-        return $koter;
+        return explode(',', $coordinates)[1];
     }
 
-    protected function formatData()
+    /**
+     * Transform data gempa
+     *
+     * @param Collection $gempa
+     * @return Collection
+     */
+    protected function transformGempa(Collection $gempa): Collection
     {
-        $gempa = $this->getGempa();
-        $gempa->transform(function ($item, $key) {
+        $gempa->transform(function ($gempa) {
+            $wilayah = explode(' ', $gempa['Wilayah']);
             return [
-                'datetime_wib' => $this->getDateTimeWib(),
-                'datetime_utc' => $this->getDateTimeUtc(),
-                'id_lap' => $this->getIdLaporan(),
-                'datetime_wib_str' => $this->getDateTimeWib(),
-                'magnitude' => $this->getMagnitude(),
+                'datetime_wib' => $this->datetimeWib($gempa['DateTime']),
+                'datetime_utc' => Carbon::parse($gempa['DateTime'])->format('Y-m-d H:i:s'),
+                'id_lap' => $this->idLaporan($gempa['DateTime']),
+                'datetime_wib_str' => $this->datetimeWib($gempa['DateTime']),
+                'magnitude' => $gempa['Magnitude'],
                 'magtype' => 'SR',
-                'depth' => $this->getDepth(),
+                'depth' => explode(' ', $gempa['Kedalaman'])[0],
                 'dep_unit' => 'Km',
-                'lat_lima' => $this->getLatitude(),
-                'lon_lima' => $this->getLongitude(),
-                'latlon_text' => $this->getLatitude().' LU '.$this->getLongitude().' BT',
-                'area' => $this->getArea()?: null,
-                'koter' => $this->getKoter(),
-                'nearest_volcano' => $this->getGunungApiTerdekat($this->getLatitude(),$this->getLongitude()),
+                'lat_lima' => $this->latitude($gempa['Coordinates']),
+                'lon_lima' => $this->longitude($gempa['Coordinates']),
+                'latlon_text' => $gempa['Lintang'] . ' ' . $gempa['Bujur'],
+                'area' => $gempa['Wilayah'],
+                'koter' => isset($gempa['Dirasakan']) ? $gempa['Wilayah'] : end($wilayah),
+                'nearest_volcano' => $this->getGunungApiTerdekat(
+                    $this->latitude($gempa['Coordinates']),
+                    $this->longitude($gempa['Coordinates'])
+                ),
+                'mmi' => isset($gempa['Dirasakan']) ? $gempa['Dirasakan'] : null,
                 'roq_source' => 'Badan Meteorologi, Klimatologi dan Geofisika (BMKG)'
             ];
         });
 
-        $this->gempa = $gempa;
-        return $this;
+        return $gempa;
     }
 
-    protected function saveGempa()
+    /**
+     * Filter Data gempa
+     *
+     * @param Collection $gempas
+     * @param Collection $roqs
+     * @return Collection
+     */
+    protected function filtered(Collection $gempas, Collection $roqs): Collection
     {
-        $gempa = $this->gempa->first();
-        $roq = new MagmaRoq;
-        $roq->fill($gempa);
-        if ($roq->save())
-        {
-            $import = new ImportApp();
-            $import->notify(new ImportNotification('Gempa BMKG >> '.$gempa['area']));
-        }
+        $id_laporans = $roqs->pluck('id_lap')->all();
 
-        return $this;
+        return $gempas->whereNotIn('id_lap', $id_laporans);
     }
 
-    protected function updateGempa()
+    /**
+     * Remove extsited gempa in database
+     *
+     * @param Collection $gempas
+     * @return Collection
+     */
+    protected function getNonExistedRoq(Collection $gempas): Collection
     {
-        $roq = $this->roq;
-        if ($roq->mmi == null)
-        {
-            $roq->mmi = $this->terasa['mmi'];
-            $roq->depth = $this->terasa['kedalaman'];
-            if ($roq->save())
-            {
-                $import = new ImportApp();
-                $import->notify(new ImportNotification('Gempa Terasa BMKG >> '.$this->terasa['mmi']));
-            }
-    
-        }
+        $roqs = MagmaRoq::select('id_lap')->whereIn(
+            'id_lap',
+            $gempas->pluck('id_lap')->all()
+        )->limit(30)->get();
 
-        return $this;
-    }
-
-    protected function setIdLaporan()
-    {
-        $this->id_laporan = 'ROQ'.$this->datetime->format('YmdHis');
-        return $this;
-    }
-
-    protected function getIdLaporan()
-    {
-        return $this->id_laporan;
-    }
-
-    protected function setDateTime()
-    {
-        $tanggal = $this->gempa['tanggal'];
-        $waktu = explode(' ',$this->gempa['jam']);
-
-        $datetime = Carbon::createFromFormat('d-M-y H:i:s',$tanggal.$waktu[0]);
-
-        $this->datetime = $datetime;
-        $this->setIdLaporan();
-
-        $datetime_wib = $datetime->format('Y-m-d H:i:s');
-
-        if ($waktu[1] == 'WITA') {
-            $datetime_wib = $datetime->addHour()->format('Y-m-d H:i:s');
-        };
-
-        if ($waktu[1] == 'WIT') {
-            $datetime_wib = $datetime->addHours(2)->format('Y-m-d H:i:s');
-        };
-
-        $this->datetime_wib = $datetime_wib;
-        $this->datetime_utc = $datetime->subHours(7)->format('Y-m-d H:i:s');
-
-        return $this;
-    }
-
-    protected function setDateTimeTerasa()
-    {
-        $tanggal = $this->terasa['tanggal'];
-        $waktu = explode(' ',$this->terasa['jam']);
-
-        $datetime = Carbon::createFromFormat('d/m/Y H:i:s',$tanggal.$waktu[0]);
-
-        $this->datetime = $datetime;
-        $this->setIdLaporan();
-        $this->terasa_active = true;
-
-        return $this;
-    }
-
-    protected function getDateTimeWib()
-    {
-        return $this->datetime_wib;
-    }
-
-    protected function getDateTimeUtc()
-    {
-        return $this->datetime_utc;
-    }
-
-    protected function createGempa()
-    {
-        $this->has_laporan ?: $this->formatData()->saveGempa();
-        return $this;
-    }
-
-    protected function updateGempaTerasa()
-    {
-        $this->has_laporan ? $this->updateGempa() : false;
-        return $this;
-    }
-
-    protected function checkLaporanExists()
-    {
-        $id_laporan = $this->getIdLaporan();
-
-        $this->roq = MagmaRoq::where('id_lap',$id_laporan)->first();
-
-        $this->has_laporan = $this->roq ? true : false;
-
-        if (!($this->has_laporan == false) AND !($this->terasa_active == false))
-        {
-            $this->info('Validate latitude...');
-            $this->has_laporan = ($this->getLatitude() >= -11) AND ($this->getLatitude() <= 6)
-                                    ? false : true;
-        }
-
-        return $this;
-    }
-
-    protected function getDataFromBmkg()
-    {
-        try {
-            $xml_en = XmlParser::load('https://data.bmkg.go.id/DataMKG/TEWS/en_autogempa.xml');
-            $gempa_en = $xml_en->parse([
-                'tanggal' => ['uses' => 'gempa.Tanggal'],
-                'jam' => ['uses' => 'gempa.Jam'],
-                'koordinat' => ['uses' => 'gempa.point.coordinates'],
-                'lintang' => ['uses' => 'gempa.Lintang'],
-                'bujur' => ['uses' => 'gempa.Bujur'],       
-            ]);
-    
-            $xml_id = XmlParser::load('https://data.bmkg.go.id/DataMKG/TEWS/autogempa.xml');
-            $gempa_id = $xml_id->parse([
-                'kedalaman' => ['uses' => 'gempa.Kedalaman'],
-                'magnitude' => ['uses' => 'gempa.Magnitude'],
-                'wilayah_1'=> ['uses' => 'gempa.Wilayah1'],
-                'wilayah_2' => ['uses' => 'gempa.Wilayah2'],
-                'wilayah_3' => ['uses' => 'gempa.Wilayah3'],
-                'wilayah_4' => ['uses' => 'gempa.Wilayah4'],
-                'wilayah_5' => ['uses' => 'gempa.Wilayah5'],         
-            ]);
-
-            $xml_terasa = XmlParser::load('https://data.bmkg.go.id/DataMKG/TEWS/lastgempadirasakan.xml');
-            $terasa = $xml_terasa->parse([
-                'tanggal' => ['uses' => 'Gempa.Tanggal'],
-                'jam' => ['uses' => 'Gempa.Jam'],
-                'kedalaman'=> ['uses' => 'Gempa.Kedalaman'],
-                'mmi' => ['uses' => 'Gempa.Dirasakan'],  
-            ]);
-
-            $this->gempa = collect($gempa_en+$gempa_id);
-            $this->terasa = collect($terasa);
-
-            return $this;
-
-        } 
-        
-        catch (Exception $e) {
-            $this->gempa = null;
-            $this->terasa = null;
-            Log::info('[FAILED] Gagal Download data Gempa BMKG : '.now());
-        }
+        return $roqs->isEmpty() ? $gempas : $this->filtered($gempas, $roqs);
     }
 
     /**
@@ -299,21 +196,14 @@ class AutoGempaBmkg extends Command
      */
     public function handle()
     {
-        $this->getDataFromBmkg();
+        $this->info('Sedang melakukan importing gempa BMKG...');
+        $gempas = $this->transformGempa(
+            $this->gempaDirasakan()->merge($this->gempaTerkini())
+        );
 
-        if ($this->gempa !== null) {
-            $this->info('Sedang melakukan importing gempa BMKG...');
-            $this->setDateTime()
-                ->checkLaporanExists()
-                ->createGempa();
-            $this->info('Importing gempa BMKG Berhasil!');
-        }
-
-        if ($this->terasa !== null) {
-            $this->setDateTimeTerasa()
-            ->checkLaporanExists()
-            ->updateGempaTerasa();
-        }
-
+        $this->getNonExistedRoq($gempas)->each(function ($gempa) {
+            $this->storeRoq($gempa);
+        });
+        $this->info('Importing gempa BMKG Berhasil!');
     }
 }
