@@ -39,7 +39,7 @@ class Kernel extends ConsoleKernel
         $this->scheduleGunungApi($schedule);
         $this->scheduleGerakanTanah($schedule);
         $this->scheduleAdministrasi($schedule);
-        // $this->scheduleGempaBumi($schedule);
+        $this->scheduleGempaBumi($schedule);
     }
 
 
@@ -154,10 +154,10 @@ class Kernel extends ConsoleKernel
             ->pingBefore('https://data.bmkg.go.id/')
             ->withoutOverlapping(3);
 
-        $schedule->command('import:roq')
-            ->daily()
-            ->pingBefore($this->getUrlMagma())
-            ->appendOutputTo($filePath);
+        // $schedule->command('import:roq')
+        //     ->daily()
+        //     ->pingBefore($this->getUrlMagma())
+        //     ->appendOutputTo($filePath);
     }
 
     /**
