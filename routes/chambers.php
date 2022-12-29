@@ -227,6 +227,7 @@ Route::get('roles/assign', 'RoleController@assign')
 Route::post('roles/assign', 'RoleController@saveRole');
 Route::resource('roles', 'RoleController');
 Route::resource('press-release','PressReleaseController');
+Route::resource('tag', 'TagController');
 
 Route::post('vona/send/{vona}', 'VonaController@send')
     ->name('vona.send-email');
