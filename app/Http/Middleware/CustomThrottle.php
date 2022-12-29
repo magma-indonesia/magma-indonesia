@@ -10,6 +10,10 @@ class CustomThrottle extends ThrottleRequests
 {
     protected function resolveRequestSignature($request)
     {
+        if (auth()->check()) {
+            $this->limiter = 1000;
+        }
+
         if ($request->route())
             return sha1(URL::current() . '|' . $request->ip());
 
