@@ -1,12 +1,12 @@
-@extends('layouts.default') 
+@extends('layouts.default')
 @section('title') Create Press Release
 @endsection
- 
+
 @section('add-vendor-css')
 <link rel="stylesheet" href="{{ asset('vendor/summernote/dist/summernote.css') }}" />
 <link rel="stylesheet" href="{{ asset('vendor/summernote/dist/summernote-bs3.css') }}" />
 @endsection
- 
+
 @section('content-header')
 <div class="small-header">
     <div class="hpanel">
@@ -32,13 +32,13 @@
     </div>
 </div>
 @endsection
- 
+
 @section('content-body')
 <div class="content animate-panel">
     <div class="row">
         <div class="col-lg-12">
             <div class="alert alert-info">
-                <i class="fa fa-bolt"></i> 
+                <i class="fa fa-bolt"></i>
                 <strong> Mohon dibaca kembali sebelum membuat press release kepada publik. </strong>
             </div>
         </div>
@@ -66,7 +66,7 @@
                             <label>Pembuat Laporan</label>
                             <select id="nama" class="form-control" name="nama">
                                 @foreach($users as $user)
-                                <option value="{{ $user->name}}" {{ $user->id == auth()->user()->id ? 'selected' : ''}}>{{ $user->name }}</option>      
+                                <option value="{{ $user->name}}" {{ $user->id == auth()->user()->id ? 'selected' : ''}}>{{ $user->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -86,7 +86,7 @@
                             <br>
                             <label class="w-xs btn btn-outline btn-default btn-file">
                                 <i class="fa fa-upload"></i>
-                                <span class="label-file">Browse </span> 
+                                <span class="label-file">Browse </span>
                                 <input accept="image/jpeg" class="file" name="file" type="file" style="display: none;">
                                 <input id="file" type="hidden" name="foto">
                             </label>
@@ -104,12 +104,12 @@
     </div>
 </div>
 @endsection
- 
+
 @section('add-vendor-script')
 <script src="{{ asset('vendor/summernote/dist/summernote.min.js') }}"></script>
 <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
 @endsection
- 
+
 @section('add-script')
 <script>
     $(document).ready(function () {
@@ -158,7 +158,12 @@
                 ['insert', ['hr']],
                 ['view', ['fullscreen', 'codeview']],
                 ['help', ['help']]
-            ]
+            ],
+            onpaste: function (e) {
+                var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                e.preventDefault();
+                document.execCommand('insertText', false, bufferText);
+            }
         });
 
         $("#form").validate({
