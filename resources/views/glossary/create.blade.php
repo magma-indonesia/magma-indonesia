@@ -106,7 +106,7 @@ Create Glossary
                                                 @for ($i = 0; $i < 5; $i++)
                                                 <label class="w-xs m-t-sm btn btn-outline btn-default btn-file">
                                                     <i class="fa fa-upload"></i>
-                                                    <span class="label-file">Browse </span> 
+                                                    <span class="label-file">Browse </span>
                                                     <input id="file_{{ $i }}" accept="image/x-png,image/gif,image/jpeg" class="file" name="files[]" type="file" style="display: none;">
                                                 </label>
                                                 @endfor
@@ -123,10 +123,10 @@ Create Glossary
                                             <label>Publikasikan?</label>
                                             <div><p>Segera publikasikan informasi</p></div>
                                             <div>
-                                                <label class="checkbox-inline"> 
-                                                <input name="is_published" class="i-checks" type="radio" value="1" id="status"> Ya </label> 
                                                 <label class="checkbox-inline">
-                                                <input name="is_published" class="i-checks" type="radio" value="0" id="status" checked> Tidak </label> 
+                                                <input name="is_published" class="i-checks" type="radio" value="1" id="status"> Ya </label>
+                                                <label class="checkbox-inline">
+                                                <input name="is_published" class="i-checks" type="radio" value="0" id="status" checked> Tidak </label>
                                             </div>
                                         </div>
                                     </div>
@@ -186,7 +186,12 @@ $(document).ready(function() {
             ['insert', ['hr']],
             ['view', ['fullscreen', 'codeview']],
             ['help', ['help']]
-        ]
+        ],
+        onpaste: function (e) {
+            var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+            e.preventDefault();
+            document.execCommand('insertText', false, bufferText);
+        }
     });
 });
 </script>
