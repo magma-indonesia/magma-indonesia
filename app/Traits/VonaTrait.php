@@ -16,20 +16,6 @@ trait VonaTrait
 
     protected $feet = 3.2;
 
-    protected function noticenumberTemp(Request $request)
-    {
-        $prefix = $request->type == 'real' ? '' : 'EXERCISE-';
-        $year = now()->format('Y');
-
-        $vonaCount = VonaOld::where('issued', 'like', '2022%')
-            ->where('ga_code', $request->code)
-            ->where('type', $request->type)
-            ->count();
-
-        $vonaCount = sprintf('%03d', $vonaCount + 500);
-        return $prefix . $year . $request->code . $vonaCount;
-    }
-
     /**
      * Get Noticenumber of VONA
      *
@@ -38,19 +24,15 @@ trait VonaTrait
      */
     protected function noticenumber(Request $request): string
     {
-        if (now()->format('Y') === '2022') {
-            return $this->noticenumberTemp($request);
-        }
-
         $prefix = $request->type == 'real' ? '' : 'EXERCISE-';
         $year = now()->format('Y');
 
-        $vonaCount = Vona::where('issued', 'like', now()->format('Y'))
+        $vonaCount = Vona::where('issued', 'like', "$year%")
             ->where('code_id', $request->code)
             ->where('type', $request->type)
             ->count();
 
-        $vonaCount = sprintf('%03d', $vonaCount + 1);
+        $vonaCount = sprintf('%03d', $vonaCount);
         return $prefix . $year . $request->code . $vonaCount;
     }
 
@@ -108,11 +90,10 @@ trait VonaTrait
      */
     protected function previousCode(Request $request): string
     {
-        $latestVona = VonaOld::with('volcano:ga_code,ga_nama_gapi,ga_id_smithsonian,ga_elev_gapi,ga_lon_gapi,ga_lat_gapi,ga_prov_gapi,ga_zonearea')
-            ->where('ga_code', $request->code)
+        $latestVona = Vona::where('code_id', $request->code)
             ->where('type', $request->type)
-            ->where('sent', 1)
-            ->orderBy('issued_time', 'desc')
+            ->where('is_sent', 1)
+            ->orderBy('issued', 'desc')
             ->first();
 
         if (is_null($latestVona))
