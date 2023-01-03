@@ -7,6 +7,7 @@ use App\Jobs\UpdateBlacklistLog;
 use App\StatistikAccess;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 class UpdateBlacklist extends Command
 {
@@ -52,7 +53,9 @@ class UpdateBlacklist extends Command
 
         if ($diff->isNotEmpty()) {
             $diff->each(function ($ip) {
-                Blacklist::firstOrCreate(['ip_address' => $ip]);
+                if (!Str::contains($ip, '172.16.')) {
+                    Blacklist::firstOrCreate(['ip_address' => $ip]);
+                }
             });
 
             Cache::forget('blacklist');
