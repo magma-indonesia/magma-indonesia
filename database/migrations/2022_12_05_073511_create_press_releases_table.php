@@ -15,23 +15,19 @@ class CreatePressReleasesTable extends Migration
     {
         Schema::create('press_releases', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('judul');
+            $table->string('slug')->index();
+            $table->datetime('datetime')->nullable();
             $table->boolean('gunung_api')->default(0);
             $table->boolean('gerakan_tanah')->default(0);
             $table->boolean('gempa_bumi')->default(0);
             $table->boolean('tsunami')->default(0);
             $table->string('lainnya')->nullable();
-            $table->enum('kategori', [
-                'peningkatan tingkat aktivitas',
-                'penurunan tingkat aktivitas',
-                'peringatan dini',
-                'analisis geologi'
-            ]);
-            $table->char('code_id', 3)
+            $table->char('code', 3)
                 ->index()->nullable();
-            $table->foreign('code_id')
-                ->references('code')->on('ga_dd')->onDelete('set null');
-            $table->string('judul');
-            $table->string('slug');
+            $table->foreign('code')
+                ->references('code')->on('ga_dd')
+                ->onDelete('set null');
             $table->longText('deskripsi');
             $table->bigInteger('hit')->default(0);
             $table->char('nip', 18)->index();

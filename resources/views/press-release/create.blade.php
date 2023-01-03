@@ -7,6 +7,7 @@ Buat Press Release
 @section('add-vendor-css')
 <link rel="stylesheet" href="{{ asset('vendor/summernote/dist/summernote.css') }}" />
 <link rel="stylesheet" href="{{ asset('vendor/summernote/dist/summernote-bs3.css') }}" />
+<link rel="stylesheet" href="{{ asset('vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}" />
 @endsection
 
 @section('content-header')
@@ -31,7 +32,7 @@ Buat Press Release
                 </ol>
             </div>
 
-            <p class="m-b-lg tx-16">
+            <p class="m-b-lg m-l-sm tx-16">
                 Gunakan menu ini untuk membuat press release.
             </p>
             <div class="alert alert-danger">
@@ -45,13 +46,177 @@ Buat Press Release
 
 @section('content-body')
 <div class="content content-boxed no-top-padding">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="hpanel hred">
-                <div class="panel-body">
-                    <form action="{{ route('chambers.press-release.store') }}" method="post" enctype="multipart/form-data">
-                        @csrf
-                        <div class="p-m tab-pane active">
+    <form action="{{ route('chambers.press-release.store') }}" method="post" enctype="multipart/form-data">
+        @csrf
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="hpanel hred">
+                    <div class="panel-body">
+                        <div class="tab-pane active">
+                            <div class="row m-b-lg">
+                                <div class="col-lg-4 text-center m-b-lg">
+                                    <i class="pe-7s-ribbon fa-5x text-muted"></i>
+                                    <p class="m-t-md">
+                                        <strong>Judul dan Kategori</strong>
+                                    </p>
+                                    <p>
+                                        Gunakan judul yang jelas dan pilih kategori press release yang sesuai.
+                                    </p>
+                                    <p>
+                                        Jika kategori belum ada, silahkan tambahkan kategori di <a href="{{ route('chambers.tag.index') }}">link berikut ini.</a>
+                                    </p>
+                                </div>
+
+                                <div class="col-lg-8">
+
+                                    <div class="row">
+                                        <div class="form-group col-lg-12">
+                                            <label>Judul</label>
+                                            <input type="text" value="{{ old('judul') }}" class="form-control" name="judul" placeholder="Judul dari Press Release" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-lg-12">
+                                            <label>Tanggal Press Release</label>
+                                            <input name="datetime" id="datepicker" class="form-control" type="text" value="{{ empty(old('datetime')) ? now()->format('Y-m-d H:i') : old('date') }}">
+                                            @if( $errors->has('datetime'))
+                                            <label class="error" for="datetime">{{ ucfirst($errors->first('datetime')) }}</label>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-lg-12">
+                                            <label>Pilih Kategori</label>
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-6">
+
+                                                    @foreach ($categories as $value => $name)
+                                                    <div class="checkbox">
+                                                        <label><input
+                                                        id="{{ $value === 'gunung_api' ? 'gunung_api' : '' }}"
+                                                        name="categories[]" value="{{ $value }}" type="checkbox" class="i-checks categories" {{
+                                                                (is_array(old('categories')) AND in_array($value, old('categories'))) ? 'checked'
+                                                                : '' }}> {{ $name }} </label>
+                                                    </div>
+                                                    @endforeach
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-sm-12 gunung-api" style="display: {{ (is_array(old('categories')) AND in_array('gunung_api', old('categories'))) ? 'block' :'none'}};">
+                                            <label>Gunung Api</label>
+                                            <select id="code" class="form-control" name="code">
+                                                @foreach($gadds as $gadd)
+                                                <option value="{{ $gadd->code }}" {{ old('code') == $gadd->code ? 'selected' : ''}}>{{ $gadd->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @if( $errors->has('code'))
+                                            <label class="error" for="code">{{ ucfirst($errors->first('code')) }}</label>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-lg-12">
+                                            <label>Pilih Label</label>
+                                            <div class="row">
+                                                @foreach ($tags->chunk(5) as $tagsChunk)
+                                                <div class="col-sm-12 col-md-6">
+                                                    @foreach ($tagsChunk as $tag)
+                                                    <div class="checkbox">
+                                                        <label><input name="tags[]" value="{{ $tag->id }}" type="checkbox" class="i-checks tags" {{
+                                                                (is_array(old('tags')) AND in_array($tag->id, old('tags'))) ? 'checked'
+                                                                : '' }}> {{ $tag->name }} </label>
+                                                    </div>
+                                                    @endforeach
+                                                </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="hpanel hred">
+                    <div class="panel-body">
+                        <div class="tab-pane active">
+                            <div class="row m-b-lg">
+                                <div class="col-lg-4 text-center m-b-lg">
+                                    <i class="pe-7s-ribbon fa-5x text-muted"></i>
+                                    <p class="m-t-md">
+                                        <strong>Dokumen dan Gambar Pendukung</strong>
+                                    </p>
+                                    <p>
+                                        Upload dokumen dan gambar pendukung. File dokumen maksimal yang bisa diupload adalah sebesar 3MB sementara gambar, maksimal 1MB per gambar.
+                                    </p>
+                                </div>
+
+                                <div class="col-lg-8">
+                                    <div class="row">
+                                        <div class="form-group col-lg-12">
+                                            <label>Dokumen</label>
+                                            <div><p>Format dokumen yang diterima adalah format PDF dengan ukuran per filenya <strong>maksimal 5MB.</strong></p></div>
+                                            <div class="m-b-sm">
+                                                @for ($i = 0; $i < 5; $i++)
+                                                <label class="w-xs m-t-sm btn btn-outline btn-default btn-file">
+                                                    <i class="fa fa-upload"></i>
+                                                    <span class="label-file">Browse </span>
+                                                    <input id="file_{{ $i }}"accept=".pdf" class="file" name="files[]" type="file" style="display: none;">
+                                                </label>
+                                                @endfor
+                                            </div>
+                                            <div class="m-t-sm">
+                                                <button type="button" class="w-xs btn btn-danger clear-file"><i class="fa fa-trash"></i> Hapus File</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </div>
+
+                                <div class="col-lg-8">
+                                    <div class="row">
+                                        <div class="form-group col-lg-12">
+                                            <label>Gambar</label>
+                                            <div><p>Bisa dalam bentuk Infografis, Poster, Leaflet, Flyer atau Publikasi lainnya. Format yang diterima adalah format gambar. Per file <strong>maksimal 3MB.</strong></p></div>
+                                            <div class="m-b-sm">
+                                                @for ($i = 0; $i < 5; $i++)
+                                                <label class="w-xs m-t-sm btn btn-outline btn-default btn-file">
+                                                    <i class="fa fa-upload"></i>
+                                                    <span class="label-gambar">Browse </span>
+                                                    <input id="file_{{ $i }}" accept="image/jpeg" class="gambar" name="gambars[]" type="file" style="display: none;">
+                                                </label>
+                                                @endfor
+                                            </div>
+                                            <div class="m-t-sm">
+                                                <button type="button" class="w-xs btn btn-danger clear-gambar"><i class="fa fa-trash"></i> Bersihkan Gambar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="hpanel hred">
+                    <div class="panel-body">
+                        <div class="tab-pane active">
 
                             <div class="row">
                                 <div class="col-lg-12 text-left">
@@ -63,11 +228,6 @@ Buat Press Release
                             </div>
 
                             <div class="row m-b-lg">
-
-                                <div class="col-lg-12">
-
-                                </div>
-
                                 <div class="col-lg-12">
 
                                     @if ($errors->any())
@@ -84,14 +244,6 @@ Buat Press Release
 
                                     <div class="row">
                                         <div class="form-group col-lg-12">
-                                            <label>Judul</label>
-                                            <input type="text" value="{{ old('judul') }}" class="form-control" name="judul" placeholder="Istilah yang akan dijelaskan" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="form-group col-lg-12">
-                                            <label>Konten</label>
                                             <textarea name="deskripsi" class="summernote">{{ old('deskripsi') }}</textarea>
                                         </div>
                                     </div>
@@ -110,22 +262,32 @@ Buat Press Release
                             </div>
 
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 @endsection
 
 @section('add-vendor-script')
 <script src="{{ asset('vendor/summernote/dist/summernote.min.js') }}"></script>
-<script src="{{ asset('vendor/iCheck/icheck.min.js') }}"></script>
+<script src="{{ asset('vendor/moment/moment.js') }}"></script>
+<script src="{{ asset('vendor/moment/locale/id.js') }}"></script>
+<script src="{{ asset('vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
 @endsection
 
 @section('add-script')
 <script>
 $(document).ready(function() {
+    $('#datepicker').datetimepicker({
+        minDate: '2015-05-01',
+        maxDate: '{{ now()->addDay(1)->format('Y-m-d')}}',
+        sideBySide: true,
+        locale: 'id',
+        format: 'YYYY-MM-DD HH:mm',
+    });
+
     $('input.file').on('change', function(e) {
         var input = $(this),
             label = input.val()
@@ -135,12 +297,25 @@ $(document).ready(function() {
         input.siblings('.label-file').html(label);
     });
 
+    $('input.gambar').on('change', function(e) {
+        var input = $(this),
+            label = input.val()
+                        .replace(/\\/g, '/')
+                        .replace(/.*\//, '');
+
+        input.siblings('.label-gambar').html(label);
+    });
+
     $('.clear-file').on('click', function(e) {
         $('.label-file').html('Browse');
     });
 
+    $('.clear-gambar').on('click', function(e) {
+        $('.label-gambar').html('Browse');
+    });
+
     $('.summernote').summernote({
-        height: '450px',
+        height: '1000',
         toolbar: [
             ['style', ['style']],
             ['font', ['bold', 'italic', 'underline', 'clear']],
@@ -152,7 +327,20 @@ $(document).ready(function() {
             ['insert', ['hr']],
             ['view', ['fullscreen', 'codeview']],
             ['help', ['help']]
-        ]
+        ],
+        onpaste: function (e) {
+            var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+            e.preventDefault();
+            document.execCommand('insertText', false, bufferText);
+        }
+    });
+
+    $("input[id='gunung_api']").on('ifChecked', function(event) {
+        $('.gunung-api').show();
+    });
+
+    $("input[id='gunung_api']").on('ifUnchecked', function(event) {
+        $('.gunung-api').hide();
     });
 });
 </script>
