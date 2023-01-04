@@ -99,10 +99,10 @@ trait VonaTrait
             ->orderBy('issued', 'desc')
             ->first();
 
-        if ($latestVona->isEmpty())
+        if (is_null($latestVona))
             return 'unassigned';
 
-        return $latestVona->cu_avcode;
+        return $latestVona->current_code;
     }
 
     /**
