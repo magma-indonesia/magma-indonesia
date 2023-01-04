@@ -286,7 +286,7 @@ trait VonaTrait
             'cu_avcode' => $vona->current_code,
             'pre_avcode' => $vona->previous_code,
             'source' => "{$vona->gunungapi->name} Volcano Observatory",
-            'notice_number' => $this->noticenumber($request),
+            'notice_number' => $vona->noticenumber,
             'volcano_location' => $this->location($vona),
             'area' => "{$vona->gunungapi->province_en}, Indonesia",
             'summit_elevation' => $this->summitElevation($vona),
