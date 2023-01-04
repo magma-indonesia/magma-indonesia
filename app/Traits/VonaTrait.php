@@ -91,12 +91,13 @@ trait VonaTrait
     protected function previousCode(Request $request): string
     {
         $latestVona = Vona::where('code_id', $request->code)
+            ->where('issued', 'like', "$year%")
             ->where('type', $request->type)
             ->where('is_sent', 1)
             ->orderBy('issued', 'desc')
             ->first();
 
-        if (is_null($latestVona))
+        if ($latestVona->isEmpty())
             return 'unassigned';
 
         return $latestVona->cu_avcode;
