@@ -90,7 +90,7 @@ class VonaService
      */
     protected function sendToTelegram(Vona $vona): void
     {
-        if (request()->user()->hasRole('Super Admin')) {
+        if (optional(request()->user())->hasRole('Super Admin')) {
             $vona->notify(new VonaTelegram($vona));
         }
 
