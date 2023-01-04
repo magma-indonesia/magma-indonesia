@@ -90,6 +90,8 @@ trait VonaTrait
      */
     protected function previousCode(Request $request): string
     {
+        $year = now()->format('Y');
+
         $latestVona = Vona::where('code_id', $request->code)
             ->where('issued', 'like', "$year%")
             ->where('type', $request->type)
