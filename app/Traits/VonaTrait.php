@@ -32,7 +32,7 @@ trait VonaTrait
             ->where('type', $request->type)
             ->count();
 
-        $vonaCount = sprintf('%03d', $vonaCount);
+        $vonaCount = sprintf('%03d', $vonaCount + 1);
         return $prefix . $year . $request->code . $vonaCount;
     }
 
