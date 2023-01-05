@@ -119,6 +119,9 @@ Route::name('v1.')->group(function () {
         // Route::get('gunung-api/{name}', 'FrontPage\v1\GunungApiByVolcanoController@show')
         //     ->name('gunungapi.show');
 
+        Route::get('gerakan-tanah/lews', 'FrontPage\v1\LewsController@index')
+            ->name('gertan.lews');
+
         Route::get('gerakan-tanah/tanggapan','FrontPage\v1\GerakanTanahController@indexGertan')
             ->name('gertan.sigertan');
         Route::get('gerakan-tanah/tanggapan/{id?}','FrontPage\v1\GerakanTanahController@showGertan')

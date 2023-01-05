@@ -54,6 +54,21 @@ return [
             'engine' => null,
         ],
 
+        'lews' => [
+            'driver' => 'mysql',
+            'host' => env('LEWS_HOST', '127.0.0.1'),
+            'port' => env('LEWS_PORT', '3306'),
+            'database' => env('LEWS_DATABASE', 'forge'),
+            'username' => env('LEWS_USERNAME', 'forge'),
+            'password' => env('LEWS_PASSWORD', ''),
+            'unix_socket' => env('LEWS_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+
         'magma' => [
             'driver' => 'mysql',
             'host' => env('MAGMA_HOST', 'forge'),
