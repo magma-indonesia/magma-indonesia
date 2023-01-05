@@ -32,7 +32,7 @@ trait VonaTrait
             ->where('type', $request->type)
             ->count();
 
-        $vonaCount = sprintf('%03d', $vonaCount);
+        $vonaCount = sprintf('%03d', $vonaCount + 1);
         return $prefix . $year . $request->code . $vonaCount;
     }
 
@@ -90,7 +90,10 @@ trait VonaTrait
      */
     protected function previousCode(Request $request): string
     {
+        $year = now()->format('Y');
+
         $latestVona = Vona::where('code_id', $request->code)
+            ->where('issued', 'like', "$year%")
             ->where('type', $request->type)
             ->where('is_sent', 1)
             ->orderBy('issued', 'desc')
@@ -99,7 +102,7 @@ trait VonaTrait
         if (is_null($latestVona))
             return 'unassigned';
 
-        return $latestVona->cu_avcode;
+        return $latestVona->current_code;
     }
 
     /**
@@ -283,7 +286,7 @@ trait VonaTrait
             'cu_avcode' => $vona->current_code,
             'pre_avcode' => $vona->previous_code,
             'source' => "{$vona->gunungapi->name} Volcano Observatory",
-            'notice_number' => $this->noticenumber($request),
+            'notice_number' => $vona->noticenumber,
             'volcano_location' => $this->location($vona),
             'area' => "{$vona->gunungapi->province_en}, Indonesia",
             'summit_elevation' => $this->summitElevation($vona),

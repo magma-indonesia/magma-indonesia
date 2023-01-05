@@ -35,6 +35,7 @@ class VonaService
     public function storeVona(Request $request): self
     {
         $vona = Vona::firstOrCreate([
+            'noticenumber' => $this->noticenumber($request),
             'issued' => $this->issued($request),
             'type' => Str::upper($request->type),
             'code_id' => $request->code,
@@ -61,7 +62,6 @@ class VonaService
 
         $vona->update([
             'old_id' => $oldVona->no,
-            'noticenumber' => $oldVona->notice_number,
         ]);
 
         $this->vona = $vona;
@@ -90,7 +90,7 @@ class VonaService
      */
     protected function sendToTelegram(Vona $vona): void
     {
-        if (request()->user()->hasRole('Super Admin')) {
+        if (optional(request()->user())->hasRole('Super Admin')) {
             $vona->notify(new VonaTelegram($vona));
         }
 
