@@ -53,4 +53,8 @@ class LewsStation extends LewsModel
         'alias_ch14',
         'alias_ch15',
     ];
+
+    protected $cast = [
+        'last_update' => 'datetime:Y-m-d H:i:s',
+    ];
 }

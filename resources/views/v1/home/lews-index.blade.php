@@ -20,6 +20,25 @@ Landslide Early Warning System (LEWS)
 @section('main')
 <div class="row row-sm">
     <div class="col-lg-12">
+        <div class="table-responsive">
+            <table class="table mg-b-0 tx-13">
+                <thead>
+                    <tr class="tx-10">
+                        <th class="wd-10p pd-y-5 tx-center">Nama Stasiun</th>
+                        <th class="pd-y-5">Dusun</th>
+                        <th class="pd-y-5">Desa</th>
+                        <th class="pd-y-5">Kecamatan</th>
+                        <th class="pd-y-5">Kabupaten</th>
+                        <th class="pd-y-5">Kabupaten</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row row-sm">
+    <div class="col-lg-12">
         <div class="card mg-t-20 pd-20">
             <div id="container"></div>
         </div>
