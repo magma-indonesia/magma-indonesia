@@ -11,4 +11,8 @@ class LewsData extends LewsModel
     protected $guarded = [
         'ID'
     ];
+
+    protected $dates = [
+        'date_data',
+    ];
 }

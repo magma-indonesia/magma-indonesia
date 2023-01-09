@@ -3,10 +3,12 @@
 namespace App\GerakanTanah;
 
 use App\Traits\LewsChannelAlias;
+use App\Traits\LewsDataChannel;
 
 class LewsStation extends LewsModel
 {
     use LewsChannelAlias;
+    use LewsDataChannel;
 
     protected $primaryKey = 'ID';
 
@@ -17,6 +19,8 @@ class LewsStation extends LewsModel
     ];
 
     protected $appends = [
+        'data_count',
+        'channels_used',
         'channel_0',
         'channel_1',
         'channel_2',
@@ -54,7 +58,7 @@ class LewsStation extends LewsModel
         'alias_ch15',
     ];
 
-    protected $cast = [
-        'last_update' => 'datetime:Y-m-d H:i:s',
+    protected $dates = [
+        'last_update',
     ];
 }

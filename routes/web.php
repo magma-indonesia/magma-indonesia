@@ -121,6 +121,8 @@ Route::name('v1.')->group(function () {
 
         Route::get('gerakan-tanah/lews', 'FrontPage\v1\LewsController@index')
             ->name('gertan.lews');
+        Route::get('gerakan-tanah/lews/{id}', 'FrontPage\v1\LewsController@show')
+            ->name('gertan.lews.show');
 
         Route::get('gerakan-tanah/tanggapan','FrontPage\v1\GerakanTanahController@indexGertan')
             ->name('gertan.sigertan');
