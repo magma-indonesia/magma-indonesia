@@ -7,6 +7,7 @@ use App\GerakanTanah\LewsStation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 
 class LewsController extends Controller
 {
@@ -31,7 +32,9 @@ class LewsController extends Controller
     public function index()
     {
         return view('v1.home.lews-index', [
-            'stations' => LewsStation::all(),
+            'stations' => Cache::remember('lews-station', 15, function () {
+                return LewsStation::all();
+            }),
         ]);
     }
 
