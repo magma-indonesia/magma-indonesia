@@ -29,14 +29,12 @@ Landslide Early Warning System (LEWS)
                     </thead>
                     <tbody>
                         @foreach ($stations as $station)
-                            @if ($station->nama_dusun)
-                            <tr>
-                                <td>{{ $station->nama_sta }}</td>
-                                <td>{{ "$station->nama_kabupaten, $station->nama_kecamatan, $station->nama_desa, $station->nama_dusun" }}</td>
-                                <th>{{ $station->data_count }}</th>
-                                <td><a href="{{ route('v1.gertan.lews.show', $station) }}" target="_blank"> Lihat Data</a></td>
-                            </tr>
-                            @endif
+                        <tr>
+                            <td>{{ $station->nama_sta }}</td>
+                            <td>{{ "$station->nama_kabupaten, $station->nama_kecamatan, $station->nama_desa, $station->nama_dusun" }}</td>
+                            <th>{{ $station->data_count }}</th>
+                            <td><a href="{{ route('v1.gertan.lews.show', $station) }}" target="_blank"> Lihat Data</a></td>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>
