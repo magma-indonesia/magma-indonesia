@@ -25,7 +25,8 @@
                     </ul>
                     <label class="label-section mg-t-15">VONA <i class="icon ion-plane"></i></label>
                     <ul>
-                        <li><a href="{{ route('v1.vona.index') }}">Issued</a></li>
+                        <li><a href="{{ route('vona.index') }}">Issued</a></li>
+                        <li><a href="{{ route('v1.vona.index') }}">Archived</a></li>
                     </ul>
                 </div>
             </li>

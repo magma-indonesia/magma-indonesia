@@ -90,17 +90,17 @@ class Vona extends Model
         return strtolower($value);
     }
 
-    public function getAshHeightFtAttribute($value)
+    public function getAshHeightFtAttribute()
     {
         return round($this->attributes['ash_height'] * 0.3048);
     }
 
-    public function getSourceAttribute($value)
+    public function getSourceAttribute()
     {
         return self::SOURCE;
     }
 
-    public function getContactsAttribute($value)
+    public function getContactsAttribute()
     {
         return self::CONTACTS;
     }

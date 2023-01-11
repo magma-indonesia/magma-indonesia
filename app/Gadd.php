@@ -9,27 +9,8 @@ class Gadd extends Model
 {
     protected $table = 'ga_dd';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name',
-        'code',
-        'alias',
-        'tzone',
-        'zonearea',
-        'district',
-        'province',
-        'province_en',
-        'nearest_city',
-        'division',
-        'volc_type',
-        'elevation',
-        'latitude',
-        'longitude',
-        'smithsonian_id'
+    protected $guarded = [
+        'id',
     ];
 
     protected $hidden = [
@@ -64,6 +45,11 @@ class Gadd extends Model
     public function var()
     {
         return $this->hasMany('App\MagmaVar','code_id','code');
+    }
+
+    public function vonas()
+    {
+        return $this->hasMany('App\Vona', 'code_id', 'code');
     }
 
     /**

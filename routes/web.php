@@ -8,6 +8,7 @@
 |
 */
 
+use App\Http\Controllers\FrontPage\VonaController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['guest']], function () {
@@ -28,6 +29,9 @@ Route::group(['middleware' => ['guest']], function () {
 
 Route::get('logout','LoginController@logout')
         ->name('logout');
+
+Route::get('vona', [VonaController::class, 'index'])
+    ->name('vona.index');
 
 Route::name('v1.')->group(function () {
     Route::group(['prefix' => 'v1', 'middleware' => ['statistik.home']], function () {

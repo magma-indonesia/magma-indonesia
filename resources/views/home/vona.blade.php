@@ -1,16 +1,16 @@
 @extends('layouts.slim')
 
 @section('title')
-VONA
+Volcano Observatory Notice for Aviation (VONA)
 @endsection
 
 @section('breadcrumb')
 <li class="breadcrumb-item">VONA</li>
-<li class="breadcrumb-item active" aria-current="page">Archived</li>
+<li class="breadcrumb-item active" aria-current="page">Issued</li>
 @endsection
 
 @section('page-title')
-Archived
+VONA
 @endsection
 
 @section('main')
@@ -28,91 +28,26 @@ Archived
             <label class="slim-card-title">Volcanoes</label>
             <div class="row row-xs">
                 <div class="col-xs-12">
-                    <a href="{{ route('v1.vona.index') }}" type="button" class="btn btn-sm btn-primary mg-b-10">All Volcanoes</a>
+                    <a href="{{ route('vona.index') }}" type="button" class="btn btn-sm btn-primary mg-b-10">All Volcanoes</a>
                     @foreach ($gadds as $gadd)
-                    <a href="{{ route('v1.vona.index',['code' => $gadd->ga_code]) }}" type="button" class="btn btn-sm btn-primary mg-b-10">{{ $gadd->ga_nama_gapi }} ({{ $gadd->vona_count }})</a>
+                    <a href="{{ route('vona.index',['code' => $gadd->code]) }}" type="button" class="btn btn-sm btn-primary mg-b-10">{{ $gadd->name }} ({{ $gadd->vonas_count }})</a>
                     @endforeach
                 </div>
             </div>
         </div>
 
-        @if (!$grouped->isEmpty())
         <div class="card pd-30">
             <div class="mg-b-30">
                 {{ $vonas->appends(Request::except('page'))->onEachSide(1)->links('vendor.pagination.slim-paginate') }}
             </div>
+
             <div class="timeline-group">
 
-                @foreach ($grouped as $date => $grouped_vonas)
-
-                @if ($date != now()->format('Y-m-d'))
-                <div class="timeline-item timeline-day">
-                    <div class="timeline-time">&nbsp;</div>
-                    <div class="timeline-body">
-                    <p class="timeline-date">{{ \Carbon\Carbon::createFromFormat('Y-m-d', $date)->format('jS \\of F Y')}}, {{ \Carbon\Carbon::createFromFormat('Y-m-d', $date)->diffForHumans()  }}</p>
-                     </div>
-                </div>
-                @else
-                <div class="timeline-item timeline-day">
-                    <div class="timeline-time">&nbsp;</div>
-                    <div class="timeline-body">
-                        <p class="timeline-date">Today</p>
-                    </div>
-                </div>
-                @endif
-
-                @foreach ($grouped_vonas as $vona)
-                <div class="timeline-item">
-                    <div class="timeline-time"><small>{{ $vona->issued_time}} UTC</small>
-                    @switch($vona->cu_avcode)
-                        @case('GREEN')
-                            <a href="#" class="btn btn-sm btn-success">Green</a>
-                            @break
-                        @case('YELLOW')
-                            <a href="#" class="btn btn-sm bg-yellow" style="color: white;">Yellow</a>
-                            @break
-                        @case('ORANGE')
-                            <a href="#" class="btn btn-sm btn-warning">Orange</a>
-                            @break
-                        @default
-                            <a href="#" class="btn btn-sm btn-danger">Red</a>
-                    @endswitch
-                    </div>
-
-                    <div class="timeline-body">
-
-                        @if ($vona->type == 'EXERCISE')
-                        <div class="alert alert-outline alert-warning" role="alert">
-                            <strong>VA EXERCISE VA EXERCISE VA EXERCISE</strong>
-                        </div>
-                        @endif
-
-                        <p class="timeline-title"><a href="#">{{ $vona->ga_nama_gapi }} - {{ $vona->issued }}</a></p>
-                        <p class="timeline-author"><a href="#">{{ $vona->nama }}</a>, {{ $vona->source }} - {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $vona->issued_time)->addHours(7)->diffForHumans() }} </p>
-                        <p class="timeline-text">{{ ucfirst($vona->volcanic_act_summ).' '.$vona->vc_height_text.' '.$vona->other_vc_info }}.</p>
-                        <a class="card-link m-b-10" href="{{ URL::signedRoute('v1.vona.show',['id' => $vona->no ]) }}">View</a>
-
-                        @if ($vona->type == 'EXERCISE')
-                        <div class="alert alert-outline alert-warning mg-t-20" role="alert">
-                            <strong>VA EXERCISE VA EXERCISE VA EXERCISE</strong>
-                        </div>
-                        @endif
-                    </div>
-                </div>
-                @endforeach
-
-                @endforeach
-            </div>
-            <div class="mg-t-30">
-                {{ $vonas->appends(Request::except('page'))->onEachSide(1)->links('vendor.pagination.slim-paginate') }}
             </div>
         </div>
-        @else
-        <div class="alert alert-danger pd-30 mg-b-30" role="alert">
-            <strong>No VONA found.</strong> Please check your search parameters.
-        </div>
-        @endif
+
     </div>
+
     <div class="col-lg-3 mg-t-20 mg-lg-t-0">
 
         @if (session('status'))
