@@ -42,7 +42,20 @@ VONA
             </div>
 
             <div class="timeline-group">
-
+            @foreach ($grouped as $date => $grouped_vonas)
+                <div class="timeline-item timeline-day">
+                    <div class="timeline-time">&nbsp;</div>
+                    <div class="timeline-body">
+                        <p class="timeline-date">
+                            @if ($date === now()->format('Y-m-d'))
+                            Today
+                            @else
+{{ \Carbon\Carbon::createFromFormat('Y-m-d', $date)->format('jS \\of F Y')}}, {{ \Carbon\Carbon::createFromFormat('Y-m-d', $date)->diffForHumans()  }}
+                            @endif
+                        </p>
+                    </div>
+                </div>
+            @endforeach
             </div>
         </div>
 

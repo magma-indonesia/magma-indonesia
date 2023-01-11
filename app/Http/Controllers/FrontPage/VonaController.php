@@ -27,10 +27,11 @@ class VonaController extends Controller
         return Cache::tags(['fp-vona.index'])->remember(
             'home/vona:grouped:'.$vonas->first()->uuid.':'.$page, 30,
             function() use($vonas) {
-            return $vonas->groupBy(function ($vona) {
-                return substr($vona->issued, 0, 10);
-            });
-        });
+                return $vonas->groupBy(function ($vona) {
+                    return substr($vona->issued, 0, 10);
+                });
+            }
+        );
     }
 
     /**
@@ -63,7 +64,7 @@ class VonaController extends Controller
         return view('home.vona', [
             'gadds' => $gadds,
             'vonas' => $vonas,
-            'groupeds' => $grouped,
+            'grouped' => $grouped,
         ]);
     }
 
