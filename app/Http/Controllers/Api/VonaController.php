@@ -13,18 +13,25 @@ class VonaController extends Controller
 {
 
     use VonaLocation;
-    
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {        
+    {
         $vonas = Vona::orderBy('issued','desc')
-                    ->where('sent',1)
+                    ->where('is_sent',1)
                     ->paginate(30,['*'],'vona_page');
-        return new VonaCollection($vonas);
+
+        $vonas->getCollection()->transform(function ($vona) {
+            return $vona->issued;
+        });
+
+        return response()->json($vonas);
+
+        return $vonas;
     }
 
     /**
