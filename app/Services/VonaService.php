@@ -193,7 +193,7 @@ class VonaService
      * @param Vona $vona
      * @return PDF
      */
-    public function downloadPdf(Vona $vona): PDF
+    public function downloadPdf(Vona $vona)
     {
         $vona->load('gunungapi');
 

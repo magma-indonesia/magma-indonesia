@@ -107,7 +107,7 @@ class VonaController extends Controller
      *
      * @param Request $request
      * @param VonaService $vonaService
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function pdf(Vona $vona, VonaService $vonaService)
     {
