@@ -32,6 +32,9 @@ Route::get('logout/v1', 'Api\v1\LoginController@logout')
 Route::get('login/v1/status', 'Api\v1\LoginController@status')
     ->name('login.v1.status');
 
+Route::get('vona', 'Api\VonaController@index')
+    ->name('vona.index');
+
 // Route::group(['prefix' => 'tesuser'], function() {
 //     Route::get('mgt','TesUserMgtController@index');
 //     Route::get('mgb','TesUserMgbController@index');
