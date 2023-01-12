@@ -70,7 +70,7 @@ class VonaController extends Controller
      */
     public function show(Vona $vona)
     {
-        $vona = Vona::findOrFail($vona->uuid)->load('gunungapi');
+        $vona = $vona->load('gunungapi');
         $ven = $vona->old_ven_uuid ?
             MagmaVen::where('uuid', $vona->old_ven_uuid)->first() :
             null;

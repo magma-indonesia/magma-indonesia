@@ -42,7 +42,7 @@ VONA
             </div>
 
             <div class="timeline-group">
-            @foreach ($grouped as $date => $grouped_vonas)
+            @foreach ($grouped as $date => $vonas)
                 <div class="timeline-item timeline-day">
                     <div class="timeline-time">&nbsp;</div>
                     <div class="timeline-body">
@@ -50,11 +50,55 @@ VONA
                             @if ($date === now()->format('Y-m-d'))
                             Today
                             @else
-{{ \Carbon\Carbon::createFromFormat('Y-m-d', $date)->format('jS \\of F Y')}}, {{ \Carbon\Carbon::createFromFormat('Y-m-d', $date)->diffForHumans()  }}
+                            {{ \Carbon\Carbon::createFromFormat('Y-m-d', $date)->format('jS \\of F Y')}},
+                            {{ \Carbon\Carbon::createFromFormat('Y-m-d', $date)->diffForHumans()  }}
                             @endif
                         </p>
                     </div>
                 </div>
+
+                @foreach ($vonas as $vona)
+                <div class="timeline-item">
+                    <div class="timeline-time"><small>{{ $vona->issued}} UTC</small>
+                    @switch($vona->current_code)
+                        @case('GREEN')
+                            <a href="#" class="btn btn-sm btn-success">Green</a>
+                            @break
+                        @case('YELLOW')
+                            <a href="#" class="btn btn-sm bg-yellow" style="color: white;">Yellow</a>
+                            @break
+                        @case('ORANGE')
+                            <a href="#" class="btn btn-sm btn-warning">Orange</a>
+                            @break
+                        @default
+                            <a href="#" class="btn btn-sm btn-danger">Red</a>
+                    @endswitch
+                    </div>
+
+                    <div class="timeline-body">
+
+                        @if ($vona->type == 'EXERCISE')
+                        <div class="alert alert-outline alert-warning" role="alert">
+                            <strong>VA EXERCISE VA EXERCISE VA EXERCISE</strong>
+                        </div>
+                        @endif
+
+                        <p class="timeline-title"><a href="{{ route('vona.index',['code' => $vona->code_id]) }}">{{ $vona->gunungapi->name }} - {{ $vona->issued_utc }}</a></p>
+
+                        <p class="timeline-author"><span class="tx-primary tx-medium">{{ $vona->user->name }}</span>, {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $vona->issued_local)->setTimezone('UTC')->diffForHumans() }} </p>
+
+                        <p class="timeline-text">{{ $vona->volcanoActivitySummary($vona) }} {{ $vona->volcanicCloudHeight($vona) }}</p>
+
+                        <a class="card-link m-b-10" href="{{ URL::signedRoute('vona.show', ['uuid' => $vona ]) }}">View</a>
+
+                       @if ($vona->type == 'EXERCISE')
+                        <div class="alert alert-outline alert-warning mg-t-20" role="alert">
+                            <strong>VA EXERCISE VA EXERCISE VA EXERCISE</strong>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+                @endforeach
             @endforeach
             </div>
         </div>

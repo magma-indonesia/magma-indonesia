@@ -360,7 +360,7 @@ trait VonaTrait
      * @param Vona $vona
      * @return string
      */
-    protected function volcanicCloudHeight(Vona $vona): string
+    public function volcanicCloudHeight(Vona $vona): string
     {
         $feet = $vona->ash_height * $this->feet;
 
@@ -377,7 +377,7 @@ trait VonaTrait
      * @param Vona $vona
      * @return string
      */
-    protected function volcanoActivitySummary(Vona $vona): string
+    public function volcanoActivitySummary(Vona $vona): string
     {
         $utc = $vona->issued->format('Hi');
         $tz = $this->zoneArea($vona->gunungapi->zonearea);

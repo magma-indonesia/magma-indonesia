@@ -14,7 +14,7 @@ class VonaController extends Controller
 {
     public function __construct()
     {
-
+        Carbon::setLocale('en');
     }
 
     protected function cacheName()
@@ -59,7 +59,7 @@ class VonaController extends Controller
                     ->orderByDesc('issued')
                     ->paginate(15);
 
-        return $grouped = $this->grouped($vonas, $page);
+        $grouped = $this->grouped($vonas, $page);
 
         return view('home.vona', [
             'gadds' => $gadds,
@@ -97,7 +97,7 @@ class VonaController extends Controller
      */
     public function show(Vona $vona)
     {
-        //
+        return $vona;
     }
 
     /**

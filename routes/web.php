@@ -32,6 +32,9 @@ Route::get('logout','LoginController@logout')
 
 Route::get('vona', [VonaController::class, 'index'])
     ->name('vona.index');
+Route::get('vona/{uuid}', [VonaController::class, 'show'])
+    ->name('vona.show')
+    ->middleware('signed');
 
 Route::name('v1.')->group(function () {
     Route::group(['prefix' => 'v1', 'middleware' => ['statistik.home']], function () {

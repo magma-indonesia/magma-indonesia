@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Uuid;
+use App\Traits\VonaTrait;
 use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 
@@ -11,6 +12,7 @@ class Vona extends Model
 {
     use Uuid;
     use Notifiable;
+    use VonaTrait;
 
     public $incrementing = false;
 
