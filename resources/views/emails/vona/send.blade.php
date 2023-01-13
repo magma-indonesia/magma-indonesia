@@ -407,8 +407,8 @@
                                                         the colour code is changes. Latest volcanic information is
                                                         posted at <b>VONA | MAGMA
                                                             Indonesia</b> Website.<br>
-                                                        Link: <a href="{{ route('v1.vona.index')}}">{{
-                                                            route('v1.vona.index')}}</a>
+                                                        Link: <a href="{{ route('vona.index')}}">{{
+                                                            route('vona.index')}}</a>
                                                     </td>
                                                 </tr>
                                                 <tr style="background-color: rgba(0, 0, 0, 0.03);">
@@ -434,7 +434,7 @@
                                                             <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td> <a href="{{ URL::signedRoute('v1.vona.show', ['id' => $vona->old_id]) }}" target="_blank">{{ strtoupper($vona->gunungapi->name) }} {{ $vona->issued_utc }}</a> </td>
+                                                                        <td> <a href="{{ URL::signedRoute('vona.show', $vona) }}" target="_blank">{{ strtoupper($vona->gunungapi->name) }} {{ $vona->issued_utc }}</a> </td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>

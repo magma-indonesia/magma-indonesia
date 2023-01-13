@@ -407,8 +407,8 @@
                                                         the colour code is changes. Latest volcanic information is
                                                         posted at <b>VONA | MAGMA
                                                             Indonesia</b> Website.<br>
-                                                        Link: <a href="{{ route('v1.vona.index')}}">{{
-                                                            route('v1.vona.index')}}</a>
+                                                        Link: <a href="{{ route('vona.index')}}">{{
+                                                            route('vona.index')}}</a>
                                                     </td>
                                                 </tr>
                                                 <tr style="background-color: rgba(0, 0, 0, 0.03);">

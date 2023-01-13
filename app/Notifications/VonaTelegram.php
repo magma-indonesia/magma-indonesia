@@ -32,11 +32,14 @@ class VonaTelegram extends Notification implements ShouldQueue
     {
         $this->vona->load('gunungapi');
 
-        $url = URL::signedRoute('v1.vona.show', ['id' => $this->vona->old_id]);
+        $url = URL::signedRoute('vona.show', $this->vona);
 
-        $header = $this->vona->type === 'EXERCISE' ? "VA EXERCISE APAC VOLCEX 22/01" : "{$this->vona->gunungapi->name} {$this->vona->issued_utc}";
+        $header = $this->vona->type === 'EXERCISE' ?
+            "VA EXERCISE APAC VOLCEX 22/01" :
+            "{$this->vona->gunungapi->name} {$this->vona->issued_utc}";
 
-        $footer = $this->vona->type === 'EXERCISE' ? "VA EXERCISE VA EXERCISE VA EXERCISE" : $header;
+        $footer = $this->vona->type === 'EXERCISE' ?
+            "VA EXERCISE VA EXERCISE VA EXERCISE" : $header;
 
         $text = "*{$header}*\n"
         . "====================\n\n"
