@@ -83,13 +83,20 @@ VONA
                         </div>
                         @endif
 
-                        <p class="timeline-title"><a href="{{ route('vona.index',['code' => $vona->code_id]) }}">{{ $vona->gunungapi->name }} - {{ $vona->issued_utc }}</a></p>
+                        <p class="timeline-title">
+                            <a href="{{ route('vona.index',['code' => $vona->code_id]) }}">{{ $vona->gunungapi->name }} - {{ $vona->issued_utc }}</a>
+                        </p>
 
-                        <p class="timeline-author"><span class="tx-primary tx-medium">{{ $vona->user->name }}</span>, {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $vona->issued_local)->setTimezone('UTC')->diffForHumans() }} </p>
+                        <p class="timeline-author">
+                            <span class="tx-primary tx-medium">{{ $vona->user->name }}</span>,
+                            {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $vona->issued_local)->setTimezone('UTC')->diffForHumans() }}
+                        </p>
 
-                        <p class="timeline-text">{{ $vona->volcanoActivitySummary($vona) }} {{ $vona->volcanicCloudHeight($vona) }}</p>
+                        <p class="timeline-text">
+                            {{ $vona->volcanoActivitySummary($vona) }} {{ $vona->volcanicCloudHeight($vona) }}
+                        </p>
 
-                        <a class="card-link m-b-10" href="{{ URL::signedRoute('vona.show', ['uuid' => $vona ]) }}">View</a>
+                        <a class="card-link m-b-10" href="{{ URL::signedRoute('vona.show', $vona) }}">View</a>
 
                        @if ($vona->type == 'EXERCISE')
                         <div class="alert alert-outline alert-warning mg-t-20" role="alert">

@@ -61,7 +61,7 @@ class VonaController extends Controller
 
         $grouped = $this->grouped($vonas, $page);
 
-        return view('home.vona', [
+        return view('home.vona.index', [
             'gadds' => $gadds,
             'vonas' => $vonas,
             'grouped' => $grouped,

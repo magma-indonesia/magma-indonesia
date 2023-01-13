@@ -22,7 +22,7 @@ trait VonaTrait
      * @param Request $request
      * @return String
      */
-    protected function noticenumber(Request $request): string
+    public function noticenumber(Request $request): string
     {
         $prefix = $request->type == 'real' ? '' : 'EXERCISE-';
         $year = now()->format('Y');
@@ -88,7 +88,7 @@ trait VonaTrait
      *
      * @return string
      */
-    protected function previousCode(Request $request): string
+    public function previousCode(Request $request): string
     {
         $year = now()->format('Y');
 
@@ -242,7 +242,7 @@ trait VonaTrait
     }
 
     /**
-     * Undocumented function
+     * Volcano submit elevation
      *
      * @param Vona $vona
      * @return string
@@ -258,7 +258,7 @@ trait VonaTrait
      *
      * @return void
      */
-    protected function nextNotice()
+    public function nextNotice()
     {
         $route = URL::route('chambers.vona.index');
         $url = config('app.url');
@@ -346,7 +346,7 @@ trait VonaTrait
      * @param Vona $vona
      * @return string
      */
-    protected function ashCloudHeight(Vona $vona): string
+    public function ashCloudHeight(Vona $vona): string
     {
         $ashCloudAboveSeaLevel = $vona->ash_height + $vona->gunungapi->elevation;
 
@@ -394,7 +394,13 @@ trait VonaTrait
         return "Ash-cloud is not observed.";
     }
 
-    protected function ashIntensity(Vona $vona): string
+    /**
+     * Ash intensity
+     *
+     * @param Vona $vona
+     * @return string
+     */
+    public function ashIntensity(Vona $vona): string
     {
         if (count($vona->ash_intensity) == 1) {
             $intensity = strtolower(__($vona->ash_intensity[0]));
@@ -414,7 +420,7 @@ trait VonaTrait
      * @param Vona $vona
      * @return string
      */
-    protected function ashColor(Vona $vona): string
+    public function ashColor(Vona $vona): string
     {
         if (count($vona->ash_color) == 1) {
             $color = strtolower(__($vona->ash_color[0]));
@@ -434,7 +440,7 @@ trait VonaTrait
      * @param Vona $vona
      * @return string
      */
-    protected function ashDirections(Vona $vona): string
+    public function ashDirections(Vona $vona): string
     {
         if (count($vona->ash_directions) == 1) {
             $direction = strtolower(__($vona->ash_directions[0]));
@@ -456,7 +462,7 @@ trait VonaTrait
      * @param Vona $vona
      * @return string
      */
-    protected function otherVolcanicCloudInformation(Vona $vona): string
+    public function otherVolcanicCloudInformation(Vona $vona): string
     {
         if ($vona->ash_height == 0) {
             return "Ash-cloud is not observed.";
@@ -477,7 +483,7 @@ trait VonaTrait
      * @param Vona $vona
      * @return string
      */
-    protected function eruptionIsContinuing(Vona $vona): string
+    public function eruptionIsContinuing(Vona $vona): string
     {
         return $vona->is_continuing ? 'Eruption and ash emission is continuing.' : '';
     }
@@ -488,7 +494,7 @@ trait VonaTrait
      * @param Vona $vona
      * @return string
      */
-    protected function eruptionTremor(Vona $vona): string
+    public function eruptionTremor(Vona $vona): string
     {
         return $vona->amplitude_tremor > 0 ?
             "Tremor recorded on seismogram with maximum amplitude {$vona->amplitude_tremor} mm." : "";
@@ -500,7 +506,7 @@ trait VonaTrait
      * @param Vona $vona
      * @return string
      */
-    protected function eruptionRecording(Vona $vona): string
+    public function eruptionRecording(Vona $vona): string
     {
         if ($vona->amplitude == 0) {
             return "";
@@ -519,7 +525,7 @@ trait VonaTrait
      * @param Vona $vona
      * @return string
      */
-    protected function remarks(Vona $vona): string
+    public function remarks(Vona $vona): string
     {
         $data = array_filter([
             $this->eruptionIsContinuing($vona),
@@ -537,7 +543,7 @@ trait VonaTrait
      * @param Request $request
      * @return float
      */
-    protected function duration(Request $request): float
+    public function duration(Request $request): float
     {
         if ($request->erupsi_berlangsung || $request->color == 'green') {
             return 0;
@@ -551,7 +557,7 @@ trait VonaTrait
      *
      * @return void
      */
-    protected function clearVonaCache(): void
+    public function clearVonaCache(): void
     {
         Cache::tags(['fp-vona.index', 'api-vona.index'])->flush();
     }

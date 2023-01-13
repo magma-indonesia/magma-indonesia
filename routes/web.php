@@ -32,7 +32,7 @@ Route::get('logout','LoginController@logout')
 
 Route::get('vona', [VonaController::class, 'index'])
     ->name('vona.index');
-Route::get('vona/{uuid}', [VonaController::class, 'show'])
+Route::get('vona/{vona}', [VonaController::class, 'show'])
     ->name('vona.show')
     ->middleware('signed');
 
