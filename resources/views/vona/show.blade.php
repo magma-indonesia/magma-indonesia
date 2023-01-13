@@ -176,7 +176,7 @@ VONA | Volcano Observatory Notice for Aviation
                                     <td><b>:</b></td>
                                     <td>A new VONA will be issued if conditions change significantly or the colour code is changes.<br>
                                     Latest Volcanic information is posted at <b>VONA | MAGMA Indonesia</b> Website.<br>
-                                    Link: <a href="{{ route('v1.vona.index')}}">{{ route('v1.vona.index') }}</a></td>
+                                    Link: <a href="{{ route('vona.index')}}">{{ route('vona.index') }}</a></td>
                                 </tr>
                             </tbody>
                         </table>

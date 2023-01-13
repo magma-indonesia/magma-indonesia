@@ -153,6 +153,28 @@ trait VonaTrait
     }
 
     /**
+     * Undocumented function
+     *
+     * @param Vona $vona
+     * @return string
+     */
+    public function colorCss(string $currentColorCode): string
+    {
+        switch (strtoupper($currentColorCode)) {
+            case 'GREEN':
+                return 'bg-success';
+            case 'YELLOW':
+                return 'bg-yellow';
+            case 'ORANGE':
+                return 'bg-warning';
+            case 'RED':
+                return 'bg-danger';
+            default:
+                return 'bg-danger';
+        }
+    }
+
+    /**
      * Get current color code if the choice is not Auto
      *
      * @param Request $request
@@ -174,7 +196,7 @@ trait VonaTrait
      * @param Request $request
      * @return string
      */
-    protected function currentCode(Request $request): string
+    public function currentCode(Request $request): string
     {
         return $request->color === 'auto' ?
                 $this->getColor($request) : $this->getColorNonAuto($request);

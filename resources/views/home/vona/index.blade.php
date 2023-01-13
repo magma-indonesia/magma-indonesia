@@ -84,12 +84,16 @@ VONA
                         @endif
 
                         <p class="timeline-title">
+                            <span class="square-10 {{ $vona->colorCss($vona->current_code) }} mg-r-5 rounded-circle"></span>
                             <a href="{{ route('vona.index',['code' => $vona->code_id]) }}">{{ $vona->gunungapi->name }} - {{ $vona->issued_utc }}</a>
                         </p>
 
                         <p class="timeline-author">
                             <span class="tx-primary tx-medium">{{ $vona->user->name }}</span>,
                             {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $vona->issued_local)->setTimezone('UTC')->diffForHumans() }}
+                            @if ($vona->old_ven_uuid)
+                            <a href="{{ route('v1.gunungapi.ven.show', $vona->old_ven_uuid) }}" class="badge badge-primary tx-white">Auto</a>
+                            @endif
                         </p>
 
                         <p class="timeline-text">
