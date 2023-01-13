@@ -52,8 +52,9 @@ class VonaController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\VonaCreateRequest $request
-     * @return \Illuminate\Http\Response
+     * @param VonaCreateRequest $request
+     * @param VonaService $vonaService
+     * @return void
      */
     public function store(VonaCreateRequest $request, VonaService $vonaService)
     {
