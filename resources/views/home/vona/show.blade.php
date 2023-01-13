@@ -42,7 +42,7 @@
                             <td>(3)</td>
                             <td><b>Volcano</b></td>
                             <td><b>:</b></td>
-                            <td>{{ $vona->gunungapi->name.' ('.$vona->ga_id_smithsonian.')' }}</td>
+                            <td>{{ $vona->gunungapi->name.' ('.$vona->gunungapi->smithsonian_id.')' }}</td>
                         </tr>
                         <tr>
                             <td>(4)</td>
@@ -84,7 +84,7 @@
                             <td>(10)</td>
                             <td><b>Summit Elevation</b></td>
                             <td><b>:</b></td>
-                            <td>{{ round($vona->summit_elevation) }} FT ({{ round($vona->summit_elevation/3.2) }} M)</td>
+                            <td>{{ round($vona->gunungapi->elevation*3.2) }} FT ({{ round($vona->gunungapi->elevation) }} M)</td>
                         </tr>
                         <tr>
                             <td>(11)</td>
