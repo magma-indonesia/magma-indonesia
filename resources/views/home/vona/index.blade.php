@@ -30,7 +30,7 @@ VONA
                 <div class="col-xs-12">
                     <a href="{{ route('vona.index') }}" type="button" class="btn btn-sm btn-primary mg-b-10">All Volcanoes</a>
                     @foreach ($gadds as $gadd)
-                    <a href="{{ route('vona.index',['code' => $gadd->code]) }}" type="button" class="btn btn-sm btn-primary mg-b-10">{{ $gadd->name }} ({{ $gadd->vonas_count }})</a>
+                    <a href="{{ route('vona.index', array_merge(['code' => $gadd->code], request()->all())) }}" type="button" class="btn btn-sm btn-primary mg-b-10">{{ $gadd->name }} ({{ $gadd->vonas_count }})</a>
                     @endforeach
                 </div>
             </div>
@@ -148,16 +148,16 @@ VONA
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title tx-dark tx-medium mg-b-10">VONA Color Code</h5>
-                <a href="{{ route('vona.index', ['color' => 'GREEN']) }}" class="btn btn-sm btn-success mg-b-10">Green</a>
+                <a href="{{ route('vona.index', array_merge(['color' => 'GREEN'], request()->all())) }}" class="btn btn-sm btn-success mg-b-10">Green</a>
                 <p class="card-text tx-thin">Volcano is in normal, non-eruptive state, or, after a change from a higher level: Volcanic activity considered to have ceased, and volcano reverted to its normal, non-eruptive state.</p>
                 <hr>
-                <a href="{{ route('vona.index', ['color' => 'YELLOW']) }}" class="btn btn-sm bg-yellow mg-b-10" style="color: white;">Yellow</a>
+                <a href="{{ route('vona.index', array_merge(['color' => 'YELLOW'], request()->all())) }}" class="btn btn-sm bg-yellow mg-b-10" style="color: white;">Yellow</a>
                 <p class="card-text tx-thin">Volcano is experiencing signs of elevated unrest above known background levels, or, after a change from higher level: Volcanic activity has decreased significantly but continues to be closely monitored for possible renewed increase.</p>
                 <hr>
-                <a href="{{ route('vona.index', ['color' => 'ORANGE']) }}" class="btn btn-sm btn-warning mg-b-10">Orange</a>
+                <a href="{{ route('vona.index', array_merge(['color' => 'ORANGE'], request()->all())) }}" class="btn btn-sm btn-warning mg-b-10">Orange</a>
                 <p class="card-text tx-thin"> Volcano is exhibiting heightened unrest with increased likelihood of eruption with column height <b>below</b> 6000 meter above sea level.</p>
                 <hr>
-                <a href="{{ route('vona.index', ['color' => 'RED']) }}" class="btn btn-sm btn-danger mg-b-10">Red</a>
+                <a href="{{ route('vona.index', array_merge(['color' => 'RED'], request()->all())) }}" class="btn btn-sm btn-danger mg-b-10">Red</a>
                 <p class="card-text tx-thin">Eruption is forecast to be imminent with significant emission of ash with column height <b>above</b> 6000 meter above sea level.</p>
             </div>
         </div>

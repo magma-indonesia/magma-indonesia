@@ -16,6 +16,27 @@ class VonaHomeService
     public $vona;
 
     /**
+     * Get cache name for vona
+     *
+     * @param string $type
+     * @param string $uuid
+     * @param string|null $page
+     * @param string|null $code
+     * @param string|null $color
+     * @return string
+     */
+    protected function cacheName(
+        string $type,
+        string $uuid,
+        ?string $page = "1",
+        ?string $code = null,
+        ?string $color = null
+    ): string
+    {
+        return "home/{$type}:{$uuid}-{$page}{$code}{$color}";
+    }
+
+    /**
      * Gadd's collection
      *
      * @return Collection
@@ -32,32 +53,27 @@ class VonaHomeService
     /**
      * Gruped VONA by date
      *
-     * @param Request $request
      * @param LengthAwarePaginator|null $vonas
-     * @return Collection
+     * @return $this
      */
-    public function grouped(Request $request, ?LengthAwarePaginator $vonas = null): Collection
+    public function grouped(?LengthAwarePaginator $vonas = null): self
     {
-        $page = $request->has('page') ? $request->page : '1';
         $vonas = is_null($vonas) ? $this->get() : $vonas;
 
-        return Cache::tags(['fp-vona.index'])->remember(
-            'home/vona:grouped:' . $vonas->first()->uuid . ':' . $page, 30,
-            function () use ($vonas) {
-                return $vonas->groupBy(function ($vona) {
-                    return substr($vona->issued, 0, 10);
-                });
-            }
-        );
+        $this->vonas = $vonas->groupBy(function ($vona) {
+            return substr($vona->issued, 0, 10);
+        });
+
+        return $this;
     }
 
     /**
-     * Get VONA's
+     * Get cache VONA
      *
      * @param Request $request
-     * @return $this
+     * @return LengthAwarePaginator
      */
-    public function indexVona(Request $request): self
+    public function indexVonaCache(Request $request): LengthAwarePaginator
     {
         $vonas = Vona::query();
 
@@ -69,9 +85,34 @@ class VonaHomeService
             $vonas->where('current_code', $request->color);
         }
 
-        $vonas = $vonas->where('is_sent', 1)
+        return $vonas->where('is_sent', 1)
             ->orderByDesc('issued')
             ->paginate(15);
+    }
+
+    /**
+     * Get VONA's
+     *
+     * @param Request $request
+     * @return $this
+     */
+    public function indexVona(Request $request): self
+    {
+        $vona = Vona::orderBy('issued', 'desc')->first();
+
+        $cacheName = $this->cacheName(
+            'vonas',
+            $vona->uuid,
+            $request->page,
+            $request->code,
+            $request->color
+        );
+
+        $vonas = Cache::tags(['fp-vona.index'])->remember(
+            $cacheName, 30, function () use ($request) {
+                return $this->indexVonaCache($request);
+            }
+        );
 
         if ($vonas->isEmpty()) {
             abort(404, 'No VONA found. Please check your search parameters.');
@@ -85,9 +126,9 @@ class VonaHomeService
     /**
      * Get VONA's
      *
-     * @return LengthAwarePaginator
+     * @return mixed
      */
-    public function get(): LengthAwarePaginator
+    public function get()
     {
         return $this->vonas;
     }

@@ -33,7 +33,7 @@ class VonaController extends Controller
         return view('home.vona.index', [
             'gadds' => $vonaHomeService->gadds(),
             'vonas' => $vonaHomeService->indexVona($request)->get(),
-            'grouped' => $vonaHomeService->grouped($request),
+            'grouped' => $vonaHomeService->grouped()->get(),
         ]);
     }
 
