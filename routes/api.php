@@ -35,6 +35,17 @@ Route::get('login/v1/status', 'Api\v1\LoginController@status')
 Route::get('vona', 'Api\VonaController@index')
     ->name('vona.index');
 
+Route::name('vogamos.')->group(function () {
+    Route::group(['middleware' => ['jwt.auth']], function () {
+        Route::group(['prefix' => 'vogamos'], function () {
+            Route::get('/', 'Api\VogamosController@index')
+                ->name('index');
+            Route::post('store', 'Api\VogamosController@store')
+                ->name('store');
+        });
+    });
+});
+
 // Route::group(['prefix' => 'tesuser'], function() {
 //     Route::get('mgt','TesUserMgtController@index');
 //     Route::get('mgb','TesUserMgbController@index');
@@ -193,7 +204,7 @@ Route::name('novac.')->group(function () {
         Route::group(['prefix' => 'novac'], function () {
             Route::get('/', 'Api\NovacDataController@index')
                 ->name('index');
-            Route::get('create', 'Api\NovacDataController@create')
+            Route::post('store', 'Api\NovacDataController@create')
                 ->name('create');
         });
     });
