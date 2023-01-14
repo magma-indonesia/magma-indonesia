@@ -69,6 +69,21 @@ return [
             'engine' => null,
         ],
 
+        'vogamos' => [
+            'driver' => 'mysql',
+            'host' => env('VOGAMOS_HOST', '127.0.0.1'),
+            'port' => env('VOGAMOS_PORT', '3306'),
+            'database' => env('VOGAMOS_DATABASE', 'forge'),
+            'username' => env('VOGAMOS_USERNAME', 'forge'),
+            'password' => env('VOGAMOS_PASSWORD', ''),
+            'unix_socket' => env('VOGAMOS_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+
         'magma' => [
             'driver' => 'mysql',
             'host' => env('MAGMA_HOST', 'forge'),
