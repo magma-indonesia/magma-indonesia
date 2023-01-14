@@ -44,8 +44,14 @@ class VonaController extends Controller
      */
     public function create()
     {
+        $vona = Vona::with('gunungapi')->where('nip_pelapor', request()->user()->nip)
+            ->where('type', 'REAL')
+            ->where('is_sent', 1)
+            ->orderBy('issued','desc')->first();
+
         return view('vona.create', [
-            'gadds' => Gadd::select('name','code')->orderBy('name')->get()
+            'gadds' => Gadd::select('name','code')->orderBy('name')->get(),
+            'code' => $vona ? $vona->gunungapi->code : null,
         ]);
     }
 

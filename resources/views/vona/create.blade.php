@@ -89,7 +89,7 @@ Buat VONA Gunung Api
                                             <label>Gunung Api</label>
                                             <select id="code" class="form-control" name="code">
                                                 @foreach($gadds as $gadd)
-                                                <option value="{{ $gadd->code }}" {{ old('code') == $gadd->code ? 'selected' : ''}}>{{ $gadd->name }}</option>
+                                                <option value="{{ $gadd->code }}" {{ $code === $gadd->code ? 'selected' : ''}}>{{ $gadd->name }}</option>
                                                 @endforeach
                                             </select>
                                             @if( $errors->has('code'))
