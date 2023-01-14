@@ -23,7 +23,7 @@
 	<!-- App styles -->
 	<link rel="stylesheet" href="{{ asset('styles/style.css') }}">
 	<link rel="stylesheet" href="{{ asset('styles/app.css') }}">
-	
+
 	<style>
 		.full-img {
 			background-image: url('/svg/login.svg');
@@ -53,7 +53,7 @@
 					<div class="col-md-12">
 						<div class="text-center m-b-md">
 							<img alt="logo" class="p-m" src="{{ url('/').'/svg/login-logo.svg' }}" style="width: 240px;">
-							<h2>Login MAGMA</h2>					
+							<h2>Login MAGMA</h2>
 						</div>
 						<div class="hpanel">
 							<div class="panel-body" style="background: transparent;border: 0;">
@@ -69,7 +69,7 @@
 										<input type="password" title="Password" placeholder="******" name="password" id="password"
 											class="form-control" required>
 									</div>
-		
+
 									@if(count($errors) > 0)
 									<div class="form-group">
 										<div class="alert alert-danger">
@@ -81,7 +81,7 @@
 										</div>
 									</div>
 									@endif
-		
+
 									<button type="submit" class="btn btn-magma btn-block">Login</button>
 								</form>
 							</div>
@@ -93,11 +93,11 @@
 						<img style="max-width: 60px;" src="{{ url('/') }}/images/logo/esdm.gif">
 						<br>
 						<strong>Badan Geologi, PVMBG</strong> - MAGMA Indonesia
-						<br/> 2015 &copy; Kementerian Energi dan Sumber Daya Mineral
+						<br/> {{ now()->format('Y') }} &copy; Kementerian Energi dan Sumber Daya Mineral
 					</div>
 				</div>
 			</div>
-		</div>	
+		</div>
 	</div>
 
 	<!-- Vendor scripts -->
