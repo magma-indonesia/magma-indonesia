@@ -73,9 +73,10 @@ class AutoGempaBmkg extends Command
      * @param array $gempa
      * @return void
      */
-    protected function storeRoq(array $gempa): void
+    protected function storeRoq(string $idLaporan, array $gempa): void
     {
-        MagmaRoq::create($gempa);
+        MagmaRoq::firstOrCreate([
+            'id_lap' => $idLaporan], $gempa);
     }
 
     /**
@@ -202,8 +203,9 @@ class AutoGempaBmkg extends Command
         );
 
         $this->getNonExistedRoq($gempas)->each(function ($gempa) {
-            $this->storeRoq($gempa);
+            $this->storeRoq($gempa['id_lap'], $gempa);
         });
+
         $this->info('Importing gempa BMKG Berhasil!');
     }
 }
