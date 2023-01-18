@@ -77,10 +77,7 @@ class VonaController extends Controller
      */
     public function show(Vona $vona)
     {
-        $vona = $vona->load('gunungapi');
-        $ven = $vona->old_ven_uuid ?
-            MagmaVen::where('uuid', $vona->old_ven_uuid)->first() :
-            null;
+        $vona = $vona->load('gunungapi', 'old_ven');
 
         return view('vona.show', [
             'vona' => $vona,
@@ -89,7 +86,7 @@ class VonaController extends Controller
             'volcanic_cloud_height' => $this->volcanicCloudHeight($vona),
             'other_volcanic_cloud_information' => $this->otherVolcanicCloudInformation($vona),
             'remarks' => $this->remarks($vona),
-            'ven' => $ven,
+            'ven' => $vona->old_ven,
         ]);
     }
 
@@ -196,6 +193,5 @@ class VonaController extends Controller
         ];
 
         return response()->json($data);
-
     }
 }

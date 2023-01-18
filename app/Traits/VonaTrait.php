@@ -7,6 +7,7 @@ use App\Vona;
 use App\v1\Vona as VonaOld;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
@@ -429,11 +430,25 @@ trait VonaTrait
             return "The intensity of volcanic ash is observed to be {$intensity}.";
         }
 
-        $intensity = collect($vona->ash_intensity)->transform(function ($intensity) {
-            return strtolower(__($intensity));
-        });
+        $intensity = $this->translateAshIntensity($vona->ash_intensity)
+                ->transform(function ($intensity) {
+                    return strtolower($intensity);
+                });
 
         return "The intensity of volcanic ash is observed from {$intensity->first()} to {$intensity->last()}.";
+    }
+
+    /**
+     * Translate Ash Intensity to english
+     *
+     * @param array $ashIntensity
+     * @return Collection`
+     */
+    public function translateAshIntensity(array $ashIntensity): Collection
+    {
+        return collect($ashIntensity)->transform(function ($intensity) {
+            return (__($intensity));
+        });
     }
 
     /**
@@ -449,11 +464,25 @@ trait VonaTrait
             return "Volcanic ash is observed to be {$color}.";
         }
 
-        $colors = collect($vona->ash_color)->transform(function ($color) {
-            return strtolower(__($color));
-        });
+        $colors = $this->translateAshColor($vona->ash_color)
+            ->transform(function ($color) {
+                return strtolower($color);
+            });
 
         return "Volcanic ash is observed to be {$colors->first()} to {$colors->last()}.";
+    }
+
+    /**
+     * UTranslate ash color to english
+     *
+     * @param array $ashColors
+     * @return Collection
+     */
+    public function translateAshColor(array $ashColors): Collection
+    {
+        return collect($ashColors)->transform(function ($color) {
+            return (__($color));
+        });
     }
 
     /**
@@ -469,13 +498,27 @@ trait VonaTrait
             return "Ash cloud moving to {$direction}.";
         }
 
-        $directions = collect($vona->ash_directions)->transform(function ($direction) {
-            return strtolower(__($direction));
-        })->toArray();
+        $directions = $this->translateAshDirections($vona->ash_directions)
+            ->transform(function ($direction) {
+                return strtolower($direction);
+            })->toArray();
 
         $directions = Str::replaceLast(', ', ' to ', implode(', ', $directions));
 
         return "Ash cloud moving from {$directions}.";
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param array $ashDirections
+     * @return Collection
+     */
+    public function translateAshDirections(array $ashDirections): Collection
+    {
+        return collect($ashDirections)->transform(function ($direction) {
+            return (__($direction));
+        });
     }
 
     /**
@@ -553,7 +596,7 @@ trait VonaTrait
             $this->eruptionIsContinuing($vona),
             $this->eruptionRecording($vona),
             $this->eruptionTremor($vona),
-            $vona->remarks,
+            strlen($vona->remarks) <= 5 ? '' : $vona->remarks,
         ]);
 
         return implode(' ', $data);

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\VonaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,6 +35,18 @@ Route::get('login/v1/status', 'Api\v1\LoginController@status')
 
 Route::get('vona', 'Api\VonaController@index')
     ->name('vona.index');
+Route::get('vona/descriptive', [VonaController::class, 'indexDescriptive'])
+    ->name('vona.descriptive');
+Route::get('vona/latest', [VonaController::class, 'latest'])
+    ->name('vona.latest');
+Route::get('vona/latest/descriptive', [VonaController::class, 'latestDescriptive'])
+    ->name('vona.latest.descriptive');
+Route::get('vona/filter', [VonaController::class, 'filter'])
+    ->name('vona.filter');
+Route::get('vona/{uuid}', 'Api\VonaController@show')
+    ->name('vona.show');
+Route::get('vona/{vona}/descriptive', [VonaController::class, 'showDescriptive'])
+    ->name('vona.show.descriptive');
 
 Route::name('vogamos.')->group(function () {
     Route::group(['middleware' => ['jwt.auth']], function () {

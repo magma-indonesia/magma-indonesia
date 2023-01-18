@@ -126,4 +126,9 @@ class Vona extends Model
     {
         return $this->belongsTo('App\MagmaVen','ven_uuid','uuid');
     }
+
+    public function old_ven()
+    {
+        return $this->belongsTo('App\v1\MagmaVen', 'old_ven_uuid', 'uuid');
+    }
 }
