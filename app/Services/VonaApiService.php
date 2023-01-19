@@ -82,7 +82,7 @@ class VonaApiService
     {
         return [
             'uuid' => $vona->uuid,
-            'isseud' => $vona->issued_utc,
+            'issued' => $vona->issued_utc,
             'type' => $vona->type == 'REAL' ? 'Real' : 'Exercise',
             'volcano' => "{$vona->gunungapi->name} ({$vona->gunungapi->smithsonian_id})",
             'latitude' => $vona->gunungapi->latitude,
@@ -158,11 +158,12 @@ class VonaApiService
     /**
      * Get vona index
      *
+     * @param LengthAwarePaginator|null $vonas
      * @return LengthAwarePaginator
      */
-    public function indexVona(): LengthAwarePaginator
+    public function indexVona(?LengthAwarePaginator $vonas = null): LengthAwarePaginator
     {
-        $vonas = $this->vonas();
+        $vonas = $vonas ?: $this->vonas();
         $vonas->getCollection()->transform(function (Vona $vona) {
             return $this->vonaIndexResponse($vona);
         });

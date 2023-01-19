@@ -38,7 +38,7 @@ class VonaController extends Controller
     /**
      * Show vona in descriptive
      *
-     * @param [type] $uuid
+     * @param string $uuid
      * @param VonaApiService $vonaApiService
      * @return void
      */
@@ -54,7 +54,7 @@ class VonaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Vona  $vona
+     * @param string $uuid
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(string $uuid, VonaApiService $vonaApiService)
@@ -67,7 +67,7 @@ class VonaController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Get latest vona
      *
      * @param VonaApiService $vonaApiService
      * @return \Illuminate\Http\JsonResponse
@@ -88,25 +88,29 @@ class VonaController extends Controller
         return response()->json($vonaApiService->latestVonaDescriptive());
     }
 
-    public function filter(VonaFilterRequest $request)
+    /**
+     * Filtering vonas
+     *
+     * @param VonaFilterRequest $request
+     * @param VonaApiService $vonaApiService
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function filter(VonaFilterRequest $request, VonaApiService $vonaApiService)
     {
-        $vona = Vona::query();
+        $vonas = Vona::query();
 
         if ($request->filled('code')) {
-            $vona->where('code_id', $request->code);
+            $vonas->where('code_id', $request->code);
         }
 
         if ($request->filled('start_date')) {
-            $vona->where('issued','>=', $request->start_date);
+            $vonas->where('issued','>=', $request->start_date);
         }
 
         if ($request->filled('end_date')) {
-            $vona->where('issued', '<=', $request->end_date);
+            $vonas->where('issued', '<=', $request->end_date);
         }
 
-        // return Vona::whereBetween('issued', [$request->start_date, $request->end_date])
-        //     ->paginate();
-
-        return $vona->paginate();
+        return $vonaApiService->indexVona($vonas->paginate());
     }
 }
