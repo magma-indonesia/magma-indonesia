@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\VonaFilterRequest;
 use App\Services\VonaApiService;
 use App\Vona;
 
@@ -87,27 +88,20 @@ class VonaController extends Controller
         return response()->json($vonaApiService->latestVonaDescriptive());
     }
 
-    public function filter(Request $request)
+    public function filter(VonaFilterRequest $request)
     {
         $vona = Vona::query();
-        $startDate = now()->subDays(100);
-        $endDate = now();
-        $isDescriptive = 0;
 
-        if ($request->has('code')) {
+        if ($request->filled('code')) {
             $vona->where('code_id', $request->code);
         }
 
-        if ($request->has('start_date')) {
-            $startDate = $request->start_date;
+        if ($request->filled('start_date')) {
+            $vona->where('issued','>=', $request->start_date);
         }
 
-        if ($request->has('end_date')) {
-            $endDate = $request->end_date;
-        }
-
-        if ($request->has('start_date') AND $request->has('end_date')) {
-            $vona->whereBetween('issued', [$startDate, $endDate]);
+        if ($request->filled('end_date')) {
+            $vona->where('issued', '<=', $request->end_date);
         }
 
         // return Vona::whereBetween('issued', [$request->start_date, $request->end_date])
