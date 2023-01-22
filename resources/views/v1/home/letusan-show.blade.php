@@ -70,6 +70,12 @@ Informasi Letusan
                                 <a href="whatsapp://send?text={{ url()->full()
                                 }}" class="btn btn-success"><i class="fa fa-whatsapp mg-r-5"></i>Whatsapp</a>
                             </div>
+
+                            <ul class="nav nav-activity-profile mg-t-20 mg-b-20">
+                                <li class="nav-item"><a href="https://t.me/MagmaIndonesia" class="nav-link">
+                                    <i class="icon ion-navigate tx-purple"></i> Notifikasi Erupsi Telegram</a>
+                                </li>
+                            </ul>
                         </div><!-- col-8 -->
                     </div><!-- row -->
                 </div>
