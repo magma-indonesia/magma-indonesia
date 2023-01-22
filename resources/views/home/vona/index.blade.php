@@ -24,6 +24,11 @@ VONA
             </div>
         </div>
 
+        <ul class="nav nav-activity-profile mg-t-20 mg-b-20">
+            <li class="nav-item"><a href="https://t.me/vona_indonesia" class="nav-link"><i class="icon ion-navigate tx-purple"></i> Join VONA Telegram Channel</a>
+            </li>
+        </ul>
+
         <div class="card pd-30 mg-b-20">
             <label class="slim-card-title">Volcanoes</label>
             <div class="row row-xs">
