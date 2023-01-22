@@ -20,6 +20,7 @@ Informasi Letusan
 @section('main')
 <div class="row row-sm row-timeline">
     <div class="col-lg-8">
+
         <div class="card pd-30 mg-b-20">
             <label class="slim-card-title">Filter Gunung Api</label>
             <div class="row row-xs">
@@ -31,6 +32,11 @@ Informasi Letusan
                 </div>
             </div>
         </div>
+
+        <ul class="nav nav-activity-profile mg-t-20 mg-b-20">
+            <li class="nav-item"><a href="https://t.me/MagmaIndonesia" class="nav-link"><i class="icon ion-navigate tx-purple"></i> Notifikasi Letusan Telegram</a>
+            </li>
+        </ul>
 
         <div class="card pd-30">
             {{ $vens->appends(Request::except('page'))->onEachSide(1)->links('vendor.pagination.slim-paginate') }}
