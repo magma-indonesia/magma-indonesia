@@ -1,17 +1,22 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\{
+    ChamberController,
+    StatistikController,
+    RoutesController
+};
 
-Route::get('/','ChamberController@index')->name('index');
-Route::get('statistik/{year?}','StatistikController@index')
+Route::get('/',[ChamberController::class, 'index'])->name('index');
+Route::get('statistik/{year?}', [StatistikController::class, 'index'])
     ->name('statistik.index');
 
-Route::get('routes', 'RoutesController@index');
+Route::get('routes', [RoutesController::class, 'index']);
 
-Route::resource('edukasi', 'EdukasiController');
-Route::resource('glossary', 'GlossaryController');
-Route::resource('crs','CrsController');
-Route::resource('pengajuan','PengajuanController');
+Route::resource('edukasi', EdukasiController::class);
+Route::resource('glossary', GlossaryController::class);
+Route::resource('crs', CrsController::class);
+Route::resource('pengajuan', PengajuanController::class);
 Route::post('crs/lokasi','CrsController@getCities')->name('crs.getcities');
 Route::get('export/{type}','ExportController@index')->name('export');
 
@@ -32,6 +37,8 @@ Route::name('administratif.')->group(function () {
                     ->name('statistik-kegiatan.index');
         });
     });
+
+    Route::resource('overtime', 'OvertimeController');
 });
 
 Route::get('absensi/search','AbsensiController@search')->name('absensi.search');
@@ -226,7 +233,7 @@ Route::get('roles/assign', 'RoleController@assign')
     ->name('roles.assign');
 Route::post('roles/assign', 'RoleController@saveRole');
 Route::resource('roles', 'RoleController');
-Route::resource('press-release','PressReleaseController');
+Route::resource('press-release', PressReleaseController::class);
 Route::resource('tag', 'TagController');
 
 Route::post('vona/send/{vona}', 'VonaController@send')

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class PressReleaseCreateRequest extends FormRequest
 {
@@ -16,6 +17,13 @@ class PressReleaseCreateRequest extends FormRequest
         return auth()->check();
     }
 
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'slug' => Str::slug($this->judul),
+        ]);
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -25,7 +33,9 @@ class PressReleaseCreateRequest extends FormRequest
     {
         return [
             'judul' => 'required|max:254',
+            'slug' => 'required|unique:press_releases,slug',
             'datetime' => 'nullable|date_format:Y-m-d H:i',
+            'no_surat' => 'nullable|max:254',
             'categories' => 'required|array',
             'categories.*' => 'required|in:gunung_api,gerakan_tanah,gempa_bumi,tsunami,lainnya',
             'code' => 'sometimes|required|size:3|exists:ga_dd,code',
@@ -36,6 +46,8 @@ class PressReleaseCreateRequest extends FormRequest
             'files.*' => 'sometimes|required|max:5120',
             'gambars' => 'sometimes|required|array',
             'gambars.*' => 'sometimes|required|max:3072',
+            'petas' => 'sometimes|required|array',
+            'petas.*' => 'sometimes|required|max:3072',
         ];
     }
 }

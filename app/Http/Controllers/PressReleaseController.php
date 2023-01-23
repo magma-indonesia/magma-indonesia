@@ -27,7 +27,7 @@ class PressReleaseController extends Controller
      */
     public function index()
     {
-        return PressRelease::all();
+        return PressRelease::with('press_release_files')->get();
     }
 
     /**
@@ -55,7 +55,13 @@ class PressReleaseController extends Controller
         PressReleaseService $pressReleaseService,
         PressReleaseFileService $pressReleaseFileService)
     {
-        return $request;
+        $pressRelease = $pressReleaseService->storePressRelease($request)
+            ->press_release_files()
+            ->createMany(
+                $pressReleaseFileService->storeFiles($request)->toArray()
+            );
+
+        return $pressRelease->load('press_release_files');
     }
 
     /**

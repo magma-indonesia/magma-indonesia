@@ -32,9 +32,6 @@ Buat Press Release
                 </ol>
             </div>
 
-            <p class="m-b-lg m-l-sm tx-16">
-                Gunakan menu ini untuk membuat press release.
-            </p>
             <div class="alert alert-danger">
                 <i class="fa fa-gears"></i> Halaman ini masih dalam tahap pengembangan. Error, bug, maupun penurunan
                 performa bisa terjadi sewaktu-waktu
@@ -62,9 +59,6 @@ Buat Press Release
                                     <p>
                                         Gunakan judul yang jelas dan pilih kategori press release yang sesuai.
                                     </p>
-                                    <p>
-                                        Jika kategori belum ada, silahkan tambahkan kategori di <a href="{{ route('chambers.tag.index') }}">link berikut ini.</a>
-                                    </p>
                                 </div>
 
                                 <div class="col-lg-8">
@@ -83,6 +77,13 @@ Buat Press Release
                                             @if( $errors->has('datetime'))
                                             <label class="error" for="datetime">{{ ucfirst($errors->first('datetime')) }}</label>
                                             @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-lg-12">
+                                            <label>No. Surat (optional)</label>
+                                            <input type="text" value="{{ old('no_surat') }}" class="form-control" name="no_surat" placeholder="No. Surat Press Release jika ada">
                                         </div>
                                     </div>
 
@@ -122,6 +123,7 @@ Buat Press Release
                                     <div class="row">
                                         <div class="form-group col-lg-12">
                                             <label>Pilih Label</label>
+                                            <div><p>Label digunakan untuk melakukan grouping jenis berita. Berguna untuk dilakukan filtering. Jika label belum ada, bisa ditambahkan melalui <a href="{{ route('chambers.tag.index') }}" target="_blank"><b>tautan berikut ini</b></a> </div>
                                             <div class="row">
                                                 @foreach ($tags->chunk(5) as $tagsChunk)
                                                 <div class="col-sm-12 col-md-6">
@@ -182,12 +184,30 @@ Buat Press Release
                                         </div>
                                     </div>
                                     <hr>
-                                </div>
 
-                                <div class="col-lg-8">
                                     <div class="row">
                                         <div class="form-group col-lg-12">
-                                            <label>Gambar</label>
+                                            <label>Peta KRB/Grafik/Hasil Pemodelan</label>
+                                            <div><p>Gunakan menu ini untuk mengupload file hasil olahan data pemantauan. Format yang diterima adalah format gambar. Per file <strong>maksimal 3MB.</strong></p></div>
+                                            <div class="m-b-sm">
+                                                @for ($i = 0; $i < 5; $i++)
+                                                <label class="w-xs m-t-sm btn btn-outline btn-default btn-peta">
+                                                    <i class="fa fa-upload"></i>
+                                                    <span class="label-peta">Browse </span>
+                                                    <input id="peta_{{ $i }}" accept="image/jpeg" class="peta" name="petas[]" type="file" style="display: none;">
+                                                </label>
+                                                @endfor
+                                            </div>
+                                            <div class="m-t-sm">
+                                                <button type="button" class="w-xs btn btn-danger clear-peta"><i class="fa fa-trash"></i> Bersihkan File Peta/Grafik</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+
+                                    <div class="row">
+                                        <div class="form-group col-lg-12">
+                                            <label>Foto/Gambar</label>
                                             <div><p>Bisa dalam bentuk Infografis, Poster, Leaflet, Flyer atau Publikasi lainnya. Format yang diterima adalah format gambar. Per file <strong>maksimal 3MB.</strong></p></div>
                                             <div class="m-b-sm">
                                                 @for ($i = 0; $i < 5; $i++)
@@ -204,7 +224,6 @@ Buat Press Release
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -251,7 +270,6 @@ Buat Press Release
                                 </div>
                             </div>
 
-                            <hr>
                             <div class="row">
                                 <div class="col-lg-offset-4 col-lg-8">
                                     <div class="text-right">
@@ -306,12 +324,25 @@ $(document).ready(function() {
         input.siblings('.label-gambar').html(label);
     });
 
+    $('input.peta').on('change', function(e) {
+        var input = $(this),
+            label = input.val()
+                        .replace(/\\/g, '/')
+                        .replace(/.*\//, '');
+
+        input.siblings('.label-peta').html(label);
+    });
+
     $('.clear-file').on('click', function(e) {
         $('.label-file').html('Browse');
     });
 
     $('.clear-gambar').on('click', function(e) {
         $('.label-gambar').html('Browse');
+    });
+
+    $('.clear-peta').on('click', function(e) {
+        $('.label-peta').html('Browse');
     });
 
     $('.summernote').summernote({

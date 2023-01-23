@@ -17,7 +17,8 @@ class CreatePressReleasesTable extends Migration
             $table->increments('id');
             $table->string('judul');
             $table->string('slug')->index();
-            $table->datetime('datetime')->nullable();
+            $table->string('no_surat')->nullable();
+            $table->datetime('datetime')->useCurrent();
             $table->boolean('gunung_api')->default(0);
             $table->boolean('gerakan_tanah')->default(0);
             $table->boolean('gempa_bumi')->default(0);
