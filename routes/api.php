@@ -48,6 +48,15 @@ Route::get('vona/{uuid}', 'Api\VonaController@show')
 Route::get('vona/{vona}/descriptive', [VonaController::class, 'showDescriptive'])
     ->name('vona.show.descriptive');
 
+Route::name('mounts.')->group(function () {
+    Route::group(['middleware' => ['jwt.auth']], function () {
+        Route::group(['prefix' => 'mounts'], function () {
+            Route::get('/', 'Api\MountsController@index')
+                ->name('index');
+        });
+    });
+});
+
 Route::name('vogamos.')->group(function () {
     Route::group(['middleware' => ['jwt.auth']], function () {
         Route::group(['prefix' => 'vogamos'], function () {
