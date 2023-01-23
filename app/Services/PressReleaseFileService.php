@@ -16,16 +16,35 @@ class PressReleaseFileService
 
     }
 
+    /**
+     * Get path
+     *
+     * @param string $type
+     * @return string
+     */
     public function path(string $type): string
     {
         return "press-release/{$type}";
     }
 
+    /**
+     * Get thumbnail path
+     *
+     * @param string $type
+     * @return string
+     */
     public function thumbnailPath(string $type): string
     {
         return "press-release/{$type}/thumbnails";
     }
 
+    /**
+     * Return all stored files
+     *
+     * @param UploadedFile $file
+     * @param string $type
+     * @return array
+     */
     public function storeFile(UploadedFile $file, string $type): array
     {
         $name = $file->store("public/press-release/{$type}");
@@ -42,6 +61,12 @@ class PressReleaseFileService
         ];
     }
 
+    /**
+     * Store files
+     *
+     * @param Request $request
+     * @return Collection
+     */
     public function storeFiles(Request $request): Collection
     {
         return collect(['files', 'petas', 'gambars'])->transform(function ($type) use ($request) {
