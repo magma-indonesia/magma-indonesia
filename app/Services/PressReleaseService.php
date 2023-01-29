@@ -17,7 +17,7 @@ class PressReleaseService
     {
         $pressRelease = PressRelease::firstOrCreate([
             'slug' => $request->slug,
-            'datetime' => $request->datetime,
+            'datetime' => $request->datetime ?? now(),
         ],[
             'judul' => $request->judul,
             'no_surat' => $request->no_surat,

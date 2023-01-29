@@ -8,6 +8,7 @@
 |
 */
 
+use App\Http\Controllers\FrontPage\PressReleaseController;
 use App\Http\Controllers\FrontPage\VonaController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,9 @@ Route::get('vona', [VonaController::class, 'index'])
 Route::get('vona/{vona}', [VonaController::class, 'show'])
     ->name('vona.show')
     ->middleware('signed');
+
+Route::get('press-release/{id}/{slug}', [PressReleaseController::class, 'show'])
+    ->name('press-release.show');
 
 Route::name('v1.')->group(function () {
     Route::group(['prefix' => 'v1', 'middleware' => ['statistik.home']], function () {
@@ -125,6 +129,9 @@ Route::name('v1.')->group(function () {
 
         // Route::get('gunung-api/{name}', 'FrontPage\v1\GunungApiByVolcanoController@show')
         //     ->name('gunungapi.show');
+
+        Route::get('gunung-api/vogamos', 'FrontPage\v1\VogamosController@index')
+            ->name('gunung-api.vogamos');
 
         Route::get('gerakan-tanah/lews', 'FrontPage\v1\LewsController@index')
             ->name('gertan.lews');

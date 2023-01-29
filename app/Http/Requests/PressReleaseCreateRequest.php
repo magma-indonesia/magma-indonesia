@@ -48,6 +48,7 @@ class PressReleaseCreateRequest extends FormRequest
             'gambars.*' => 'sometimes|required|max:3072',
             'petas' => 'sometimes|required|array',
             'petas.*' => 'sometimes|required|max:3072',
+            'is_published' => 'required|boolean',
         ];
     }
 }

@@ -12,7 +12,7 @@ class PressReleaseFile extends Model
 
     protected $appends = [
         'url',
-        // 'thumbnail'
+        'thumbnail'
     ];
 
     /**
@@ -32,7 +32,11 @@ class PressReleaseFile extends Model
      */
     public function getThumbnailAttribute()
     {
-        return asset('storage/press-release/thumbnails/' . $this->attributes['filename']);
+        if ($this->attributes['collection'] !== 'files') {
+            return asset("storage/press-release/{$this->attributes['collection']}/thumbnails/{$this->attributes['name']}");
+        }
+
+        return null;
     }
 
     /**

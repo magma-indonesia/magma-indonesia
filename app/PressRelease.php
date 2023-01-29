@@ -4,7 +4,6 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use App\PressReleaseFile;
 
 class PressRelease extends Model
 {
@@ -36,9 +35,9 @@ class PressRelease extends Model
         return $this->belongsTo('App\Gadd', 'code_id', 'code');
     }
 
-    public function pengirim()
+    public function user()
     {
-        return $this->belongsTo('App\User', 'nip_pengirim', 'nip');
+        return $this->belongsTo('App\User', 'nip', 'nip');
     }
 
     /**
@@ -48,7 +47,7 @@ class PressRelease extends Model
      */
     public function press_release_files()
     {
-        return $this->hasMany(PressReleaseFile::class);
+        return $this->hasMany('App\PressReleaseFile');
     }
 
     /**

@@ -34,6 +34,7 @@ class CreatePressReleasesTable extends Migration
             $table->char('nip', 18)->index();
             $table->foreign('nip')
                 ->references('nip')->on('users');
+            $table->boolean('is_published')->default(1);
             $table->softDeletes();
             $table->timestamps();
         });

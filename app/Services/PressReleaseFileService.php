@@ -2,18 +2,21 @@
 
 namespace App\Services;
 
-use App\PressRelease;
-use App\PressReleaseFile;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class PressReleaseFileService
 {
-    public function createThumbnail()
+    public function createThumbnail(UploadedFile $file, string $type, string $name): void
     {
+        $thumbnail = Image::make(storage_path("app/$name"))->resize(250, 250, function ($constraint) {
+            $constraint->aspectRatio();
+        })->encode('jpg');
 
+        Storage::disk('public')->put("{$this->thumbnailPath($type)}/{$file->hashName()}", $thumbnail);
     }
 
     /**
@@ -39,16 +42,15 @@ class PressReleaseFileService
     }
 
     /**
-     * Return all stored files
+     * Undocumented function
      *
      * @param UploadedFile $file
      * @param string $type
+     * @param string $name
      * @return array
      */
-    public function storeFile(UploadedFile $file, string $type): array
+    public function toArray(UploadedFile $file, string $type, string $name): array
     {
-        $name = $file->store("public/press-release/{$type}");
-
         return [
             'name' => $file->hashName(),
             'file_name' => $file->getClientOriginalName(),
@@ -62,6 +64,18 @@ class PressReleaseFileService
     }
 
     /**
+     * Return all stored files
+     *
+     * @param UploadedFile $file
+     * @param string $type
+     * @return string
+     */
+    public function storeFile(UploadedFile $file, string $type): string
+    {
+        return $file->store("public/press-release/{$type}");
+    }
+
+    /**
      * Store files
      *
      * @param Request $request
@@ -72,7 +86,13 @@ class PressReleaseFileService
         return collect(['files', 'petas', 'gambars'])->transform(function ($type) use ($request) {
             if ($request->has($type)) {
                 return collect($request->file($type))->transform(function ($file) use ($type) {
-                    return $this->storeFile($file, $type);
+                    $name = $this->storeFile($file, $type);
+
+                    if ($type !== 'files') {
+                        $this->createThumbnail($file, $type, $name);
+                    }
+
+                    return $this->toArray($file, $type, $name);
                 });
             }
         })->filter()->flatten(1)->values();

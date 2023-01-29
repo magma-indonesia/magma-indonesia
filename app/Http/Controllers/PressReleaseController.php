@@ -9,6 +9,7 @@ use App\Services\PressReleaseFileService;
 use App\Services\PressReleaseService;
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PressReleaseController extends Controller
 {
@@ -27,7 +28,11 @@ class PressReleaseController extends Controller
      */
     public function index()
     {
-        return PressRelease::with('press_release_files')->get();
+        return view('press-release.index', [
+            'pressReleases' => PressRelease::select('id', 'judul', 'slug', 'nip')
+                ->withCount('press_release_files')->with('user')->get(),
+            'categories' => $this->categories,
+        ]);
     }
 
     /**
@@ -45,9 +50,11 @@ class PressReleaseController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store Press Release
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param PressReleaseCreateRequest $request
+     * @param PressReleaseService $pressReleaseService
+     * @param PressReleaseFileService $pressReleaseFileService
      * @return \Illuminate\Http\Response
      */
     public function store(
@@ -55,11 +62,15 @@ class PressReleaseController extends Controller
         PressReleaseService $pressReleaseService,
         PressReleaseFileService $pressReleaseFileService)
     {
-        $pressRelease = $pressReleaseService->storePressRelease($request)
-            ->press_release_files()
-            ->createMany(
-                $pressReleaseFileService->storeFiles($request)->toArray()
-            );
+        $pressRelease = DB::transaction(function () use ($request, $pressReleaseService, $pressReleaseFileService) {
+            $pressRelease = $pressReleaseService->storePressRelease($request);
+            $pressRelease->press_release_files()
+                ->createMany(
+                    $pressReleaseFileService->storeFiles($request)->toArray()
+                );
+
+            return $pressRelease;
+        });
 
         return $pressRelease->load('press_release_files');
     }
@@ -72,7 +83,10 @@ class PressReleaseController extends Controller
      */
     public function show(PressRelease $pressRelease)
     {
-        //
+        return redirect()->route('press-release.show', [
+            'id' => $pressRelease->id,
+            'slug' => $pressRelease->slug
+        ]);
     }
 
     /**
@@ -83,7 +97,12 @@ class PressReleaseController extends Controller
      */
     public function edit(PressRelease $pressRelease)
     {
-        //
+        return view('press-release.edit', [
+            'pressRelease' => $pressRelease->load('press_release_files', 'tags'),
+            'tags' => Tag::all(),
+            'categories' => $this->categories,
+            'gadds' => Gadd::select('name', 'code')->orderBy('name')->get(),
+        ]);
     }
 
     /**
