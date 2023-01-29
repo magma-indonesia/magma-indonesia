@@ -128,6 +128,15 @@ trait VonaTrait
      */
     protected function getColor(Request $request): string
     {
+        $ashHeightAboveSeaLevel = $this->ashCloudHeightAboveSeaLevel($request);
+
+        if ($request->erupsi_berlangsung) {
+            if ($ashHeightAboveSeaLevel >= 6000)
+                return 'RED';
+
+            return 'ORANGE';
+        }
+
         if ($request->visibility == 0) {
             if (($request->amplitudo == 0) and ($request->amplitudo_tremor == 0)) {
                 return 'GREEN';
@@ -141,8 +150,6 @@ trait VonaTrait
                 return 'ORANGE';
             }
         }
-
-        $ashHeightAboveSeaLevel = $this->ashCloudHeightAboveSeaLevel($request);
 
         if ($ashHeightAboveSeaLevel >= 6000)
             return 'RED';
