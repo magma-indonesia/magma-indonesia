@@ -413,6 +413,10 @@ trait VonaTrait
         $tz = $this->zoneArea($vona->gunungapi->zonearea);
         $local = Carbon::createFromTimeString($vona->issued, 'UTC')->setTimezone($tz)->format('Hi');
 
+        if (strtoupper($vona->current_code) === 'YELLOW') {
+            return "Increasing in volcanic activity.";
+        }
+
         if ($vona->is_visible) {
             return "Eruption with volcanic ash cloud at {$utc} UTC ({$local} local).";
         }
