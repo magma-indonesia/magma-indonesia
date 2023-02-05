@@ -1,7 +1,7 @@
 @extends('layouts.slim')
 
 @section('title')
-VONA
+VONA | Volcano Observatory Notice for Aviation
 @endsection
 
 @section('breadcrumb')
