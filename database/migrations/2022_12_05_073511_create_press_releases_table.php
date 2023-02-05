@@ -31,9 +31,10 @@ class CreatePressReleasesTable extends Migration
                 ->onDelete('set null');
             $table->longText('deskripsi');
             $table->bigInteger('hit')->default(0);
-            $table->char('nip', 18)->index();
+            $table->char('nip', 18)->index()->nullable();
             $table->foreign('nip')
-                ->references('nip')->on('users');
+                ->references('nip')->on('users')
+                ->onDelete('set null');
             $table->boolean('is_published')->default(1);
             $table->softDeletes();
             $table->timestamps();

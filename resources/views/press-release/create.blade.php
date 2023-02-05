@@ -269,16 +269,57 @@ Buat Press Release
 
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                            <div class="row">
-                                <div class="col-lg-offset-4 col-lg-8">
-                                    <div class="text-right">
-                                        <a href="{{ url()->previous() }}" class="btn btn-outline btn-danger">Cancel</a>
-                                        <button type="submit" class="btn btn-danger">Submit</button>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="hpanel hred">
+                    <div class="panel-body">
+                        <div class="tab-pane active">
+                            <div class="row m-b-lg">
+                                <div class="col-lg-4 text-center m-b-lg">
+                                    <i class="pe-7s-ribbon fa-5x text-muted"></i>
+                                    <p class="m-t-md">
+                                        <strong>Simpan dan Publikasi</strong>
+                                    </p>
+                                    <p>
+                                        Simpan dan atau publikasi press release yang dibuat.
+                                    </p>
+                                </div>
+
+                                <div class="col-lg-8">
+                                    <div class="row">
+                                        <div class="form-group col-sm-12">
+                                            <label>Apakah Press Release akan dipublikasikan langsung?</label>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <label class="checkbox" style="font-weight: normal"><input name="is_published" value="1" type="radio" class="i-checks is-published"
+                                                            {{ (old('is_published') == '1' OR empty(old('is_published'))) ? 'checked' : ''}}> Ya, segera publikasikan </label>
+                                                    <label class="checkbox" style="font-weight: normal"><input name="is_published" value="0" type="radio" class="i-checks is-published"
+                                                            {{ (old('is_published') == '0') ? 'checked' : ''}}> Tidak, simpan sebagai draft </label>
+
+                                                    <span class="help-block m-b-none">Pastikan informasi press release telah mengikuti penggunaan bahasa Indonesia yang baik dan benar.</span>
+
+                                                    @if( $errors->has('is_published'))
+                                                    <label class="error" for="is_published">{{ ucfirst($errors->first('is_published')) }}</label>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group col-sm-12">
+                                            <hr>
+                                            <a href="{{ url()->previous() }}" class="btn btn-outline btn-danger">Cancel</a>
+                                            <button type="submit" class="btn btn-danger">Submit</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

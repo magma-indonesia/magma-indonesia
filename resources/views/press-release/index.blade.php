@@ -71,6 +71,28 @@ Press Release
 
             </div>
         </div>
+
+        <div class="col-lg-6 col-xs-12">
+            <div class="hpanel hred">
+                <div class="panel-body h-200">
+                    <div class="stats-title pull-left">
+                        <h4>Tags/Label</h4>
+                    </div>
+
+                    <div class="stats-icon pull-right">
+                        <i class="pe-7s-note2 fa-4x text-danger"></i>
+                    </div>
+
+                    <div class="m-t-xl">
+                        <h1>{{ $tagsCounts }}</h1>
+                        <p> Tag digunakan untuk memberikan label pada press release, laporan, atau pengguna. Dapat juga digunakan untuk mengelompokkan data dalam satu kelompok yang sama. Tag atau label bersifat unik.
+                        </p>
+                        <a href="{{ route('chambers.tag.index') }}" class="btn btn-outline btn-danger"><i class="fa fa-plus"></i> Create</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 
     <div class="row">

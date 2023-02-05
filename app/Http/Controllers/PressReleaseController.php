@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Gadd;
 use App\Http\Requests\PressReleaseCreateRequest;
+use App\Http\Requests\PressReleaseUpdateRequest;
 use App\PressRelease;
 use App\Services\PressReleaseFileService;
 use App\Services\PressReleaseService;
@@ -29,8 +30,9 @@ class PressReleaseController extends Controller
     public function index()
     {
         return view('press-release.index', [
-            'pressReleases' => PressRelease::select('id', 'judul', 'slug', 'nip')
+            'pressReleases' => PressRelease::select('id', 'judul', 'slug', 'nip', 'is_published')
                 ->withCount('press_release_files')->with('user')->get(),
+            'tagsCounts' => Tag::count(),
             'categories' => $this->categories,
         ]);
     }
@@ -97,8 +99,13 @@ class PressReleaseController extends Controller
      */
     public function edit(PressRelease $pressRelease)
     {
+        $pressRelease = $pressRelease->load('press_release_files', 'tags');
+
         return view('press-release.edit', [
-            'pressRelease' => $pressRelease->load('press_release_files', 'tags'),
+            'pressRelease' => $pressRelease,
+            'pressReleaseFiles' => $pressRelease->press_release_files->mapToGroups(function ($file) {
+                return [$file->collection => $file];
+            }),
             'tags' => Tag::all(),
             'categories' => $this->categories,
             'gadds' => Gadd::select('name', 'code')->orderBy('name')->get(),
@@ -106,15 +113,19 @@ class PressReleaseController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Store update for press release
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\PressRelease  $pressRelease
+     * @param PressReleaseUpdateRequest $request
+     * @param PressRelease $pressRelease
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PressRelease $pressRelease)
-    {
-        //
+    public function update(
+        PressReleaseUpdateRequest $request,
+        PressRelease $pressRelease,
+        PressReleaseService $pressReleaseService,
+        PressReleaseFileService $pressReleaseFileService
+    ) {
+        return $request;
     }
 
     /**

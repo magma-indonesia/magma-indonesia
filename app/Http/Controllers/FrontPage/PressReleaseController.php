@@ -10,6 +10,7 @@ class PressReleaseController extends Controller
 {
     public function show(string $id, string $slug)
     {
-        return PressRelease::where('id', $id)->where('slug', $slug)->firstOrFail();
+        return PressRelease::with('tags', 'press_release_files')
+            ->where('id', $id)->where('slug', $slug)->firstOrFail();
     }
 }
