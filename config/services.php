@@ -38,7 +38,8 @@ return [
     'telegram-bot-api' => [
         'token' => env('TELEGRAM_BOT_TOKEN', 'YOUR BOT TOKEN HERE'),
         'magma_channel' => env('TELEGRAM_MAGMA_CHANNEL', 'ID Channel MAGMA'),
-        'vona_channel' => env('TELEGRAM_VONA_CHANNEL', 'ID Channel MAGMA'),
+        'vona_channel' => env('TELEGRAM_VONA_CHANNEL', 'ID Channel VONA'),
+        'developer_channel' => env('TELEGRAM_DEVELOPER_CHANNEL', 'ID Channel Developer MAGMA'),
     ],
 
 ];

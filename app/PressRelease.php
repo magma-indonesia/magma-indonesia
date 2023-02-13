@@ -27,7 +27,7 @@ class PressRelease extends Model
      */
     public function routeNotificationForTelegram()
     {
-        return "-1001228642046";
+        return config('services.telegram-bot-api.developer_channel');;
     }
 
     public function gunungapi()
