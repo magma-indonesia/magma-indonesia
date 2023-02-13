@@ -102,7 +102,7 @@ Edit Press Release
                                                     @foreach ($categories as $value => $name)
                                                     <div class="checkbox">
                                                         <label><input
-                                                                id="{{ $value === 'gunung_api' ? 'gunung_api' : '' }}"
+                                                                id="{{ $value }}"
                                                                 name="categories[]" value="{{ $value }}" type="checkbox"
                                                                 class="i-checks categories" {{ $pressRelease->{$value} ? 'checked' : '' }}> {{ $name }}
                                                         </label>
@@ -111,6 +111,18 @@ Edit Press Release
 
                                                 </div>
                                             </div>
+                                        </div>
+
+                                     <div class="form-group col-sm-12 lainnya" style="display: {{ $pressRelease->lainnya ? 'block' :'none'}};">
+                                            <label>Kategori Lainya</label>
+
+                                           <div><p>Jika tidak ada pilihan kategori yang terdaftar, silahkan masukkan kategori lainnya di sini</p></div>
+
+                                            <input type="text" value="{{ $pressRelease->lainnya }}" class="form-control" name="lainnya" placeholder="Kategori lainnya">
+
+                                            @if( $errors->has('lainnya'))
+                                            <label class="error" for="lainnya">{{ ucfirst($errors->first('lainnya')) }}</label>
+                                            @endif
                                         </div>
 
                                         <div class="form-group col-sm-12 gunung-api"
@@ -543,8 +555,16 @@ Edit Press Release
         $('.gunung-api').show();
     });
 
+    $("input[id='lainnya']").on('ifChecked', function(event) {
+        $('.lainnya').show();
+    });
+
     $("input[id='gunung_api']").on('ifUnchecked', function(event) {
         $('.gunung-api').hide();
+    });
+
+    $("input[id='lainnya']").on('ifUnchecked', function(event) {
+        $('.lainnya').hide();
     });
 });
 </script>

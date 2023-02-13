@@ -36,11 +36,6 @@ Press Release
                 <i class="fa fa-gears"></i> Halaman ini masih dalam tahap pengembangan. Error, bug, maupun penurunan
                 performa bisa terjadi sewaktu-waktu
             </div>
-            @if (session('message'))
-            <div class="alert alert-success">
-                <i class="fa fa-check"></i> {{ session('message') }}
-            </div>
-            @endif
         </div>
     </div>
 </div>
@@ -97,6 +92,14 @@ Press Release
 
     <div class="row">
         <div class="col-lg-12">
+
+            @if (session()->has('message'))
+            <div class="alert alert-success">
+                <i class="fa fa-check"></i> {{ session()->get('message') }}.
+                <a href="{{ session()->get('url') }}" target="_blank">Lihat Press Release</a>
+            </div>
+            @endif
+
             <div class="hpanel">
                 <div class="panel-body">
                     <table id="table-press-release" class="table table-striped" data-sorting="true" data-expand-first="true" data-page-size="10" data-paging="true" data-paging-limit="10" data-filtering="true" data-filter-placeholder="Cari..." data-filter-position="left">
@@ -117,7 +120,7 @@ Press Release
                                 <td>{{ $pressRelease->is_published ? 'Ya' : 'Tidak' }}</td>
                                 <td>{{ $pressRelease->user->name }}</td>
                                 <td>
-                                    <a href="{{ route('press-release.show', ['id' => $pressRelease->id, 'slug' => $pressRelease->slug ]) }}" class="btn btn-sm btn-info btn-outline m-b-xs" type="button" title="View">View</a>
+                                    <a href="{{ route('press-release.show', ['id' => $pressRelease->id, 'slug' => $pressRelease->slug ]) }}" class="btn btn-sm btn-info btn-outline m-b-xs" type="button" title="View" target="_blank">View</a>
                                     <a href="{{ route('chambers.press-release.edit', $pressRelease) }}" class="btn btn-sm btn-warning btn-outline m-b-xs" type="button" title="Edit">Edit</a>
                                     <a class="btn btn-sm btn-success btn-outline m-b-xs m-l form-submit" data-id="{{ $pressRelease->id }}" type="button" title="Aktivasi" data-value="1">Publish</a>
                                     <a class="btn btn-sm btn-danger btn-outline m-b-xs m-r form-submit" data-id="{{ $pressRelease->id }}" type="button" title="Deaktivasi" data-value="0">Unpublish</a>
