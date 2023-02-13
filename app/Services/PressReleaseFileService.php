@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use App\PressRelease;
+use App\PressReleaseFile;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
@@ -81,7 +84,7 @@ class PressReleaseFileService
      * @param Request $request
      * @return Collection
      */
-    public function storeFiles(Request $request): Collection
+    public function store(Request $request): Collection
     {
         return collect(['files', 'petas', 'gambars'])->transform(function ($type) use ($request) {
             if ($request->has($type)) {
@@ -96,5 +99,42 @@ class PressReleaseFileService
                 });
             }
         })->filter()->flatten(1)->values();
+    }
+
+    public function destroyFiles(EloquentCollection $pressReleaseFiles)
+    {
+        $pressReleaseFiles = PressReleaseFile::whereIn('id', $pressReleaseFiles->pluck('id'))->get();
+
+        $pressReleaseFiles->each(function ($file) {
+            Storage::disk($file->disk)->delete("$file->path/thumbnails/$file->name");
+            Storage::disk($file->disk)->delete("$file->path/$file->name");
+            $file->delete();
+        });
+    }
+
+    public function storeFiles(Request $request, PressRelease $pressRelease)
+    {
+        return $this->save($request, $pressRelease);
+    }
+
+    public function updateFiles(Request $request, PressRelease $pressRelease)
+    {
+        if ($request->has('delete_files')) {
+            $this->destroyFiles(
+                PressReleaseFile::whereIn('id', $request->delete_files)->get()
+            );
+        }
+
+        return $this->save($request, $pressRelease);
+    }
+
+    public function save(Request $request, PressRelease $pressRelease)
+    {
+        $pressRelease->press_release_files()
+            ->createMany(
+                $this->store($request)->toArray()
+            );
+
+        return $pressRelease->load('press_release_files');
     }
 }

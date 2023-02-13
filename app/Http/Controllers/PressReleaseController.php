@@ -9,8 +9,8 @@ use App\PressRelease;
 use App\Services\PressReleaseFileService;
 use App\Services\PressReleaseService;
 use App\Tag;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 
 class PressReleaseController extends Controller
 {
@@ -66,15 +66,18 @@ class PressReleaseController extends Controller
     {
         $pressRelease = DB::transaction(function () use ($request, $pressReleaseService, $pressReleaseFileService) {
             $pressRelease = $pressReleaseService->storePressRelease($request);
-            $pressRelease->press_release_files()
-                ->createMany(
-                    $pressReleaseFileService->storeFiles($request)->toArray()
-                );
+            $pressReleaseFileService->storeFiles($request, $pressRelease);
 
             return $pressRelease;
         });
 
-        return $pressRelease->load('press_release_files');
+        return redirect()
+            ->route('chambers.press-release.index')
+            ->with([
+                'message' => "$pressRelease->judul berhasil dibuat",
+                'url' => URL::route('press-release.show',
+                    ['id' => $pressRelease->id, 'slug' => $pressRelease->slug]),
+            ]);
     }
 
     /**
@@ -125,7 +128,11 @@ class PressReleaseController extends Controller
         PressReleaseService $pressReleaseService,
         PressReleaseFileService $pressReleaseFileService
     ) {
-        return $request;
+        $pressRelease = $pressReleaseService->updatePressRelease($request, $pressRelease);
+
+        $pressReleaseFileService->updateFiles($request, $pressRelease);
+
+        return $pressRelease;
     }
 
     /**
