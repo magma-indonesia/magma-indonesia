@@ -146,7 +146,7 @@
 
         // Initialize summernote plugin
         $('.summernote').summernote({
-            height: '300px',
+            height: '600',
             toolbar: [
                 ['style', ['style']],
                 ['font', ['bold', 'italic', 'underline', 'clear']],
