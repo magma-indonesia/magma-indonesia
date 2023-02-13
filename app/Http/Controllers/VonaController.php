@@ -8,7 +8,6 @@ use App\Http\Requests\SendEmailRequest;
 use App\Http\Requests\VonaCreateRequest;
 use App\Services\VonaService;
 use App\Traits\VonaTrait;
-use App\v1\MagmaVen;
 use App\v1\Vona as V1Vona;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
