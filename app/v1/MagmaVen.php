@@ -39,7 +39,7 @@ class MagmaVen extends Model
      */
     public function routeNotificationForTelegram()
     {
-        return "-1001228642046";
+        return config('services.telegram-bot-api.magma_channel');
     }
 
 
