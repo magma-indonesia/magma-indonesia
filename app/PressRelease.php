@@ -30,14 +30,19 @@ class PressRelease extends Model
         return config('services.telegram-bot-api.developer_channel');;
     }
 
-    public function gunungapi()
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function gunungApi()
     {
-        return $this->belongsTo('App\Gadd', 'code_id', 'code');
+        return $this->belongsTo(Gadd::class, 'code', 'code');
     }
 
     public function user()
     {
-        return $this->belongsTo('App\User', 'nip', 'nip');
+        return $this->belongsTo(User::class, 'nip', 'nip');
     }
 
     /**
@@ -47,7 +52,7 @@ class PressRelease extends Model
      */
     public function press_release_files()
     {
-        return $this->hasMany('App\PressReleaseFile');
+        return $this->hasMany(PressReleaseFile::class);
     }
 
     /**
