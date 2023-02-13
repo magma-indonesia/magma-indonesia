@@ -74,7 +74,7 @@ class PressReleaseController extends Controller
         return redirect()
             ->route('chambers.press-release.index')
             ->with([
-                'message' => "$pressRelease->judul berhasil dibuat",
+                'message' => "{$pressRelease->judul} berhasil dibuat",
                 'url' => URL::route('press-release.show',
                     ['id' => $pressRelease->id, 'slug' => $pressRelease->slug]),
             ]);
@@ -132,7 +132,15 @@ class PressReleaseController extends Controller
 
         $pressReleaseFileService->updateFiles($request, $pressRelease);
 
-        return $pressRelease;
+        return redirect()
+            ->route('chambers.press-release.index')
+            ->with([
+                'message' => "{$pressRelease->judul} berhasil diperbarui",
+                'url' => URL::route(
+                    'press-release.show',
+                    ['id' => $pressRelease->id, 'slug' => $pressRelease->slug]
+                ),
+            ]);
     }
 
     /**
