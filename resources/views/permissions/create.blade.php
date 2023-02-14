@@ -1,8 +1,8 @@
-@extends('layouts.default') 
+@extends('layouts.default')
 
-@section('title') 
-    Create Permission 
-@endsection 
+@section('title')
+    Create Permission
+@endsection
 
 @section('content-header')
 <div class="small-header">
@@ -48,7 +48,7 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <input name="name[]" type="text" placeholder="Min 3 Karakter, Maksimal 10 Karakter" class="form-control" value="" required>
-                                <span class="input-group-btn"> 
+                                <span class="input-group-btn">
                                     <button type="button" class="btn btn-primary add-permission" style="width:40px;"> + </button>
                                 </span>
                             </div>
@@ -59,10 +59,10 @@
                             <div class="input-group">
                                 <input name="name[]" type="text" placeholder="Min 3 Karakter, Maksimal 10 Karakter" class="form-control" value="{{ old('name.'.$i) }}" required>
                                 <span class="input-group-btn">
-                                @if($i>0)                  
+                                @if($i>0)
                                     <button type="button" class="btn btn-danger remove-permission" style="width:40px;"> - </button>
                                 @else
-                                    <button type="button" class="btn btn-primary add-permission" style="width:40px;"> + </button>                        
+                                    <button type="button" class="btn btn-primary add-permission" style="width:40px;"> + </button>
                                 @endif
                                 </span>
                             </div>
@@ -72,13 +72,13 @@
                         </div>
                         @endfor
                         @endif
-                        
+
                         @if(!$roles->isEmpty())
                         <div class="form-group">
                             <label>Roles</label>
                             @foreach($roles as $role)
                                 <div class="checkbox">
-                                    <label><input name="roles[]" value="{{$role->id}}" type="checkbox" class="i-checks"> {{$role->name}} </label>                       
+                                    <label><input name="roles[]" value="{{$role->id}}" type="checkbox" class="i-checks"> {{$role->name}} </label>
                                 </div>
                             @endforeach
                             @if( $errors->has('roles'))
@@ -86,9 +86,9 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label>Pilih Semua</label> 
+                            <label>Pilih Semua</label>
                             <div class="checkbox">
-                                <label><input type="checkbox" class="i-checks all"> Check All</label>    
+                                <label><input type="checkbox" class="i-checks all"> Check All</label>
                             </div>
                         </div>
 
@@ -103,21 +103,21 @@
         </div>
     </div>
 </div>
-@endsection 
+@endsection
 
 @section('add-vendor-script')
 <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
-@endsection 
+@endsection
 
 @section('add-script')
 <script>
-    
+
 	$(document).ready(function(){
 
         var $checkAll = $('input.all'),
             $checkboxes = $('input.i-checks');
 
-        $checkAll.on('ifChecked ifUnchecked', function(event) {        
+        $checkAll.on('ifChecked ifUnchecked', function(event) {
             if (event.type == 'ifChecked') {
                 $checkboxes.iCheck('check');
             } else {
@@ -140,7 +140,7 @@
                 $removePlus  = $ele.find('.input-group-btn').remove(),
                 $remove = '<span class="input-group-btn"><button type="button" class="btn btn-danger remove-permission" style="width:40px;"> - </button></span>',
                 $addRemove = $ele.find('input').after($remove);
-            
+
             $(this).closest('.form-group').after($ele);
 
         });
