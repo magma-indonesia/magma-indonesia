@@ -67,6 +67,11 @@ class PressReleaseController extends Controller
             });
     }
 
+    public function index()
+    {
+        return PressRelease::all();
+    }
+
     /**
      * Show Press Release
      *

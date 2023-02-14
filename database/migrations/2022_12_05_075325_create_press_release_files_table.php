@@ -28,6 +28,7 @@ class CreatePressReleaseFilesTable extends Migration
             $table->string('disk')->default('public');
             $table->string('file_hash', 64);
             $table->string('collection')->nullable();
+            $table->text('overview')->nullable();
             $table->unsignedBigInteger('size');
             $table->timestamps();
         });

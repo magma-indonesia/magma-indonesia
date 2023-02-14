@@ -37,6 +37,8 @@ Route::get('vona/{vona}', [VonaController::class, 'show'])
     ->name('vona.show')
     ->middleware('signed');
 
+Route::get('press-release', [PressReleaseController::class, 'index'])
+    ->name('press-release.index');
 Route::get('press-release/{id}/{slug}', [PressReleaseController::class, 'show'])
     ->name('press-release.show');
 

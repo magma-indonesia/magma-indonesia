@@ -9,3 +9,9 @@
 {{ $thumbnail }}
 @endsection
 @endif
+
+@section('breadcrumb')
+<li class="breadcrumb-item active" aria-current="page">
+    <a href="{{ route('press-release.index') }}">Press Release</a>
+</li>
+@endsection

@@ -162,6 +162,11 @@ Buat Press Release
 
         <div class="row">
             <div class="col-lg-12">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
                 <div class="hpanel hred">
                     <div class="panel-body">
                         <div class="tab-pane active">
@@ -177,64 +182,89 @@ Buat Press Release
                                 </div>
 
                                 <div class="col-lg-8">
-                                    <div class="row">
-                                        <div class="form-group col-lg-12">
-                                            <label>Dokumen</label>
-                                            <div><p>Format dokumen yang diterima adalah format PDF dengan ukuran per filenya <strong>maksimal 5MB.</strong></p></div>
-                                            <div class="m-b-sm">
-                                                @for ($i = 0; $i < 5; $i++)
-                                                <label class="w-xs m-t-sm btn btn-outline btn-default btn-file">
+                                    {{-- Dokumen --}}
+                                    <div class="form-group">
+                                        <label>Dokumen</label>
+                                        <div><p>Format dokumen yang diterima adalah format PDF dengan ukuran per filenya <strong>maksimal 5MB.</strong></p></div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="input-group btn-file">
+                                            <span class="input-group-btn">
+                                                <label class="btn btn-primary">
                                                     <i class="fa fa-upload"></i>
                                                     <span class="label-file">Browse </span>
-                                                    <input id="file_{{ $i }}"accept=".pdf" class="file" name="files[]" type="file" style="display: none;">
+                                                    <input id="file_" accept=".pdf" class="file" name="files[]" type="file" style="display: none;">
                                                 </label>
-                                                @endfor
-                                            </div>
-                                            <div class="m-t-sm">
-                                                <button type="button" class="w-xs btn btn-danger clear-file"><i class="fa fa-trash"></i> Hapus File</button>
-                                            </div>
+                                            </span>
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-danger clear-file"><i class="fa fa-trash"></i></button>
+                                            </span>
+                                            <input class="form-control overviews-files" name="overviews[files][]" type="text" placeholder="(Optional) Keterangan file">
+                                            <span class="input-group-btn add-remove-button">
+                                                <button type="button" class="btn btn-primary add-file">+</button>
+                                            </span>
+
                                         </div>
+                                        <span class="span-file"></span>
                                     </div>
                                     <hr>
 
-                                    <div class="row">
-                                        <div class="form-group col-lg-12">
-                                            <label>Peta KRB/Grafik/Hasil Pemodelan</label>
-                                            <div><p>Gunakan menu ini untuk mengupload file hasil olahan data pemantauan. Format yang diterima adalah format gambar. Per file <strong>maksimal 3MB.</strong></p></div>
-                                            <div class="m-b-sm">
-                                                @for ($i = 0; $i < 5; $i++)
-                                                <label class="w-xs m-t-sm btn btn-outline btn-default btn-peta">
+                                    {{-- Peta KRB --}}
+                                    <div class="form-group">
+                                        <label>Peta KRB/Grafik/Hasil Pemodelan</label>
+                                        <div><p>Gunakan menu ini untuk mengupload file hasil olahan data pemantauan. Format yang diterima adalah format gambar. Per file <strong>maksimal 3MB.</strong></p></div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="input-group btn-file">
+                                            <span class="input-group-btn">
+                                                <label class="btn btn-primary">
                                                     <i class="fa fa-upload"></i>
-                                                    <span class="label-peta">Browse </span>
-                                                    <input id="peta_{{ $i }}" accept="image/jpeg" class="peta" name="petas[]" type="file" style="display: none;">
+                                                    <span class="label-file">Browse </span>
+                                                    <input id="file_" accept="image/jpeg" class="file" name="petas[]" type="file" style="display: none;">
                                                 </label>
-                                                @endfor
-                                            </div>
-                                            <div class="m-t-sm">
-                                                <button type="button" class="w-xs btn btn-danger clear-peta"><i class="fa fa-trash"></i> Bersihkan File Peta/Grafik</button>
-                                            </div>
+                                            </span>
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-danger clear-file"><i class="fa fa-trash"></i></button>
+                                            </span>
+                                            <input class="form-control overviews-files" name="overviews[petas][]" type="text" placeholder="(Optional) Keterangan file" value="">
+                                            <span class="input-group-btn add-remove-button">
+                                                <button type="button" class="btn btn-primary add-file">+</button>
+                                            </span>
+
                                         </div>
+                                        <span class="span-file"></span>
                                     </div>
                                     <hr>
 
-                                    <div class="row">
-                                        <div class="form-group col-lg-12">
+                                    {{-- Foto/Gambar --}}
+                                    <div class="form-group">
                                             <label>Foto/Gambar</label>
                                             <div><p>Bisa dalam bentuk Infografis, Poster, Leaflet, Flyer atau Publikasi lainnya. Format yang diterima adalah format gambar. Per file <strong>maksimal 3MB.</strong></p></div>
-                                            <div class="m-b-sm">
-                                                @for ($i = 0; $i < 5; $i++)
-                                                <label class="w-xs m-t-sm btn btn-outline btn-default btn-file">
-                                                    <i class="fa fa-upload"></i>
-                                                    <span class="label-gambar">Browse </span>
-                                                    <input id="file_{{ $i }}" accept="image/jpeg" class="gambar" name="gambars[]" type="file" style="display: none;">
-                                                </label>
-                                                @endfor
-                                            </div>
-                                            <div class="m-t-sm">
-                                                <button type="button" class="w-xs btn btn-danger clear-gambar"><i class="fa fa-trash"></i> Bersihkan Gambar</button>
-                                            </div>
-                                        </div>
                                     </div>
+
+                                    <div class="form-group">
+                                        <div class="input-group btn-file">
+                                            <span class="input-group-btn">
+                                                <label class="btn btn-primary">
+                                                    <i class="fa fa-upload"></i>
+                                                    <span class="label-file">Browse </span>
+                                                    <input id="file_" accept="image/jpeg" class="file" name="gambars[]" type="file" style="display: none;">
+                                                </label>
+                                            </span>
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-danger clear-file"><i class="fa fa-trash"></i></button>
+                                            </span>
+                                            <input class="form-control overviews-files" name="overviews[gambars][]" type="text" placeholder="(Optional) Keterangan file" value="">
+                                            <span class="input-group-btn add-remove-button">
+                                                <button type="button" class="btn btn-primary add-file">+</button>
+                                            </span>
+
+                                        </div>
+                                        <span class="span-file"></span>
+                                    </div>
+                                    <hr>
                                 </div>
                             </div>
                         </div>
@@ -365,37 +395,35 @@ $(document).ready(function() {
                         .replace(/\\/g, '/')
                         .replace(/.*\//, '');
 
-        input.siblings('.label-file').html(label);
+        input.siblings('.label-file').html('Uploaded');
+        input.parents('.input-group').siblings('.span-file').html(label);
     });
 
-    $('input.gambar').on('change', function(e) {
-        var input = $(this),
-            label = input.val()
-                        .replace(/\\/g, '/')
-                        .replace(/.*\//, '');
-
-        input.siblings('.label-gambar').html(label);
-    });
-
-    $('input.peta').on('change', function(e) {
-        var input = $(this),
-            label = input.val()
-                        .replace(/\\/g, '/')
-                        .replace(/.*\//, '');
-
-        input.siblings('.label-peta').html(label);
-    });
+    function resetValueAfterClear(element) {
+        element.find('input').val('');
+        element.find('.label-file').html('Browse');
+        element.find('.span-file').html('');
+    };
 
     $('.clear-file').on('click', function(e) {
-        $('.label-file').html('Browse');
+        var element = $(this).closest('.form-group');
+        resetValueAfterClear(element);
     });
 
-    $('.clear-gambar').on('click', function(e) {
-        $('.label-gambar').html('Browse');
+    $('.add-file').on('click', function() {
+        var element = $(this).closest('.form-group'),
+            $clone = element.clone(true),
+            $removePlus  = $clone.find('.add-remove-button').remove(),
+            $remove = '<span class="input-group-btn"><button type="button" class="btn btn-danger remove-file">-</button></span>',
+            $addRemove = $clone.find('.overviews-files').after($remove);
+
+        resetValueAfterClear($clone);
+
+        element.after($clone);
     });
 
-    $('.clear-peta').on('click', function(e) {
-        $('.label-peta').html('Browse');
+    $('form').on('click','.remove-file',function(){
+        $(this).closest('.form-group').remove();
     });
 
     $('.summernote').summernote({

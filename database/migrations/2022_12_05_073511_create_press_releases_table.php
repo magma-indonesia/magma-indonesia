@@ -30,6 +30,7 @@ class CreatePressReleasesTable extends Migration
                 ->references('code')->on('ga_dd')
                 ->onDelete('set null');
             $table->longText('deskripsi');
+            $table->longText('short_deskripsi')->nullable();
             $table->bigInteger('hit')->default(0);
             $table->char('nip', 18)->index()->nullable();
             $table->foreign('nip')

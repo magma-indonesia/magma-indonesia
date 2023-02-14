@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\PressRelease;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PressReleaseService
 {
@@ -39,6 +40,7 @@ class PressReleaseService
             'lainnya' => $request->lainnya,
             'code' => $request->code,
             'deskripsi' => $request->deskripsi,
+            'short_deskripsi' => Str::limit(strip_tags($request->deskripsi), 100, '...'),
             'is_published' => $request->is_published,
             'nip' => request()->user()->nip,
         ];

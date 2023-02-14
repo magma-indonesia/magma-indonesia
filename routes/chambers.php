@@ -234,7 +234,7 @@ Route::get('roles/assign', 'RoleController@assign')
 Route::post('roles/assign', 'RoleController@saveRole');
 Route::resource('roles', 'RoleController');
 
-Route::post('press-release/publish', 'PressReleaseController@publish')
+Route::post('press-release/publish/{id?}', 'PressReleaseController@publish')
     ->name('press-release.publish');
 Route::resource('press-release', PressReleaseController::class);
 

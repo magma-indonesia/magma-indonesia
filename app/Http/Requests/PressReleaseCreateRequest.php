@@ -78,6 +78,12 @@ class PressReleaseCreateRequest extends FormRequest
             'gambars.*' => 'sometimes|required|max:3072',
             'petas' => 'sometimes|required|array',
             'petas.*' => 'sometimes|required|max:3072',
+            'overviews.files' => 'sometimes|nullable|array',
+            'overviews.files.*' => 'sometimes|nullable',
+            'overviews.petas' => 'sometimes|nullable|array',
+            'overviews.petas.*' => 'sometimes|nullable',
+            'overviews.gambars' => 'sometimes|nullable|array',
+            'overviews.gambars.*' => 'sometimes|nullable',
             'is_published' => 'required|boolean',
         ];
     }

@@ -237,7 +237,7 @@ $(document).ready(function() {
 
         var $id = $(this).data('id'),
             $value = $(this).data('value'),
-            $url = get_url($value),
+            $url = get_url($value)+'/'+$id,
             $type = $('#form-type').val($value),
             $data = get_form($value).serialize();
 

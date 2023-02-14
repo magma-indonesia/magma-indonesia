@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\URL;
 
 class PressReleaseController extends Controller
 {
+    /**
+     * Kategoi press release
+     *
+     * @var array
+     */
     protected $categories = [
         'gunung_api' => 'Gunung Api',
         'gerakan_tanah' => 'Gerakan Tanah',
@@ -65,6 +70,8 @@ class PressReleaseController extends Controller
         PressReleaseService $pressReleaseService,
         PressReleaseFileService $pressReleaseFileService)
     {
+        return $request;
+
         $pressRelease = DB::transaction(function () use ($request, $pressReleaseService, $pressReleaseFileService) {
             $pressRelease = $pressReleaseService->storePressRelease($request);
             $pressReleaseFileService->storeFiles($request, $pressRelease);
@@ -144,12 +151,30 @@ class PressReleaseController extends Controller
             ]);
     }
 
-    public function publish(Request $request)
+    /**
+     * Publish press release
+     *
+     * @param Request $request
+     * @param string $id
+     * @return \Illuminate\Http\Response
+     */
+    public function publish(Request $request, string $id)
     {
+        $this->validate($request, [
+            'is_published' => 'required|boolean',
+        ]);
+
+        $pressRelease = PressRelease::findOrFail($id);
+
+        $pressRelease->is_published = $request->is_published;
+        $pressRelease->save();
+
         return response()->json([
             'status' => 200,
             'success' => 1,
-            'message' => "{$request->is_published} berhasil di-publish",
+            'message' => $pressRelease->is_published ?
+                "{$pressRelease->judul} berhasil dipublikasikan" :
+                "{$pressRelease->judul} berhasil ditarik dari publikasi"
         ]);
     }
 
