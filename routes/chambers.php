@@ -233,7 +233,11 @@ Route::get('roles/assign', 'RoleController@assign')
     ->name('roles.assign');
 Route::post('roles/assign', 'RoleController@saveRole');
 Route::resource('roles', 'RoleController');
+
+Route::post('press-release/publish', 'PressReleaseController@publish')
+    ->name('press-release.publish');
 Route::resource('press-release', PressReleaseController::class);
+
 Route::resource('tag', 'TagController');
 
 Route::post('vona/send/{vona}', 'VonaController@send')

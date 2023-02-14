@@ -139,9 +139,8 @@ Press Release
     </div>
 </div>
 
-<form id="form-update" style="display:none;" method="POST" data-action="{{ route('chambers.press-release.index') }}">
+<form id="form-update" style="display:none;" method="POST" data-action="{{ route('chambers.press-release.publish') }}">
     @csrf
-    @method('PUT')
     <input id="form-type" type="hidden" name="is_published" value="0">
 </form>
 
@@ -238,7 +237,7 @@ $(document).ready(function() {
 
         var $id = $(this).data('id'),
             $value = $(this).data('value'),
-            $url = get_url($value)+'/'+$id,
+            $url = get_url($value),
             $type = $('#form-type').val($value),
             $data = get_form($value).serialize();
 

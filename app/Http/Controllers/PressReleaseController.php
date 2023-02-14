@@ -9,6 +9,7 @@ use App\PressRelease;
 use App\Services\PressReleaseFileService;
 use App\Services\PressReleaseService;
 use App\Tag;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 
@@ -141,6 +142,15 @@ class PressReleaseController extends Controller
                     ['id' => $pressRelease->id, 'slug' => $pressRelease->slug]
                 ),
             ]);
+    }
+
+    public function publish(Request $request)
+    {
+        return response()->json([
+            'status' => 200,
+            'success' => 1,
+            'message' => "{$request->is_published} berhasil di-publish",
+        ]);
     }
 
     /**
