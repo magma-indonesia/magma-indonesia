@@ -70,7 +70,7 @@ class PressReleaseController extends Controller
         PressReleaseService $pressReleaseService,
         PressReleaseFileService $pressReleaseFileService)
     {
-        return $request;
+        // return $request;
 
         $pressRelease = DB::transaction(function () use ($request, $pressReleaseService, $pressReleaseFileService) {
             $pressRelease = $pressReleaseService->storePressRelease($request);

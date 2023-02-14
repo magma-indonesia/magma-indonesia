@@ -52,7 +52,7 @@ class PressReleaseFileService
      * @param string $name
      * @return array
      */
-    public function toArray(UploadedFile $file, string $type, string $name): array
+    public function toArray(UploadedFile $file, string $type, string $name, string $overview = null): array
     {
         return [
             'name' => $file->hashName(),
@@ -62,6 +62,7 @@ class PressReleaseFileService
             'disk' => 'public',
             'file_hash' => hash_file('sha256', storage_path("app/$name")),
             'collection' => $type,
+            'overview' => $overview,
             'size' => $file->getSize(),
         ];
     }
@@ -88,14 +89,16 @@ class PressReleaseFileService
     {
         return collect(['files', 'petas', 'gambars'])->transform(function ($type) use ($request) {
             if ($request->has($type)) {
-                return collect($request->file($type))->transform(function ($file) use ($type) {
+                return collect($request->file($type))->transform(function ($file, $index) use ($type, $request) {
                     $name = $this->storeFile($file, $type);
 
                     if ($type !== 'files') {
                         $this->createThumbnail($file, $type, $name);
                     }
 
-                    return $this->toArray($file, $type, $name);
+                    $overview = $request->overviews[$type][$index];
+
+                    return $this->toArray($file, $type, $name, $overview);
                 });
             }
         })->filter()->flatten(1)->values();
