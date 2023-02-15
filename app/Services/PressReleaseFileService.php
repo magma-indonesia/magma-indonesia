@@ -52,14 +52,14 @@ class PressReleaseFileService
      * @param string $name
      * @return array
      */
-    public function toArray(UploadedFile $file, string $type, string $name, string $overview = null): array
+    public function toArray(UploadedFile $file, string $type, string $name, string $overview = null, string $disk = 'public'): array
     {
         return [
             'name' => $file->hashName(),
             'file_name' => $file->getClientOriginalName(),
             'mime_type' => $file->getClientMimeType(),
             'path' => $this->path($type),
-            'disk' => 'public',
+            'disk' => $disk,
             'file_hash' => hash_file('sha256', storage_path("app/$name")),
             'collection' => $type,
             'overview' => $overview,

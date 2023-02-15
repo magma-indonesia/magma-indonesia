@@ -52,8 +52,8 @@ Edit Press Release
                 <div class="hpanel hred">
                     <div class="panel-body">
                         <div class="tab-pane active">
-                            <div class="row m-b-lg">
-                                <div class="col-lg-4 text-center m-b-lg">
+                            <div class="row m-sm">
+                                <div class="col-lg-4 text-center">
                                     <i class="pe-7s-ribbon fa-5x text-muted"></i>
                                     <p class="m-t-md">
                                         <strong>Judul dan Kategori</strong>
@@ -151,9 +151,9 @@ Edit Press Release
                                                         target="_blank"><b>tautan berikut ini</b></a>
                                             </div>
                                             <div class="row">
-                                                @foreach ($tags->chunk(5) as $tagsChunk)
-                                                <div class="col-sm-12 col-md-6">
-                                                    @foreach ($tagsChunk as $tag)
+
+                                                <div class="col-sm-12">
+                                                    @foreach ($tags as $tag)
                                                     <div class="checkbox">
                                                         <label><input name="tags[]" value="{{ $tag->id }}"
                                                                 type="checkbox" class="i-checks tags" {{ in_array($tag->id, $pressRelease->tags->pluck('id')->toArray()) ? 'checked'
@@ -161,7 +161,7 @@ Edit Press Release
                                                     </div>
                                                     @endforeach
                                                 </div>
-                                                @endforeach
+
                                             </div>
                                         </div>
                                     </div>
@@ -179,8 +179,8 @@ Edit Press Release
                 <div class="hpanel hred">
                     <div class="panel-body">
                         <div class="tab-pane active">
-                            <div class="row m-b-lg">
-                                <div class="col-lg-4 text-center m-b-lg">
+                            <div class="row m-md">
+                                <div class="col-lg-4 text-center">
                                     <i class="pe-7s-ribbon fa-5x text-muted"></i>
                                     <p class="m-t-md">
                                         <strong>Dokumen dan Gambar Pendukung</strong>
@@ -194,15 +194,15 @@ Edit Press Release
                                 <div class="col-lg-8">
                                     {{-- Dokumen --}}
                                     <div class="row">
-                                        <div class="form-group col-lg-12">
+                                        <div class="col-lg-12">
                                             {{-- Dokumen Exists --}}
                                             @if (isset($pressReleaseFiles['files']) AND $pressReleaseFiles['files']->isNotEmpty())
-                                            <label>Hapus Dokumen</label>
-                                            <div>
+                                            <div class="form-group">
+                                                <label>Hapus Dokumen</label>
                                                 <p>Dokumen <strong>exists</strong> yang saat ini sedang digunakan dalam press release. Pilih dokumen yang ingin dihapus.</p>
                                             </div>
 
-                                            <div class="m-b-sm">
+                                            <div class="form-group">
                                                 <div class="table-responsive project-list">
                                                     <table class="table table-striped">
                                                         <thead>
@@ -225,24 +225,31 @@ Edit Press Release
                                             </div>
                                             @endif
 
-                                            <label>Tambahkan Dokumen</label>
-                                           <div>
-                                                <p>Format dokumen yang diterima adalah format PDF dengan ukuran per
-                                                    filenya <strong>maksimal 5MB.</strong></p>
+                                            {{-- Add Dokumen --}}
+                                            <div class="form-group">
+                                                <label>Dokumen</label>
+                                                <p>Format dokumen yang diterima adalah format PDF dengan ukuran per filenya <strong>maksimal 5MB.</strong></p>
                                             </div>
-                                            <div class="m-b-sm">
-                                                @for ($i = 0; $i < 5; $i++) <label
-                                                    class="w-xs m-t-sm btn btn-outline btn-default btn-file">
-                                                    <i class="fa fa-upload"></i>
-                                                    <span class="label-file">Browse </span>
-                                                    <input id="file_{{ $i }}" accept=".pdf" class="file" name="files[]"
-                                                        type="file" style="display: none;">
-                                                    </label>
-                                                    @endfor
-                                            </div>
-                                            <div class="m-t-sm">
-                                                <button type="button" class="w-xs btn btn-danger clear-file"><i
-                                                        class="fa fa-trash"></i> Hapus File</button>
+
+                                            <div class="form-group">
+                                                <div class="input-group btn-file">
+                                                    <span class="input-group-btn">
+                                                        <label class="btn btn-primary">
+                                                            <i class="fa fa-upload"></i>
+                                                            <span class="label-file">Browse </span>
+                                                            <input id="file_" accept=".pdf" class="file" name="files[]" type="file" style="display: none;">
+                                                        </label>
+                                                    </span>
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-danger clear-file"><i class="fa fa-trash"></i></button>
+                                                    </span>
+                                                    <input class="form-control overviews-files" name="overviews[files][]" type="text" placeholder="(Optional) Keterangan file">
+                                                    <span class="input-group-btn add-remove-button">
+                                                        <button type="button" class="btn btn-primary add-file">+</button>
+                                                    </span>
+
+                                                </div>
+                                                <span class="span-file"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -250,15 +257,17 @@ Edit Press Release
 
                                     {{-- Peta KRB --}}
                                     <div class="row">
-                                        <div class="form-group col-lg-12">
+                                        <div class="col-lg-12">
                                             {{-- Peta KRB/Grafik/Hasil Pemodelan Exists --}}
                                             @if (isset($pressReleaseFiles['petas']) AND $pressReleaseFiles['petas']->isNotEmpty())
-                                            <label>Hapus Peta KRB/Grafik/Hasil Pemodelan</label>
-                                            <div>
-                                                <p>Peta KRB/Grafik/Hasil Pemodelan <strong>exists</strong> yang saat ini sedang digunakan dalam press release. Pilih yang ingin dihapus.</p>
+                                            <div class="form-group">
+                                                <label>Hapus Peta KRB/Grafik/Hasil Pemodelan</label>
+                                                <div>
+                                                    <p>Peta KRB/Grafik/Hasil Pemodelan <strong>exists</strong> yang saat ini sedang digunakan dalam press release. Pilih yang ingin dihapus.</p>
+                                                </div>
                                             </div>
 
-                                            <div class="m-b-sm">
+                                            <div class="form-group">
                                                 <div class="table-responsive project-list">
                                                     <table class="table table-striped">
                                                         <thead>
@@ -283,25 +292,31 @@ Edit Press Release
                                             </div>
                                             @endif
 
-                                            <label>Tambahkan Peta KRB/Grafik/Hasil Pemodelan</label>
-                                            <div>
-                                                <p>Gunakan menu ini untuk mengupload file hasil olahan data pemantauan.
-                                                    Format yang diterima adalah format gambar. Per file <strong>maksimal
-                                                        3MB.</strong></p>
+                                            <div class="form-group">
+                                                <label>Peta KRB/Grafik/Hasil Pemodelan</label>
+                                                <p>Gunakan menu ini untuk mengupload file hasil olahan data pemantauan. Format yang diterima adalah format gambar. Per file <strong>maksimal 3MB.</strong></p>
                                             </div>
-                                            <div class="m-b-sm">
-                                                @for ($i = 0; $i < 5; $i++) <label
-                                                    class="w-xs m-t-sm btn btn-outline btn-default btn-peta">
-                                                    <i class="fa fa-upload"></i>
-                                                    <span class="label-peta">Browse </span>
-                                                    <input id="peta_{{ $i }}" accept="image/jpeg" class="peta"
-                                                        name="petas[]" type="file" style="display: none;">
-                                                    </label>
-                                                    @endfor
-                                            </div>
-                                            <div class="m-t-sm">
-                                                <button type="button" class="w-xs btn btn-danger clear-peta"><i
-                                                        class="fa fa-trash"></i> Bersihkan File Peta/Grafik</button>
+
+                                            <div class="form-group">
+                                                <div class="input-group btn-file">
+                                                    <span class="input-group-btn">
+                                                        <label class="btn btn-primary">
+                                                            <i class="fa fa-upload"></i>
+                                                            <span class="label-file">Browse </span>
+                                                            <input id="file_" accept="image/jpeg" class="file" name="petas[]" type="file" style="display: none;">
+                                                        </label>
+
+                                                    </span>
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-danger clear-file"><i class="fa fa-trash"></i></button>
+                                                                                        </span>
+                                                    <input class="form-control overviews-files" name="overviews[petas][]" type="text" placeholder="(Optional) Keterangan file" value="">
+                                                    <span class="input-group-btn add-remove-button">
+                                                        <button type="button" class="btn btn-primary add-file">+</button>
+                                                    </span>
+
+                                                </div>
+                                                <span class="span-file"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -312,12 +327,14 @@ Edit Press Release
                                         <div class="form-group col-lg-12">
                                             {{-- Peta KRB/Grafik/Hasil Pemodelan Exists --}}
                                             @if (isset($pressReleaseFiles['gambars']) AND $pressReleaseFiles['gambars']->isNotEmpty())
-                                            <label>Hapus Foto/Gambar</label>
-                                            <div>
-                                                <p>Foto/Gambar <strong>exists</strong> yang saat ini sedang digunakan dalam press release. Pilih yang ingin dihapus.</p>
+                                            <div class="form-group">
+                                                <label>Hapus Foto/Gambar</label>
+                                                <div>
+                                                    <p>Foto/Gambar <strong>exists</strong> yang saat ini sedang digunakan dalam press release. Pilih yang ingin dihapus.</p>
+                                                </div>
                                             </div>
 
-                                            <div class="m-b-sm">
+                                            <div class="form-group">
                                                 <div class="table-responsive project-list">
                                                     <table class="table table-striped">
                                                         <thead>
@@ -342,25 +359,30 @@ Edit Press Release
                                             </div>
                                             @endif
 
-                                            <label>Tambahkan Foto/Gambar</label>
-                                            <div>
-                                                <p>Bisa dalam bentuk Infografis, Poster, Leaflet, Flyer atau Publikasi
-                                                    lainnya. Format yang diterima adalah format gambar. Per file
-                                                    <strong>maksimal 3MB.</strong></p>
+                                            <div class="form-group">
+                                                <label>Foto/Gambar</label>
+                                                <p>Bisa dalam bentuk Infografis, Poster, Leaflet, Flyer atau Publikasi lainnya. Format yang diterima adalah format gambar. Per file <strong>maksimal 3MB.</strong></p>
                                             </div>
-                                            <div class="m-b-sm">
-                                                @for ($i = 0; $i < 5; $i++) <label
-                                                    class="w-xs m-t-sm btn btn-outline btn-default btn-file">
-                                                    <i class="fa fa-upload"></i>
-                                                    <span class="label-gambar">Browse </span>
-                                                    <input id="file_{{ $i }}" accept="image/jpeg" class="gambar"
-                                                        name="gambars[]" type="file" style="display: none;">
-                                                    </label>
-                                                    @endfor
-                                            </div>
-                                            <div class="m-t-sm">
-                                                <button type="button" class="w-xs btn btn-danger clear-gambar"><i
-                                                        class="fa fa-trash"></i> Bersihkan Foto/Gambar</button>
+
+                                            <div class="form-group">
+                                                <div class="input-group btn-file">
+                                                    <span class="input-group-btn">
+                                                        <label class="btn btn-primary">
+                                                            <i class="fa fa-upload"></i>
+                                                            <span class="label-file">Browse </span>
+                                                            <input id="file_" accept="image/jpeg" class="file" name="gambars[]" type="file" style="display: none;">
+                                                        </label>
+                                                    </span>
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-danger clear-file"><i class="fa fa-trash"></i></button>
+                                                    </span>
+                                                    <input class="form-control overviews-files" name="overviews[gambars][]" type="text" placeholder="(Optional) Keterangan file" value="">
+                                                    <span class="input-group-btn add-remove-button">
+                                                        <button type="button" class="btn btn-primary add-file">+</button>
+                                                    </span>
+
+                                                </div>
+                                                <span class="span-file"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -388,7 +410,7 @@ Edit Press Release
                                 </div>
                             </div>
 
-                            <div class="row m-b-lg">
+                            <div class="row m-sm">
                                 <div class="col-lg-12">
 
                                     @if ($errors->any())
@@ -424,8 +446,8 @@ Edit Press Release
                 <div class="hpanel hred">
                     <div class="panel-body">
                         <div class="tab-pane active">
-                            <div class="row m-b-lg">
-                                <div class="col-lg-4 text-center m-b-lg">
+                            <div class="row m-sm">
+                                <div class="col-lg-4 text-center">
                                     <i class="pe-7s-ribbon fa-5x text-muted"></i>
                                     <p class="m-t-md">
                                         <strong>Simpan dan Publikasi</strong>
@@ -482,7 +504,7 @@ Edit Press Release
 
 @section('add-script')
 <script>
-    $(document).ready(function() {
+$(document).ready(function() {
     $('#datepicker').datetimepicker({
         minDate: '2015-05-01',
         maxDate: '{{ now()->addDay(1)->format('Y-m-d')}}',
@@ -491,43 +513,64 @@ Edit Press Release
         format: 'YYYY-MM-DD HH:mm',
     });
 
+    function validateSize(input, limit = 3) {
+        const fileSize = input[0].files[0].size / 1024 / 1024;
+
+        return (fileSize > limit) ? false : true;
+    };
+
+    function resetLabelInputFile(input) {
+        input.val('');
+        input.siblings('.label-file').html('Browse');
+        input.parents('.input-group').siblings('.span-file').html('');
+    };
+
+    function replaceLabelInputFile(input, label) {
+        input.siblings('.label-file').html('Ganti');
+        input.parents('.input-group').siblings('.span-file').html(label);
+    };
+
+    function alertOnFileExceeds(input, limit) {
+        resetLabelInputFile(input);
+        alert('File berukuran lebih besar dari '+limit+' MB');
+    };
+
+    function resetValueAfterClear(element) {
+        element.find('input').val('');
+        element.find('.label-file').html('Browse');
+        element.find('.span-file').html('');
+    };
+
     $('input.file').on('change', function(e) {
-        var input = $(this),
-            label = input.val()
-                        .replace(/\\/g, '/')
-                        .replace(/.*\//, '');
+        const input = $(this);
+        const label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+        const fileType = input[0].files[0].type;
+        const limit = (fileType === 'application/pdf') ? 5 : 3;
 
-        input.siblings('.label-file').html(label);
-    });
-
-    $('input.gambar').on('change', function(e) {
-        var input = $(this),
-            label = input.val()
-                        .replace(/\\/g, '/')
-                        .replace(/.*\//, '');
-
-        input.siblings('.label-gambar').html(label);
-    });
-
-    $('input.peta').on('change', function(e) {
-        var input = $(this),
-            label = input.val()
-                        .replace(/\\/g, '/')
-                        .replace(/.*\//, '');
-
-        input.siblings('.label-peta').html(label);
+        validateSize($(this), limit) ?
+            replaceLabelInputFile(input, label) :
+            alertOnFileExceeds(input, limit);
     });
 
     $('.clear-file').on('click', function(e) {
-        $('.label-file').html('Browse');
+        const element = $(this).closest('.form-group');
+        resetValueAfterClear(element);
     });
 
-    $('.clear-gambar').on('click', function(e) {
-        $('.label-gambar').html('Browse');
+    $('.add-file').on('click', function() {
+        const element = $(this).closest('.form-group');
+        const $clone = element.clone(true);
+        const $removePlus  = $clone.find('.add-remove-button').remove();
+        const $remove = '<span class="input-group-btn"><button type="button" class="btn btn-danger remove-file">-</button></span>';
+        const $addRemove = $clone.find('.overviews-files').after($remove);
+
+        resetValueAfterClear($clone);
+
+        element.after($clone);
     });
 
-    $('.clear-peta').on('click', function(e) {
-        $('.label-peta').html('Browse');
+    $('form').on('click','.remove-file',function(){
+        $(this).closest('.form-group').remove();
     });
 
     $('.summernote').summernote({

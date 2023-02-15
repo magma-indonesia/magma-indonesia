@@ -39,12 +39,13 @@ class PressReleaseController extends Controller
     public function pressReleaseShow(string $id, string $slug): PressRelease
     {
         return PressRelease::with([
-            'gunungApi:code,name',
+            'gunung_api:code,name',
             'tags:name,slug',
-            'press_release_files'
+            'press_release_files',
+            'peta_krbs:code,tahun,filename,size,medium_size,large_size'
         ])->where('id', $id)
-            ->where('slug', $slug)
-            ->firstOrFail();
+        ->where('slug', $slug)
+        ->firstOrFail();
     }
 
     /**
@@ -69,7 +70,12 @@ class PressReleaseController extends Controller
 
     public function index()
     {
-        return PressRelease::all();
+        return PressRelease::select('')->with([
+            'peta_krbs:code,tahun,filename,size,medium_size,large_size',
+            'gunung_api:code,name',
+            'press_release_files',
+            'tags',
+        ])->get();
     }
 
     /**
@@ -81,6 +87,8 @@ class PressReleaseController extends Controller
      */
     public function show(string $id, string $slug)
     {
+        // return $this->cacheResponseShow($id, $slug);
+
         return view('home.press-release.show', $this->cacheResponseShow($id, $slug));
     }
 }

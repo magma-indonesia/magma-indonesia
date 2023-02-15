@@ -35,11 +35,16 @@ class PressRelease extends Model
      *
      * @return void
      */
-    public function gunungApi()
+    public function gunung_api()
     {
         return $this->belongsTo(Gadd::class, 'code', 'code');
     }
 
+    /**
+     * Get user
+     *
+     * @return void
+     */
     public function user()
     {
         return $this->belongsTo(User::class, 'nip', 'nip');
@@ -61,5 +66,15 @@ class PressRelease extends Model
     public function tags()
     {
         return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    /**
+     * Get all peta KRB for gunung api
+     *
+     * @return void
+     */
+    public function peta_krbs()
+    {
+        return $this->hasMany(PetaKrbGunungApi::class, 'code', 'code')->where('published', 1);
     }
 }

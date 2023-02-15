@@ -40,7 +40,7 @@ class PressReleaseService
             'lainnya' => $request->lainnya,
             'code' => $request->code,
             'deskripsi' => $request->deskripsi,
-            'short_deskripsi' => Str::limit(strip_tags($request->deskripsi), 100, '...'),
+            'short_deskripsi' => Str::limit(strip_tags($request->deskripsi), 275, '...'),
             'is_published' => $request->is_published,
             'nip' => request()->user()->nip,
         ];

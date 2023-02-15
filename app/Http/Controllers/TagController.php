@@ -18,7 +18,7 @@ class TagController extends Controller
     public function index()
     {
         return view('tag.index', [
-            'tags' => Tag::all(),
+            'tags' => Tag::withCount('press_releases')->get(),
         ]);
     }
 
@@ -55,7 +55,10 @@ class TagController extends Controller
      */
     public function show(Tag $tag)
     {
-        return redirect()->route('chambers.tag.index');
+        return $tag->load([
+            'press_releases:press_releases.id,judul,slug,short_deskripsi',
+            'press_releases.press_release_files',
+        ]);
     }
 
     /**
