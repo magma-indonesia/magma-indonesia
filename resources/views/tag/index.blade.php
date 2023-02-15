@@ -100,7 +100,9 @@ Tags untuk Kategori atau Label
                             @foreach ($tags as $tag)
                             <tr>
                                 <td>{{ $tag->name }}</td>
-                                <td>10</td>
+                                <td>
+                                    <a href="{{ route('chambers.tag.show', $tag) }}">{{ $tag->press_releases_count }}</a>
+                                </td>
                                 <td>
                                     <a href="{{ route('chambers.tag.edit', $tag) }}" class="btn btn-sm btn-warning btn-outline m-b-xs" type="button" title="Edit">Edit</a>
 
