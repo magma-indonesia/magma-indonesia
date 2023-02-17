@@ -4,7 +4,7 @@
     {{ $pressRelease->judul }}
 @endsection
 
-@if ($thumbnail)
+@if (!is_null($thumbnail))
     @section('thumbnail')
         {{ $thumbnail }}
     @endsection
@@ -22,50 +22,20 @@
 
 @section('main')
 <div class="row row-sm">
-    <div class="col-lg-12">
-        <div class="card card-recent-messages">
-            <div class="card-header">
-                <span>Recent Messages</span>
-                <a href=""><i class="icon ion-more"></i></a>
-            </div><!-- card-header -->
-            <div class="list-group list-group-flush">
-                <div class="list-group-item">
-                    <div class="media">
-                        <img src="../img/img1.jpg" alt="">
-                        <div class="media-body">
-                            <h6>Katherine Lumaad</h6>
-                            <p>an hour ago</p>
-                        </div><!-- media-body -->
-                    </div><!-- media -->
-                    <p class="msg">The European languages are members of the same family. Their separate existence is
-                        a myth...</p>
-                </div><!-- list-group-item -->
-                <div class="list-group-item">
-                    <div class="media">
-                        <img src="../img/img2.jpg" alt="">
-                        <div class="media-body">
-                            <h6>Mary Grace Ceballos</h6>
-                            <p>2 hours ago</p>
-                        </div><!-- media-body -->
-                    </div><!-- media -->
-                    <p class="msg">The European languages are members of the same family. Their separate existence is
-                        a myth...</p>
-                </div><!-- list-group-item -->
-                <div class="list-group-item">
-                    <div class="media">
-                        <img src="../img/img4.jpg" alt="">
-                        <div class="media-body">
-                            <h6>Rowella Sombrio</h6>
-                            <p>3 hours ago</p>
-                        </div><!-- media-body -->
-                    </div><!-- media -->
-                    <p class="msg">The European languages are members of the same family. Their separate existence is
-                        a myth...</p>
-                </div><!-- list-group-item -->
-            </div><!-- list-group -->
-            <div class="card-footer">
-                <a href="" class="tx-12"><i class="fa fa-angle-down mg-r-5"></i> Show all messages</a>
-            </div><!-- card-footer -->
+    <div class="col-lg-10">
+        <div class="card card-blog">
+            <img class="img-fit-cover" src="{{ $cover }}" alt="Image" style="height: 300px">
+            <div class="card-body">
+                <p class="blog-category">Finance</p>
+                <h5 class="blog-title"><a href="">Your Finances Don't Have to Be Perfect to Work</a></h5>
+                <p class="blog-text">It is a long established fact that a reader will be distracted by the readable
+                    content of a page when looking at its layout.</p>
+                <p class="blog-links">
+                    <a href="">12 Likes</a>
+                    <a href="">23 Comments</a>
+                    <a href=""><i class="icon ion-more"></i></a>
+                </p>
+            </div><!-- card-body -->
         </div>
     </div>
 </div>

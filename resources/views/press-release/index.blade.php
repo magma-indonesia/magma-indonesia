@@ -83,6 +83,7 @@ Press Release
                         <p> Tag digunakan untuk memberikan label pada press release, laporan, atau pengguna. Dapat juga digunakan untuk mengelompokkan data dalam satu kelompok yang sama. Tag atau label bersifat unik.
                         </p>
                         <a href="{{ route('chambers.tag.index') }}" class="btn btn-outline btn-danger"><i class="fa fa-plus"></i> Create</a>
+                        <a href="{{ route('chambers.tag.index') }}" class="btn btn-outline btn-danger"> Daftar Tag/Label</a>
                     </div>
                 </div>
 

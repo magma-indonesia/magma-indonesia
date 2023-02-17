@@ -4,10 +4,32 @@ namespace App\Services;
 
 use App\PressRelease;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 class PressReleaseService
 {
+    /**
+     * Clear html tags for short description
+     *
+     * @param string $deskripsi
+     * @return string
+     */
+    public function shortDeskripsi(string $deskripsi): string
+    {
+        return Str::limit(
+            strip_tags(
+                str_replace(
+                    ['<br><br>', '<br>' , '&nbsp;'],
+                    [' ', ' ', ''],
+                    $deskripsi
+                )
+            ),
+            275,
+            '...'
+        );
+    }
+
     /**
      * Get first or create attributes in array
      *
@@ -40,7 +62,7 @@ class PressReleaseService
             'lainnya' => $request->lainnya,
             'code' => $request->code,
             'deskripsi' => $request->deskripsi,
-            'short_deskripsi' => Str::limit(strip_tags($request->deskripsi), 275, '...'),
+            'short_deskripsi' => $this->shortDeskripsi($request->deskripsi),
             'is_published' => $request->is_published,
             'nip' => request()->user()->nip,
         ];
@@ -61,6 +83,16 @@ class PressReleaseService
     }
 
     /**
+     * Clear cache
+     *
+     * @return void
+     */
+    public function clearCache(): void
+    {
+        Cache::tags(['home:press-release'])->flush();
+    }
+
+    /**
      * Store and return Press release model
      *
      * @param Request $request
@@ -74,6 +106,8 @@ class PressReleaseService
         );
 
         $pressRelease->tags()->attach($request->tags);
+
+        $this->clearCache();
 
         return $pressRelease;
     }
@@ -92,6 +126,8 @@ class PressReleaseService
         );
 
         $pressRelease->tags()->sync($request->tags);
+
+        $this->clearCache();
 
         return $pressRelease;
     }

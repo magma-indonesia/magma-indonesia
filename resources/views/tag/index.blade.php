@@ -42,6 +42,31 @@ Tags untuk Kategori atau Label
 
 @section('content-body')
 <div class="content content-boxed no-top-padding">
+    <div class="row">
+        <div class="col-lg-6 col-xs-12">
+            <div class="hpanel hred">
+                <div class="panel-body h-200">
+                    <div class="stats-title pull-left">
+                        <h4>Press Release</h4>
+                    </div>
+
+                    <div class="stats-icon pull-right">
+                        <i class="pe-7s-note2 fa-4x text-danger"></i>
+                    </div>
+
+                    <div class="m-t-xl">
+                        <h1>{{ $press_release_count }}</h1>
+                        <p>
+                            Jumlah Press Release yang dibuat. Gunakan menu <b>Create</b> untuk menambahkan Press Release.
+                        </p>
+                        <a href="{{ route('chambers.press-release.create') }}" class="btn btn-outline btn-danger"><i class="fa fa-plus"></i> Create</a>
+                        <a href="{{ route('chambers.press-release.index') }}" class="btn btn-outline btn-danger"> Daftar Press Release</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-lg-12">

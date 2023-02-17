@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TagCreateRequest;
 use App\Http\Requests\TagUpdateRequest;
+use App\PressRelease;
 use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -18,6 +19,7 @@ class TagController extends Controller
     public function index()
     {
         return view('tag.index', [
+            'press_release_count' => PressRelease::count(),
             'tags' => Tag::withCount('press_releases')->get(),
         ]);
     }
