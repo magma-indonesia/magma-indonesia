@@ -63,7 +63,7 @@ class PressReleaseCreateRequest extends FormRequest
         return [
             'judul' => 'required|max:254',
             'slug' => 'required|unique:press_releases,slug',
-            'datetime' => 'nullable|date_format:Y-m-d H:i',
+            'datetime' => 'nullable|date_format:Y-m-d H:i:s',
             'no_surat' => 'nullable|max:254',
             'categories' => 'required|array',
             'categories.*' => 'required|in:gunung_api,gerakan_tanah,gempa_bumi,tsunami,lainnya',

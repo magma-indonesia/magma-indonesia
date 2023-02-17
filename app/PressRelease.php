@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Route;
 
 class PressRelease extends Model
 {
@@ -14,10 +15,15 @@ class PressRelease extends Model
         'gerakan_tanah' => 'boolean',
         'gempa_bumi' => 'boolean',
         'tsunami' => 'boolean',
+        'datetime' => 'datetime:Y-m-d H:i:s',
     ];
 
     protected $guarded = [
         'id',
+    ];
+
+    protected $appends = [
+        'url',
     ];
 
     /**
@@ -31,11 +37,21 @@ class PressRelease extends Model
     }
 
     /**
+     * URL of Press Release
+     *
+     * @return String
+     */
+    public function getUrlAttribute(): string
+    {
+        return route('press-release.show', ['id' => $this->attributes['id'], 'slug' => $this->attributes['slug']]);
+    }
+
+    /**
      * Undocumented function
      *
      * @return void
      */
-    public function gunung_api()
+    public function gunungApi()
     {
         return $this->belongsTo(Gadd::class, 'code', 'code');
     }

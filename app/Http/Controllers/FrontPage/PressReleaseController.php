@@ -6,42 +6,25 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\PressRelease;
 use App\PressReleaseFile;
+use App\Tag;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
 class PressReleaseController extends Controller
 {
-    public function coverUrl(PressRelease $pressRelease): ?string
-    {
-        $pressReleaseFile = $this->imageUrl($pressRelease);
-
-        return $pressReleaseFile->isEmpty() ? null : $pressReleaseFile['url'];
-    }
-
-    public function imageUrl(PressRelease $pressRelease): Collection
-    {
-        $pressReleaseFile = $pressRelease->press_release_files->whenNotEmpty(function ($pressReleaseFiles) {
-            return $pressReleaseFiles->when($pressReleaseFiles->contains('collection', 'petas'), function ($pressReleaseFiles) {
-                return $pressReleaseFiles->where('collection', 'petas')->first();
-            })->when($pressReleaseFiles->contains('collection', 'gambars'), function ($pressReleaseFiles) {
-                return $pressReleaseFiles->where('collection', 'gambars')->first();
-            });
-        });
-
-        return collect($pressReleaseFile);
-    }
-
     /**
-     * Get thumbnail URL
+     * Get image URL
      *
      * @param PressRelease $pressRelease
      * @return PressReleaseFile|null
      */
-    public function thumbnailUrl(PressRelease $pressRelease): ?string
+    public function imageUrl(PressRelease $pressRelease): ?PressReleaseFile
     {
-        $pressReleaseFile = $this->imageUrl($pressRelease);
+        $pressReleaseFile = $pressRelease->press_release_files->whenNotEmpty(function ($pressReleaseFiles) {
+            return $pressReleaseFiles->whereIn('collection', ['petas', 'gambars'])->first();
+        });
 
-        return $pressReleaseFile->isEmpty() ? null : $pressReleaseFile['thumbnail'];
+        return $pressReleaseFile;
     }
 
     /**
@@ -54,13 +37,11 @@ class PressReleaseController extends Controller
     public function pressReleaseShow(string $id, string $slug): PressRelease
     {
         return PressRelease::with([
-            'gunung_api:code,name',
-            'tags:name,slug',
+            'peta_krbs:code,tahun,filename,size,medium_size,large_size',
+            'gunungApi:code,name',
             'press_release_files',
-            'peta_krbs:code,tahun,filename,size,medium_size,large_size'
-        ])->where('id', $id)
-        ->where('slug', $slug)
-        ->firstOrFail();
+            'tags:name,slug',
+        ])->where('id', $id)->where('slug', $slug)->firstOrFail();
     }
 
     /**
@@ -71,43 +52,52 @@ class PressReleaseController extends Controller
      * @param boolean $enable
      * @return array
      */
-    public function cacheResponseShow(string $id, string $slug, bool $disable = false)
+    public function cacheResponseShow(string $id, string $slug, bool $disable = false): array
     {
         if ($disable) {
             Cache::tags(['home:press-release'])->flush();
         }
 
-        $pressRelease = $this->pressReleaseShow($id, $slug);
-
-        return $pressRelease->press_release_files;
-
-        return $this->imageUrl($pressRelease)->toArray();
-
-        return [
-            'pressRelease' => $pressRelease,
-            'cover' => $this->coverUrl($pressRelease),
-            'thumbnail' => $this->thumbnailUrl($pressRelease)
-        ];
-
         return Cache::tags(['home:press-release'])
             ->rememberForever("home:press-release:$id:$slug", function () use ($id, $slug) {
                 $pressRelease = $this->pressReleaseShow($id, $slug);
+                $imageUrl = $this->imageUrl($pressRelease);
 
                 return [
                     'pressRelease' => $pressRelease,
-                    'cover' => $this->coverUrl($pressRelease),
-                    'thumbnail' => $this->thumbnailUrl($pressRelease)
+                    'cover' => $imageUrl ? $imageUrl->url : null,
+                    'thumbnail' => $imageUrl ? $imageUrl->thumbnail : null,
                 ];
             });
     }
 
-    public function index()
+    public function cacheResponseIndex(Request $request)
     {
+        $pressReleases = PressRelease::query();
+
+        if ($request->has('tag')) {
+            $pressReleases->with([
+                'tags'
+            ]);
+        }
+
+        return [];
+    }
+
+    /**
+     * Get list of Press Reelase Index
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        return $this->cacheResponseIndex($request);
+
         return PressRelease::with([
             'peta_krbs:code,tahun,filename,size,medium_size,large_size',
-            'gunung_api:code,name',
+            'gunungApi:code,name',
             'press_release_files',
-            'tags',
+            'tags:name,slug',
         ])->get();
     }
 
@@ -120,8 +110,6 @@ class PressReleaseController extends Controller
      */
     public function show(string $id, string $slug)
     {
-        return $this->cacheResponseShow($id, $slug, true);
-
         return view('home.press-release.show', $this->cacheResponseShow($id, $slug, true));
     }
 }
