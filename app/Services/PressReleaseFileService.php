@@ -13,6 +13,14 @@ use Intervention\Image\Facades\Image;
 
 class PressReleaseFileService
 {
+    /**
+     * Create thumbnail
+     *
+     * @param UploadedFile $file
+     * @param string $type
+     * @param string $name
+     * @return void
+     */
     public function createThumbnail(UploadedFile $file, string $type, string $name): void
     {
         $thumbnail = Image::make(storage_path("app/$name"))->resize(250, 250, function ($constraint) {
@@ -104,24 +112,52 @@ class PressReleaseFileService
         })->filter()->flatten(1)->values();
     }
 
-    public function destroyFiles(EloquentCollection $pressReleaseFiles)
+    /**
+     * Destroy files
+     *
+     * @param EloquentCollection $pressReleaseFiles
+     * @return void
+     */
+    public function destroyFiles(EloquentCollection $pressReleaseFiles): void
     {
-        $pressReleaseFiles = PressReleaseFile::whereIn('id', $pressReleaseFiles->pluck('id'))->get();
+        $pressReleaseFiles->whenNotEmpty(function ($files) {
+            $files->each(function ($file) {
 
-        $pressReleaseFiles->each(function ($file) {
-            Storage::disk($file->disk)->delete("$file->path/thumbnails/$file->name");
-            Storage::disk($file->disk)->delete("$file->path/$file->name");
-            $file->delete();
+                if ($file->collection === 'petas' || $file->collection === 'gambars') {
+                    Storage::disk($file->disk)->delete("$file->path/thumbnails/$file->name");
+                }
+
+                Storage::disk($file->disk)->delete("$file->path/$file->name");
+                $file->delete();
+            });
         });
     }
 
-    public function storeFiles(Request $request, PressRelease $pressRelease)
+    /**
+     * Save files
+     *
+     * @param Request $request
+     * @param PressRelease $pressRelease
+     * @return PressRelease
+     */
+    public function storeFiles(Request $request, PressRelease $pressRelease): PressRelease
     {
         return $this->save($request, $pressRelease);
     }
 
-    public function updateFiles(Request $request, PressRelease $pressRelease)
+    /**
+     * Update files
+     *
+     * @param Request $request
+     * @param PressRelease $pressRelease
+     * @return PressRelease
+     */
+    public function updateFiles(Request $request, PressRelease $pressRelease): PressRelease
     {
+        if ($request->has('overview_updates')) {
+            $this->updateOverviews($request->overview_updates);
+        }
+
         if ($request->has('delete_files')) {
             $this->destroyFiles(
                 PressReleaseFile::whereIn('id', $request->delete_files)->get()
@@ -131,13 +167,35 @@ class PressReleaseFileService
         return $this->save($request, $pressRelease);
     }
 
-    public function save(Request $request, PressRelease $pressRelease)
+    /**
+     * Update overview column
+     *
+     * @param array $overviews
+     * @return void
+     */
+    public function updateOverviews(array $overviews): void
+    {
+        collect($overviews)->each(function ($overview, $id) {
+            $pressReleaseFile = PressReleaseFile::findOrFail($id);
+            $pressReleaseFile->overview = $overview;
+            $pressReleaseFile->save();
+        });
+    }
+
+    /**
+     * Save file
+     *
+     * @param Request $request
+     * @param PressRelease $pressRelease
+     * @return PressRelease
+     */
+    public function save(Request $request, PressRelease $pressRelease): PressRelease
     {
         $pressRelease->press_release_files()
             ->createMany(
                 $this->store($request)->toArray()
             );
 
-        return $pressRelease->load('press_release_files');
+        return $pressRelease->refresh();
     }
 }

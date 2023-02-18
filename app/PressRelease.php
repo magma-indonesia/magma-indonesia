@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,7 @@ class PressRelease extends Model
 
     protected $appends = [
         'url',
+        'cover_thumbnail_url',
     ];
 
     /**
@@ -74,6 +76,18 @@ class PressRelease extends Model
     public function press_release_files()
     {
         return $this->hasMany(PressReleaseFile::class);
+    }
+
+    /**
+     * Get thumbnail preview
+     *
+     * @return void
+     */
+    public function getCoverThumbnailUrlAttribute()
+    {
+        $thumbnailUrl = $this->press_release_files()->whereIn('collection', ['petas','gambars'])->first();
+
+        return $thumbnailUrl ? $thumbnailUrl->thumbnail : null;
     }
 
     /**

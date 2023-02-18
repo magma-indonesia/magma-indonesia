@@ -2,17 +2,22 @@
 
 namespace App;
 
+use App\Traits\ByteConverter;
 use Illuminate\Database\Eloquent\Model;
 
 class PressReleaseFile extends Model
 {
+    use ByteConverter;
+
     protected $guarded = [
         'id'
     ];
 
     protected $appends = [
         'url',
-        'thumbnail'
+        'thumbnail',
+        'size_kb',
+        'size_mb',
     ];
 
     /**
@@ -37,6 +42,26 @@ class PressReleaseFile extends Model
         }
 
         return null;
+    }
+
+    /**
+     * Size Image in KB
+     *
+     * @return String
+     */
+    public function getSizeKbAttribute()
+    {
+        return $this->getKiloByte($this->attributes['size']);
+    }
+
+    /**
+     * Size Image in MB
+     *
+     * @return String
+     */
+    public function getSizeMbAttribute()
+    {
+        return $this->getMegaByte($this->attributes['size']);
     }
 
     /**

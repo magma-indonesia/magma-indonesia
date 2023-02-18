@@ -121,7 +121,7 @@ Press Release
                                 <td>{{ $pressRelease->is_published ? 'Ya' : 'Tidak' }}</td>
                                 <td>{{ $pressRelease->user->name }}</td>
                                 <td>
-                                    <a href="{{ route('press-release.show', ['id' => $pressRelease->id, 'slug' => $pressRelease->slug ]) }}" class="btn btn-sm btn-info btn-outline m-b-xs" type="button" title="View" target="_blank">View</a>
+                                    <a href="{{ route('chambers.press-release.show', $pressRelease) }}" class="btn btn-sm btn-info btn-outline m-b-xs" type="button" title="View" target="_blank">View</a>
                                     <a href="{{ route('chambers.press-release.edit', $pressRelease) }}" class="btn btn-sm btn-warning btn-outline m-b-xs" type="button" title="Edit">Edit</a>
                                     <a class="btn btn-sm btn-success btn-outline m-b-xs m-l form-submit" data-id="{{ $pressRelease->id }}" type="button" title="Aktivasi" data-value="1">Publish</a>
                                     <a class="btn btn-sm btn-danger btn-outline m-b-xs m-r form-submit" data-id="{{ $pressRelease->id }}" type="button" title="Deaktivasi" data-value="0">Unpublish</a>

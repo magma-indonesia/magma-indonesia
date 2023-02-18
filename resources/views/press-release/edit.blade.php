@@ -180,18 +180,23 @@ Edit Press Release
                     <div class="panel-body">
                         <div class="tab-pane active">
                             <div class="row m-md">
-                                <div class="col-lg-4 text-center">
-                                    <i class="pe-7s-ribbon fa-5x text-muted"></i>
-                                    <p class="m-t-md">
-                                        <strong>Dokumen dan Gambar Pendukung</strong>
-                                    </p>
-                                    <p>
-                                        Upload dokumen dan gambar pendukung. File dokumen maksimal yang bisa diupload
-                                        adalah sebesar 3MB sementara gambar, maksimal 1MB per gambar.
-                                    </p>
-                                </div>
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-lg-2 text-center">
+                                            <i class="pe-7s-ribbon fa-5x text-muted"></i>
+                                        </div>
+                                        <div class="col-lg-10">
+                                            <h4>
+                                                <strong>Dokumen dan Gambar Pendukung</strong>
+                                            </h4>
+                                            <p>
+                                                Upload dokumen dan gambar pendukung. File dokumen maksimal yang bisa diupload
+                                                adalah sebesar 3MB sementara gambar, maksimal 1MB per gambar.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <hr>
 
-                                <div class="col-lg-8">
                                     {{-- Dokumen --}}
                                     <div class="row">
                                         <div class="col-lg-12">
@@ -209,6 +214,7 @@ Edit Press Release
                                                             <tr>
                                                                 <th>Hapus?</th>
                                                                 <th>Nama Dokumen</th>
+                                                                <th>Update Keterangan</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -216,7 +222,7 @@ Edit Press Release
                                                             <tr>
                                                                 <td><input type="checkbox" name="delete_files[]" class="i-checks" value="{{ $file->id }}"></td>
                                                                 <td><a href="{{ $file->url }}" target="_blank">{{ $file->file_name }}</a>
-                                                                </td>
+                                                                <td><textarea rows="3" name="overview_updates[{{  $file->id }}]" class="form-control">{{ $file->overview }}</textarea></td>
                                                             </tr>
                                                             @endforeach
                                                         </tbody>
@@ -274,16 +280,18 @@ Edit Press Release
                                                             <tr>
                                                                 <th>Hapus?</th>
                                                                 <th>Preview</th>
-                                                                <th>File</th>
+                                                                <th>Update Keterangan</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             @foreach ($pressReleaseFiles['petas'] as $file)
                                                             <tr>
                                                                 <td><input type="checkbox" name="delete_files[]" class="i-checks" value="{{ $file->id }}"></td>
-                                                                <td><img class="img-responsive" src="{{ $file->thumbnail }}" alt="{{ $file->file_name }}">
+                                                                <td style="width: 150px;">
+                                                                    <img class="img-responsive" src="{{ $file->thumbnail }}" alt="{{ $file->file_name }}">
+                                                                    <span class="d-block"><a href="{{ $file->url }}" target="_blank">{{ $file->file_name }}</a></span>
                                                                 </td>
-                                                                <td><a href="{{ $file->url }}" target="_blank">{{ $file->file_name }}</a></td>
+                                                                <td><textarea rows="3" name="overview_updates[{{  $file->id }}]" class="form-control">{{ $file->overview }}</textarea></td>
                                                             </tr>
                                                             @endforeach
                                                         </tbody>
@@ -341,16 +349,18 @@ Edit Press Release
                                                             <tr>
                                                                 <th>Hapus?</th>
                                                                 <th>Preview</th>
-                                                                <th>File</th>
+                                                                <th>Keterangan</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             @foreach ($pressReleaseFiles['gambars'] as $file)
                                                             <tr>
                                                                 <td><input type="checkbox" name="delete_files[]" class="i-checks" value="{{ $file->id }}"></td>
-                                                                <td><img class="img-responsive" src="{{ $file->thumbnail }}" alt="{{ $file->file_name }}">
+                                                                <td style="width: 150px;">
+                                                                    <img class="img-responsive" src="{{ $file->thumbnail }}" alt="{{ $file->file_name }}">
+                                                                    <span class="d-block"><a href="{{ $file->url }}" target="_blank">{{ $file->file_name }}</a></span>
                                                                 </td>
-                                                                <td><a href="{{ $file->url }}" target="_blank">{{ $file->file_name }}</a></td>
+                                                                <td><textarea rows="3" name="overview_updates[{{  $file->id }}]" class="form-control"">{{ $file->overview }}</textarea></td>
                                                             </tr>
                                                             @endforeach
                                                         </tbody>

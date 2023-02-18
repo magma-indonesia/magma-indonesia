@@ -396,7 +396,7 @@ $(document).ready(function() {
         maxDate: '{{ now()->addDay(1)->format('Y-m-d')}}',
         sideBySide: true,
         locale: 'id',
-        format: 'YYYY-MM-DD HH:mm',
+        format: 'YYYY-MM-DD HH:mm:ss',
     });
 
     function validateSize(input, limit = 3) {

@@ -78,6 +78,8 @@ class PressReleaseCreateRequest extends FormRequest
             'gambars.*' => 'sometimes|required|max:3072',
             'petas' => 'sometimes|required|array',
             'petas.*' => 'sometimes|required|max:3072',
+            'overview_updates' => 'sometimes|nullable|array',
+            'overview_updates.*' => 'sometimes|nullable',
             'overviews.files' => 'sometimes|nullable|array',
             'overviews.files.*' => 'sometimes|nullable',
             'overviews.petas' => 'sometimes|nullable|array',

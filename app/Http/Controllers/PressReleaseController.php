@@ -70,12 +70,14 @@ class PressReleaseController extends Controller
         PressReleaseService $pressReleaseService,
         PressReleaseFileService $pressReleaseFileService)
     {
-        // return $request;
-
         $pressRelease = DB::transaction(function () use ($request, $pressReleaseService, $pressReleaseFileService) {
-            $pressRelease = $pressReleaseService->storePressRelease($request);
-            $pressReleaseFileService->storeFiles($request, $pressRelease);
 
+            $pressRelease = $pressReleaseFileService->storeFiles(
+                $request,
+                $pressReleaseService->storePressRelease($request)
+            );
+
+            $pressReleaseService->storeToOldPressRelease($pressRelease);
             return $pressRelease;
         });
 
@@ -124,10 +126,12 @@ class PressReleaseController extends Controller
     }
 
     /**
-     * Store update for press release
+     * Update Press Reelase
      *
      * @param PressReleaseUpdateRequest $request
      * @param PressRelease $pressRelease
+     * @param PressReleaseService $pressReleaseService
+     * @param PressReleaseFileService $pressReleaseFileService
      * @return \Illuminate\Http\Response
      */
     public function update(
@@ -184,8 +188,23 @@ class PressReleaseController extends Controller
      * @param  \App\PressRelease  $pressRelease
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PressRelease $pressRelease)
+    public function destroy(
+        PressRelease $pressRelease,
+        PressReleaseFileService $pressReleaseFileService)
     {
-        //
+        $pressReleaseFiles = $pressRelease->load('press_release_files')->press_release_files;
+
+        if ($pressRelease->delete()) {
+            $pressReleaseFileService->destroyFiles($pressReleaseFiles);
+            return [
+                'message' => $pressRelease->judul . ' berhasil dihapus',
+                'success' => true
+            ];
+        }
+
+        return [
+            'message' => $pressRelease->judul . ' gagal dihapus',
+            'success' => false
+        ];
     }
 }

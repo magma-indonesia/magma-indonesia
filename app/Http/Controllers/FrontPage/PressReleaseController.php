@@ -4,84 +4,69 @@ namespace App\Http\Controllers\FrontPage;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Home\PressReleaseIndexRequest;
 use App\PressRelease;
-use App\PressReleaseFile;
-use App\Tag;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
+use App\Services\PressReleaseService;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
 class PressReleaseController extends Controller
 {
-    /**
-     * Get image URL
-     *
-     * @param PressRelease $pressRelease
-     * @return PressReleaseFile|null
-     */
-    public function imageUrl(PressRelease $pressRelease): ?PressReleaseFile
+    public function filter(Request $request, Builder $query): Builder
     {
-        $pressReleaseFile = $pressRelease->press_release_files->whenNotEmpty(function ($pressReleaseFiles) {
-            return $pressReleaseFiles->whereIn('collection', ['petas', 'gambars'])->first();
-        });
-
-        return $pressReleaseFile;
-    }
-
-    /**
-     * Get Press Release based on id and slug
-     *
-     * @param string $id
-     * @param string $slug
-     * @return PressRelease
-     */
-    public function pressReleaseShow(string $id, string $slug): PressRelease
-    {
-        return PressRelease::with([
-            'peta_krbs:code,tahun,filename,size,medium_size,large_size',
-            'gunungApi:code,name',
-            'press_release_files',
-            'tags:name,slug',
-        ])->where('id', $id)->where('slug', $slug)->firstOrFail();
-    }
-
-    /**
-     * Cache press release show
-     *
-     * @param string $id
-     * @param string $slug
-     * @param boolean $enable
-     * @return array
-     */
-    public function cacheResponseShow(string $id, string $slug, bool $disable = false): array
-    {
-        if ($disable) {
-            Cache::tags(['home:press-release'])->flush();
+        if ($request->has('tag')) {
+            $query->whereHas(
+                'tags',
+                function ($tag) use ($request) {
+                    $tag->where('slug', $request->tag);
+                },
+            );
         }
 
-        return Cache::tags(['home:press-release'])
-            ->rememberForever("home:press-release:$id:$slug", function () use ($id, $slug) {
-                $pressRelease = $this->pressReleaseShow($id, $slug);
-                $imageUrl = $this->imageUrl($pressRelease);
+        if ($request->has('volcano')) {
+            $query->whereHas(
+                'gunungApi',
+                function ($gunungApi) use ($request) {
+                    $gunungApi->where('code', $request->volcano);
+                },
+            );
+        }
 
-                return [
-                    'pressRelease' => $pressRelease,
-                    'cover' => $imageUrl ? $imageUrl->url : null,
-                    'thumbnail' => $imageUrl ? $imageUrl->thumbnail : null,
-                ];
-            });
+        if ($request->has('gunung-api')) {
+        }
+
+        if ($request->has('gerakan-tanah')) {
+        }
+
+        if ($request->has('gempa-bumi')) {
+        }
+
+        if ($request->has('tsunami')) {
+        }
+
+        if ($request->has('lainnya')) {
+        }
+
+        return $query;
     }
 
-    public function cacheResponseIndex(Request $request)
+    /**
+     * Undocumented function
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function cacheResponseIndex(Request $request): Collection
     {
         $pressReleases = PressRelease::query();
 
-        if ($request->has('tag')) {
-            $pressReleases->with([
-                'tags'
-            ]);
-        }
+        $pressReleases->with('tags:name,slug', 'gunungApi:code,name')->select([
+            'id', 'judul', 'slug', 'no_surat',
+            'gunung_api', 'gerakan_tanah', 'gempa_bumi', 'tsunami',
+            'lainnya', 'code', 'short_deskripsi', 'hit'
+        ])->where('is_published', 1);
 
-        return [];
+        return $this->filter($request, $pressReleases)->get();
     }
 
     /**
@@ -89,7 +74,9 @@ class PressReleaseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(
+        PressReleaseIndexRequest $request,
+        PressReleaseService $pressReleaseService)
     {
         return $this->cacheResponseIndex($request);
 
@@ -102,14 +89,18 @@ class PressReleaseController extends Controller
     }
 
     /**
-     * Show Press Release
+     * Undocumented function
      *
      * @param string $id
      * @param string $slug
-     * @return \Illuminate\Http\Response
+     * @param PressReleaseService $pressReleaseService
+     * @return void
      */
-    public function show(string $id, string $slug)
+    public function show(
+        string $id,
+        string $slug,
+        PressReleaseService $pressReleaseService)
     {
-        return view('home.press-release.show', $this->cacheResponseShow($id, $slug, true));
+        return view('home.press-release.show', $pressReleaseService->cacheResponseShow($id, $slug, true));
     }
 }
