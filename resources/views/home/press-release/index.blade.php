@@ -20,8 +20,8 @@ Press Release
 
 @section('main')
 <div class="row row-sm">
-	<div class="col-lg-12">
-
+	<div class="col-lg-9">
+		{{ $pressReleases->appends(request()->query())->links('vendor.pagination.slim-simple') }}
 		@foreach ($pressReleases as $pressRelease)
 		<div class="card card-latest-activity mg-t-20">
 			<div class="card-body">
@@ -88,7 +88,9 @@ Press Release
 
 		</div>
 		@endforeach
-
+		<div class="mg-t-20">
+		{{ $pressReleases->appends(request()->query())->links('vendor.pagination.slim-simple') }}
+		</div>
 	</div>
 </div>
 @endsection
