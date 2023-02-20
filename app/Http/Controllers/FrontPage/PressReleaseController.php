@@ -9,7 +9,6 @@ use App\PressRelease;
 use App\Services\PressReleaseService;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 
 class PressReleaseController extends Controller
 {
@@ -87,13 +86,6 @@ class PressReleaseController extends Controller
         return view('home.press-release.index', [
             'pressReleases' => $this->cacheResponseIndex($request),
         ]);
-
-        return PressRelease::with([
-            'peta_krbs:code,tahun,filename,size,medium_size,large_size',
-            'gunungApi:code,name',
-            'press_release_files',
-            'tags:name,slug',
-        ])->get();
     }
 
     /**
