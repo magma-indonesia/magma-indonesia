@@ -191,7 +191,7 @@ Edit Press Release
                                             </h4>
                                             <p>
                                                 Upload dokumen dan gambar pendukung. File dokumen maksimal yang bisa diupload
-                                                adalah sebesar 3MB sementara gambar, maksimal 1MB per gambar.
+                                                adalah sebesar 5MB sementara gambar, maksimal 3MB per gambar.
                                             </p>
                                         </div>
                                     </div>
@@ -332,7 +332,7 @@ Edit Press Release
 
                                     {{-- Foto --}}
                                     <div class="row">
-                                        <div class="form-group col-lg-12">
+                                        <div class="col-lg-12">
                                             {{-- Peta KRB/Grafik/Hasil Pemodelan Exists --}}
                                             @if (isset($pressReleaseFiles['gambars']) AND $pressReleaseFiles['gambars']->isNotEmpty())
                                             <div class="form-group">

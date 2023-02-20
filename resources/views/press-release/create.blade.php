@@ -165,21 +165,28 @@ Buat Press Release
                 <div class="hpanel hred">
                     <div class="panel-body">
                         <div class="tab-pane active">
-                            <div class="row m-sm">
-                                <div class="col-lg-4 text-center">
-                                    <i class="pe-7s-ribbon fa-5x text-muted"></i>
-                                    <p class="m-t-md">
-                                        <strong>Dokumen dan Gambar Pendukung</strong>
-                                    </p>
-                                    <p>
-                                        Upload dokumen dan gambar pendukung. File dokumen maksimal yang bisa diupload adalah sebesar 3MB sementara gambar, maksimal 1MB per gambar.
-                                    </p>
-                                </div>
+                            <div class="row m-md">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-lg-2 text-center">
+                                            <i class="pe-7s-ribbon fa-5x text-muted"></i>
+                                        </div>
+                                        <div class="col-lg-10">
+                                            <h4>
+                                                <strong>Dokumen dan Gambar Pendukung</strong>
+                                            </h4>
+                                            <p>
+                                                Upload dokumen dan gambar pendukung. File dokumen maksimal yang bisa diupload
+                                                adalah sebesar 5MB sementara gambar, maksimal 3MB per gambar.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <hr>
 
-                                <div class="col-lg-8">
                                     {{-- Dokumen --}}
                                     <div class="row">
                                         <div class="col-lg-12">
+                                            {{-- Add Dokumen --}}
                                             <div class="form-group">
                                                 <label>Dokumen</label>
                                                 <p>Format dokumen yang diterima adalah format PDF dengan ukuran per filenya <strong>maksimal 5MB.</strong></p>
@@ -205,7 +212,6 @@ Buat Press Release
                                                 </div>
                                                 <span class="span-file"></span>
                                             </div>
-
                                         </div>
                                     </div>
                                     <hr>
@@ -230,7 +236,7 @@ Buat Press Release
                                                     </span>
                                                     <span class="input-group-btn">
                                                         <button type="button" class="btn btn-danger clear-file"><i class="fa fa-trash"></i></button>
-                                                                                        </span>
+                                                    </span>
                                                     <input class="form-control overviews-files" name="overviews[petas][]" type="text" placeholder="(Optional) Keterangan file" value="">
                                                     <span class="input-group-btn add-remove-button">
                                                         <button type="button" class="btn btn-primary add-file">+</button>
@@ -243,7 +249,7 @@ Buat Press Release
                                     </div>
                                     <hr>
 
-                                    {{-- Foto/Gambar --}}
+                                    {{-- Foto --}}
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group">
@@ -273,9 +279,8 @@ Buat Press Release
                                             </div>
                                         </div>
                                     </div>
-                                    <hr>
-
                                 </div>
+
                             </div>
                         </div>
                     </div>
