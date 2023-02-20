@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\FilterPressRelease;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 class PressRelease extends Model
 {
     use Notifiable;
+    use FilterPressRelease;
 
     protected $casts = [
         'gunung_api' => 'boolean',
@@ -26,6 +28,7 @@ class PressRelease extends Model
     protected $appends = [
         'url',
         'cover_thumbnail_url',
+        'cover_url',
     ];
 
     /**
@@ -79,7 +82,7 @@ class PressRelease extends Model
     }
 
     /**
-     * Get thumbnail preview
+     * Get thumbnail URL
      *
      * @return void
      */
@@ -88,6 +91,18 @@ class PressRelease extends Model
         $thumbnailUrl = $this->press_release_files()->whereIn('collection', ['petas','gambars'])->first();
 
         return $thumbnailUrl ? $thumbnailUrl->thumbnail : null;
+    }
+
+    /**
+     * Get cover URL
+     *
+     * @return void
+     */
+    public function getCoverUrlAttribute()
+    {
+        $coverUrl = $this->press_release_files()->whereIn('collection', ['petas', 'gambars'])->first();
+
+        return $coverUrl ? $coverUrl->url : null;
     }
 
     /**

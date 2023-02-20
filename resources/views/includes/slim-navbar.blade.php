@@ -66,11 +66,17 @@
                     </ul>
                 </div>
             </li>
-            <li class="nav-item nav-item-15 {{ active('v1.press.index') }}">
-                <a class="nav-link" href="{{ route('v1.press.index') }}">
+            <li class="nav-item nav-item-15 with-sub {{ active(['v1.press.index', 'press-release.index']) }}">
+                <a class="nav-link" href="#">
                     <i class="icon ion-ios-bookmarks-outline"></i>
                     <span class="d-none d-xl-block">Press Release </span>
                 </a>
+                <div class="sub-item">
+                    <ul>
+                        <li><a href="{{ route('press-release.index') }}">Press Release</a></li>
+                        <li><a href="{{ route('v1.press.index') }}">Archived</a></li>
+                    </ul>
+                </div>
             </li>
         </ul>
     </div>

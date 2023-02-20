@@ -42,8 +42,8 @@ $(function(){
   /////////////////// START: TEMPLATE SETTINGS /////////////////////
   var loc    = window.location.pathname;
   var path   = loc.split('/');
-  var isRtl  = (path[2].indexOf('rtl') >= 0)? true : false;   // path[2] for production
-  var isSidebar = (path[2].indexOf('sidebar') >= 0)? true : false; // path[2] for production
+  var isRtl  = false;   // path[2] for production
+  var isSidebar = false; // path[2] for production
   var newloc = '';
 
   // inject additional link tag for header skin

@@ -28,6 +28,8 @@ class PressReleaseIndexRequest extends FormRequest
         return [
             'tag' => 'sometimes|exists:tags,slug',
             'volcano' => 'sometimes|exists:ga_dd,code',
+            'category' => 'sometimes|in:gunung-api,gerakan-tanah,gempa-bumi,tsunami,lainnya',
+            'value' => 'required_if:category,lainnya',
         ];
     }
 
@@ -39,6 +41,7 @@ class PressReleaseIndexRequest extends FormRequest
      */
     protected function failedValidation(Validator $validator)
     {
+        // throw new HttpResponseException(response()->json($validator->errors(), 422));
         abort(404);
     }
 }
