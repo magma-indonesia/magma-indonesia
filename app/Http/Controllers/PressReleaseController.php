@@ -77,7 +77,10 @@ class PressReleaseController extends Controller
                 $pressReleaseService->storePressRelease($request)
             );
 
-            $pressReleaseService->storeToOldPressRelease($pressRelease);
+            if ($request->to_old_press_release) {
+                $pressReleaseService->storeToOldPressRelease($pressRelease);
+            }
+
             return $pressRelease;
         });
 

@@ -6,8 +6,6 @@ use App\Http\Requests\TagCreateRequest;
 use App\Http\Requests\TagUpdateRequest;
 use App\PressRelease;
 use App\Tag;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class TagController extends Controller
 {
@@ -43,7 +41,7 @@ class TagController extends Controller
      */
     public function store(TagCreateRequest $request)
     {
-        $tag = Tag::create(['name' => Str::title($request->name)]);
+        $tag = Tag::create(['name' => $request->name]);
 
         return redirect()->route('chambers.tag.index')
             ->with('message', "$tag->name berhasil ditambahkan");
@@ -87,7 +85,7 @@ class TagController extends Controller
     {
         $oldName = $tag->name;
 
-        $tag->update(['name' => Str::title($request->name)]);
+        $tag->update(['name' => $request->name]);
         $tag->save();
 
         return redirect()->route('chambers.tag.index')

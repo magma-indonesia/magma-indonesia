@@ -87,6 +87,7 @@ class PressReleaseCreateRequest extends FormRequest
             'overviews.gambars' => 'sometimes|nullable|array',
             'overviews.gambars.*' => 'sometimes|nullable',
             'is_published' => 'required|boolean',
+            'to_old_press_release' => 'required|boolean',
         ];
     }
 }

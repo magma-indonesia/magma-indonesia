@@ -20,7 +20,7 @@ Press Release
 
 @section('main')
 <div class="row row-sm">
-	<div class="col-lg-9">
+	<div class="col-lg-12">
 		{{ $pressReleases->appends(request()->query())->links('vendor.pagination.slim-simple') }}
 		@foreach ($pressReleases as $pressRelease)
 		<div class="card card-latest-activity mg-t-20">

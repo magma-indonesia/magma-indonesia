@@ -361,7 +361,22 @@ Buat Press Release
                                                     @endif
                                                 </div>
                                             </div>
+                                        </div>
 
+                                        <div class="form-group col-sm-12">
+                                            <label>Simpan dan publikasikan ke MAGMA v1?</label>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <label class="checkbox" style="font-weight: normal"><input name="to_old_press_release" value="1" type="radio" class="i-checks to-old-press-release"
+                                                            {{ (old('to_old_press_release') == '1' OR empty(old('to_old_press_release'))) ? 'checked' : ''}}> Ya</label>
+                                                    <label class="checkbox" style="font-weight: normal"><input name="to_old_press_release" value="0" type="radio" class="i-checks to-old-press-release"
+                                                            {{ (old('to_old_press_release') == '0') ? 'checked' : ''}}> Tidak</label>
+
+                                                    @if( $errors->has('to_old_press_release'))
+                                                    <label class="error" for="to_old_press_release">{{ ucfirst($errors->first('to_old_press_release')) }}</label>
+                                                    @endif
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="form-group col-sm-12">
