@@ -15,7 +15,13 @@
     <meta name="author" content="Kementerian Energi dan Sumber Daya Mineral">
 
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <link href="{{ asset('favicon.ico') }}" rel="shortcut icon">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+    <link rel="icon" type="image/png" href="{{ asset('favicon-16x16.0.png') }}" sizes="16x16">
+    <link rel="icon" type="image/png" href="{{ asset('favicon-32x32.0.png') }}" sizes="32x32">
+    <link rel="icon" type="image/png" href="{{ asset('favicon-96x96.0.png') }}" sizes="96x96">
+    <link rel="icon" type="image/png" href="{{ asset('favicon-192x192.0.png') }}" sizes="192x192">
+    <link rel="apple-touch-icon" href="{{ asset('favicon-180x180.0.png') }}" sizes="180x180">
+    <link rel="dns-prefetch" href="{{ config('app.url') }}">
 
 	<!-- Vendor styles -->
 	<link rel="stylesheet" href="{{ asset('vendor/bootstrap/dist/css/bootstrap.css') }}" />
