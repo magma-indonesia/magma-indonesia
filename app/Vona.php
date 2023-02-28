@@ -87,6 +87,11 @@ class Vona extends Model
         return Carbon::createFromTimeString($this->attributes['issued'], 'UTC')->setTimezone($zone);
     }
 
+    public function getIssuedLocalDateAttribute()
+    {
+        return $this->getIssuedLocalAttribute()->format('Y-m-d');
+    }
+
     public function getPreviousCodeAttribute($value)
     {
         return strtolower($value);

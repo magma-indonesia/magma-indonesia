@@ -2,6 +2,7 @@
 
 namespace App\v1;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -142,5 +143,24 @@ class MagmaVen extends Model
     public function user()
     {
         return $this->belongsTo('App\v1\User','erupt_usr','vg_nip');
+    }
+
+    public function getVarLogLocalAttribute()
+    {
+        $zone = $this->gunungapi->ga_zonearea;
+
+        switch ($zone) {
+            case 'WIB':
+                $zone = 'Asia/Jakarta';
+                break;
+            case 'WITA':
+                $zone = 'Asia/Makassar';
+                break;
+            default:
+                $zone = 'Asia/Jayapura';
+                break;
+        }
+
+        return Carbon::createFromTimeString($this->attributes['utc'], 'UTC')->setTimezone($zone)->format('Y-m-d H:i:s');
     }
 }

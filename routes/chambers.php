@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     ChamberController,
     StatistikController,
-    RoutesController
+    RoutesController,
+    OvertimeController,
 };
 
 Route::get('/',[ChamberController::class, 'index'])->name('index');
@@ -17,6 +18,13 @@ Route::resource('edukasi', EdukasiController::class);
 Route::resource('glossary', GlossaryController::class);
 Route::resource('crs', CrsController::class);
 Route::resource('pengajuan', PengajuanController::class);
+
+Route::get('overtime/{date?}/{flush?}', [OvertimeController::class, 'index'])
+    ->name('overtime.index');
+Route::get('overtime/{nip}/show/{date?}', [OvertimeController::class, 'show'])
+    ->name('overtime.show');
+// Route::resource('overtime', OvertimeController::class);
+
 Route::post('crs/lokasi','CrsController@getCities')->name('crs.getcities');
 Route::get('export/{type}','ExportController@index')->name('export');
 
@@ -37,8 +45,6 @@ Route::name('administratif.')->group(function () {
                     ->name('statistik-kegiatan.index');
         });
     });
-
-    Route::resource('overtime', 'OvertimeController');
 });
 
 Route::get('absensi/search','AbsensiController@search')->name('absensi.search');
