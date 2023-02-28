@@ -108,7 +108,7 @@ Rekap Lembur
                         <table id="table-rekap" class="table table-condensed table-striped">
                             <thead>
                                 <tr>
-                                    <th colspan="2" class="text-center border-left">Nama</th>
+                                    <th colspan="2" class="text-center border-left">Pegawai</th>
                                     <th colspan="{{ $colspan }}" class="text-center border-right border-left">Tanggal</th>
                                     <th></th>
                                 </tr>
