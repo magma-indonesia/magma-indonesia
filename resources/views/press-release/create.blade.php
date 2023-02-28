@@ -73,7 +73,7 @@ Buat Press Release
                                     <div class="row">
                                         <div class="form-group col-lg-12">
                                             <label>Tanggal Press Release</label>
-                                            <input name="datetime" id="datepicker" class="form-control" type="text" value="{{ empty(old('datetime')) ? now()->format('Y-m-d H:i') : old('date') }}">
+                                            <input name="datetime" id="datepicker" class="form-control" type="text" value="{{ empty(old('datetime')) ? now()->format('Y-m-d H:i') : old('datetime') }}">
                                             @if( $errors->has('datetime'))
                                             <label class="error" for="datetime">{{ ucfirst($errors->first('datetime')) }}</label>
                                             @endif
