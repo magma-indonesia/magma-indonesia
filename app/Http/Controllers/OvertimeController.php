@@ -505,6 +505,18 @@ class OvertimeController extends Controller
         });
     }
 
+    public function disableOrder()
+    {
+        $disableOrder = $this->dates->map(function ($order, $index) {
+            return [
+                'orderable' => false,
+                'targets' => $index+2,
+            ];
+        });
+
+        return $disableOrder;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -528,6 +540,7 @@ class OvertimeController extends Controller
             'selected_date' => $this->date->formatLocalized('%B %Y'),
             'is_cached' => $isCachedForever,
             'dates_period' => $this->dates,
+            'disable_order' => $this->disableOrder(),
             'colspan' => $datesPeriod->count(),
             'overtimes' => $this->cacheIndex($isCachedForever)->values(),
         ]);

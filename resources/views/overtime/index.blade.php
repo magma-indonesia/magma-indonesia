@@ -1,11 +1,11 @@
 @extends('layouts.default')
 
 @section('title')
-Rekap Lembur
+Rekap Lembur {{ $selected_date }}
 @endsection
 
 @section('add-vendor-css')
-<link rel="stylesheet" href="{{ asset('vendor/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/dataTables.bootstrap.min.css" />
 <link rel="stylesheet" href="{{ asset('vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}" />
 @role('Super Admin')
 <link rel="stylesheet" href="{{ asset('vendor/sweetalert/lib/sweet-alert.css') }}" />
@@ -105,13 +105,9 @@ Rekap Lembur
 
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <table id="table-rekap" class="table table-condensed table-striped">
+                        <h3 class="text-center">{{ $selected_date }}</h3>
+                        <table id="table-rekap" class="table table- condensed table-striped">
                             <thead>
-                                <tr>
-                                    <th colspan="2" class="text-center border-left">Pegawai</th>
-                                    <th colspan="{{ $colspan }}" class="text-center border-right border-left">Tanggal</th>
-                                    <th></th>
-                                </tr>
                                 <tr>
                                     <th>Nama</th>
                                     <th>NIP</th>
@@ -141,7 +137,7 @@ Rekap Lembur
                                 @foreach ($dates_period as $date_period)
 
                                     @if ($overtime['overtime']->contains($date_period->format('Y-m-d')))
-                                    <td class="bg-success border-right border-left"></td>
+                                    <td class="bg-success border-right border-left text-center" style="color: transparent;">1</td>
                                     @else
                                     <td class="border-right border-left"></td>
                                     @endif
@@ -163,15 +159,16 @@ Rekap Lembur
 
 @section('add-vendor-script')
 <!-- DataTables -->
-<script src="{{ asset('vendor/datatables/media/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('vendor/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <!-- DataTables buttons scripts -->
-<script src="{{ asset('vendor/pdfmake/build/pdfmake.min.js') }}"></script>
-<script src="{{ asset('vendor/pdfmake/build/vfs_fonts.js') }}"></script>
-<script src="{{ asset('vendor/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
-<script src="{{ asset('vendor/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
-<script src="{{ asset('vendor/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
-<script src="{{ asset('vendor/datatables.net-buttons-bs/js/buttons.bootstrap.min.js') }}"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.5/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.5/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.5/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.bootstrap.min.js"></script>
 <script src="{{ asset('vendor/moment/moment.js') }}"></script>
 <script src="{{ asset('vendor/moment/locale/id.js') }}"></script>
 <script src="{{ asset('vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
@@ -203,11 +200,11 @@ $(document).ready(function () {
 
     // Initialize table
     $('#table-rekap').dataTable({
-        dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
-        "lengthMenu": [[50, 100, 150, -1], [50, 100, 150, "All"]],
+        columnDefs: @json($disable_order),
+        dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center 'B><'col-sm-4'f>>tp",
+        "lengthMenu": [[250, 100, 150, -1], [250, 100, 150, "All"]],
         buttons: [
-            { extend: 'csv', title: 'Rekap Laporan', className: 'btn-sm'},
-            { extend: 'pdfHtml5', orientation: 'landscape', pageSize: 'LEGAL', title: 'Rekap Lembur', className: 'btn-sm'},
+            'copy', 'csv', 'excel', 'pdf', 'print'
         ]
     });
 });
