@@ -16,14 +16,19 @@ class MagmaVen extends Model
     protected $keyType = 'string';
 
     protected $casts = [
-        'warna_abu' => 'array',
-        'intensitas' => 'array',
-        'arah_abu' => 'array',
+        'is_visible' => 'boolean',
+        'is_continuing' => 'boolean',
+        'ash_color' => 'array',
+        'ash_intensity' => 'array',
+        'ash_directions' => 'array',
         'arah_guguran' => 'array',
     ];
 
     protected $dates = [
-        'datetime_utc'
+        'datetime_utc',
+        'published_at',
+        'blasted_at',
+        'broadcasted_at',
     ];
 
     protected $with = [
