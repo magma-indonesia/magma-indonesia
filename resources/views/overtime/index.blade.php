@@ -130,21 +130,21 @@ Rekap Lembur {{ $selected_date }}
                             @foreach ($overtimes as $overtime)
                             <tr>
                                 <td class="border-right">
-                                    <a href="{{ route('chambers.overtime.show', ['nip' => $overtime['nip'], 'date' => $date->format('Y-m') ]) }}" style="color: #337ab7; text-decoration: none;">{{ $overtime['name'] }}</a>
+                                    <a href="{{ route('chambers.overtime.show.nip', ['nip' => $overtime['nip'], 'date' => $date->format('Y-m') ]) }}" style="color: #337ab7; text-decoration: none;">{{ $overtime['nama'] }}</a>
                                 </td>
                                 <td class="border-right">{{ $overtime['nip'] }}</td>
 
                                 @foreach ($dates_period as $date_period)
 
-                                    @if ($overtime['overtime']->contains($date_period->format('Y-m-d')))
-                                    <td class="bg-success border-right border-left text-center" style="color: transparent;">1</td>
+                                    @if ($overtime['overtimes']->contains($date_period->format('Y-m-d')))
+                                    <td title="" class="bg-success border-right border-left text-center" style="color: transparent;">1</td>
                                     @else
                                     <td class="border-right border-left"></td>
                                     @endif
 
                                 @endforeach
 
-                                <td>{{ $overtime['overtime_count'] }}</td>
+                                <td>{{ $overtime['overtimes_count'] }}</td>
                             </tr>
                             @endforeach
                             </tbody>

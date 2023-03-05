@@ -22,7 +22,7 @@ Route::resource('pengajuan', PengajuanController::class);
 Route::get('overtime/{date?}/{flush?}', [OvertimeController::class, 'index'])
     ->name('overtime.index');
 Route::get('overtime/{nip}/show/{date?}', [OvertimeController::class, 'show'])
-    ->name('overtime.show');
+    ->name('overtime.show.nip');
 // Route::resource('overtime', OvertimeController::class);
 
 Route::post('crs/lokasi','CrsController@getCities')->name('crs.getcities');
