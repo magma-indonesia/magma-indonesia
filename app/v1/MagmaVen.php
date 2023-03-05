@@ -2,6 +2,7 @@
 
 namespace App\v1;
 
+use App\Traits\v1\FilterMagmaVen;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +11,7 @@ use Illuminate\Notifications\Notifiable;
 class MagmaVen extends Model
 {
     use Notifiable;
+    use FilterMagmaVen;
 
     protected $connection = 'magma';
 
@@ -145,22 +147,27 @@ class MagmaVen extends Model
         return $this->belongsTo('App\v1\User','erupt_usr','vg_nip');
     }
 
+    public function zoneArea()
+    {
+        switch ($this->gunungapi->zonearea) {
+            case 'WIB':
+                return 'Asia/Jakarta';
+            case 'WITA':
+                return 'Asia/Makassar';
+            default:
+                return 'Asia/Jayapura';
+        }
+    }
+
     public function getVarLogLocalAttribute()
     {
-        $zone = $this->gunungapi->ga_zonearea;
+        return Carbon::createFromTimeString($this->attributes['utc'], 'UTC')
+            ->setTimezone($this->zoneArea())->format('Y-m-d H:i:s');
+    }
 
-        switch ($zone) {
-            case 'WIB':
-                $zone = 'Asia/Jakarta';
-                break;
-            case 'WITA':
-                $zone = 'Asia/Makassar';
-                break;
-            default:
-                $zone = 'Asia/Jayapura';
-                break;
-        }
-
-        return Carbon::createFromTimeString($this->attributes['utc'], 'UTC')->setTimezone($zone)->format('Y-m-d H:i:s');
+    public function getEruptTglLocalAttribute()
+    {
+        return Carbon::createFromTimeString($this->attributes['utc'], 'UTC')
+            ->setTimezone($this->zoneArea());
     }
 }
