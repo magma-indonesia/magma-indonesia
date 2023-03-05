@@ -2,11 +2,15 @@
 
 namespace App\v1;
 
+use App\Traits\v1\FilterMagmaVar;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 class MagmaVarOptimize extends Model
 {
+    use FilterMagmaVar;
+
     protected $connection = 'magma';
 
     public $timestamps = false;
@@ -25,6 +29,11 @@ class MagmaVarOptimize extends Model
         return $this->belongsTo('App\v1\Gadd', 'ga_code', 'ga_code');
     }
 
+    /**
+     * Get local time
+     *
+     * @return void
+     */
     public function getVarLogLocalAttribute()
     {
         $zone = $this->gunungapi->ga_zonearea;
@@ -41,9 +50,15 @@ class MagmaVarOptimize extends Model
                 break;
         }
 
-        return Carbon::createFromTimeString($this->attributes['var_log'], $zone)->format('Y-m-d H:i:s');
+        return Carbon::createFromTimeString($this->attributes['var_log'], 'WIB')
+            ->setTimezone($zone);
     }
 
+    /**
+     * Get Level as integer
+     *
+     * @return void
+     */
     public function getLevelAttribute()
     {
         switch ($this->attributes['cu_status']) {
