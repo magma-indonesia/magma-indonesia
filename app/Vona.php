@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Traits\FilterVona;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Uuid;
 use App\Traits\VonaTrait;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Notifications\Notifiable;
 
 class Vona extends Model
@@ -13,6 +15,7 @@ class Vona extends Model
     use Uuid;
     use Notifiable;
     use VonaTrait;
+    use FilterVona;
 
     public $incrementing = false;
 
@@ -69,27 +72,34 @@ class Vona extends Model
         return Carbon::createFromFormat('Y-m-d H:i:s', $this->attributes['issued'])->format('Ymd/Hi').'Z';
     }
 
+    public function zoneArea()
+    {
+        switch ($this->gunungapi->zonearea) {
+            case 'WIB':
+                return 'Asia/Jakarta';
+            case 'WITA':
+                return 'Asia/Makassar';
+            default:
+                return 'Asia/Jayapura';
+        }
+    }
+
     public function getIssuedLocalAttribute()
     {
-        $zone = $this->gunungapi->zonearea;
-
-        switch ($zone) {
-            case 'WIB':
-                $zone = 'Asia/Jakarta';
-                break;
-            case 'WITA':
-                $zone = 'Asia/Makassar';
-                break;
-            default:
-                $zone = 'Asia/Jayapura';
-        }
+        $zone = $this->zoneArea();
 
         return Carbon::createFromTimeString($this->attributes['issued'], 'UTC')->setTimezone($zone);
     }
 
-    public function getIssuedLocalDateAttribute()
+    public function getLocalDateTimeAttribute()
     {
-        return $this->getIssuedLocalAttribute()->format('Y-m-d');
+        return $this->getIssuedLocalAttribute();
+    }
+
+    public function getCreatedAtLocalAttribute()
+    {
+        $zone = $this->zoneArea();
+        return Carbon::createFromTimeString($this->attributes['created_at'], config('app.timezone'))->setTimezone($zone);;
     }
 
     public function getPreviousCodeAttribute($value)
