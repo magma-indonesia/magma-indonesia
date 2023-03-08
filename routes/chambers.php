@@ -7,6 +7,7 @@ use App\Http\Controllers\{
     RoutesController,
     OvertimeController,
 };
+use App\Http\Controllers\v1\PerubahanTingkatAktivitasController;
 
 Route::get('/',[ChamberController::class, 'index'])->name('index');
 Route::get('statistik/{year?}', [StatistikController::class, 'index'])
@@ -356,6 +357,9 @@ Route::name('v1.')->group(function () {
                         'create','store'
                     ]
                 ]);
+
+                Route::get('perubahan-tingkat-aktivitas/{year?}/{flush?}', [PerubahanTingkatAktivitasController::class, 'index'])
+                    ->name('perubahan-tingkat-aktivitas');
 
                 Route::get('rekap-laporan/{year?}', 'RekapPembuatLaporanController@index')
                     ->name('rekap-laporan.index');
