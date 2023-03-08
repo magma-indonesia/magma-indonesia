@@ -89,8 +89,8 @@ Perubahan Tingkat Aktivitas
                             <tbody>
                             @foreach ($vars as $var)
                             <tr>
-                                <td><a href="{{ URL::signedRoute('v1.gunungapi.var.show', ['id' => $var->no]) }}" class="card-link" target="_blank">{{ $var->ga_nama_gapi }}</a></td>
-                                <td>{{ $var->pre_status  }}</td>
+                                <td><a href="{{ URL::signedRoute('v1.gunungapi.var.show', ['id' => $var->no]) }}" target="_blank">{{ $var->ga_nama_gapi }}</a></td>
+                                <td>{{ $var->pre_status }}</td>
                                 <td>{{ $var->cu_status }}</td>
                                 <td>{{ $var->activity_change === 'increase' ? 'Naik' : 'Turun' }}</td>
                                 <td>{{ $var->var_data_date }}</td>
