@@ -150,6 +150,9 @@
                             <li class="{{ active('chambers.v1.gunungapi.data-dasar.index') }}">
                                 <a class="m-l" href="{{ route('chambers.v1.gunungapi.data-dasar.index') }}">Data Dasar</a>
                             </li>
+                            <li class="{{ active('chambers.v1.gunungapi.perubahan-tingkat-aktivitas') }}">
+                                <a class="m-l" href="{{ route('chambers.v1.gunungapi.perubahan-tingkat-aktivitas') }}">Perubahan Tingkat Aktivitas</a>
+                            </li>
                             <li class="">
                                 <a class="m-l" href="{{ route('chambers.resume-harian.index') }}">Resume Harian</a>
                             </li>
