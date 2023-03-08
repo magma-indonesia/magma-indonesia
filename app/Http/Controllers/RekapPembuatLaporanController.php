@@ -66,7 +66,7 @@ class RekapPembuatLaporanController extends Controller
      * @param string $slug
      * @return self
      */
-    protected function gunungApi(string $slug): self
+    public function gunungApi(string $slug): self
     {
         $this->gunungApi = Gadd::where('slug', $slug)->firstOrFail();
         return $this;
@@ -77,9 +77,9 @@ class RekapPembuatLaporanController extends Controller
      *
      * @return self
      */
-    protected function gunungApis(): self
+    public function gunungApis(): self
     {
-        $this->gunungApis = Cache::rememberForever('gunungApis', function () {
+        $this->gunungApis = Cache::tags(['rekap-laporan'])->rememberForever('gunungApis', function () {
             return Gadd::select('ga_code','slug', 'ga_nama_gapi', 'ga_zonearea')->get();
         });
 
@@ -92,7 +92,7 @@ class RekapPembuatLaporanController extends Controller
      * @param string $nip
      * @return self
      */
-    protected function user(string $nip): self
+    public function user(string $nip): self
     {
         $this->user = User::where('vg_nip', $nip)->firstOrFail();
         return $this;
@@ -103,7 +103,7 @@ class RekapPembuatLaporanController extends Controller
      *
      * @return Collection
      */
-    protected function years(): Collection
+    public function years(): Collection
     {
         return collect(CarbonPeriod::create(
             Carbon::createFromDate('2015')->startOfYear(),
@@ -117,7 +117,7 @@ class RekapPembuatLaporanController extends Controller
      *
      * @return Collection
      */
-    protected function months(): Collection
+    public function months(): Collection
     {
         return collect(CarbonPeriod::create(
             Carbon::createFromDate(
@@ -136,7 +136,7 @@ class RekapPembuatLaporanController extends Controller
      * @param Request $request
      * @return self
      */
-    protected function pengamatOnly(Request $request): self
+    public function pengamatOnly(Request $request): self
     {
         if ($request->pengamatOnly === 'true') {
             $this->pengamatOnly = true;
@@ -151,7 +151,7 @@ class RekapPembuatLaporanController extends Controller
      * @param string|null $year
      * @return self
      */
-    protected function year(?string $year = null): self
+    public function year(?string $year = null): self
     {
         try {
             $this->year = !is_null($year) ? $year : now()->format('Y');
@@ -169,7 +169,7 @@ class RekapPembuatLaporanController extends Controller
      * @param Request $request
      * @return self
      */
-    protected function month(Request $request): self
+    public function month(Request $request): self
     {
         try {
             $this->month = $request->has('month') ?
@@ -186,7 +186,7 @@ class RekapPembuatLaporanController extends Controller
      *
      * @return array
      */
-    protected function dates(): array
+    public function dates(): array
     {
         return [
             Carbon::createFromFormat('Y', $this->year)->startOfYear()->format('Y-m-d'),
@@ -201,7 +201,7 @@ class RekapPembuatLaporanController extends Controller
      * @param string $month
      * @return integer
      */
-    protected function countLaporanPerBulan(Collection $vars, string $month): int
+    public function countLaporanPerBulan(Collection $vars, string $month): int
     {
         return $vars->filter(function ($var) use($month) {
                 return Str::startsWith($var->var_data_date, "{$this->year}-{$month}");
@@ -214,7 +214,7 @@ class RekapPembuatLaporanController extends Controller
      * @param string $periode
      * @return array
      */
-    protected function getTimePeriod(string $periode): array
+    public function getTimePeriod(string $periode): array
     {
         switch ($periode) {
             case '00:00-24:00':
@@ -252,7 +252,7 @@ class RekapPembuatLaporanController extends Controller
      * @param string $periode
      * @return array
      */
-    protected function getStartDateForCalendar(string $var_data_date, string $periode): array
+    public function getStartDateForCalendar(string $var_data_date, string $periode): array
     {
         return [
             'start' => Carbon::createFromFormat(
@@ -272,7 +272,7 @@ class RekapPembuatLaporanController extends Controller
      * @param Collection $vars
      * @return Collection
      */
-    protected function calendars(Collection $vars): Collection
+    public function calendars(Collection $vars): Collection
     {
         $vars->transform(function ($var) {
             return [
@@ -291,7 +291,7 @@ class RekapPembuatLaporanController extends Controller
      * @param Collection $vars
      * @return Collection
      */
-    protected function rekapLaporanByNip(Collection $vars): Collection
+    public function rekapLaporanByNip(Collection $vars): Collection
     {
         $vars->transform(function ($var) {
             return [
@@ -302,7 +302,7 @@ class RekapPembuatLaporanController extends Controller
                 'tanggal_laporan' => Carbon::createFromFormat('Y-m-d', $var->var_data_date),
                 'jenis_periode_laporan' => $var->var_perwkt,
                 'periode_laporan' => $var->periode,
-                'dibuat_pada' => Carbon::createFromFormat('d/m/Y H:i:s', $var->var_issued),
+                'dibuat_pada' => $var->var_log_local,
                 'time_zone' => $var->gunungapi->ga_zonearea,
                 'link' => URL::route('chambers.v1.gunungapi.laporan.show', ['id' => $var->no]),
             ];
@@ -317,11 +317,11 @@ class RekapPembuatLaporanController extends Controller
      * @param Collection $vars
      * @return array
      */
-    protected function rekapShowLaporanByGunungApi(Collection $vars): array
+    public function rekapShowLaporanByGunungApi(Collection $vars): array
     {
         return [
             'users' => $this->rekapLaporan($vars),
-            'calendar' => $this->calendars($vars),
+            'calendars' => $this->calendars($vars),
         ];
     }
 
@@ -331,7 +331,7 @@ class RekapPembuatLaporanController extends Controller
      * @param Collection $vars
      * @return Collection
      */
-    protected function rekapIndexLaporanByGunungApi(Collection $vars): Collection
+    public function rekapIndexLaporanByGunungApi(Collection $vars): Collection
     {
         return $this->groupedByGunungApis($vars)->transform(function ($vars, $namaGunungApi) {
             return [
@@ -364,7 +364,7 @@ class RekapPembuatLaporanController extends Controller
      * @param Collection $vars
      * @return Collection
      */
-    protected function groupedByGunungApis(Collection $vars): Collection
+    public function groupedByGunungApis(Collection $vars): Collection
     {
         return $vars->groupBy(function ($var) {
             return $var->gunungapi->ga_nama_gapi;
@@ -377,7 +377,7 @@ class RekapPembuatLaporanController extends Controller
      * @param Collection $vars
      * @return Collection
      */
-    protected function groupedByNames(Collection $vars): Collection
+    public function groupedByNames(Collection $vars): Collection
     {
         return $vars->groupBy(function ($var) {
             return $var->user->vg_nama ?? 'Guest';
@@ -390,7 +390,7 @@ class RekapPembuatLaporanController extends Controller
      * @param Collection $vars
      * @return Collection
      */
-    protected function rekapLaporan(Collection $vars): Collection
+    public function rekapLaporan(Collection $vars): Collection
     {
         return $this->groupedByNames($vars)->transform(function ($vars, $name) {
             return [
@@ -421,9 +421,9 @@ class RekapPembuatLaporanController extends Controller
      * @param Collection $vars
      * @return Collection
      */
-    protected function rejectNonPengamat(Collection $vars): Collection
+    public function rejectNonPengamat(Collection $vars): Collection
     {
-        $pengamats = Cache::remember('pengamat-gunung-api', 60*24, function () {
+        $pengamats = Cache::tags(['rekap-laporan'])->remember('pengamat-gunung-api', 60*24, function () {
             return Kantor::whereNotIn('obscode', [
                 'PVG',
                 'PAG',
@@ -442,14 +442,15 @@ class RekapPembuatLaporanController extends Controller
      *
      * @return Collection
      */
-    protected function getVarsByNip(): Collection
+    public function getVarsByNip(): Collection
     {
-        $vars = MagmaVarOptimize::select('no', 'ga_code','var_data_date', 'var_perwkt', 'periode', 'var_nip_pelapor', 'var_noticenumber','var_issued')
+        $vars = MagmaVarOptimize::select('no', 'ga_code','var_data_date', 'var_perwkt', 'periode', 'var_nip_pelapor', 'var_noticenumber','var_issued', 'var_log')
             ->with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea,slug')
             ->where('var_nip_pelapor', $this->user->vg_nip)
             ->whereBetween('var_data_date', $this->dates())
             ->orderBy('var_data_date', 'desc')
-            ->get();
+            ->get()
+            ->each->append(['var_log_local']);
 
         return $vars;
     }
@@ -459,7 +460,7 @@ class RekapPembuatLaporanController extends Controller
      *
      * @return Collection
      */
-    protected function getVars(): Collection
+    public function getVars(): Collection
     {
         $vars = MagmaVarOptimize::select('var_data_date', 'var_nip_pelapor')
             ->whereBetween('var_data_date', $this->dates())
@@ -476,9 +477,9 @@ class RekapPembuatLaporanController extends Controller
      *
      * @return Collection
      */
-    protected function getIndexVarsByGunungApi(): Collection
+    public function getIndexVarsByGunungApi(): Collection
     {
-        $vars = MagmaVarOptimize::select('ga_code','var_data_date', 'var_nip_pelapor', 'var_perwkt', 'var_issued')
+        $vars = MagmaVarOptimize::select('ga_code','var_data_date', 'var_nip_pelapor', 'var_perwkt', 'var_issued', 'var_log')
             ->whereBetween('var_data_date', $this->dates())
             ->with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea,slug')
             ->with('user:vg_nip,vg_nama')
@@ -494,15 +495,16 @@ class RekapPembuatLaporanController extends Controller
      *
      * @return Collection
      */
-    protected function getShowVarsByGunungApi(): Collection
+    public function getShowVarsByGunungApi(): Collection
     {
-        $vars = MagmaVarOptimize::select('no', 'ga_code','var_data_date', 'var_perwkt', 'periode', 'var_nip_pelapor', 'var_noticenumber','var_issued')
+        $vars = MagmaVarOptimize::select('no', 'ga_code','var_data_date', 'var_perwkt', 'periode', 'var_nip_pelapor', 'var_noticenumber','var_issued', 'var_log')
             ->with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea')
             ->with('user:vg_nip,vg_nama')
             ->where('ga_code', $this->gunungApi->ga_code)
             ->whereBetween('var_data_date', $this->dates())
             ->orderBy('var_data_date', 'asc')
-            ->get();
+            ->get()
+            ->each->append(['var_log_local']);
 
         return $vars;
     }
@@ -513,17 +515,17 @@ class RekapPembuatLaporanController extends Controller
      * @param boolean $forever
      * @return Collection
      */
-    protected function cacheVarsByNipForever(bool $forever = true): Collection
+    public function cacheVarsByNipForever(bool $forever = true): Collection
     {
         if ($forever) {
-            return Cache::rememberForever("rekap-laporan-forever-{$this->year}-{$this->user->vg_nip}", function () {
+            return Cache::tags(['rekap-laporan'])->rememberForever("rekap-laporan-forever-{$this->year}-{$this->user->vg_nip}", function () {
                 return $this->rekapLaporanByNip(
                     $this->getVarsByNip()
                 );
             });
         }
 
-        return Cache::remember("rekap-laporan-{$this->year}-{$this->user->vg_nip}", 60, function () {
+        return Cache::tags(['rekap-laporan'])->remember("rekap-laporan-{$this->year}-{$this->user->vg_nip}", 60, function () {
             return $this->rekapLaporanByNip(
                 $this->getVarsByNip()
             );
@@ -536,17 +538,17 @@ class RekapPembuatLaporanController extends Controller
      * @param boolean $forever
      * @return Collection
      */
-    protected function cacheVarsForever(bool $forever = true): Collection
+    public function cacheVarsForever(bool $forever = true): Collection
     {
         $pengamatOnly = $this->pengamatOnly ? 'true' : 'false';
 
         if ($forever) {
-            return Cache::rememberForever("rekap-laporan-forever-{$this->year}-{$pengamatOnly}", function () {
+            return Cache::tags(['rekap-laporan'])->rememberForever("rekap-laporan-forever-{$this->year}-{$pengamatOnly}", function () {
                 return $this->rekapLaporan($this->getVars());
             });
         }
 
-        return Cache::remember("rekap-laporan-{$this->year}-{$pengamatOnly}", 60, function () {
+        return Cache::tags(['rekap-laporan'])->remember("rekap-laporan-{$this->year}-{$pengamatOnly}", 60, function () {
             return $this->rekapLaporan($this->getVars());
         });
     }
@@ -557,18 +559,18 @@ class RekapPembuatLaporanController extends Controller
      * @param boolean $forever
      * @return void
      */
-    protected function cacheIndexVarsGunungApiForever(bool $forever = true)
+    public function cacheIndexVarsGunungApiForever(bool $forever = true)
     {
         $pengamatOnly = $this->pengamatOnly ? 'true' : 'false';
 
         if ($forever) {
-            return Cache::rememberForever("rekap-laporan-index-gunungpi-forever-{$this->year}-{$pengamatOnly}", function () {
+            return Cache::tags(['rekap-laporan'])->rememberForever("rekap-laporan-index-gunungpi-forever-{$this->year}-{$pengamatOnly}", function () {
                 return $this->rekapIndexLaporanByGunungApi(
                     $this->getIndexVarsByGunungApi());
             });
         }
 
-        return Cache::remember("rekap-laporan-index-gunungpi-{$this->year}-{$pengamatOnly}", 60, function () {
+        return Cache::tags(['rekap-laporan'])->remember("rekap-laporan-index-gunungpi-{$this->year}-{$pengamatOnly}", 60, function () {
             return $this->rekapIndexLaporanByGunungApi(
                 $this->getIndexVarsByGunungApi()
             );
@@ -581,16 +583,16 @@ class RekapPembuatLaporanController extends Controller
      * @param boolean $forever
      * @return void
      */
-    protected function cacheShowVarsGunungApiForever(bool $forever = true)
+    public function cacheShowVarsGunungApiForever(bool $forever = true)
     {
         if ($forever) {
-            return Cache::rememberForever("rekap-laporan-show-gunungpi-forever-{$this->year}-{$this->gunungApi->slug}", function () {
+            return Cache::tags(['rekap-laporan'])->rememberForever("rekap-laporan-show-gunungpi-forever-{$this->year}-{$this->gunungApi->slug}", function () {
                 return $this->rekapShowLaporanByGunungApi(
                     $this->getShowVarsByGunungApi());
             });
         }
 
-        return Cache::remember("rekap-laporan-show-gunungpi-{$this->year}-{$this->gunungApi->slug}", 60, function () {
+        return Cache::tags(['rekap-laporan'])->remember("rekap-laporan-show-gunungpi-{$this->year}-{$this->gunungApi->slug}", 60, function () {
             return $this->rekapShowLaporanByGunungApi(
                 $this->getShowVarsByGunungApi()
             );
@@ -628,6 +630,8 @@ class RekapPembuatLaporanController extends Controller
     public function showByNip(Request $request, string $year, string $nip): View
     {
         $this->year($year)->user($nip);
+
+        if ($request->has('flush')) Cache::tags(['rekap-laporan'])->flush();
 
         return view('rekap-laporan.show-by-nip', [
             'user' => $this->user,
