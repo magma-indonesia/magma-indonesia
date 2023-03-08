@@ -72,4 +72,34 @@ class MagmaVarOptimize extends Model
                 return 4;
         }
     }
+
+    /**
+     * Get previous Level as integer
+     *
+     * @return void
+     */
+    public function getPreviousLevelAttribute()
+    {
+        switch ($this->attributes['pre_status']) {
+            case 'Level I (Normal)':
+                return 1;
+            case 'Level II (Waspada)':
+                return 2;
+            case 'Level III (Siaga)':
+                return 3;
+            case 'Level IV (Siaga)':
+                return 4;
+        }
+    }
+
+    public function getActivityChangeAttribute()
+    {
+        if ($this->previous_level < $this->level)
+            return 'increase';
+
+        if ($this->previous_level > $this->level)
+            return 'decrease';
+
+        return 'no change';
+    }
 }
