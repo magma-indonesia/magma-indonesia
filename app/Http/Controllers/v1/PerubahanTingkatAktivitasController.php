@@ -86,7 +86,7 @@ class PerubahanTingkatAktivitasController extends Controller
 
         return view('gunungapi.perubahan-tingkat-aktivitas.index', [
             'vars' => $this->cacheIndex(),
-            'selected_year' => $year,
+            'selected_year' => $this->year,
             'years' => $this->years(),
         ]);
     }
