@@ -27,13 +27,10 @@ Rekap Lembur {{ $user->name }}
                 <ol class="breadcrumb">
                     <li><a href="{{ route('chambers.index') }}">MAGMA</a></li>
                     <li><a href="{{ route('chambers.overtime.index') }}">Rekap Lembur</a></li>
-                    <li class="active"><a href="{{ route('chambers.overtime.show.nip', ['date' => $date->format('Y-m'), 'nip' => $user->nip ]) }}">{{ $user->name }}</a></li>
+                    <li class="active"><a href="{{ route('chambers.overtime.show-nip', ['date' => $date->format('Y-m'), 'nip' => $user->nip ]) }}">{{ $user->name }}</a></li>
                 </ol>
             </div>
 
-            <p class="m-b-lg tx-16">
-                Menu ini digunakan untuk memberikan gambaran rekapitulasi laporan yang dibuat oleh pengamat gunung api maupun staff gunung api setiap bulannya. Distribusi sebaran pembuatan laporan dapat dilihat dalam bentuk tabel di bawah ini.
-            </p>
             <div class="alert alert-danger">
                 <i class="fa fa-gears"></i> Halaman ini masih dalam tahap pengembangan. Error, bug, maupun penurunan performa bisa terjadi sewaktu-waktu
             </div>
@@ -62,15 +59,46 @@ Rekap Lembur {{ $user->name }}
                         <p>
                             Menu untuk melihat rekapitulasi jumlah laporan yang dibuat oleh pengamat gunung api. Pilih tahun laporan yang ingin dilihat.
                         </p>
-                        <form id="form-date" method="GET" data-action="{{ route('chambers.overtime.index') }}">
+                        <form id="form-date" method="GET" data-action="{{ route('chambers.overtime.show-nip', ['nip' => $user->nip]) }}">
                             <div class="input-group">
-                                <input name="date" id="datepicker" class="form-control date" type="text" value="{{ empty(old('date')) ? $date->format('Y-m') : old('date') }}">
+                                <input name="date" id="datepicker" class="form-control date" type="text" value="{{ empty(old('date')) ? $date : old('date') }}">
                                 <span class="input-group-btn">
                                     <button type="submit" class="btn btn-primary submit-date">Lihat</button>
                                 </span>
                             </div>
                         </form>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="hpanel">
+                <ul class="nav nav-tabs">
+                @foreach ($reports as $key => $report)
+                @if ($overtimes['group_by_type_and_dates'][$key]->isNotEmpty())
+                    <li class="{{ $loop->first ? 'active' : '' }}"><a data-toggle="tab" href="#{{ \Illuminate\Support\Str::slug($report) }}" aria-expanded="true">{{ $report }}</a></li>
+                @endif
+                @endforeach
+                </ul>
+                <div class="tab-content">
+                    @foreach ($reports as $key => $report)
+                    @if ($overtimes['group_by_type_and_dates'][$key]->isNotEmpty())
+                    <div id="{{ \Illuminate\Support\Str::slug($report) }}" class="tab-pane {{ $loop->first ? 'active' : '' }}">
+                        <div class="panel-body">
+                            <strong>{{ $report }}</strong>
+
+                            <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of
+                                existence in this spot, which was created for the bliss of souls like mine.</p>
+
+                            <p>I am so happy, my dear friend, so absorbed in the exquisite sense of mere tranquil existence, that I neglect my talents. I should be incapable of drawing a single stroke at
+                                the present moment; and yet I feel that I never was a greater artist than now. When.</p>
+                        </div>
+                    </div>
+                    @endif
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -109,14 +137,14 @@ $(document).ready(function () {
         format: 'YYYY-MM',
     });
 
-    // $('body').on('click','.submit-date',function (e) {
-    //     e.preventDefault();
+    $('body').on('click','.submit-date',function (e) {
+        e.preventDefault();
 
-    //     var $value = $('.date').val(),
-    //         $url = $('#form-date').data('action')+'/'+$value;
+        var $value = $('.date').val(),
+            $url = $('#form-date').data('action')+'/'+$value;
 
-    //     window.open($url, '_self');
-    // });
+        window.open($url, '_self');
+    });
 
     // Initialize table
     // $('#table-rekap').dataTable({
