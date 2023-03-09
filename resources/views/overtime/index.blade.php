@@ -130,7 +130,7 @@ Rekap Lembur {{ $selected_date }}
                             @foreach ($overtimes as $overtime)
                             <tr>
                                 <td class="border-right">
-                                    <a href="{{ route('chambers.overtime.show.nip', ['nip' => $overtime['nip'], 'date' => $date->format('Y-m') ]) }}" style="color: #337ab7; text-decoration: none;">{{ $overtime['nama'] }}</a>
+                                    <a href="{{ route('chambers.overtime.show-nip', ['nip' => $overtime['nip'], 'date' => $date->format('Y-m') ]) }}" style="color: #337ab7; text-decoration: none;">{{ $overtime['nama'] }}</a>
                                 </td>
                                 <td class="border-right">{{ $overtime['nip'] }}</td>
 
