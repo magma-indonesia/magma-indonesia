@@ -132,6 +132,16 @@ class OvertimeService
     ];
 
     /**
+     * Load relationship for Magma Ven
+     *
+     * @var array
+     */
+    public $magmaVenWith = [
+        'user:vg_nip,vg_nama',
+        'gunungapi:ga_code,ga_nama_gapi,ga_zonearea',
+    ];
+
+    /**
      * Load relationship for VONA
      *
      * @var array
@@ -178,7 +188,7 @@ class OvertimeService
             abort(404);
         }
 
-        if ($this->year < 2023 || ($this->year > (int) (now()->format('Y')))) {
+        if ((int) $this->year < 2023 || ((int) $this->year > (int) (now()->format('Y')))) {
             abort(404);
         }
 
@@ -258,6 +268,29 @@ class OvertimeService
         })->filter()->values();
     }
 
+    public function reportByType(Collection $overtimes): Collection
+    {
+        return collect($this->reports)->map(function ($type) use ($overtimes) {
+
+            $ids = $overtimes->where('type', $type)->pluck('ids')->flatten(1);
+
+            switch ($type) {
+                case 'var':
+                    return MagmaVarOptimize::select($this->magmaVarSelects)
+                        ->with($this->magmaVarWith[1])
+                        ->whereIn('no', $ids)->get()->each->append(['var_log_local']);
+                case 'ven':
+                    return MagmaVen::select($this->magmaVenSelects)
+                        ->with($this->magmaVenWith[1])
+                        ->whereIn('uuid', $ids)->get()->each->append(['erupt_tgl_local']);
+                default:
+                    return Vona::select($this->vonaSelects)
+                        ->with($this->vonaWith[1])
+                        ->whereIn('uuid', $ids)->get()->each->append(['created_at_local']);
+            }
+        });
+    }
+
     /**
      * Get collection of report
      *
@@ -266,24 +299,25 @@ class OvertimeService
      */
     public function reports(Collection $overtimes): array
     {
-        $reports = collect($this->reports)->map(function ($type) use ($overtimes) {
+        $dateTimes = collect($this->reports)->map(function ($type) use ($overtimes) {
             return $overtimes->where('type', $type)
                 ->pluck('dates')->flatten(1)->sort()->values();
         });
 
         return [
-            'reports' => $reports->map(function ($report) {
-                return $report->groupBy(function ($date) {
-                    return $date->format('Y-m-d');
-                })->map(function ($dates) {
-                    return $dates->map(function ($date) {
-                        return $date->format('H:i:s');
+            'reports' => $this->reportByType($overtimes),
+            'group_by_type_and_dates' => $dateTimes->map(function ($report) {
+                return $report->groupBy(function ($dateTime) {
+                    return $dateTime->format('Y-m-d');
+                })->map(function ($dateTimes) {
+                    return $dateTimes->map(function ($dateTime) {
+                        return $dateTime->format('H:i:s');
                     })->unique()->values();
                 });
             }),
-            'overtimes_reports' => $reports->flatten(1)
-                ->map(function ($date) {
-                    return $date->format('Y-m-d');
+            'unique_dates' => $dateTimes->flatten(1)
+                ->map(function ($dateTime) {
+                    return $dateTime->format('Y-m-d');
                 })
                 ->unique()
                 ->sort()
@@ -308,12 +342,26 @@ class OvertimeService
             return collect([
                 'nama' => $name,
                 'nip' => $overtimes->first()['nip'],
-                'overtimes' => $reports['overtimes_reports'],
-                'overtimes_count' => $reports['overtimes_reports']->count(),
+                'overtimes' => $reports['unique_dates'],
+                'overtimes_count' => $reports['unique_dates']->count(),
+            ])->merge([
+                'group_by_type_and_dates' => $reports['group_by_type_and_dates'],
+                'reports' => $reports['reports'],
             ]);
         });
 
         return $this->pengamatOnly ? $this->rejectNonPengamat($collection) : $collection;
+    }
+
+    /**
+     * Check if VARS is cached
+     *
+     * @return boolean
+     */
+    public function isCachedForever(): bool
+    {
+        return ($this->date->format('Y-m')) !== (now()->format('Y-m')) ?
+            true : false;
     }
 
     /**
@@ -322,17 +370,47 @@ class OvertimeService
      * @param boolean $forever
      * @return Collection
      */
-    public function cacheIndex(bool $forever = true): Collection
+    public function cacheIndex(): Collection
     {
         $pengamatOnly = $this->pengamatOnly ? 'true' : 'false';
 
-        if ($forever) {
+        if ($this->isCachedForever()) {
             return Cache::tags(['overtime'])->rememberForever("{$this->date->format('Y-m')}-forever-$pengamatOnly", function () {
                 return $this->overtimes();
             });
         }
 
         return Cache::tags(['overtime'])->remember("{$this->date->format('Y-m')}-$pengamatOnly", 60, function () {
+            return $this->overtimes();
+        });
+    }
+
+    /**
+     * Generate cache name
+     *
+     * @return string
+     */
+    public function cacheShowName(): string
+    {
+        return $this->isCachedForever() ?
+            "{$this->date->format('Y-m')}-{$this->nip}-forever" :
+            "{$this->date->format('Y-m')}-{$this->nip}";
+    }
+
+    /**
+     * Cache by NIP
+     *
+     * @return Collection
+     */
+    public function cacheShow(?bool $isCached = null): Collection
+    {
+        if ($isCached) {
+            return Cache::tags(['overtime'])->rememberForever($this->cacheShowName(), function () {
+                return $this->overtimes();
+            });
+        }
+
+        return Cache::tags(['overtime'])->remember($this->cacheShowName(), 60, function () {
             return $this->overtimes();
         });
     }
@@ -509,7 +587,7 @@ class OvertimeService
             $magmaVens->overtime($this->betweenDate());
 
         return $magmaVens->select($this->magmaVenSelects)
-            ->with($this->magmaVarWith)
+            ->with($this->magmaVenWith)
             ->overtime($this->betweenDate())
             ->nip($this->nip);
     }
