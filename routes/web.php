@@ -34,8 +34,7 @@ Route::get('logout','LoginController@logout')
 Route::get('vona', [VonaController::class, 'index'])
     ->name('vona.index');
 Route::get('vona/{vona}', [VonaController::class, 'show'])
-    ->name('vona.show')
-    ->middleware('signed');
+    ->name('vona.show');
 
 Route::get('press-release', [PressReleaseController::class, 'index'])
     ->name('press-release.index');
