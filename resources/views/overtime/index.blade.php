@@ -20,7 +20,7 @@ Rekap Lembur {{ $selected_date }}
                 <i class="pe-7s-ribbon fa-2x text-danger"></i>
             </h1>
             <h1 class="m-b-md">
-                <strong>Rekap Laporan</strong>
+                <strong>Rekap Lembur</strong>
             </h1>
 
             <div id="hbreadcrumb">

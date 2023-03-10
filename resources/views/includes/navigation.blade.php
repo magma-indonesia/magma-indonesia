@@ -165,6 +165,10 @@
                                 <a class="m-l" href="{{ route('chambers.v1.gunungapi.rekap-laporan.index') }}">Rekap Laporan</a>
                             </li>
 
+                            <li class="{{ active('chambers.overtime.index') }}">
+                                <a class="m-l" href="{{ route('chambers.overtime.index') }}">Rekap Lembur</a>
+                            </li>
+
                             <li class="{{ active('chambers.v1.gunungapi.laporan.index') }}">
                                 <a class="m-l" href="{{ route('chambers.v1.gunungapi.laporan.index') }}">Daftar Laporan</a>
                             </li>
@@ -285,7 +289,7 @@
                 </ul>
             </li>
 
-            <li class="{{ active(['chambers.datadasar.*','chambers.cctv.*','chambers.laporan.*','chambers.laporan.search','chambers.pos.*','chambers.letusan.*','chambers.draft.*','chambers.peralatan.*','chambers.rsam.*','chambers.rekomendasi.*', 'chambers.resume-harian.*', 'chambers.event-catalog.*']) }}">
+            <li class="{{ active(['chambers.datadasar.*','chambers.cctv.*','chambers.laporan.*','chambers.laporan.search','chambers.pos.*','chambers.letusan.*','chambers.draft.*','chambers.peralatan.*','chambers.rsam.*','chambers.rekomendasi.*', 'chambers.resume-harian.*', 'chambers.event-catalog.*', 'chambers.overtime.*']) }}">
                 <a href="#">
                     <span class="nav-label">Gunung Api</span>
                     <span class="fa arrow"></span>
@@ -309,6 +313,9 @@
                     </li>
                     <li class="{{ active('chambers.peralatan.index') }}">
                         <a href="{{ route('chambers.peralatan.index') }}">Peralatan Monitoring</a>
+                    </li>
+                    <li class="{{ active('chambers.overtime.index') }}">
+                        <a href="{{ route('chambers.overtime.index') }}">Rekap Lembur</a>
                     </li>
                     <li class="{{ active('chambers.laporan.index') }}">
                         <a href="{{ route('chambers.laporan.index') }}">Daftar Laporan</a>
