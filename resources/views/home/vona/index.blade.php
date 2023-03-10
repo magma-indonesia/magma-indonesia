@@ -95,7 +95,7 @@ VONA
                             {{ $vona->volcanoActivitySummary($vona) }} {{ $vona->volcanicCloudHeight($vona) }}
                         </p>
 
-                        <a class="card-link m-b-10" href="{{ URL::signedRoute('vona.show', $vona) }}">View</a>
+                        <a class="card-link m-b-10" href="{{ URL::route('vona.show', $vona) }}">View</a>
 
                        @if ($vona->type == 'EXERCISE')
                         <div class="alert alert-outline alert-warning mg-t-20" role="alert">
