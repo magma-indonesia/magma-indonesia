@@ -247,7 +247,11 @@ $(document).ready(function () {
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center 'B><'col-sm-4'f>>tp",
         "lengthMenu": [[250, 100, 150, -1], [250, 100, 150, "All"]],
         buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
+            'copy', 'csv', 'excel', {
+                extend: 'pdfHtml5',
+                orientation: 'landscape',
+                pageSize: 'LEGAL'
+            }, 'print'
         ]
     });
     @endif
