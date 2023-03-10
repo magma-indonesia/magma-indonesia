@@ -314,7 +314,7 @@
                     <li class="{{ active('chambers.peralatan.index') }}">
                         <a href="{{ route('chambers.peralatan.index') }}">Peralatan Monitoring</a>
                     </li>
-                    <li class="{{ active('chambers.overtime.index') }}">
+                    <li class="{{ active('chambers.overtime.*') }}">
                         <a href="{{ route('chambers.overtime.index') }}">Rekap Lembur</a>
                     </li>
                     <li class="{{ active('chambers.laporan.index') }}">
