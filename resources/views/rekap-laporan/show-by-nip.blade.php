@@ -110,8 +110,8 @@ Rekap Laporan {{ $user->vg_nama }}
                                     <th>NIP</th>
                                     <th>Nama</th>
                                     <th>Gunung Api</th>
-                                    <th>Periode</th>
                                     <th>Tanggal Laporan</th>
+                                    <th>Periode</th>
                                     <th>Dibuat pada</th>
                                     <th>Link Laporan</th>
                                 </tr>
@@ -122,8 +122,8 @@ Rekap Laporan {{ $user->vg_nama }}
                                     <td>{{ $var['nip'] }}</td>
                                     <td class="border-right">{{ $var['nama'] }}</td>
                                     <td><a href="{{ route('chambers.v1.gunungapi.rekap-laporan.show.gunung-api', ['year' => $selected_year, 'slug' => $var['slug']]) }}" style="color: #337ab7; text-decoration: none;">{{ $var['gunung_api'] }}</a></td>
-                                    <td>{{ $var['jenis_periode_laporan'] }}, {{ $var['periode_laporan'] }}</td>
                                     <td>{{ $var['tanggal_laporan']->formatLocalized('%A, %d %B %Y') }}</td>
+                                    <td>{{ $var['jenis_periode_laporan'] }}, {{ $var['periode_laporan'] }}</td>
                                     <td>{{ $var['dibuat_pada']->formatLocalized('%A, %d %B %Y %H:%M:%S') }} {{ $var['time_zone'] }}</td>
                                     <td><a href="{{ $var['link'] }}" class="btn btn-sm btn-magma btn-outline" style="margin-right: 3px;">View</a></td>
                                 </tr>
