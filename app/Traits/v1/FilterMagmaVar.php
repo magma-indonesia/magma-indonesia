@@ -40,7 +40,7 @@ trait FilterMagmaVar
      */
     public function scopeOvertime(Builder $query, array $betweenDates): Builder
     {
-        return $query->whereBetween('var_data_date', $betweenDates)
+        return $query->whereBetween('var_log', $betweenDates)
             ->where(function ($query) {
                 $query->whereBetween(DB::raw("TIME(var_log)"), ['16:00:00', '23:59:59'])
                     ->orWhereBetween(DB::raw("TIME(var_log)"), ['00:00:00', '05:00:00']);

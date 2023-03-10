@@ -149,7 +149,7 @@ class MagmaVen extends Model
 
     public function zoneArea()
     {
-        switch ($this->gunungapi->zonearea) {
+        switch ($this->gunungapi->ga_zonearea) {
             case 'WIB':
                 return 'Asia/Jakarta';
             case 'WITA':
@@ -168,6 +168,12 @@ class MagmaVen extends Model
     public function getEruptTglLocalAttribute()
     {
         return Carbon::createFromTimeString($this->attributes['utc'], 'UTC')
+            ->setTimezone($this->zoneArea());
+    }
+
+    public function getEruptTspLocalAttribute()
+    {
+        return Carbon::createFromTimeString($this->attributes['erupt_tsp'], config('app.timezone'))
             ->setTimezone($this->zoneArea());
     }
 }

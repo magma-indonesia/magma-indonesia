@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 
 class OvertimeService
@@ -88,6 +90,8 @@ class OvertimeService
         'cu_status',
         'var_noticenumber',
         'var_data_date',
+        'var_perwkt',
+        'periode',
         'var_log',
         'var_nip_pelapor',
     ];
@@ -104,6 +108,7 @@ class OvertimeService
         'ga_code',
         'erupt_usr',
         'uuid',
+        'erupt_tsp',
     ];
 
     /**
@@ -128,7 +133,7 @@ class OvertimeService
      */
     public $magmaVarWith = [
         'user:vg_nip,vg_nama',
-        'gunungapi:ga_code,ga_nama_gapi,ga_zonearea',
+        'gunungapi:ga_code,slug,ga_nama_gapi,ga_zonearea',
     ];
 
     /**
@@ -208,6 +213,12 @@ class OvertimeService
                 Carbon::createFromFormat('Y-m', $date) : now();
 
             $this->dates = $this->dates();
+
+            $year = (int) $this->date->format('Y');
+
+            if ($year < 2023 or (int) $year > (int) now()->format('Y'))
+                abort(404);
+
             return $this;
         } catch (\Throwable $th) {
             abort(404);
@@ -273,10 +284,90 @@ class OvertimeService
      *
      * @return string
      */
-    public function title(Collection $reportByType): Collection
+    public function titles(Collection $reportByType): Collection
     {
-        // dd($reportByType);
-        return implode(', ', $reportByType['vars']->pluck());
+        return $reportByType->map(function ($report, $type) {
+            return $report->map(function ($times, $date) use ($type) {
+                return [
+                    'date' => $date,
+                    'title' => Str::upper($this->reports[$type]).": ".implode(', ', $times->toArray()),
+                ];
+            })->values();
+        })->flatten(1)->groupBy(function ($titles) {
+            return $titles['date'];
+        })->map(function ($titles, $date) {
+            return implode(', ', $titles->pluck('title')->toArray());
+        });
+    }
+
+    /**
+     * Get VAR collection for table
+     *
+     * @param Collection $ids
+     * @return Collection
+     */
+    public function varCollection(Collection $ids): Collection
+    {
+        $vars = MagmaVarOptimize::select($this->magmaVarSelects)
+            ->with($this->magmaVarWith[1])
+            ->whereIn('no', $ids)->get()->each->append(['var_log_local']);
+
+        return $vars->transform(function ($var) {
+            return [
+                'nip' => $var->user->vg_nip,
+                'nama' => $var->user->vg_nama,
+                'gunung_api' => $var->gunungapi->ga_nama_gapi,
+                'slug' => $var->gunungapi->slug,
+                'tanggal_laporan' => Carbon::createFromFormat('Y-m-d', $var->var_data_date),
+                'jenis_periode_laporan' => $var->var_perwkt,
+                'periode_laporan' => $var->periode,
+                'dibuat_pada' => $var->var_log_local,
+                'time_zone' => $var->gunungapi->ga_zonearea,
+                'link' => URL::signedRoute('v1.gunungapi.var.show', ['id' => $var->no]),
+            ];
+        });
+    }
+
+    /**
+     * Get VEN collection for table
+     *
+     * @param Collection $ids
+     * @return Collection
+     */
+    public function venCollection(Collection $ids): Collection
+    {
+        $vens = MagmaVen::select($this->magmaVenSelects)
+            ->with($this->magmaVenWith)
+            ->whereIn('uuid', $ids)->get()->each->append(['erupt_tgl_local','erupt_tsp_local']);
+
+        return $vens->transform(function ($ven) {
+            return [
+                'nip' => $ven->user->vg_nip,
+                'nama' => $ven->user->vg_nama,
+                'gunung_api' => $ven->gunungapi->ga_nama_gapi,
+                'time_zone' => $ven->gunungapi->ga_zonearea,
+                'waktu_letusan' => $ven->erupt_tgl_local,
+                'link' => URL::route('v1.gunungapi.ven.show', $ven->uuid),
+            ];
+        });
+    }
+
+    public function vonaCollection(Collection $ids): Collection
+    {
+        $vonas = Vona::select($this->vonaSelects)
+            ->with($this->vonaWith[1])
+            ->whereIn('uuid', $ids)->get()->each->append(['created_at_local']);
+
+        return $vonas->transform(function ($vona) {
+            return [
+                'nip' => $vona->user->nip,
+                'nama' => $vona->user->name,
+                'gunung_api' => $vona->gunungapi->name,
+                'issued' => $vona->issued,
+                'waktu_pelaporan' => $vona->created_at_local,
+                'link' => URL::route('vona.show', $vona->uuid),
+            ];
+        });
     }
 
     /**
@@ -293,21 +384,22 @@ class OvertimeService
 
             switch ($type) {
                 case 'var':
-                    return MagmaVarOptimize::select($this->magmaVarSelects)
-                        ->with($this->magmaVarWith[1])
-                        ->whereIn('no', $ids)->get()->each->append(['var_log_local']);
+                    return $this->varCollection($ids);
                 case 'ven':
-                    return MagmaVen::select($this->magmaVenSelects)
-                        ->with($this->magmaVenWith[1])
-                        ->whereIn('uuid', $ids)->get()->each->append(['erupt_tgl_local']);
+                    return $this->venCollection($ids);
                 default:
-                    return Vona::select($this->vonaSelects)
-                        ->with($this->vonaWith[1])
-                        ->whereIn('uuid', $ids)->get()->each->append(['created_at_local']);
+                    return $this->vonaCollection($ids);
             }
         });
     }
 
+    /**
+     * Report from VAR, VEN and VONA
+     *
+     * @param Collection $overtimes
+     * @param Collection $dateTimes
+     * @return Collection
+     */
     public function reportCollection(Collection $overtimes, Collection $dateTimes): Collection
     {
         $groupByTypeAndDates = $dateTimes->map(function ($report) {
@@ -330,7 +422,7 @@ class OvertimeService
                 ->unique()
                 ->sort()
                 ->values(),
-            'title' => $this->title($groupByTypeAndDates),
+            'titles' => $this->titles($groupByTypeAndDates),
         ]);
     }
 
@@ -340,7 +432,7 @@ class OvertimeService
      * @param Collection $overtimes
      * @return array
      */
-    public function reports(Collection $overtimes): array
+    public function reports(Collection $overtimes): Collection
     {
         $dateTimes = collect($this->reports)->map(function ($type) use ($overtimes) {
             return $overtimes->where('type', $type)
@@ -369,7 +461,7 @@ class OvertimeService
                 'nip' => $overtimes->first()['nip'],
                 'unique_dates' => $reports['unique_dates'],
                 'unique_dates_count' => $reports['unique_dates']->count(),
-                'title' => $reports['title'],
+                'titles' => $reports['titles'],
             ])->merge([
                 'group_by_type_and_dates' => $reports['group_by_type_and_dates'],
                 'reports' => $reports['reports'],
@@ -391,6 +483,20 @@ class OvertimeService
     }
 
     /**
+     * Generate cache name
+     *
+     * @return string
+     */
+    public function cacheIndexName(): string
+    {
+        $pengamatOnly = $this->pengamatOnly ? 'true' : 'false';
+
+        return $this->isCachedForever() ?
+            "{$this->date->format('Y-m')}-forever-$pengamatOnly" :
+            "{$this->date->format('Y-m')}-$pengamatOnly";
+    }
+
+    /**
      * Cache Index response
      *
      * @param boolean $forever
@@ -398,15 +504,13 @@ class OvertimeService
      */
     public function cacheIndex(): Collection
     {
-        $pengamatOnly = $this->pengamatOnly ? 'true' : 'false';
-
         if ($this->isCachedForever()) {
-            return Cache::tags(['overtime'])->rememberForever("{$this->date->format('Y-m')}-forever-$pengamatOnly", function () {
+            return Cache::tags(['overtime'])->rememberForever($this->cacheIndexName(), function () {
                 return $this->overtimes();
             });
         }
 
-        return Cache::tags(['overtime'])->remember("{$this->date->format('Y-m')}-$pengamatOnly", 60, function () {
+        return Cache::tags(['overtime'])->remember($this->cacheIndexName(), 60, function () {
             return $this->overtimes();
         });
     }
@@ -428,9 +532,9 @@ class OvertimeService
      *
      * @return Collection
      */
-    public function cacheShow(?bool $isCached = null): Collection
+    public function cacheShow(): Collection
     {
-        if ($isCached) {
+        if ($this->isCachedForever()) {
             return Cache::tags(['overtime'])->rememberForever($this->cacheShowName(), function () {
                 return $this->overtimes();
             });
@@ -619,7 +723,7 @@ class OvertimeService
     }
 
     /**
-     * Undocumented function
+     * Get VEN
      *
      * @return Collection
      */
@@ -638,5 +742,84 @@ class OvertimeService
                 'ids' => $vens->pluck('uuid'),
             ];
         })->sortKeys();
+    }
+
+    /**
+     * Response for index overtime
+     *
+     * @param Request $request
+     * @param string|null $date
+     * @param boolean $flush
+     * @return array
+     */
+    public function indexResponse(
+        Request $request,
+        string $date = null,
+        bool $flush = false
+    ): array
+    {
+        $this->flush($flush)->date($date)->pengamatOnly($request);
+
+        $datesPeriod = $this->datesPeriod();
+
+        return [
+            'date' => $this->date,
+            'pengamat_only' => $this->pengamatOnly,
+            'selected_date' => $this->date->formatLocalized('%B %Y'),
+            'cached' => [
+                'is_cached' => $this->isCachedForever(),
+                'cached_name' => $this->cacheIndexName()
+            ],
+            'dates_period' => $this->dates,
+            'disable_order' => $this->disableOrder(),
+            'colspan' => $datesPeriod->count(),
+            'holiday_dates' => $this->holidayDates(),
+            'overtimes' => $this->cacheIndex()->values(),
+        ];
+    }
+
+    /**
+     * Get show response overtime by nip and date
+     *
+     * @param Request $request
+     * @param string $nip
+     * @param string|null $date
+     * @return array
+     */
+    public function showResponse(
+        Request $request,
+        string $nip,
+        string $date = null
+    ): array
+    {
+        $this->date($date)->nip($request, $nip);
+
+        return [
+            'cached' => [
+                'is_cached' => $this->isCachedForever(),
+                'cached_name' => $this->cacheShowName()
+            ],
+            'date' => $this->date,
+            'user' => $this->user,
+            'reports' => collect($this->reports)->transform(function ($report, $key) {
+                switch ($key) {
+                    case 'vars':
+                        $name = 'Volcanic Activity Report (VAR)';
+                        break;
+                    case 'vens':
+                        $name = 'Volcanic Eruption Notice (VEN)';
+                        break;
+                    default:
+                        $name = 'Volcano Observatory Notice for Aviation (VONA)';
+                }
+
+                return [
+                    'name' => $name,
+                    'slug' => Str::slug($name),
+                ];
+            })->toArray(),
+            'selected_date' => $this->date,
+            'overtimes' => $this->cacheShow()->first(),
+        ];
     }
 }

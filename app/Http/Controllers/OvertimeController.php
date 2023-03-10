@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Overtime;
 use App\Services\OvertimeService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class OvertimeController extends Controller
 {
@@ -19,31 +20,8 @@ class OvertimeController extends Controller
         string $date = null,
         bool $flush = false)
     {
-        $overtimeService->flush($flush)->date($date)->pengamatOnly($request);
-
-        $datesPeriod = $overtimeService->datesPeriod();
-
-        return [
-            'date' => $overtimeService->date,
-            'pengamat_only' => $overtimeService->pengamatOnly,
-            'selected_date' => $overtimeService->date->formatLocalized('%B %Y'),
-            'is_cached' => $overtimeService->isCachedForever(),
-            'dates_period' => $overtimeService->dates,
-            'disable_order' => $overtimeService->disableOrder(),
-            'colspan' => $datesPeriod->count(),
-            'overtimes' => $overtimeService->cacheIndex()->values(),
-        ];
-
-        return view('overtime.index', [
-            'date' => $overtimeService->date,
-            'pengamat_only' => $overtimeService->pengamatOnly,
-            'selected_date' => $overtimeService->date->formatLocalized('%B %Y'),
-            'is_cached' => $overtimeService->isCachedForever(),
-            'dates_period' => $overtimeService->dates,
-            'disable_order' => $overtimeService->disableOrder(),
-            'colspan' => $datesPeriod->count(),
-            'overtimes' => $overtimeService->cacheIndex()->values(),
-        ]);
+        return view('overtime.index',
+            $overtimeService->indexResponse($request, $date, $flush));
     }
 
     /**
@@ -59,49 +37,8 @@ class OvertimeController extends Controller
         string $date = null
     )
     {
-        $overtimeService->date($date)->nip($request, $nip)->flush(true);
-
-        return [
-            'cached' => [
-                'is_cached' => $overtimeService->isCachedForever(),
-                'cached_name' => $overtimeService->cacheShowName()
-            ],
-            'date' => $overtimeService->date,
-            'user' => $overtimeService->user,
-            'reports' => collect($overtimeService->reports)->transform(function ($report, $key) {
-                switch ($key) {
-                    case 'vars':
-                        return 'Volcanic Activity Report (VAR)';
-                    case 'vens':
-                        return 'Volcanic Eruption Notice (VEN)';
-                    default:
-                        return 'Volcano Observatory Notice for Aviation (VONA)';
-                }
-            }),
-            'selected_date' => $overtimeService->date,
-            'overtimes' => $overtimeService->cacheShow()->first(),
-        ];
-
-        return view('overtime.show-nip', [
-            'cached' => [
-                'is_cached' => $overtimeService->isCachedForever(),
-                'cached_name' => $overtimeService->cacheShowName()
-            ],
-            'date' => $overtimeService->date,
-            'user' => $overtimeService->user,
-            'reports' => collect($overtimeService->reports)->transform(function ($report, $key) {
-                switch ($key) {
-                    case 'vars':
-                        return 'Volcanic Activity Report (VAR)';
-                    case 'vens':
-                        return 'Volcanic Eruption Notice (VEN)';
-                    default:
-                        return 'Volcano Observatory Notice for Aviation (VONA)';
-                }
-            }),
-            'selected_date' => $overtimeService->date,
-            'overtimes' => $overtimeService->cacheShow()->first(),
-        ]);
+        return view('overtime.show-nip',
+            $overtimeService->showResponse($request, $nip, $date));
     }
 
     /**

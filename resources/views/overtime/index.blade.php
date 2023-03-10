@@ -78,6 +78,30 @@ Rekap Lembur {{ $selected_date }}
                 </div>
             </div>
         </div>
+
+        @role('Super Admin')
+        <div class="col-lg-4 col-xs-12">
+            <div class="hpanel hred">
+                <div class="panel-body h-200">
+                    <div class="stats-title pull-left">
+                        <h4>Jadwal Libur Nasional</h4>
+                    </div>
+
+                    <div class="stats-icon pull-right">
+                        <i class="pe-7s-note2 fa-4x text-danger"></i>
+                    </div>
+
+                    <div class="m-t-xl">
+                        <h1>{{ $selected_date }}</h1>
+                        <p>
+                            Gunakan menu ini untuk melihat atau menambahkan hari libur nasional. Adapun libur nasional pada bulan {{ $selected_date }} adalah sebagai berikut:
+                        </p>
+                        <a href="#" class="btn btn-outline btn-danger m-t-xs">Lihat Libur</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endrole
     </div>
 
     <div class="row">
@@ -114,11 +138,11 @@ Rekap Lembur {{ $selected_date }}
                                     @foreach ($dates_period as $date_period)
 
                                         @if ($loop->first)
-                                        <th class="border-left">{{ $date_period->format('d') }}</th>
+                                        <th class="border-left border-right {{ $holiday_dates->contains($date_period->format('Y-m-d')) ? 'text-danger' : '' }}">{{ $date_period->format('d') }}</th>
                                         @elseif ($loop->last)
-                                        <th class="border-right">{{ $date_period->format('d') }}</th>
+                                        <th class="border-right {{ $holiday_dates->contains($date_period->format('Y-m-d')) ? 'text-danger' : '' }}">{{ $date_period->format('d') }}</th>
                                         @else
-                                        <th class="border-right">{{ $date_period->format('d') }}</th>
+                                        <th class="border-right {{ $holiday_dates->contains($date_period->format('Y-m-d')) ? 'text-danger' : '' }}">{{ $date_period->format('d') }}</th>
                                         @endif
 
                                     @endforeach
@@ -137,7 +161,7 @@ Rekap Lembur {{ $selected_date }}
                                 @foreach ($dates_period as $date_period)
 
                                     @if ($overtime['unique_dates']->contains($date_period->format('Y-m-d')))
-                                    <td title="" class="bg-success border-right text-center" style="color: transparent;" title="{{ $overtime['title'] }}">1</td>
+                                    <td title="{{ $overtime['titles'][$date_period->format('Y-m-d')] }}" class="bg-success border-right text-center" style="color: transparent;">1</td>
                                     @else
                                     <td class="border-right"></td>
                                     @endif

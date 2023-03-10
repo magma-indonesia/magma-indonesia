@@ -50,7 +50,7 @@ class MagmaVarOptimize extends Model
                 break;
         }
 
-        return Carbon::createFromTimeString($this->attributes['var_log'], 'WIB')
+        return Carbon::createFromTimeString($this->attributes['var_log'], 'Asia/Jakarta')
             ->setTimezone($zone);
     }
 
