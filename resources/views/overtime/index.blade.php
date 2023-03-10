@@ -118,7 +118,7 @@ Rekap Lembur {{ $selected_date }}
                                         @elseif ($loop->last)
                                         <th class="border-right">{{ $date_period->format('d') }}</th>
                                         @else
-                                        <th>{{ $date_period->format('d') }}</th>
+                                        <th class="border-right">{{ $date_period->format('d') }}</th>
                                         @endif
 
                                     @endforeach
@@ -130,21 +130,21 @@ Rekap Lembur {{ $selected_date }}
                             @foreach ($overtimes as $overtime)
                             <tr>
                                 <td class="border-right">
-                                    <a href="{{ route('chambers.overtime.show-nip', ['nip' => $overtime['nip'], 'date' => $date->format('Y-m') ]) }}" style="color: #337ab7; text-decoration: none;">{{ $overtime['name'] }}</a>
+                                    <a href="{{ route('chambers.overtime.show-nip', ['nip' => $overtime['nip'], 'date' => $date->format('Y-m') ]) }}" style="color: #337ab7; text-decoration: none;">{{ $overtime['nama'] }}</a>
                                 </td>
                                 <td class="border-right">{{ $overtime['nip'] }}</td>
 
                                 @foreach ($dates_period as $date_period)
 
-                                    @if ($overtime['overtime']->contains($date_period->format('Y-m-d')))
-                                    <td title="" class="bg-success border-right border-left text-center" style="color: transparent;">1</td>
+                                    @if ($overtime['unique_dates']->contains($date_period->format('Y-m-d')))
+                                    <td title="" class="bg-success border-right text-center" style="color: transparent;" title="{{ $overtime['title'] }}">1</td>
                                     @else
-                                    <td class="border-right border-left"></td>
+                                    <td class="border-right"></td>
                                     @endif
 
                                 @endforeach
 
-                                <td>{{ $overtime['overtime']->count() }}</td>
+                                <td>{{ $overtime['unique_dates_count'] }}</td>
                             </tr>
                             @endforeach
                             </tbody>

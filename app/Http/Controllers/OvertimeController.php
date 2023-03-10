@@ -23,6 +23,17 @@ class OvertimeController extends Controller
 
         $datesPeriod = $overtimeService->datesPeriod();
 
+        return [
+            'date' => $overtimeService->date,
+            'pengamat_only' => $overtimeService->pengamatOnly,
+            'selected_date' => $overtimeService->date->formatLocalized('%B %Y'),
+            'is_cached' => $overtimeService->isCachedForever(),
+            'dates_period' => $overtimeService->dates,
+            'disable_order' => $overtimeService->disableOrder(),
+            'colspan' => $datesPeriod->count(),
+            'overtimes' => $overtimeService->cacheIndex()->values(),
+        ];
+
         return view('overtime.index', [
             'date' => $overtimeService->date,
             'pengamat_only' => $overtimeService->pengamatOnly,

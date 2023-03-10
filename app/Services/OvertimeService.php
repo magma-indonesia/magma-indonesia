@@ -268,6 +268,23 @@ class OvertimeService
         })->filter()->values();
     }
 
+    /**
+     * Get title for Index overtime html
+     *
+     * @return string
+     */
+    public function title(Collection $reportByType): Collection
+    {
+        // dd($reportByType);
+        return implode(', ', $reportByType['vars']->pluck());
+    }
+
+    /**
+     * Get report by type
+     *
+     * @param Collection $overtimes
+     * @return Collection
+     */
     public function reportByType(Collection $overtimes): Collection
     {
         return collect($this->reports)->map(function ($type) use ($overtimes) {
@@ -291,6 +308,32 @@ class OvertimeService
         });
     }
 
+    public function reportCollection(Collection $overtimes, Collection $dateTimes): Collection
+    {
+        $groupByTypeAndDates = $dateTimes->map(function ($report) {
+            return $report->groupBy(function ($dateTime) {
+                return $dateTime->format('Y-m-d');
+            })->map(function ($dateTimes) {
+                return $dateTimes->map(function ($dateTime) {
+                    return $dateTime->format('H:i:s');
+                })->unique()->values();
+            });
+        });
+
+        return collect([
+            'reports' => $this->reportByType($overtimes),
+            'group_by_type_and_dates' => $groupByTypeAndDates,
+            'unique_dates' => $dateTimes->flatten(1)
+                ->map(function ($dateTime) {
+                    return $dateTime->format('Y-m-d');
+                })
+                ->unique()
+                ->sort()
+                ->values(),
+            'title' => $this->title($groupByTypeAndDates),
+        ]);
+    }
+
     /**
      * Get collection of report
      *
@@ -304,25 +347,7 @@ class OvertimeService
                 ->pluck('dates')->flatten(1)->sort()->values();
         });
 
-        return [
-            'reports' => $this->reportByType($overtimes),
-            'group_by_type_and_dates' => $dateTimes->map(function ($report) {
-                return $report->groupBy(function ($dateTime) {
-                    return $dateTime->format('Y-m-d');
-                })->map(function ($dateTimes) {
-                    return $dateTimes->map(function ($dateTime) {
-                        return $dateTime->format('H:i:s');
-                    })->unique()->values();
-                });
-            }),
-            'unique_dates' => $dateTimes->flatten(1)
-                ->map(function ($dateTime) {
-                    return $dateTime->format('Y-m-d');
-                })
-                ->unique()
-                ->sort()
-                ->values()
-        ];
+        return $this->reportCollection($overtimes, $dateTimes);
     }
 
     /**
@@ -342,8 +367,9 @@ class OvertimeService
             return collect([
                 'nama' => $name,
                 'nip' => $overtimes->first()['nip'],
-                'overtimes' => $reports['unique_dates'],
-                'overtimes_count' => $reports['unique_dates']->count(),
+                'unique_dates' => $reports['unique_dates'],
+                'unique_dates_count' => $reports['unique_dates']->count(),
+                'title' => $reports['title'],
             ])->merge([
                 'group_by_type_and_dates' => $reports['group_by_type_and_dates'],
                 'reports' => $reports['reports'],
