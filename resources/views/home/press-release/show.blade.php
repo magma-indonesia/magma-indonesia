@@ -88,7 +88,7 @@
                 </div>
                 <hr>
 
-                <div class="blog-text lh-8" style="text-align: justify">{!! $pressRelease->deskripsi !!}</div>
+                <div class="tx-16 lh-6 mg-b-25" style="text-align: justify">{!! $pressRelease->deskripsi !!}</div>
 
                 @if ($pressRelease->press_release_files->isNotEmpty())
 
@@ -110,7 +110,7 @@
                                                         data-value="{{ $pressReleaseFile->id }}">
                                                 </a>
                                             </td>
-                                            <td class="valign-middle">
+                                            <td class="valign-middle tx-14">
                                                 {{ $pressReleaseFile->overview ?? $pressRelease->judul }}
                                                 <span class="tx-11 d-block"><span
                                                         class="square-8 bg-info mg-r-5 rounded-circle"></span>{{ $pressReleaseFile->size_kb }}</span>
