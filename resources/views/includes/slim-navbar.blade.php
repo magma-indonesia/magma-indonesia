@@ -17,6 +17,7 @@
                     <ul>
                         <li><a href="{{ route('v1.gunungapi.tingkat-aktivitas') }}">Tingkat Aktivitas</a></li>
                         <li><a href="{{ route('v1.gunungapi.var') }}">Laporan Aktivitas</a></li>
+                        <li><a href="{{ route('v1.gunungapi.laporan-harian') }}">Laporan Harian</a></li>
                         <li><a href="{{ route('v1.gunungapi.ven') }}">Informasi Letusan</a></li>
                         <li><a href="{{ route('v1.gunungapi.peta-kawasan-rawan-bencana') }}">Download Peta KRB</a></li>
                         <li><a href="{{ route('v1.gunungapi.cctv') }}">Kamera (CCTV)</a></li>

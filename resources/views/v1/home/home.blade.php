@@ -115,6 +115,7 @@
                     <li><a role="button" data-target="#panelVolcanoes" aria-haspopup="true"><span class="glyphicon glyphicon-search"></span> Cari Gunung Api</a></li>
                     <li class="hidden-lg"><a href="{{ route('v1.gunungapi.tingkat-aktivitas') }}"><span class="glyphicon glyphicon-tasks"></span>Tingkat Aktivitas</a></li>
                     <li class="hidden-lg"><a href="{{ route('v1.gunungapi.var') }}"><span class="glyphicon glyphicon-stats"></span> Laporan Gunung Api</a></li>
+                    <li class="hidden-lg"><a href="{{ route('v1.gunungapi.laporan-harian') }}"><span class="glyphicon glyphicon-calendar"></span> Laporan Harian</a></li>
                     <li class="hidden-lg"><a href="{{ route('v1.gunungapi.ven') }}"><span class="glyphicon glyphicon-th-list"></span> Informasi Letusan</a></li>
                     <li class="hidden-lg"><a href="{{ route('v1.gunungapi.peta-kawasan-rawan-bencana') }}"><span class="glyphicon glyphicon-cloud-download"></span> Download Peta KRB</a></li>
                     <li class="hidden-lg"><a href="{{ route('vona.index') }}"><span class="glyphicon glyphicon-plane"></span> VONA</a></li>
@@ -126,7 +127,7 @@
                     <li class="hidden-lg"><a href="{{ route('v1.gempabumi.roq') }}"><span><i class="icon icon-earthquake"></i></span> Gempa Bumi</a></li>
                     <li class="divider hidden-lg"></li>
                     <li class="hidden-lg"><a href="{{ route('v1.edukasi.index') }}"><span class="glyphicon glyphicon-new-window"></span> Edukasi</a></li>
-                    <li class="hidden-lg"><a href="{{ route('v1.press.index') }}"><span class="glyphicon glyphicon-new-window"></span> Press Release</a></li>
+                    <li class="hidden-lg"><a href="{{ route('press-release.index') }}"><span class="glyphicon glyphicon-new-window"></span> Press Release</a></li>
                     <li class="divider"></li>
                     <li><a role="button" data-target="#panelBasemaps" aria-haspopup="true"><span class="glyphicon glyphicon-th-large"></span> Basemaps</a></li>
                     <li><a role="button" id="calciteToggleNavbar" aria-haspopup="true"><span class="glyphicon glyphicon-fullscreen"></span> Full Map</a></li>
@@ -151,6 +152,7 @@
                     <ul class="dropdown-menu">
                         <li class="padding-magma-xs"><a href="{{ route('v1.gunungapi.tingkat-aktivitas') }}">Tingkat Aktivitas</a></li>
                         <li class="padding-magma-xs"><a href="{{ route('v1.gunungapi.var') }}">Laporan Aktivitas (VAR)</a></li>
+                        <li class="padding-magma-xs"><a href="{{ route('v1.gunungapi.laporan-harian') }}">Laporan Harian</a></li>
                         <li class="padding-magma-xs"><a href="{{ route('v1.gunungapi.ven') }}">Informasi Letusan (VEN)</a></li>
                         <li class="padding-magma-xs"><a href="{{ route('v1.gunungapi.peta-kawasan-rawan-bencana') }}">Download Peta KRB</a></li>
                         <li class="padding-magma-xs"><a href="{{ route('vona.index') }}">VONA</a></li>
@@ -175,7 +177,7 @@
                     <a class="hidden-xs hidden-sm hidden-md" href="{{ route('v1.edukasi.index') }}">Edukasi</a>
                 </li>
                 <li>
-                    <a class="hidden-xs hidden-sm hidden-md" href="{{ route('v1.press.index') }}">Press Release</a>
+                    <a class="hidden-xs hidden-sm hidden-md" href="{{ route('press-release.index') }}">Press Release</a>
                 </li>
                 <li>
                     <a class="hidden-xs hidden-sm hidden-md" role="button" data-target="#setLocation" data-toggle="modal" data-dismiss="modal" aria-haspopup="true"><span class="glyphicon glyphicon-info-sign"></span> Cek Lokasi</a>

@@ -10,7 +10,10 @@ Laporan Harian Gunung Api
 @endsection
 
 @section('page-title')
-Laporan Harian
+Laporan Harian - {{ $date->formatLocalized('%A, %d %B %Y') }}
+@role('Super Admin')
+<span class="badge badge-pill badge-danger">{{ $is_cached ? 'Cached' : 'Not Cached' }}</span>
+@endrole
 @endsection
 
 @section('main')
