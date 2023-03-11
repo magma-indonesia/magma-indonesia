@@ -88,7 +88,7 @@
                 </div>
                 <hr>
 
-                <p class="blog-text lh-8" style="text-align: justify">{!! $pressRelease->deskripsi !!}</p>
+                <div class="blog-text lh-8" style="text-align: justify">{!! $pressRelease->deskripsi !!}</div>
 
                 @if ($pressRelease->press_release_files->isNotEmpty())
 
