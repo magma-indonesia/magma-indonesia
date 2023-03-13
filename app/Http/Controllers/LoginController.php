@@ -14,6 +14,8 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
+    protected $request;
+
     protected $maxAttempts = 2;
 
     protected $redirectTo = '/chambers';
@@ -30,21 +32,21 @@ class LoginController extends Controller
 
     public function username()
     {
-        return filter_var($this->request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'nip';
+        return filter_var(request()->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'nip';
     }
 
     public function login(Request $request)
     {
-        $this->request = $request;
-
         $request->merge([
             $this->username() => $request->username,
             'password' => $request->password,
             'status' => 1,
         ]);
-        $request->request->remove('username');
 
-        $this->validateLogin($request);
+        $request->validate([
+            $this->username() => 'required|string',
+            'password' => 'required|string',
+        ]);
 
         if ($this->hasTooManyLoginAttempts($request)) {
             $this->fireLockoutEvent($request);
@@ -52,11 +54,11 @@ class LoginController extends Controller
         }
 
         if ($this->attemptLogin($request)) {
-            $user = auth()->user();
+            $user = request()->user();
 
             $user->update([
                 'last_login_at' => Carbon::now()->toDateTimeString(),
-                'last_login_ip' => last($request->getClientIps())  
+                'last_login_ip' => last($request->getClientIps())
             ]);
 
             StatistikLogin::updateOrCreate([
