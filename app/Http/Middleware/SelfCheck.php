@@ -16,12 +16,12 @@ class SelfCheck
      */
     public function handle($request, Closure $next)
     {
+        if (request()->user()->hasRole('Super Admin'))
+            return $next($request);
+
         $user = User::select('nip')
                 ->where('id',$request->route('user'))
                 ->first();
-
-        if (request()->user()->hasRole('Super Admin'))
-            return $next($request);
 
         if (auth()->user()->nip == $user->nip)
             return $next($request);
