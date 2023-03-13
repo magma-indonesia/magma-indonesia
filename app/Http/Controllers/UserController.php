@@ -75,6 +75,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        // dd(request()->user()->load('bidang'));
         $users = User::all();
         return view('users.index', compact('users'));
     }
@@ -175,18 +176,17 @@ class UserController extends Controller
             'status.boolean' => 'Tipe status tidak valid',
         ]);
 
-        $bidang = $user->bidang()->update([
-            'user_id' => $user->id,
+        $user->bidang()->updateOrCreate([
+            'user_id' => $user->id
+        ],[
             'bidang_id' => $request->bidang
         ]);
 
-        $input = $request->except(['imagebase64']);
-        $name  = $request->name;
-        $user->fill($input)->save();
+        $user->fill(
+            $request->except(['imagebase64'])
+        )->save();
 
-        $uploadPhoto = !empty($request->filetype) ?
-                            $this->uploadPhoto($user,$request->imagebase64,$request->filetype) :
-                            true;
+        !empty($request->filetype) ? $this->uploadPhoto($user,$request->imagebase64,$request->filetype) : true;
 
         if ($request->has('roles'))
         {
@@ -198,7 +198,7 @@ class UserController extends Controller
 
         return redirect()->route('chambers.users.index')
             ->with('flash_message',
-            'Data '.$name.' berhasil dirubah.');
+            "Data {$user->name} berhasil dirubah.");
     }
 
     /**
