@@ -19,6 +19,10 @@ class MagmaVarOptimize extends Model
 
     protected $table = 'magma_var';
 
+    protected $guarded = [
+        'no',
+    ];
+
     public function user()
     {
         return $this->belongsTo('App\v1\User', 'var_nip_pelapor', 'vg_nip');

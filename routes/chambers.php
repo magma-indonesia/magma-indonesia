@@ -7,11 +7,15 @@ use App\Http\Controllers\{
     RoutesController,
     OvertimeController,
 };
+use App\Http\Controllers\Cendana\MagmaVarController;
 use App\Http\Controllers\v1\PerubahanTingkatAktivitasController;
 
 Route::get('/',[ChamberController::class, 'index'])->name('index');
 Route::get('statistik/{year?}', [StatistikController::class, 'index'])
     ->name('statistik.index');
+
+Route::get('cendana/magma-var', [MagmaVarController::class, 'index'])
+    ->name('cendana.magma-var');
 
 Route::get('routes', [RoutesController::class, 'index']);
 
