@@ -42,6 +42,13 @@ class Kernel extends ConsoleKernel
         $this->scheduleGempaBumi($schedule);
     }
 
+    protected function scheduleImportFromCendana(Schedule $schedule)
+    {
+        $schedule->command('cendana:magma-var')
+            ->cron('*/15 0,6,12,18 * * *')
+            ->pingBefore('https://cendana15.com/api/public/v1/magmavar');
+    }
+
 
     /**
      * Scheduler untuk mengkompilasi laporan MAGMA-VAR 24 jam:
