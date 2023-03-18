@@ -48,11 +48,31 @@ Route::get('vona/{uuid}', 'Api\VonaController@show')
 Route::get('vona/{vona}/descriptive', [VonaController::class, 'showDescriptive'])
     ->name('vona.show.descriptive');
 
+Route::name('gunung-api.')->group(function () {
+    Route::group(['middleware' => ['jwt.auth']], function () {
+        Route::group(['prefix' => 'gunung-api'], function () {
+            Route::get('/', 'Api\GaddController@index')
+                ->name('index');
+            Route::get('/filter', 'Api\GaddController@filter')
+                ->name('filter');
+            Route::get('/{code}', 'Api\GaddController@show')
+                ->name('show');
+
+        });
+    });
+});
+
 Route::name('mounts.')->group(function () {
     Route::group(['middleware' => ['jwt.auth']], function () {
         Route::group(['prefix' => 'mounts'], function () {
             Route::get('/', 'Api\MountsController@index')
                 ->name('index');
+            Route::get('latest/{code}', 'Api\MountsController@latest')
+                ->name('latest');
+            Route::get('update', 'Api\MountsController@update')
+                ->name('update');
+            Route::post('store', 'Api\MountsController@store')
+                ->name('store');
         });
     });
 });
