@@ -2,6 +2,7 @@
 
 namespace App\Services\Cendana;
 
+use App\Jobs\DownloadImageFromCendana;
 use App\v1\MagmaVarOptimize;
 use App\v1\User;
 use GuzzleHttp\Client;
@@ -60,7 +61,7 @@ class MagmaVarService
      *
      * @return User
      */
-    protected function user(): User
+    public function user(): User
     {
         return User::select('vg_nip', 'vg_nama')
             ->where('vg_nip', $this->var['observer'][0]['nip'])->first();
@@ -72,7 +73,7 @@ class MagmaVarService
      * @param string|null $code
      * @return MagmaVarOptimize
      */
-    protected function magmaVar(?string $code = 'MER'): MagmaVarOptimize
+    public function magmaVar(?string $code = 'MER'): MagmaVarOptimize
     {
         $date = now()->subDay()->format('Ymd');
 
@@ -119,12 +120,12 @@ class MagmaVarService
      *
      * @return integer
      */
-    public function periodId(): int
+    public function periodId()
     {
         $periodIds = collect([
             0 => ['00:00', '00:29'], // 24 Jam
             1 => ['06:00', '11:59'], // 00:00 - 06:00
-            2 => ['12:00', '15:59'], // 06:00 - 12:00
+            2 => ['12:00', '17:59'], // 06:00 - 12:00
             3 => ['18:00', '23:59'], // 12:00 - 18:00
             4 => ['00:30', '05:59'], // 18:00 - 24:00
         ]);
@@ -172,7 +173,7 @@ class MagmaVarService
      *
      * @return string
      */
-    protected function varIssued(): string
+    public function varIssued(): string
     {
         return Carbon::parse($this->var['createdAt'])->format('d/m/Y H:m:s');
     }
@@ -182,7 +183,7 @@ class MagmaVarService
      *
      * @return string
      */
-    protected function cuStatus(): string
+    public function cuStatus(): string
     {
         $level = (int) $this->var['activityLevel']['level'];
 
@@ -203,7 +204,7 @@ class MagmaVarService
      *
      * @return string
      */
-    protected function periode(): string
+    public function periode(): string
     {
         switch ((int) $this->var['periodId']) {
             case 0:
@@ -224,7 +225,7 @@ class MagmaVarService
      *
      * @return string
      */
-    protected function varNoticenumber(): string
+    public function varNoticenumber(): string
     {
         $period = '';
 
@@ -256,7 +257,7 @@ class MagmaVarService
      *
      * @return string
      */
-    protected function takenAt(): string
+    public function takenAt(): string
     {
         $timezone = $this->magmaVar->gunungapi->ga_zonearea;
 
@@ -280,7 +281,7 @@ class MagmaVarService
      *
      * @return string
      */
-    protected function volcanoLocation(): string
+    public function volcanoLocation(): string
     {
         return "{$this->magmaVar->gunungapi->ga_lat_gapi}, {$this->magmaVar->gunungapi->ga_lon_gapi}";
     }
@@ -290,7 +291,7 @@ class MagmaVarService
      *
      * @return string
      */
-    protected function varPerwkt(): string
+    public function varPerwkt(): string
     {
         return ((int) $this->var['periodId'] === 0) ? '24 Jam' : '6 Jam';
     }
@@ -300,7 +301,7 @@ class MagmaVarService
      *
      * @return string
      */
-    protected function varVisibility(): string
+    public function varVisibility(): string
     {
         $visibility = collect($this->var['visual']['visibility'])->map(function ($visibility) {
             if ($visibility === 'TAMPAK')
@@ -321,7 +322,7 @@ class MagmaVarService
      *
      * @return string
      */
-    protected function varCuaca(): string
+    public function varCuaca(): string
     {
         $cuaca = collect($this->var['meteorology']['weather'])->map(function ($cuaca) {
             return Str::title($cuaca);
@@ -335,7 +336,7 @@ class MagmaVarService
      *
      * @return float
      */
-    protected function varCurahHujan(): float
+    public function varCurahHujan(): float
     {
         if (is_null($this->var['meteorology']['rainfall']))
             return 0;
@@ -348,7 +349,7 @@ class MagmaVarService
      *
      * @return string
      */
-    protected function varAsap(): string
+    public function varAsap(): string
     {
         if (is_null($this->var['visual']['smoke']))
             return 'Nihil';
@@ -361,7 +362,7 @@ class MagmaVarService
      *
      * @return integer
      */
-    protected function varTasapMin(): int
+    public function varTasapMin(): int
     {
         if (is_null($this->var['visual']['smoke']))
             return 0;
@@ -374,7 +375,7 @@ class MagmaVarService
      *
      * @return string
      */
-    protected function varWasap(): string
+    public function varWasap(): string
     {
         if (is_null($this->var['visual']['smoke']))
             return '';
@@ -387,7 +388,7 @@ class MagmaVarService
      *
      * @return string
      */
-    protected function varIntasap(): string
+    public function varIntasap(): string
     {
         if (is_null($this->var['visual']['smoke']))
             return '';
@@ -400,7 +401,7 @@ class MagmaVarService
      *
      * @return string
      */
-    protected function varTekasap(): string
+    public function varTekasap(): string
     {
         if (is_null($this->var['visual']['smoke']))
         return '';
@@ -415,7 +416,7 @@ class MagmaVarService
      * @param string $code
      * @return self
      */
-    protected function gempaSp(array $gempa, string $code): self
+    public function gempaSp(array $gempa, string $code): self
     {
         $this->gempas["var_{$code}"] = $gempa['count'];
         $this->gempas["var_{$code}_amin"] = $gempa['count'] === 1 ? $gempa['amplitude'] : $gempa['amplitude']['min'];
@@ -435,7 +436,7 @@ class MagmaVarService
      * @param string $code
      * @return self
      */
-    protected function gempaNormal(array $gempa, string $code): self
+    public function gempaNormal(array $gempa, string $code): self
     {
         $this->gempas["var_{$code}"] = $gempa['count'];
         $this->gempas["var_{$code}_amin"] = $gempa['count'] === 1 ? $gempa['amplitude'] : $gempa['amplitude']['min'];
@@ -453,7 +454,7 @@ class MagmaVarService
      * @param string $code
      * @return self
      */
-    protected function gempaDominan(array $gempa, string $code): self
+    public function gempaDominan(array $gempa, string $code): self
     {
         $this->gempas["var_{$code}"] = $gempa['count'];
         $this->gempas["var_{$code}_amin"]  = $gempa['count'] === 1 ? $gempa['amplitude'] : $gempa['amplitude']['min'];
@@ -470,7 +471,7 @@ class MagmaVarService
      * @param string $code
      * @return self
      */
-    protected function gempaLuncuran(array $gempa, string $code): self
+    public function gempaLuncuran(array $gempa, string $code): self
     {
         $this->gempas["var_{$code}"] = $gempa['count'];
         $this->gempas["var_{$code}_amin"] = $gempa['count'] === 1 ? $gempa['amplitude'] : $gempa['amplitude']['min'];
@@ -491,7 +492,7 @@ class MagmaVarService
      * @param string $code
      * @return self
      */
-    protected function gempaErupsi(array $gempa, string $code): self
+    public function gempaErupsi(array $gempa, string $code): self
     {
         $this->gempas["var_{$code}"] = $gempa['count'];
         $this->gempas["var_{$code}_amin"] = $gempa['count'] === 1 ? $gempa['amplitude'] : $gempa['amplitude']['min'];
@@ -511,9 +512,9 @@ class MagmaVarService
      * @param array $gempa
      * @return self
      */
-    protected function translateJenisGempa(array $gempa): self
+    public function translateJenisGempa(array $gempa): self
     {
-        $translate = [
+        $translate = collect([
             'VTA' => [
                 'code' => 'vta',
                 'type' => 'sp',
@@ -558,23 +559,27 @@ class MagmaVarService
                 'code' => 'tre',
                 'type' => 'dominan'
             ],
-        ];
+        ]);
 
-        $type = $translate[$gempa['code']]['type'];
-        $code = $translate[$gempa['code']]['code'];
+        $translate->when($translate->has($gempa['code']), function ($translate) use ($gempa) {
+            $type = $translate[$gempa['code']]['type'];
+            $code = $translate[$gempa['code']]['code'];
 
-        switch ($type) {
-            case 'sp':
-                return $this->gempaSp($gempa, $code);
-            case 'normal':
-                return $this->gempaNormal($gempa, $code);
-            case 'dominan':
-                return $this->gempaDominan($gempa, $code);
-            case 'luncuran':
-                return $this->gempaLuncuran($gempa, $code);
-            case 'erupsi':
-                return $this->gempaErupsi($gempa, $code);
-        }
+            switch ($type) {
+                case 'sp':
+                    return $this->gempaSp($gempa, $code);
+                case 'normal':
+                    return $this->gempaNormal($gempa, $code);
+                case 'dominan':
+                    return $this->gempaDominan($gempa, $code);
+                case 'luncuran':
+                    return $this->gempaLuncuran($gempa, $code);
+                case 'erupsi':
+                    return $this->gempaErupsi($gempa, $code);
+            }
+        });
+
+        return $this;
     }
 
     /**
@@ -582,7 +587,7 @@ class MagmaVarService
      *
      * @return Collection
      */
-    protected function gempas(): Collection
+    public function gempas(): Collection
     {
         collect($this->var['seismicity'])->transform(function ($gempa) {
             return $this->translateJenisGempa($gempa);
@@ -599,7 +604,7 @@ class MagmaVarService
     public function existAttributes(): array
     {
         return [
-            'ga_code' => 'MER',
+            'ga_code' => $this->magmaVar->gunungapi->ga_code,
             'var_noticenumber' => $this->varNoticenumber(),
         ];
     }
@@ -683,7 +688,7 @@ class MagmaVarService
      *
      * @return MagmaVarOptimize|null
      */
-    public function storeToOldMagmaVar(): ?MagmaVarOptimize
+    public function storeToOldMagmaVar()
     {
         if (!is_null($this->var)) {
             $var = MagmaVarOptimize::updateOrCreate(
@@ -691,7 +696,9 @@ class MagmaVarService
                 $this->fill()
             );
 
-            return $var;
+            DownloadImageFromCendana::dispatch($var);
+
+            return $var->refresh();
         }
 
         return null;
