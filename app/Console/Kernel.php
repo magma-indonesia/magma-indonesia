@@ -45,9 +45,12 @@ class Kernel extends ConsoleKernel
 
     protected function scheduleImportFromCendana(Schedule $schedule)
     {
+        $filePath = storage_path('logs/cendana-magma-var-' . now()->format('Y-m-d') . '.log');
+
         $schedule->command('cendana:magma-var')
             ->cron('*/15 * * * *')
-            ->pingBefore('https://cendana15.com/api/public/v1/magmavar');
+            ->pingBefore('https://cendana15.com/api/public/v1/magmavar')
+            ->appendOutputTo($filePath);;
     }
 
 
