@@ -34,6 +34,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $this->scheduleImportFromCendana($schedule);
         $this->scheduleLiveSeismogram($schedule);
         $this->scheduleCompileMagmaVar($schedule);
         $this->scheduleGunungApi($schedule);
@@ -45,7 +46,7 @@ class Kernel extends ConsoleKernel
     protected function scheduleImportFromCendana(Schedule $schedule)
     {
         $schedule->command('cendana:magma-var')
-            ->cron('*/15 0,6,12,18 * * *')
+            ->cron('*/15 * * * *')
             ->pingBefore('https://cendana15.com/api/public/v1/magmavar');
     }
 
