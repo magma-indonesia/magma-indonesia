@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\MagmaVenStoreRequest;
-use App\MagmaVen;
-use App\Services\MagmaVenService;
+use App\MagmaVenFile;
 use Illuminate\Http\Request;
 
-class MagmaVenController extends Controller
+class MagmaVenFileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,12 +14,7 @@ class MagmaVenController extends Controller
      */
     public function index()
     {
-        $magmaVens = MagmaVen::with('gunungapi:code,name')
-            ->orderBy('datetime_utc', 'desc')->paginate(30);
-
-        return view('gunungapi.magma-ven.index', [
-            'magmaVens' => $magmaVens
-        ]);
+        //
     }
 
     /**
@@ -29,12 +22,9 @@ class MagmaVenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(MagmaVenService $magmaVenService)
+    public function create()
     {
-        return view('gunungapi.magma-ven.create', [
-            'gadds' => $magmaVenService->gadds(),
-            'recomendations' => $magmaVenService->recomendations(),
-        ]);
+        //
     }
 
     /**
@@ -43,18 +33,18 @@ class MagmaVenController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(MagmaVenStoreRequest $request)
+    public function store(Request $request)
     {
-        return $request;
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\MagmaVen  $magmaVen
+     * @param  \App\MagmaVenFile  $magmaVenFile
      * @return \Illuminate\Http\Response
      */
-    public function show(MagmaVen $magmaVen)
+    public function show(MagmaVenFile $magmaVenFile)
     {
         //
     }
@@ -62,10 +52,10 @@ class MagmaVenController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\MagmaVen  $magmaVen
+     * @param  \App\MagmaVenFile  $magmaVenFile
      * @return \Illuminate\Http\Response
      */
-    public function edit(MagmaVen $magmaVen)
+    public function edit(MagmaVenFile $magmaVenFile)
     {
         //
     }
@@ -74,10 +64,10 @@ class MagmaVenController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\MagmaVen  $magmaVen
+     * @param  \App\MagmaVenFile  $magmaVenFile
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MagmaVen $magmaVen)
+    public function update(Request $request, MagmaVenFile $magmaVenFile)
     {
         //
     }
@@ -85,10 +75,10 @@ class MagmaVenController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\MagmaVen  $magmaVen
+     * @param  \App\MagmaVenFile  $magmaVenFile
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MagmaVen $magmaVen)
+    public function destroy(MagmaVenFile $magmaVenFile)
     {
         //
     }

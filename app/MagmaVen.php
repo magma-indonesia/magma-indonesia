@@ -94,4 +94,14 @@ class MagmaVen extends Model
         return $this->belongsTo('App\VarRekomendasi', 'rekomendasi_id', 'id');
     }
 
+    /**
+     * Has Many files
+     *
+     * @return \App\MagmaVenFile
+     */
+    public function magma_ven_files()
+    {
+        return $this->hasMany(MagmaVenFile::class);
+    }
+
 }
