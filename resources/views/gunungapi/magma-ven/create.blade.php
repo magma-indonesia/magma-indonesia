@@ -75,6 +75,19 @@ Buat Informasi Letusan (VEN)
                                 </div>
 
                                 <div class="col-lg-8">
+
+                                    @if ($errors->any())
+                                    <div class="row">
+                                        <div class="form-group col-sm-12">
+                                            <div class="alert alert-danger">
+                                            @foreach ($errors->all() as $error)
+                                                <p>{{ $error }}</p>
+                                            @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
+
                                     {{-- Gunung Api --}}
                                     <div class="row">
                                         <div class="form-group col-lg-12">
@@ -166,6 +179,101 @@ Buat Informasi Letusan (VEN)
 
                                                     @if( $errors->has('is_continuing'))
                                                     <label class="error" for="is_continuing">{{ ucfirst($errors->first('is_continuing')) }}</label>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- Suara Gemuruh --}}
+                                    <div class="row">
+                                        <div class="form-group col-sm-12">
+                                            <label>Apakah terdengar suara gemuruh?</label>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <label class="checkbox-inline"><input name="rumbling_is_heard" value="1" type="radio" class="i-checks rumbling_is_heard"
+                                                            {{ old('rumbling_is_heard') == '1' ? 'checked' : ''}}> Ya </label>
+                                                    <label class="checkbox-inline"><input name="rumbling_is_heard" value="0" type="radio" class="i-checks rumbling_is_heard"
+                                                            {{ (old('rumbling_is_heard') == '0' OR empty(old('rumbling_is_heard'))) ? 'checked' : ''}}> Tidak </label>
+
+                                                    @if( $errors->has('rumbling_is_heard'))
+                                                    <label class="error" for="rumbling_is_heard">{{ ucfirst($errors->first('rumbling_is_heard')) }}</label>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- Suara Dentuman --}}
+                                    <div class="row">
+                                        <div class="form-group col-sm-12">
+                                            <label>Apakah terdengar suara dentuman?</label>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <label class="checkbox-inline"><input name="explosion_is_heard" value="1" type="radio" class="i-checks explosion_is_heard"
+                                                            {{ old('explosion_is_heard') == '1' ? 'checked' : ''}}> Ya </label>
+                                                    <label class="checkbox-inline"><input name="explosion_is_heard" value="0" type="radio" class="i-checks explosion_is_heard"
+                                                            {{ (old('explosion_is_heard') == '0' OR empty(old('explosion_is_heard'))) ? 'checked' : ''}}> Tidak </label>
+
+                                                    @if( $errors->has('explosion_is_heard'))
+                                                    <label class="error" for="explosion_is_heard">{{ ucfirst($errors->first('explosion_is_heard')) }}</label>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- Sinar Api --}}
+                                    <div class="row">
+                                        <div class="form-group col-sm-12">
+                                            <label>Apakah sinar api teramati?</label>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <label class="checkbox-inline"><input name="hotspot_is_observed" value="1" type="radio" class="i-checks hotspot_is_observed"
+                                                            {{ old('hotspot_is_observed') == '1' ? 'checked' : ''}}> Ya </label>
+                                                    <label class="checkbox-inline"><input name="hotspot_is_observed" value="0" type="radio" class="i-checks hotspot_is_observed"
+                                                            {{ (old('hotspot_is_observed') == '0' OR empty(old('hotspot_is_observed'))) ? 'checked' : ''}}> Tidak </label>
+
+                                                    @if( $errors->has('hotspot_is_observed'))
+                                                    <label class="error" for="hotspot_is_observed">{{ ucfirst($errors->first('hotspot_is_observed')) }}</label>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- Lontaran Lava Pijar --}}
+                                    <div class="row">
+                                        <div class="form-group col-sm-12">
+                                            <label>Apakah lontaran lava pijar teramati?</label>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <label class="checkbox-inline"><input name="incandescent_lava_is_observed" value="1" type="radio" class="i-checks incandescent_lava_is_observed"
+                                                            {{ old('incandescent_lava_is_observed') == '1' ? 'checked' : ''}}> Ya </label>
+                                                    <label class="checkbox-inline"><input name="incandescent_lava_is_observed" value="0" type="radio" class="i-checks incandescent_lava_is_observed"
+                                                            {{ (old('incandescent_lava_is_observed') == '0' OR empty(old('incandescent_lava_is_observed'))) ? 'checked' : ''}}> Tidak </label>
+
+                                                    @if( $errors->has('incandescent_lava_is_observed'))
+                                                    <label class="error" for="incandescent_lava_is_observed">{{ ucfirst($errors->first('incandescent_lava_is_observed')) }}</label>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- Gas --}}
+                                    <div class="row">
+                                        <div class="form-group col-sm-12">
+                                            <label>Apakah tercium bau gas?</label>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <label class="checkbox-inline"><input name="gas" value="1" type="radio" class="i-checks gas"
+                                                            {{ old('gas') == '1' ? 'checked' : ''}}> Ya </label>
+                                                    <label class="checkbox-inline"><input name="gas" value="0" type="radio" class="i-checks gas"
+                                                            {{ (old('gas') == '0' OR empty(old('gas'))) ? 'checked' : ''}}> Tidak </label>
+
+                                                    @if( $errors->has('gas'))
+                                                    <label class="error" for="gas">{{ ucfirst($errors->first('gas')) }}</label>
                                                     @endif
                                                 </div>
                                             </div>
@@ -474,8 +582,27 @@ Buat Informasi Letusan (VEN)
                                         </div>
                                     </div>
 
-                                    {{-- Erupsi telah selesai --}}
-                                    <div class="is-continuing" style="display: {{ old('is_continuing') == '0' ? 'none' :'block'}};">
+                                        {{-- Tremor Menerus --}}
+                                        <div class="row">
+                                            <div class="form-group col-sm-12">
+                                                <label>Apakah terekam TREMOR menerus?</label>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <label class="checkbox-inline"><input name="tremor" value="1" type="radio" class="i-checks tremor"
+                                                                {{ old('tremor') == '1' ? 'checked' : ''}}> Ya </label>
+                                                        <label class="checkbox-inline"><input name="tremor" value="0" type="radio" class="i-checks tremor"
+                                                                {{ (old('tremor') == '0' OR empty(old('tremor'))) ? 'checked' : ''}}> Tidak </label>
+
+                                                        @if( $errors->has('tremor'))
+                                                        <label class="error" for="tremor">{{ ucfirst($errors->first('tremor')) }}</label>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    {{-- Erupsi masih berlangsung --}}
+                                    <div class="is-continuing" style="display: {{ (old('is_continuing') == '0') || (empty(old('is_continuing'))) ? 'block' :'none'}};">
 
                                         {{-- Amplitude --}}
                                         <div class="row">
@@ -499,7 +626,7 @@ Buat Informasi Letusan (VEN)
                                                 <label>Durasi</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon" style="min-width: 100px;">Durasi</span>
-                                                    <input name="duration" type="number" min="1" class="form-control" type="text" value="{{ empty(old('duration')) ? 0 : old('duration') }}">
+                                                    <input name="duration" type="number" min="1" class="form-control" type="text" value="{{ empty(old('duration')) ? 1: old('duration') }}">
                                                     <span class="input-group-addon" style="min-width: 75px;">detik</span>
                                                 </div>
 
