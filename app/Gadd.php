@@ -20,6 +20,27 @@ class Gadd extends Model
         'deleted_at',
     ];
 
+    protected $appends = [
+        'time_zone',
+    ];
+
+    /**
+     * Get Time Zone Attribute
+     *
+     * @return void
+     */
+    public function getTimeZoneAttribute(): string
+    {
+        switch ($this->attributes['zonearea']) {
+            case 'WIB':
+                return 'Asia/Jakarta';
+            case 'WITA':
+                return 'Asia/Makassar';
+            default:
+                return 'Asia/Jayapura';
+        }
+    }
+
     /**
      *   Masing-masing Gunungapi bisa memiliki lebih
      *   dari 1 Status. Catatan peningkatan atau penurunan level Gunung Api
