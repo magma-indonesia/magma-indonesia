@@ -38,17 +38,21 @@ Laporan Harian - {{ $date->formatLocalized('%A, %d %B %Y') }}
 </div>
 
 <div class="tab-content" id="myTabContent">
-    <div class="form-group">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <div class="input-group-text">
-                <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
+
+    <form id="form-date" method="GET" data-action="{{ route('v1.gunungapi.laporan-harian') }}">
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                    <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
+                    </div>
                 </div>
+                <input id="date" value="{{ now()->format('Y-m-d') }}" name="date" type="text" class="form-control fc-datepicker" placeholder="{{ now()->format('Y-m-d') }}">
+                <button class="btn btn-primary submit-date mg-l-10" type="submit">Lihat</button>
             </div>
-            <input id="date" value="{{ now()->format('Y-m-d') }}" name="date" type="text" class="form-control fc-datepicker" placeholder="{{ now()->format('Y-m-d') }}">
-            <button class="btn btn-primary mg-l-10" type="submit">Cari Tanggal Laporan</button>
         </div>
-    </div>
+    </form>
+
     @foreach ($groupedByStatus as $status => $gadds)
         <div id="tab-{{ $loop->index }}" role="tabpanel" aria-labelledby="home-tab-{{ $loop->index }}"
             class="card card-table mg-b-20 tab-pane {{ $loop->first ? 'show active' : '' }}">
@@ -123,8 +127,17 @@ Laporan Harian - {{ $date->formatLocalized('%A, %d %B %Y') }}
 
 @section('add-script')
 <script>
-$(function(){
+$(document).ready(function () {
     'use strict'
+
+    $('body').on('click','.submit-date',function (e) {
+        e.preventDefault();
+
+        var $value = $('#date').val(),
+            $url = $('#form-date').data('action')+'/'+$value;
+
+        window.open($url, '_self');
+    });
 
     // Datepicker
     $('.fc-datepicker').datepicker({
@@ -132,9 +145,8 @@ $(function(){
         dateFormat: 'yy-mm-dd',
         showOtherMonths: true,
         selectOtherMonths: true,
+        maxDate: '{{ now()->format("Y-m-d")}}',
     });
-
-    $('#date').datepicker();
 
 });
 </script>

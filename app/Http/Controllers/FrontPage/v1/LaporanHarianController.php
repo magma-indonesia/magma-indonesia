@@ -20,7 +20,7 @@ class LaporanHarianController extends Controller
         return view('v1.home.laporan-harian', [
             'date' => $laporanHarianService->date($date),
             'is_cached' => $laporanHarianService->isCached(),
-            'groupedByStatus' => $laporanHarianService->cache(false)
+            'groupedByStatus' => $laporanHarianService->groupedByStatus()
         ]);
     }
 }

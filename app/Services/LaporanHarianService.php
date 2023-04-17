@@ -397,6 +397,7 @@ class LaporanHarianService
             return [
                 'name' => $gadd->ga_nama_gapi,
                 'status' => $this->status($gadd->var),
+                'date' => $gadd->var->var_data_date,
                 'visual' => [
                     'gunung_api' => $this->visual($gadd->var),
                     'letusan' => $this->letusan($gadd->var),
@@ -410,21 +411,26 @@ class LaporanHarianService
         return $filtered->groupBy('status')->sortKeysDesc();
     }
 
-    public function cache(?bool $isCached = null): Collection
+    public function cache(): Collection
     {
-        $isCached = is_null($isCached) ? $this->isCached() : $isCached;
-
-        // dd($isCached);
-
-        return $isCached ?
+        return $this->isCached ?
             Cache::rememberForever("laporan-harian-{$this->date->format('Ymd')}", function () {
                 return $this->transformed($this->gadds());
             }) : $this->transformed($this->gadds());
     }
 
-    public function isCached(?Carbon $date = null)
+    public function groupedByStatus()
     {
-        return $this->isCached = now()->format('Ymd') === $this->date->format('Ymd') ? false : true;
+        return $this->cache()->isEmpty() ? abort(404) : $this->cache();
+    }
+
+    public function isCached(?bool $isCached = null)
+    {
+        if (is_null($isCached)) {
+            return $this->isCached = now()->format('Ymd') === $this->date->format('Ymd') ? false : true;
+        }
+
+        return $this->isCached = $isCached;
     }
 
     /**
@@ -433,7 +439,7 @@ class LaporanHarianService
      * @param string|null $date
      * @return Carbon
      */
-    public function date(?string $date = null): Carbon
+    public function date(?string $date = null)
     {
         if (is_null($date)) {
             return $this->date = now();
@@ -458,19 +464,15 @@ class LaporanHarianService
      * @param Carbon $date
      * @return Collection
      */
-    public function gadds(?Carbon $date = null): Collection
+    public function gadds(): Collection
     {
-        $date = is_null($date) ? $this->date : $date;
-
         $gadds = Gadd::select('ga_code', 'ga_nama_gapi')
             ->whereNotIn('ga_code', ['TEO'])
             ->where('laporan_harian', 1)
             ->orderBy('ga_nama_gapi')
             ->with([
-                'var' => function ($query) use ($date) {
-                    $date->format('Ymd') === now()->format('Ymd') ?
-                        $query->latestVar() :
-                        $query->byDate($date->format('Ymd'));
+                'var' => function ($query) {
+                    $query->where('var_noticenumber', 'like', "{$this->date->format('Ymd')}%");
                 },
                 'var.rekomendasi.lists',
             ])
