@@ -141,7 +141,7 @@
                 <a href="https://www.esdm.go.id/" target="_blank"><img src="{{ asset('logo-esdm.png') }}" style="height:24px;"></a>
                 <img src="{{ asset('magma-logo-small.png') }}" style="height:24px;margin-left:5px;">
                 <span class="calcite-title-main" style="margin-left:15px;"><a class="calcite-title-main" href="{{ route('v1.home') }}">MAGMA Indonesia</a></span>
-                <span class="calcite-title-sub hidden-xs" style="margin-left:15px;">Bridging the will of nature to society</span>
+                <span class="calcite-title-sub hidden-xs" style="margin-left:15px;">Bringing the will of nature to society</span>
                 <span class="calcite-title-divider hidden-xs hidden-sm hidden-md"></span>
             </div>
 
