@@ -1,12 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{
-    ChamberController,
-    StatistikController,
-    RoutesController,
-    OvertimeController,
-};
+use App\Http\Controllers\ChamberController;
+use App\Http\Controllers\StatistikController;
+use App\Http\Controllers\RoutesController;
+use App\Http\Controllers\OvertimeController;
 use App\Http\Controllers\Cendana\MagmaVarController;
 use App\Http\Controllers\v1\PerubahanTingkatAktivitasController;
 
