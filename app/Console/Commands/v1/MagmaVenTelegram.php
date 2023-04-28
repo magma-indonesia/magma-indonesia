@@ -115,9 +115,9 @@ class MagmaVenTelegram extends Command
             $this->info('Telegram : Sent!');
             $ven->sent_to_telegram_at = now();
 
-            $this->info('Twitter : Sending...');
-            $ven->bitly = $this->sendToTwitter($ven);
-            $this->info('Twitter : Sent!');
+            // $this->info('Twitter : Sending...');
+            // $ven->bitly = $this->sendToTwitter($ven);
+            // $this->info('Twitter : Sent!');
 
             $ven->save();
             $this->info('Ven : Updated!');
