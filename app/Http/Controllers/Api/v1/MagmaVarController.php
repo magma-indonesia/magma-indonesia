@@ -2,22 +2,25 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Api\MagmaVarFilterRequest;
+use App\Traits\v1\DeskripsiGempa;
+use App\Traits\VisualAsap;
+use App\Traits\WarnaGempa;
 use App\v1\MagmaVar as OldVar;
+use App\v1\MagmaVarOptimize;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
-
-use App\Traits\VisualAsap;
-use App\Traits\v1\DeskripsiGempa;
 use Illuminate\Support\Facades\URL;
 
 class MagmaVarController extends Controller
 {
 
-    use VisualAsap,DeskripsiGempa;
+    use VisualAsap,DeskripsiGempa,WarnaGempa;
+    protected $series = array();
+    protected $graph;
 
     protected function varAsap($var)
     {
@@ -225,5 +228,81 @@ class MagmaVarController extends Controller
             ->paginate(15);
 
         return $this->transformPaginationData($vars);
+    }
+
+    /**
+     * Simplified Volcanic Seismicity Interface
+     *
+     * @param string $volCode
+     * @return Collection
+     */
+    public function seismic(string $volCode)
+    {
+
+        $start = now()->subDays(90);
+        $end = now();
+        $start_str = strtotime($start->format('Y-m-d'));
+        $end_str = strtotime($end->format('Y-m-d'));
+        $categories = $this->setCategories($start, $end);
+
+        $graph = Cache::remember('var:seismic:'.$volCode.':'.$start_str.':'.$end_str, 30, function() use($volCode, $start, $end) {
+            return MagmaVarOptimize::select(
+                    'var_lts','var_apl','var_gug','var_apg','var_hbs',
+                    'var_tre','var_tor','var_lof','var_hyb','var_vtb',
+                    'var_vta','var_vlp','var_tel','var_trs','var_tej',
+                    'var_dev','var_gtb','var_hrm','var_dpt','ga_code',
+                    'var_data_date')
+                ->where('ga_code',$volCode)
+                ->where('var_perwkt','24 Jam')
+                ->whereBetween('var_data_date',[$start->format('Y-m-d'),$end->format('Y-m-d')])
+                ->orderBy('var_data_date','asc')
+                ->get();
+        });
+
+        $keyed = $graph->keyBy('var_data_date');
+
+        $this->graph = $categories->flip()->map(function ($item) {
+            return app('App\Http\Controllers\v1\Json\HighCharts')->default_jumlah;
+        })->merge($keyed);
+
+        $gempas = collect($this->codes);
+        $gempas->each(function ($gempa, $key) {
+            $data = $this->getSeries($key);
+            if ($data->count) {
+                $this->series[] = [
+                    'name' => $gempa,
+                    'data' => $data->data,
+                    'color' => $data->color
+                ];
+            }
+        });
+
+        return collect([
+            'categories' => $categories,
+            'series' => $this->series
+        ]);
+    }
+
+    public function setCategories($start, $end)
+    {
+
+        $categories = array();
+        $dates = new \DatePeriod($start, new \DateInterval('P1D'), $end);
+
+        foreach ($dates as $date)
+        {
+            $categories[] = $date->format('Y-m-d');
+        }
+
+        return collect($categories);
+    }
+
+    public function getSeries($key)
+    {
+        return (object) [
+            'count' => $this->graph->sum('var_'.$key),
+            'data' => $this->graph->pluck('var_'.$key),
+            'color' => $this->getColor($key)
+        ];
     }
 }
