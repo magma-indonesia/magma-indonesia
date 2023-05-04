@@ -24,7 +24,7 @@ class HighCharts extends Controller
     protected $start_str;
     protected $end;
     protected $end_str;
-    protected $default_jumlah = [
+    public $default_jumlah = [
         'var_lts' => 0,
         'var_apl' => 0,
         'var_gug' => 0,
@@ -93,7 +93,7 @@ class HighCharts extends Controller
         return $this->categories;
     }
 
-    protected function getSeries($key)
+    public function getSeries($key)
     {
 
         return (object) [

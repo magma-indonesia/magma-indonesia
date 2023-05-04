@@ -33,7 +33,7 @@
         "spatie/laravel-permission": "^2.7",
         "stevebauman/location": "^6.1",
         "symfony/psr-http-message-bridge": "^1.1",
-        "tymon/jwt-auth": "dev-develop",
+        "tymon/jwt-auth": "^1.0",
         "watson/active": "^2.0",
         "zendframework/zend-diactoros": "^2.0"
     },
