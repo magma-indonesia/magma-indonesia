@@ -202,7 +202,7 @@ Rekap Laporan {{ $gadd->ga_nama_gapi }}
 @section('add-script')
 <script>
 $(document).ready(function () {
-    var dataCalendars = @json($vars['calendar']);
+    var dataCalendars = @json($vars['calendars']);
 
     // Initialize table
     $('#table-rekap').dataTable({
