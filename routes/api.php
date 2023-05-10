@@ -128,6 +128,8 @@ Route::name('v1.')->group(function () {
             Route::get('magma-var','Api\v1\MagmaVarController@index');
             Route::get('magma-var/filter','Api\v1\MagmaVarController@filter')
                 ->name('magma-var.filter');
+            Route::get('magma-var/seismic/{code}','Api\v1\MagmaVarController@seismic')
+                ->name('magma-var.seismicity');
             Route::get('magma-var/{code}/{noticenumber?}','Api\v1\MagmaVarController@show')
                 ->name('magma-var.show');
 
