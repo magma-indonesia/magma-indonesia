@@ -41,34 +41,34 @@
 
                 @foreach ($pressRelease->tags as $tag)
                     <a href="{{ route('press-release.index', ['tag' => $tag->slug]) }}"
-                        class="badge badge-pill badge-primary tx-14" target="_blank">{{ $tag->name }}</a>
+                        class="badge badge-pill badge-primary tx-14 mg-b-10" target="_blank">{{ $tag->name }}</a>
                 @endforeach
 
                 @if ($pressRelease->gunung_api)
                     <a href="{{ route('press-release.index', ['category' => 'gunung-api']) }}"
-                        class="badge badge-pill badge-danger tx-14" target="_blank">Gunung Api</a>
+                        class="badge badge-pill badge-danger tx-14 mg-b-10" target="_blank">Gunung Api</a>
                     <a href="{{ route('press-release.index', ['volcano' => $pressRelease->gunungApi->code]) }}"
-                        class="badge badge-pill badge-danger tx-14">{{ "Gunung Api {$pressRelease->gunungApi->name}" }}</a>
+                        class="badge badge-pill badge-danger tx-14 mg-b-10">{{ "Gunung Api {$pressRelease->gunungApi->name}" }}</a>
                 @endif
 
                 @if ($pressRelease->gerakan_tanah)
                     <a href="{{ route('press-release.index', ['category' => 'gerakan-tanah']) }}"
-                        class="badge badge-pill badge-danger tx-14">Gerakan Tanah</a>
+                        class="badge badge-pill badge-danger tx-14 mg-b-10">Gerakan Tanah</a>
                 @endif
 
                 @if ($pressRelease->gempa_bumi)
                     <a href="{{ route('press-release.index', ['category' => 'gempa-bumi']) }}"
-                        class="badge badge-pill badge-danger tx-14">Gempa Bumi</a>
+                        class="badge badge-pill badge-danger tx-14 mg-b-10">Gempa Bumi</a>
                 @endif
 
                 @if ($pressRelease->tsunami)
                     <a href="{{ route('press-release.index', ['category' => 'tsunami']) }}"
-                        class="badge badge-pill badge-danger tx-14">Tsunami</a>
+                        class="badge badge-pill badge-danger tx-14 mg-b-10">Tsunami</a>
                 @endif
 
                 @if ($pressRelease->lainnya)
                     <a href="{{ route('press-release.index', ['category' => 'lainnya', 'value' => $pressRelease->lainnya]) }}"
-                        class="badge badge-pill badge-light tx-14">{{ $pressRelease->lainnya }}</a>
+                        class="badge badge-pill badge-light tx-14 mg-b-10">{{ $pressRelease->lainnya }}</a>
                 @endif
             </div>
 
