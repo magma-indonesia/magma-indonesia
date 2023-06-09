@@ -65,7 +65,7 @@ return [
         'format' => env('ONE_MAP_FORMAT', 'json'),
         'expiration' => env('ONE_MAP_EXPIRATION', 3600),
         'client' => env('ONE_MAP_CLIENT', 'referer'),
-        'referer' => env('ONE_MAP_REFERER', 'magma..esdm.go.id')
+        'referer' => env('ONE_MAP_REFERER', 'magma.esdm.go.id')
     ],
 
 ];
