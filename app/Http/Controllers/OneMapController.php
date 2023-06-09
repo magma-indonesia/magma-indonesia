@@ -64,7 +64,7 @@ class OneMapController extends Controller
      *
      * @return array
      */
-    public function index(): array
+    public function get(): array
     {
         $client = new Client([
             'headers' => [
@@ -82,5 +82,17 @@ class OneMapController extends Controller
         ]);
 
         return json_decode($response->getBody(), true);
+    }
+
+    /**
+     * Get Vew from one map
+     *
+     * @return void
+     */
+    public function index()
+    {
+        return view('test', [
+            'token' => $this->token()
+        ]);
     }
 }
