@@ -1,0 +1,2486 @@
+{
+    "area": [
+        {
+            "code": "AGU",
+            "krb": "1",
+            "id": "Berpotensi Terlanda aliran lahar / banjir dan kemungkinan dapat terkena perluasan awan panas dan longsoran / runtuhan tebing.",
+            "en": "Potential affected by lahar flows / flood and possibly threatened by the extension of pyroclastic flows and slinding / collapse of step slopes."
+        },
+        {
+            "code": "AGU",
+            "krb": "2",
+            "id": "Berpotensi sedang terlanda awan panas, aliran lava dan aliran lahar",
+            "en": "Moderately potential affected by pyroclastic flows, lava flows and lahar"
+        },
+        {
+            "code": "AGU",
+            "krb": "3",
+            "id": "Berpotensi tinggi terlanda awan panas, aliran lava, guguran lava, gas berbahaya.",
+            "en": "Highly potential affected by pyroclastic flows, lava flows, lava avalances and hazardous gases."
+        },
+        {
+            "code": "AMB",
+            "krb": "1",
+            "id": "Berpotensi terlanda aliran lahar hujan dan kemungkinan dapat terkena perluasan longsoran puing vulkanik",
+            "en": "Potentally affected by rain lahar and possibly affected by volcanic debris avalanches."
+        },
+        {
+            "code": "AMB",
+            "krb": "2",
+            "id": "Berpotensi terlanda aliran lumpur panas, lahar hujan dan kemungkinan longsoran puing vulkanik, aliran awan panas atau aliran lava.",
+            "en": "Potentially affected by hot mud flow, rain lahar and possibly volcanic debris avalanches, pyroclastic flows or lava flows."
+        },
+        {
+            "code": "AMB",
+            "krb": "3",
+            "id": "Selalu terancam aliran lumpur panas, gas racun dan kemungkinan longsoran puing vulkanik, aliran awan panas atau lava.",
+            "en": "Always threatened by hot mud flow, toxic gases and possibly volcanic debris avalanches, pyroclastic flows or lavas"
+        },
+        {
+            "code": "AWU",
+            "krb": "1",
+            "id": "Kawasan berpotensi  terlanda aliran lahar",
+            "en": "Potentially affected by lahar"
+        },
+        {
+            "code": "AWU",
+            "krb": "2",
+            "id": "Kawasan berpotensi terlanda aliran awan panas, aliran lava, guguran lava, gas vulkanik beracun, dan aliran lahar",
+            "en": "Potentially affected by pyroclastic flows, lava flows, toxic volcanic gas, and lahars."
+        },
+        {
+            "code": "AWU",
+            "krb": "3",
+            "id": "Kawasan sangat berpotensi terlanda aliran awan panas, aliran lava, guguran lava, gas vulkanik beracun, dan aliran lahar.",
+            "en": "Very potentially affected by pyroclastic flows, lava flows, toxic volcanic gas, and lahars."
+        },
+        {
+            "code": "BAN",
+            "krb": "2",
+            "id": "Kawasan yang berpotensi terlanda perluasan awan panas",
+            "en": "Areas potentially affected by pyroclastic flows extencion."
+        },
+        {
+            "code": "BAN",
+            "krb": "3",
+            "id": "Kawasan yang sangat berpotensi terlanda awan panas dan aliran lava",
+            "en": "Areas very potentially affected by pyroclastic flows and lava flows."
+        },
+        {
+            "code": "BAT",
+            "krb": "2",
+            "id": "Kawasan yang berpotensi sedang terhadap aliran awan panas, aliran lava, dan lahar.",
+            "en": "Moderately potential affected by pyroclastic flows, lava flows, and lahar."
+        },
+        {
+            "code": "BAT",
+            "krb": "3",
+            "id": "Kawasan yang berpotensi tinggi terlanda awan panas, aliran lava, guguran lava, gas berbahaya, dan lahar.",
+            "en": "Highly potential area that affected by pyroclastic flows, lava flows, lava avalanches, hazardous gases, and lahar."
+        },
+        {
+            "code": "BOL",
+            "krb": "1",
+            "id": "Kawasan yang berpotensi terlanda lahar hujan.",
+            "en": "Areas potentially affected by rain lahars."
+        },
+        {
+            "code": "BOL",
+            "krb": "2",
+            "id": "Kawasan yang berpotensi terlanda awan panas, aliran lava dan guguran lava.",
+            "en": "Areas potentially affected by pyroclastic flows, lava flows and lava avalanches."
+        },
+        {
+            "code": "BOL",
+            "krb": "3",
+            "id": "Kawasan yang sangat berpotensi terlanda awan panas, aliran lava, guguran lava dan gas beracun.",
+            "en": "Areas very potentially affected by pyroclastic flows, lava flows, lava avalanches, and toxic volcanic gas."
+        },
+        {
+            "code": "BRO",
+            "krb": "2",
+            "id": "Kawasan yang berpotensi sedang terlanda aliran lava dan lahar.",
+            "en": "Moderately potential affected by lava flows and lahar."
+        },
+        {
+            "code": "BRO",
+            "krb": "3",
+            "id": "Kawasan yang berpotensi tinggi terlanda aliran lava, guguran lava, gas vulkanik beracun, dan lahar.",
+            "en": "An area high potentially affected by lava flows, lava avalanches, toxic volcanic gases, and lahar."
+        },
+        {
+            "code": "CER",
+            "krb": "1",
+            "id": "Berpotensi terlanda aliran lahar hujan",
+            "en": "Potentially affected by rain lahar."
+        },
+        {
+            "code": "CER",
+            "krb": "2",
+            "id": "Berpotensi terlanda aliran awan panas, lava dan lahar hujan.",
+            "en": "Potentially affected by pyroclastic flow, lava and rain lahar."
+        },
+        {
+            "code": "CER",
+            "krb": "3",
+            "id": "Selalu terancam aliran awan panas, lava dan gas racun.",
+            "en": "Always threatened by pyroclastic flow, lava and toxic gases."
+        },
+        {
+            "code": "COL",
+            "krb": "1",
+            "id": "Berpotensi terlanda aliran lahar hujan dan kemungkinan terkena perluasan awan panas.",
+            "en": "Potentially affected by rain lahar and possibly affected by extention of pyroclastic flows"
+        },
+        {
+            "code": "COL",
+            "krb": "2",
+            "id": "Berpotensi terlanda aliran awan panas, lava, lahar letusan dan lahar hujan.",
+            "en": "Potentially affected by pyroclastic flows, eruption and rain lahars."
+        },
+        {
+            "code": "COL",
+            "krb": "3",
+            "id": "Selalu terancam awan panas, lontaran batu (pijar), gas racun, lumpur (panas) dan kemungkinan lava.",
+            "en": "Always threatened by pyroclastic flows, ejected rocks (glowing), toxic gases, hot mud and possibly lava flows."
+        },
+        {
+            "code": "DEM",
+            "krb": "1",
+            "id": "Kawasan yang berpotensi terlanda lahar hujan dan kemungkinan perluasan awan panas.",
+            "en": "Area that could be affected by lahars and possibly enlarged area of pyroclastic flow movement."
+        },
+        {
+            "code": "DEM",
+            "krb": "2",
+            "id": "Kawasan yang berpotensi terlanda aliran awan panas dan lava. Kawasan ini diperhitungkan sebagai perluasan aliran awan panas dan lava jika letusan  cenderung bertambah besar.",
+            "en": "Area that could be affected by the pyroclastic flows and lava. This hazard zone is a possibly enlarged area when the eruption tends to bigger."
+        },
+        {
+            "code": "DEM",
+            "krb": "3",
+            "id": "Kawasan yang sangat berpotensi terlanda awan panas dan aliran lava.",
+            "en": "Area that could be strongly affected by pyroclastic flows and lava."
+        },
+        {
+            "code": "DIE",
+            "krb": "1",
+            "id": "Berpotensi terlanda aliran lahar.",
+            "en": "Potentially affected by lahars."
+        },
+        {
+            "code": "DIE",
+            "krb": "2",
+            "id": "Berpotensi terancam gas racun, base surge dan semburan lumpur.",
+            "en": "Potentially threatened by toxic gases, base surge and mud explotion."
+        },
+        {
+            "code": "DIE",
+            "krb": "3",
+            "id": "Sangat berpotensi terancam gas racun, base surge, dan semburan lumpur.",
+            "en": "Very potentially threatened by toxic gases, base surge and mud explotion."
+        },
+        {
+            "code": "DUK",
+            "krb": "1",
+            "id": "Kawasan yang berpotensi terlanda aliran lahar hujan",
+            "en": "Areas potentially affected by rain lahars."
+        },
+        {
+            "code": "DUK",
+            "krb": "2",
+            "id": "Kawasan yang berpotensi terlanda aliran awan panas, aliran lava dan lahar hujan.",
+            "en": "Areas potentially affected by pyroclastic flows, lava flows, and rain lahars."
+        },
+        {
+            "code": "DUK",
+            "krb": "3",
+            "id": "Kawasan yang sangat berpotensi terlanda awan panas, aliran lava dan gas beracun.",
+            "en": "Areas very potentially affected by pyrolastic flows, lava flows and toxix gases."
+        },
+        {
+            "code": "EBU",
+            "krb": "1",
+            "id": "Berpotensi terhadap aliran lahar hujan.",
+            "en": "Potentially affected by rain lahars."
+        },
+        {
+            "code": "EBU",
+            "krb": "2",
+            "id": "Berpotensi terlanda aliran awan panas, lava dan lahar hujan.",
+            "en": "Potentially affected by pyroclastic flows, lava flows and rain lahars."
+        },
+        {
+            "code": "EBU",
+            "krb": "3",
+            "id": "Selalu terancam aliran awan panas, lava dan gas beracun.",
+            "en": "Always threatened by pyroclastic flows, lava flows and toxic gases."
+        },
+        {
+            "code": "TPR",
+            "krb": "1",
+            "id": "Berpotensi terhadap aliran lahar.",
+            "en": "Potentially affected by lahar flow."
+        },
+        {
+            "code": "TPR",
+            "krb": "2",
+            "id": "Berpotensi terlanda aliran lava, gas racun, kemungkinan awan panas dan lahar.",
+            "en": "Potentially affected by lava flow, toxic gases, possibly pyroclastic flow and lahars."
+        },
+        {
+            "code": "TPR",
+            "krb": "3",
+            "id": "Selalu terancam aliran lava, gas beracun dan kemungkinan awan panas. ",
+            "en": "Always threatened by heavy ash fall, hot mud and ejected rock fragments."
+        },
+        {
+            "code": "WUR",
+            "krb": "1",
+            "id": "Kawasan yang berpotensi terlanda lahar hujan.",
+            "en": "Areas potentially affected by rain lahars."
+        },
+        {
+            "code": "WUR",
+            "krb": "2",
+            "id": "Kawasan yang berpotensi terlanda awan panas, aliran lava dan guguran lava.",
+            "en": "Area potentially affected by pyroclastic flows, lava flows and lava avalanches."
+        },
+        {
+            "code": "WUR",
+            "krb": "3",
+            "id": "Kawasan yang sangat berpotensi terlanda awan panas, aliran lava, guguran lava, dan gas beracun.",
+            "en": "Areas very potentially affected by pyroclastic flows, lava flows, lava avalanches, and toxic volcanic gas."
+        },
+        {
+            "code": "KER",
+            "krb": "1",
+            "id": "Kawasan berpotensi terlanda aliran lahar.",
+            "en": "Potentially affected by lahars."
+        },
+        {
+            "code": "KER",
+            "krb": "2",
+            "id": "Kawasan berpotensi terlanda aliran awan panas, aliran lava, guguran lava, gas vulkanik beracun dan aliran lahar.",
+            "en": "Potentially affected by pyroclastic flows, lava flows, toxic volcanic gas, and lahars."
+        },
+        {
+            "code": "KER",
+            "krb": "3",
+            "id": "Kawasan sangat berpotensi terlanda aliran awan panas, aliran lava, guguran lava, gas vulkanik beracun, dan aliran lahar.",
+            "en": "Very potentially affected by pyroclastic flows, lava flows, toxic volcanic gas, and lahars."
+        },
+        {
+            "code": "EGO",
+            "krb": "1",
+            "id": "Berpotensi terlanda lahar / banjir",
+            "en": "Potentially affected by lahars or stream flow (fload)"
+        },
+        {
+            "code": "EGO",
+            "krb": "2",
+            "id": "Berpotensi terlanda awan panas dan aliran lahar",
+            "en": "Potentially affected by pyroclastic flows and lahars."
+        },
+        {
+            "code": "EGO",
+            "krb": "3",
+            "id": "Sering terlanda awan panas dan kemungkinan aliran lava.",
+            "en": "Frequently affected by pyroclastic flows, and posibbly by lava flows."
+        },
+        {
+            "code": "GAL",
+            "krb": "1",
+            "id": "Kawasan berpotensi terlanda aliran lahar dan hujan abu.",
+            "en": "Potentially affected by lahar and ash falls."
+        },
+        {
+            "code": "GAL",
+            "krb": "2",
+            "id": "Kawasan berpotensi sedang terlanda aliran awan panas, aliran lava, dan aliran lahar.",
+            "en": "Moderately Potential affected by by pyroclastic flows, lava flows, and lahar."
+        },
+        {
+            "code": "GAL",
+            "krb": "3",
+            "id": "Kawasan berptensi tinggi terlanda aliran awan panas, aliran lava, gas vulkanik berbahaya dan aliran lahar.",
+            "en": "Highly potential affected by pyroclastic flows, lava flows, hazardous gases and lahar."
+        },
+        {
+            "code": "GML",
+            "krb": "1",
+            "id": "Berpotensi terlanda lahar/banjir dan kemungkinan dapat terkena perluasan awan panas dan aliran lava.",
+            "en": "Potentially affected by lahar and the possibility of pyroclastic flows and lava flows extension."
+        },
+        {
+            "code": "GML",
+            "krb": "2",
+            "id": "Berpotensi terlanda awan panas, aliran lava, guguran batu (pijar) dan aliran lahar.",
+            "en": "Potentially affected by pyroclastic flows, lava flows, glowing rock fragment and lahar"
+        },
+        {
+            "code": "GML",
+            "krb": "3",
+            "id": "Sering terlanda awan panas, aliran lava, lontaran atau guguran batu (pijar).",
+            "en": "Frequently affected by pyroclastic flows, lava flows, ejected rock fragment (glowing)."
+        },
+        {
+            "code": "GMK",
+            "krb": "1",
+            "id": "Berpotensi terlanda aliran lahar hujan.",
+            "en": "Potentially affected by rain lahar."
+        },
+        {
+            "code": "GMK",
+            "krb": "2",
+            "id": "Berpotensi terlanda aliran awan panas, lava dan lahar hujan.",
+            "en": "Potentially affected by Pyroclastic flow, lava and rain lahar."
+        },
+        {
+            "code": "GMK",
+            "krb": "3",
+            "id": "Selalu terancam aliran awan panas, lava dan gas racun.",
+            "en": "Always threaneted by pyroclastic flow, lava and toxic gases"
+        },
+        {
+            "code": "GED",
+            "krb": "1",
+            "id": "Berpotensi terhadap aliran lahar hujan.",
+            "en": "Potentially affected by rain lahar."
+        },
+        {
+            "code": "GED",
+            "krb": "2",
+            "id": "Berpotensi terhadap aliran awan panas, lava dan lahar hujan.",
+            "en": "Potentially affected by heavy ash fall and ajected rock fragments."
+        },
+        {
+            "code": "GED",
+            "krb": "3",
+            "id": "Selalu terancam aliran awan panas, gas racun dan lava.",
+            "en": "Always threatened by pyroclastic flow, toxic gases and lava flow."
+        },
+        {
+            "code": "GUN",
+            "krb": "1",
+            "id": "Berpotensi terhadap aliran lahar dan berpotensi rendah terhadap perluasan awan panas, aliran lava dan kemungkinan guguran puing vulkanik.",
+            "en": "Potentially affected by lahars and low potential affected by pyroclastic flows extension, lava flows, lahar, and possibly volcanic debris avalanches."
+        },
+        {
+            "code": "GUN",
+            "krb": "2",
+            "id": "Berpotensi sedang terlanda perluasan awan panas, aliran lava, aliran lahar, dan kemungkinan guguran puing vulkanik.",
+            "en": "Moderately potential affected by pyroclastic flows extension, lava flows, lahar, and possibly volcanic debris avalanches."
+        },
+        {
+            "code": "GUN",
+            "krb": "3",
+            "id": "Berpotensi tinggi terlanda awan panas, aliran lava, guguran lava pijar dan aliran lahar.",
+            "en": "Highly potential affected by pyroclastic flows, lava flows, glowing lava avalanche, and lahar"
+        },
+        {
+            "code": "IBU",
+            "krb": "1",
+            "id": "Berpotensi terhadap aliran lahar.",
+            "en": "Potentially affected by lahar."
+        },
+        {
+            "code": "IBU",
+            "krb": "2",
+            "id": "Berpotensi terlanda aliran lava, lahar dan kemungkinan lahar panas",
+            "en": "Potentially affected by lava flows, lava, and possibly hot lava"
+        },
+        {
+            "code": "IBU",
+            "krb": "3",
+            "id": "Selalu terancam aliran lava, gas racun dan kemungkinan daliran awan panas.",
+            "en": "Always threatened by lava flows, poison gases and possible hot cloud."
+        },
+        {
+            "code": "IJE",
+            "krb": "1",
+            "id": "Berpotensi terlanda lahar hujan dan kemungkinan perluasan awan panas atau lahar letusan.",
+            "en": "Potentially affected by rain lahar and possibly affected by incandescent pyroclastic flow or eruption lahar."
+        },
+        {
+            "code": "IJE",
+            "krb": "2",
+            "id": "Berpotensi terlanda aliran awan panas, lahar letusan, lahar hujan dan kemungkinan longsoran puing vulkanik.",
+            "en": "Potentially affected by pyroclastic flow eruption rain, rain lahar and possibly volcanic debris avalanches."
+        },
+        {
+            "code": "IJE",
+            "krb": "3",
+            "id": "Selalu terancam aliran awan panas, gas racun, lahar letusan atau lava.",
+            "en": "Always threatened by pyroclastic flow, toxic gases, rain lahars or lavas."
+        },
+        {
+            "code": "WER",
+            "krb": "1",
+            "id": "Kawasan yang berpotensi terlanda lahar hujan.",
+            "en": "Areas potentially affected by rain lahars."
+        },
+        {
+            "code": "WER",
+            "krb": "2",
+            "id": "Kawasan yang berpotensi terlanda awan panas, aliran lava dan guguran lava.",
+            "en": "Areas potentially affected by pyroclastic flows, lava flows and lava avalanches."
+        },
+        {
+            "code": "WER",
+            "krb": "3",
+            "id": "Kawasan yang sangat berpotensi terlanda awan panas, aliran lava, guguran lava, dan gas beracun.",
+            "en": "Areas very potentially affected by pyroclastic flows, lava flows, lava avalanches, and toxic volcanic gases."
+        },
+        {
+            "code": "IYA",
+            "krb": "1",
+            "id": "Kawasan yang berpotensi terlanda lahar hujan.",
+            "en": "Areas potentially affected by rain lahars"
+        },
+        {
+            "code": "IYA",
+            "krb": "2",
+            "id": "Kawasan yang berpotensi terlanda awan panas alliran lava dan lahar.",
+            "en": "Areas potentially affected by pyroclastic flows lava flows and lahars."
+        },
+        {
+            "code": "IYA",
+            "krb": "3",
+            "id": "Kawasan yang sangat berpotensi terlanda awan panas, aliran lava dan gas racun.",
+            "en": "Area that is very potentially affected by pyroclastic flows, lava flows and toxic gases."
+        },
+        {
+            "code": "KAB",
+            "krb": "1",
+            "id": "Kawasan yang berpotensi terlanda lahar hujan, dan kemungkinan perluasan awan panas.",
+            "en": "Potentially affected by rain lahar, and possibly affected by extending of pyroclastic flow."
+        },
+        {
+            "code": "KAB",
+            "krb": "2",
+            "id": "Kawasan yang berpotensi terlanda awan panas, aliran lava, guguran lava, dan gas beracun.",
+            "en": "Potentially affected by pyroclastic flow, lava flow, debris lava avalanche, and toxic volcanic gas"
+        },
+        {
+            "code": "KAB",
+            "krb": "3",
+            "id": "Kawasan sangat berpotensi terlanda awan panas, aliran lava, guguran lava, dan gas beracun.",
+            "en": "Very potentially affected by pyroclastic flow, lava flow, lava avalanche, and toxic volcanic gas."
+        },
+        {
+            "code": "LEW",
+            "krb": "1",
+            "id": "Kawasan yang berpotensi terlanda lahar hujan.",
+            "en": "Areas potentially affected by rain lahars."
+        },
+        {
+            "code": "LEW",
+            "krb": "2",
+            "id": "Kawasan yang berpotensi terlanda awan panas, aliran lava, dan guguran lava.",
+            "en": "Areas potentially affected by pyroclastic flows, lava flows and lava avalanches."
+        },
+        {
+            "code": "LEW",
+            "krb": "3",
+            "id": "Kawasan yang sangat berpotenti terlanda awan panas, aliran lava, guguran lava, dan gas beracun.",
+            "en": "Areas very potentially affected by pyroclastic flows, lava flows, lava avalanches, and toxic volcanic gas."
+        },
+        {
+            "code": "KAR",
+            "krb": "1",
+            "id": "Berpotensi terhadap aliran lahar hujan.",
+            "en": "Potentially affected by rain lahars flow."
+        },
+        {
+            "code": "KAR",
+            "krb": "2",
+            "id": "Berpotensi terlanda aliran lava, aliran lahar, dan awan panas.",
+            "en": "Potentially affected by lava flows, lahar, and pyroclastic flows."
+        },
+        {
+            "code": "KAR",
+            "krb": "3",
+            "id": "Sering terlanda awan panas, guguran batu (pijar), aliran lava, dan aliran lahar.",
+            "en": "Frequently affected by pyroclastic flows, (glowing) rock falls, lava flows, and lahar."
+        },
+        {
+            "code": "KLM",
+            "krb": "1",
+            "id": "Kawasan yang berpotensi terlanda lahar hujan.",
+            "en": "Areas potentially affected by rain lahars."
+        },
+        {
+            "code": "KLM",
+            "krb": "2",
+            "id": "Kawasan yang berpotensi terlanda awan panas, aliran lava dan guguran lava.",
+            "en": "Areas potentially affected by pyroclastic flows, lava flows and lava avalanches."
+        },
+        {
+            "code": "KLM",
+            "krb": "3",
+            "id": "Kawasan yang sangat berpotensi terlanda awan panas, aliran lava, guguran lava, dan gas beracun.",
+            "en": "Areas very potentially affected by pyroclastic flows, lava flows, lava avalanches, and toxic volcanic gas."
+        },
+        {
+            "code": "KLD",
+            "krb": "1",
+            "id": "Kawasan berpotensi terlanda aliran lahar.",
+            "en": "Potentially affected by lahars."
+        },
+        {
+            "code": "KLD",
+            "krb": "2",
+            "id": "Kawasan berpotensi terlanda aliran piroklastik/awan panas, aliran lava, guguran lava, gas vulkanik berbahaya, dan aliran lahar.",
+            "en": "Very potentially affected by pyroclasic flows, lava flows, hazardous gases, and lahars."
+        },
+        {
+            "code": "KLD",
+            "krb": "3",
+            "id": "Kawasan sangat berpotensi terlanda aliran piroklastik/awan panas, aliran lava, guguran lava, gas vulkanik berbahaya, dan aliran lahar.",
+            "en": "Very potentially affected by pyroclasic flows, lava flows, hazardous gases, and lahars."
+        },
+        {
+            "code": "LER",
+            "krb": "1",
+            "id": "Kawasan yang berpotensi terlanda lahar hujan.",
+            "en": "Areas potentially affected by rain lahars."
+        },
+        {
+            "code": "LER",
+            "krb": "2",
+            "id": "Kawasan yang berpotensi terlanda awan panas, aliran lava.",
+            "en": "Areas potentially affected by pyroclastic flows, lava flows."
+        },
+        {
+            "code": "LER",
+            "krb": "3",
+            "id": "Kawasan yang sangat berpotensi terlanda awan panas, aliran lava dan gas beracun.",
+            "en": "Areas very potentially affected by pyroclastic flows, lava flows and toxic volcanic gas."
+        },
+        {
+            "code": "TEL",
+            "krb": "1",
+            "id": "Kawasan yang berpotensi terlanda lahar.",
+            "en": "Areas potentially affected by lahars."
+        },
+        {
+            "code": "TEL",
+            "krb": "2",
+            "id": "Kawasan yang berpotensi terlanda awan panas, aliran lava dan lahar.",
+            "en": "Areas potentially affected by pyroclastic flows, lava flows and lahars."
+        },
+        {
+            "code": "TEL",
+            "krb": "3",
+            "id": "Kawasan yang sangat berpotensi tertanda awan panas, aliran lava dan gas racun.",
+            "en": "Areas very potentially affected by pyroclastic flows, lava flows and toxic gases."
+        },
+        {
+            "code": "LIK",
+            "krb": "1",
+            "id": "Kawasan yang berpotensi terlanda lahar hujan.",
+            "en": "Areas potentially affected by rain lahars."
+        },
+        {
+            "code": "LIK",
+            "krb": "2",
+            "id": "Kawasan yang berpotensial terlanda awan panas aliran, lava dan guguran lava.",
+            "en": "Areas potentially affected by pyroclastic flows, lava flows and lava avalances."
+        },
+        {
+            "code": "LIK",
+            "krb": "3",
+            "id": "Kawasan yang sangat berpotensial terlanda awan panas, aliran lava, guguran lava dan gas beracun.",
+            "en": "Areas very potentially affected by pyroclastic flows, lava flows, lava avalanches, and toxic volcanic gas."
+        },
+        {
+            "code": "LOK",
+            "krb": "1",
+            "id": "Berpotensi terhadap aliran.",
+            "en": "Potentially affected by lahars."
+        },
+        {
+            "code": "LOK",
+            "krb": "2",
+            "id": "Berpotensi sedang terlanda perluasan awan panas dan aliran lahar.",
+            "en": "Moderately potential affected by pyroclastic flows extension and lahar"
+        },
+        {
+            "code": "LOK",
+            "krb": "3",
+            "id": "Berpotensi tinggi terlanda awan panas, aliran lava, guguram lava pijar dan aliran lahar.",
+            "en": "Highly potential affected by pyroclastic flows, lava flows, glowing lava avalanche, and lahar."
+        },
+        {
+            "code": "LWK",
+            "krb": "1",
+            "id": "Kawasan yang berpotensi terlanda lahar hujan.",
+            "en": "Areas potentially affected by rain lahars."
+        },
+        {
+            "code": "LWK",
+            "krb": "2",
+            "id": "Kawasan yang berpotensi terlanda awan panas, aliran lava dan guguran lava.",
+            "en": "Areas potentially affected by pyroclasic flows, lava flows and lava avalanches."
+        },
+        {
+            "code": "LWK",
+            "krb": "3",
+            "id": "Kawasan yang sangat berpotensi terlanda awan panas, aliran lava, guguran lava dan gas beracun.",
+            "en": "Areas very potentially affected by pyroclasic flows, lava flows, lava avalanches, and toxic volcanic gas."
+        },
+        {
+            "code": "LWP",
+            "krb": "1",
+            "id": "Kawasan yang berpotensi terlanda lahar hujan.",
+            "en": "Areas potentially affected by rain lahars."
+        },
+        {
+            "code": "LWP",
+            "krb": "2",
+            "id": "Kawasan yang berpotensi terlanda awan panas, aliran lava dan guguran lava.",
+            "en": "Areas potentially affected by pyroclasic flows, lava flows and lava avalanches."
+        },
+        {
+            "code": "LWP",
+            "krb": "3",
+            "id": "Kawasan yang sangat berpotensi terlanda awan panas, aliran lava, guguran lava dan gas beracun.",
+            "en": "Areas very potentially affected by pyroclasic flows, lava flows, lava avalanches, and toxic volcanic gas."
+        },
+        {
+            "code": "MAH",
+            "krb": "1",
+            "id": "Berpotensi terlanda aliran lahar hujan.",
+            "en": "Potentially affected by rain lahar."
+        },
+        {
+            "code": "MAH",
+            "krb": "2",
+            "id": "Berpotensi terlanda aliran awan panas, lahar atau lava",
+            "en": "Potentially affected by froclastic flows, lahar or lavas."
+        },
+        {
+            "code": "MAH",
+            "krb": "3",
+            "id": "Selalu terancam aliran awan panas, gas racun dan kemungkinan aliran lava.",
+            "en": "Always threatened by froclastic flow, toxic gases and possibly lava flow."
+        },
+        {
+            "code": "MAR",
+            "krb": "1",
+            "id": "Berpotensi terlanda aliran lahar hujan.",
+            "en": "Potentially affected by rain lahar."
+        },
+        {
+            "code": "MAR",
+            "krb": "2",
+            "id": "Berpotensi terhadap aliran awan panas, lava, guguran batu (pijar) dan lahar hujan.",
+            "en": "Potentially affected by pyroclastic flow, lava, glowing ajected rock fragments and rain lahar."
+        },
+        {
+            "code": "MAR",
+            "krb": "3",
+            "id": "Selalu terancam aliran awan panas, Lava, gas racun dan guguran batu(pijar).",
+            "en": "Always threatened by pyroclastic flow, Lava, toxic gases and glowing rock fragments"
+        },
+        {
+            "code": "MER",
+            "krb": "1",
+            "id": "Kawasan berpotensi terlanda lahar dan kemungkinan perluasan awan panas."
+        },
+        {
+            "code": "MER",
+            "krb": "2",
+            "id": "Kawasan berpotensi terlanda awan panas, aliran lava, guguran batu (pijar) dan gas racun."
+        },
+        {
+            "code": "MER",
+            "krb": "3",
+            "id": "Kawasan sangat berpotensi terlanda awan panas, aliran lava, guguran batu (pijar), dan gas beracun."
+        },
+        {
+            "code": "PAP",
+            "krb": "1",
+            "id": "Kawasan yang berpotensi terlanda lahar hujan.",
+            "en": "Areas potentially affected by rain lahars."
+        },
+        {
+            "code": "PAP",
+            "krb": "2",
+            "id": "Kawasan yang berpotensi terlanda awan panas dan aliran lava.",
+            "en": "Areas potentially affected by pyroclastic flows and lava flows."
+        },
+        {
+            "code": "PAP",
+            "krb": "3",
+            "id": "Kawasan yang sangat berpotensi terlanda awan panas, aliran lava dan gas beracun.",
+            "en": "Areas very potentially affected by pyroclastic flows, lava flows, and toxic gases."
+        },
+        {
+            "code": "PEU",
+            "krb": "1",
+            "id": "Berpotensi terhadap aliran lahar hujan.",
+            "en": "Potentially affected by rain lahar."
+        },
+        {
+            "code": "PEU",
+            "krb": "2",
+            "id": "Berpotensi terlanda aliran awan panas, lava dan lahar hujan",
+            "en": "Potentially affected by pyroclastic flow, lava and rain lahar."
+        },
+        {
+            "code": "PEU",
+            "krb": "3",
+            "id": "Selalu terancam aliran awan panas, Lava dan gas racun.",
+            "en": "Always threatened by pyroclastic flow, lava and toxic gases."
+        },
+        {
+            "code": "RAN",
+            "krb": "1",
+            "id": "Kawasan yang berpotensi terlanda lahar hujan.",
+            "en": "Areas potentially affected by rain lahars."
+        },
+        {
+            "code": "RAN",
+            "krb": "2",
+            "id": "Kawasan yang berpotensi terlanda awan panas, aliran lava dan guguran lava",
+            "en": "Areas potentially affected by pyroclastic flows, lava flows, and lava avalanches"
+        },
+        {
+            "code": "RAN",
+            "krb": "3",
+            "id": "Kawasan yang sangat berpotensi terlanda awan panas, aliran lava, guguran lava dan gas beracun",
+            "en": "Areas very potentially affected by pyroclastic flows, lava flows, lava avalanches, and toxic volcanic gas"
+        },
+        {
+            "code": "RAU",
+            "krb": "1",
+            "id": "Berpotensi terhadap aliran lahar hujan.",
+            "en": "Potentially affected by rain lahar"
+        },
+        {
+            "code": "RAU",
+            "krb": "2",
+            "id": "Berpotensi terlanda aliran awan panas, aliran lava dan lahar hujan",
+            "en": "Potentially affected by pyroclastic flow, lava flow, and rain lahars."
+        },
+        {
+            "code": "RAU",
+            "krb": "3",
+            "id": "Selalu terancam aliran awan panas, aliran lava dan gas racun.",
+            "en": "Always threatened by pyroclastic flow, lava flow and toxic gases."
+        },
+        {
+            "code": "RIE",
+            "krb": "1",
+            "id": "Kawasan yang berpotensi terlanda lahar hujan dan kemungkinan perluasan awan panas.",
+            "en": "Area that could be affected by lahars and possibly enlarged area of pyroclastic flow movement."
+        },
+        {
+            "code": "RIE",
+            "krb": "2",
+            "id": "Kawasan yang berpotensi terlanda aliran awan panas dan lava. Kawasan ini diperhitungkan sebagai perluasan aliran awan panas dan lava yang dapat melampaui dinding kawah bagian barat dan punggungan di bagian tenggara kawah.",
+            "en": "Area that could be affected by the pyroclastic flows and lava. This hazard zone is a possibly enlarged area when the potentials hazard my ride up the highest crater wall on the western part and topographic barrier on the southeast part."
+        },
+        {
+            "code": "RIE",
+            "krb": "3",
+            "id": "Kawasan yang sangat berpotensi terlanda awan panas dan aliran lava.",
+            "en": "Area that could be strongly affected by pyroclastic flows and lava."
+        },
+        {
+            "code": "RIN",
+            "krb": "1",
+            "id": "Kawasan yang berpotensi terlanda lahar.",
+            "en": "Areas potentially affected by lahars."
+        },
+        {
+            "code": "RIN",
+            "krb": "2",
+            "id": "Kawasan yang berpotensi terlanda awan panas dan aliran lava",
+            "en": "Areas potentially affected by pyroclastic flows and lava flows."
+        },
+        {
+            "code": "RIN",
+            "krb": "3",
+            "id": "Kawasan yang sangat berpotensi terlanda awan panas, aliran lava, Kemungkinan base surge dan gas beracun.",
+            "en": "Areas very potentially affected by pyroclastic flows, lava flows, possibly base surge and toxic gas."
+        },
+        {
+            "code": "ROK",
+            "krb": "1",
+            "id": "Kawasan yang berpotensi terlanda lahar hujan dan perluasan awan panas.",
+            "en": "Areas potentially affected by ram lahars and pyroclastic flow expansion."
+        },
+        {
+            "code": "ROK",
+            "krb": "2",
+            "id": "Kawasan yang berpotensi terlanda awan panas dan aliran lava.",
+            "en": "Areas potentially affected by pyroclastic flows and lava flows."
+        },
+        {
+            "code": "ROK",
+            "krb": "3",
+            "id": "Kawasan yang sangat berpotensi terlanda awan panas dan aliran lava.",
+            "en": "Areas very potentially affected by pyroclasic flows and lava flows."
+        },
+        {
+            "code": "RUA",
+            "krb": "2",
+            "id": "Berpotensi terlanda aliran awan panas, lava dan lahar hujan.",
+            "en": "Potentially affected by pyroclastic flows, lava and rain lahars."
+        },
+        {
+            "code": "RUA",
+            "krb": "3",
+            "id": "Selalu terancam aliran awan panas, lava dan gas beracun.",
+            "en": "Always threatened by pyroclastic flows, lava and toxic gases."
+        },
+        {
+            "code": "SAL",
+            "krb": "1",
+            "id": "Berpotensi terhadap aliran lahar hujan.",
+            "en": "Potentially affected by rain lahar."
+        },
+        {
+            "code": "SAL",
+            "krb": "2",
+            "id": "Berpotensi terhadap aliran lumpur panas, lahar hujan dan kemungkinan aliran awan panas atau lava.",
+            "en": "Potentially affected by hot mud flow, rain lahar and possibly pyroclastic flow or lavas."
+        },
+        {
+            "code": "SAL",
+            "krb": "3",
+            "id": "Selalu terancam aliran lumpur panas, base surge, gas racun dan kemungkinan aliran awan panas atau lava.",
+            "en": "Always threatened by hot mud flow, base surge, toxic gases and possibly pyroclastic flow or lavas."
+        },
+        {
+            "code": "SAN",
+            "krb": "1",
+            "id": "Berpotensi terhadap aliran lahar dan berpotensi rendah terhadap perluasan awan panas, aliran lava dan dan kemungkinan guguran puing vulkanik",
+            "en": "Potentially affected by lahars and low potential affected by pyroclastic flows extension, lava flows, lahars,and possibly volcanic debris avalanches"
+        },
+        {
+            "code": "SAN",
+            "krb": "2",
+            "id": "Berpotensi sedang terlanda perluasan awan panas, aliran lava, dan kemungkinan guguran puing vulkanik",
+            "en": "Moderately potential affected by incandescent ejected sized lapilli with 64 mm maximum diameter and heavy ash fall"
+        },
+        {
+            "code": "SAN",
+            "krb": "3",
+            "id": "Berpotensi tinggi terlanda awan wanas, aliran lava, guguran lava pijar dan aliran lahar",
+            "en": "Highly potential affected by pyroclastic flows, lava flows, glowing lava avalanche , and lahars"
+        },
+        {
+            "code": "SBG",
+            "krb": "1",
+            "id": "Berpotensi terhadap aliran lahar hujan dan kemungkinan dapat terlanda aliran awan panas,",
+            "en": "Potentially affected by rain lahar and possibly affected by incandescent pyroclastic flows."
+        },
+        {
+            "code": "SBG",
+            "krb": "2",
+            "id": "Berpotensi terlanda aliran awan panas, lava dan lahar dan lahar hujan",
+            "en": "Potentially affected by pyroclastic flows, lava and rain lahars."
+        },
+        {
+            "code": "SBG",
+            "krb": "3",
+            "id": "Selalu terancam aliran awan panas, gas racun, dan lava.",
+            "en": "Always threanted by pyroclastic flow, toxic gases and lava flow."
+        },
+        {
+            "code": "SEU",
+            "krb": "1",
+            "id": "Berpotensi terhadap aliran lahar hujan.",
+            "en": "Potentially affected by rain lahar."
+        },
+        {
+            "code": "SEU",
+            "krb": "2",
+            "id": "Berpotensi terlanda aliran awan panas, lava dan lahar hujan.",
+            "en": "Potentially affected by pyroclastic flow, lava and rain lahar."
+        },
+        {
+            "code": "SEU",
+            "krb": "3",
+            "id": "Selalu terancam aliran awan panas, Lava dan gas beracun",
+            "en": "Always threatened by pyroclastic flow, Lava amd toxic gases"
+        },
+        {
+            "code": "SIN",
+            "krb": "1",
+            "id": "Kawasan berpotensi terlanda aliran lahar.",
+            "en": "Potentially affected by lahars."
+        },
+        {
+            "code": "SIN",
+            "krb": "2",
+            "id": "Kawasan berpotensi terlanda awan panas,aliran lava, gas vulkanik beracun, dan aliran lahar.",
+            "en": "Potentially affected by pyroclastic flow, lava flows, lava avalaches, toxic volcanic gases, and lahars"
+        },
+        {
+            "code": "SIN",
+            "krb": "3",
+            "id": "Kawasan sangat berpotensi terlanda awan panas, aliran lava, guguran lava, gas vulkanik beracun, dan aliran lahar.",
+            "en": "Very potentially affected by pyroclastic flows, lava flows, lava avalanches, toxic volcanic gases, and lahars."
+        },
+        {
+            "code": "SIR",
+            "krb": "1",
+            "id": "Kawasan yang berpotensi terlanda lahar hujan dan perluasan awan panas",
+            "en": "Areas potentially affected by rain lahars and possibly enlarged area of pyroclastic flows"
+        },
+        {
+            "code": "SIR",
+            "krb": "2",
+            "id": "Kawasan yang berpotensi terlanda awan panas dan aliran lava",
+            "en": "Areas potentially affected by pyroclastic flows and lava flows"
+        },
+        {
+            "code": "SIR",
+            "krb": "3",
+            "id": "Kawasan yang sangat berpotensi terlanda awan panas , aliran lava dan gas beracun",
+            "en": "Areas very potentially affected by pyroclastic flows, lava avalanches, and toxic volcanic gas"
+        },
+        {
+            "code": "SLA",
+            "krb": "1",
+            "id": "Berpotensi terlanda aliran lahar hujan.",
+            "en": "Potentially affected by rain lahar,"
+        },
+        {
+            "code": "SLA",
+            "krb": "2",
+            "id": "Berpotensi terlanda aliran lava, awan panas, dan lahar hujan.",
+            "en": "Potentially affected by lava, pyroclastic flow and rain lahar."
+        },
+        {
+            "code": "SLA",
+            "krb": "3",
+            "id": "Selaltu terancam aliran lava, gas racun dan awan panas",
+            "en": "Always ajected by lava flow, toxic gases and pyroclastic flow."
+        },
+        {
+            "code": "SMR",
+            "krb": "1",
+            "id": "Berpotensi terlanda lahar/banjir dan kemungkinan dapat terkena perluasan awan dan aliran lava",
+            "en": "Potentially affected by lahar and the possibility of pyroclastic flows and lava flows extentions."
+        },
+        {
+            "code": "SMR",
+            "krb": "2",
+            "id": "Berpotensi terlanda awan panas aliran lava, guguran batu (pijar) dan aliran lahar.",
+            "en": "Potentially affected by pyroclastic flows, lava flows glowing rock fragments and lahar."
+        },
+        {
+            "code": "SMR",
+            "krb": "3",
+            "id": "Sering terlanda awan panas, aliran lava, lontaran atau guguran batu (pijar).",
+            "en": "Frequently affected by pyroclastic flows, lava flows, ejected rock fragments (glowing)."
+        },
+        {
+            "code": "SOP",
+            "krb": "1",
+            "id": "Berpotensi terhadap aliran lahar hujan.",
+            "en": "Potentially affected by rain lahar flow."
+        },
+        {
+            "code": "SOP",
+            "krb": "2",
+            "id": "Berpotensi terlanda alira lava, awan panas dan lahar hujan",
+            "en": "Potentially affected by pyroclastic flows, lava and rain lahar."
+        },
+        {
+            "code": "SOP",
+            "krb": "3",
+            "id": "Sering terlanda aliran lava dan awan panas.",
+            "en": "Frequently affected by lava flow and pyroclastic."
+        },
+        {
+            "code": "SOR",
+            "krb": "1",
+            "id": "Berpotensi terhadap aliran lahar hujan",
+            "en": "Potentially affected by rain lahar."
+        },
+        {
+            "code": "SOR",
+            "krb": "2",
+            "id": "Berpotensi terlanda aliran awan panas, lava dan lahar hujan.",
+            "en": "Potentially affected by pyroclastic flow, lava and rain lahar."
+        },
+        {
+            "code": "SOR",
+            "krb": "3",
+            "id": "Selalu terancam  aliran awan panas, Lava dan gas beracun",
+            "en": "Always threatened by pyroclastic flow, Lava and toxic gases."
+        },
+        {
+            "code": "SUN",
+            "krb": "1",
+            "id": "Berpotensi terlanda aliran lahar hujan",
+            "en": "Potentially affected by rain lahar"
+        },
+        {
+            "code": "SUN",
+            "krb": "2",
+            "id": "Berpotensi terlanda aliran lava, lahar hujan dan awan panas.",
+            "en": "Potentially affected by lava flow. rain lahars and pyroclastic"
+        },
+        {
+            "code": "SUN",
+            "krb": "3",
+            "id": "Selalu terancam aliran lava, gas beracun dan awan panas.",
+            "en": "Always threatened by lava flow, toxic gases and pyroclastic."
+        },
+        {
+            "code": "TAL",
+            "krb": "1",
+            "id": "Berpotensi terhdadap aliran hujan.",
+            "en": "Potentially affected by rain lahar."
+        },
+        {
+            "code": "TAL",
+            "krb": "2",
+            "id": "Berpotensi terlanda aliran lavam lahar dan kemungkinan awan panas.",
+            "en": "Potentially affected by lava flow, lahar and possibly affected by pyroclastic flow."
+        },
+        {
+            "code": "TAL",
+            "krb": "3",
+            "id": "Selalu terancam aliran Lava, gas racun dan kemungkinan aklran awan panas.",
+            "en": "Always threatened by lava flow, toxic gases and possibly affected by pyroclastic flow."
+        },
+        {
+            "code": "TAM",
+            "krb": "1",
+            "id": "Kawasan yang berpotensi terlanda lahar",
+            "en": "Areas potentially affected by lahars."
+        },
+        {
+            "code": "TAM",
+            "krb": "2",
+            "id": "Kawasan yang berpotensi terlanda awan panas dan aliran lava.",
+            "en": "Areas potentially affected by pyroclastic flows and lava flows."
+        },
+        {
+            "code": "TAM",
+            "krb": "3",
+            "id": "Kawasan yang sangat berpotensi terlanda awan panas, aliran lava dan gas beracun.",
+            "en": "Areas very potentially to be affected by pyroclastic flows,lava flows and toxic gas."
+        },
+        {
+            "code": "TAN",
+            "krb": "1",
+            "id": "Berpotensi terhadap aliran lahar hujan",
+            "en": "Potentially affected by rain lahar."
+        },
+        {
+            "code": "TAN",
+            "krb": "2",
+            "id": "Berpotensi terlanda aliran awan panas, lava dan lahar hujan.",
+            "en": "Very potentially affected by pyroclastic flows, lava flows, lava avalanches, toxic volcanic gases, and lahars."
+        },
+        {
+            "code": "TAN",
+            "krb": "3",
+            "id": "Selalu terancam aliran awan panas, Lava dan gas racun.",
+            "en": "Always threatened by pyroclastic flow, Lava and toxic gases."
+        },
+        {
+            "code": "TGK",
+            "krb": "1",
+            "id": "Kawasan yang berpotensi terhadap lahar.",
+            "en": "Areas potentially affected by lahars."
+        },
+        {
+            "code": "TGK",
+            "krb": "2",
+            "id": "Kawasan yang berpotensi terlanda awan panas dan lava.",
+            "en": "Areas potentially affected by pyroclastic flows and lava flows."
+        },
+        {
+            "code": "TGK",
+            "krb": "3",
+            "id": "Kawasan yang sangat berpotensi terlanda awan panas, aliran lava dan gas beracun.",
+            "en": "Areas very potentially affected by pyroclastic flows, lava flows and toxic gases."
+        },
+        {
+            "code": "TAR",
+            "krb": "3",
+            "id": "Kawasan yang sangat berpotensi terlanda awan panas, aliran lava, dan gas beracun",
+            "en": "Areas very potentially affected by pyroclastic flow, lava flow and toxic gasses."
+        },
+        {
+            "code": "WEL",
+            "krb": "1",
+            "id": "Kawasan yang berpotensi terlanda lahar hujan dan kemungkinan perluasan awan panas.",
+            "en": "Area that could be affected by lahars and possibly enlarged area of pyroclastic flow movement."
+        },
+        {
+            "code": "WEL",
+            "krb": "3",
+            "id": "Kawasan Rawan Bencana III terhadap aliran masa adalah Kawasan yang sangat berpotensi terlanda awan panas, aliran lava, dan gas beracun",
+            "en": "Area that could be strongly affected by pyroclastic flows,lava. And volcanic gases"
+        },
+        {
+            "code": "KRA",
+            "krb": "2",
+            "id": "Berpotensi terlanda aliran lava dan kemungkinan awan panas.",
+            "en": "Potentially affected by lava flow and possibly affected by pyroclastic flows."
+        },
+        {
+            "code": "KRA",
+            "krb": "3",
+            "id": "Sering terlanda aliran lava dan kemungkinan awan panas",
+            "en": "Frequently affected by lava flow and possibly affected by pyroclastic flow."
+        }
+    ],
+    "radius": [
+        {
+            "code": "AGU",
+            "krb": "1",
+            "radius": "12",
+            "id": "Berpotensi terhadap lontaran batu (pijar) dengan diameter maksimum 10 mm dan hujan abu lebat",
+            "en": "Potentially affected by ash fall and incandescent ejected materials with 10 mm maximum in diameter. "
+        },
+        {
+            "code": "AGU",
+            "krb": "2",
+            "radius": "9",
+            "id": "Berpotensi terhadap lontaran batu (pijar) berukuran kerikil / lapilli dengan diameter maksimum 64 mm dan hujan abu lebat",
+            "en": "Potentially affected by incandescent ejected sized lapilli with 64 mm in maximum diameter and heavy ash fall. "
+        },
+        {
+            "code": "AGU",
+            "krb": "3",
+            "radius": "6",
+            "id": "Berpotensi terlanda jatuhan batu (pijar) berukuran diameter lebih dari 64 mm dan hujan abu lebat.",
+            "en": "Potential affected by ejected rock fragment (glowing) with diameter more than 64 mm and heavy ash fall. "
+        },
+        {
+            "code": "AMB",
+            "krb": "1",
+            "radius": "8",
+            "id": "Berpotensi terhadap hujan abu dan kemungkinan dapat terkena lontaran batu (pijar, Ø < 3 cm)",
+            "en": "Potentially affected by ash fall and possibly affected by incandescent ejected rock fragments. "
+        },
+        {
+            "code": "AMB",
+            "krb": "2",
+            "radius": "5",
+            "id": "Berpotensi terlanda hujan abu lebar dan lontaran batu (pijar Ø > 3-10 cm).",
+            "en": "Potentially affected by heavy ash fall and ejected rock fragments (glowing)."
+        },
+        {
+            "code": "AMB",
+            "krb": "3",
+            "radius": "1.5",
+            "id": "Selalu terancam lontaran batu (pijar), lumpur panas dan hujan abu lebat (pijar, Ø > 10 cm).",
+            "en": "Always ejected rock fragments (glowing), hot mud and heavy ash fall. "
+        },
+        {
+            "code": "AWU",
+            "krb": "1",
+            "radius": "8",
+            "id": "Batas kawasan berpotensi tertimpa lontaran material berdiameter maksimal 10 mm dan hujan abu.",
+            "en": "Potentially threatened by ejected rock with 10 mm in maximum diameter and ash fall. "
+        },
+        {
+            "code": "AWU",
+            "krb": "2",
+            "radius": "5",
+            "id": "Batas kawasan yang berpotensi tertimpa lontaran batu (pijar) berdiameter maksimal 64 mm dan hujan abu (lebat)",
+            "en": "Potentially threatened by ejected rock (glowing) with 64 mm in maximum diameter and (heavy) ash fall. "
+        },
+        {
+            "code": "AWU",
+            "krb": "3",
+            "radius": "3",
+            "id": "Batas kawasan sangat berpotensi tertimpa lontaran batu (pijar) berdiameter lebih dari 64 mm dan hujan abu lebat",
+            "en": "Very potentially threatened by ejected rock (glowing) with more than 64 mm in diameter and heavy ash fall. "
+        },
+        {
+            "code": "BAN",
+            "krb": "1",
+            "radius": "4",
+            "id": "Kawasan yang berpotensi terlanda hujan abu dan kemungkinan dapat terkena lontaran batu (pijar) ukuran kerikil.",
+            "en": "Areas potentially affected by ash falls and possibly threatened by incandescent ejected rock fragments. "
+        },
+        {
+            "code": "BAN",
+            "krb": "2",
+            "radius": "2",
+            "id": "Kawasan yang berpotensi terlanda lontaran batu (pijar) dan hujan abu.",
+            "en": "Areas potentially affected by ballistic rock fragments (glowing) and heavy ash falls. "
+        },
+        {
+            "code": "BAN",
+            "krb": "3",
+            "radius": "1",
+            "id": "Kawasan yang sangat berpotensi terlanda lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Areas very potentially affected by ballistic rock fragments and thick ash falls. "
+        },
+        {
+            "code": "BAT",
+            "krb": "1",
+            "radius": "6",
+            "id": "Berpotensi terhadap lontaran batu (pijar) dengan diameter maksimum 10 mm dan hujan abu lebat.",
+            "en": "Potentially affected by ash fall and incandescent ejected materials with 10 mm maximum in diameter. "
+        },
+        {
+            "code": "BAT",
+            "krb": "2",
+            "radius": "4",
+            "id": "Berpotensi terhadap lontaran batu (pijar) berukuran kerikil / lapilli dengan diameter maksimum 64 mm dan hujan abu lebat.",
+            "en": "Potentially affected by incandescent ejected sized lapilli with 64 mm in maximum diameter and heavy ash fall. "
+        },
+        {
+            "code": "BAT",
+            "krb": "3",
+            "radius": "2",
+            "id": "Kawasan yang berpotensi terlanda lontaran batu (pijar) berukuran lebih dari 64 mm dan hujan abu lebat.",
+            "en": "Potentially affected by ejected materials (glowing) which maximum sized more than 64 mm and heavy ash fall. "
+        },
+        {
+            "code": "BOL",
+            "krb": "1",
+            "radius": "8",
+            "id": "Kawasan yang berpotensi tertimpa hujan dan lontaran batu (pijar).",
+            "en": "Areas potentially threatened by ash falls, and possibly threatened by ejected rock materials (glowing)."
+        },
+        {
+            "code": "BOL",
+            "krb": "2",
+            "radius": "5",
+            "id": "Kawasan yang berpotensi tertimpa lontaran batu (pijar) Ø 2-6 cm dan hujan abu lebat.",
+            "en": "Areas potentially threatened by ejected rock materials (glowing) with 2-6 cm in diameters and heavy ash falls. "
+        },
+        {
+            "code": "BOL",
+            "krb": "3",
+            "radius": "3",
+            "id": "Kawasan yang sangat berpotensi tertimpa lontaran batu (pijar)  Ø > 6 cm dan hujan abu lebat",
+            "en": "Areas very potentially threatened byu ejected rock materials (glowing) with more than 6 cm in diameters and heavy ash falls. "
+        },
+        {
+            "code": "BRO",
+            "krb": "1",
+            "radius": "6",
+            "id": "Kawasan yang berpotensi terlanda lontaran batu berukuran maksimum 10 mm dan hujan abu.",
+            "en": "Potentially pounded by fall-out materials (glowing) measuring 10 mm in maximum diameter and ash fall. "
+        },
+        {
+            "code": "BRO",
+            "krb": "2",
+            "radius": "4",
+            "id": "Batas kawasan yang berpotensi sedang terlanda lontaran batu (pijar) berukuran maksimum 64 mm dan hujan abu (lebat)",
+            "en": "Moderately potential pounded by fall-out materials (glowing) measuring 64 mm in maximum diameter and (heavy) ash fall. "
+        },
+        {
+            "code": "BRO",
+            "krb": "3",
+            "radius": "2",
+            "id": "Batas kawasan yang berpotensi tinggin terlanda lontaran batu (pijar) berukuran lebih dari 64 mm dan hujan abu lebat.",
+            "en": "Highly potential pounded by fall-out materials (glowing) measuring more than 64 mm and heavy ash fall. "
+        },
+        {
+            "code": "CER",
+            "krb": "1",
+            "radius": "8",
+            "id": "Berpotensi terlanda hujan abu dan kemungkinan dapat terkena lontaran batu (pijar).",
+            "en": "Potentially affected by ash fall and possibly affected by incandescent ejected rock fragments. "
+        },
+        {
+            "code": "CER",
+            "krb": "2",
+            "radius": "4",
+            "id": "Berpotensi terlanda hujan abu lebat dan lontaran batu (pijar).",
+            "en": "Potentially affected by heavy ash fall and ejected rock fragments. "
+        },
+        {
+            "code": "CER",
+            "krb": "3",
+            "radius": "1.5",
+            "id": "Selalu terancam lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Always affected ejected rock fragments (glowing) and heavy ash fall. "
+        },
+        {
+            "code": "COL",
+            "krb": "1",
+            "radius": "8",
+            "id": "Berpotensi terlanda hujan abu lebat dan kemungkinan dapat terkena lontaran batu (pijar).",
+            "en": "Potentially affected by ash fall and possibly affected by incandescent ejected rock fragments. "
+        },
+        {
+            "code": "COL",
+            "krb": "2",
+            "radius": "5",
+            "id": "Berpotensi terlanda hujan abu lebat dan lontaran batu (pijar).",
+            "en": "Potentially affected by heavy ash fall and incandescent ejected rock fragments."
+        },
+        {
+            "code": "DEM",
+            "krb": "1",
+            "radius": "8",
+            "id": "Kawasan yang berpotensi tertimpa hujan abu dan kemungkinan dapat tertimpa material lontaran batu (pijar) dalam radius 8 km dari sumber erupsi. Ketebalan abu erupsi pada kawasan rawan bencana ini lebih tipis dibandingkan dengan abu erupsi yang berada di kawasan rawan bencana II.",
+            "en": "Area that could be mainly affected by heavy ash fall and probably ballistic projectiles as far away as 8 kilometers from the vent. The ash fall accumulation in this hazard zone is less than does in Hazard Zone II."
+        },
+        {
+            "code": "DEM",
+            "krb": "2",
+            "radius": "3",
+            "id": "Kawasan yang berpotensi terlanda hujan abu lebat dan lontaran batu (pijar) dalam radius 3 km dari pusat erupsi.",
+            "en": "Area that could be mainly affected by heavy ash fall and probably ballistic projectiles as far away as 3 kilometers from the vent. "
+        },
+        {
+            "code": "DEM",
+            "krb": "3",
+            "radius": "1",
+            "id": "Kawasan yang sangat berpotensi tertimpa lontaran batu (pijar) berupa bom gunungapi dan atau pecahan batuan, skorea hujan abu lebat dan atau hujan lumpur dalam radius 1 km dari sumber erupsi.",
+            "en": "Area that could be strongly affected by ballistic projectiles, ash falls and mud falls as far away as 1 kilometers from the vent."
+        },
+        {
+            "code": "DIE",
+            "krb": "1",
+            "radius": "3",
+            "id": "Kawasan yang berpotensi tertimpan hujan abu.",
+            "en": "Areas potentially threatened by ash falls."
+        },
+        {
+            "code": "DIE",
+            "krb": "2",
+            "radius": "2",
+            "id": "Kawasan yang berpotensi tertimpa lontaran batu dan hujan abu lebat.",
+            "en": "Areas potentially threatened by ejected rock materials, and heavy ash falls."
+        },
+        {
+            "code": "DIE",
+            "krb": "3",
+            "radius": "1",
+            "id": "Kawasan yang sangat berpotensi tertimpa lontaran batu, hujan lumpur dan hujan abu lebat.",
+            "en": "Areas potentially threatened by ejected rock materials, and heavy ash falls."
+        },
+        {
+            "code": "DUK",
+            "krb": "1",
+            "radius": "8",
+            "id": "Kawasan yang berpotensi terlanda hujan abu dan kemungkinan dapat terkena lontaran batu pijar (Ø < 2 cm)",
+            "en": "Areas potentially affected by ash falls and possibly affected by incandescent ejected rock fragments (Ø < 2 cm)."
+        },
+        {
+            "code": "DUK",
+            "krb": "2",
+            "radius": "5",
+            "id": "Kawasan yang berpotensi terlanda hujan abu lebat dan lontaran  batu  pijar (Ø – 2 – 6 cm).",
+            "en": "Areas potentially affected by heavy ash falls and incandescent ejected rock fragments (Ø – 2 – 6 cm). "
+        },
+        {
+            "code": "DUK",
+            "krb": "3",
+            "radius": "1.5",
+            "id": "Kawasan yang sangat berpotensi terlanda hujan abu lebat dan lontaran batu pijar (Ø > 6 cm).",
+            "en": "Areas very potentially affected by heavy ash falls and incandescent ejected rocks fragments (Ø > 6 cm)."
+        },
+        {
+            "code": "EBU",
+            "krb": "1",
+            "radius": "8",
+            "id": "Berpotensi terhadap hujan abu dan kemungkinan dapat terkena lontaran batu (pijar, Ø < 2 cm)",
+            "en": "Potentially affected by ash falls and possibly affected by incandescent ejected rock fragments (Ø < 2 cm)."
+        },
+        {
+            "code": "EBU",
+            "krb": "2",
+            "radius": "5",
+            "id": "Berpotensi terlanda hujan abu lebat dan lontaran batu (pijar Ø  2-6 cm).",
+            "en": "Potentially affected by heavy ash falls and incandescent ejected rock fragments (Ø 2-6 cm)."
+        },
+        {
+            "code": "EBU",
+            "krb": "3",
+            "radius": "1.5",
+            "id": "Selalu terancam hujan abu lebat dan lontaran batu (pijar, Ø > 6 cm).",
+            "en": "Always threatened by heavy ash falls and incandescent ejected rock fragments (Ø > 6 cm)."
+        },
+        {
+            "code": "TPR",
+            "krb": "2",
+            "radius": "5",
+            "id": "Berpotensi terhadap lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Potentially threatened by ejected rock fragments (glowing) and heavy ash fall. "
+        },
+        {
+            "code": "TPR",
+            "krb": "3",
+            "radius": "1",
+            "id": "Selalu terancam hujan abu lebat / lumpur panas dan lontaran batu (pijar).",
+            "en": "Always threatened by heavy ash fall and incandescent rock fragments."
+        },
+        {
+            "code": "WUR",
+            "krb": "1",
+            "radius": "5",
+            "id": "Kawasan yang berpotensi tertimpa hujan abu dan kemungkinan dapat tertimpa lontaran batu (pijar, Ø < 2 cm)",
+            "en": "Areas potentially affected by ash falls, and possibly threatened by ejected rock material (glowing, Ø < 2 cm) less than 2 cm in diameters."
+        },
+        {
+            "code": "WUR",
+            "krb": "2",
+            "radius": "3",
+            "id": "Kawasan yang berpotensi tertimpa lontaran batu (pijar, Ø 2-6 cm) dan hujan abu lebat.",
+            "en": "Areas potentially affected by ejected rock materials (glowing, Ø 2-6 cm) between 2-6 cm in diameters and heavy ash falls. (RADIUS = 3 KM)."
+        },
+        {
+            "code": "WUR",
+            "krb": "3",
+            "radius": "1.5",
+            "id": "Kawasan yang sangat berpotensi tertimpa lontaran batu (pijar, Ø > 6 cm) dan hujan abu lebat.",
+            "en": "Areas very potentially affected by ejected rock materials (glowing Ø > 6 cm) more than 6 cm in diameter, and heavy ash falls."
+        },
+        {
+            "code": "KER",
+            "krb": "1",
+            "radius": "8",
+            "id": "Batas kawasan berpotensi tertimpa lontaran material berdiameter 10 mm dan hujan abu.",
+            "en": "Potentially threatened by ejected rock with 10 mm in diameter and ash falls."
+        },
+        {
+            "code": "KER",
+            "krb": "2",
+            "radius": "6",
+            "id": "Batas kawasan yang berpotensi tertimpa lontaran batu (pijar) berdiameter 20 mm dan hujan abu lebat.",
+            "en": "Potentially threatened by ejected rock (glowing) with 20 mm in diameter and heavy ash falls."
+        },
+        {
+            "code": "KER",
+            "krb": "3",
+            "radius": "3",
+            "id": "Batas kawasan sangat berpotensi tertimpa lontaran batu (pijar) berdiameter 64 mm dan hujan abu lebat.",
+            "en": "Very potentially threatened by ejected rock (glowing) with 64 mm in diameter and heavy ash falls."
+        },
+        {
+            "code": "EGO",
+            "krb": "1",
+            "radius": "10",
+            "id": "Berpotensi terlanda hujan abu lebat dan lontaran batu (pijar) lebih kecil dari 6 cm",
+            "en": "Potentially affected by heavy ash fall and ejected rock fragment smaller than 6 cm in diameter."
+        },
+        {
+            "code": "EGO",
+            "krb": "2",
+            "radius": "6",
+            "id": "Berpotensi terlanda hujan abu lebat dan lontaran batu (pijar).",
+            "en": "Potentially affected by heavy ash fall and ejected rock fragment ."
+        },
+        {
+            "code": "EGO",
+            "krb": "3",
+            "radius": "1.5",
+            "id": "Sering terlanda lontaran / guguran batu (pijar).",
+            "en": "Frequently affected by ejected rock fragment."
+        },
+        {
+            "code": "GAL",
+            "krb": "1",
+            "radius": "7",
+            "id": "Batas Kawasan yang berpotensi tertimpa lontaran material berdiameter maksimal 10 mm.",
+            "en": "Potentially threatened by ejected rock with 10 mm iin maximum diameter."
+        },
+        {
+            "code": "GAL",
+            "krb": "2",
+            "radius": "5",
+            "id": "Batas Kawasan yang berpotensi tertimpa lontaran batu (pijar) berdiameter maksimum 64 mm.",
+            "en": "Potentially threaneted by ejected rock (glowing) with 64 mm in maximum diameter."
+        },
+        {
+            "code": "GAL",
+            "krb": "3",
+            "radius": "3",
+            "id": "Batas Kawasan berpotensi tertimpa lontaran batu (pijar) berdiameter lebih dari 64 mm.",
+            "en": "Potentially threaneted by ejected rock (glowing) measuring more than 64 mm in diameter."
+        },
+        {
+            "code": "GML",
+            "krb": "1",
+            "radius": "3.5",
+            "id": "Rawan terhadap hujan abu dan kemungkinan lontaran batu (pijar).",
+            "en": "Potentially affected by ash falls and possibly ejected rock fragments (glowing)"
+        },
+        {
+            "code": "GML",
+            "krb": "2",
+            "radius": "2.5",
+            "id": "Rawan terhadap lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Potentially threatened by ajected rock fragments (glowing) and heavy ash falls."
+        },
+        {
+            "code": "GMK",
+            "krb": "1",
+            "radius": "8",
+            "id": "Berpotensi terlanda hujan abu dan kemungkinan dapat terkena lontaran batu (pijar).",
+            "en": "Potentially affected by ash fall and possibly threaneted by incandescent ejected rock fragments."
+        },
+        {
+            "code": "GMK",
+            "krb": "2",
+            "radius": "6",
+            "id": "Berpotensi terlanda hujan abu lebat, dan lontaran batu (pijar).",
+            "en": "Potentially affected by heavy ash fall, and ejected rock fragments."
+        },
+        {
+            "code": "GMK",
+            "krb": "3",
+            "radius": "1.5",
+            "id": "Selalu terancam lontaran batu (pijar), dan hujan abu lebat.",
+            "en": "Always ejected rock fragments (glowing), and heavy ash fall."
+        },
+        {
+            "code": "GED",
+            "krb": "1",
+            "radius": "10",
+            "id": "Berpotensi terlanda hujan abu dan kemungkinan dapat terkena lontaranbatu (pijar).",
+            "en": "Potentially affected by incandescent ejected rock fragments."
+        },
+        {
+            "code": "GED",
+            "krb": "2",
+            "radius": "5",
+            "id": "Berpotensi terhadap hujan abu lebat , dan lontaran batu (pijar).",
+            "en": "Potentially affected by heavy ash fall, and ejected rock fragments."
+        },
+        {
+            "code": "GED",
+            "krb": "3",
+            "radius": "1.5",
+            "id": "Selalu terancam lontaran batu (pijar), lumpur panas dan hujan abu lebat.",
+            "en": "Always ejected rock fragments (glowing), hot mud and heavy ash fall."
+        },
+        {
+            "code": "GUN",
+            "krb": "1",
+            "radius": "8",
+            "id": "Berpotensi terhadap lontaran batu (pijar) dengan diameter maksimum 10 mm dan hujan abu lebat",
+            "en": "Potentially affected by heavy ash fall and incandescent ejected materials with 10 mm maximum in diameter"
+        },
+        {
+            "code": "GUN",
+            "krb": "2",
+            "radius": "5",
+            "id": "Berpotensi terhadap lontaran bat (pijar) berukuran kerikil/lapilli dengan diameter maksimum 64 mm dan hujan abu lebat.",
+            "en": "Potentially affected by incandescent ejected sized lapilli with 64 mm maximum diameter and heavy ash fall."
+        },
+        {
+            "code": "GUN",
+            "krb": "3",
+            "radius": "3",
+            "id": "Berpotensi tinggi terhadap lontaran batu (pijar) berukuran lapilli sampai bom/blok dengan diameter lebih dari 64 mm dan hujan abu lebat.",
+            "en": "Highly potential affected by baliistic trajectories (glowing) sized bomb/block with diameter more than 64 mm, and heavy ash full"
+        },
+        {
+            "code": "IBU",
+            "krb": "1",
+            "radius": "8",
+            "id": "Berpotensi terlanda hujan abu dan kemungkinan dapat terkena lontaran batu (pijar).",
+            "en": "Potentially affected by rain of ash and the possibility of being exposed to stone throws (incandescent)."
+        },
+        {
+            "code": "IBU",
+            "krb": "2",
+            "radius": "5",
+            "id": "Berpotensi terhadap lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Potentially affected by ejected rock fragments and ash fall."
+        },
+        {
+            "code": "IBU",
+            "krb": "3",
+            "radius": "2",
+            "id": "Selalu terancam lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Always ejected rock fragments (glowing) and heavy ash fall."
+        },
+        {
+            "code": "IJE",
+            "krb": "1",
+            "radius": "8",
+            "id": "Berpotensi terhadap hujan abu dan kemungkinan dapat terkena lontaran batu (pijar).",
+            "en": "Potentially affected by ash fall and possibly affected by incandescent ejected rock fragments."
+        },
+        {
+            "code": "IJE",
+            "krb": "2",
+            "radius": "6",
+            "id": "Berpotensi terlanda hujan abu lebat, dan lontaran batu (pijar)",
+            "en": "Potentially affected by heavy ash fall, and ejected rock fragments."
+        },
+        {
+            "code": "IJE",
+            "krb": "3",
+            "radius": "1.5",
+            "id": "Selalu terancam lontaran batu (pijar), lumpur panas dan hujan abu lebat.",
+            "en": "Always ejected rock fragments (glowing), hot mud and heavy ash full."
+        },
+        {
+            "code": "WER",
+            "krb": "1",
+            "radius": "8",
+            "id": "Kawasan yang berpotensi tertimpa hujan abu dan kemungkinan dapat tertimpa lontaran batu (pijar).",
+            "en": "Areas potentially threaneted by ash falls, and possibly threatened by ejected rock materials (glowing)."
+        },
+        {
+            "code": "WER",
+            "krb": "2",
+            "radius": "5",
+            "id": "Kawasan yang berpotensi tertimpa lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Areas potentially threatened by ejected rock materials (glowing), and heavy ash falls."
+        },
+        {
+            "code": "WER",
+            "krb": "3",
+            "radius": "2",
+            "id": "Kawasan yang sangat berpotensi tertimpa lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Areas very potentially threaneted by ejected rock materials (glowing), and heavy ash falls."
+        },
+        {
+            "code": "IYA",
+            "krb": "1",
+            "radius": "7",
+            "id": "Kawasan yang berpotensi tertimpa hujan abu dan kemungkinan dapat tertimpa lotaran batu (pijar)",
+            "en": "Areas potentially threatened by ash falls, and possibly threatened ejected rock materials (glowing)"
+        },
+        {
+            "code": "IYA",
+            "krb": "2",
+            "radius": "5",
+            "id": "Kawasan yang berpotensi tertimpa lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Areas potentially threatened by ejcted rock materials (glowing), and heavy ash falls."
+        },
+        {
+            "code": "IYA",
+            "krb": "3",
+            "radius": "2",
+            "id": "Kawasan yang sangat berpotensi tertimpa lontaran batu (pijar) dan hujan abu lebat",
+            "en": "Area that is very potentially threatened by ejected rock materials (glowing) more than 6 cm in diameter, and heavy ash falls"
+        },
+        {
+            "code": "KAB",
+            "krb": "1",
+            "radius": "8",
+            "id": "Kawasan yang berpotensi tertimpa hujan abu dan kemungkinan dapat tertimpa material batu (pijar) berdiameter lebih kecil dari 2 cm",
+            "en": "Potentially threatened by ash fall, and possibly threatened by ejected rock materials (glowing) with less than 2 cm in diameter."
+        },
+        {
+            "code": "KAB",
+            "krb": "2",
+            "radius": "5",
+            "id": "Kawasan yang berpotensi tertimoa lontaran batu (pijar) berdiameter 2-6 cm dan gujan abu lebat.",
+            "en": "Potentially threatened by ejected rock materials (glowing) with 2-6 cm in diameter, and heavy ash fall."
+        },
+        {
+            "code": "KAB",
+            "krb": "3",
+            "radius": "2",
+            "id": "Kawasan sangat berpotensi tertimpa lontaran batu (pijar) berdiameter lebih dari 6 cm, dan hujan abu lebat.",
+            "en": "Very potentially threatened by ejected rock materials (glowing) with more than 6 cm in diameter, and heavy ash fall."
+        },
+        {
+            "code": "LEW",
+            "krb": "1",
+            "radius": "7",
+            "id": "Kawasan yang berpotensi tertimpa hujan abu dan kemungkinan dapat tertimpa lontaran batu (pijar).",
+            "en": "Areas potentially threatened by ash falls, and possibly threatened by ejected rock materials (glowing)."
+        },
+        {
+            "code": "LEW",
+            "krb": "2",
+            "radius": "4",
+            "id": "Kawasan yang berpotensi tertimpa lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Areas potentially threatened by ejected rock materials (glowing), and heavy ash falls."
+        },
+        {
+            "code": "LEW",
+            "krb": "3",
+            "radius": "2",
+            "id": "Kawasan yang sangat berpotensi tertimpa lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Areas very potentially threatened by ejected rock materials (glowing), and heavy ash falls."
+        },
+        {
+            "code": "KAR",
+            "krb": "1",
+            "radius": "6",
+            "id": "Rawan terhadap hujan abu – pasir.",
+            "en": "Potentially affected by ash falls."
+        },
+        {
+            "code": "KAR",
+            "krb": "2",
+            "radius": "4.5",
+            "id": "Berpotensi terhadap hujan abu lebat dan kemungkinan dapat terkena lontaran batu (pijar).",
+            "en": "Potentially affected by heavy ash fall and possibly affected by incandescent ejected rock fragments."
+        },
+        {
+            "code": "KAR",
+            "krb": "3",
+            "radius": "2.5",
+            "id": "Sering terlanda hujan abu lebat dan lontaran batu (pijar).",
+            "en": "Frequently affected by heavy ash fall and incandescent ejected rock fragments."
+        },
+        {
+            "code": "KLM",
+            "krb": "1",
+            "radius": "7",
+            "id": "Kawasan yang berpotensi tertimpa hujan abu dan kemungkinan dapat tertimpa lontaran batu (pijar).",
+            "en": "Areas potentially threatened by ash falls, and possibly threatened by ejected rock materials (glowing)"
+        },
+        {
+            "code": "KLM",
+            "krb": "2",
+            "radius": "5",
+            "id": "Kawasan yang berpotensi tertimpa lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Areas potentially threatened by ejected rock materials (glowing), and heavy ash falls."
+        },
+        {
+            "code": "KLM",
+            "krb": "3",
+            "radius": "2",
+            "id": "Kawasan yang sangat berpotensi tertimpa lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Areas very potentially threatened by ejected rock materials (glowing) more than 6 cm in diameter, and heavy ash falls."
+        },
+        {
+            "code": "KLD",
+            "krb": "1",
+            "radius": "14",
+            "id": "Batas Kawasan berpotensi tertimpa lontaran material berdiameter 10 mm dan hujan au.",
+            "en": "Potentially threatened by ejected rock with 10 mm in diameter and ash falls."
+        },
+        {
+            "code": "KLD",
+            "krb": "2",
+            "radius": "10",
+            "id": "Batas Kawasan sangat berpotensi tertimpa lontaran batu (pijar) berdiameter 20 mm dan hujan abu lebat.",
+            "en": "Very potentially threatened by ejected rock (glowing) with 20 mm in diameter and heavy ash falls."
+        },
+        {
+            "code": "KLD",
+            "krb": "3",
+            "radius": "7",
+            "id": "Batas Kawasan sangat berpotensi tertimpa lontaran batu (pijar) berdiameter 64 mm dan hujan abu lebat.",
+            "en": "Very potentially threatened by ejected rock (glowing) with 64 mm in diameter and heavy ash falls."
+        },
+        {
+            "code": "LER",
+            "krb": "1",
+            "radius": "6",
+            "id": "Kawasan yang berpotensi tertimpa hujan abu dan material lontaran batu (pijar).",
+            "en": "Areas potentially threatened by ash falls, and possibly threatened by ejected rock materials (glowing)."
+        },
+        {
+            "code": "LER",
+            "krb": "2",
+            "radius": "4",
+            "id": "Kawasan yang berpotensi tertimpa lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Areas potentially threatened by ejected rock materials (glowing), and heavy ash falls."
+        },
+        {
+            "code": "LER",
+            "krb": "3",
+            "radius": "2.5",
+            "id": "Kawasan yang sangat berpotensi tertimpa lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Areas very potentially threatened by ejected rock materials (glowing) more than 6 cm in diameter, and heavy ash falls."
+        },
+        {
+            "code": "TEL",
+            "krb": "1",
+            "radius": "8",
+            "id": "Kawasan yang berpotensi terlanda hujan abu dan kemungkinan dapat terkena lontaran batu (pijar).",
+            "en": "         "
+        },
+        {
+            "code": "TEL",
+            "krb": "2",
+            "radius": "5",
+            "id": "Kawasan yang berpotensi terlanda hujan abu lebat, dan lontaran batu (pijar).",
+            "en": "Areas potentially affected by thick ash fall, and ejected rock fragments."
+        },
+        {
+            "code": "TEL",
+            "krb": "3",
+            "radius": "3",
+            "id": "Kawasan yang sangat berpotensi terlanda lontaran batu (pijar) dan hujan abu lebat .",
+            "en": "Areas very potentially affected by ballistic rock fragments (glowing) and heavy ash fall."
+        },
+        {
+            "code": "LIK",
+            "krb": "1",
+            "radius": "4",
+            "id": "Kawasan yang berpotensi tertimpa hujan abu dan kemunkinan dapat tertimpa lontaran batu(pijar).",
+            "en": "Areas potentially threatened by ash falls, and possibly threatened by ejected rocks materials(glowing)."
+        },
+        {
+            "code": "LIK",
+            "krb": "2",
+            "radius": "2",
+            "id": "Kawasan yang berpotensial tertimpa loantaran batu (pijar) dan abu lebat.",
+            "en": "Areas potentially threantened by ejected rock materials (glowing), and heavy ash falls."
+        },
+        {
+            "code": "LIK",
+            "krb": "3",
+            "radius": "1",
+            "id": "Kawasan yang sangat berpotensi tertimpa lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Areas very potentially threatened by ejected rock materials (glowing) more than 6 cm in diameter; and heavy ash falls."
+        },
+        {
+            "code": "LOK",
+            "krb": "1",
+            "radius": "6",
+            "id": "Berpotensi terhadap lontaran batu (pijar) dengan diameter maksimum 10 mm dan hujan abu lebat.",
+            "en": "Potentially affected by ash fall and incandescent ejected materials with 10 mm maximum in diameter."
+        },
+        {
+            "code": "LOK",
+            "krb": "2",
+            "radius": "4",
+            "id": "Berpotensi terhadap lontaran batu (pijar) berukuran kerikil/lapilli dengan diameter maksimum 64 mm dan hujann abu lebat.",
+            "en": "Potentially affected by incandescent ejected sized lapilli with 64 mm in maximum diameter and heavy ah fall."
+        },
+        {
+            "code": "LOK",
+            "krb": "3",
+            "radius": "2.5",
+            "id": "Berpotensi tinggi terhadap lontaran batu (pijar) berukuran lapilli sampai bom/blok dengan diameter lebih dari 64 mm dan hujan abu lebat.",
+            "en": "Highly potential affected by ballistic trajectories (glowing) sized bomb/block with more than 64 mm, and heavy ash fall."
+        },
+        {
+            "code": "LWK",
+            "krb": "1",
+            "radius": "7",
+            "id": "Kawasan yang berpotensi tertimpa hujan abu dan kemungkinan dapat tertimpa lontaran batu (pijar).",
+            "en": "Areas potentially threatened by ash fall, and possibly threatened by ejected rock materials (glowing)."
+        },
+        {
+            "code": "LWK",
+            "krb": "2",
+            "radius": "5",
+            "id": "Kawasan yang berpotensi tertimpa lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Areas potentially threatened by ejected rock materials(glowing), and heavy ash falls."
+        },
+        {
+            "code": "LWK",
+            "krb": "3",
+            "radius": "2",
+            "id": "Berpotensi terhadap hujan abu dan kemungkinan terkena lontaran batu (pijar).",
+            "en": "Areas very potentially threatened by ejected rock materials (glowing) more than 6 cm in diameter, and heavy ash falls."
+        },
+        {
+            "code": "LWP",
+            "krb": "1",
+            "radius": "7",
+            "id": "Kawasan yang berpotensi tertimpa hujan abu dan kemungkinan dapat tertimpa lontaran batu (pijar).",
+            "en": "Areas potentially threatened by ash fall, and possibly threatened by ejected rock materials (glowing)."
+        },
+        {
+            "code": "LWP",
+            "krb": "2",
+            "radius": "5",
+            "id": "Kawasan yang berpotensi tertimpa lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Areas potentially threatened by ejected rock materials(glowing), and heavy ash falls."
+        },
+        {
+            "code": "LWP",
+            "krb": "3",
+            "radius": "2",
+            "id": "Berpotensi terhadap hujan abu dan kemungkinan terkena lontaran batu (pijar).",
+            "en": "Areas very potentially threatened by ejected rock materials (glowing) more than 6 cm in diameter, and heavy ash falls."
+        },
+        {
+            "code": "MAH",
+            "krb": "1",
+            "radius": "7",
+            "id": "Berpotensi terhadap hujan abu dan kemungkinan terkena lontaran batu (pijar).",
+            "en": "Potentially affected by incandescent ejected rock fragments (glowing)."
+        },
+        {
+            "code": "MAH",
+            "krb": "2",
+            "radius": "5",
+            "id": "Berpotensi terlanda hujan abu lebat dan lontaran batu (pijar).",
+            "en": "Potentially affected by heavy ash fall and ejected rock fragments (glowing). "
+        },
+        {
+            "code": "MAH",
+            "krb": "3",
+            "radius": "1.5",
+            "id": "Selalu terancam lontaran batu (pijar), Lumpur panas dan hujan abu lebat.",
+            "en": "Always threatened rock fragments (glowing) hot mud and heavy ash fall."
+        },
+        {
+            "code": "MAR",
+            "krb": "1",
+            "radius": "7",
+            "id": "Berpotensi terhadap hujan abu dan kemungkinan terkena lontaran batu (pijar).",
+            "en": "Potentially affected by ash fall and possibly affected by incandescent ejected rock fragments."
+        },
+        {
+            "code": "MAR",
+            "krb": "2",
+            "radius": "5",
+            "id": "Berpotensi terhadap hujan abu lebat, dan lontaran batu (pijar).",
+            "en": "Potentially affected by heavy ash fall, and ejected rock fragments."
+        },
+        {
+            "code": "MAR",
+            "krb": "3",
+            "radius": "3",
+            "id": "Selalu terancam lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Always ejected rock fragment (glowing) and heavy ash fall."
+        },
+        {
+            "code": "MER",
+            "krb": "2",
+            "radius": "10",
+            "id": "Kawasan berpotensi tertimpa lontaran batu (pijar) berdiameter>2-6 cm dan hujan abu lebat"
+        },
+        {
+            "code": "PAP",
+            "krb": "1",
+            "radius": "6",
+            "id": "Kawasan yang berpotensi tertimpa hujan abu dan kemungkinan dapat tertimpa lontaran batu (pijar).",
+            "en": "Areas potentially threatened by ash falls, and possibly threatened by ejected rock materials (glowing)."
+        },
+        {
+            "code": "PAP",
+            "krb": "2",
+            "radius": "4",
+            "id": "Kawasan yang berpotensi tertimpa lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Areas potentially threatened by ejected rock materials (glowing), and heavy ash falls."
+        },
+        {
+            "code": "PAP",
+            "krb": "3",
+            "radius": "2",
+            "id": "Kawasan yang sangat berpotensi tertimpa lontaran batu (pijar) dan abu lebat.",
+            "en": "Areas very potentially threatened by ejected rock materials (glowing) and heavy ash falls."
+        },
+        {
+            "code": "PEU",
+            "krb": "1",
+            "radius": "8",
+            "id": "Berpotensi terhadap hujan abu dan kemungkinan daapat terkena lontaran batu (pijar).",
+            "en": "Potentially affected by ash fall and possibly threatened by incandescent ejected rock fragments."
+        },
+        {
+            "code": "PEU",
+            "krb": "2",
+            "radius": "5",
+            "id": "Berpotensi terlanda hujan abu lebat, dan lontaran batu (pijar).",
+            "en": "Potentially affected by heavy ash fall, and ejected rock fragments."
+        },
+        {
+            "code": "PEU",
+            "krb": "3",
+            "radius": "2",
+            "id": "Selalu terancam lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Always ejected rock fragments (glowing) and heavy ash fall."
+        },
+        {
+            "code": "RAN",
+            "krb": "1",
+            "radius": "5",
+            "id": "Kawasan yang berpotensi tertimpa hujan abu dan kemungkinan dapat teritimpa lontaran batu(pijar)0<2 cm \r\n",
+            "en": "Areas potentially threatened by ejected rock materials (glowing) less than 2 cm in diameters"
+        },
+        {
+            "code": "RAN",
+            "krb": "2",
+            "radius": "3",
+            "id": "Kawasan yang berpotensi tertimpa lontaran batu (pijar) 0 2-6 cm dan hujan abu lebat.",
+            "en": "Areas very potentially threatened by ejected rock materials (glowing) 0 2-6 cm, and heavy ash falls."
+        },
+        {
+            "code": "RAN",
+            "krb": "3",
+            "radius": "1",
+            "id": "Kawasan yang sangat berpotensi tertimpa lontaran batu (pijar) 0>6 cm dan hujan abu lebat",
+            "en": "Areas very potentially threatened by ejected rock materials (glowing) more than 6 cm in diameter, and heavy ahs falls"
+        },
+        {
+            "code": "RAU",
+            "krb": "1",
+            "radius": "10",
+            "id": "Berpotensi terhadap hujan abu dan kemungkinan dapat terkena lontaran batu (pijar). 0<2 cm.",
+            "en": "Potentially affected by ash falls and possibly affected by incandescent ejected rock fragments"
+        },
+        {
+            "code": "RAU",
+            "krb": "2",
+            "radius": "8",
+            "id": "Berpotensi terlanda hujan abu lebat, dan lontaran batu (pijar), 0 3-8 cm.",
+            "en": "Potentially affected by heavy ash falls and incandescent ejected rock fragments."
+        },
+        {
+            "code": "RAU",
+            "krb": "3",
+            "radius": "3",
+            "id": "Selalu terancam hujan abu lebat dan lontaran batu (pijar), 0>8 cm.",
+            "en": "Always threatened by heavy ash fall and incandescent ejected rock fragment."
+        },
+        {
+            "code": "RIE",
+            "krb": "1",
+            "radius": "6",
+            "id": "Kawasan yang berpotensi tertimpa hujan abu dan kemungkinan dapat tertimpa material lontaran batu (pijar) dalam radius 6 Kmdari sumber letusan. Ketebalan abu letusan pada Kawasan rawan bencana ini lebih tipis dibandingkan dengan abu letusan yang berada di Kawasan rawan bencana II",
+            "en": "Area that could be mainly affected by heavy ash falls and probably ballistic projectiles as far away as 6 Kilometres from the vent. The ash falls accumulation in this hazard zones is less than does in Hazard Zone II."
+        },
+        {
+            "code": "RIE",
+            "krb": "2",
+            "radius": "4",
+            "id": "Kawasan yang berpotensi terlanda hujan abu lebat dan lontaran batu (pijar) dalam radius 4 Km dari pusat letusan dengan ketebalan maksimal diperkirakan sekitar 15 cm.",
+            "en": "Area that could be mainly affected by heavy ash fall and probably ballistic projectiles as far away as 4 Kilometres from the vent."
+        },
+        {
+            "code": "RIE",
+            "krb": "3",
+            "radius": "2",
+            "id": "Kawasan yang sangat berpotensi tertimpa lontaran batu (pijar) berupa bom gunung api dan atau pecahan batuan, skorea dan atau hujan abu lebar dalam radius 2 Km dari sumber letusan.",
+            "en": "Area that could be strongly affected by ballistic projectiles and ash fall as far away as 2 Kilometres from the vent."
+        },
+        {
+            "code": "RIN",
+            "krb": "1",
+            "radius": "8",
+            "id": "Kawasan yang rawan terhadap material jatuhan berupa hujan abu tanpa memerhatikan arah tipuan angin dan kemungkinan dapat terkena lontaran batu (pijar).",
+            "en": "Areas potentially affected by ash fall regarless prevailing wind and possibly hit by ballistic rock fragment."
+        },
+        {
+            "code": "RIN",
+            "krb": "2",
+            "radius": "5",
+            "id": "Kawasan yang berpotensi terlanda lontaran batu (pijar), hujan abu lebat, hujan lumpur(panas), lahar dan gas beracun.",
+            "en": "Areas potentially affected bby ballistic rock fragment (glowing), this ash falls, wet ash falls(hot), lahars and toxic gas."
+        },
+        {
+            "code": "RIN",
+            "krb": "3",
+            "radius": "3",
+            "id": "Kawasan yang sangat berpotensi terlanda lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Areas very potentially affected by ballistic rock fragment (glowing) and thick ash falls."
+        },
+        {
+            "code": "ROK",
+            "krb": "1",
+            "radius": "7",
+            "id": "Kawasan yang berpotensi tertimpa hujan abu dan kemungkinan dapat tertimpa lontaran batu (pijar)",
+            "en": "Areas potentially threatened by ash falls, and possibly threatened by ejected rock materials (glowing)"
+        },
+        {
+            "code": "ROK",
+            "krb": "2",
+            "radius": "5",
+            "id": "Kawasan yang berpotensi tertimpa lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Areas potentially threatened by ejected rock materials (glowing), and heavy ash falls"
+        },
+        {
+            "code": "ROK",
+            "krb": "3",
+            "radius": "3",
+            "id": "Kawasan yang sangat berpotensi tertimpa lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Areas very potentially threatened by ejected rock materials (glowing) more than 6 cm in diameter, and heavy ash falls."
+        },
+        {
+            "code": "RUA",
+            "krb": "1",
+            "radius": "7",
+            "id": "Berpotensi terhadap hujan abu lebat dan kemungkinan dapat terkena lontaran batu (pijar 0 <2 cm).",
+            "en": "Potentially affected by ash fall and possibly affected by incandescent ejected rock fragments"
+        },
+        {
+            "code": "RUA",
+            "krb": "2",
+            "radius": "5",
+            "id": "Berpotensi terlanda hujan abu lebat dan lontaran batu (pijar, 2-6 cm)",
+            "en": "Potentially affected by heavy ash fall and incandescent ejected rock fragments."
+        },
+        {
+            "code": "RUA",
+            "krb": "3",
+            "radius": "2.5",
+            "id": "Selalu terancam hujan abu lebat dan lontaran batu (pijar 0>6 cm)",
+            "en": "Always threatened by heavy ash fall and incandescent ejected rock fragment."
+        },
+        {
+            "code": "SAL",
+            "krb": "1",
+            "radius": "5",
+            "id": "Berpotensi terlanda hujan abu dan kemungkinan dapat terkena lontaran batu(panas)",
+            "en": "Potentially affected by ash fall and possibly affected by incandescent ejected rock fragments."
+        },
+        {
+            "code": "SAL",
+            "krb": "2",
+            "radius": "3",
+            "id": "Berpotensi terhadap hujan abu lebat, dan lontaran batu (panas).",
+            "en": "Potentially affeceted by heavy ash fall, and ejected rock fragments"
+        },
+        {
+            "code": "SAL",
+            "krb": "3",
+            "radius": "1.5",
+            "id": "Selalu terancam lontaran batu (panas), Lumpur panas dan hujan abu lebat.",
+            "en": "Always ejected rock fragments (glowing), hot mud and heavy ash fall."
+        },
+        {
+            "code": "SAN",
+            "krb": "1",
+            "radius": "15",
+            "id": "Berpotensi terhadap lontaran batu (pijar) dengan diameter maksimum 10 mm dan hujan abu lebat",
+            "en": "Potentially affected by heavy ash fall and incandescent ejected materials with 10 mm maximum in diameter"
+        },
+        {
+            "code": "SAN",
+            "krb": "2",
+            "radius": "7",
+            "id": "Berpotensi terhadap lontaran batu (pijar) berukuran kerikil/lapilli dengan diameter maksimum 64 mm dan hujan abu lebat",
+            "en": "Potentially affected by incandescent ejected sized apilli with 64 mm maximum diameter and havy ash fall."
+        },
+        {
+            "code": "SAN",
+            "krb": "3",
+            "radius": "3",
+            "id": "Berpotensi tinggi terhadap lontaran batu (pijar) berukuran lapilli sampai bom/blok dengan diameter lebih dari 64 mm dan hujan abu lebat",
+            "en": "Hyghly potential affected by ballistic trajectories (glowing) sized bomb/block with diameter more than 64 mm, and heavy ash fall"
+        },
+        {
+            "code": "SBG",
+            "krb": "1",
+            "radius": "8",
+            "id": "Berpotensi terhadap hujan abu dan kemungkinan dapat terkena lontaran batu (pijar) ",
+            "en": "Potentially affected by ash fall and possibly affected by incandescent ejected rock fragments"
+        },
+        {
+            "code": "SBG",
+            "krb": "2",
+            "radius": "5",
+            "id": "Berpotensi terlanda hujan abu lebat, dan lontaran batu (pijar)",
+            "en": "Potentially affected by heavy ash fall and incandescent ejected rock fragments."
+        },
+        {
+            "code": "SBG",
+            "krb": "3",
+            "radius": "2",
+            "id": "Selalu terancam hujan abu lebat dan lontaran batu (pijar).",
+            "en": "Always threanted by heavy ash fall and incandescent ejected rock fragments"
+        },
+        {
+            "code": "SEU",
+            "krb": "1",
+            "radius": "8",
+            "id": "Berpotensi terhadap hujan abu dan kemungkinan dapat terkena lontaran batu (pijar).",
+            "en": "Potentially affected by ash fall and possibly threanted by incandescent ejected rock fragmens."
+        },
+        {
+            "code": "SEU",
+            "krb": "2",
+            "radius": "5",
+            "id": "Berpotensi terlanda hujan abu lebat , dan lontaran batu (pijar).",
+            "en": "Potentially affected by heavy ash fall, and ejected rock fragments."
+        },
+        {
+            "code": "SEU",
+            "krb": "3",
+            "radius": "2",
+            "id": "Selalu terancam lontaran batu (pijar) dan hujan abu lebat / lumpur panas.",
+            "en": "Always ejected rock fragments (glowing) and heavy ash fall / hot mud."
+        },
+        {
+            "code": "SIN",
+            "krb": "1",
+            "radius": "7",
+            "id": "Batas Kawasan berpotensi tertimpa lontaran material/batu berdiameter kurang dari 2 cm",
+            "en": "Potentially threatened by ejected rock/materials (glowing) with less than 2 cm in diameter and ash fall"
+        },
+        {
+            "code": "SIN",
+            "krb": "2",
+            "radius": "5",
+            "id": "Batas Kawasan yang berpotensi tertimpa lontaran material/batu (pijar) berdiameter 2 - 6 cm dan hujan abu (lebat)",
+            "en": "Batas Kawasan yang berpotensi tertimpa lontaran material/batu (pijar) berdiameter 2 - 6 cm dan hujan abu (lebat)"
+        },
+        {
+            "code": "SIN",
+            "krb": "3",
+            "radius": "3",
+            "id": "Batas kawasan sangat berpotensi tertimpa lontaran material/batu (pijar) berdiameter lebih dari 6 cm dan hujan abu lebat.",
+            "en": "Very potentially threatened by ejected rock/materials (glowing) with more than 6 cm in diameter and heavy ash falls."
+        },
+        {
+            "code": "SIR",
+            "krb": "1",
+            "radius": "6",
+            "id": "Kawasan yang berpotensi tertimpa hujan abu dan kemungkinan dapat tertimpa lontaran batu(pijar)",
+            "en": "Very potentially threatened by ejected rock/materials (glowing) with more than 6 cm in diameter and heavy ash falls."
+        },
+        {
+            "code": "SIR",
+            "krb": "2",
+            "radius": "2.5",
+            "id": "Kawasan yang berpotensi tertimpa lontaran batu (pijar) dan hujan abu lebat",
+            "en": "Areas potentially threatened by ejected rock materials (glowing), and heavy ash falls"
+        },
+        {
+            "code": "SIR",
+            "krb": "3",
+            "radius": "1.5",
+            "id": "Kawasan yang sangat berpotensi tertimpa lontaran batu (pijar) dan hujan abu abu lebat",
+            "en": "Areas very potentially threatened ejected rock materials (glowing) and heavy ash falls"
+        },
+        {
+            "code": "SLA",
+            "krb": "1",
+            "radius": "8",
+            "id": "Berpotensi terhadap hujan abu dan kemungkinan dapat terkena lontaran batu (pijar)",
+            "en": "Potentially affected by ash fall and possibly affected by incandescent ejeceted rock fragments"
+        },
+        {
+            "code": "SLA",
+            "krb": "2",
+            "radius": "4",
+            "id": "Berpotensi terhadap hujan abu lebat dan, lontaran batu (pijar).",
+            "en": "Potentially affected by heavy ash fall and ejected rock fragments."
+        },
+        {
+            "code": "SLA",
+            "krb": "3",
+            "radius": "2",
+            "id": "Selalu terancam lontaran batu (pijar), dan hujan abu lebat.",
+            "en": "Always ejected rock fragments (glowing), and heavy ash fall."
+        },
+        {
+            "code": "SMR",
+            "krb": "1",
+            "radius": "8",
+            "id": "Rawan terhadap hujan abu dan kemungkinan lontaran batu (pijar).",
+            "en": "Potentially affected by ash falls and possibly ejected rock fragments (glowing)."
+        },
+        {
+            "code": "SMR",
+            "krb": "2",
+            "radius": "5",
+            "id": "Rawan terhadap lontaran batu (pijar) dan hujan lebat.",
+            "en": "Potentially threatened by ejected rock fragments (glowing) and heavy ash falls."
+        },
+        {
+            "code": "SOP",
+            "krb": "1",
+            "radius": "10",
+            "id": "Berpotensi terlanda hujan abu dan kemungkinan dapat terkena lontaran batu (pijar)",
+            "en": "Potentially affected by ash fall and possibly affected by incandescent ejected rock fragments."
+        },
+        {
+            "code": "SOP",
+            "krb": "2",
+            "radius": "4",
+            "id": "Berpotensi terhadap hujan abu lebat dan kemungkinan dapat terkena lontaran batu (pijar).",
+            "en": "Potentially affected by heavy ash fall and possibly affected by incandescent ejected rock fragments."
+        },
+        {
+            "code": "SOP",
+            "krb": "3",
+            "radius": "1.5",
+            "id": "Sering terlanda hujan abu lebat dan lontaran batu (pijar).",
+            "en": "Frequently affected by heavy ash fall incandescent ejected rock fragments."
+        },
+        {
+            "code": "SOR",
+            "krb": "1",
+            "radius": "8",
+            "id": "Berpotensi terhadap hujan abu dan kemungkinan dapat terkena lontaran batu (Pijar).",
+            "en": "Potentially affected by incandescent ejected rock fragments."
+        },
+        {
+            "code": "SOR",
+            "krb": "2",
+            "radius": "6",
+            "id": "Berpotensi terlanda hujan abu lebat, dan lontaran batu (pijar)",
+            "en": "Potentially affected by heavy ash fall, and ejected rock fragments"
+        },
+        {
+            "code": "SOR",
+            "krb": "3",
+            "radius": "1.5",
+            "id": "Selalu terancam lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Always ejected fragments (glowing) and heavy ash fall."
+        },
+        {
+            "code": "SUN",
+            "krb": "1",
+            "radius": "8",
+            "id": "Berpotensi terlanda hujan abu dan kemungkinan dapat terkena lontaran batu (pijar), Ø<3 cm",
+            "en": "Potentially affected by ash fall and possibly affected by incandescent ejected rock fragments"
+        },
+        {
+            "code": "SUN",
+            "krb": "2",
+            "radius": "5",
+            "id": "Berpotensi terlanda hujan abu lebat, dan lontaran batu (pijar) Ø 3 – 8 cm.",
+            "en": "Potentially affected by heavy ash fall and incandescent rock fragments."
+        },
+        {
+            "code": "SUN",
+            "krb": "3",
+            "radius": "2",
+            "id": "Selalu terancam hujan abu lebat dan lontaran batu (pijar), Ø8 cm.",
+            "en": "Always threatened by heavy ash fall and incandescent ejected rock fragments."
+        },
+        {
+            "code": "TAL",
+            "krb": "1",
+            "radius": "8",
+            "id": "Berpotensi terhadap hujan abu dan kemungkinan dapat terkena lontaran batu (pijar).",
+            "en": "Potentially affected by ash fall and possibly threatened by incandescent ejected rock fragments."
+        },
+        {
+            "code": "TAL",
+            "krb": "2",
+            "radius": "5",
+            "id": "Berpotensi terlanda hujan abu lebat, dan lontaran batu (pijar).",
+            "en": "Potentially affected by heavy ash fall, and ejected rock fragments."
+        },
+        {
+            "code": "TAL",
+            "krb": "3",
+            "radius": "2",
+            "id": "Selalu terancam lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Always ejected rock fragments (glowing) and heavy ash fall."
+        },
+        {
+            "code": "TAM",
+            "krb": "1",
+            "radius": "8",
+            "id": "Kawasan yang berpotensi terlanda hujan abu dan kemungkinan dapat terkena lontaran batu (pijar tanpa memerhatikan arah tiupan angina.",
+            "en": "Areas potentially affected by ash fall and possibly threatened by incandescent rock fragments regardless prevailing wind"
+        },
+        {
+            "code": "TAM",
+            "krb": "2",
+            "radius": "5",
+            "id": "Kawasan yang berpotensi terlanda lontaran batu (pijar), hujan abu lebat, hujan lumpur (panas) dan gas beracun.",
+            "en": "Areas potentially affected by ballistic rock fragments (incandescent), thick dry ash falls, wet ash falls (hot) and toxic gas."
+        },
+        {
+            "code": "TAM",
+            "krb": "3",
+            "radius": "3",
+            "id": "Kawasan yang sangat berpotensi terlanda lontoran batu (pijar), hujan abu lebat dan air dengan keasaman tinggi.",
+            "en": "Area very potentially being affected by ballistic rock fragments, thick ash fall and very acid water."
+        },
+        {
+            "code": "TAN",
+            "krb": "1",
+            "radius": "8",
+            "id": "Berpotensi terhadap hujan abu dan kemungkinan dapat terkena lontaran batu (pijar).",
+            "en": "Potentially affected by ash fall and possibly threatened by incandescent ejedted rock fragments."
+        },
+        {
+            "code": "TAN",
+            "krb": "2",
+            "radius": "5",
+            "id": "Berpotensi terlanda hujan abu lebat, dan lontaran batu (pijar).",
+            "en": "Potentially affected by heavy ash fall, and ejected rock fragments."
+        },
+        {
+            "code": "TAN",
+            "krb": "3",
+            "radius": "2",
+            "id": "Selalu terancam lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Always threatened by ejected rock fragments (glowing) and heavy ash fall."
+        },
+        {
+            "code": "TGK",
+            "krb": "1",
+            "radius": "7",
+            "id": "Kawasan yang berpotensi terhadap hujan abu dan kemungkinan dapat terkena lontaran batu (pijar)",
+            "en": "Areas potentially effected by ash falls and posiibly hit by incandescent ballistic rock fragments."
+        },
+        {
+            "code": "TGK",
+            "krb": "2",
+            "radius": "4",
+            "id": "Kawasan yang berpotensi terlanda hujan abu lebat, dan lontaran batu (pijar)",
+            "en": "Areas potentially effected by thick ash falls, and ballistic rock fragments."
+        },
+        {
+            "code": "TGK",
+            "krb": "3",
+            "radius": "2",
+            "id": "Kawasan yang sangat berpotensi terlanda lontaran batu (pijar) dan hujan abu lebat.",
+            "en": "Areas very potentially affected by ballistic rock fragments (glowing) and thick ash falls"
+        },
+        {
+            "code": "TAR",
+            "krb": "1",
+            "radius": "4.5",
+            "id": "Kawasan yang berpotensi tertimpa hujan abu dan kemungkinan dapat tertimpa lontaran batu (pijar).",
+            "en": "Areas potentially threatened by heavy ash fall and possibly threatened by ejected rock fragments (glowing)."
+        },
+        {
+            "code": "TAR",
+            "krb": "2",
+            "radius": "3",
+            "id": "Kawasan yang berpotensi tertimpa hujan abu lebat dan lontaran batu (pijar).",
+            "en": "Areas potentially threatened by heavy ash fall and ejected rock fragment (glowing)."
+        },
+        {
+            "code": "TAR",
+            "krb": "3",
+            "radius": "1.5",
+            "id": "Kawasan yang sangat berpotensi tertimpa hujan abu lebat dan lontaran batu (pijar).",
+            "en": "Areas potentially threatened by heavy ash full and ejected rock fragments (glowing)"
+        },
+        {
+            "code": "WEL",
+            "krb": "1",
+            "radius": "8",
+            "id": "Kawasan yang berpotensi tertimpa hujan abu dan kemungkinan dapat tertimpa material lontaran batu (pijar) dalam radius 8 km dari sumber letusan.Ketebalan abu letusan pada Kawasan rawan bencana ini lebih tipis dibandingkan dengan abu letusan yang berada dikawasan rawan bencana II",
+            "en": "Area that could be mainly affected by heavy ash fall and probably ballistic projectiles as far away as 8 kilometres from the vent. The ash fall accumulation in this hazard zones is less than does in Hazard Zone II."
+        },
+        {
+            "code": "WEL",
+            "krb": "2",
+            "radius": "5",
+            "id": "Kawasan yang berpotensi terlanda awan panas dan aliran lava. Kawasan rawan bencana ini Kawasan landaan awan panas dan aliran lava dengan derajat kemungkinan lebih rendah KRB III.",
+            "en": "Area that could be effected by the pyroclastic flows and lava. This hazard zone is a possibly enlarged area when the potentials hazard might extend outward from Hazard Zone III."
+        },
+        {
+            "code": "WEL",
+            "krb": "3",
+            "radius": "3",
+            "id": "Kawasan yang sangat berpotensi tertimpa lontaran batu (pijar), hujan lumpur, dan hujan abu lebat dalam radius 3 km dari sumber erupsi.Kawasan Rawan bencana terhadap hujan lumpur berada dalam radius sekitar 200 m dari sumber erupsi.",
+            "en": "Area that could be affected by ballistic projectiles, ash fall, and mud outpouring,as far away as 3 kilometres from the vent. The hazard affected from mud outpouring is within radius 200 meters from the vent."
+        },
+        {
+            "code": "KRA",
+            "krb": "1",
+            "radius": "8",
+            "id": "Berpotensi terhadap hujan abu dan kemungkinan dapat terkena lontaran batu (pijar).",
+            "en": "Potentially affected by ash fall and probably hit by incandescent ejected rock fragments of lapilli sizes"
+        },
+        {
+            "code": "KRA",
+            "krb": "2",
+            "radius": "5",
+            "id": "Berpotensi terlanda hujan abu lebat dan kemungkinan dapat terkena lontaran batu (pijar) ukuran kerikil.",
+            "en": "Potentially affected by heavy ash fall and possibly affected by incandescent ejected rock fragments of pebble size"
+        },
+        {
+            "code": "KRA",
+            "krb": "3",
+            "radius": "2",
+            "id": "Sering terlanda hujan abu lebat dan lontaran batu (pijar) / bom volkanik",
+            "en": "Frequently affected by heavy ash fall and incandescent ballistic projectiees (volcanic bomb)."
+        }
+    ]
+}
