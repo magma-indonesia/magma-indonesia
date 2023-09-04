@@ -297,6 +297,44 @@ class MagmaVarService
     }
 
     /**
+     * Deskripsi visual guguran lava
+     *
+     * @return string
+     */
+    public function visualGuguranLava(): string
+    {
+        if (is_null($this->var['visual']['ap']))
+            return '';
+
+        return "Teramati {$this->var['visual']['ap']['count']} kali guguran lava ke arah {$this->var['visual']['ap']['direction']} dengan jarak luncur maksimum {$this->var['visual']['ap']['max_distance']}.";
+    }
+
+    /**
+     * Deskripsi visual guguran
+     *
+     * @return string
+     */
+    public function visualGuguran(): string
+    {
+        if (is_null($this->var['visual']['rf']))
+            return '';
+
+        return "Teramati {$this->var['visual']['rf']['count']} kali guguran ke arah {$this->var['visual']['rf']['direction']} dengan jarak luncur maksimum {$this->var['visual']['rf']['max_distance']}.";
+    }
+
+    /**
+     * Get var keterangan lain
+     *
+     * @return string
+     */
+    public function varKetLain(): string
+    {
+        $varKetLain = "{$this->visualGuguranLava()} {$this->visualGuguran()}";
+
+        return blank($varKetLain) ? 'Nihil' : $varKetLain;
+    }
+
+    /**
      * Get VAR Visibility
      *
      * @return string
@@ -654,7 +692,7 @@ class MagmaVarService
             'var_intasap' => $this->varIntasap(),
             'var_tekasap' => $this->varTekasap(),
             'var_viskawah' => 'Nihil',
-            'var_ketlain' => 'Nihil',
+            'var_ketlain' => $this->varKetLain(),
             'var_rekom' => $this->magmaVar->var_rekom,
             'magma_var_rekomendasi_id' => $this->magmaVar->magma_var_rekomendasi_id,
             'var_nip_pelapor' => $this->var['observer'][0]['nip'],
