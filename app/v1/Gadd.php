@@ -2,6 +2,7 @@
 
 namespace App\v1;
 
+use App\KrbGunungApi;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -112,4 +113,16 @@ class Gadd extends Model
         return $this->hasMany('App\v1\PosPga','code_id','ga_code');
     }
 
+    public function krbGunungApi()
+    {
+        return $this->setConnection('mysql')
+            ->hasOne(KrbGunungApi::class, 'code', 'ga_code')
+            ->where('is_active', 1);
+    }
+
+    public function KrbGunungApiPenjelasans()
+    {
+        return $this->setConnection('mysql')
+            ->hasMany(KrbGunungApiPenjelasan::class, 'code', 'code');
+    }
 }
