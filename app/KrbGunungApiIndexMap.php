@@ -20,7 +20,7 @@ class KrbGunungApiIndexMap extends Model
         return $this->belongsTo(User::class, 'nip', 'nip');
     }
 
-    public function krb()
+    public function krbGunungApi()
     {
         return $this->belongsTo(KrbGunungApi::class, 'krb_code', 'krb_code');
     }

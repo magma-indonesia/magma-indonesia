@@ -32,7 +32,7 @@ class KrbGunungApi extends Model
 
     public function penjelasans()
     {
-        return $this->hasOne(KrbGunungApiPenjelasan::class, 'krb_code', 'krb_code');
+        return $this->hasMany(KrbGunungApiPenjelasan::class, 'krb_code', 'krb_code');
     }
 
     public function indexMaps()

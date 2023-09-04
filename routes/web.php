@@ -74,6 +74,10 @@ Route::name('v1.')->group(function () {
             ->name('press.show')
             ->middleware('signed');
 
+        Route::get('gunung-api', function () {
+            return 'data dasar';
+        })->name('gunungapi.data-dasar');
+
         Route::get('gunung-api/peta-kawasan-rawan-bencana','FrontPage\v1\PetaKrbGunungApiController@index')
             ->name('gunungapi.peta-kawasan-rawan-bencana');
 
@@ -125,8 +129,8 @@ Route::name('v1.')->group(function () {
             ->name('gunungapi.laporan-harian')
             ->middleware('revalidate');
 
-        // Route::get('gunung-api/{name}', 'FrontPage\v1\GunungApiByVolcanoController@show')
-        //     ->name('gunungapi.show');
+        Route::get('gunung-api/{name}', 'FrontPage\v1\GunungApiByVolcanoController@show')
+            ->name('gunungapi.show');
 
         Route::get('gunung-api/vogamos', 'FrontPage\v1\VogamosController@index')
             ->name('gunung-api.vogamos');
@@ -182,6 +186,9 @@ Route::name('v1.')->group(function () {
                     ->middleware('signed');
                 Route::post('has-eruptions','v1\Json\MapController@hasEruptions')
                     ->name('has.eruptions')
+                    ->middleware('signed');
+                Route::post('gunung-api/{name}', 'v1\Json\GunungApiByVolcanoController@show')
+                    ->name('gunungapi.show')
                     ->middleware('signed');
             });
         });

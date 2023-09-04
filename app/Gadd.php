@@ -194,4 +194,19 @@ class Gadd extends Model
     {
         return $this->hasMany('App\SmsLocation', 'code_id', 'code');
     }
+
+    /**
+     * Load peta KRB
+     *
+     * @return void
+     */
+    public function krbGunungApi()
+    {
+        return $this->hasOne(KrbGunungApi::class, 'code', 'code')->where('is_active', 1);
+    }
+
+    public function krbGunungApiPenjelasans()
+    {
+        return $this->hasMany(KrbGunungApiPenjelasan::class, 'code', 'code');
+    }
 }

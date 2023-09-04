@@ -9,7 +9,6 @@ class KrbGunungApiPenjelasan extends Model
 {
     protected $with = [
         'user:nip,name',
-        'gunungapi',
     ];
 
     protected $guarded = [

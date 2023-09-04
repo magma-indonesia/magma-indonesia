@@ -1,4 +1,4 @@
-<div class="slim-mainpanel">
+<div class="slim-mainpanel @yield('bg-color')">
     <div class="@yield('container', 'container')">
         <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
