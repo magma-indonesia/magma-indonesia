@@ -306,7 +306,7 @@ class MagmaVarService
         if (is_null($this->var['visual']['ap']))
             return '';
 
-        return "Teramati {$this->var['visual']['ap']['count']} kali guguran lava ke arah {$this->var['visual']['ap']['direction']} dengan jarak luncur maksimum {$this->var['visual']['ap']['max_distance']}.";
+        return "Teramati {$this->var['visual']['ap']['count']} kali guguran lava ke arah {$this->var['visual']['ap']['direction']} dengan jarak luncur maksimum {$this->var['visual']['ap']['max_distance']}. ";
     }
 
     /**
@@ -329,7 +329,7 @@ class MagmaVarService
      */
     public function varKetLain(): string
     {
-        $varKetLain = "{$this->visualGuguranLava()} {$this->visualGuguran()}";
+        $varKetLain = "{$this->visualGuguranLava()}{$this->visualGuguran()}";
 
         return blank($varKetLain) ? 'Nihil' : $varKetLain;
     }
