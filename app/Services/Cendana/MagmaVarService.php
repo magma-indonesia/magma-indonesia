@@ -306,7 +306,7 @@ class MagmaVarService
         if (is_null($this->var['visual']['ap']))
             return '';
 
-        return "Teramati {$this->var['visual']['ap']['count']} kali guguran lava ke arah {$this->var['visual']['ap']['direction']} dengan jarak luncur maksimum {$this->var['visual']['ap']['max_distance']}. ";
+        return "Teramati {$this->var['visual']['ap']['count']} kali awan panas guguran ke arah Kali {$this->var['visual']['ap']['direction']} dengan jarak luncur maksimum {$this->var['visual']['ap']['max_distance']} meter. ";
     }
 
     /**
@@ -319,7 +319,7 @@ class MagmaVarService
         if (is_null($this->var['visual']['rf']))
             return '';
 
-        return "Teramati {$this->var['visual']['rf']['count']} kali guguran ke arah {$this->var['visual']['rf']['direction']} dengan jarak luncur maksimum {$this->var['visual']['rf']['max_distance']}.";
+        return "Teramati {$this->var['visual']['rf']['count']} kali guguran lava ke arah Kali {$this->var['visual']['rf']['direction']} dengan jarak luncur maksimum {$this->var['visual']['rf']['max_distance']} meter.";
     }
 
     /**
