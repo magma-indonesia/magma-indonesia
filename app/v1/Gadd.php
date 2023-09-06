@@ -2,6 +2,8 @@
 
 namespace App\v1;
 
+use App\DataDasarGeologi;
+use App\DataDasarGunungApi;
 use App\KrbGunungApi;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -124,5 +126,17 @@ class Gadd extends Model
     {
         return $this->setConnection('mysql')
             ->hasMany(KrbGunungApiPenjelasan::class, 'code', 'code');
+    }
+
+    public function dataDasar()
+    {
+        return $this->setConnection('mysql')
+            ->hasOne(DataDasarGunungApi::class, 'code', 'ga_code');
+    }
+
+    public function dataDasarGeologi()
+    {
+        return $this->setConnection('mysql')
+            ->hasOne(DataDasarGeologi::class, 'code', 'ga_code');
     }
 }

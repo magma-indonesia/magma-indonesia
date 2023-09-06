@@ -209,4 +209,16 @@ class Gadd extends Model
     {
         return $this->hasMany(KrbGunungApiPenjelasan::class, 'code', 'code');
     }
+
+    public function dataDasar()
+    {
+        return $this->setConnection('mysql')
+            ->hasOne(DataDasarGunungApi::class, 'code', 'ga_code');
+    }
+
+    public function dataDasarGeologi()
+    {
+        return $this->setConnection('mysql')
+            ->hasOne(DataDasarGeologi::class, 'code', 'ga_code');
+    }
 }
