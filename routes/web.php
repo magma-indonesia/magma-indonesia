@@ -74,9 +74,8 @@ Route::name('v1.')->group(function () {
             ->name('press.show')
             ->middleware('signed');
 
-        Route::get('gunung-api', function () {
-            return 'data dasar';
-        })->name('gunungapi.data-dasar');
+        Route::get('gunung-api', 'FrontPage\v1\DataDasarGunungApiController@index')
+            ->name('gunungapi.data-dasar');
 
         Route::get('gunung-api/peta-kawasan-rawan-bencana','FrontPage\v1\PetaKrbGunungApiController@index')
             ->name('gunungapi.peta-kawasan-rawan-bencana');
