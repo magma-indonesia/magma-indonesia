@@ -123,34 +123,61 @@ bg-white
 
         <div class="nav-statistics-wrapper mg-b-20">
             <nav class="nav" style="display: flex">
-                <a href="#geologi-umum" id="home-geologi-umum" class="nav-link active" data-toggle="tab" role="tab" aria-controls="geologi-umum" aria-selected="true">Umum</a>
+                @if ($geologi->umum)
+                <a href="#geologi-umum" id="home-geologi-umum" class="nav-link" data-toggle="tab" role="tab" aria-controls="geologi-umum" aria-selected="true">Umum</a>
+                @endif
+
+                @if ($geologi->morfologi)
                 <a href="#geologi-morfologi" id="home-geologi-morfologi" class="nav-link" data-toggle="tab" role="tab" aria-controls="home-geologi-morfologi" aria-selected="true">Morfologi</a>
+                @endif
+
+                @if ($geologi->stratigrafi)
                 <a href="#geologi-stratigrafi" id="home-geologi-stratigrafi" class="nav-link" data-toggle="tab" role="tab" aria-controls="home-geologi-stratigrafi" aria-selected="true">Stratigrafi</a>
+                @endif
+
+                @if ($geologi->struktur_geologi)
                 <a href="#geologi-struktur-geologi" id="home-geologi-struktur-geologi" class="nav-link" data-toggle="tab" role="tab" aria-controls="home-geologi-struktur-geologi" aria-selected="true">Struktur Geologi</a>
+                @endif
+
+                @if ($geologi->petrografi)
                 <a href="#geologi-petrografi" id="home-geologi-petrografi" class="nav-link" data-toggle="tab" role="tab" aria-controls="home-geologi-petrografi" aria-selected="true">Petrografi</a>
+                @endif
+
             </nav>
         </div>
 
         <div class="tab-content" id="myTabContent">
+
+            @if ($geologi->umum)
             <div id="geologi-umum" role="tabpanel" aria-labelledby="home-geologi-umum" class="tab-pane show active">
-                <p>Umum</p>
+                <p>{{ $geologi->umum }}</p>
             </div>
+            @endif
 
+            @if ($geologi->morfologi)
             <div id="geologi-morfologi" role="tabpanel" aria-labelledby="home-geologi-morfologi" class="tab-pane">
-                <p>Morfologi</p>
+                <p>{{ $geologi->morfologi }}</p>
             </div>
+            @endif
 
+            @if ($geologi->stratigrafi)
             <div id="geologi-stratigrafi" role="tabpanel" aria-labelledby="home-geologi-stratigrafi" class="tab-pane">
-                <p>Stratigrafi</p>
+                <p>{{ $geologi->stratigrafi }}</p>
             </div>
+            @endif
 
+            @if ($geologi->struktur_geologi)
             <div id="geologi-struktur-geologi" role="tabpanel" aria-labelledby="home-geologi-struktur-geologi" class="tab-pane">
-                <p>struktur-geologi</p>
+                <p>{{ $geologi->struktur_geologi }}</p>
             </div>
+            @endif
 
+            @if ($geologi->petrografi)
             <div id="geologi-petrografi" role="tabpanel" aria-labelledby="home-geologi-petrografi" class="tab-pane">
-                <p>petrografi</p>
+                <p>{{ $geologi->petrografi }}</p>
             </div>
+            @endif
+
         </div>
     </div>
 </div>
@@ -384,7 +411,7 @@ $(document).ready(function () {
 
     $.ajax({
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-        url: '{{ URL::signedRoute('v1.json.highcharts') }}',
+        url: "{{ URL::signedRoute('v1.json.highcharts') }}",
         type: 'POST',
         data: {
             id: '{{ $var->no }}',

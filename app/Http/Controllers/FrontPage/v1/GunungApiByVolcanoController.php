@@ -73,7 +73,8 @@ class GunungApiByVolcanoController extends Controller
             return Gadd::where('slug', $name)->with([
                 'krbGunungApi',
                 'krbGunungApi.penjelasans',
-                'krbGunungApi.indexMaps'
+                'krbGunungApi.indexMaps',
+                'dataDasarGeologi',
             ])->firstOrFail();
         });
 
@@ -95,9 +96,13 @@ class GunungApiByVolcanoController extends Controller
 
         // return [
         //     'gadd' => $gadd,
+        //     'tentang_id' => $this->pendahuluanIndonesia($gadd),
+        //     'tentang_en' => $this->pendahuluanEnglish($gadd),
         //     'home_krb' => $home_krb,
         //     'vars_daily' => $vars_daily->all(),
         //     'var' => $vars_daily->first(),
+        //     'vens' => $vens,
+        //     'geologis' => $gadd->dataDasarGeologi,
         // ];
 
         return view('v1.home.volcano-show', [
@@ -107,6 +112,7 @@ class GunungApiByVolcanoController extends Controller
             'home_krb' => $home_krb,
             'vars_daily' => $vars_daily->all(),
             'var' => $vars_daily->first(),
+            'geologi' => $gadd->dataDasarGeologi,
         ]);
     }
 }

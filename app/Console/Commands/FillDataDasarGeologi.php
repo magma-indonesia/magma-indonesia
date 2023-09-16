@@ -63,7 +63,7 @@ class FillDataDasarGeologi extends Command
                 'morfologi' => $geologi->morfologi,
                 'stratigrafi' => $geologi->stratigrafi,
                 'struktur_geologi' => $geologi->struktur_geologi,
-                'petrografi' => $geologi->struktur_geologi,
+                'petrografi' => $geologi->petrografi,
                 'nip' => '198803152015031005',
             ]);
         });
