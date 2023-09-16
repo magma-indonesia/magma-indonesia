@@ -45,9 +45,9 @@ Data Dasar Gunung Api {{ $gadd->ga_nama_gapi }}
 Gunung Api {{ $gadd->ga_nama_gapi }}
 @endsection
 
-@section('bg-color')
+{{-- @section('bg-color')
 bg-white
-@endsection
+@endsection --}}
 
 @section('main')
 <div class="card card-dash-chart-one mg-b-30">
@@ -122,7 +122,7 @@ bg-white
         </h4>
 
         <div class="nav-statistics-wrapper mg-b-20">
-            <nav class="nav" style="display: flex">
+            <nav class="nav geologi" style="display: flex">
                 @if ($geologi->umum)
                 <a href="#geologi-umum" id="home-geologi-umum" class="nav-link" data-toggle="tab" role="tab" aria-controls="geologi-umum" aria-selected="true">Umum</a>
                 @endif
@@ -149,32 +149,62 @@ bg-white
         <div class="tab-content" id="myTabContent">
 
             @if ($geologi->umum)
-            <div id="geologi-umum" role="tabpanel" aria-labelledby="home-geologi-umum" class="tab-pane show active">
+            <div id="geologi-umum" role="tabpanel" aria-labelledby="home-geologi-umum" class="tab-pane">
                 <p>{{ $geologi->umum }}</p>
+
+                {{-- @auth --}}
+                <p class="tx-14">
+                    <a href="">Edit</a>
+                </p>
+                {{-- @endauth --}}
             </div>
             @endif
 
             @if ($geologi->morfologi)
             <div id="geologi-morfologi" role="tabpanel" aria-labelledby="home-geologi-morfologi" class="tab-pane">
                 <p>{{ $geologi->morfologi }}</p>
+
+                {{-- @auth --}}
+                <p class="tx-14">
+                    <a href="">Edit</a>
+                </p>
+                {{-- @endauth --}}
             </div>
             @endif
 
             @if ($geologi->stratigrafi)
             <div id="geologi-stratigrafi" role="tabpanel" aria-labelledby="home-geologi-stratigrafi" class="tab-pane">
                 <p>{{ $geologi->stratigrafi }}</p>
+
+                {{-- @auth --}}
+                <p class="tx-14">
+                    <a href="">Edit</a>
+                </p>
+                {{-- @endauth --}}
             </div>
             @endif
 
             @if ($geologi->struktur_geologi)
             <div id="geologi-struktur-geologi" role="tabpanel" aria-labelledby="home-geologi-struktur-geologi" class="tab-pane">
                 <p>{{ $geologi->struktur_geologi }}</p>
+
+                {{-- @auth --}}
+                <p class="tx-14">
+                    <a href="">Edit</a>
+                </p>
+                {{-- @endauth --}}
             </div>
             @endif
 
             @if ($geologi->petrografi)
             <div id="geologi-petrografi" role="tabpanel" aria-labelledby="home-geologi-petrografi" class="tab-pane">
                 <p>{{ $geologi->petrografi }}</p>
+
+                {{-- @auth --}}
+                <p class="tx-14">
+                    <a href="">Edit</a>
+                </p>
+                {{-- @endauth --}}
             </div>
             @endif
 
@@ -185,9 +215,16 @@ bg-white
 <hr>
 <div class="row mg-b-30">
     <div class="col-12">
-        <h4 class="tx-inverse tx-lato tx-bold mg-b-30">
-            Tingkat Aktivitas Saat Ini
-        </h4>
+        <div class="report-summary-header">
+            <div>
+                <h4 class="tx-inverse mg-b-3">Tingkat Aktivitas Terkini</h4>
+                <p class="mg-b-0"><i class="icon ion-calendar mg-r-3"></i> {{ $activity_date }}</p>
+            </div>
+            <div>
+                <a href="{{ route('v1.gunungapi.var') }}" class="btn btn-secondary"><i class="icon ion-ios-clock-outline tx-22"></i> Laporan Aktivitas</a>
+                <a href="" class="btn btn-secondary"><i class="icon ion-ios-gear-outline tx-24"></i> Edit Settings</a>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -215,19 +252,67 @@ bg-white
     </div>
 </div>
 
-<div class="card card-dash-chart-one mg-t-20 mg-sm-t-30">
-    <div class="row no-gutters">
-        <div class="col-lg-12">
-            <div class="right-panel">
-                <h6 class="slim-card-title">Peta Kawasan Rawan Bencana {{ $gadd->ga_nama_gapi }}</h6>
-                <div id="map" class="ht-250 ht-sm-350 ht-md-450 bg-gray-300"
-                    style="position: relative; overflow: hidden; background-color: rgb(255, 255, 255);">
+<hr>
+<div class="row mg-b-10">
+    <div class="col-12">
+        <div class="report-summary-header">
+            <div>
+                <h4 class="tx-inverse mg-b-3">Peta Kawasan Rawan Bencana (KRB) {{ $gadd->ga_nama_gapi }}</h4>
+                <p class="mg-b-0" style="font-style: italic">{{ \Illuminate\Support\Str::title($gadd->krbGunungApi->created_by) }} ({{ $gadd->krbGunungApi->year_published }})</p>
+            </div>
+            <div>
+                <a href="{{ route('v1.gunungapi.var') }}" class="btn btn-secondary"><i class="icon ion-ios-download-outline tx-20"></i> Download</a>
+            </div>
+        </div>
+
+        <div class="card card-dash-chart-one mg-t-20 mg-sm-t-30">
+            <div class="row no-gutters">
+                <div class="col-lg-3">
+
                 </div>
-            </div><!-- right-panel -->
-        </div><!-- col-8 -->
-    </div><!-- row -->
+                <div class="col-lg-9">
+                    <div id="map" class="ht-250 ht-sm-350 ht-md-450 bg-gray-300"
+                        style="position: relative; overflow: hidden; background-color: rgb(255, 255, 255);">
+                    </div>
+                </div><!-- col-8 -->
+            </div><!-- row -->
+        </div>
+    </div>
 </div>
 
+<div class="row">
+    <div class="col-12">
+        <div class="nav-statistics-wrapper mg-b-20">
+            <nav class="nav" style="display: flex">
+
+                @foreach ($krbs as $krb)
+                <a href="{{ $krb['href'] }}" id="home-{{ $krb['id'] }}" class="nav-link"
+                    data-toggle="tab" role="tab" aria-controls="home-{{ $krb['id'] }}"
+                    aria-selected="true">{{ $krb['text'] }}</a>
+                @endforeach
+
+            </nav>
+        </div>
+
+        <div class="tab-content" id="myTabContent">
+
+            @foreach ($krbs as $krb)
+            <div id="{{ $krb['id'] }}" role="tabpanel" aria-labelledby="home-{{ $krb['id'] }}" class="tab-pane">
+                <p>{!! $krb['indonesia'] !!}</p>
+
+                {{-- @auth --}}
+                <p class="tx-14">
+                    <a href="">Edit</a>
+                </p>
+                {{-- @endauth --}}
+            </div>
+            @endforeach
+
+        </div>
+    </div>
+</div>
+
+<hr>
 <div class="row row-sm mg-t-20">
     <div class="col-lg-12">
         <div class="card card-table">
@@ -284,6 +369,19 @@ bg-white
 @section('add-script')
 <script>
 $(document).ready(function () {
+
+    $(".nav .nav-link:first-child" ).addClass('show active');
+    $(".tab-content .tab-pane:first-child" ).addClass('show active');
+
+    function maxPopUpWidth() {
+        var width = $(window).width(),
+            maxWidth = 0.3 * width;
+        if (width <= 767) {
+            return 360;
+        }
+        return maxWidth;
+    }
+
     var url = '{{ url('/') }}';
     var krb_esri = '{{ $home_krb->url }}';
     var query = "MAG_CODE='{{ $var->ga_code }}'";
@@ -334,8 +432,8 @@ $(document).ready(function () {
             url: krb_esri,
         }).bindPopup('Loading..', {
             closeButton: true,
-            minWidth : 600,
             className: 'anto',
+            maxWidth: maxPopUpWidth()
         }).on('click', function (e) {
 
             var popup = this.getPopup();

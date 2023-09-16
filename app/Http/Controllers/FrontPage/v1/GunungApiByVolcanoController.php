@@ -5,10 +5,12 @@ namespace App\Http\Controllers\FrontPage\v1;
 use App\HomeKrb;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\KrbGunungApi;
 use App\v1\Gadd;
 use App\v1\MagmaVar;
 use App\v1\MagmaVen;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 class GunungApiByVolcanoController extends Controller
 {
@@ -65,6 +67,44 @@ class GunungApiByVolcanoController extends Controller
         return $gadd->krbGunungApi->english ?? null;
     }
 
+    public function varsDate(int $days = 90)
+    {
+        $end = now();
+        $start = now()->subDays($days);
+
+        return "{$start->formatLocalized('%d %B %Y')} - {$end->formatLocalized('%d %B %Y')}";
+    }
+
+    public function textKrb(int $zonaKrb): string
+    {
+        switch ($zonaKrb) {
+            case 1:
+                return 'KRB 1';
+            case 2:
+                return 'KRB 2';
+            default:
+                return 'KRB 3';
+        }
+    }
+
+    public function krb(KrbGunungApi $krbGunungApi)
+    {
+        return $krbGunungApi->penjelasans->map(function ($penjelasan) {
+            return [
+                'href' => "#krb-{$penjelasan->zona_krb}",
+                'id' => "krb-{$penjelasan->zona_krb}",
+                'text' => $this->textKrb($penjelasan->zona_krb),
+                'indonesia' => $penjelasan->indonesia,
+                'english' => $penjelasan->english,
+                'area_id' => $penjelasan->area_id,
+                'area_en' => $penjelasan->area_en,
+                'radius' => $penjelasan->radius,
+                'radius_id' => $penjelasan->radius_id,
+                'radius_en' => $penjelasan->radius_en,
+            ];
+        });
+    }
+
     public function show(string $name)
     {
         $home_krb = $this->cacheHomeKrb();
@@ -75,8 +115,21 @@ class GunungApiByVolcanoController extends Controller
                 'krbGunungApi.penjelasans',
                 'krbGunungApi.indexMaps',
                 'dataDasarGeologi',
+                'peta_krbs' => function ($query) {
+                    $query->where('published', 1);
+                },
             ])->firstOrFail();
         });
+
+        $gadd = Gadd::where('slug', $name)->with([
+                'krbGunungApi',
+                'krbGunungApi.penjelasans',
+                'krbGunungApi.indexMaps',
+                'dataDasarGeologi',
+                'petaKrbs' => function ($query) {
+                    $query->where('published', 1);
+                },
+            ])->firstOrFail();
 
         $ven = MagmaVen::select('erupt_id')
             ->orderBy('erupt_id', 'desc')
@@ -96,22 +149,25 @@ class GunungApiByVolcanoController extends Controller
 
         // return [
         //     'gadd' => $gadd,
+        //     'krbs' => $this->krb($gadd->krbGunungApi),
         //     'tentang_id' => $this->pendahuluanIndonesia($gadd),
         //     'tentang_en' => $this->pendahuluanEnglish($gadd),
         //     'home_krb' => $home_krb,
         //     'vars_daily' => $vars_daily->all(),
         //     'var' => $vars_daily->first(),
-        //     'vens' => $vens,
-        //     'geologis' => $gadd->dataDasarGeologi,
+        //     'activity_date' => $this->varsDate(),
+        //     'geologi' => $gadd->dataDasarGeologi,
         // ];
 
         return view('v1.home.volcano-show', [
             'gadd' => $gadd,
+            'krbs' => $this->krb($gadd->krbGunungApi),
             'tentang_id' => $this->pendahuluanIndonesia($gadd),
             'tentang_en' => $this->pendahuluanEnglish($gadd),
             'home_krb' => $home_krb,
             'vars_daily' => $vars_daily->all(),
             'var' => $vars_daily->first(),
+            'activity_date' => $this->varsDate(),
             'geologi' => $gadd->dataDasarGeologi,
         ]);
     }
