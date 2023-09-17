@@ -10,6 +10,7 @@ Data Dasar Gunung Api {{ $gadd->ga_nama_gapi }}
 
 @section('add-vendor-css')
 <link href="{{ asset('slim/lib/SpinKit/css/spinkit.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('vendor/lightbox2/css/lightbox.min.css') }}" />
 <!-- Load Leaflet CSS and JS from CDN-->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
     integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
@@ -29,6 +30,7 @@ Data Dasar Gunung Api {{ $gadd->ga_nama_gapi }}
 {{-- Load FullScreen --}}
 <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
 <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+
 <style>
 .leaflet-popup-content-wrapper {
 	border-radius: 0px;
@@ -106,11 +108,98 @@ bg-white
 </div>
 
 <hr>
+<div class="row">
+    <div class="col-12">
+        <h4 class="tx-inverse tx-lato tx-bold mg-b-30">
+            Gallery
+        </h4>
+
+        <div class="row">
+            @foreach ($vars_daily as $var)
+            <div class="col-sm-2">
+                <div class="card bd-0 mg-b-10">
+
+                    <a href="{{ $var->var_image }}" data-lightbox="file-set"
+                        data-title="{{ $var->ga_nama_gapi.'_'.$var->data_date.' '.$var->periode }}">
+                        <img src="{{ $var->var_image }}" class="img-fluid" alt="{{ $var->ga_nama_gapi.'_'.$var->data_date.' '.$var->periode }}" data-value="{{ $var->no }}">
+                    </a>
+
+                    <div class="card-body bd bd-t-0">
+                        <p class="card-text">{{ $var->ga_nama_gapi.'_'.$var->data_date.' '.$var->periode }}</p>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</div>
+
+<hr>
 <div class="row mg-b-30">
     <div class="col-12">
         <h4 class="tx-inverse tx-lato tx-bold mg-b-30">
             Sejarah Aktivitas
         </h4>
+
+        @if ($gadd->dataDasarSejarahLetusan->count() > 10)
+        <div id="accordion3" class="accordion-two" role="tablist" aria-multiselectable="true">
+            <div class="card">
+                <div class="card-header" role="tab" id="headingTwo3">
+                    <a class="tx-gray-800 transition collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapseTwo3" aria-expanded="false" aria-controls="collapseTwo3">
+                        Lihat sejarah letusan ({{ $gadd->dataDasarSejarahLetusan->count() }})
+                    </a>
+                </div>
+                <div id="collapseTwo3" class="collapse" role="tabpanel" aria-labelledby="headingTwo3" style="">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped mg-b-0">
+                                <thead>
+                                    <tr>
+                                        <th class="wd-30p">Waktu</th>
+                                        <th>Deskripsi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($gadd->dataDasarSejarahLetusan as $sejarah)
+                                    <tr>
+                                        <td class="wd-30p">{{ $sejarah['date_text'] }}</td>
+                                        <td>{{ $sejarah['description'] }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @else
+
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped mg-b-0">
+                        <thead>
+                            <tr>
+                                <th class="wd-30p">Waktu</th>
+                                <th>Deskripsi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($gadd->dataDasarSejarahLetusan as $sejarah)
+                            <tr>
+                                <td class="wd-30p">{{ $sejarah['date_text'] }}</td>
+                                <td>{{ $sejarah['description'] }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        @endif
+
     </div>
 </div>
 
@@ -267,10 +356,19 @@ bg-white
 
         <div class="card card-dash-chart-one mg-t-20 mg-sm-t-30">
             <div class="row no-gutters">
-                <div class="col-lg-3">
+                <div class="col-lg-4">
+                    <div class="pd-20">
 
+                        @foreach ($krbs as $krb)
+                        <h6 class="slim-card-title mg-b-5">{{ $krb['long_text'] }}</h6>
+                        <p>{{ $krb['area_id'] }}</p>
+                        <p style="font-style: italic">{{ $krb['area_en'] }}</p>
+                        <hr>
+                        @endforeach
+
+                    </div>
                 </div>
-                <div class="col-lg-9">
+                <div class="col-lg-8">
                     <div id="map" class="ht-250 ht-sm-350 ht-md-450 bg-gray-300"
                         style="position: relative; overflow: hidden; background-color: rgb(255, 255, 255);">
                     </div>
@@ -298,6 +396,11 @@ bg-white
 
             @foreach ($krbs as $krb)
             <div id="{{ $krb['id'] }}" role="tabpanel" aria-labelledby="home-{{ $krb['id'] }}" class="tab-pane">
+
+                <h6 class="slim-card-title mg-b-5">{{ $krb['long_text'] }}</h6>
+                <p class="mg-b-0">{{ $krb['area_id'] }}</p>
+                <p style="font-style: italic">{{ $krb['area_en'] }}</p>
+
                 <p>{!! $krb['indonesia'] !!}</p>
 
                 {{-- @auth --}}
@@ -363,6 +466,7 @@ bg-white
 @endsection
 
 @section('add-vendor-script')
+<script src="{{ asset('vendor/lightbox2/js/lightbox.min.js') }}"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 @endsection
 

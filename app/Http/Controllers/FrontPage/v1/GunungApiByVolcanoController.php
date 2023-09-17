@@ -87,6 +87,18 @@ class GunungApiByVolcanoController extends Controller
         }
     }
 
+    public function longTextKrb(int $zonaKrb): string
+    {
+        switch ($zonaKrb) {
+            case 1:
+                return 'Kawasan Rawan Bencana 1';
+            case 2:
+                return 'Kawasan Rawan Bencana 2';
+            default:
+                return 'Kawasan Rawan Bencana 3';
+        }
+    }
+
     public function krb(KrbGunungApi $krbGunungApi)
     {
         return $krbGunungApi->penjelasans->map(function ($penjelasan) {
@@ -94,6 +106,7 @@ class GunungApiByVolcanoController extends Controller
                 'href' => "#krb-{$penjelasan->zona_krb}",
                 'id' => "krb-{$penjelasan->zona_krb}",
                 'text' => $this->textKrb($penjelasan->zona_krb),
+                'long_text' => $this->longTextKrb($penjelasan->zona_krb),
                 'indonesia' => $penjelasan->indonesia,
                 'english' => $penjelasan->english,
                 'area_id' => $penjelasan->area_id,
@@ -115,7 +128,8 @@ class GunungApiByVolcanoController extends Controller
                 'krbGunungApi.penjelasans',
                 'krbGunungApi.indexMaps',
                 'dataDasarGeologi',
-                'peta_krbs' => function ($query) {
+                'dataDasarSejarahLetusan',
+                'petaKrbs' => function ($query) {
                     $query->where('published', 1);
                 },
             ])->firstOrFail();
@@ -126,6 +140,7 @@ class GunungApiByVolcanoController extends Controller
                 'krbGunungApi.penjelasans',
                 'krbGunungApi.indexMaps',
                 'dataDasarGeologi',
+                'dataDasarSejarahLetusan',
                 'petaKrbs' => function ($query) {
                     $query->where('published', 1);
                 },
@@ -135,7 +150,7 @@ class GunungApiByVolcanoController extends Controller
             ->orderBy('erupt_id', 'desc')
             ->first();
 
-        $vars = MagmaVar::select('no','ga_code', 'var_perwkt', 'var_data_date','cu_status')
+        $vars = MagmaVar::select('no','ga_code', 'periode','ga_nama_gapi', 'var_perwkt', 'var_data_date','cu_status','var_image')
             ->with('gunungapi:ga_code,ga_zonearea')
             ->where('ga_code', $gadd->ga_code)
             ->whereBetween('var_data_date', ['2021-07-01', '2021-07-08'])

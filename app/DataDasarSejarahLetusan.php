@@ -79,21 +79,32 @@ class DataDasarSejarahLetusan extends Model
 
     public function getDateTextAttribute()
     {
-        $end_date = $this->attributes['end_date'];
+        $start_year = $this->attributes['start_year'];
+        $start_month = $this->attributes['start_month'];
         $start_date = $this->attributes['start_date'];
+        $end_year = $this->attributes['end_year'];
+        $end_month = $this->attributes['end_month'];
+        $end_date = $this->attributes['end_date'];
 
         if ($start_date AND $end_date) {
-            $start_year = $this->attributes['start_year'];
-            $start_month = $this->attributes['start_month'];
-            $start_date = $this->attributes['start_date'];
-            $end_year = $this->attributes['end_year'];
-            $end_month = $this->attributes['end_month'];
-            $end_date = $this->attributes['end_date'];
-
             $start = Carbon::createFromFormat('Y-m-d', "$start_year-$start_month-$start_date");
             $end = Carbon::createFromFormat('Y-m-d', "$end_year-$end_month-$end_date");
 
             return $start->eq($end) ? $start->format('j F Y') : $start->format('j F Y')." - ".$end->format('j F Y');
+        }
+
+        if ($start_month AND $end_month) {
+
+            $start_format = is_null($start_date) ? 'F Y' : 'j F Y';
+            $end_format = is_null($end_date) ? 'F Y' : 'j F Y';
+
+            $start_date = $start_date ?? '01';
+            $end_date = $end_date ?? '01';
+
+            $start = Carbon::createFromFormat('Y-m-d', "$start_year-$start_month-$start_date");
+            $end = Carbon::createFromFormat('Y-m-d', "$end_year-$end_month-$end_date");
+
+            return $start->eq($end) ? $start->format($start_format) : $start->format($start_format) . " - " . $end->format($end_format);
         }
 
         return $this->getStartTextAttribute();
