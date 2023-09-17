@@ -131,19 +131,25 @@ class Gadd extends Model
     public function dataDasar()
     {
         return $this->setConnection('mysql')
-            ->hasOne(DataDasarGunungApi::class, 'code', 'ga_code');
+            ->hasOne(DataDasarGunungApi::class, 'code', 'code');
     }
 
     public function dataDasarGeologi()
     {
         return $this->setConnection('mysql')
-            ->hasOne(DataDasarGeologi::class, 'code', 'ga_code');
+            ->hasOne(DataDasarGeologi::class, 'code', 'code');
     }
 
     public function petaKrbs()
     {
         return $this->setConnection('mysql')
-            ->hasMany('App\PetaKrbGunungApi', 'code', 'ga_code')
+            ->hasMany('App\PetaKrbGunungApi', 'code', 'code')
             ->orderBy('tahun');
+    }
+
+    public function dataDasarSejarahLetusan()
+    {
+        return $this->setConnection('mysql')
+            ->hasMany(DataDasarSejarahLetusan::class, 'code', 'code');
     }
 }

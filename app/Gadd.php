@@ -202,7 +202,8 @@ class Gadd extends Model
      */
     public function krbGunungApi()
     {
-        return $this->hasOne(KrbGunungApi::class, 'code', 'code')->where('is_active', 1);
+        return $this->hasOne(KrbGunungApi::class, 'code', 'code')
+            ->where('is_active', 1);
     }
 
     public function krbGunungApiPenjelasans()
@@ -212,13 +213,16 @@ class Gadd extends Model
 
     public function dataDasar()
     {
-        return $this->setConnection('mysql')
-            ->hasOne(DataDasarGunungApi::class, 'code', 'ga_code');
+        return $this->hasOne(DataDasarGunungApi::class, 'code', 'code');
     }
 
     public function dataDasarGeologi()
     {
-        return $this->setConnection('mysql')
-            ->hasOne(DataDasarGeologi::class, 'code', 'ga_code');
+        return $this->hasOne(DataDasarGeologi::class, 'code', 'code');
+    }
+
+    public function dataDasarSejarahLetusan()
+    {
+        return $this->hasMany(DataDasarSejarahLetusan::class, 'code', 'code');
     }
 }
