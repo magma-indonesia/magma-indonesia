@@ -153,6 +153,7 @@ class Gadd extends Model
     public function dataDasarSejarahLetusan()
     {
         return $this->setConnection('mysql')
-            ->hasMany(DataDasarSejarahLetusan::class, 'code', 'code');
+            ->hasMany(DataDasarSejarahLetusan::class, 'code', 'code')
+            ->orderBy('start_year');
     }
 }
