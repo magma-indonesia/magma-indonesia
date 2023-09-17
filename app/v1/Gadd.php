@@ -4,7 +4,10 @@ namespace App\v1;
 
 use App\DataDasarGeologi;
 use App\DataDasarGunungApi;
+use App\DataDasarSejarahLetusan;
 use App\KrbGunungApi;
+use App\KrbGunungApiPenjelasan;
+use App\PetaKrbGunungApi;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -143,7 +146,7 @@ class Gadd extends Model
     public function petaKrbs()
     {
         return $this->setConnection('mysql')
-            ->hasMany('App\PetaKrbGunungApi', 'code', 'code')
+            ->hasMany(PetaKrbGunungApi::class, 'code', 'code')
             ->orderBy('tahun');
     }
 
