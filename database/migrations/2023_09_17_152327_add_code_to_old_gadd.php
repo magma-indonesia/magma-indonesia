@@ -14,7 +14,7 @@ class AddCodeToOldGadd extends Migration
     public function up()
     {
         Schema::connection('magma')->table('ga_dd', function (Blueprint $table) {
-            $table->char('code', 3)->unique();
+            $table->char('code', 3)->unique()->nullable();
         });
     }
 
