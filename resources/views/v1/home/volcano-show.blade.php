@@ -63,10 +63,36 @@ bg-white
         </div><!-- col-8 -->
 
         <div class="col-lg-4">
-            <div class="right-panel">
-                <h6 class="slim-card-title">Administratif</h6>
-                <a href="" class="tx-20"><i class="fa fa-map-marker"></i></a>
+            <div class="pd-20">
+                <h6 class="slim-card-title mg-b-5">Administratif</h6>
+                <p>{{ $intro }}</p>
+                <h6 class="slim-card-title mg-b-5">Morfologi Gunung Api</h6>
+                <p>{{ $gadd->ga_morf_gapi }}</p>
+                <h6 class="slim-card-title mg-b-5">Dominant Rock Type</h6>
+                <p>{{ $gadd->ga_rtype_gapi }}</p>
+                <h6 class="slim-card-title mg-b-5">Tingkat Aktivitas Saat Ini</h6>
+                <p>
+                    @switch($vars_daily[0]['cu_status'])
+                        @case('1')
+                        Level I (Normal)
+                        @break
+                        @case('2')
+                        Level II (Waspada)
+                        @break
+                        @case('3')
+                        Level III (Siaga)
+                        @break
+                        @default
+                        Level IV (Awas)
+                        @break
+                    @endswitch
+                </p>
 
+                {{-- @auth --}}
+                <p class="tx-14">
+                    <a href="">Edit</a>
+                </p>
+                {{-- @endauth --}}
             </div><!-- left-panel -->
         </div><!-- col-4 -->
 
@@ -107,6 +133,7 @@ bg-white
     </div>
 </div>
 
+{{-- GALLERY --}}
 <hr>
 <div class="row">
     <div class="col-12">
@@ -116,7 +143,7 @@ bg-white
 
         <div class="row">
             @foreach ($vars_daily as $var)
-            <div class="col-sm-2">
+            <div class="col-lg-2 col-sm">
                 <div class="card bd-0 mg-b-10">
 
                     <a href="{{ $var->var_image }}" data-lightbox="file-set"
@@ -134,6 +161,7 @@ bg-white
     </div>
 </div>
 
+{{-- SEJARAH AKTIVITAS --}}
 <hr>
 <div class="row mg-b-30">
     <div class="col-12">
@@ -163,7 +191,7 @@ bg-white
                                     @foreach ($gadd->dataDasarSejarahLetusan as $sejarah)
                                     <tr>
                                         <td class="wd-30p">{{ $sejarah['date_text'] }}</td>
-                                        <td>{{ $sejarah['description'] }}</td>
+                                        <td>{{ $sejarah['description'] }} <div><a href="">Edit</a></div></td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -189,7 +217,7 @@ bg-white
                             @foreach ($gadd->dataDasarSejarahLetusan as $sejarah)
                             <tr>
                                 <td class="wd-30p">{{ $sejarah['date_text'] }}</td>
-                                <td>{{ $sejarah['description'] }}</td>
+                                <td>{{ $sejarah['description'] }} <a href="">Edit</a></td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -203,6 +231,7 @@ bg-white
     </div>
 </div>
 
+{{-- GEOLOGI --}}
 <hr>
 <div class="row mg-b-30">
     <div class="col-12">
@@ -210,97 +239,39 @@ bg-white
             Geologi
         </h4>
 
-        <div class="nav-statistics-wrapper mg-b-20">
-            <nav class="nav geologi" style="display: flex">
-                @if ($geologi->umum)
-                <a href="#geologi-umum" id="home-geologi-umum" class="nav-link" data-toggle="tab" role="tab" aria-controls="geologi-umum" aria-selected="true">Umum</a>
-                @endif
+        @foreach ($geologis as $geologi)
 
-                @if ($geologi->morfologi)
-                <a href="#geologi-morfologi" id="home-geologi-morfologi" class="nav-link" data-toggle="tab" role="tab" aria-controls="home-geologi-morfologi" aria-selected="true">Morfologi</a>
-                @endif
+        @if ($geologi['content'])
+        <div id="accordion-{{ $geologi['id'] }}" class="accordion-two" role="tablist" aria-multiselectable="true">
+            <div class="card">
+                <div class="card-header" role="tab" id="heading-{{ $geologi['id'] }}">
+                    <a class="tx-gray-800 transition collapsed" data-toggle="collapse" data-parent="#accordion-{{ $geologi['id'] }}" href="#collapse-{{ $geologi['id'] }}" aria-expanded="false" aria-controls="collapse-{{ $geologi['id'] }}">
+                        {{ $geologi['header'] }}
+                    </a>
+                </div>
 
-                @if ($geologi->stratigrafi)
-                <a href="#geologi-stratigrafi" id="home-geologi-stratigrafi" class="nav-link" data-toggle="tab" role="tab" aria-controls="home-geologi-stratigrafi" aria-selected="true">Stratigrafi</a>
-                @endif
+                <div id="collapse-{{ $geologi['id'] }}" class="collapse" role="tabpanel" aria-labelledby="heading-{{ $geologi['id'] }}" style="">
+                    <div class="card-body">
+                        <p>{{ $geologi['content'] }}</p>
 
-                @if ($geologi->struktur_geologi)
-                <a href="#geologi-struktur-geologi" id="home-geologi-struktur-geologi" class="nav-link" data-toggle="tab" role="tab" aria-controls="home-geologi-struktur-geologi" aria-selected="true">Struktur Geologi</a>
-                @endif
-
-                @if ($geologi->petrografi)
-                <a href="#geologi-petrografi" id="home-geologi-petrografi" class="nav-link" data-toggle="tab" role="tab" aria-controls="home-geologi-petrografi" aria-selected="true">Petrografi</a>
-                @endif
-
-            </nav>
+                        {{-- @auth --}}
+                        <p class="tx-14">
+                            <a href="">Edit</a>
+                        </p>
+                        {{-- @endauth --}}
+                    </div>
+                </div>
+            </div>
         </div>
+        @endif
 
-        <div class="tab-content" id="myTabContent">
 
-            @if ($geologi->umum)
-            <div id="geologi-umum" role="tabpanel" aria-labelledby="home-geologi-umum" class="tab-pane">
-                <p>{{ $geologi->umum }}</p>
+        @endforeach
 
-                {{-- @auth --}}
-                <p class="tx-14">
-                    <a href="">Edit</a>
-                </p>
-                {{-- @endauth --}}
-            </div>
-            @endif
-
-            @if ($geologi->morfologi)
-            <div id="geologi-morfologi" role="tabpanel" aria-labelledby="home-geologi-morfologi" class="tab-pane">
-                <p>{{ $geologi->morfologi }}</p>
-
-                {{-- @auth --}}
-                <p class="tx-14">
-                    <a href="">Edit</a>
-                </p>
-                {{-- @endauth --}}
-            </div>
-            @endif
-
-            @if ($geologi->stratigrafi)
-            <div id="geologi-stratigrafi" role="tabpanel" aria-labelledby="home-geologi-stratigrafi" class="tab-pane">
-                <p>{{ $geologi->stratigrafi }}</p>
-
-                {{-- @auth --}}
-                <p class="tx-14">
-                    <a href="">Edit</a>
-                </p>
-                {{-- @endauth --}}
-            </div>
-            @endif
-
-            @if ($geologi->struktur_geologi)
-            <div id="geologi-struktur-geologi" role="tabpanel" aria-labelledby="home-geologi-struktur-geologi" class="tab-pane">
-                <p>{{ $geologi->struktur_geologi }}</p>
-
-                {{-- @auth --}}
-                <p class="tx-14">
-                    <a href="">Edit</a>
-                </p>
-                {{-- @endauth --}}
-            </div>
-            @endif
-
-            @if ($geologi->petrografi)
-            <div id="geologi-petrografi" role="tabpanel" aria-labelledby="home-geologi-petrografi" class="tab-pane">
-                <p>{{ $geologi->petrografi }}</p>
-
-                {{-- @auth --}}
-                <p class="tx-14">
-                    <a href="">Edit</a>
-                </p>
-                {{-- @endauth --}}
-            </div>
-            @endif
-
-        </div>
     </div>
 </div>
 
+{{-- TINGKAT AKTIVITAS TERKINI --}}
 <hr>
 <div class="row mg-b-30">
     <div class="col-12">
@@ -317,6 +288,7 @@ bg-white
     </div>
 </div>
 
+{{-- CHART --}}
 <hr>
 <div class="row mg-b-30">
     <div class="col-12">
@@ -341,6 +313,7 @@ bg-white
     </div>
 </div>
 
+{{-- KAWASAN RAWAN BENCANA --}}
 <hr>
 <div class="row mg-b-10">
     <div class="col-12">
@@ -402,6 +375,7 @@ bg-white
                 <p style="font-style: italic">{{ $krb['area_en'] }}</p>
 
                 <p>{!! $krb['indonesia'] !!}</p>
+                <p style="font-style: italic">{!! $krb['english'] !!}</p>
 
                 {{-- @auth --}}
                 <p class="tx-14">

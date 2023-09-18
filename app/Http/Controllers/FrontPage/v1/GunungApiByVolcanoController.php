@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\FrontPage\v1;
 
+use App\DataDasarGeologi;
 use App\HomeKrb;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -9,6 +10,7 @@ use App\KrbGunungApi;
 use App\v1\Gadd;
 use App\v1\MagmaVar;
 use App\v1\MagmaVen;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
@@ -99,7 +101,7 @@ class GunungApiByVolcanoController extends Controller
         }
     }
 
-    public function krb(KrbGunungApi $krbGunungApi)
+    public function krb(KrbGunungApi $krbGunungApi): Collection
     {
         return $krbGunungApi->penjelasans->map(function ($penjelasan) {
             return [
@@ -116,6 +118,28 @@ class GunungApiByVolcanoController extends Controller
                 'radius_en' => $penjelasan->radius_en,
             ];
         });
+    }
+
+    public function geologis(DataDasarGeologi $dataDasarGeologi): Collection
+    {
+        return collect([
+            'umum' => 'Umum',
+            'morfologi' => 'Morfologi',
+            'stratigrafi' => 'Stratigrafi',
+            'struktur_geologi' => 'Struktur Geologi',
+            'petrografi' => 'Petrografi',
+        ])->transform(function ($category, $key) use ($dataDasarGeologi) {
+            return [
+                'id' => $key,
+                'header' => $category,
+                'content' => $dataDasarGeologi->{$key},
+            ];
+        })->values();
+    }
+
+    public function intro(Gadd $gadd): string
+    {
+        return "Gunung Api {$gadd->ga_nama_gapi} terletak di Kab\Kota {$gadd->ga_kab_gapi}, {$gadd->ga_prov_gapi} dengan posisi geografis di Latitude {$gadd->ga_lat_gapi}°LU, Longitude {$gadd->ga_lon_gapi}°BT dan memiliki ketinggian {$gadd->ga_elev_gapi} mdpl.";
     }
 
     public function show(string $name)
@@ -171,11 +195,12 @@ class GunungApiByVolcanoController extends Controller
         //     'vars_daily' => $vars_daily->all(),
         //     'var' => $vars_daily->first(),
         //     'activity_date' => $this->varsDate(),
-        //     'geologi' => $gadd->dataDasarGeologi,
+        //     'geologis' => $this->geologis($gadd->dataDasarGeologi),
         // ];
 
         return view('v1.home.volcano-show', [
             'gadd' => $gadd,
+            'intro' => $this->intro($gadd),
             'krbs' => $this->krb($gadd->krbGunungApi),
             'tentang_id' => $this->pendahuluanIndonesia($gadd),
             'tentang_en' => $this->pendahuluanEnglish($gadd),
@@ -183,7 +208,7 @@ class GunungApiByVolcanoController extends Controller
             'vars_daily' => $vars_daily->all(),
             'var' => $vars_daily->first(),
             'activity_date' => $this->varsDate(),
-            'geologi' => $gadd->dataDasarGeologi,
+            'geologis' => $this->geologis($gadd->dataDasarGeologi),
         ]);
     }
 }
