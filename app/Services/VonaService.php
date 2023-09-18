@@ -75,7 +75,7 @@ class VonaService
      * @param Request $request
      * @return Collection
      */
-    protected function subscribers(Request $request): Collection
+    public function subscribers(Request $request): Collection
     {
         return VonaSubscriber::where($request->group, 1)
             ->where('status', 1)
@@ -88,7 +88,7 @@ class VonaService
      * @param Vona $vona
      * @return void
      */
-    protected function sendToTelegram(Vona $vona): void
+    public function sendToTelegram(Vona $vona): void
     {
         if (optional(request()->user())->hasRole('Super Admin')) {
             $vona->notify(new VonaTelegram($vona));
@@ -109,7 +109,7 @@ class VonaService
      * @param Request $request
      * @return void
      */
-    protected function sendEmail(Vona $vona, Request $request): void
+    public function sendEmail(Vona $vona, Request $request): void
     {
         $subs = $this->subscribers($request);
         $vona->load('gunungapi');
@@ -131,7 +131,7 @@ class VonaService
      * @param Request $request
      * @return void
      */
-    protected function sendOrUnsend(Vona $vona, Request $request): void
+    public function sendOrUnsend(Vona $vona, Request $request): void
     {
         $vona->update([
             'is_sent' => $request->group === 'send' ? 1 : 0,
@@ -149,7 +149,7 @@ class VonaService
      * @param Vona $vona
      * @return void
      */
-    protected function updateIsSent(Vona $vona): void
+    public function updateIsSent(Vona $vona): void
     {
         $vona->update([
             'is_sent' => 1,
