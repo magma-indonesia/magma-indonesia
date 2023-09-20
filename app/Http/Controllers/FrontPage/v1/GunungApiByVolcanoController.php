@@ -16,38 +16,47 @@ use Illuminate\Support\Str;
 
 class GunungApiByVolcanoController extends Controller
 {
-    protected function cacheHomeKrb()
+    protected $startDate;
+    protected $endDate;
+
+    public function __construct()
+    {
+        $this->startDate = config('app.debug') ? '2021-07-01' : now()->subDays(90)->format('Y-m-d');
+        $this->endDate = config('app.debug') ? '2021-07-08' : now()->format('Y-m-d');
+    }
+
+    public function cacheHomeKrb()
     {
         return Cache::rememberForever('home:krb', function () {
             return HomeKrb::latest()->first();
         });
     }
 
-    protected function filteredVen($code, $ven, $page)
+    public function filteredVen(string $code)
     {
-        $vens = Cache::remember('v1/home/vens:filtered:' . $ven->erupt_id . ':' . $page . ':' . $code, 120, function () use ($code) {
+        $vens = Cache::remember('v1/home/vens:filtered:' . $code, 120, function () use ($code) {
             return MagmaVen::with('gunungapi:ga_code,ga_nama_gapi,ga_zonearea,ga_elev_gapi', 'user:vg_nip,vg_nama')
                 ->where('ga_code', $code)
                 ->orderBy('erupt_tgl', 'desc')
                 ->orderBy('erupt_jam', 'desc')
-                ->paginate(15);
+                ->get();
         });
 
         $vens = $vens->isEmpty() ? collect([]) : $vens;
         return $vens;
     }
 
-    protected function sixHours($vars)
+    public function sixHours($vars)
     {
         return $vars->where('var_perwkt', '6')->all();
     }
 
-    protected function daily($vars)
+    public function daily($vars)
     {
         return $vars->where('var_perwkt', '24');
     }
 
-    protected function convertKrbCode(string $lcode): int
+    public function convertKrbCode(string $lcode): int
     {
         switch (substr($lcode, 2, 2)) {
             case '03':
@@ -59,12 +68,12 @@ class GunungApiByVolcanoController extends Controller
         }
     }
 
-    protected function pendahuluanIndonesia(Gadd $gadd): string
+    public function pendahuluanIndonesia(Gadd $gadd): string
     {
         return $gadd->krbGunungApi->indonesia;
     }
 
-    protected function pendahuluanEnglish(Gadd $gadd): ?string
+    public function pendahuluanEnglish(Gadd $gadd): ?string
     {
         return $gadd->krbGunungApi->english ?? null;
     }
@@ -170,21 +179,17 @@ class GunungApiByVolcanoController extends Controller
                 },
             ])->firstOrFail();
 
-        $ven = MagmaVen::select('erupt_id')
-            ->orderBy('erupt_id', 'desc')
-            ->first();
-
         $vars = MagmaVar::select('no','ga_code', 'periode','ga_nama_gapi', 'var_perwkt', 'var_data_date','cu_status','var_image')
             ->with('gunungapi:ga_code,ga_zonearea')
             ->where('ga_code', $gadd->ga_code)
-            ->whereBetween('var_data_date', ['2021-07-01', '2021-07-08'])
+            ->whereBetween('var_data_date', [$this->startDate, $this->endDate])
             ->orderBy('var_data_date', 'desc')
             ->orderBy('no', 'desc')
             ->get();
 
         $vars_daily = $this->daily($vars);
 
-        $vens = $this->filteredVen($gadd->ga_code, $ven, 1);
+        $vens = $this->filteredVen($gadd->ga_code);
 
         // return [
         //     'gadd' => $gadd,
