@@ -10,46 +10,34 @@ use Illuminate\Support\Collection;
 
 class VogamosController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return [];
-    }
-
-    protected function sortDateByDescThenGroupedByStation(Request $request): array
-    {
-        return collect($request->toArray())
-                ->sortByDesc('date_data')
-                ->groupBy('ID_stasiun')
-                ->all();
+        return VogamosStation::where('code', $request->code)
+            ->where('is_active', 1)->get();
     }
 
     public function store(Request $request)
     {
-        $stations = $this->sortDateByDescThenGroupedByStation($request);
-
-        [$stationsExists, $stationsNotExists] = collect($stations)->partition(function ($stationData, $stationId) {
-            return VogamosStation::where('ID_stasiun', $stationId)->exists();
+        $stations = collect($request->toArray())->each(function ($station) {
+            VogamosStation::updateOrCreate([
+                'station_id' => $station['station_id'],
+            ], [
+                'code' => $station['code'],
+                'station' => $station['station'],
+                'nama' => $station['nama'],
+                'dusun' => $station['dusun'],
+                'desa' => $station['desa'],
+                'kecamatan' => $station['kecamatan'],
+                'kabupaten' => $station['kabupaten'],
+                'provinsi' => $station['provinsi'],
+                'elevation' => $station['elevation'],
+                'latitude' => $station['latitude'],
+                'longitude' => $station['longitude'],
+                'keterangan' => $station['keterangan'],
+                'is_active' => $station['is_active'],
+            ]);
         });
 
-        return $stationsExists;
-
-        // $stationsNotExists = collect($stations)->keys()->reject(function ($station) {
-        //     return VogamosStation::where('ID_stasiun', $station)->exists();
-        // })->values();
-
-        // return $stationsNotExists;
-        // $this->groupByStation->firstOrCreateStation->insertDataPerStation->updateLastUpdate;
-
-        $station = VogamosStation::firstOrCreate([
-            'ID_stasiun' => strtoupper($request->ID_stasiun)
-        ]);
-
-        $data = (new VogamosData())->setTable(strtoupper($request->ID_stasiun));
-
-        $data = $data->updateOrCreate($request->only([
-            'ID_stasiun', 'date_data'
-        ]), $request->only($station->channels_used->toArray()));
-
-        return $data;
+        return VogamosStation::all();
     }
 }

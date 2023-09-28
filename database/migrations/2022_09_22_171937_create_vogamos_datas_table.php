@@ -13,11 +13,11 @@ class CreateVogamosDatasTable extends Migration
      */
     public function up()
     {
-        Schema::create('vogamos_datas', function (Blueprint $table) {
+        Schema::connection('vogamos')->create('vogamos_datas', function (Blueprint $table) {
             $table->increments('id');
-            $table->char('station')->index();
-            $table->foreign('station')
-                ->references('station')
+            $table->string('station_id')->index();
+            $table->foreign('station_id')
+                ->references('station_id')
                 ->on('vogamos_stations');
             $table->dateTime('datetime')->index();
             $table->float('suhu_tanah_satu');
@@ -28,7 +28,7 @@ class CreateVogamosDatasTable extends Migration
             $table->float('co2');
             $table->float('suhu_dalam_box');
             $table->float('tegangan_baterai');
-            $table->index(['station','datetime']);
+            $table->index(['station_id','datetime']);
             $table->timestamps();
         });
     }
