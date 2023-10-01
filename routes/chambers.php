@@ -120,7 +120,11 @@ Route::name('stakeholder.')->group(function () {
 Route::group(['prefix' => 'gunungapi'], function () {
     Route::resource('datadasar','DataDasar');
     Route::resource('pos','PosPgaController');
-    Route::resource('letusan','MagmaVenController');
+
+    Route::get('magma-ven/test','MagmaVenController@test')
+        ->name('magma-ven.create.test');
+    Route::resource('magma-ven', 'MagmaVenController');
+
     Route::resource('laporan-guguran','LaporanGuguranController');
     Route::resource('cctv','KameraGunungApiController');
     Route::resource('seismometer','SeismometerController');
@@ -231,6 +235,21 @@ Route::name('gempabumi.')->group(function () {
         Route::resource('tanggapan','RoqTanggapanController');
         Route::get('/','MagmaRoqController@index')->name('index');
         Route::delete('/{id}','MagmaRoqController@destroy')->name('destroy');
+    });
+});
+
+Route::name('peralatan.')->group(function () {
+    Route::group(['prefix' => 'peralatan'], function () {
+        Route::get('/', 'PeralatanController@index')->name('index');
+
+        Route::resource('pemantauan', 'PeralatanPemantauanController');
+
+        Route::resource('metode', 'MetodePemantauanController');
+        Route::resource('sub-metode', 'SubMetodePemantauanController');
+
+        Route::resource('katalog-barang', 'KatalogBarangController');
+        Route::resource('kategori-peralatan', 'KategoriPeralatanController');
+
     });
 });
 
@@ -439,10 +458,16 @@ Route::name('v1.')->group(function () {
         });
 
         Route::name('vona.')->group(function() {
-            Route::get('vona','v1\VonaController@index')->name('index');
-            Route::get('vona/filter', 'v1\VonaController@filter')->name('filter');
-            Route::get('vona/{no}','v1\VonaController@show')->name('show');
-            Route::delete('vona/{no}','v1\VonaController@destroy')->name('destroy');
+            Route::get('vona','v1\VonaController@index')
+                ->name('index');
+            Route::get('vona/statistik/{year?}/{code?}', 'v1\VonaController@statistik')
+                ->name('statistik');
+            Route::get('vona/filter', 'v1\VonaController@filter')
+                ->name('filter');
+            Route::get('vona/{no}','v1\VonaController@show')
+                ->name('show');
+            Route::delete('vona/{no}','v1\VonaController@destroy')
+                ->name('destroy');
         });
 
         Route::resource('absensi','v1\AbsensiController');
