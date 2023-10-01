@@ -23,9 +23,14 @@ Data Dasar Gunung Api {{ $gadd->ga_nama_gapi }}
 <script src="https://unpkg.com/esri-leaflet-renderers@2.0.6/dist/esri-leaflet-renderers.js"
     integrity="sha512-mhpdD3igvv7A/84hueuHzV0NIKFHmp2IvWnY5tIdtAHkHF36yySdstEVI11JZCmSY4TCvOkgEoW+zcV/rUfo0A=="
     crossorigin=""></script>
+
 <!-- Load extend Home -->
 <link rel="stylesheet" href="{{ asset('css/leaflet.defaultextent.css') }}">
 <script src="{{ asset('js/leaflet.defaultextent.js') }}"></script>
+
+<!-- Load User Marker -->
+<link rel="stylesheet" href="{{ asset('css/leaflet.usermarker.css') }}">
+<script src="{{ asset('js/leaflet.usermarker.js') }}"></script>
 
 {{-- Load FullScreen --}}
 <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
@@ -584,6 +589,15 @@ $(document).ready(function () {
 
     map.addControl(new L.Control.Fullscreen());
     map_volcano.addControl(new L.Control.Fullscreen());
+
+    // Get User Location
+    map.locate({enableHighAccuracy:true})
+        .on('locationfound',function(e){
+            var user_marker = L.userMarker([e.latitude, e.longitude], {pulsing:true, accuracy:200, smallIcon:false});
+            user_marker.addTo(map).bindPopup('Anda Berada di Sini',{
+                closeButton:false
+            }).openPopup();
+        });
 
     $.ajax({
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},

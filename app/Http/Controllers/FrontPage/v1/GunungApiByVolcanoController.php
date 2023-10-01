@@ -21,8 +21,8 @@ class GunungApiByVolcanoController extends Controller
 
     public function __construct()
     {
-        $this->startDate = '2021-07-01';
-        $this->endDate = '2021-07-08';
+        $this->startDate = config('app.debug') ? '2021-07-01' : now()->subDays(7)->format('Y-m-d');
+        $this->endDate = config('app.debug') ? '2021-07-08' : now()->format('Y-m-d');
     }
 
     public function cacheHomeKrb()
